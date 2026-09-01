@@ -255,6 +255,21 @@ public:
 
 	// ===========[ Subtick abuses ]===========
 
+	// Why the engine would throw away a command's entire subtick move list.
+	// When that happens it falls back to the final button state for the whole tick,
+	// effectively desubticking the command.
+	enum class SubtickRejection : u8
+	{
+		None = 0,
+		MoveCount,    // more moves than the engine accepts
+		When,         // out of order, or outside the tick
+		Button,       // more than one button at once, or a button the engine does not apply
+		ImpulseLimit, // the accumulated movement axis left the range a real input can reach
+	};
+
+	// `forwardAxis` and `sideAxis` are the movement impulses the command starts from.
+	static SubtickRejection VerifySubtickMoves(const PlayerCommand *cmd, f32 forwardAxis, f32 sideAxis);
+
 	std::deque<f32> suspiciousSubtickMoveTimes;
 	std::deque<f32> invalidCommandTimes;
 	std::deque<f32> zeroWhenCommandTimes;

@@ -29,17 +29,18 @@
 #define NEAR_PERFECT_MIN_DURATION    (ENGINE_FIXED_TICK_INTERVAL / 64.0f) // ~0.25ms
 #define NEAR_PERFECT_MAX_DURATION    0.001f                               // 1ms
 
-// A counter-strafe attempt resolves one of three ways: Overlap (early), Perfect, Underlap (late)
-// Late bias is the share of the *missed* attempts that were late.
-// Humans miss in both directions, so this sits well below 1.
-// A null bind releases the opposite key on the same command as the press, so it cannot produce an overlap at all and pins late bias at 1.
-// The threshold leans on that structural improbability.
-// This is a very lenient threshold, 0.95 would have been more reasonable, but we really want to avoid false positives.
-#define LATE_BIAS_THRESHOLD 0.9925f
-// Sample size needed before late bias means anything, counted in MISSES rather than attempts.
-#define LATE_BIAS_MIN_MISSES 50
-
 CConVar<bool> kz_ac_nulls_debug("kz_ac_nulls_debug", FCVAR_CHEAT, "Enable nulls detector debug messages", false);
+
+// forwardmove/sizemove/upmove is rejected by the server if it's over 10.
+// In reality this never happens (either 0 or 1), but this matches what the server does.
+static_global f32 SanitizeMoveValue(f32 value)
+{
+	if (value != value || fabsf(value) >= 10.0f)
+	{
+		return 0.0f;
+	}
+	return value;
+}
 
 void KZAnticheatService::CreateInputEvents(PlayerCommand *cmd)
 {
@@ -48,222 +49,115 @@ void KZAnticheatService::CreateInputEvents(PlayerCommand *cmd)
 	{
 		return;
 	}
-	// Note: We assume that the subtick inputs here is consistent with the button states in cmd->buttonstates.
-	// Usually the only way this can be false is if the client is not legitimate.
-	if (cmd->base().subtick_moves_size() == 0)
-	{
-		// Technically the player can abuse this to hide their nulls but this will be caught by the subtick abuse detection.
-		return;
-	}
-	u64 oldButtons = 0;
 	Vector &lastMovementImpulses = this->player->GetMoveServices()->m_vecLastMovementImpulses;
-	if (lastMovementImpulses.x > 0)
-	{
-		oldButtons |= IN_FORWARD;
-	}
-	else if (lastMovementImpulses.x < 0)
-	{
-		oldButtons |= IN_BACK;
-	}
+	f32 forwardAxis = lastMovementImpulses.x;
+	f32 sideAxis = lastMovementImpulses.y;
 
-	if (lastMovementImpulses.y > 0)
+	auto heldButton = [](f32 axis, u64 positive, u64 negative) -> u64
 	{
-		oldButtons |= IN_MOVELEFT;
-	}
-	else if (lastMovementImpulses.y < 0)
+		if (axis > 0.0f)
+		{
+			return positive;
+		}
+		return axis < 0.0f ? negative : 0;
+	};
+
+	INetChannelInfo *netchan = interfaces::pEngine->GetPlayerNetInfo(this->player->GetPlayerSlot());
+	bool airborne = (this->player->GetPlayerPawn()->m_fFlags() & FL_ONGROUND) == 0 && this->player->GetMoveType() == MOVETYPE_WALK;
+	// This isn't the actual airspeed at the time of the input, but it's close enough for our purposes.
+	f32 airSpeed = airborne ? this->player->moveDataPost.m_vecVelocity.Length2D() : -1.0f;
+
+	// Emit the press/release pair implied by an axis crossing between directions. Anything the axis does
+	// while staying on one side of zero is a magnitude change, not a direction change, and carries no
+	// counter-strafe information.
+	auto emitTransition = [&](u64 wasHeld, u64 nowHeld, f32 when, bool analog)
 	{
-		oldButtons |= IN_MOVERIGHT;
+		if (wasHeld == nowHeld)
+		{
+			return;
+		}
+		auto push = [&](u64 button, bool pressed)
+		{
+			InputEvent event {cmd->cmdNum, when, -1.0f, button, pressed, analog, airSpeed};
+			netchan->GetRemoteFramerate(&event.framerate, nullptr, nullptr);
+			if (button == IN_FORWARD || button == IN_BACK)
+			{
+				this->recentForwardBackwardEvents.push_back(event);
+			}
+			else // IN_MOVELEFT || IN_MOVERIGHT
+			{
+				this->recentLeftRightEvents.push_back(event);
+			}
+		};
+		if (wasHeld)
+		{
+			push(wasHeld, false);
+		}
+		if (nowHeld)
+		{
+			push(nowHeld, true);
+		}
+	};
+
+	if (cmd->base().subtick_moves_size() == 0 || VerifySubtickMoves(cmd, forwardAxis, sideAxis) != SubtickRejection::None)
+	{
+		// A command is allowed to change the movement buttons without carrying any subtick move.
+		// In such scenario, SetupMove derives the impulses from the final button state
+		// and treat it as an input that happened at the very start of the tick.
+		u64 buttons = cmd->base().buttons_pb().buttonstate1();
+		f32 newForward = (buttons & (IN_FORWARD | IN_BACK)) ? SanitizeMoveValue(cmd->base().forwardmove()) : 0.0f;
+		f32 newSide = (buttons & (IN_MOVELEFT | IN_MOVERIGHT)) ? SanitizeMoveValue(cmd->base().leftmove()) : 0.0f;
+		emitTransition(heldButton(forwardAxis, IN_FORWARD, IN_BACK), heldButton(newForward, IN_FORWARD, IN_BACK), 0.0f, false);
+		emitTransition(heldButton(sideAxis, IN_MOVELEFT, IN_MOVERIGHT), heldButton(newSide, IN_MOVELEFT, IN_MOVERIGHT), 0.0f, false);
+		return;
 	}
 
 	for (i32 i = 0; i < cmd->base().subtick_moves_size(); ++i)
 	{
-		bool hasButton = cmd->base().subtick_moves(i).has_button();
-		// Buttons that are not direction inputs are ignored.
-		u64 button = cmd->base().subtick_moves(i).button();
-		if (hasButton)
+		const CSubtickMoveStep &step = cmd->base().subtick_moves(i);
+		u64 oldForward = heldButton(forwardAxis, IN_FORWARD, IN_BACK);
+		u64 oldSide = heldButton(sideAxis, IN_MOVELEFT, IN_MOVERIGHT);
+
+		if (step.has_button() && step.button())
 		{
-			if (button == IN_FORWARD || button == IN_BACK || button == IN_MOVELEFT || button == IN_MOVERIGHT)
+			// Buttons that are not direction inputs are ignored.
+			u64 button = step.button();
+			f32 delta = step.pressed() ? 1.0f : -1.0f;
+			if (button == IN_FORWARD)
 			{
-				const CSubtickMoveStep &step = cmd->base().subtick_moves(i);
-				InputEvent event;
-				event.cmdNum = cmd->cmdNum;
-				event.fraction = step.when();
-				event.button = button;
-				event.pressed = step.pressed();
-				INetChannelInfo *netchan = interfaces::pEngine->GetPlayerNetInfo(this->player->GetPlayerSlot());
-				netchan->GetRemoteFramerate(&event.framerate, nullptr, nullptr);
-				// Only record airspeed if the player might be airstrafing.
-				if ((this->player->GetPlayerPawn()->m_fFlags() & FL_ONGROUND) == 0 && this->player->GetMoveType() == MOVETYPE_WALK)
-				{
-					// This isn't the actual airspeed at the time of the input, but it's close enough for our purposes.
-					event.airSpeed = this->player->moveDataPost.m_vecVelocity.Length2D();
-				}
-				if (button == IN_FORWARD || button == IN_BACK)
-				{
-					this->recentForwardBackwardEvents.push_back(event);
-				}
-				else // IN_MOVELEFT || IN_MOVERIGHT
-				{
-					this->recentLeftRightEvents.push_back(event);
-				}
+				forwardAxis += delta;
+			}
+			else if (button == IN_BACK)
+			{
+				forwardAxis -= delta;
+			}
+			else if (button == IN_MOVELEFT)
+			{
+				sideAxis += delta;
+			}
+			else if (button == IN_MOVERIGHT)
+			{
+				sideAxis -= delta;
+			}
+			else
+			{
+				continue;
 			}
 		}
-		else if (cmd->base().subtick_moves(i).has_analog_forward_delta() || cmd->base().subtick_moves(i).has_analog_left_delta())
+		else if (step.has_analog_forward_delta() || step.has_analog_left_delta())
 		{
-			// Analog movement input changes
-			const CSubtickMoveStep &step = cmd->base().subtick_moves(i);
-			// Helper to record an input event
-			auto recordAnalogEvent = [&](u64 button, bool pressed)
-			{
-				InputEvent event {cmd->cmdNum, step.when(), -1.0f, button, pressed, true, -1.0f};
-				INetChannelInfo *netchan = interfaces::pEngine->GetPlayerNetInfo(this->player->GetPlayerSlot());
-				netchan->GetRemoteFramerate(&event.framerate, nullptr, nullptr);
-				if ((this->player->GetPlayerPawn()->m_fFlags() & FL_ONGROUND) == 0 && this->player->GetMoveType() == MOVETYPE_WALK)
-				{
-					event.airSpeed = this->player->moveDataPost.m_vecVelocity.Length2D();
-				}
-				if (button == IN_FORWARD || button == IN_BACK)
-				{
-					this->recentForwardBackwardEvents.push_back(event);
-				}
-				else // IN_MOVELEFT || IN_MOVERIGHT
-				{
-					this->recentLeftRightEvents.push_back(event);
-				}
-			};
-
-			// Helper to release a button if it's currently pressed
-			auto tryRelease = [&](int button)
-			{
-				if (oldButtons & button)
-				{
-					recordAnalogEvent(button, false);
-					oldButtons &= ~button;
-				}
-			};
-
-			// Helper to press a button if it's not currently pressed
-			auto tryPress = [&](int button)
-			{
-				if (!(oldButtons & button))
-				{
-					recordAnalogEvent(button, true);
-					oldButtons |= button;
-				}
-			};
-			if (step.has_analog_forward_delta() && step.analog_forward_delta() != 0.0f)
-			{
-				float delta = step.analog_forward_delta();
-				if (delta != 0.0f)
-				{
-					if (delta == 1.0f)
-					{
-						// Back to neutral OR neutral to forward
-						if (oldButtons & IN_BACK)
-						{
-							tryRelease(IN_BACK);
-						}
-						else
-						{
-							tryPress(IN_FORWARD);
-						}
-					}
-					else if (delta == -1.0f)
-					{
-						// Forward to neutral OR neutral to back
-						if (oldButtons & IN_FORWARD)
-						{
-							tryRelease(IN_FORWARD);
-						}
-						else
-						{
-							tryPress(IN_BACK);
-						}
-					}
-					else if (delta == 2.0f)
-					{
-						// Back to forward
-						tryRelease(IN_BACK);
-						tryPress(IN_FORWARD);
-					}
-					else if (delta == -2.0f)
-					{
-						// Forward to back
-						tryRelease(IN_FORWARD);
-						tryPress(IN_BACK);
-					}
-				}
-			}
-			if (step.has_analog_left_delta() && step.analog_left_delta() != 0.0f)
-			{
-				float delta = step.analog_left_delta();
-				if (delta != 0.0f)
-				{
-					if (delta == 1.0f)
-					{
-						// Right to neutral OR neutral to left
-						if (oldButtons & IN_MOVERIGHT)
-						{
-							tryRelease(IN_MOVERIGHT);
-						}
-						else
-						{
-							tryPress(IN_MOVELEFT);
-						}
-					}
-					else if (delta == -1.0f)
-					{
-						// Left to neutral OR neutral to right
-						if (oldButtons & IN_MOVELEFT)
-						{
-							tryRelease(IN_MOVELEFT);
-						}
-						else
-						{
-							tryPress(IN_MOVERIGHT);
-						}
-					}
-					else if (delta == 2.0f)
-					{
-						// Right to left
-						tryRelease(IN_MOVERIGHT);
-						tryPress(IN_MOVELEFT);
-					}
-					else if (delta == -2.0f)
-					{
-						// Left to right
-						tryRelease(IN_MOVELEFT);
-						tryPress(IN_MOVERIGHT);
-					}
-				}
-			}
+			forwardAxis += step.analog_forward_delta();
+			sideAxis += step.analog_left_delta();
 		}
-		// The button loop did not take into account buttons that are pressed and released on the same tick fraction.
-		// They should cancel each other out, so we need to clean them up.
-		auto cleanupEvents = [](std::deque<InputEvent> &events)
+		else
 		{
-			auto it = events.begin();
-			while (it != events.end())
-			{
-				auto next = std::next(it);
-				if (next == events.end())
-				{
-					break;
-				}
-				if (it->cmdNum == next->cmdNum && it->fraction == next->fraction && it->button == next->button && it->pressed != next->pressed)
-				{
-					// Cancel out
-					it = events.erase(it);
-					it = events.erase(it);
-				}
-				else
-				{
-					++it;
-				}
-			}
-		};
-		cleanupEvents(this->recentForwardBackwardEvents);
-		cleanupEvents(this->recentLeftRightEvents);
+			continue;
+		}
+
+		// The engine never clamps the impulses. It only refuses the whole command if they leave the range
+		// VerifySubtickMoves checks, so anything reaching here accumulates as is.
+		emitTransition(oldForward, heldButton(forwardAxis, IN_FORWARD, IN_BACK), step.when(), !step.has_button());
+		emitTransition(oldSide, heldButton(sideAxis, IN_MOVELEFT, IN_MOVERIGHT), step.when(), !step.has_button());
 	}
 }
 
@@ -328,11 +222,6 @@ void KZAnticheatService::AnalyzeNullsForAxis(const std::deque<InputEvent> &event
 	this->nullsUnderlapBuffer.clear();
 	auto &underlapDurations = this->nullsUnderlapBuffer;
 
-	// Unweighted attempt counts for the late bias criterion.
-	u32 lateBiasOverlaps = 0;
-	u32 lateBiasUnderlaps = 0;
-	u32 lateBiasPerfect = 0;
-	u32 lateBiasAnalog = 0;
 
 	// Track the last release event and current press state for each direction
 	const InputEvent *lastButton1Release = nullptr;
@@ -421,7 +310,6 @@ void KZAnticheatService::AnalyzeNullsForAxis(const std::deque<InputEvent> &event
 						{
 							maxConsecutivePerfect = numConsecutivePerfect;
 						}
-						lateBiasPerfect++;
 					}
 				}
 				else if (event.airSpeed >= MIN_AIR_SPEED_FOR_DETECTION)
@@ -432,14 +320,6 @@ void KZAnticheatService::AnalyzeNullsForAxis(const std::deque<InputEvent> &event
 					}
 					numOverlaps += weight;
 					numConsecutivePerfect = 0;
-					if (shouldAnalyze)
-					{
-						lateBiasOverlaps++;
-					}
-				}
-				if (shouldAnalyze && event.analog)
-				{
-					lateBiasAnalog++;
 				}
 			}
 		}
@@ -485,10 +365,6 @@ void KZAnticheatService::AnalyzeNullsForAxis(const std::deque<InputEvent> &event
 			continue;
 		}
 
-		if (event.analog)
-		{
-			lateBiasAnalog++;
-		}
 		// Note: timeDiff < 0 (overlap) is already handled earlier in the loop
 		if (timeDiff < nearPerfect)
 		{
@@ -503,7 +379,6 @@ void KZAnticheatService::AnalyzeNullsForAxis(const std::deque<InputEvent> &event
 			{
 				maxConsecutivePerfect = numConsecutivePerfect;
 			}
-			lateBiasPerfect++;
 		}
 		else
 		{
@@ -513,7 +388,6 @@ void KZAnticheatService::AnalyzeNullsForAxis(const std::deque<InputEvent> &event
 			}
 			// Underlap: gap between release and press
 			underlapDurations.push_back(timeDiff);
-			lateBiasUnderlaps++;
 		}
 	}
 	f32 underlapMedian = 0.0f;
@@ -552,35 +426,12 @@ void KZAnticheatService::AnalyzeNullsForAxis(const std::deque<InputEvent> &event
 		this->MarkInfraction(KZAnticheatService::Infraction::Type::Nulls, details);
 	}
 
-	// The detection method above only fires on a player who both nulls and lands the
-	// swap exactly, and misses anyone whose null carries a consistent small offset.
-
-	// Late bias instead asks which way the player misses.
-	// Nulls releases the opposite direction on the same command as the press, so it cannot be early, and every miss is late
-	// Humans usually miss in both directions which is what separates this from simply having a low overlap rate.
-	u32 lateBiasMisses = lateBiasUnderlaps + lateBiasOverlaps;
-	u32 lateBiasAttempts = lateBiasMisses + lateBiasPerfect;
-	f32 lateBias = (lateBiasMisses > 0) ? (f32)lateBiasUnderlaps / (f32)lateBiasMisses : 0.0f;
-	f32 analogFraction = (lateBiasAttempts > 0) ? (f32)lateBiasAnalog / (f32)lateBiasAttempts : 0.0f;
-	// High underlap median means the player has a bigger problem to worry about than nulls.
-	bool slowUnderlaps = underlapMedian >= UNDERLAP_MEDIAN_FORGIVENESS_THRESHOLD;
-
-	if (lateBiasMisses >= LATE_BIAS_MIN_MISSES && !slowUnderlaps && lateBias >= LATE_BIAS_THRESHOLD)
-	{
-		std::string details = tinyformat::format("Nulls detection (late bias) on axis %s. Late bias %.4f over %d attempts "
-												 "(UL: %d, OL: %d, perfect: %d), DA median: %.2f ms, analog: %.1f%%, FPS: %.2f",
-												 axisName, lateBias, lateBiasAttempts, lateBiasUnderlaps, lateBiasOverlaps, lateBiasPerfect,
-												 underlapMedian * 1000, analogFraction * 100, 1 / medianFramerate);
-		this->MarkInfraction(KZAnticheatService::Infraction::Type::Nulls, details);
-	}
-
 	if (kz_ac_nulls_debug.Get())
 	{
 		this->player->PrintAlert(false, true,
-								 "Perfect: %d (streak %d, ban %d) | Overlap %d\nUnderlap median: %.1f ms | FPS: %.1f | Sample count %d\n"
-								 "Late bias: %.4f (ban %.2f) over %d attempts | analog %.1f%%",
+								 "Perfect: %d (streak %d, ban %d) | Overlap %d\nUnderlap median: %.1f ms | FPS: %.1f | Sample count %d",
 								 numPerfect, maxConsecutivePerfect, adjustedRequiredPerfectCstrafes, numOverlaps, underlapMedian * 1000,
-								 1 / medianFramerate, (i32)(total), lateBias, LATE_BIAS_THRESHOLD, lateBiasAttempts, analogFraction * 100);
+								 1 / medianFramerate, (i32)(total));
 	}
 }
 
