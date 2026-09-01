@@ -68,8 +68,8 @@ static_global bool CanRunCommand(KZPlayer *player, u64 flags)
 		return false;
 	}
 
-	// Checkpoint commands and measure commands are exempt from the cooldown, since they're expected to be spammed.
-	if (flags & (SCFL_CHECKPOINT | SCFL_MEASURE))
+	// Certain commands are exempt from the cooldown, since they're expected to be spammed.
+	if (flags & (SCFL_CHECKPOINT | SCFL_MEASURE | SCFL_PREFERENCE))
 	{
 		return true;
 	}
