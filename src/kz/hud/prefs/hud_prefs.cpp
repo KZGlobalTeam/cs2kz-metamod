@@ -11,6 +11,11 @@
 static_global constexpr const char *ELEMENT_PHRASE[(i32)MHUDElement::Count] = {"Menu - Timer", "Speed", "Menu - Prespeed", "Menu - Keys",
 																			   "Menu - Checkpoint"};
 
+// Kept from registration so the reset buttons can hand the nodes straight back to the model, rather
+// than repeating every default in a list that has to be updated whenever an option is added.
+static_global KZOptNode *generalNode {};
+static_global KZOptNode *elementNodes[(i32)MHUDElement::Count] {};
+
 // While any popup for an element's position/size/font/color is open, force that element on screen so
 // the player can see what they are editing.
 static_function void HudEdit(KZPlayer *player, i64 tag, bool begin)
@@ -72,15 +77,16 @@ static_function void CrosshairToggle(KZPlayer *player, i64)
 
 static_function void ResetAll(KZPlayer *player, i64)
 {
+	KZMenu::ResetNode(player, generalNode);
 	for (i32 i = 0; i < (i32)MHUDElement::Count; i++)
 	{
-		MHUDResetElementPrefs(player, (MHUDElement)i);
+		KZMenu::ResetNode(player, elementNodes[i]);
 	}
 }
 
 static_function void ResetElement(KZPlayer *player, i64 tag)
 {
-	MHUDResetElementPrefs(player, (MHUDElement)tag);
+	KZMenu::ResetNode(player, elementNodes[tag]);
 }
 
 // --- Registration -------------------------------------------------------------------
@@ -90,6 +96,7 @@ void MHUDRegisterMenu()
 	KZOptNode *hud = KZMenu::AddCategory("Menu - HUD");
 
 	KZOptNode *general = KZMenu::AddSub(hud, "Menu - General");
+	generalNode = general;
 	KZMenu::AddChoice(general, "Menu - Style", StyleChoices, StyleCurrent, StylePick);
 	KZMenu::AddActionToggle(general, "Menu - Panel", PanelCurrent, PanelToggle);
 	KZMenu::AddActionToggle(general, "Menu - Crosshair", CrosshairCurrent, CrosshairToggle);
@@ -102,6 +109,7 @@ void MHUDRegisterMenu()
 	{
 		const MHUDElementDef &def = MHUD_ELEMENTS[e];
 		KZOptNode *sub = KZMenu::AddSub(hud, ELEMENT_PHRASE[e]);
+		elementNodes[e] = sub;
 
 		KZMenu::AddToggle(sub, "Menu - Enabled", def.enabledKey, true);
 		KZMenu::AddPosition(sub, "Menu - Position", def.xKey, def.yKey, def.xDefault, def.yDefault, e, HudEdit);
@@ -118,6 +126,7 @@ void MHUDRegisterMenu()
 			KZMenu::AddToggle(sub, "Menu - Keys Overlap", "mhudKeysOverlap", true);
 			KZMenu::AddToggle(sub, "Menu - Keys Unpressed", "mhudKeysHideUnpressed", false);
 			KZMenu::AddToggle(sub, "Menu - Keys Letters", "mhudKeysLetters", false);
+			KZMenu::AddToggle(sub, "Menu - Keys Square", "mhudKeysSquare", false);
 		}
 
 		KZMenu::SetItemDivider(sub); // rule between the layout controls and the colors

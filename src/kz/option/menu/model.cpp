@@ -1,4 +1,5 @@
 #include "kz/option/menu/model.h"
+#include "kz/option/kz_option.h"
 
 #include "tier0/memdbgon.h"
 
@@ -141,5 +142,42 @@ namespace KZMenu
 		item.onPick = onPick;
 		item.tag = tag;
 		node->items.push_back(item);
+	}
+
+	void ResetNode(KZPlayer *player, KZOptNode *node)
+	{
+		if (!node)
+		{
+			return;
+		}
+		auto *opts = player->optionService;
+		for (const KZOptItem &item : node->items)
+		{
+			if (!item.prefKey)
+			{
+				continue;
+			}
+			switch (item.type)
+			{
+				case KZOptItemType::Toggle:
+					opts->SetPreferenceBool(item.prefKey, item.idef != 0);
+					break;
+				case KZOptItemType::Color:
+					opts->SetPreferenceColor(item.prefKey, item.cdef);
+					break;
+				case KZOptItemType::Font:
+					opts->SetPreferenceStr(item.prefKey, item.sdef);
+					break;
+				case KZOptItemType::Position:
+					opts->SetPreferenceFloat(item.prefKey, (f32)item.idef);
+					opts->SetPreferenceFloat(item.yKey, (f32)item.iydef);
+					break;
+				case KZOptItemType::Size:
+					opts->SetPreferenceFloat(item.prefKey, (f32)item.idef);
+					break;
+				default:
+					break;
+			}
+		}
 	}
 } // namespace KZMenu

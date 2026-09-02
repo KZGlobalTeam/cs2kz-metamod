@@ -153,6 +153,10 @@
 	{
 		"en"		"Use WASD letters"
 	}
+	"Menu - Keys Square"
+	{
+		"en"		"Square keys"
+	}
 	"Menu - Color"
 	{
 		"en"		"Color"

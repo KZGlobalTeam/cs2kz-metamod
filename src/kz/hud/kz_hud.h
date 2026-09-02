@@ -46,9 +46,6 @@ struct MHUDColorPrefDef
 // The color states of one element, in menu order.
 const MHUDColorPrefDef *MHUDElementColorPrefs(MHUDElement element, i32 &count);
 
-// Put one element's preferences back to their defaults.
-void MHUDResetElementPrefs(KZPlayer *player, MHUDElement element);
-
 extern const MHUDElementDef MHUD_ELEMENTS[(i32)MHUDElement::Count];
 
 #define MHUD_SIZE_MIN 8
@@ -194,6 +191,7 @@ public:
 	bool IsMHUDKeysOverlapEnabled();
 	bool IsMHUDKeysHidingUnpressed();
 	bool IsMHUDKeysUsingLetters();
+	bool IsMHUDKeysSquare();
 	bool IsMHUDOutlineEnabled(MHUDElement element);
 
 private:
@@ -239,12 +237,12 @@ private:
 		bool colorComputed {};
 	};
 
-	// TODO (?): Update the container so it is always big enough for the text.
 	struct LayoutKeysState
 	{
 		bool pressed[6] {};
 		bool hideIdle {};
 		i32 letters {-1};
+		i32 square {-1};
 		i32 fontSize {INT_MIN};
 		const char *fontClass {};
 	};

@@ -126,6 +126,13 @@ void KZHUDService::UpdateKeysElement(CCSCustomHudLayout *layout, KZPlayer *sourc
 		layout->SetHasClass(MHUD_ELEMENTS[(i32)MHUDElement::Keys].panelId, "keys-letters",
 							letters ? k_eHudPanelClassStatus_HasClass : k_eHudPanelClassStatus_DoesNotHaveClass);
 	}
+	const i32 square = this->IsMHUDKeysSquare() ? 1 : 0;
+	if (this->layoutKeys.square != square)
+	{
+		this->layoutKeys.square = square;
+		layout->SetHasClass(MHUD_ELEMENTS[(i32)MHUDElement::Keys].panelId, "keys-square",
+							square ? k_eHudPanelClassStatus_HasClass : k_eHudPanelClassStatus_DoesNotHaveClass);
+	}
 	for (i32 i = 0; i < KZ_ARRAYSIZE(KEY_PANELS); i++)
 	{
 		if (this->layoutKeys.pressed[i] == keys[i])

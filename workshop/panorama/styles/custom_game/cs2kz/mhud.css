@@ -76,6 +76,12 @@
 	font-weight: bolder;
 }
 
+/* mhudKeysSquare trades the default wide keys for square ones. */
+.keys-square .key-button {
+	width: 40px;
+	height: 40px;
+}
+
 /* mhudKeysLetters swaps the movement arrows for their WASD letters. */
 .key-glyph-letter {
 	visibility: collapse;

@@ -41,6 +41,11 @@ bool KZHUDService::IsMHUDKeysUsingLetters()
 	return this->player->optionService->GetPreferenceBool("mhudKeysLetters", false);
 }
 
+bool KZHUDService::IsMHUDKeysSquare()
+{
+	return this->player->optionService->GetPreferenceBool("mhudKeysSquare", false);
+}
+
 bool KZHUDService::IsMHUDOutlineEnabled(MHUDElement element)
 {
 	return this->player->optionService->GetPreferenceBool(MHUD_ELEMENTS[(i32)element].outlineKey, true);
@@ -58,34 +63,3 @@ void KZHUDService::ToggleStyle()
 	opts->SetPreferenceBool("hudLegacyStyle", !opts->GetPreferenceBool("hudLegacyStyle", false));
 }
 
-void MHUDResetElementPrefs(KZPlayer *p, MHUDElement element)
-{
-	const MHUDElementDef &def = MHUD_ELEMENTS[(i32)element];
-	auto *opts = p->optionService;
-	opts->SetPreferenceBool(def.enabledKey, true);
-	opts->SetPreferenceFloat(def.xKey, def.xDefault);
-	opts->SetPreferenceFloat(def.yKey, def.yDefault);
-	opts->SetPreferenceFloat(def.sizeKey, def.sizeDefault);
-	opts->SetPreferenceStr(def.fontKey, MHUD_DEFAULT_FONT);
-	opts->SetPreferenceBool(def.outlineKey, true);
-
-	i32 count = 0;
-	const MHUDColorPrefDef *colors = MHUDElementColorPrefs(element, count);
-	for (i32 i = 0; i < count; i++)
-	{
-		opts->SetPreferenceColor(colors[i].prefKey, Color(colors[i].r, colors[i].g, colors[i].b, 255));
-	}
-
-	switch (element)
-	{
-		case MHUDElement::Timer:
-			opts->SetPreferenceBool("mhudTimerDetailed", true);
-			break;
-		case MHUDElement::Keys:
-			opts->SetPreferenceBool("mhudKeysOverlap", true);
-			opts->SetPreferenceBool("mhudKeysHideUnpressed", false);
-			break;
-		default:
-			break;
-	}
-}

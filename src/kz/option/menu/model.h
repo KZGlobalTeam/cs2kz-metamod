@@ -91,6 +91,11 @@ namespace KZMenu
 	void SetItemSubtext(KZOptNode *node, const char *phraseKey);
 	void SetItemDivider(KZOptNode *node);
 
+	// Write every value item in this node back to the default it was registered with. Items with no
+	// preference behind them - buttons, action toggles, choices - are skipped: their state lives in a
+	// service. Keeps reset buttons from drifting away from the declared defaults.
+	void ResetNode(KZPlayer *player, KZOptNode *node);
+
 	// The registered categories, in registration order.
 	const std::vector<KZOptNode *> &Tree();
 } // namespace KZMenu
