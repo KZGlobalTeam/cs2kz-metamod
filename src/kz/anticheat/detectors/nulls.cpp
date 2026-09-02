@@ -222,7 +222,6 @@ void KZAnticheatService::AnalyzeNullsForAxis(const std::deque<InputEvent> &event
 	this->nullsUnderlapBuffer.clear();
 	auto &underlapDurations = this->nullsUnderlapBuffer;
 
-
 	// Track the last release event and current press state for each direction
 	const InputEvent *lastButton1Release = nullptr;
 	const InputEvent *lastButton2Release = nullptr;
@@ -428,8 +427,7 @@ void KZAnticheatService::AnalyzeNullsForAxis(const std::deque<InputEvent> &event
 
 	if (kz_ac_nulls_debug.Get())
 	{
-		this->player->PrintAlert(false, true,
-								 "Perfect: %d (streak %d, ban %d) | Overlap %d\nUnderlap median: %.1f ms | FPS: %.1f | Sample count %d",
+		this->player->PrintAlert(false, true, "Perfect: %d (streak %d, ban %d) | Overlap %d\nUnderlap median: %.1f ms | FPS: %.1f | Sample count %d",
 								 numPerfect, maxConsecutivePerfect, adjustedRequiredPerfectCstrafes, numOverlaps, underlapMedian * 1000,
 								 1 / medianFramerate, (i32)(total));
 	}
