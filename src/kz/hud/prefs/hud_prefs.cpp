@@ -52,6 +52,24 @@ static_function void PanelToggle(KZPlayer *player, i64)
 	player->hudService->TogglePanel();
 }
 
+// The crosshair mirrors the player's own cl_crosshair* settings, which the server can only read by
+// asking for them: re-ask whenever the option is switched on, so changes made since the player
+// connected show up.
+static_function i64 CrosshairCurrent(KZPlayer *player, i64)
+{
+	return player->optionService->GetPreferenceBool("mhudCrosshair", false) ? 1 : 0;
+}
+
+static_function void CrosshairToggle(KZPlayer *player, i64)
+{
+	const bool enabled = !player->optionService->GetPreferenceBool("mhudCrosshair", false);
+	player->optionService->SetPreferenceBool("mhudCrosshair", enabled);
+	if (enabled)
+	{
+		player->hudService->QueryCrosshairCvars();
+	}
+}
+
 static_function void ResetAll(KZPlayer *player, i64)
 {
 	for (i32 i = 0; i < (i32)MHUDElement::Count; i++)
@@ -74,6 +92,7 @@ void MHUDRegisterMenu()
 	KZOptNode *general = KZMenu::AddSub(hud, "Menu - General");
 	KZMenu::AddChoice(general, "Menu - Style", StyleChoices, StyleCurrent, StylePick);
 	KZMenu::AddActionToggle(general, "Menu - Panel", PanelCurrent, PanelToggle);
+	KZMenu::AddActionToggle(general, "Menu - Crosshair", CrosshairCurrent, CrosshairToggle);
 	KZMenu::AddToggle(general, "Menu - Compact", "compactPanel", false);
 	KZMenu::SetItemSubtext(general, "Menu - Compact Sub");
 	KZMenu::SetItemDivider(general);
@@ -98,6 +117,7 @@ void MHUDRegisterMenu()
 		{
 			KZMenu::AddToggle(sub, "Menu - Keys Overlap", "mhudKeysOverlap", true);
 			KZMenu::AddToggle(sub, "Menu - Keys Unpressed", "mhudKeysHideUnpressed", false);
+			KZMenu::AddToggle(sub, "Menu - Keys Letters", "mhudKeysLetters", false);
 		}
 
 		KZMenu::SetItemDivider(sub); // rule between the layout controls and the colors

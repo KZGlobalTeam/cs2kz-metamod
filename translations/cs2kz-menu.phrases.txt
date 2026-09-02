@@ -25,6 +25,10 @@
 	{
 		"en"		"Compact"
 	}
+	"Menu - Crosshair"
+	{
+		"en"		"Virtual crosshair"
+	}
 	"Menu - Compact Sub"
 	{
 		"en"		"Legacy panel only"
@@ -144,6 +148,10 @@
 	"Menu - Keys Unpressed"
 	{
 		"en"		"Hide unpressed keys"
+	}
+	"Menu - Keys Letters"
+	{
+		"en"		"Use WASD letters"
 	}
 	"Menu - Color"
 	{

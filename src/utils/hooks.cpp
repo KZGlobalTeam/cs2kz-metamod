@@ -36,6 +36,7 @@
 #include "kz/replays/kz_replaysystem.h"
 #include "kz/racing/kz_racing.h"
 #include "utils/utils.h"
+#include "utils/cvarquery.h"
 #include "sdk/entity/cbasetrigger.h"
 #include "cstrike15_usermessages.pb.h"
 #include "sdk/entity/ccscustomhudlayout.h"
@@ -221,6 +222,8 @@ bool hooks::Initialize()
 	SH_ADD_HOOK(ICvar, DispatchConCommand, g_pCVar, SH_STATIC(Hook_DispatchConCommand), false);
 
 	SH_ADD_HOOK(IGameEventSystem, PostEventAbstract, interfaces::pGameEventSystem, SH_STATIC(Hook_PostEvent), false);
+
+	cvarquery::Init();
 	// clang-format off
 	CNetworkGameServerBase *networkGameServerVtbl = (CNetworkGameServerBase *)modules::engine->FindVirtualTable("CNetworkGameServer");
 	IGameSystem *entityDebugGameSystemVtbl = (IGameSystem *)modules::server->FindVirtualTable("CEntityDebugGameSystem");
@@ -328,6 +331,8 @@ void hooks::Cleanup()
 	SH_REMOVE_HOOK(ICvar, DispatchConCommand, g_pCVar, SH_STATIC(Hook_DispatchConCommand), false);
 
 	SH_REMOVE_HOOK(IGameEventSystem, PostEventAbstract, interfaces::pGameEventSystem, SH_STATIC(Hook_PostEvent), false);
+
+	cvarquery::Shutdown();
 
 	SH_REMOVE_HOOK_ID(activateServerHook);
 
@@ -638,6 +643,7 @@ static_function void Hook_ClientDisconnect(CPlayerSlot slot, ENetworkDisconnecti
 	player->globalService->OnClientDisconnect();
 	player->menuService->OnClientDisconnect();
 	player->hudService->OnClientDisconnect();
+	cvarquery::OnClientDisconnect(slot);
 	g_pKZPlayerManager->OnClientDisconnect(slot, reason, pszName, xuid, pszNetworkID);
 	RETURN_META(MRES_IGNORED);
 }

@@ -26,7 +26,8 @@ std::string KZHUDService::GetSpeedText(const char *language)
 	// preference falls back to that element's default color (the shared MHUD_DEF_* the layout HUD uses).
 	const Color baseCol = panorama::ResolveSolidColor(opts->GetPreferenceColor("mhudSpeedColor", MHUD_DEF_BASE_COLOR), MHUD_DEF_BASE_COLOR);
 	const Color perfCol = panorama::ResolveSolidColor(opts->GetPreferenceColor("mhudPrespeedPerfColor", MHUD_DEF_PERF_COLOR), MHUD_DEF_PERF_COLOR);
-	const Color jumpbugCol = panorama::ResolveSolidColor(opts->GetPreferenceColor("mhudPrespeedJumpbugColor", MHUD_DEF_JUMPBUG_COLOR), MHUD_DEF_JUMPBUG_COLOR);
+	const Color jumpbugCol =
+		panorama::ResolveSolidColor(opts->GetPreferenceColor("mhudPrespeedJumpbugColor", MHUD_DEF_JUMPBUG_COLOR), MHUD_DEF_JUMPBUG_COLOR);
 	const Color cjCol = panorama::ResolveSolidColor(opts->GetPreferenceColor("mhudSpeedCjColor", MHUD_DEF_CJ_COLOR), MHUD_DEF_CJ_COLOR);
 	Color tintCol = info.jumpbug ? jumpbugCol : (info.perf ? perfCol : baseCol);
 	char colorBuf[24];

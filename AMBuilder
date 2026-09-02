@@ -88,6 +88,7 @@ def configure_main(sdk_target, sdk, cxx):
     os.path.join(builder.sourcePath, 'src', 'utils', 'schema.cpp'),
     os.path.join(builder.sourcePath, 'src', 'utils', 'simplecmds.cpp'),
     os.path.join(builder.sourcePath, 'src', 'utils', 'ctimer.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'utils', 'cvarquery.cpp'),
     os.path.join(builder.sourcePath, 'src', 'utils', 'http.cpp'),
     os.path.join(builder.sourcePath, 'src', 'utils', 'async_file_io.cpp'),
 
@@ -144,6 +145,7 @@ def configure_main(sdk_target, sdk, cxx):
     
     os.path.join(builder.sourcePath, 'src', 'kz', 'hud', 'kz_hud.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'hud', 'legacy.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'hud', 'layout', 'crosshair.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'hud', 'layout', 'entity.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'hud', 'layout', 'mhud.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'hud', 'prefs', 'hud_prefs.cpp'),

@@ -7,7 +7,8 @@
 
 const char *MHUDFontClass(KZPlayer *player, MHUDElement element)
 {
-	return panorama::ResolveFontClass(player->optionService->GetPreferenceStr(MHUD_ELEMENTS[(i32)element].fontKey, MHUD_DEFAULT_FONT), MHUD_DEFAULT_FONT);
+	return panorama::ResolveFontClass(player->optionService->GetPreferenceStr(MHUD_ELEMENTS[(i32)element].fontKey, MHUD_DEFAULT_FONT),
+									  MHUD_DEFAULT_FONT);
 }
 
 bool KZHUDService::IsMHUDElementEnabled(MHUDElement element)
@@ -33,6 +34,11 @@ bool KZHUDService::IsMHUDKeysOverlapEnabled()
 bool KZHUDService::IsMHUDKeysHidingUnpressed()
 {
 	return this->player->optionService->GetPreferenceBool("mhudKeysHideUnpressed", false);
+}
+
+bool KZHUDService::IsMHUDKeysUsingLetters()
+{
+	return this->player->optionService->GetPreferenceBool("mhudKeysLetters", false);
 }
 
 bool KZHUDService::IsMHUDOutlineEnabled(MHUDElement element)

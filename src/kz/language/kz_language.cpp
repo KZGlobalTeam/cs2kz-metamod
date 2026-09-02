@@ -9,7 +9,7 @@
 #include "kz/checkpoint/kz_checkpoint.h"
 #include "kz/timer/kz_timer.h"
 
-#include <vendor/ClientCvarValue/public/iclientcvarvalue.h>
+#include "utils/cvarquery.h"
 #include <vendor/MultiAddonManager/public/imultiaddonmanager.h>
 
 extern IMultiAddonManager *g_pMultiAddonManager;
@@ -21,8 +21,6 @@ static_global class KZOptionServiceEventListener_Language : public KZOptionServi
 		player->languageService->OnPlayerPreferencesLoaded();
 	}
 } optionEventListener;
-
-extern IClientCvarValue *g_pClientCvarValue;
 
 static_global KeyValues *translationKV;
 static_global KeyValues *languagesKV;
@@ -207,13 +205,12 @@ void KZLanguageService::OnPlayerConnect(u64 steamID64)
 	}
 	this->UpdateLanguage(steamID64, KZOptionService::GetOptionStr("defaultLanguage", KZ_DEFAULT_LANGUAGE), LanguageInfo::CacheLevel::CACHE_NONE,
 						 false);
-	if (g_pClientCvarValue)
 	{
 		// clang-format off
-		g_pClientCvarValue->QueryCvarValue(this->player->GetPlayerSlot(), "cl_language",
-			[steamID64](CPlayerSlot nSlot, ECvarValueStatus eStatus, const char *pszCvarName, const char *pszCvarValue)
+		cvarquery::Query(this->player->GetPlayerSlot(), "cl_language",
+			[steamID64](CPlayerSlot nSlot, cvarquery::Status eStatus, const char *pszCvarName, const char *pszCvarValue)
 			{
-				if (eStatus == ECvarValueStatus::ValueIntact)
+				if (eStatus == cvarquery::Status::ValueIntact)
 				{
 					const char* langKey = languagesKV->GetString(pszCvarValue, pszCvarValue);
 					KZ_LOG_INFO(LogChannel::Language, "Received client convar value: %s\n", langKey);

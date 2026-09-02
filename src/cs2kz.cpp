@@ -36,7 +36,6 @@
 #include "kz/pubapi/kz_pubapi.h"
 
 #include <vendor/MultiAddonManager/public/imultiaddonmanager.h>
-#include <vendor/ClientCvarValue/public/iclientcvarvalue.h>
 #include <vendor/ixwebsocket/ixwebsocket/IXNetSystem.h>
 #include <vendor/mm-cs2menus/src/public/ics2menus.h>
 
@@ -44,7 +43,6 @@
 KZPlugin g_KZPlugin;
 
 IMultiAddonManager *g_pMultiAddonManager;
-IClientCvarValue *g_pClientCvarValue;
 ICS2Menus *g_pMenus;
 CSteamGameServerAPIContext g_steamAPI;
 
@@ -173,21 +171,18 @@ void KZPlugin::AllPluginsLoaded()
 	g_pKZPlayerManager->ResetPlayers();
 	this->UpdateSelfMD5();
 	g_pMultiAddonManager = (IMultiAddonManager *)g_SMAPI->MetaFactory(MULTIADDONMANAGER_INTERFACE, nullptr, nullptr);
-	g_pClientCvarValue = (IClientCvarValue *)g_SMAPI->MetaFactory(CLIENTCVARVALUE_INTERFACE, nullptr, nullptr);
 	g_pMenus = (ICS2Menus *)g_SMAPI->MetaFactory(CS2MENUS_INTERFACE, nullptr, nullptr);
 }
 
 void KZPlugin::OnPluginLoad(PluginId id)
 {
 	g_pMultiAddonManager = (IMultiAddonManager *)g_SMAPI->MetaFactory(MULTIADDONMANAGER_INTERFACE, nullptr, nullptr);
-	g_pClientCvarValue = (IClientCvarValue *)g_SMAPI->MetaFactory(CLIENTCVARVALUE_INTERFACE, nullptr, nullptr);
 	g_pMenus = (ICS2Menus *)g_SMAPI->MetaFactory(CS2MENUS_INTERFACE, nullptr, nullptr);
 }
 
 void KZPlugin::OnPluginUnload(PluginId id)
 {
 	g_pMultiAddonManager = (IMultiAddonManager *)g_SMAPI->MetaFactory(MULTIADDONMANAGER_INTERFACE, nullptr, nullptr);
-	g_pClientCvarValue = (IClientCvarValue *)g_SMAPI->MetaFactory(CLIENTCVARVALUE_INTERFACE, nullptr, nullptr);
 	g_pMenus = (ICS2Menus *)g_SMAPI->MetaFactory(CS2MENUS_INTERFACE, nullptr, nullptr);
 }
 

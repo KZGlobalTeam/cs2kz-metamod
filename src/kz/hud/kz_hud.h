@@ -60,11 +60,28 @@ static_global const Color MHUD_DEF_BASE_COLOR(255, 255, 255, 255);
 static_global const Color MHUD_DEF_PERF_COLOR(0x40, 0xFF, 0x40, 0xFF);
 static_global const Color MHUD_DEF_JUMPBUG_COLOR(0xFF, 0xFF, 0x20, 0xFF);
 static_global const Color MHUD_DEF_CJ_COLOR(0x71, 0xEE, 0xB8, 0xFF);
-static_global const Color MHUD_DEF_TIMER_TP_COLOR(255, 255, 255, 255);
+static_global const Color MHUD_DEF_TIMER_TP_COLOR(0xFF, 0xFF, 0x00, 0xFF);
 static_global const Color MHUD_DEF_TIMER_PRO_COLOR(0x5F, 0x99, 0xD9, 0xFF);
-static_global const Color MHUD_DEF_TIMER_PAUSED_COLOR(0xFF, 0xFF, 0x00, 0xFF);
+static_global const Color MHUD_DEF_TIMER_PAUSED_COLOR(0xFF, 0x80, 0x00, 0xFF);
 static_global const Color MHUD_DEF_TIMER_STOPPED_COLOR(0xFF, 0xA0, 0xA0, 0xFF);
 static_global const Color MHUD_DEF_KEYS_OVERLAP_COLOR(0xFF, 0x40, 0x40, 0xFF);
+
+// The player's own cl_crosshair* values, as read back from the client. The defaults are the game's,
+// used verbatim until a query answers, or forever if one never does.
+struct MHUDCrosshairSettings
+{
+	f32 size {5.0f};
+	f32 thickness {0.5f};
+	f32 gap {-2.0f};
+	f32 outlineThickness {1.0f};
+	i32 color {1};
+	i32 r {50}, g {250}, b {50};
+	i32 alpha {200};
+	bool useAlpha {true};
+	bool drawOutline {true};
+	bool dot {false};
+	bool tStyle {false};
+};
 
 class KZHUDService : public KZBaseService
 {
@@ -176,6 +193,7 @@ public:
 	bool IsMHUDTimerDetailed();
 	bool IsMHUDKeysOverlapEnabled();
 	bool IsMHUDKeysHidingUnpressed();
+	bool IsMHUDKeysUsingLetters();
 	bool IsMHUDOutlineEnabled(MHUDElement element);
 
 private:
@@ -226,9 +244,36 @@ private:
 	{
 		bool pressed[6] {};
 		bool hideIdle {};
+		i32 letters {-1};
 		i32 fontSize {INT_MIN};
 		const char *fontClass {};
 	};
+
+	// The classes last applied to the crosshair panels. Every field is the numeric suffix of its class
+	// family (-1 = nothing applied yet), so a settings change only rewrites what actually moved.
+	struct LayoutCrosshairState
+	{
+		i32 shown {-1};
+		i32 armLength {-1};
+		i32 thickness {-1};
+		i32 margin {-1};
+		i32 outline {-1};
+		i32 outlineLength {-1};
+		i32 outlineThickness {-1};
+		i32 outlineMargin {-1};
+		i32 outlineDot {-1};
+		i32 opacity {-1};
+		i32 dot {-1};
+		i32 noTopArm {-1};
+		const char *colorClass {};
+	};
+
+	MHUDCrosshairSettings crosshair {};
+	LayoutCrosshairState layoutCrosshair {};
+
+	// Not an MHUDElement: the crosshair has no text, so none of the per-element font/size/color
+	// machinery applies to it.
+	void ApplyCrosshair(CCSCustomHudLayout *layout, bool show, bool force);
 
 	CHandle<CBaseEntity> ownedLayout {};
 	LayoutElementState layoutElements[(i32)MHUDElement::Count] {};
@@ -260,6 +305,16 @@ public:
 	{
 		this->DestroyOwnedLayout();
 	}
+
+	// Send one round of async cl_crosshair* queries. Also called when the player switches the virtual
+	// crosshair on, so it updates immediately instead of at the next poll.
+	void QueryCrosshairCvars();
+
+	// Called back with one cl_crosshair* value the client reported.
+	void OnCrosshairCvarValue(const char *name, const char *value);
+
+	// Query once now, then keep re-querying so settings changed mid-session are picked up.
+	void StartCrosshairPolling();
 
 	// Destroy every player's owned entity. Called on plugin unload.
 	static void Cleanup();

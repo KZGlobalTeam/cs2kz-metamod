@@ -2,7 +2,7 @@
 #include "kz/hud/kz_hud.h"
 
 #define MHUD_DEF_TIMER_X    0
-#define MHUD_DEF_TIMER_Y    4
+#define MHUD_DEF_TIMER_Y    35
 #define MHUD_DEF_TIMER_SIZE 24
 
 #define MHUD_DEF_SPEED_X    0
@@ -14,11 +14,11 @@
 #define MHUD_DEF_PRESPEED_SIZE 22
 
 #define MHUD_DEF_KEYS_X    0
-#define MHUD_DEF_KEYS_Y    16
+#define MHUD_DEF_KEYS_Y    20
 #define MHUD_DEF_KEYS_SIZE 20
 
 #define MHUD_DEF_CHECKPOINT_X    0
-#define MHUD_DEF_CHECKPOINT_Y    24
+#define MHUD_DEF_CHECKPOINT_Y    30
 #define MHUD_DEF_CHECKPOINT_SIZE 20
 
 // Default element colors (MHUD_DEF_*_COLOR) live in kz_hud.h: both HUD styles share them.

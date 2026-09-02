@@ -200,6 +200,7 @@ void KZPlayer::OnPlayerActive()
 void KZPlayer::OnPlayerFullyConnect()
 {
 	this->anticheatService->OnPlayerFullyConnect();
+	this->hudService->StartCrosshairPolling();
 }
 
 void KZPlayer::OnAuthorized()

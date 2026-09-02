@@ -8,13 +8,9 @@ WIP, not ready for release
 
 - Optional: [MultiAddonManager](https://github.com/Source2ZE/MultiAddonManager/releases/) v1.5 for radio menus, particle HUD and KZ sound effects (eg. jumpstats)
 
-- Optional[^1]: [ClientCvarValue](https://github.com/komashchenko/ClientCvarValue/releases) for automatic client language support
-
 - Optional: [SQL_MM](https://github.com/zer0k-z/sql_mm/releases) v1.3.4.2 or later for local database support
 
 - Optional: [CS2Menus](https://github.com/FemboyKZ/mm-cs2menus) v1.5.0 or later for html menu support
-
-[^1]: if your server is global, this plugin is required
 
 ## Installation
 

@@ -158,9 +158,9 @@ private:
 		bool itemDiv[KZ_MENU_ITEMS] {};           // "divider" (rule under the item, unused)
 		const char *itemSwatch[KZ_MENU_ITEMS] {}; // color item's pal-bg swatch class
 		// List popup rows, one slot each:
-		bool liHidden[KZ_MENU_LIST] {};         // row "hidden"
-		bool liSel[KZ_MENU_LIST] {};            // "selected" (current choice)
-		const char *liFont[KZ_MENU_LIST] {};    // per-row font class (font picker previews its face)
+		bool liHidden[KZ_MENU_LIST] {};      // row "hidden"
+		bool liSel[KZ_MENU_LIST] {};         // "selected" (current choice)
+		const char *liFont[KZ_MENU_LIST] {}; // per-row font class (font picker previews its face)
 		// Color popup swatches, one slot each:
 		const char *swBg[KZ_MENU_SWATCH] {}; // swatch's pal-bg / gbg class
 		bool swSel[KZ_MENU_SWATCH] {};       // "selected" (the item's current color)

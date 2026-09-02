@@ -14,11 +14,16 @@ void KZHUDService::UpdateTimerElement(CCSCustomHudLayout *layout, KZPlayer *sour
 	std::string text = source->hudService->GetTimerText(this->player->languageService->GetLanguage());
 	if (!this->IsMHUDTimerDetailed())
 	{
-		// Drop the hundredths, keeping any (STOPPED)/(PAUSED) suffix.
-		size_t dot = text.find('.');
-		if (dot != std::string::npos && text.size() >= dot + 3)
+		// Drop the fraction, keeping any (STOPPED)/(PAUSED) suffix.
+		const size_t dot = text.find('.');
+		if (dot != std::string::npos)
 		{
-			text.erase(dot, 3);
+			size_t end = dot + 1;
+			while (end < text.size() && V_isdigit(text[end]))
+			{
+				end++;
+			}
+			text.erase(dot, end - dot);
 		}
 	}
 
@@ -114,6 +119,13 @@ void KZHUDService::UpdateKeysElement(CCSCustomHudLayout *layout, KZPlayer *sourc
 		layout->SetHasClass(MHUD_ELEMENTS[(i32)MHUDElement::Keys].panelId, "hide-idle",
 							hideIdle ? k_eHudPanelClassStatus_HasClass : k_eHudPanelClassStatus_DoesNotHaveClass);
 	}
+	const i32 letters = this->IsMHUDKeysUsingLetters() ? 1 : 0;
+	if (this->layoutKeys.letters != letters)
+	{
+		this->layoutKeys.letters = letters;
+		layout->SetHasClass(MHUD_ELEMENTS[(i32)MHUDElement::Keys].panelId, "keys-letters",
+							letters ? k_eHudPanelClassStatus_HasClass : k_eHudPanelClassStatus_DoesNotHaveClass);
+	}
 	for (i32 i = 0; i < KZ_ARRAYSIZE(KEY_PANELS); i++)
 	{
 		if (this->layoutKeys.pressed[i] == keys[i])
@@ -175,6 +187,9 @@ bool KZHUDService::UpdateHudLayout(KZPlayer *source)
 	}
 	const bool force = created;
 	const bool show = this->IsShowingPanel() && this->IsUsingLayoutStyle();
+
+	// The crosshair is independent of the elements below, so it is applied before the collapse path.
+	this->ApplyCrosshair(layout, show, force);
 
 	if (!show)
 	{

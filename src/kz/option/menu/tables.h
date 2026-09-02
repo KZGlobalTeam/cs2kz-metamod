@@ -49,8 +49,8 @@ namespace panorama
 	// The color picker's combined entry space: solids first, then gradients.
 	i32 GetColorEntryCount();
 	const char *GetColorEntryBgClass(i32 entry);
-	Color GetColorEntryValue(i32 entry);      // the color to store when this entry is picked
-	i32 FindColorEntry(const Color &color);   // which entry a stored color matches, -1 if none
+	Color GetColorEntryValue(i32 entry);    // the color to store when this entry is picked
+	i32 FindColorEntry(const Color &color); // which entry a stored color matches, -1 if none
 
 	const char *ResolveFontSlug(const char *name, const char *fallback);
 	const char *ResolveFontClass(const char *name, const char *fallback);

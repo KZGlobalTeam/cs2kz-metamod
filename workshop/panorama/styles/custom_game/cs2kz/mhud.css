@@ -2,10 +2,12 @@
 @import url("file://{resources}/styles/custom_game/cs2kz/fonts.css");
 @import url("file://{resources}/styles/custom_game/cs2kz/font-size.css");
 @import url("file://{resources}/styles/custom_game/cs2kz/positions.css");
+@import url("file://{resources}/styles/custom_game/cs2kz/crosshair.css");
 
 .root {
 	width: 100%;
 	height: 100%;
+	z-index: 1;
 }
 
 .element {
@@ -72,4 +74,17 @@
 
 .key-glyph-arrow {
 	font-weight: bolder;
+}
+
+/* mhudKeysLetters swaps the movement arrows for their WASD letters. */
+.key-glyph-letter {
+	visibility: collapse;
+}
+
+.keys-letters .key-glyph-arrow {
+	visibility: collapse;
+}
+
+.keys-letters .key-glyph-letter {
+	visibility: visible;
 }

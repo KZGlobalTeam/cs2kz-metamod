@@ -914,8 +914,12 @@ void KZMenuService::DropCapture()
 	this->popup = Popup::None;
 	this->popupItemIndex = -1;
 	this->listChoices.clear();
-	if (CCSCustomHudLayout *layout = this->MenuLayout())
+	// The already-spawned entity, not MenuLayout(): that one refuses to hand anything back once the
+	// plugin is unloading, which is exactly when the capture most needs dropping. Nothing is captured
+	// without an entity anyway, so there is never a reason to spawn one here.
+	if (CBaseEntity *ent = this->layoutEntity.Get())
 	{
+		CCSCustomHudLayout *layout = (CCSCustomHudLayout *)ent;
 		this->SetClass(layout, "menu_root", "hidden", true);
 		this->applied.rootHidden = true;
 		layout->SetInputCaptureEnabled(slot, false);
@@ -997,6 +1001,7 @@ void KZMenuService::Cleanup()
 		if (player && player->menuService)
 		{
 			player->menuService->Reset();
+			player->menuService->DestroyOwnedLayout();
 		}
 	}
 }
