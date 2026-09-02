@@ -1,6 +1,3 @@
-// Color and font-family are the two properties the server reclasses here, everything else is
-// fixed chrome. The plugin picks a pal-fg-N (color) and a font-family--N class per element; do not
-// set `color` or `font-family` on .element here or the plugin's class will tie/lose on specificity.
 @import url("file://{resources}/styles/custom_game/cs2kz/palette.css");
 @import url("file://{resources}/styles/custom_game/cs2kz/fonts.css");
 @import url("file://{resources}/styles/custom_game/cs2kz/font-size.css");
@@ -14,6 +11,7 @@
 .element {
 	horizontal-align: center;
 	vertical-align: middle;
+	text-overflow: noclip;
 }
 
 .hidden {
@@ -21,7 +19,7 @@
 }
 
 .outline {
-	text-shadow: 0px 0px 4px 2.0 #000000ff;
+	text-shadow: 0px 0px 4px 2 #000000ff;
 }
 
 .keys {
@@ -66,7 +64,10 @@
 }
 
 .key-glyph {
-	horizontal-align: center;
+	width: 100%;
+	text-align: center;
+	vertical-align: center;
+	text-overflow: noclip;
 }
 
 .key-glyph-arrow {

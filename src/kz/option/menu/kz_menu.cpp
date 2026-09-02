@@ -290,18 +290,15 @@ void KZMenuService::RenderChrome(CCSCustomHudLayout *layout)
 	const char *font = panorama::ResolveFontClass(opts->GetPreferenceStr("menuFont", KZ_MENU_DEFAULT_FONT), KZ_MENU_DEFAULT_FONT);
 	const char *color = panorama::ResolveColorClass(opts->GetPreferenceColor("menuColor", KZ_MENU_DEFAULT_COLOR));
 
-	// Panorama only re-measures/re-tints a panel when a class lands on that panel itself; a font or
-	// color class set on a parent is inherited for new children but does not re-lay-out or re-color
-	// the ones already on screen. So the menu font and color cannot be set once on a container - they
-	// are stamped on every text panel individually. When either changes we sweep the whole set,
-	// removing the previously stamped class and adding the new one on each panel.
+	// A child does pick up an inherited font/color class, but only when it is updated itself (its
+	// dialog string or its own font class changes). Stamping every text panel keeps them all in step.
 	if (this->applied.menuFont != font || this->applied.menuColor != color)
 	{
 		const bool fontChanged = this->applied.menuFont != font;
 		const bool colorChanged = this->applied.menuColor != color;
-		auto stamp = [&](const char *panel)
+		auto stamp = [&](const char *panel, bool withFont)
 		{
-			if (fontChanged)
+			if (fontChanged && withFont)
 			{
 				if (this->applied.menuFont)
 				{
@@ -318,16 +315,29 @@ void KZMenuService::RenderChrome(CCSCustomHudLayout *layout)
 				this->SetClass(layout, panel, color, true);
 			}
 		};
-		stamp("menu_title");
+		stamp("menu_title", true);
 		for (i32 i = 0; i < KZ_MENU_CATS; i++)
 		{
-			stamp(CatLbl(i));
+			stamp(CatLbl(i), true);
 		}
 		for (i32 i = 0; i < KZ_MENU_ITEMS; i++)
 		{
-			stamp(ItemLbl(i));
-			stamp(ItemSub(i));
-			stamp(ItemVal(i));
+			stamp(ItemLbl(i), true);
+			stamp(ItemSub(i), true);
+			stamp(ItemVal(i), true);
+		}
+		// The popups are part of the menu, so their text follows the menu font and color too.
+		stamp("step_label", true);
+		stamp("step_readout", true);
+		stamp("cp_page", true);
+		stamp("lp_page", true);
+		stamp("lp_note", true);
+		stamp("lp_title", true);
+		// List rows take the menu color, but never the menu font: RenderListPopup sets a per-row font
+		// class so the font picker previews each face, and a second font class here would fight it.
+		for (i32 i = 0; i < KZ_MENU_LIST; i++)
+		{
+			stamp(LiLbl(i), false);
 		}
 		this->applied.menuFont = font;
 		this->applied.menuColor = color;
@@ -468,7 +478,23 @@ void KZMenuService::RenderColorPopup(CCSCustomHudLayout *layout)
 void KZMenuService::RenderListPopup(CCSCustomHudLayout *layout)
 {
 	const i32 n = (i32)this->listChoices.size();
-	const i32 pages = MAX(1, (n + KZ_MENU_LIST - 1) / KZ_MENU_LIST);
+	// The font picker pages by family (one family per page, scrolling if it has many faces); a choice
+	// list just pages by slot count.
+	const i32 pages = this->popupFont ? MAX(1, (i32)this->fontPageStart.size()) : MAX(1, (n + KZ_MENU_LIST - 1) / KZ_MENU_LIST);
+	this->popupPage = Clamp(this->popupPage, 0, pages - 1);
+	i32 first = 0;
+	i32 count = 0;
+	if (this->popupFont)
+	{
+		first = this->fontPageStart[this->popupPage];
+		count = (this->popupPage + 1 < pages ? this->fontPageStart[this->popupPage + 1] : n) - first;
+	}
+	else
+	{
+		first = this->popupPage * KZ_MENU_LIST;
+		count = n - first;
+	}
+	count = Clamp(count, 0, KZ_MENU_LIST);
 
 	i64 curId = -1;
 	const KZOptItem *it = this->PopupItem();
@@ -489,15 +515,15 @@ void KZMenuService::RenderListPopup(CCSCustomHudLayout *layout)
 		curId = it->getCurrent(this->player, it->tag);
 	}
 
-	const char *menuFont = panorama::ResolveFontClass(this->player->optionService->GetPreferenceStr("menuFont", KZ_MENU_DEFAULT_FONT), KZ_MENU_DEFAULT_FONT);
+	const char *menuFont =
+		panorama::ResolveFontClass(this->player->optionService->GetPreferenceStr("menuFont", KZ_MENU_DEFAULT_FONT), KZ_MENU_DEFAULT_FONT);
 
 	for (i32 i = 0; i < KZ_MENU_LIST; i++)
 	{
-		const i32 idx = this->popupPage * KZ_MENU_LIST + i;
-		const bool used = idx < n;
+		const bool used = i < count;
 		if (used)
 		{
-			const KZChoice &c = this->listChoices[idx];
+			const KZChoice &c = this->listChoices[first + i];
 			this->SetVar(layout, LiLbl(i), LiVar(i), c.label.c_str());
 			this->SetBoolClass(layout, LiPanel(i), "selected", this->applied.liSel[i], c.id == curId);
 			// Font rows preview their own face; choice rows use the menu font.
@@ -506,9 +532,26 @@ void KZMenuService::RenderListPopup(CCSCustomHudLayout *layout)
 		}
 		this->SetBoolClass(layout, LiPanel(i), "hidden", this->applied.liHidden[i], !used);
 	}
+	// The header names the family being browsed, or the item for a plain choice list.
+	const char *title = "";
+	if (this->popupFont && count > 0)
+	{
+		title = PANORAMA_FONTS[this->listChoices[first].id].family;
+		this->SetVar(layout, "lp_title", "lptitle", title);
+	}
+	else if (it)
+	{
+		this->SetVar(layout, "lp_title", "lptitle", KZMenuPhrase(this->player, it->phraseKey).c_str());
+	}
 	char page[16];
 	V_snprintf(page, sizeof(page), "%i/%i", this->popupPage + 1, pages);
 	this->SetVar(layout, "lp_page", "lppage", page);
+	// Only the font list carries the * marker, so only it needs the footnote.
+	this->SetBoolClass(layout, "lp_note", "hidden", this->applied.noteHidden, !this->popupFont);
+	if (this->popupFont)
+	{
+		this->SetVar(layout, "lp_note", "lpnote", KZMenuPhrase(this->player, "Menu - Font Local Note").c_str());
+	}
 }
 
 void KZMenuService::RenderStepPopup(CCSCustomHudLayout *layout)
@@ -635,11 +678,42 @@ void KZMenuService::OpenPopup(Popup kind, i32 itemIdx)
 	{
 		this->popupFont = it.type == KZOptItemType::Font;
 		this->listChoices.clear();
+		this->fontPageStart.clear();
 		if (this->popupFont)
 		{
+			// One page per family, listing that family's faces by variant. The table is already
+			// ordered by family, so a single pass finds the page boundaries.
+			const char *family = NULL;
 			for (i32 f = 0; f < PANORAMA_FONT_COUNT; f++)
 			{
-				this->listChoices.push_back({PANORAMA_FONTS[f].displayName, f, NULL});
+				const PanoramaFontDef &def = PANORAMA_FONTS[f];
+				if (!family || V_strcmp(family, def.family) != 0)
+				{
+					family = def.family;
+					this->fontPageStart.push_back((i32)this->listChoices.size());
+				}
+				KZChoice face;
+				face.label = def.variant;
+				face.id = f;
+				this->listChoices.push_back(face);
+			}
+			// Open on the family the player is already using rather than always at the first.
+			const char *slug = panorama::ResolveFontSlug(this->player->optionService->GetPreferenceStr(it.prefKey, it.sdef), it.sdef);
+			for (i32 f = 0; f < PANORAMA_FONT_COUNT; f++)
+			{
+				if (V_strcmp(slug, PANORAMA_FONTS[f].slug) != 0)
+				{
+					continue;
+				}
+				for (i32 p = (i32)this->fontPageStart.size() - 1; p >= 0; p--)
+				{
+					if (this->fontPageStart[p] <= f)
+					{
+						this->popupPage = p;
+						break;
+					}
+				}
+				break;
 			}
 		}
 		else if (it.getChoices)
@@ -679,9 +753,10 @@ void KZMenuService::PopupPageStep(i32 delta)
 	}
 	else if (this->popup == Popup::List)
 	{
-		pages = MAX(1, ((i32)this->listChoices.size() + KZ_MENU_LIST - 1) / KZ_MENU_LIST);
+		// One page per font family; a plain choice list pages by slot count.
+		pages = this->popupFont ? MAX(1, (i32)this->fontPageStart.size()) : MAX(1, ((i32)this->listChoices.size() + KZ_MENU_LIST - 1) / KZ_MENU_LIST);
 	}
-	this->popupPage = clamp(this->popupPage + delta, 0, pages - 1);
+	this->popupPage = Clamp(this->popupPage + delta, 0, pages - 1);
 	this->Render();
 }
 
@@ -703,8 +778,14 @@ void KZMenuService::PopupPick(i32 slot)
 	}
 	else if (this->popup == Popup::List)
 	{
-		const i32 idx = this->popupPage * KZ_MENU_LIST + slot;
-		if (idx < 0 || idx >= (i32)this->listChoices.size())
+		const i32 n = (i32)this->listChoices.size();
+		const i32 pages = (i32)this->fontPageStart.size();
+		const bool byFamily = this->popupFont && this->popupPage < pages;
+		const i32 first = byFamily ? this->fontPageStart[this->popupPage] : this->popupPage * KZ_MENU_LIST;
+		// A click must stay inside this page, or it would spill into the next family.
+		const i32 end = byFamily ? (this->popupPage + 1 < pages ? this->fontPageStart[this->popupPage + 1] : n) : MIN(first + KZ_MENU_LIST, n);
+		const i32 idx = first + slot;
+		if (idx < 0 || idx >= end)
 		{
 			return;
 		}

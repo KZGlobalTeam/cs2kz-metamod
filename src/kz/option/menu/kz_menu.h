@@ -12,7 +12,7 @@ class CCheckTransmitInfo;
 // Fixed slot counts, kept in step with menu.xml.
 #define KZ_MENU_CATS   20
 #define KZ_MENU_ITEMS  16
-#define KZ_MENU_LIST   12
+#define KZ_MENU_LIST   32 // must cover the largest font family (Stratum2, 29 faces)
 #define KZ_MENU_SWATCH 40 // 10 columns x 4 rows per color page
 
 std::string KZMenuPhrase(KZPlayer *player, const char *key);
@@ -125,6 +125,8 @@ private:
 	const KZOptItem *itemSlots[KZ_MENU_ITEMS] {};
 	i32 itemCount {};
 	std::vector<KZChoice> listChoices; // the open list popup's full option list
+	// Font picker only: index into listChoices where each family starts. One page per family.
+	std::vector<i32> fontPageStart;
 
 	// Last value written for each dialog variable, so an unchanged value is not resent.
 	std::unordered_map<std::string, std::string> writtenVars;
@@ -141,6 +143,7 @@ private:
 		bool listHidden {true};   // list_popup "hidden"
 		bool stepHidden {true};   // step_popup "hidden"
 		bool vstepHidden {true};  // the stepper's vertical rows "hidden" (shown only for Position)
+		bool noteHidden {true};   // the list popup's "* is a system font" footnote "hidden"
 		// Left column, one slot each:
 		bool catHidden[KZ_MENU_CATS] {};   // slot "hidden" (unused)
 		bool catSel[KZ_MENU_CATS] {};      // "selected" (active node)

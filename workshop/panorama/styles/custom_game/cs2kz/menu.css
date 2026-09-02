@@ -1,7 +1,3 @@
-// Three-pane options menu. The plugin classes two things onto the text panels: the menu font
-// (font-family--N) and the menu color (pal-fg-N). So the panels it writes (title, cat labels, item
-// labels/values, list labels) must not set `color` or `font-family` here, or the plugin's class ties
-// on specificity and loses. Everything else is fixed chrome.
 @import url("file://{resources}/styles/custom_game/cs2kz/palette.css");
 @import url("file://{resources}/styles/custom_game/cs2kz/fonts.css");
 
@@ -10,8 +6,6 @@
 	height: 100%;
 }
 
-// Full-screen, transparent: it only captures input and hosts the box + popups. With the box hidden
-// (a popup open) the HUD entity behind it shows through for live preview.
 #menu_root {
 	width: 100%;
 	height: 100%;
@@ -48,12 +42,44 @@
 	visibility: collapse;
 }
 
-.menu-title {
-	font-size: 20px;
+.window-header {
+	width: 100%;
+	flow-children: right;
 	margin-bottom: 14px;
+}
+
+.menu-title {
+	width: fill-parent-flow(1);
+	vertical-align: center;
+	font-size: 20px;
 	text-transform: uppercase;
 	font-weight: bold;
 	letter-spacing: 2px;
+}
+
+.close-btn {
+	width: 20px;
+	height: 20px;
+	margin-left: 10px;
+	horizontal-align: right;
+	vertical-align: center;
+	wash-color: #888888;
+	background-image: url("s2r://panorama/images/control_icons/x_close_png.vtex");
+	background-size: 20px 20px;
+	background-repeat: no-repeat;
+	background-position: 50% 50%;
+	transition-property: wash-color;
+	transition-duration: 0.1s;
+	transition-timing-function: ease-in;
+}
+
+.close-btn:hover {
+	wash-color: #ffffff;
+}
+
+.close-btn:active {
+	wash-color: #ffffff;
+	background-size: 17px 17px;
 }
 
 .panes {
@@ -98,8 +124,6 @@
 	padding-left: 26px;
 }
 
-// A category header that owns subcategories: reads as a section title, and while its sub is active
-// it is inert (no hover, no click).
 .cat.cat-parent {
 	margin-top: 6px;
 }
@@ -164,7 +188,6 @@
 	visibility: collapse;
 }
 
-// Label column (label + optional subtext) on the left, control on the right.
 .item-row {
 	width: 100%;
 	flow-children: right;
@@ -182,7 +205,6 @@
 	text-overflow: ellipsis;
 }
 
-// Optional second line, shown only when the item declares one.
 .item-sub {
 	width: 100%;
 	font-size: 13px;
@@ -196,7 +218,6 @@
 	visibility: visible;
 }
 
-// A horizontal rule under every item.
 .item-divider {
 	width: 100%;
 	height: 1px;
@@ -218,7 +239,6 @@
 	text-overflow: ellipsis;
 }
 
-// Toggle value reads as a pill: green when on, muted when off.
 .item.type-toggle .item-value {
 	padding: 2px 10px;
 	border-radius: 9px;
@@ -229,7 +249,6 @@
 	background-color: #24f09733;
 }
 
-// Color item shows a swatch instead of a value.
 .item-swatch {
 	width: 34px;
 	height: 18px;
@@ -246,8 +265,7 @@
 	visibility: visible;
 }
 
-// --- popups: a third panel floated just right of the centred box via an x-transform, so the two
-// panes never move. x = half the box width (430) + gap (14) + half the popup (150). ------------------
+// --- popups -------------------------------------------------------------------------
 
 .popup {
 	horizontal-align: center;
@@ -268,7 +286,6 @@
 	visibility: collapse;
 }
 
-// Wider popup for the 10-column swatch grid.
 .color-popup {
 	width: 316px;
 }
@@ -296,7 +313,6 @@
 	visibility: collapse;
 }
 
-// The item's current color, when it lands on this page.
 .swatch.selected {
 	border-color: #ffcc44ff;
 	box-shadow: 0 0 6px #ffcc44cc;
@@ -305,7 +321,7 @@
 .list-rows {
 	flow-children: down;
 	width: 260px;
-	max-height: 380px;
+	height: 450px;
 	overflow: squish scroll;
 }
 
@@ -325,6 +341,17 @@
 }
 
 .li.hidden {
+	visibility: collapse;
+}
+
+.popup-note {
+	width: 100%;
+	margin-top: 8px;
+	font-size: 12px;
+	opacity: 0.55;
+}
+
+.popup-note.hidden {
 	visibility: collapse;
 }
 
@@ -362,22 +389,28 @@
 	vertical-align: middle;
 	width: 60px;
 	text-align: center;
-	color: #cfcfcfff;
 }
 
 // --- stepper popup -----------------------------------------------------------------
 
-.step-title {
-	horizontal-align: center;
-	color: #ffcc44ff;
+.step-popup {
+	width: 340px;
+}
+
+.popup-title {
+	width: fill-parent-flow(1);
+	vertical-align: center;
 	font-size: 18px;
-	margin-bottom: 8px;
 }
 
 .step-row {
 	flow-children: right;
 	horizontal-align: center;
 	margin: 4px 0px;
+}
+
+.step-row.v-step {
+	flow-children: down;
 }
 
 .step-row.hidden {
@@ -387,7 +420,7 @@
 .step-btn {
 	width: 44px;
 	padding: 5px 0px;
-	margin: 0px 3px;
+	margin: 2px;
 	border-radius: 3px;
 	background-color: #ffffff1a;
 	transition-property: background-color;
@@ -404,39 +437,16 @@
 }
 
 .step-readout {
-	width: 120px;
+	width: 110px;
 	text-align: center;
 	vertical-align: middle;
-	color: #ffcc44ff;
 	font-size: 19px;
 }
 
-.popup-close {
-	horizontal-align: center;
-	margin-top: 12px;
+.popup .close-btn {
+	margin-bottom: 8px;
 }
 
-// --- footer ------------------------------------------------------------------------
-
-.footer {
-	flow-children: right;
-	horizontal-align: right;
-	margin-top: 12px;
-}
-
-.footer-btn {
-	padding: 6px 16px;
-	border-radius: 3px;
-	background-color: #ffffff1a;
-	transition-property: background-color;
-	transition-duration: 0.05s;
-}
-
-.footer-btn:hover {
-	background-color: #ffffff40;
-}
-
-.footer-label {
-	horizontal-align: center;
-	color: #ffffffff;
+.window-header .close-btn {
+	margin-bottom: 0px;
 }

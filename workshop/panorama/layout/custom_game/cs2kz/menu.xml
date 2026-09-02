@@ -5,7 +5,10 @@
   <Panel class="root" hittest="false">
     <Panel id="menu_root" class="menu hidden">
       <Panel id="menu_box" class="menu-box">
-        <Label id="menu_title" class="menu-title" text="{s:title}" />
+        <Panel class="window-header">
+          <Label id="menu_title" class="menu-title" text="{s:title}" />
+          <Button id="m_close" class="close-btn" />
+        </Panel>
 
         <Panel id="menu_panes" class="panes">
           <Panel id="menu_cats" class="cats">
@@ -282,12 +285,10 @@
           </Panel>
         </Panel>
 
-        <Panel class="footer">
-          <Button id="m_close" class="footer-btn"><Label class="footer-label" text="Close" /></Button>
-        </Panel>
       </Panel>
 
       <Panel id="color_popup" class="popup color-popup hidden">
+        <Button id="color_close" class="close-btn" />
         <Panel class="swatch-grid">
         <Button id="sw0" class="swatch" />
         <Button id="sw1" class="swatch" />
@@ -334,59 +335,125 @@
           <Button id="cp_prev" class="popup-btn"><Label class="popup-btn-label" text="&lt;" /></Button>
           <Label id="cp_page" class="popup-page" text="{s:cppage}" />
           <Button id="cp_next" class="popup-btn"><Label class="popup-btn-label" text="&gt;" /></Button>
-          <Button id="color_close" class="popup-btn popup-close"><Label class="popup-btn-label" text="X" /></Button>
         </Panel>
       </Panel>
 
       <Panel id="list_popup" class="popup list-popup hidden">
+        <Panel class="window-header">
+          <Label id="lp_title" class="popup-title" text="{s:lptitle}" />
+          <Button id="list_close" class="close-btn" />
+        </Panel>
         <Panel class="list-rows">
-        <Button id="li0" class="li hidden">
-          <Label id="li_lbl0" class="li-label" text="{s:ll0}" />
-        </Button>
-        <Button id="li1" class="li hidden">
-          <Label id="li_lbl1" class="li-label" text="{s:ll1}" />
-        </Button>
-        <Button id="li2" class="li hidden">
-          <Label id="li_lbl2" class="li-label" text="{s:ll2}" />
-        </Button>
-        <Button id="li3" class="li hidden">
-          <Label id="li_lbl3" class="li-label" text="{s:ll3}" />
-        </Button>
-        <Button id="li4" class="li hidden">
-          <Label id="li_lbl4" class="li-label" text="{s:ll4}" />
-        </Button>
-        <Button id="li5" class="li hidden">
-          <Label id="li_lbl5" class="li-label" text="{s:ll5}" />
-        </Button>
-        <Button id="li6" class="li hidden">
-          <Label id="li_lbl6" class="li-label" text="{s:ll6}" />
-        </Button>
-        <Button id="li7" class="li hidden">
-          <Label id="li_lbl7" class="li-label" text="{s:ll7}" />
-        </Button>
-        <Button id="li8" class="li hidden">
-          <Label id="li_lbl8" class="li-label" text="{s:ll8}" />
-        </Button>
-        <Button id="li9" class="li hidden">
-          <Label id="li_lbl9" class="li-label" text="{s:ll9}" />
-        </Button>
-        <Button id="li10" class="li hidden">
-          <Label id="li_lbl10" class="li-label" text="{s:ll10}" />
-        </Button>
-        <Button id="li11" class="li hidden">
-          <Label id="li_lbl11" class="li-label" text="{s:ll11}" />
-        </Button>
+          <Button id="li0" class="li hidden">
+            <Label id="li_lbl0" class="li-label" text="{s:ll0}" />
+          </Button>
+          <Button id="li1" class="li hidden">
+            <Label id="li_lbl1" class="li-label" text="{s:ll1}" />
+          </Button>
+          <Button id="li2" class="li hidden">
+            <Label id="li_lbl2" class="li-label" text="{s:ll2}" />
+          </Button>
+          <Button id="li3" class="li hidden">
+            <Label id="li_lbl3" class="li-label" text="{s:ll3}" />
+          </Button>
+          <Button id="li4" class="li hidden">
+            <Label id="li_lbl4" class="li-label" text="{s:ll4}" />
+          </Button>
+          <Button id="li5" class="li hidden">
+            <Label id="li_lbl5" class="li-label" text="{s:ll5}" />
+          </Button>
+          <Button id="li6" class="li hidden">
+            <Label id="li_lbl6" class="li-label" text="{s:ll6}" />
+          </Button>
+          <Button id="li7" class="li hidden">
+            <Label id="li_lbl7" class="li-label" text="{s:ll7}" />
+          </Button>
+          <Button id="li8" class="li hidden">
+            <Label id="li_lbl8" class="li-label" text="{s:ll8}" />
+          </Button>
+          <Button id="li9" class="li hidden">
+            <Label id="li_lbl9" class="li-label" text="{s:ll9}" />
+          </Button>
+          <Button id="li10" class="li hidden">
+            <Label id="li_lbl10" class="li-label" text="{s:ll10}" />
+          </Button>
+          <Button id="li11" class="li hidden">
+            <Label id="li_lbl11" class="li-label" text="{s:ll11}" />
+          </Button>
+          <Button id="li12" class="li hidden">
+            <Label id="li_lbl12" class="li-label" text="{s:ll12}" />
+          </Button>
+          <Button id="li13" class="li hidden">
+            <Label id="li_lbl13" class="li-label" text="{s:ll13}" />
+          </Button>
+          <Button id="li14" class="li hidden">
+            <Label id="li_lbl14" class="li-label" text="{s:ll14}" />
+          </Button>
+          <Button id="li15" class="li hidden">
+            <Label id="li_lbl15" class="li-label" text="{s:ll15}" />
+          </Button>
+          <Button id="li16" class="li hidden">
+            <Label id="li_lbl16" class="li-label" text="{s:ll16}" />
+          </Button>
+          <Button id="li17" class="li hidden">
+            <Label id="li_lbl17" class="li-label" text="{s:ll17}" />
+          </Button>
+          <Button id="li18" class="li hidden">
+            <Label id="li_lbl18" class="li-label" text="{s:ll18}" />
+          </Button>
+          <Button id="li19" class="li hidden">
+            <Label id="li_lbl19" class="li-label" text="{s:ll19}" />
+          </Button>
+          <Button id="li20" class="li hidden">
+            <Label id="li_lbl20" class="li-label" text="{s:ll20}" />
+          </Button>
+          <Button id="li21" class="li hidden">
+            <Label id="li_lbl21" class="li-label" text="{s:ll21}" />
+          </Button>
+          <Button id="li22" class="li hidden">
+            <Label id="li_lbl22" class="li-label" text="{s:ll22}" />
+          </Button>
+          <Button id="li23" class="li hidden">
+            <Label id="li_lbl23" class="li-label" text="{s:ll23}" />
+          </Button>
+          <Button id="li24" class="li hidden">
+            <Label id="li_lbl24" class="li-label" text="{s:ll24}" />
+          </Button>
+          <Button id="li25" class="li hidden">
+            <Label id="li_lbl25" class="li-label" text="{s:ll25}" />
+          </Button>
+          <Button id="li26" class="li hidden">
+            <Label id="li_lbl26" class="li-label" text="{s:ll26}" />
+          </Button>
+          <Button id="li27" class="li hidden">
+            <Label id="li_lbl27" class="li-label" text="{s:ll27}" />
+          </Button>
+          <Button id="li28" class="li hidden">
+            <Label id="li_lbl28" class="li-label" text="{s:ll28}" />
+          </Button>
+          <Button id="li29" class="li hidden">
+            <Label id="li_lbl29" class="li-label" text="{s:ll29}" />
+          </Button>
+          <Button id="li30" class="li hidden">
+            <Label id="li_lbl30" class="li-label" text="{s:ll30}" />
+          </Button>
+          <Button id="li31" class="li hidden">
+            <Label id="li_lbl31" class="li-label" text="{s:ll31}" />
+          </Button>
         </Panel>
         <Panel class="popup-nav">
           <Button id="lp_prev" class="popup-btn"><Label class="popup-btn-label" text="&lt;" /></Button>
           <Label id="lp_page" class="popup-page" text="{s:lppage}" />
           <Button id="lp_next" class="popup-btn"><Label class="popup-btn-label" text="&gt;" /></Button>
-          <Button id="list_close" class="popup-btn popup-close"><Label class="popup-btn-label" text="X" /></Button>
         </Panel>
+        <Label id="lp_note" class="popup-note hidden" text="{s:lpnote}" />
       </Panel>
 
       <Panel id="step_popup" class="popup step-popup hidden">
-        <Label id="step_label" class="step-title" text="{s:steplabel}" />
+        <Panel class="window-header">
+          <Label id="step_label" class="popup-title" text="{s:steplabel}" />
+          <Button id="step_close" class="close-btn" />
+        </Panel>
         <Panel id="m_step_up" class="step-row v-step hidden">
           <Button id="m_v_n5" class="step-btn"><Label class="step-btn-label" text="-5" /></Button>
           <Button id="m_v_n1" class="step-btn"><Label class="step-btn-label" text="-1" /></Button>
@@ -402,7 +469,6 @@
           <Button id="m_v_p1" class="step-btn"><Label class="step-btn-label" text="+1" /></Button>
           <Button id="m_v_p5" class="step-btn"><Label class="step-btn-label" text="+5" /></Button>
         </Panel>
-        <Button id="step_close" class="popup-btn popup-close"><Label class="popup-btn-label" text="Done" /></Button>
       </Panel>
     </Panel>
   </Panel>

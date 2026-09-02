@@ -37,6 +37,10 @@
 	{
 		"en"		"Font"
 	}
+	"Menu - Font Local Note"
+	{
+		"en"		"* depends on your local font installation"
+	}
 	"Menu - Enabled"
 	{
 		"en"		"Enabled"

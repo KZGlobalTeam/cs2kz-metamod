@@ -235,3 +235,39 @@
 .font-family--monospace {
 	font-family: monospace, "Arial Unicode MS";
 }
+
+// System fonts: not shipped with the game, so these only render if the player has them installed
+// (marked with * in the picker). Their weights come from font-weight rather than a family name,
+// because Windows exposes one "Trebuchet MS"/"Lato" family rather than a family per weight.
+.font-family--trebuchet {
+	font-family: "Trebuchet MS", "Arial Unicode MS";
+}
+
+.font-family--trebuchet-bold {
+	font-family: "Trebuchet MS", "Arial Unicode MS";
+	font-weight: bold;
+}
+
+.font-family--trebuchet-italic {
+	font-family: "Trebuchet MS", "Arial Unicode MS";
+	font-style: italic;
+}
+
+.font-family--lato-light {
+	font-family: Lato, "Arial Unicode MS";
+	font-weight: light;
+}
+
+.font-family--lato {
+	font-family: Lato, "Arial Unicode MS";
+}
+
+.font-family--lato-bold {
+	font-family: Lato, "Arial Unicode MS";
+	font-weight: bold;
+}
+
+.font-family--lato-black {
+	font-family: Lato, "Arial Unicode MS";
+	font-weight: black;
+}
