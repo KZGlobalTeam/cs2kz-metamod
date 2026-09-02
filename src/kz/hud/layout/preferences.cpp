@@ -62,4 +62,3 @@ void KZHUDService::ToggleStyle()
 	auto *opts = this->player->optionService;
 	opts->SetPreferenceBool("hudLegacyStyle", !opts->GetPreferenceBool("hudLegacyStyle", false));
 }
-
