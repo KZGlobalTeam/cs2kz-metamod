@@ -1,0 +1,36 @@
+<root>
+  <styles>
+    <include src="file://{resources}/styles/custom_game/cs2kz/mhud.css" />
+  </styles>
+  <Panel class="root" hittest="false">
+    <Label id="mhud_timer" class="element hidden" text="{s:timer}" hittest="false" />
+    <Label id="mhud_speed" class="element speed hidden" text="{s:speed}" hittest="false" />
+    <Label id="mhud_prespeed" class="element prespeed hidden" text="{s:prespeed}" hittest="false" />
+    <Panel id="mhud_keys" class="element keys hidden" hittest="false">
+      <Panel class="key-row key-row-1" hittest="false">
+        <Panel id="mhud_key_c" class="key-button" hittest="false">
+          <Label class="key-glyph" text="C" hittest="false"></Label>
+        </Panel>
+        <Panel id="mhud_key_w" class="key-button key-button-middle" hittest="false">
+          <Label class="key-glyph key-glyph-arrow" text="↑" hittest="false"></Label>
+        </Panel>
+        <Panel id="mhud_key_j" class="key-button key-button-jump" hittest="false">
+          <Label class="key-glyph" text="J" hittest="false"></Label>
+        </Panel>
+      </Panel>
+      <Panel class="key-row" hittest="false">
+        <Panel id="mhud_key_a" class="key-button" hittest="false">
+          <Label class="key-glyph key-glyph-arrow" text="←" hittest="false"></Label>
+        </Panel>
+        <Panel id="mhud_key_s" class="key-button key-button-middle" hittest="false">
+          <Label class="key-glyph key-glyph-arrow" text="↓" hittest="false"></Label>
+        </Panel>
+        <Panel id="mhud_key_d" class="key-button" hittest="false">
+          <Label class="key-glyph key-glyph-arrow" text="→" hittest="false"></Label>
+        </Panel>
+      </Panel>
+    </Panel>
+    <Label id="mhud_checkpoint" class="element checkpoint hidden" text="{s:checkpoint}" hittest="false" />
+
+  </Panel>
+</root>

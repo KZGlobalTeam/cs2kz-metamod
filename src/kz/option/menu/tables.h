@@ -1,9 +1,9 @@
 #pragma once
 #include "kz/kz.h"
 
-// The generated Panorama utility sheets, as tables. Nothing here is HUD specific: the menu chrome
-// picks a font and a color out of the same sheets the movement HUD does.
-
+// Curated Panorama utility sheets, as tables. Only the font table and its element type are shared
+// (the menu indexes it directly); the colour and gradient tables, their element types, and the
+// palette/nearest helpers all live in tables.cpp and are reached through the functions declared here.
 struct PanoramaFontDef
 {
 	const char *slug; // stored preference value, and the class suffix
@@ -13,26 +13,49 @@ struct PanoramaFontDef
 	const char *variant;
 };
 
-struct PanoramaColorDef
-{
-	const char *className;
-	u8 r, g, b;
-};
-
-#define PANORAMA_COLOR_NAME_OFFSET 7 // strlen("color--")
-
 extern const PanoramaFontDef PANORAMA_FONTS[];
 extern const i32 PANORAMA_FONT_COUNT;
-extern const PanoramaColorDef PANORAMA_COLORS[];
-extern const i32 PANORAMA_COLOR_COUNT;
 
-// The generated color class closest to an arbitrary RGB.
-// Class-only styling + limit on available classes means we cannot do better.
-const char *PanoramaNearestColorClass(const Color &color);
+namespace panorama
+{
+	// A gradient color is stored as a marker Color: alpha == 1, red == gradient index. Solid colors
+	// are always stored with alpha 255, so alpha 1 is an unambiguous gradient flag.
+	inline bool IsGradient(const Color &c)
+	{
+		return c.a() == 1;
+	}
 
-const char *PanoramaResolveFontSlug(const char *name, const char *fallback);
-const char *PanoramaFontClass(const char *name, const char *fallback);
-const char *PanoramaFontDisplayName(const char *name, const char *fallback);
+	inline Color MakeGradient(i32 index)
+	{
+		return Color((u8)index, 0, 0, 1);
+	}
 
-// Clamp to a value the generated sheets actually define.
-i32 PanoramaSnapToStep(i32 value, i32 lo, i32 hi);
+	inline i32 GetGradientIndex(const Color &c)
+	{
+		return c.r();
+	}
+
+	// A gradient has no single RGB, so anything that needs a real color (the legacy HTML HUD) resolves
+	// a gradient marker to the given fallback instead.
+	inline Color ResolveSolidColor(const Color &c, const Color &fallback)
+	{
+		return IsGradient(c) ? fallback : c;
+	}
+
+	// Gradient-aware resolvers: return the grad-* class for a stored gradient, else the nearest solid.
+	const char *ResolveColorClass(const Color &color);  // text (color)
+	const char *ResolveSwatchClass(const Color &color); // swatch (background-color)
+
+	// The color picker's combined entry space: solids first, then gradients.
+	i32 GetColorEntryCount();
+	const char *GetColorEntryBgClass(i32 entry);
+	Color GetColorEntryValue(i32 entry);      // the color to store when this entry is picked
+	i32 FindColorEntry(const Color &color);   // which entry a stored color matches, -1 if none
+
+	const char *ResolveFontSlug(const char *name, const char *fallback);
+	const char *ResolveFontClass(const char *name, const char *fallback);
+	const char *GetFontDisplayName(const char *name, const char *fallback);
+
+	// Clamp to a value the generated sheets actually define.
+	i32 SnapToStep(i32 value, i32 lo, i32 hi);
+} // namespace panorama

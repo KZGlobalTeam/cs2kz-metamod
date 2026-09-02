@@ -1,0 +1,409 @@
+<root>
+  <styles>
+    <include src="file://{resources}/styles/custom_game/cs2kz/menu.css" />
+  </styles>
+  <Panel class="root" hittest="false">
+    <Panel id="menu_root" class="menu hidden">
+      <Panel id="menu_box" class="menu-box">
+        <Label id="menu_title" class="menu-title" text="{s:title}" />
+
+        <Panel id="menu_panes" class="panes">
+          <Panel id="menu_cats" class="cats">
+        <Button id="cat0" class="cat hidden">
+          <Label id="cat_lbl0" class="cat-label" text="{s:cl0}" />
+        </Button>
+        <Button id="cat1" class="cat hidden">
+          <Label id="cat_lbl1" class="cat-label" text="{s:cl1}" />
+        </Button>
+        <Button id="cat2" class="cat hidden">
+          <Label id="cat_lbl2" class="cat-label" text="{s:cl2}" />
+        </Button>
+        <Button id="cat3" class="cat hidden">
+          <Label id="cat_lbl3" class="cat-label" text="{s:cl3}" />
+        </Button>
+        <Button id="cat4" class="cat hidden">
+          <Label id="cat_lbl4" class="cat-label" text="{s:cl4}" />
+        </Button>
+        <Button id="cat5" class="cat hidden">
+          <Label id="cat_lbl5" class="cat-label" text="{s:cl5}" />
+        </Button>
+        <Button id="cat6" class="cat hidden">
+          <Label id="cat_lbl6" class="cat-label" text="{s:cl6}" />
+        </Button>
+        <Button id="cat7" class="cat hidden">
+          <Label id="cat_lbl7" class="cat-label" text="{s:cl7}" />
+        </Button>
+        <Button id="cat8" class="cat hidden">
+          <Label id="cat_lbl8" class="cat-label" text="{s:cl8}" />
+        </Button>
+        <Button id="cat9" class="cat hidden">
+          <Label id="cat_lbl9" class="cat-label" text="{s:cl9}" />
+        </Button>
+        <Button id="cat10" class="cat hidden">
+          <Label id="cat_lbl10" class="cat-label" text="{s:cl10}" />
+        </Button>
+        <Button id="cat11" class="cat hidden">
+          <Label id="cat_lbl11" class="cat-label" text="{s:cl11}" />
+        </Button>
+        <Button id="cat12" class="cat hidden">
+          <Label id="cat_lbl12" class="cat-label" text="{s:cl12}" />
+        </Button>
+        <Button id="cat13" class="cat hidden">
+          <Label id="cat_lbl13" class="cat-label" text="{s:cl13}" />
+        </Button>
+        <Button id="cat14" class="cat hidden">
+          <Label id="cat_lbl14" class="cat-label" text="{s:cl14}" />
+        </Button>
+        <Button id="cat15" class="cat hidden">
+          <Label id="cat_lbl15" class="cat-label" text="{s:cl15}" />
+        </Button>
+        <Button id="cat16" class="cat hidden">
+          <Label id="cat_lbl16" class="cat-label" text="{s:cl16}" />
+        </Button>
+        <Button id="cat17" class="cat hidden">
+          <Label id="cat_lbl17" class="cat-label" text="{s:cl17}" />
+        </Button>
+        <Button id="cat18" class="cat hidden">
+          <Label id="cat_lbl18" class="cat-label" text="{s:cl18}" />
+        </Button>
+        <Button id="cat19" class="cat hidden">
+          <Label id="cat_lbl19" class="cat-label" text="{s:cl19}" />
+        </Button>
+          </Panel>
+          <Panel id="menu_items" class="items">
+        <Button id="item0" class="item hidden">
+          <Panel class="item-row">
+            <Panel class="item-text">
+              <Label id="item_lbl0" class="item-label" text="{s:il0}" />
+              <Label id="item_sub0" class="item-sub" text="{s:is0}" />
+            </Panel>
+            <Panel class="item-ctl">
+              <Label id="item_val0" class="item-value" text="{s:iv0}" />
+              <Panel id="item_sw0" class="item-swatch" />
+            </Panel>
+          </Panel>
+          <Panel id="item_div0" class="item-divider" />
+        </Button>
+        <Button id="item1" class="item hidden">
+          <Panel class="item-row">
+            <Panel class="item-text">
+              <Label id="item_lbl1" class="item-label" text="{s:il1}" />
+              <Label id="item_sub1" class="item-sub" text="{s:is1}" />
+            </Panel>
+            <Panel class="item-ctl">
+              <Label id="item_val1" class="item-value" text="{s:iv1}" />
+              <Panel id="item_sw1" class="item-swatch" />
+            </Panel>
+          </Panel>
+          <Panel id="item_div1" class="item-divider" />
+        </Button>
+        <Button id="item2" class="item hidden">
+          <Panel class="item-row">
+            <Panel class="item-text">
+              <Label id="item_lbl2" class="item-label" text="{s:il2}" />
+              <Label id="item_sub2" class="item-sub" text="{s:is2}" />
+            </Panel>
+            <Panel class="item-ctl">
+              <Label id="item_val2" class="item-value" text="{s:iv2}" />
+              <Panel id="item_sw2" class="item-swatch" />
+            </Panel>
+          </Panel>
+          <Panel id="item_div2" class="item-divider" />
+        </Button>
+        <Button id="item3" class="item hidden">
+          <Panel class="item-row">
+            <Panel class="item-text">
+              <Label id="item_lbl3" class="item-label" text="{s:il3}" />
+              <Label id="item_sub3" class="item-sub" text="{s:is3}" />
+            </Panel>
+            <Panel class="item-ctl">
+              <Label id="item_val3" class="item-value" text="{s:iv3}" />
+              <Panel id="item_sw3" class="item-swatch" />
+            </Panel>
+          </Panel>
+          <Panel id="item_div3" class="item-divider" />
+        </Button>
+        <Button id="item4" class="item hidden">
+          <Panel class="item-row">
+            <Panel class="item-text">
+              <Label id="item_lbl4" class="item-label" text="{s:il4}" />
+              <Label id="item_sub4" class="item-sub" text="{s:is4}" />
+            </Panel>
+            <Panel class="item-ctl">
+              <Label id="item_val4" class="item-value" text="{s:iv4}" />
+              <Panel id="item_sw4" class="item-swatch" />
+            </Panel>
+          </Panel>
+          <Panel id="item_div4" class="item-divider" />
+        </Button>
+        <Button id="item5" class="item hidden">
+          <Panel class="item-row">
+            <Panel class="item-text">
+              <Label id="item_lbl5" class="item-label" text="{s:il5}" />
+              <Label id="item_sub5" class="item-sub" text="{s:is5}" />
+            </Panel>
+            <Panel class="item-ctl">
+              <Label id="item_val5" class="item-value" text="{s:iv5}" />
+              <Panel id="item_sw5" class="item-swatch" />
+            </Panel>
+          </Panel>
+          <Panel id="item_div5" class="item-divider" />
+        </Button>
+        <Button id="item6" class="item hidden">
+          <Panel class="item-row">
+            <Panel class="item-text">
+              <Label id="item_lbl6" class="item-label" text="{s:il6}" />
+              <Label id="item_sub6" class="item-sub" text="{s:is6}" />
+            </Panel>
+            <Panel class="item-ctl">
+              <Label id="item_val6" class="item-value" text="{s:iv6}" />
+              <Panel id="item_sw6" class="item-swatch" />
+            </Panel>
+          </Panel>
+          <Panel id="item_div6" class="item-divider" />
+        </Button>
+        <Button id="item7" class="item hidden">
+          <Panel class="item-row">
+            <Panel class="item-text">
+              <Label id="item_lbl7" class="item-label" text="{s:il7}" />
+              <Label id="item_sub7" class="item-sub" text="{s:is7}" />
+            </Panel>
+            <Panel class="item-ctl">
+              <Label id="item_val7" class="item-value" text="{s:iv7}" />
+              <Panel id="item_sw7" class="item-swatch" />
+            </Panel>
+          </Panel>
+          <Panel id="item_div7" class="item-divider" />
+        </Button>
+        <Button id="item8" class="item hidden">
+          <Panel class="item-row">
+            <Panel class="item-text">
+              <Label id="item_lbl8" class="item-label" text="{s:il8}" />
+              <Label id="item_sub8" class="item-sub" text="{s:is8}" />
+            </Panel>
+            <Panel class="item-ctl">
+              <Label id="item_val8" class="item-value" text="{s:iv8}" />
+              <Panel id="item_sw8" class="item-swatch" />
+            </Panel>
+          </Panel>
+          <Panel id="item_div8" class="item-divider" />
+        </Button>
+        <Button id="item9" class="item hidden">
+          <Panel class="item-row">
+            <Panel class="item-text">
+              <Label id="item_lbl9" class="item-label" text="{s:il9}" />
+              <Label id="item_sub9" class="item-sub" text="{s:is9}" />
+            </Panel>
+            <Panel class="item-ctl">
+              <Label id="item_val9" class="item-value" text="{s:iv9}" />
+              <Panel id="item_sw9" class="item-swatch" />
+            </Panel>
+          </Panel>
+          <Panel id="item_div9" class="item-divider" />
+        </Button>
+        <Button id="item10" class="item hidden">
+          <Panel class="item-row">
+            <Panel class="item-text">
+              <Label id="item_lbl10" class="item-label" text="{s:il10}" />
+              <Label id="item_sub10" class="item-sub" text="{s:is10}" />
+            </Panel>
+            <Panel class="item-ctl">
+              <Label id="item_val10" class="item-value" text="{s:iv10}" />
+              <Panel id="item_sw10" class="item-swatch" />
+            </Panel>
+          </Panel>
+          <Panel id="item_div10" class="item-divider" />
+        </Button>
+        <Button id="item11" class="item hidden">
+          <Panel class="item-row">
+            <Panel class="item-text">
+              <Label id="item_lbl11" class="item-label" text="{s:il11}" />
+              <Label id="item_sub11" class="item-sub" text="{s:is11}" />
+            </Panel>
+            <Panel class="item-ctl">
+              <Label id="item_val11" class="item-value" text="{s:iv11}" />
+              <Panel id="item_sw11" class="item-swatch" />
+            </Panel>
+          </Panel>
+          <Panel id="item_div11" class="item-divider" />
+        </Button>
+        <Button id="item12" class="item hidden">
+          <Panel class="item-row">
+            <Panel class="item-text">
+              <Label id="item_lbl12" class="item-label" text="{s:il12}" />
+              <Label id="item_sub12" class="item-sub" text="{s:is12}" />
+            </Panel>
+            <Panel class="item-ctl">
+              <Label id="item_val12" class="item-value" text="{s:iv12}" />
+              <Panel id="item_sw12" class="item-swatch" />
+            </Panel>
+          </Panel>
+          <Panel id="item_div12" class="item-divider" />
+        </Button>
+        <Button id="item13" class="item hidden">
+          <Panel class="item-row">
+            <Panel class="item-text">
+              <Label id="item_lbl13" class="item-label" text="{s:il13}" />
+              <Label id="item_sub13" class="item-sub" text="{s:is13}" />
+            </Panel>
+            <Panel class="item-ctl">
+              <Label id="item_val13" class="item-value" text="{s:iv13}" />
+              <Panel id="item_sw13" class="item-swatch" />
+            </Panel>
+          </Panel>
+          <Panel id="item_div13" class="item-divider" />
+        </Button>
+        <Button id="item14" class="item hidden">
+          <Panel class="item-row">
+            <Panel class="item-text">
+              <Label id="item_lbl14" class="item-label" text="{s:il14}" />
+              <Label id="item_sub14" class="item-sub" text="{s:is14}" />
+            </Panel>
+            <Panel class="item-ctl">
+              <Label id="item_val14" class="item-value" text="{s:iv14}" />
+              <Panel id="item_sw14" class="item-swatch" />
+            </Panel>
+          </Panel>
+          <Panel id="item_div14" class="item-divider" />
+        </Button>
+        <Button id="item15" class="item hidden">
+          <Panel class="item-row">
+            <Panel class="item-text">
+              <Label id="item_lbl15" class="item-label" text="{s:il15}" />
+              <Label id="item_sub15" class="item-sub" text="{s:is15}" />
+            </Panel>
+            <Panel class="item-ctl">
+              <Label id="item_val15" class="item-value" text="{s:iv15}" />
+              <Panel id="item_sw15" class="item-swatch" />
+            </Panel>
+          </Panel>
+          <Panel id="item_div15" class="item-divider" />
+        </Button>
+          </Panel>
+        </Panel>
+
+        <Panel class="footer">
+          <Button id="m_close" class="footer-btn"><Label class="footer-label" text="Close" /></Button>
+        </Panel>
+      </Panel>
+
+      <Panel id="color_popup" class="popup color-popup hidden">
+        <Panel class="swatch-grid">
+        <Button id="sw0" class="swatch" />
+        <Button id="sw1" class="swatch" />
+        <Button id="sw2" class="swatch" />
+        <Button id="sw3" class="swatch" />
+        <Button id="sw4" class="swatch" />
+        <Button id="sw5" class="swatch" />
+        <Button id="sw6" class="swatch" />
+        <Button id="sw7" class="swatch" />
+        <Button id="sw8" class="swatch" />
+        <Button id="sw9" class="swatch" />
+        <Button id="sw10" class="swatch" />
+        <Button id="sw11" class="swatch" />
+        <Button id="sw12" class="swatch" />
+        <Button id="sw13" class="swatch" />
+        <Button id="sw14" class="swatch" />
+        <Button id="sw15" class="swatch" />
+        <Button id="sw16" class="swatch" />
+        <Button id="sw17" class="swatch" />
+        <Button id="sw18" class="swatch" />
+        <Button id="sw19" class="swatch" />
+        <Button id="sw20" class="swatch" />
+        <Button id="sw21" class="swatch" />
+        <Button id="sw22" class="swatch" />
+        <Button id="sw23" class="swatch" />
+        <Button id="sw24" class="swatch" />
+        <Button id="sw25" class="swatch" />
+        <Button id="sw26" class="swatch" />
+        <Button id="sw27" class="swatch" />
+        <Button id="sw28" class="swatch" />
+        <Button id="sw29" class="swatch" />
+        <Button id="sw30" class="swatch" />
+        <Button id="sw31" class="swatch" />
+        <Button id="sw32" class="swatch" />
+        <Button id="sw33" class="swatch" />
+        <Button id="sw34" class="swatch" />
+        <Button id="sw35" class="swatch" />
+        <Button id="sw36" class="swatch" />
+        <Button id="sw37" class="swatch" />
+        <Button id="sw38" class="swatch" />
+        <Button id="sw39" class="swatch" />
+        </Panel>
+        <Panel class="popup-nav">
+          <Button id="cp_prev" class="popup-btn"><Label class="popup-btn-label" text="&lt;" /></Button>
+          <Label id="cp_page" class="popup-page" text="{s:cppage}" />
+          <Button id="cp_next" class="popup-btn"><Label class="popup-btn-label" text="&gt;" /></Button>
+          <Button id="color_close" class="popup-btn popup-close"><Label class="popup-btn-label" text="X" /></Button>
+        </Panel>
+      </Panel>
+
+      <Panel id="list_popup" class="popup list-popup hidden">
+        <Panel class="list-rows">
+        <Button id="li0" class="li hidden">
+          <Label id="li_lbl0" class="li-label" text="{s:ll0}" />
+        </Button>
+        <Button id="li1" class="li hidden">
+          <Label id="li_lbl1" class="li-label" text="{s:ll1}" />
+        </Button>
+        <Button id="li2" class="li hidden">
+          <Label id="li_lbl2" class="li-label" text="{s:ll2}" />
+        </Button>
+        <Button id="li3" class="li hidden">
+          <Label id="li_lbl3" class="li-label" text="{s:ll3}" />
+        </Button>
+        <Button id="li4" class="li hidden">
+          <Label id="li_lbl4" class="li-label" text="{s:ll4}" />
+        </Button>
+        <Button id="li5" class="li hidden">
+          <Label id="li_lbl5" class="li-label" text="{s:ll5}" />
+        </Button>
+        <Button id="li6" class="li hidden">
+          <Label id="li_lbl6" class="li-label" text="{s:ll6}" />
+        </Button>
+        <Button id="li7" class="li hidden">
+          <Label id="li_lbl7" class="li-label" text="{s:ll7}" />
+        </Button>
+        <Button id="li8" class="li hidden">
+          <Label id="li_lbl8" class="li-label" text="{s:ll8}" />
+        </Button>
+        <Button id="li9" class="li hidden">
+          <Label id="li_lbl9" class="li-label" text="{s:ll9}" />
+        </Button>
+        <Button id="li10" class="li hidden">
+          <Label id="li_lbl10" class="li-label" text="{s:ll10}" />
+        </Button>
+        <Button id="li11" class="li hidden">
+          <Label id="li_lbl11" class="li-label" text="{s:ll11}" />
+        </Button>
+        </Panel>
+        <Panel class="popup-nav">
+          <Button id="lp_prev" class="popup-btn"><Label class="popup-btn-label" text="&lt;" /></Button>
+          <Label id="lp_page" class="popup-page" text="{s:lppage}" />
+          <Button id="lp_next" class="popup-btn"><Label class="popup-btn-label" text="&gt;" /></Button>
+          <Button id="list_close" class="popup-btn popup-close"><Label class="popup-btn-label" text="X" /></Button>
+        </Panel>
+      </Panel>
+
+      <Panel id="step_popup" class="popup step-popup hidden">
+        <Label id="step_label" class="step-title" text="{s:steplabel}" />
+        <Panel id="m_step_up" class="step-row v-step hidden">
+          <Button id="m_v_n5" class="step-btn"><Label class="step-btn-label" text="-5" /></Button>
+          <Button id="m_v_n1" class="step-btn"><Label class="step-btn-label" text="-1" /></Button>
+        </Panel>
+        <Panel class="step-row">
+          <Button id="m_h_n5" class="step-btn"><Label class="step-btn-label" text="-5" /></Button>
+          <Button id="m_h_n1" class="step-btn"><Label class="step-btn-label" text="-1" /></Button>
+          <Label id="step_readout" class="step-readout" text="{s:step}" />
+          <Button id="m_h_p1" class="step-btn"><Label class="step-btn-label" text="+1" /></Button>
+          <Button id="m_h_p5" class="step-btn"><Label class="step-btn-label" text="+5" /></Button>
+        </Panel>
+        <Panel id="m_step_down" class="step-row v-step hidden">
+          <Button id="m_v_p1" class="step-btn"><Label class="step-btn-label" text="+1" /></Button>
+          <Button id="m_v_p5" class="step-btn"><Label class="step-btn-label" text="+5" /></Button>
+        </Panel>
+        <Button id="step_close" class="popup-btn popup-close"><Label class="popup-btn-label" text="Done" /></Button>
+      </Panel>
+    </Panel>
+  </Panel>
+</root>

@@ -541,6 +541,8 @@ static_function void Hook_CheckTransmit(CCheckTransmitInfo **pInfos, int infoCou
 {
 	KZ::quiet::OnCheckTransmit(pInfos, infoCount);
 	KZProfileService::OnCheckTransmit();
+	KZMenuService::OnCheckTransmit(pInfos, infoCount);
+	KZHUDService::OnCheckTransmit(pInfos, infoCount);
 	RETURN_META(MRES_IGNORED);
 }
 
@@ -634,7 +636,8 @@ static_function void Hook_ClientDisconnect(CPlayerSlot slot, ENetworkDisconnecti
 	player->optionService->OnClientDisconnect();
 	player->racingService->OnClientDisconnect();
 	player->globalService->OnClientDisconnect();
-	player->menuService->Reset();
+	player->menuService->OnClientDisconnect();
+	player->hudService->OnClientDisconnect();
 	g_pKZPlayerManager->OnClientDisconnect(slot, reason, pszName, xuid, pszNetworkID);
 	RETURN_META(MRES_IGNORED);
 }

@@ -6,6 +6,7 @@
 #define KZ_HUD_TIMER_STOPPED_GRACE_TIME 3.0f
 #define KZ_HUD_ON_GROUND_THRESHOLD      0.07f
 class CCSCustomHudLayout;
+class CCheckTransmitInfo;
 
 enum class MHUDElement
 {
@@ -52,6 +53,18 @@ extern const MHUDElementDef MHUD_ELEMENTS[(i32)MHUDElement::Count];
 
 #define MHUD_SIZE_MIN 8
 #define MHUD_SIZE_MAX 100
+
+// Default element colors, shared by both the layout HUD (as pal-fg classes) and the legacy HTML HUD
+// (as hex), so the two never disagree on what an unset preference looks like.
+static_global const Color MHUD_DEF_BASE_COLOR(255, 255, 255, 255);
+static_global const Color MHUD_DEF_PERF_COLOR(0x40, 0xFF, 0x40, 0xFF);
+static_global const Color MHUD_DEF_JUMPBUG_COLOR(0xFF, 0xFF, 0x20, 0xFF);
+static_global const Color MHUD_DEF_CJ_COLOR(0x71, 0xEE, 0xB8, 0xFF);
+static_global const Color MHUD_DEF_TIMER_TP_COLOR(255, 255, 255, 255);
+static_global const Color MHUD_DEF_TIMER_PRO_COLOR(0x5F, 0x99, 0xD9, 0xFF);
+static_global const Color MHUD_DEF_TIMER_PAUSED_COLOR(0xFF, 0xFF, 0x00, 0xFF);
+static_global const Color MHUD_DEF_TIMER_STOPPED_COLOR(0xFF, 0xA0, 0xA0, 0xFF);
+static_global const Color MHUD_DEF_KEYS_OVERLAP_COLOR(0xFF, 0x40, 0x40, 0xFF);
 
 class KZHUDService : public KZBaseService
 {
@@ -145,9 +158,10 @@ public:
 			   && g_pKZUtils->GetServerGlobals()->curtime - timerStoppedTime < KZ_HUD_TIMER_STOPPED_GRACE_TIME;
 	}
 
-	// Drives the MHUD layout, taking its values from source. show=false collapses every element
-	// rather than blanking it, so the values survive a toggle.
-	bool UpdateHudLayout(KZPlayer *source, bool show);
+	// Drives this player's MHUD layout, taking its values from source (the same player, or the
+	// spectated one). When the panel is off or the legacy style is selected, every element collapses
+	// rather than blanking, so the values survive a toggle.
+	bool UpdateHudLayout(KZPlayer *source);
 
 	// Per-element enable flags.
 	bool IsMHUDElementEnabled(MHUDElement element);
@@ -200,6 +214,11 @@ private:
 		i32 y {INT_MIN};
 		bool hidden {true};
 		bool outline {false};
+		// Cache the resolved color class so the nearest-palette search (O(palette)) only runs when the
+		// color actually changes, not every tick.
+		const char *colorClassComputed {};
+		u32 lastColorPacked {};
+		bool colorComputed {};
 	};
 
 	// TODO (?): Update the container so it is always big enough for the text.
@@ -211,9 +230,11 @@ private:
 		const char *fontClass {};
 	};
 
-	CHandle<CBaseEntity> layoutEntity {};
+	CHandle<CBaseEntity> ownedLayout {};
 	LayoutElementState layoutElements[(i32)MHUDElement::Count] {};
 	LayoutKeysState layoutKeys {};
+
+	CCSCustomHudLayout *EnsureOwnedLayout(bool &created);
 
 	void UpdateLayoutElement(CCSCustomHudLayout *layout, MHUDElement element, bool show, const char *text, const Color &color, bool force);
 	void SetLayoutClass(CCSCustomHudLayout *layout, const char *panelId, const char *&cache, const char *className);
@@ -228,6 +249,24 @@ private:
 
 public:
 	static CCSCustomHudLayout *GetLayoutEntity(const char *layoutPath, CHandle<CBaseEntity> &cache);
+
+	// Destroy this player's owned entity (disconnect / unload). Safe to call when there is none.
+	void DestroyOwnedLayout();
+
+	// Tear down the owned entity when the player leaves, matching the other services' hook. Reset()
+	// keeps the entity (it survives respawns/map changes and is recreated lazily); only a disconnect
+	// destroys it.
+	void OnClientDisconnect()
+	{
+		this->DestroyOwnedLayout();
+	}
+
+	// Destroy every player's owned entity. Called on plugin unload.
+	static void Cleanup();
+
+	// Masks every player's owned mhud entity away from every client but its owner. Called from
+	// Hook_CheckTransmit.
+	static void OnCheckTransmit(CCheckTransmitInfo **pInfo, int infoCount);
 
 private:
 	i32 forcedElement {-1};

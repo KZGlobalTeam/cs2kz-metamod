@@ -1,0 +1,237 @@
+// Curated: font-family classes, one per available face.
+
+.font-family--stratum2 {
+	font-family: Stratum2, "Arial Unicode MS";
+}
+
+.font-family--forcestratum2 {
+	font-family: ForceStratum2, "Arial Unicode MS";
+}
+
+.font-family--stratum2-thin {
+	font-family: "Stratum2 Thin", "Arial Unicode MS";
+}
+
+.font-family--stratum2-thin-italic {
+	font-family: "Stratum2 Thin Italic", "Arial Unicode MS";
+}
+
+.font-family--stratum2-thin-condensed {
+	font-family: "Stratum2 Thin Condensed", "Arial Unicode MS";
+}
+
+.font-family--stratum2-thin-tf {
+	font-family: "Stratum2 Thin TF", "Arial Unicode MS";
+}
+
+.font-family--stratum2-light {
+	font-family: "Stratum2 Light", "Arial Unicode MS";
+}
+
+.font-family--stratum2-light-italic {
+	font-family: "Stratum2 Light Italic", "Arial Unicode MS";
+}
+
+.font-family--stratum2-light-condensed {
+	font-family: "Stratum2 Light Condensed", "Arial Unicode MS";
+}
+
+.font-family--stratum2-light-tf {
+	font-family: "Stratum2 Light TF", "Arial Unicode MS";
+}
+
+.font-family--stratum2-italic {
+	font-family: "Stratum2 Italic", "Arial Unicode MS";
+}
+
+.font-family--stratum2-condensed {
+	font-family: "Stratum2 Condensed", "Arial Unicode MS";
+}
+
+.font-family--stratum2-tf {
+	font-family: "Stratum2 TF", "Arial Unicode MS";
+}
+
+.font-family--stratum2-medium {
+	font-family: "Stratum2 Medium", "Arial Unicode MS";
+}
+
+.font-family--stratum2-medium-italic {
+	font-family: "Stratum2 Medium Italic", "Arial Unicode MS";
+}
+
+.font-family--stratum2-medium-condensed {
+	font-family: "Stratum2 Medium Condensed", "Arial Unicode MS";
+}
+
+.font-family--stratum2-medium-tf {
+	font-family: "Stratum2 Medium TF", "Arial Unicode MS";
+}
+
+.font-family--stratum2-bold {
+	font-family: "Stratum2 Bold", "Arial Unicode MS";
+}
+
+.font-family--stratum2-bold-italic {
+	font-family: "Stratum2 Bold Italic", "Arial Unicode MS";
+}
+
+.font-family--stratum2-bold-condensed {
+	font-family: "Stratum2 Bold Condensed", "Arial Unicode MS";
+}
+
+.font-family--stratum2-bold-tf {
+	font-family: "Stratum2 Bold TF", "Arial Unicode MS";
+}
+
+.font-family--stratum2-black {
+	font-family: "Stratum2 Black", "Arial Unicode MS";
+}
+
+.font-family--stratum2-black-italic {
+	font-family: "Stratum2 Black Italic", "Arial Unicode MS";
+}
+
+.font-family--stratum2-black-condensed {
+	font-family: "Stratum2 Black Condensed", "Arial Unicode MS";
+}
+
+.font-family--stratum2-black-tf {
+	font-family: "Stratum2 Black TF", "Arial Unicode MS";
+}
+
+.font-family--stratum2-mono {
+	font-family: "Stratum2 Mono", "Arial Unicode MS";
+}
+
+.font-family--stratum2-mono-light {
+	font-family: "Stratum2 Mono Light", "Arial Unicode MS";
+}
+
+.font-family--stratum2-mono-bold {
+	font-family: "Stratum2 Mono Bold", "Arial Unicode MS";
+}
+
+.font-family--stratum2-regular-monodigit {
+	font-family: "Stratum2 Regular Monodigit", "Arial Unicode MS";
+}
+
+.font-family--stratum2-bold-monodigit {
+	font-family: "Stratum2 Bold Monodigit", "Arial Unicode MS";
+}
+
+.font-family--noto-sans {
+	font-family: "Noto Sans", "Arial Unicode MS";
+}
+
+.font-family--noto-sans-italic {
+	font-family: "Noto Sans Italic", "Arial Unicode MS";
+}
+
+.font-family--noto-sans-bold {
+	font-family: "Noto Sans Bold", "Arial Unicode MS";
+}
+
+.font-family--noto-sans-bold-italic {
+	font-family: "Noto Sans Bold Italic", "Arial Unicode MS";
+}
+
+.font-family--noto-serif {
+	font-family: "Noto Serif", "Arial Unicode MS";
+}
+
+.font-family--noto-serif-italic {
+	font-family: "Noto Serif Italic", "Arial Unicode MS";
+}
+
+.font-family--noto-serif-bold {
+	font-family: "Noto Serif Bold", "Arial Unicode MS";
+}
+
+.font-family--noto-serif-bold-italic {
+	font-family: "Noto Serif Bold Italic", "Arial Unicode MS";
+}
+
+.font-family--noto-mono {
+	font-family: "Noto Mono", "Arial Unicode MS";
+}
+
+.font-family--noto-sans-symbols {
+	font-family: "Noto Sans Symbols", "Arial Unicode MS";
+}
+
+.font-family--noto-sans-jp-light {
+	font-family: "Noto Sans JP Light", "Arial Unicode MS";
+}
+
+.font-family--noto-sans-jp {
+	font-family: "Noto Sans JP", "Arial Unicode MS";
+}
+
+.font-family--noto-sans-jp-bold {
+	font-family: "Noto Sans JP Bold", "Arial Unicode MS";
+}
+
+.font-family--noto-sans-kr-light {
+	font-family: "Noto Sans KR Light", "Arial Unicode MS";
+}
+
+.font-family--noto-sans-kr {
+	font-family: "Noto Sans KR", "Arial Unicode MS";
+}
+
+.font-family--noto-sans-kr-bold {
+	font-family: "Noto Sans KR Bold", "Arial Unicode MS";
+}
+
+.font-family--noto-sans-sc-light {
+	font-family: "Noto Sans SC Light", "Arial Unicode MS";
+}
+
+.font-family--noto-sans-sc {
+	font-family: "Noto Sans SC", "Arial Unicode MS";
+}
+
+.font-family--noto-sans-sc-bold {
+	font-family: "Noto Sans SC Bold", "Arial Unicode MS";
+}
+
+.font-family--noto-sans-tc-light {
+	font-family: "Noto Sans TC Light", "Arial Unicode MS";
+}
+
+.font-family--noto-sans-tc {
+	font-family: "Noto Sans TC", "Arial Unicode MS";
+}
+
+.font-family--noto-sans-tc-bold {
+	font-family: "Noto Sans TC Bold", "Arial Unicode MS";
+}
+
+.font-family--noto-sans-thai-light {
+	font-family: "Noto Sans Thai Light", "Arial Unicode MS";
+}
+
+.font-family--noto-sans-thai {
+	font-family: "Noto Sans Thai", "Arial Unicode MS";
+}
+
+.font-family--noto-sans-thai-bold {
+	font-family: "Noto Sans Thai Bold", "Arial Unicode MS";
+}
+
+.font-family--arial {
+	font-family: Arial, "Arial Unicode MS";
+}
+
+.font-family--sans-serif {
+	font-family: sans-serif, "Arial Unicode MS";
+}
+
+.font-family--serif {
+	font-family: serif, "Arial Unicode MS";
+}
+
+.font-family--monospace {
+	font-family: monospace, "Arial Unicode MS";
+}

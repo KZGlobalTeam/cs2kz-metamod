@@ -1,0 +1,442 @@
+// Three-pane options menu. The plugin classes two things onto the text panels: the menu font
+// (font-family--N) and the menu color (pal-fg-N). So the panels it writes (title, cat labels, item
+// labels/values, list labels) must not set `color` or `font-family` here, or the plugin's class ties
+// on specificity and loses. Everything else is fixed chrome.
+@import url("file://{resources}/styles/custom_game/cs2kz/palette.css");
+@import url("file://{resources}/styles/custom_game/cs2kz/fonts.css");
+
+.root {
+	width: 100%;
+	height: 100%;
+}
+
+// Full-screen, transparent: it only captures input and hosts the box + popups. With the box hidden
+// (a popup open) the HUD entity behind it shows through for live preview.
+#menu_root {
+	width: 100%;
+	height: 100%;
+}
+
+#menu_root.hidden {
+	visibility: collapse;
+}
+
+// --- the chrome box ----------------------------------------------------------------
+
+.menu-box {
+	horizontal-align: center;
+	vertical-align: center;
+	flow-children: down;
+	transition-property: width, height;
+	transition-duration: 1s;
+	transition-timing-function: ease-in-out;
+	background-img-opacity: 0.01;
+	horizontal-align: center;
+	vertical-align: middle;
+	min-width: 860px;
+	height: 620px;
+	flow-children: down;
+	padding: 18px;
+	border: 1px solid #5f494926;
+	border-radius: 5px;
+	background-image: url("s2r://panorama/images/backgrounds/bluedots_large_png.vtex");
+	background-size: 360px 360px;
+	background-color: rgba(1, 1, 1, 0.95);
+}
+
+.menu-box.hidden {
+	visibility: collapse;
+}
+
+.menu-title {
+	font-size: 20px;
+	margin-bottom: 14px;
+	text-transform: uppercase;
+	font-weight: bold;
+	letter-spacing: 2px;
+}
+
+.panes {
+	flow-children: right;
+	width: 100%;
+	height: fill-parent-flow(1);
+}
+
+.panes.hidden {
+	visibility: collapse;
+}
+
+// --- left: categories --------------------------------------------------------------
+
+.cats {
+	flow-children: down;
+	width: 240px;
+	height: 100%;
+	padding-right: 12px;
+	margin-right: 14px;
+	border-right: 1px solid #ffffff1a;
+}
+
+.cat {
+	width: 100%;
+	padding: 8px 10px;
+	border-radius: 3px;
+	background-color: #00000000;
+	transition-property: background-color;
+	transition-duration: 0.05s;
+}
+
+.cat:hover {
+	background-color: #ffffff1a;
+}
+
+.cat.selected {
+	background-color: #ffffff26;
+}
+
+.cat.indent {
+	padding-left: 26px;
+}
+
+// A category header that owns subcategories: reads as a section title, and while its sub is active
+// it is inert (no hover, no click).
+.cat.cat-parent {
+	margin-top: 6px;
+}
+
+.cat.cat-parent.disabled {
+	background-color: #00000000;
+}
+
+.cat.cat-parent.disabled:hover {
+	background-color: #00000000;
+}
+
+.cat.hidden {
+	visibility: collapse;
+}
+
+.cat-label {
+	width: 100%;
+	font-size: 16px;
+	text-overflow: clip;
+	font-weight: lighter;
+}
+
+.cat.cat-parent .cat-label {
+	font-size: 18px;
+	font-weight: bold;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+	opacity: 0.7;
+}
+
+// --- middle: items -----------------------------------------------------------------
+
+.items {
+	flow-children: down;
+	width: fill-parent-flow(1);
+	height: 100%;
+	overflow: squish scroll;
+	padding-right: 8px;
+}
+
+.items VerticalScrollBar {
+	margin: 2px;
+	opacity: 0.25;
+}
+
+.item {
+	width: 100%;
+	flow-children: down;
+	padding: 7px 12px;
+	border-radius: 3px;
+	background-color: #00000000;
+	transition-property: background-color;
+	transition-duration: 0.05s;
+}
+
+.item:hover {
+	background-color: #ffffff14;
+}
+
+.item.hidden {
+	visibility: collapse;
+}
+
+// Label column (label + optional subtext) on the left, control on the right.
+.item-row {
+	width: 100%;
+	flow-children: right;
+}
+
+.item-text {
+	width: fill-parent-flow(1);
+	flow-children: down;
+	vertical-align: middle;
+}
+
+.item-label {
+	width: 100%;
+	font-size: 18px;
+	text-overflow: ellipsis;
+}
+
+// Optional second line, shown only when the item declares one.
+.item-sub {
+	width: 100%;
+	font-size: 13px;
+	opacity: 0.55;
+	margin-top: 1px;
+	text-overflow: ellipsis;
+	visibility: collapse;
+}
+
+.item.has-sub .item-sub {
+	visibility: visible;
+}
+
+// A horizontal rule under every item.
+.item-divider {
+	width: 100%;
+	height: 1px;
+	margin-top: 7px;
+	background-color: #ffffff1f;
+}
+
+.item-ctl {
+	horizontal-align: right;
+	vertical-align: middle;
+	flow-children: right;
+	max-width: 46%;
+}
+
+.item-value {
+	vertical-align: middle;
+	font-size: 16px;
+	max-width: 300px;
+	text-overflow: ellipsis;
+}
+
+// Toggle value reads as a pill: green when on, muted when off.
+.item.type-toggle .item-value {
+	padding: 2px 10px;
+	border-radius: 9px;
+	background-color: #ffffff14;
+}
+
+.item.type-toggle.on .item-value {
+	background-color: #24f09733;
+}
+
+// Color item shows a swatch instead of a value.
+.item-swatch {
+	width: 34px;
+	height: 18px;
+	border-radius: 3px;
+	border: 1px solid #ffffff40;
+	visibility: collapse;
+}
+
+.item.type-color .item-value {
+	visibility: collapse;
+}
+
+.item.type-color .item-swatch {
+	visibility: visible;
+}
+
+// --- popups: a third panel floated just right of the centred box via an x-transform, so the two
+// panes never move. x = half the box width (430) + gap (14) + half the popup (150). ------------------
+
+.popup {
+	horizontal-align: center;
+	vertical-align: middle;
+	x: 594px;
+	width: 300px;
+	flow-children: down;
+	padding: 16px;
+	border: 1px solid #5f494926;
+	border-radius: 5px;
+	background-image: url("s2r://panorama/images/backgrounds/bluedots_large_png.vtex");
+	background-size: 360px 360px;
+	background-color: rgba(1, 1, 1, 0.97);
+	background-img-opacity: 0.01;
+}
+
+.popup.hidden {
+	visibility: collapse;
+}
+
+// Wider popup for the 10-column swatch grid.
+.color-popup {
+	width: 316px;
+}
+
+.swatch-grid {
+	flow-children: right-wrap;
+	width: 280px;
+}
+
+.swatch {
+	width: 24px;
+	height: 24px;
+	margin: 2px;
+	border-radius: 3px;
+	border: 1px solid #ffffff26;
+	transition-property: border-color;
+	transition-duration: 0.05s;
+}
+
+.swatch:hover {
+	border-color: #ffffffff;
+}
+
+.swatch.hidden {
+	visibility: collapse;
+}
+
+// The item's current color, when it lands on this page.
+.swatch.selected {
+	border-color: #ffcc44ff;
+	box-shadow: 0 0 6px #ffcc44cc;
+}
+
+.list-rows {
+	flow-children: down;
+	width: 260px;
+	max-height: 380px;
+	overflow: squish scroll;
+}
+
+.li {
+	width: 100%;
+	padding: 6px 10px;
+	border-radius: 3px;
+	background-color: #00000000;
+}
+
+.li:hover {
+	background-color: #ffffff1a;
+}
+
+.li.selected {
+	background-color: #24f09733;
+}
+
+.li.hidden {
+	visibility: collapse;
+}
+
+.li-label {
+	width: 100%;
+	font-size: 18px;
+	text-overflow: ellipsis;
+}
+
+.popup-nav {
+	flow-children: right;
+	horizontal-align: center;
+	margin-top: 12px;
+}
+
+.popup-btn {
+	padding: 5px 12px;
+	margin: 0px 3px;
+	border-radius: 3px;
+	background-color: #ffffff1a;
+	transition-property: background-color;
+	transition-duration: 0.05s;
+}
+
+.popup-btn:hover {
+	background-color: #ffffff40;
+}
+
+.popup-btn-label {
+	horizontal-align: center;
+	color: #ffffffff;
+}
+
+.popup-page {
+	vertical-align: middle;
+	width: 60px;
+	text-align: center;
+	color: #cfcfcfff;
+}
+
+// --- stepper popup -----------------------------------------------------------------
+
+.step-title {
+	horizontal-align: center;
+	color: #ffcc44ff;
+	font-size: 18px;
+	margin-bottom: 8px;
+}
+
+.step-row {
+	flow-children: right;
+	horizontal-align: center;
+	margin: 4px 0px;
+}
+
+.step-row.hidden {
+	visibility: collapse;
+}
+
+.step-btn {
+	width: 44px;
+	padding: 5px 0px;
+	margin: 0px 3px;
+	border-radius: 3px;
+	background-color: #ffffff1a;
+	transition-property: background-color;
+	transition-duration: 0.05s;
+}
+
+.step-btn:hover {
+	background-color: #ffffff40;
+}
+
+.step-btn-label {
+	horizontal-align: center;
+	color: #ffffffff;
+}
+
+.step-readout {
+	width: 120px;
+	text-align: center;
+	vertical-align: middle;
+	color: #ffcc44ff;
+	font-size: 19px;
+}
+
+.popup-close {
+	horizontal-align: center;
+	margin-top: 12px;
+}
+
+// --- footer ------------------------------------------------------------------------
+
+.footer {
+	flow-children: right;
+	horizontal-align: right;
+	margin-top: 12px;
+}
+
+.footer-btn {
+	padding: 6px 16px;
+	border-radius: 3px;
+	background-color: #ffffff1a;
+	transition-property: background-color;
+	transition-duration: 0.05s;
+}
+
+.footer-btn:hover {
+	background-color: #ffffff40;
+}
+
+.footer-label {
+	horizontal-align: center;
+	color: #ffffffff;
+}

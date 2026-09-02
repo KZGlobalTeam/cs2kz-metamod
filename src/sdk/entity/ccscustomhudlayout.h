@@ -50,15 +50,35 @@ public:
 	SCHEMA_FIELD_COLLECTION(HUDPanelDialogVariableString_t, m_vecDialogVariableStrings)
 	SCHEMA_FIELD(CPlayerSlot, m_playerSlot)
 
-	// Marking a single vector element dirty needs a serializer-registered field path, cached in
-	// non-schema members of the state that the schema system does not expose. The game hits the
-	// same wall whenever that cache is cold and falls back to marking the whole edict (networkvar.h,
-	// "CNetworkUtlVectorFull"), so take the same fallback for every vector write.
-	// ponytail: full edict resend per HUD write; revisit only if a layout is updated per tick.
+	// Marks the whole state (hence the whole entity) for a full network resend.
 	void MarkFullChanged()
 	{
 		NetworkStateChangedData data(true);
 		CALL_VIRTUAL(void, 1, this, &data);
+	}
+
+	void MarkElementChanged(const SchemaKey &key, int arrayIndex)
+	{
+		if (!key.networked)
+		{
+			MarkFullChanged();
+			return;
+		}
+		NetworkStateChangedData data((uint32)key.offset, arrayIndex);
+		CALL_VIRTUAL(void, 1, this, &data);
+	}
+
+	void MarkHasClassChanged(int arrayIndex)
+	{
+		static const SchemaKey key = schema::GetOffset(m_className, m_classNameHash, "m_vecHasClasses", hash_32_fnv1a_const("m_vecHasClasses"));
+		MarkElementChanged(key, arrayIndex);
+	}
+
+	void MarkDialogVarChanged(int arrayIndex)
+	{
+		static const SchemaKey key =
+			schema::GetOffset(m_className, m_classNameHash, "m_vecDialogVariableStrings", hash_32_fnv1a_const("m_vecDialogVariableStrings"));
+		MarkElementChanged(key, arrayIndex);
 	}
 
 	// Sets the status of an interned (panelId, className) pair, appending the entry when missing.
@@ -73,7 +93,7 @@ public:
 			if (*entry->m_nPanelIdIndex() == panelIdIndex && *entry->m_nClassNameIndex() == classNameIndex)
 			{
 				*entry->m_eClassStatus() = status;
-				MarkFullChanged();
+				MarkHasClassChanged(i);
 				return true;
 			}
 		}
@@ -105,7 +125,7 @@ public:
 			if (*entry->m_nPanelIdIndex() == panelIdIndex && *entry->m_nDialogVariableIndex() == dialogVariableIndex)
 			{
 				*entry->m_bIsSet() = false;
-				MarkFullChanged();
+				MarkDialogVarChanged(i);
 				return true;
 			}
 		}
@@ -126,7 +146,7 @@ public:
 			{
 				*entry->m_sValue() = value;
 				*entry->m_bIsSet() = true;
-				MarkFullChanged();
+				MarkDialogVarChanged(i);
 				return true;
 			}
 		}
@@ -146,13 +166,6 @@ public:
 		return true;
 	}
 };
-
-// CCSUsrMsg_CustomHudClicked packs the clicked layout into 24 bits: a 14 bit entity index and the
-// low 10 bits of the serial. 0xFFFFFF is the "no layout" default the proto declares.
-#define HUD_CLICK_HANDLE_INVALID      0xFFFFFF
-#define HUD_CLICK_HANDLE_INDEX_MASK   0x3FFF
-#define HUD_CLICK_HANDLE_SERIAL_SHIFT 14
-#define HUD_CLICK_HANDLE_SERIAL_MASK  0x3FF
 
 // BUGS:
 // 1. Switching which player you observe merges HUD states instead of replacing them.
@@ -182,11 +195,8 @@ public:
 	{
 		CCSCustomHudLayoutState *state = m_vecPlayerLayoutStates().Element(slot.Get());
 
-		// The client does not index this vector, it scans it for the entry whose m_playerSlot is
-		// its own: that is the only reason the field exists. The game pre-sizes the vector at
-		// spawn and leaves every entry on slot 0, so an unstamped entry means every player past
-		// slot 0 reads slot 0's classes, dialog variables and input capture flag instead of their
-		// own. Stamp it once, here, where every per-player write already funnels through.
+		// Every entry pre-sizes on slot 0; stamp the real slot so SetInputCaptureEnabled resolves
+		// past slot 0.
 		if (state && state->m_playerSlot().Get() != slot.Get())
 		{
 			state->m_playerSlot(slot);
@@ -202,25 +212,11 @@ public:
 		return SetHasClassOnState(GetGlobalLayoutState(), panelId, className, status);
 	}
 
-	// Set if a panel has a class for a single player. Overrides the all player value.
-	// Pass k_eHudPanelClassStatus_Undefined to defer to the all player value.
-	bool SetHasClassForPlayer(CPlayerSlot slot, const char *panelId, const char *className, EHudPanelClassStatus_t status)
-	{
-		return SetHasClassOnState(GetPlayerLayoutState(slot), panelId, className, status);
-	}
-
 	// Set the value of a dialog variable. Applies to all players.
 	// The script API requires a value here; NULL clears the entry, which it has no way to express.
 	bool SetDialogVariableString(const char *panelId, const char *variableName, const char *value)
 	{
 		return SetDialogVariableStringOnState(GetGlobalLayoutState(), panelId, variableName, value);
-	}
-
-	// Set the value of a dialog variable for a single player. Overrides the all player value.
-	// Pass NULL to defer to the all player value again.
-	bool SetDialogVariableStringForPlayer(CPlayerSlot slot, const char *panelId, const char *variableName, const char *value)
-	{
-		return SetDialogVariableStringOnState(GetPlayerLayoutState(slot), panelId, variableName, value);
 	}
 
 	// Force a player into cursor mode and enable click detection on the panels of this layout.
@@ -242,12 +238,6 @@ public:
 	}
 
 private:
-	// The game keeps a CUtlHashtable next to each of these vectors to accelerate the same lookup.
-	// It is not a schema field, so this scans the networked vector instead and leaves the hashtable
-	// untouched. Harmless while the layout is only driven from here; a map script writing to the
-	// same layout would miss in its stale hashtable and intern a duplicate string, which still
-	// resolves correctly client side but burns an entry against the cap.
-	// ponytail: linear scan, fine at the game's own 1024 entry ceiling.
 	static int InternString(const CSchemaCollection<CUtlString> &strings, const char *str, bool &appended)
 	{
 		appended = false;
@@ -370,31 +360,13 @@ private:
 	}
 
 public:
-	// Resolves the packed layout handle out of a CCSUsrMsg_CustomHudClicked, NULL when it no longer
-	// names a live custom_hud_layout.
 	static CCSCustomHudLayout *FromClickHandle(uint32 packedHandle)
 	{
-		if (packedHandle == HUD_CLICK_HANDLE_INVALID)
-		{
-			return NULL;
-		}
-
-		int entityIndex = packedHandle & HUD_CLICK_HANDLE_INDEX_MASK;
-		CEntityInstance *instance = GameEntitySystem()->GetEntityInstance(CEntityIndex(entityIndex));
-
+		CEntityInstance *instance = CEntityHandle::FromPackedInt((int)packedHandle).Get();
 		if (!instance || V_strcmp(instance->GetClassname(), "custom_hud_layout") != 0)
 		{
 			return NULL;
 		}
-
-		// The serial is only carried as its low bits, so compare the same width the client sent.
-		uint32 serial = (packedHandle >> HUD_CLICK_HANDLE_SERIAL_SHIFT) & HUD_CLICK_HANDLE_SERIAL_MASK;
-
-		if ((instance->GetRefEHandle().GetSerialNumber() & HUD_CLICK_HANDLE_SERIAL_MASK) != serial)
-		{
-			return NULL;
-		}
-
 		return (CCSCustomHudLayout *)instance;
 	}
 };

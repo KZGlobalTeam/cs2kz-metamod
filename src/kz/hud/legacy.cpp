@@ -6,6 +6,7 @@
 
 #include "kz/language/kz_language.h"
 #include "kz/option/kz_option.h"
+#include "kz/option/menu/tables.h"
 #include "kz/replays/kz_replaysystem.h"
 
 #include <vendor/mm-cs2menus/src/public/ics2menus.h>
@@ -21,10 +22,12 @@ std::string KZHUDService::GetSpeedText(const char *language)
 		return KZLanguageService::PrepareMessageWithLang(language, "HUD - Speed Text", info.speed);
 	}
 	auto *opts = this->player->optionService;
-	const Color baseCol = opts->GetPreferenceColor("mhudSpeedColor", Color(0xFF, 0xFF, 0xFF, 0xFF));
-	const Color perfCol = opts->GetPreferenceColor("mhudPrespeedPerfColor", Color(0x40, 0xFF, 0x40, 0xFF));
-	const Color jumpbugCol = opts->GetPreferenceColor("mhudPrespeedJumpbugColor", Color(0xFF, 0xFF, 0x20, 0xFF));
-	const Color cjCol = opts->GetPreferenceColor("mhudSpeedCjColor", Color(0x71, 0xEE, 0xB8, 0xFF));
+	// The legacy HTML HUD prints a hex color, which a gradient has no equivalent for, so a gradient
+	// preference falls back to that element's default color (the shared MHUD_DEF_* the layout HUD uses).
+	const Color baseCol = panorama::ResolveSolidColor(opts->GetPreferenceColor("mhudSpeedColor", MHUD_DEF_BASE_COLOR), MHUD_DEF_BASE_COLOR);
+	const Color perfCol = panorama::ResolveSolidColor(opts->GetPreferenceColor("mhudPrespeedPerfColor", MHUD_DEF_PERF_COLOR), MHUD_DEF_PERF_COLOR);
+	const Color jumpbugCol = panorama::ResolveSolidColor(opts->GetPreferenceColor("mhudPrespeedJumpbugColor", MHUD_DEF_JUMPBUG_COLOR), MHUD_DEF_JUMPBUG_COLOR);
+	const Color cjCol = panorama::ResolveSolidColor(opts->GetPreferenceColor("mhudSpeedCjColor", MHUD_DEF_CJ_COLOR), MHUD_DEF_CJ_COLOR);
 	Color tintCol = info.jumpbug ? jumpbugCol : (info.perf ? perfCol : baseCol);
 	char colorBuf[24];
 	V_snprintf(colorBuf, sizeof(colorBuf), "<font color='#%02x%02x%02x'>", tintCol.r(), tintCol.g(), tintCol.b());

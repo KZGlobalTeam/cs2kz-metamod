@@ -1,4 +1,3 @@
-// What the movement HUD shows. How it reaches the client is entity.cpp's problem.
 #include "kz/hud/layout/layout.h"
 #include "kz/option/kz_option.h"
 #include "kz/option/menu/tables.h"
@@ -108,13 +107,12 @@ void KZHUDService::UpdateKeysElement(CCSCustomHudLayout *layout, KZPlayer *sourc
 		return;
 	}
 
-	const CPlayerSlot slot = this->player->GetPlayerSlot();
 	const bool hideIdle = this->IsMHUDKeysHidingUnpressed();
 	if (this->layoutKeys.hideIdle != hideIdle)
 	{
 		this->layoutKeys.hideIdle = hideIdle;
-		layout->SetHasClassForPlayer(slot, MHUD_ELEMENTS[(i32)MHUDElement::Keys].panelId, "hide-idle",
-									 hideIdle ? k_eHudPanelClassStatus_HasClass : k_eHudPanelClassStatus_DoesNotHaveClass);
+		layout->SetHasClass(MHUD_ELEMENTS[(i32)MHUDElement::Keys].panelId, "hide-idle",
+							hideIdle ? k_eHudPanelClassStatus_HasClass : k_eHudPanelClassStatus_DoesNotHaveClass);
 	}
 	for (i32 i = 0; i < KZ_ARRAYSIZE(KEY_PANELS); i++)
 	{
@@ -123,12 +121,11 @@ void KZHUDService::UpdateKeysElement(CCSCustomHudLayout *layout, KZPlayer *sourc
 			continue;
 		}
 		this->layoutKeys.pressed[i] = keys[i];
-		layout->SetHasClassForPlayer(slot, KEY_PANELS[i], "pressed",
-									 keys[i] ? k_eHudPanelClassStatus_HasClass : k_eHudPanelClassStatus_DoesNotHaveClass);
+		layout->SetHasClass(KEY_PANELS[i], "pressed", keys[i] ? k_eHudPanelClassStatus_HasClass : k_eHudPanelClassStatus_DoesNotHaveClass);
 	}
 
 	const MHUDElementDef &def = MHUD_ELEMENTS[(i32)MHUDElement::Keys];
-	const i32 size = PanoramaSnapToStep((i32)opts->GetPreferenceFloat(def.sizeKey, def.sizeDefault), 0, 500);
+	const i32 size = panorama::SnapToStep((i32)opts->GetPreferenceFloat(def.sizeKey, def.sizeDefault), 0, 500);
 	if (this->layoutKeys.fontSize != size)
 	{
 		char className[64];
@@ -137,10 +134,10 @@ void KZHUDService::UpdateKeysElement(CCSCustomHudLayout *layout, KZPlayer *sourc
 			if (this->layoutKeys.fontSize != INT_MIN)
 			{
 				V_snprintf(className, sizeof(className), "font-size--%ipx", this->layoutKeys.fontSize);
-				layout->SetHasClassForPlayer(slot, KEY_PANELS[i], className, k_eHudPanelClassStatus_DoesNotHaveClass);
+				layout->SetHasClass(KEY_PANELS[i], className, k_eHudPanelClassStatus_DoesNotHaveClass);
 			}
 			V_snprintf(className, sizeof(className), "font-size--%ipx", size);
-			layout->SetHasClassForPlayer(slot, KEY_PANELS[i], className, k_eHudPanelClassStatus_HasClass);
+			layout->SetHasClass(KEY_PANELS[i], className, k_eHudPanelClassStatus_HasClass);
 		}
 		this->layoutKeys.fontSize = size;
 	}
@@ -152,9 +149,9 @@ void KZHUDService::UpdateKeysElement(CCSCustomHudLayout *layout, KZPlayer *sourc
 		{
 			if (this->layoutKeys.fontClass)
 			{
-				layout->SetHasClassForPlayer(slot, KEY_PANELS[i], this->layoutKeys.fontClass, k_eHudPanelClassStatus_DoesNotHaveClass);
+				layout->SetHasClass(KEY_PANELS[i], this->layoutKeys.fontClass, k_eHudPanelClassStatus_DoesNotHaveClass);
 			}
-			layout->SetHasClassForPlayer(slot, KEY_PANELS[i], fontClass, k_eHudPanelClassStatus_HasClass);
+			layout->SetHasClass(KEY_PANELS[i], fontClass, k_eHudPanelClassStatus_HasClass);
 		}
 		this->layoutKeys.fontClass = fontClass;
 	}
@@ -168,24 +165,22 @@ void KZHUDService::UpdateCheckpointElement(CCSCustomHudLayout *layout, KZPlayer 
 	this->UpdateLayoutElement(layout, MHUDElement::Checkpoint, show, text.c_str(), color, force);
 }
 
-bool KZHUDService::UpdateHudLayout(KZPlayer *source, bool show)
+bool KZHUDService::UpdateHudLayout(KZPlayer *source)
 {
-	CCSCustomHudLayout *layout = KZHUDService::GetLayoutEntity(KZ_MHUD_LAYOUT, g_hMHUDLayout);
-	if (!layout || !layout->GetPlayerLayoutState(this->player->GetPlayerSlot()))
+	bool created = false;
+	CCSCustomHudLayout *layout = this->EnsureOwnedLayout(created);
+	if (!layout)
 	{
 		return false;
 	}
-
-	// A new map or a reloaded plugin means a new entity holding none of our cached classes.
-	const bool force = this->layoutEntity.Get() != (CBaseEntity *)layout;
-	if (force)
-	{
-		this->layoutEntity = layout->GetRefEHandle();
-	}
+	const bool force = created;
+	const bool show = this->IsShowingPanel() && this->IsUsingLayoutStyle();
 
 	if (!show)
 	{
-		// Collapse everything without touching source: it may be a dead or departing player.
+		// Panel off or the legacy style is selected: collapse every element. UpdateLayoutElement with
+		// show=false only applies the hidden class and returns before reading any value, so the text and
+		// color passed here are ignored (MHUD_DEF_BASE_COLOR is just a placeholder).
 		for (i32 i = 0; i < (i32)MHUDElement::Count; i++)
 		{
 			this->UpdateLayoutElement(layout, (MHUDElement)i, false, NULL, MHUD_DEF_BASE_COLOR, force);

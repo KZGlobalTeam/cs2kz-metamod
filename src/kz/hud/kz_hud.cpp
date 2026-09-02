@@ -11,6 +11,7 @@
 #include "kz/checkpoint/kz_checkpoint.h"
 #include "kz/language/kz_language.h"
 #include "kz/replays/kz_replaysystem.h"
+#include "sdk/entity/ccscustomhudlayout.h"
 
 #include <vendor/MultiAddonManager/public/imultiaddonmanager.h>
 extern IMultiAddonManager *g_pMultiAddonManager;
@@ -191,8 +192,7 @@ void KZHUDService::DrawPanels(KZPlayer *player, KZPlayer *target)
 	{
 		return;
 	}
-
-	target->hudService->UpdateHudLayout(target, target->hudService->IsShowingPanel() && target->hudService->IsUsingLayoutStyle());
+	target->hudService->UpdateHudLayout(player);
 
 	KZHUDService::DrawLegacyPanels(player, target);
 }

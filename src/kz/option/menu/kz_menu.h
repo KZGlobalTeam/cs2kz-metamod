@@ -1,79 +1,31 @@
 #pragma once
 #include "kz/kz.h"
+#include "kz/option/menu/model.h"
 
 #include <string>
+#include <unordered_map>
 #include <vector>
 
 class CCSCustomHudLayout;
-class KZMenuPage;
+class CCheckTransmitInfo;
 
-// Row label helpers.
+// Fixed slot counts, kept in step with menu.xml.
+#define KZ_MENU_CATS   20
+#define KZ_MENU_ITEMS  16
+#define KZ_MENU_LIST   12
+#define KZ_MENU_SWATCH 40 // 10 columns x 4 rows per color page
+
 std::string KZMenuPhrase(KZPlayer *player, const char *key);
-std::string KZMenuToggleLabel(KZPlayer *player, const char *phraseKey, bool on);
-std::string KZMenuValueLabel(KZPlayer *player, const char *phraseKey, const char *value);
 
-// Keep in step with the row count in the mhud addon's menu.xml.
-#define KZ_MENU_ROWS 20
-
-struct KZMenuContext
-{
-	i32 index {};
-	i32 sub {};
-};
-
-struct KZMenuRow
-{
-	std::string label;
-	const char *colorClass {}; // NULL: the player's menu color
-	KZMenuPage *submenu {};    // non-NULL: a click opens it with param as its context
-	KZMenuContext param {};
-	bool disabled {}; // drawn greyed out and not clickable
-};
-
-// One screen of the options menu. `context` is the param of the row that opened the page.
-class KZMenuPage
-{
-public:
-	virtual ~KZMenuPage() {}
-
-	virtual std::string GetTitle(KZPlayer *player, KZMenuContext context) = 0;
-
-	virtual void BuildRows(KZPlayer *player, KZMenuContext context, std::vector<KZMenuRow> &rows) {}
-
-	virtual void OnRowPicked(KZPlayer *player, KZMenuContext context, KZMenuContext param) {}
-
-	// A stepper page draws the -5/-1/+1/+5 block instead of the row list.
-	virtual bool IsStepper() const
-	{
-		return false;
-	}
-
-	virtual bool HasVerticalStep() const
-	{
-		return false;
-	}
-
-	virtual std::string GetStepReadout(KZPlayer *player, KZMenuContext context)
-	{
-		return "";
-	}
-
-	virtual void OnStep(KZPlayer *player, KZMenuContext context, bool vertical, i32 delta) {}
-
-	virtual void OnEnter(KZPlayer *player, KZMenuContext context) {}
-
-	virtual void OnLeave(KZPlayer *player, KZMenuContext context) {}
-};
-
+// Renders the KZMenu model tree into the three-pane menu.xml on the player's own (masked) layout
+// entity, and routes clicks back to it. No page stack: categories/subcategories on the left, the
+// selected node's typed items in the middle, and color / list / stepper popups docked to the side.
 class KZMenuService : public KZBaseService
 {
 	using KZBaseService::KZBaseService;
 
 public:
 	static void Init();
-	// Adds a row to the root page. Registration order is row order.
-	static void RegisterCategory(KZMenuPage *page, KZMenuContext context = {});
-
 	virtual void Reset() override;
 
 	void Toggle();
@@ -84,68 +36,147 @@ public:
 		return this->open;
 	}
 
-	void OpenPage(KZMenuPage *page, KZMenuContext context);
-	void GoBack();
-	void Refresh();
-
 	static void OnCustomHudClicked(CPlayerSlot slot, CCSCustomHudLayout *layout, const char *buttonId);
 	// The plugin is going away with the click handler in it, so nothing may stay captured.
 	static void Cleanup();
+	// Masks each player's owned menu entity away from every client but its owner. Called from
+	// Hook_CheckTransmit.
+	static void OnCheckTransmit(CCheckTransmitInfo **pInfo, int infoCount);
+
+	// Closes the menu and destroys this player's owned entity when they leave.
+	void OnClientDisconnect();
 
 private:
-	void Render();
-	void PickRow(i32 row);
-	void ApplyStep(bool vertical, i32 delta);
-	void DropCapture();
-
-	struct Frame
+	enum class Popup
 	{
-		KZMenuPage *page {};
-		KZMenuContext context {};
-		i32 scroll {};
+		None,
+		Color,
+		List,
+		Step,
 	};
 
+	struct LeftEntry
+	{
+		KZOptNode *node {};
+		bool isSub {};
+		i32 categoryIndex {};
+		i32 subIndex {};
+	};
+
+	// This player's own menu entity, masked to them (OnCheckTransmit) and lazily spawned. `created` is
+	// set true when this call spawned a fresh one, so the caller can rebuild its per-entity caches.
+	CCSCustomHudLayout *EnsureMenuLayout(bool &created);
+	// EnsureMenuLayout for callers that do not care whether it was just created.
+	CCSCustomHudLayout *MenuLayout();
+	// Remove this player's menu entity. Safe to call when there is none.
+	void DestroyOwnedLayout();
+	// Hand movement control back to the player: drop cursor capture and release the cs2menus slot.
+	void DropCapture();
+
+	// The category or subcategory whose items are currently shown, or NULL if none is selectable.
+	KZOptNode *ActiveNode();
+	// Flatten the visible left column (categories plus the selected category's subs) into leftSlots;
+	// returns the entry count.
+	i32 BuildLeft();
+
+	// Push the whole menu state to the layout. Cheap to call repeatedly: writes are diff-cached.
+	void Render();
+	// Render one region of the menu (all called from Render).
+	void RenderChrome(CCSCustomHudLayout *layout);
+	void RenderLeft(CCSCustomHudLayout *layout);
+	void RenderItems(CCSCustomHudLayout *layout);
+	void RenderColorPopup(CCSCustomHudLayout *layout);
+	void RenderListPopup(CCSCustomHudLayout *layout);
+	void RenderStepPopup(CCSCustomHudLayout *layout);
+
+	// Click handlers: pick a left-column entry, activate a middle item, drive the open popup.
+	void SelectLeft(i32 slot);
+	void ActivateItem(i32 slot);
+	void OpenPopup(Popup kind, i32 itemIdx);
+	void ClosePopup();
+	void PopupPageStep(i32 delta);
+	void PopupPick(i32 slot);
+	void Step(bool vertical, i32 delta);
+
+	// The item the open popup is editing, or NULL if the popup kind and the item's type disagree.
+	const KZOptItem *PopupItem();
+
+	// Class writes are diff-cached: additive classes are never cleared wholesale, so a stale one is
+	// removed by hand when it changes. SetVar diff-caches dialog variables too (see writtenVars) since
+	// each write marks the whole entity for a full network resend.
+	void SetClass(CCSCustomHudLayout *layout, const char *panelId, const char *className, bool on);
+	void SetBoolClass(CCSCustomHudLayout *layout, const char *panelId, const char *className, bool &cache, bool want);
+	void SetSwapClass(CCSCustomHudLayout *layout, const char *panelId, const char *&cache, const char *want);
+	void SetVar(CCSCustomHudLayout *layout, const char *panelId, const char *var, const char *value);
+
 	bool open {};
-	std::vector<Frame> stack;
-	// Bumped by anything that changes the page, so a row action that navigated is not re-rendered.
-	i32 navSerial {};
+	i32 selectedCategory {};
+	i32 selectedSub {-1};
+	Popup popup {Popup::None};
+	i32 popupItemIndex {-1};
+	bool popupFont {}; // List popup: font faces vs a Choice provider
+	i32 popupPage {};
 
-	// TODO: Is this really necessary?
-	struct WrittenState
+	CHandle<CBaseEntity> layoutEntity {};
+
+	// Snapshot of what is on screen, so a click routes without rebuilding.
+	LeftEntry leftSlots[KZ_MENU_CATS] {};
+	i32 leftCount {};
+	const KZOptItem *itemSlots[KZ_MENU_ITEMS] {};
+	i32 itemCount {};
+	std::vector<KZChoice> listChoices; // the open list popup's full option list
+
+	// Last value written for each dialog variable, so an unchanged value is not resent.
+	std::unordered_map<std::string, std::string> writtenVars;
+
+	// The classes currently applied on the layout, so a render only writes what changed. Additive
+	// classes are never cleared wholesale (see SetSwapClass/SetBoolClass), so every toggled class is
+	// tracked here. Pointer fields hold the class string last applied on that panel (NULL = none).
+	struct Applied
 	{
-		std::string title {};
-		std::string step {};
-		std::string rowText[KZ_MENU_ROWS] {};
-	} written;
+		const char *menuFont {};  // menu font class stamped on the text panels
+		const char *menuColor {}; // menu color (pal-fg) class stamped on the text panels
+		bool rootHidden {true};   // menu_root "hidden"
+		bool colorHidden {true};  // color_popup "hidden"
+		bool listHidden {true};   // list_popup "hidden"
+		bool stepHidden {true};   // step_popup "hidden"
+		bool vstepHidden {true};  // the stepper's vertical rows "hidden" (shown only for Position)
+		// Left column, one slot each:
+		bool catHidden[KZ_MENU_CATS] {};   // slot "hidden" (unused)
+		bool catSel[KZ_MENU_CATS] {};      // "selected" (active node)
+		bool catIndent[KZ_MENU_CATS] {};   // "indent" (a subcategory)
+		bool catParent[KZ_MENU_CATS] {};   // "cat-parent" (top-level header styling)
+		bool catDisabled[KZ_MENU_CATS] {}; // "disabled" (active category with a sub open)
+		// Middle column, one slot each:
+		bool itemHidden[KZ_MENU_ITEMS] {};        // slot "hidden" (unused)
+		const char *itemType[KZ_MENU_ITEMS] {};   // the "type-*" control class
+		bool itemOn[KZ_MENU_ITEMS] {};            // toggle "on"
+		bool itemSub[KZ_MENU_ITEMS] {};           // "has-sub" (subtext line shown)
+		bool itemDiv[KZ_MENU_ITEMS] {};           // "divider" (rule under the item, unused)
+		const char *itemSwatch[KZ_MENU_ITEMS] {}; // color item's pal-bg swatch class
+		// List popup rows, one slot each:
+		bool liHidden[KZ_MENU_LIST] {};         // row "hidden"
+		bool liSel[KZ_MENU_LIST] {};            // "selected" (current choice)
+		const char *liFont[KZ_MENU_LIST] {};    // per-row font class (font picker previews its face)
+		// Color popup swatches, one slot each:
+		const char *swBg[KZ_MENU_SWATCH] {}; // swatch's pal-bg / gbg class
+		bool swSel[KZ_MENU_SWATCH] {};       // "selected" (the item's current color)
+		bool swHidden[KZ_MENU_SWATCH] {};    // swatch "hidden" (trailing empty slots on the last page)
 
-	// Every default has to match what menu.xml ships.
-	struct AppliedClasses
-	{
-		const char *rowColor[KZ_MENU_ROWS] {};
-		const char *fontClass {};
-		bool rowHidden[KZ_MENU_ROWS] {};
-		bool rowDisabled[KZ_MENU_ROWS] {};
-		bool rootHidden {true};
-		bool rowsHidden {};
-		bool stepHidden {true};
-		bool vStepHidden {true};
-		bool prevHidden {true};
-		bool nextHidden {true};
-
-		AppliedClasses()
+		Applied()
 		{
-			for (i32 i = 0; i < KZ_MENU_ROWS; i++)
+			for (i32 i = 0; i < KZ_MENU_CATS; i++)
 			{
-				rowHidden[i] = true;
+				catHidden[i] = true;
+			}
+			for (i32 i = 0; i < KZ_MENU_ITEMS; i++)
+			{
+				itemHidden[i] = true;
+			}
+			for (i32 i = 0; i < KZ_MENU_LIST; i++)
+			{
+				liHidden[i] = true;
 			}
 		}
 	} applied;
-
-	// A new map means a new entity holding none of those classes.
-	CHandle<CBaseEntity> layoutEntity {};
-
-	// The page as it is on screen, so a click routes without rebuilding it.
-	KZMenuPage *rowPage[KZ_MENU_ROWS] {};
-	KZMenuContext rowParam[KZ_MENU_ROWS] {};
-	bool rowUsed[KZ_MENU_ROWS] {};
 };
