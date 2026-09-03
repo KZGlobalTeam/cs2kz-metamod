@@ -1,42 +1,18 @@
 #include "kz_racing.h"
 
-// ===== PlayerInfo =====
-
-bool KZ::racing::PlayerInfo::ToJson(Json &json) const
+bool KZ::racing::RaceConfig::FromJson(const Json &json)
 {
-	std::string id = std::to_string(this->id);
-	return json.Set("id", id) && json.Set("name", this->name);
-}
+	std::string workshopID;
 
-bool KZ::racing::PlayerInfo::FromJson(const Json &json)
-{
-	std::string id;
-
-	if (!json.Get("id", id))
+	if (!json.Get("map_workshop_id", workshopID))
 	{
 		return false;
 	}
 
-	this->id = atoll(id.c_str());
+	this->workshopID = atoi(workshopID.c_str());
 
-	return json.Get("name", this->name);
-}
-
-bool KZ::racing::RaceSpec::ToJson(Json &json) const
-{
 	// clang-format off
-	return json.Set("map_id", this->workshopID)
-		&& json.Set("course", this->courseName)
-		&& json.Set("mode", this->modeName)
-		&& json.Set("max_duration", this->maxDurationSeconds)
-		&& json.Set("max_teleports", this->maxTeleports);
-	// clang-format on
-}
-
-bool KZ::racing::RaceSpec::FromJson(const Json &json)
-{
-	// clang-format off
-	return json.Get("map_id", this->workshopID)
+	return json.Get("map_name", this->mapName)
 		&& json.Get("course", this->courseName)
 		&& json.Get("mode", this->modeName)
 		&& json.Get("max_duration", this->maxDurationSeconds)
@@ -44,146 +20,107 @@ bool KZ::racing::RaceSpec::FromJson(const Json &json)
 	// clang-format on
 }
 
+bool KZ::racing::RaceResult::FromJson(const Json &json)
+{
+	std::string status;
+
+	if (!json.Get("status", status))
+	{
+		return false;
+	}
+
+	if (status == "finished")
+	{
+		this->status = KZ::racing::RaceResult::Status::Finished;
+	}
+	else if (status == "surrendered")
+	{
+		this->status = KZ::racing::RaceResult::Status::Surrendered;
+	}
+	else if (status == "disconnected")
+	{
+		this->status = KZ::racing::RaceResult::Status::Disconnected;
+	}
+	else if (status == "did_not_finish")
+	{
+		this->status = KZ::racing::RaceResult::Status::DidNotFinish;
+	}
+	else
+	{
+		return false;
+	}
+
+	return json.Get("player_name", this->playerName) && json.Get("time", this->timeSeconds) && json.Get("teleports", this->teleports);
+}
+
 // ===== Events =====
 
 bool KZ::racing::events::ChatMessage::ToJson(Json &json) const
 {
-	return json.Set("player", this->player) && json.Set("content", this->content);
+	return json.Set("content", this->content) && json.Set("player", this->player);
 }
 
 bool KZ::racing::events::ChatMessage::FromJson(const Json &json)
 {
-	return json.Get("player", this->player) && json.Get("content", this->content);
+	return json.Get("content", this->content) && json.Get("player", this->player);
 }
 
-bool KZ::racing::events::RaceInitialized::FromJson(const Json &json)
+bool KZ::racing::events::RaceConfigured::FromJson(const Json &json)
 {
-	return this->spec.FromJson(json);
+	return this->conf.FromJson(json);
 }
 
-bool KZ::racing::events::ServerJoinRace::FromJson(const Json &json)
-{
-	return json.Get("name", this->name);
-}
-
-bool KZ::racing::events::ServerLeaveRace::FromJson(const Json &json)
-{
-	return json.Get("name", this->name);
-}
-
-bool KZ::racing::events::PlayerJoinRace::ToJson(Json &json) const
-{
-	return this->player.ToJson(json);
-}
-
-bool KZ::racing::events::PlayerJoinRace::FromJson(const Json &json)
-{
-	return this->player.FromJson(json);
-}
-
-bool KZ::racing::events::PlayerLeaveRace::ToJson(Json &json) const
-{
-	return this->player.ToJson(json);
-}
-
-bool KZ::racing::events::PlayerLeaveRace::FromJson(const Json &json)
-{
-	return this->player.FromJson(json);
-}
-
-bool KZ::racing::events::StartRace::FromJson(const Json &json)
+bool KZ::racing::events::RaceStarting::FromJson(const Json &json)
 {
 	return json.Get("countdown_duration", this->countdownSeconds);
 }
 
-bool KZ::racing::events::PlayerFinish::ToJson(Json &json) const
+bool KZ::racing::events::RaceCancelled::FromJson(const Json &json)
 {
-	// clang-format off
-	return this->player.ToJson(json)
-		&& json.Set("teleports", this->teleports)
-		&& json.Set("time", this->timeSeconds);
-	// clang-format on
-}
-
-bool KZ::racing::events::PlayerFinish::FromJson(const Json &json)
-{
-	// clang-format off
-	return this->player.FromJson(json)
-		&& json.Get("teleports", this->teleports)
-		&& json.Get("time", this->timeSeconds);
-	// clang-format on
-}
-
-bool KZ::racing::events::PlayerDisconnect::ToJson(Json &json) const
-{
-	return this->player.ToJson(json);
-}
-
-bool KZ::racing::events::PlayerDisconnect::FromJson(const Json &json)
-{
-	return this->player.FromJson(json);
-}
-
-bool KZ::racing::events::PlayerSurrender::ToJson(Json &json) const
-{
-	return this->player.ToJson(json);
-}
-
-bool KZ::racing::events::PlayerSurrender::FromJson(const Json &json)
-{
-	return this->player.FromJson(json);
-}
-
-bool KZ::racing::events::RaceResults::FromJson(const Json &json)
-{
-	return json.Get("participants", this->participants);
-}
-
-bool KZ::racing::events::RaceResults::Participant::FromJson(const Json &json)
-{
-	std::string id;
-
-	if (!json.Get("id", id))
-	{
-		return false;
-	}
-
-	this->id = atoll(id.c_str());
-
-	if (!json.Get("name", this->name))
-	{
-		return false;
-	}
-
-	std::string state;
-
-	if (!json.Get("state", state))
-	{
-		return false;
-	}
-
-	if (state == "disconnected")
-	{
-		this->state = State::Disconnected;
-	}
-	else if (state == "surrendered")
-	{
-		this->state = State::Surrendered;
-	}
-	else if (state == "did_not_finish")
-	{
-		this->state = State::DidNotFinish;
-	}
-	else if (state == "finished")
-	{
-		this->state = State::Finished;
-		return json.Get("teleports", this->teleports) && json.Get("time", this->timeSeconds);
-	}
-
 	return true;
 }
 
-bool KZ::racing::events::RaceFinished::FromJson(const Json &json)
+bool KZ::racing::events::RaceCompleted::FromJson(const Json &json)
 {
-	return this->results.FromJson(json);
+	return json.Get("results", this->results);
+}
+
+bool KZ::racing::events::PlayerReady::ToJson(Json &json) const
+{
+	return json.Set("player", this->player);
+}
+
+bool KZ::racing::events::PlayerReady::FromJson(const Json &json)
+{
+	return json.Get("player", this->player);
+}
+
+bool KZ::racing::events::PlayerFinished::ToJson(Json &json) const
+{
+	return json.Set("player", this->player) && json.Set("time", this->timeSeconds) && json.Set("teleports", this->teleports);
+}
+
+bool KZ::racing::events::PlayerFinished::FromJson(const Json &json)
+{
+	return json.Get("player", this->player) && json.Get("time", this->timeSeconds) && json.Get("teleports", this->teleports);
+}
+
+bool KZ::racing::events::PlayerSurrendered::ToJson(Json &json) const
+{
+	return json.Set("player", this->player);
+}
+
+bool KZ::racing::events::PlayerSurrendered::FromJson(const Json &json)
+{
+	return json.Get("player", this->player);
+}
+
+bool KZ::racing::events::PlayerDisconnected::ToJson(Json &json) const
+{
+	return json.Set("player", this->player);
+}
+
+bool KZ::racing::events::PlayerDisconnected::FromJson(const Json &json)
+{
+	return json.Get("player", this->player);
 }

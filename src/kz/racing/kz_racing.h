@@ -1,29 +1,40 @@
 #pragma once
 #include "../kz.h"
 #include "utils/json.h"
+#include "utils/ws.h"
 #include "public/steam/isteamugc.h"
-#include <vendor/ixwebsocket/ixwebsocket/IXWebSocket.h>
 
 namespace KZ::racing
 {
-	struct PlayerInfo
+	struct RaceConfig
 	{
-		u64 id {};
-		std::string name {};
+		std::string mapName;
+		std::string courseName;
+		u64 workshopID;
+		std::string modeName;
+		std::optional<u32> maxDurationSeconds;
+		std::optional<u32> maxTeleports;
 
-		bool ToJson(Json &json) const;
 		bool FromJson(const Json &json);
 	};
 
-	struct RaceSpec
+	struct RaceResult
 	{
-		u32 workshopID;
-		std::string courseName;
-		std::string modeName;
-		f64 maxDurationSeconds;
-		u32 maxTeleports;
+		enum class Status
+		{
+			Finished,
+			Surrendered,
+			Disconnected,
+			DidNotFinish,
+		};
 
-		bool ToJson(Json &json) const;
+		Status status;
+		std::string playerName;
+
+		// these two are only present if `status == Finished`
+		std::optional<f64> timeSeconds;
+		std::optional<u32> teleports;
+
 		bool FromJson(const Json &json);
 	};
 
@@ -31,155 +42,119 @@ namespace KZ::racing
 	{
 		struct ChatMessage
 		{
-			PlayerInfo player;
+			inline static constexpr const char *tag = "chat_message";
+
 			std::string content;
 
-			bool ToJson(Json &json) const;
-			bool FromJson(const Json &json);
-		};
+			// SteamID or name depending on whether we are the sender or recipient
+			std::string player;
 
-		struct RaceInitialized
-		{
-			RaceSpec spec;
+			ChatMessage() = default;
 
-			bool FromJson(const Json &json);
-		};
-
-		struct Ready
-		{
-			bool ToJson(Json &json) const
-			{
-				return true;
-			}
-		};
-
-		struct ServerJoinRace
-		{
-			std::string name;
-
-			bool FromJson(const Json &json);
-		};
-
-		struct Unready
-		{
-			bool ToJson(Json &json) const
-			{
-				return true;
-			}
-		};
-
-		struct ServerLeaveRace
-		{
-			std::string name;
-
-			bool FromJson(const Json &json);
-		};
-
-		struct PlayerJoinRace
-		{
-			PlayerInfo player;
+			ChatMessage(const std::string &content, u64 steamID) : content(content), player(std::to_string(steamID)) {}
 
 			bool ToJson(Json &json) const;
 			bool FromJson(const Json &json);
 		};
 
-		struct PlayerLeaveRace
+		struct RaceConfigured
 		{
-			PlayerInfo player;
+			inline static constexpr const char *tag = "race_configured";
 
-			bool ToJson(Json &json) const;
-			bool FromJson(const Json &json);
-		};
-
-		struct StartRace
-		{
-			f64 countdownSeconds;
+			RaceConfig conf;
 
 			bool FromJson(const Json &json);
 		};
 
-		struct PlayerFinish
+		struct RaceStarting
 		{
-			PlayerInfo player;
-			u32 teleports;
-			f64 timeSeconds;
+			inline static constexpr const char *tag = "race_starting";
 
-			bool ToJson(Json &json) const;
-			bool FromJson(const Json &json);
-		};
-
-		struct PlayerDisconnect
-		{
-			PlayerInfo player;
-
-			bool ToJson(Json &json) const;
-			bool FromJson(const Json &json);
-		};
-
-		struct PlayerSurrender
-		{
-			PlayerInfo player;
-
-			bool ToJson(Json &json) const;
-			bool FromJson(const Json &json);
-		};
-
-		struct RaceResults
-		{
-			struct Participant
-			{
-				enum class State
-				{
-					Disconnected,
-					Surrendered,
-					DidNotFinish,
-					Finished,
-				};
-
-				u64 id;
-				std::string name;
-				State state;
-
-				// These are only initialized when `state == State::Finished`.
-				u32 teleports;
-				f64 timeSeconds;
-
-				bool FromJson(const Json &json);
-			};
-
-			std::vector<Participant> participants;
+			u64 countdownSeconds;
 
 			bool FromJson(const Json &json);
-		};
-
-		struct RaceFinished
-		{
-			RaceResults results;
-
-			bool ToJson(Json &json) const
-			{
-				return true;
-			}
-
-			bool FromJson(const Json &json);
-		};
-
-		struct CancelRace
-		{
-			bool ToJson(Json &json) const
-			{
-				return true;
-			}
 		};
 
 		struct RaceCancelled
 		{
-			bool FromJson(const Json &json)
-			{
-				return true;
-			}
+			inline static constexpr const char *tag = "race_cancelled";
+
+			bool FromJson(const Json &json);
 		};
 
+		struct RaceCompleted
+		{
+			inline static constexpr const char *tag = "race_completed";
+
+			std::vector<RaceResult> results;
+
+			bool FromJson(const Json &json);
+		};
+
+		struct PlayerReady
+		{
+			inline static constexpr const char *tag = "player_ready";
+
+			// SteamID or name depending on whether we are the sender or recipient
+			std::string player;
+
+			PlayerReady() = default;
+
+			PlayerReady(u64 steamID) : player(std::to_string(steamID)) {}
+
+			bool ToJson(Json &json) const;
+			bool FromJson(const Json &json);
+		};
+
+		struct PlayerFinished
+		{
+			inline static constexpr const char *tag = "player_finished";
+
+			// SteamID or name depending on whether we are the sender or recipient
+			std::string player;
+			f64 timeSeconds;
+			u32 teleports;
+
+			PlayerFinished() = default;
+
+			PlayerFinished(u64 steamID, f64 timeSeconds, u32 teleports)
+				: player(std::to_string(steamID)), timeSeconds(timeSeconds), teleports(teleports)
+			{
+			}
+
+			bool ToJson(Json &json) const;
+			bool FromJson(const Json &json);
+		};
+
+		struct PlayerSurrendered
+		{
+			inline static constexpr const char *tag = "player_surrendered";
+
+			// SteamID or name depending on whether we are the sender or recipient
+			std::string player;
+
+			PlayerSurrendered() = default;
+
+			PlayerSurrendered(u64 steamID) : player(std::to_string(steamID)) {}
+
+			bool ToJson(Json &json) const;
+			bool FromJson(const Json &json);
+		};
+
+		struct PlayerDisconnected
+		{
+			inline static constexpr const char *tag = "player_disconnected";
+
+			// SteamID or name depending on whether we are the sender or recipient
+			std::string player;
+
+			PlayerDisconnected() = default;
+
+			PlayerDisconnected(u64 steamID) : player(std::to_string(steamID)) {}
+
+			bool ToJson(Json &json) const;
+			bool FromJson(const Json &json);
+		};
 	}; // namespace events
 }; // namespace KZ::racing
 
@@ -193,10 +168,10 @@ struct RaceInfo
 	};
 
 	State state = State::None;
-	KZ::racing::RaceSpec spec;
-	std::vector<KZ::racing::PlayerInfo> localParticipants;
+	KZ::racing::RaceConfig conf;
+	std::vector<u64> localParticipants;
 	// This also includes people who surrendered.
-	std::vector<KZ::racing::PlayerInfo> localFinishers;
+	std::vector<u64> localFinishers;
 	// Server-side only
 	i32 earliestStartTick;
 };
@@ -229,7 +204,7 @@ public:
 	static inline std::atomic<State> state = State::Uninitialized;
 
 	// INVARIANT: should be `nullptr` when `state == Uninitialized`, and a valid pointer otherwise
-	static inline std::unique_ptr<ix::WebSocket> socket = nullptr;
+	static inline std::unique_ptr<KZWebSocket::Handle> socket = nullptr;
 
 	static void Init();
 	static void Cleanup();
@@ -248,35 +223,26 @@ public:
 	// Note that unlike the global service, these functions do not have callbacks from the coordinator.
 	// The server only acts upon receiving broadcasted messages from the coordinator.
 
-	static void SendInitRace(u32 workshopID, std::string courseName, std::string modeName, f64 maxDurationSeconds, u32 maxTeleports);
-	static void SendCancelRace();
-	static void SendReady();
-	static void SendUnready();
-	void SendJoinRace();
-	void SendLeaveRace();
-	void SendDisconnect();
+	void SendReady();
+	void SendDisconnected();
 	void SendSurrenderRace();
 	void SendFinishRace(f64 timeSeconds, u32 teleports);
-	static void SendRaceFinished();
 
 	void SendChatMessage(const std::string &message);
 
 	/* ===== Receiving events =====*/
 	// Called on the WS thread and is therefore async.
-	static void OnWebSocketMessage(const ix::WebSocketMessagePtr &message);
+	static void OnWebSocketMessage(KZWebSocket &socket, const ix::WebSocketMessagePtr &message);
 	// Called on the main thread.
 	static void OnChatMessage(const KZ::racing::events::ChatMessage &message);
-	static void OnRaceInitialized(const KZ::racing::events::RaceInitialized &message);
-	static void OnStartRace(const KZ::racing::events::StartRace &message);
+	static void OnRaceConfigured(const KZ::racing::events::RaceConfigured &message);
+	static void OnRaceStarting(const KZ::racing::events::RaceStarting &message);
 	static void OnRaceCancelled(const KZ::racing::events::RaceCancelled &message);
-	static void OnRaceFinished(const KZ::racing::events::RaceFinished &message);
-	static void OnServerJoinRace(const KZ::racing::events::ServerJoinRace &message);
-	static void OnServerLeaveRace(const KZ::racing::events::ServerLeaveRace &message);
-	static void OnPlayerJoinRace(const KZ::racing::events::PlayerJoinRace &message);
-	static void OnPlayerLeaveRace(const KZ::racing::events::PlayerLeaveRace &message);
-	static void OnPlayerFinish(const KZ::racing::events::PlayerFinish &message);
-	static void OnPlayerDisconnect(const KZ::racing::events::PlayerDisconnect &message);
-	static void OnPlayerSurrender(const KZ::racing::events::PlayerSurrender &message);
+	static void OnRaceCompleted(const KZ::racing::events::RaceCompleted &message);
+	static void OnPlayerReady(const KZ::racing::events::PlayerReady &message);
+	static void OnPlayerFinished(const KZ::racing::events::PlayerFinished &message);
+	static void OnPlayerSurrendered(const KZ::racing::events::PlayerSurrendered &message);
+	static void OnPlayerDisconnected(const KZ::racing::events::PlayerDisconnected &message);
 
 	/**
 	 * Process queued callbacks on the main thread.
@@ -338,41 +304,17 @@ public:
 
 private:
 	/**
-	 * Prepares a message to be sent to the API.
-	 */
-	template<typename T>
-	static bool PrepareMessage(std::string_view event, const T &data, Json &payload)
-	{
-		bool success = payload.Set("event", event) && payload.Set("data", data);
-
-		if (!success)
-		{
-			KZ_LOG_WARN(LogChannel::Racing, "Failed to serialize message for event `%.*s`.\n", (int)event.size(), event.data());
-		}
-
-		return success;
-	}
-
-	/**
 	 * Sends a message to the API.
 	 */
 	template<typename T>
-	static bool SendMessage(std::string_view event, const T &data)
+	static bool SendMessage(const T &data)
 	{
 		if (KZRacingService::state.load() != KZRacingService::State::Connected)
 		{
 			return false;
 		}
 
-		Json payload;
-
-		if (!KZRacingService::PrepareMessage(event, data, payload))
-		{
-			return false;
-		}
-
-		KZRacingService::socket->send(payload.ToString());
-		return true;
+		return KZRacingService::socket->SendMessage(data);
 	}
 
 	/**

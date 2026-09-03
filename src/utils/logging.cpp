@@ -47,6 +47,7 @@ static KZChannel_t g_KZChannels[] = {
 	{LogChannel::Timer, "CS2KZ::Timer", INVALID_LOGGING_CHANNEL_ID},
 	{LogChannel::Tip, "CS2KZ::Tip", INVALID_LOGGING_CHANNEL_ID},
 	{LogChannel::Trigger, "CS2KZ::Trigger", INVALID_LOGGING_CHANNEL_ID},
+	{LogChannel::WS, "CS2KZ::WebSocket", INVALID_LOGGING_CHANNEL_ID},
 };
 
 static void PurgeLogs()
