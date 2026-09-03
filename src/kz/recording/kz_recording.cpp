@@ -214,9 +214,12 @@ void KZRecordingService::RecordCommand(PlayerCommand *cmds, i32 numCmds)
 		time(&unixTime);
 		data.unixTime = (u64)unixTime;
 		INetChannelInfo *netchan = interfaces::pEngine->GetPlayerNetInfo(this->player->GetPlayerSlot());
-		netchan->GetRemoteFramerate(&data.framerate, nullptr, nullptr);
-		data.latency = netchan->GetEngineLatency();
-		data.avgLoss = netchan->GetAvgLoss(FLOW_INCOMING) + netchan->GetAvgChoke(FLOW_INCOMING);
+		if (netchan)
+		{
+			netchan->GetRemoteFramerate(&data.framerate, nullptr, nullptr);
+			data.latency = netchan->GetEngineLatency();
+			data.avgLoss = netchan->GetAvgLoss(FLOW_INCOMING) + netchan->GetAvgChoke(FLOW_INCOMING);
+		}
 		data.cmdNumber = pc.cmdNum;
 		data.clientTick = pc.base().client_tick();
 		data.forward = pc.base().has_forwardmove() ? pc.base().forwardmove() : 0;

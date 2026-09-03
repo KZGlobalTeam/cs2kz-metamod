@@ -63,6 +63,10 @@ void KZAnticheatService::CreateInputEvents(PlayerCommand *cmd)
 	};
 
 	INetChannelInfo *netchan = interfaces::pEngine->GetPlayerNetInfo(this->player->GetPlayerSlot());
+	if (!netchan)
+	{
+		return;
+	}
 	bool airborne = (this->player->GetPlayerPawn()->m_fFlags() & FL_ONGROUND) == 0 && this->player->GetMoveType() == MOVETYPE_WALK;
 	// This isn't the actual airspeed at the time of the input, but it's close enough for our purposes.
 	f32 airSpeed = airborne ? this->player->moveDataPost.m_vecVelocity.Length2D() : -1.0f;

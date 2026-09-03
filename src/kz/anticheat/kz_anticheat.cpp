@@ -95,6 +95,10 @@ void KZAnticheatService::OnSetupMove(PlayerCommand *cmd)
 
 void KZAnticheatService::OnPhysicsSimulatePost()
 {
+	if (this->player->IsFakeClient() || this->player->IsCSTV())
+	{
+		return;
+	}
 	if (!this->ShouldRunDetections())
 	{
 		this->ClearDetectionBuffers();
