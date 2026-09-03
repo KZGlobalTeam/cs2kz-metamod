@@ -17,7 +17,8 @@
 #define SUBTICK_ZERO_WHEN_RATIO_THRESHOLD  0.9f
 
 // The engine's own limits on a subtick move list, from CCSPlayer_MovementServices.
-#define MAX_SUBTICK_MOVES        32
+// Not to be confused with MAX_SUBTICK_MOVES, which is how many the replay format stores.
+#define ENGINE_MAX_SUBTICK_MOVES 32
 #define MAX_SUBTICK_MOVE_IMPULSE 2.0f
 // One button per subtick move, and only the ones the engine knows how to apply.
 #define SUBTICK_MOVE_BUTTON_MASK (IN_ATTACK | IN_ATTACK2 | IN_JUMP | IN_DUCK | IN_FORWARD | IN_BACK | IN_MOVELEFT | IN_MOVERIGHT)
@@ -94,7 +95,7 @@ static_global bool HasExcessiveSubtickMovesWithAngles(const PlayerCommand &cmd)
 // the same as a command that carried no subtick moves at all.
 KZAnticheatService::SubtickRejection KZAnticheatService::VerifySubtickMoves(const PlayerCommand *cmd, f32 forwardAxis, f32 sideAxis)
 {
-	if (cmd->base().subtick_moves_size() > MAX_SUBTICK_MOVES)
+	if (cmd->base().subtick_moves_size() > ENGINE_MAX_SUBTICK_MOVES)
 	{
 		return SubtickRejection::MoveCount;
 	}

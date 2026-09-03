@@ -31,21 +31,15 @@
 
 CConVar<bool> kz_ac_nulls_debug("kz_ac_nulls_debug", FCVAR_CHEAT, "Enable nulls detector debug messages", false);
 
-// forwardmove/sizemove/upmove is rejected by the server if it's over 10.
-// In reality this never happens (either 0 or 1), but this matches what the server does.
-static_global f32 SanitizeMoveValue(f32 value)
-{
-	if (value != value || fabsf(value) >= 10.0f)
-	{
-		return 0.0f;
-	}
-	return value;
-}
-
 void KZAnticheatService::CreateInputEvents(PlayerCommand *cmd)
 {
 	// Ignore bots.
 	if (this->player->IsFakeClient() || this->player->IsCSTV())
+	{
+		return;
+	}
+	INetChannelInfo *netchan = interfaces::pEngine->GetPlayerNetInfo(this->player->GetPlayerSlot());
+	if (!netchan)
 	{
 		return;
 	}
@@ -62,45 +56,54 @@ void KZAnticheatService::CreateInputEvents(PlayerCommand *cmd)
 		return axis < 0.0f ? negative : 0;
 	};
 
-	INetChannelInfo *netchan = interfaces::pEngine->GetPlayerNetInfo(this->player->GetPlayerSlot());
-	if (!netchan)
-	{
-		return;
-	}
 	bool airborne = (this->player->GetPlayerPawn()->m_fFlags() & FL_ONGROUND) == 0 && this->player->GetMoveType() == MOVETYPE_WALK;
 	// This isn't the actual airspeed at the time of the input, but it's close enough for our purposes.
 	f32 airSpeed = airborne ? this->player->moveDataPost.m_vecVelocity.Length2D() : -1.0f;
 
-	// Emit the press/release pair implied by an axis crossing between directions. Anything the axis does
-	// while staying on one side of zero is a magnitude change, not a direction change, and carries no
-	// counter-strafe information.
-	auto emitTransition = [&](u64 wasHeld, u64 nowHeld, f32 when, bool analog)
+	auto push = [&](u64 button, bool pressed, f32 when, bool analog)
 	{
-		if (wasHeld == nowHeld)
+		InputEvent event {cmd->cmdNum, when, -1.0f, button, pressed, analog, airSpeed};
+		netchan->GetRemoteFramerate(&event.framerate, nullptr, nullptr);
+		if (button == IN_FORWARD || button == IN_BACK)
+		{
+			this->recentForwardBackwardEvents.push_back(event);
+		}
+		else // IN_MOVELEFT || IN_MOVERIGHT
+		{
+			this->recentLeftRightEvents.push_back(event);
+		}
+	};
+
+	// Move one axis to the given set of held buttons, emitting only what actually changes. Both directions of
+	// an axis can be held at once - that is exactly what an overlap is - so this cannot be derived from the
+	// movement impulses, which cancel to zero while both are down.
+	u64 &heldButtons = this->heldMovementButtons;
+	auto setHeld = [&](u64 positive, u64 negative, u64 target, f32 when, bool analog)
+	{
+		u64 axisMask = positive | negative;
+		u64 held = heldButtons & axisMask;
+		if (held == target)
 		{
 			return;
 		}
-		auto push = [&](u64 button, bool pressed)
+		// Release before press, so a swap with no gap reads as a perfect counter-strafe and not as an overlap.
+		if ((held & ~target) & positive)
 		{
-			InputEvent event {cmd->cmdNum, when, -1.0f, button, pressed, analog, airSpeed};
-			netchan->GetRemoteFramerate(&event.framerate, nullptr, nullptr);
-			if (button == IN_FORWARD || button == IN_BACK)
-			{
-				this->recentForwardBackwardEvents.push_back(event);
-			}
-			else // IN_MOVELEFT || IN_MOVERIGHT
-			{
-				this->recentLeftRightEvents.push_back(event);
-			}
-		};
-		if (wasHeld)
-		{
-			push(wasHeld, false);
+			push(positive, false, when, analog);
 		}
-		if (nowHeld)
+		if ((held & ~target) & negative)
 		{
-			push(nowHeld, true);
+			push(negative, false, when, analog);
 		}
+		if ((target & ~held) & positive)
+		{
+			push(positive, true, when, analog);
+		}
+		if ((target & ~held) & negative)
+		{
+			push(negative, true, when, analog);
+		}
+		heldButtons = (heldButtons & ~axisMask) | target;
 	};
 
 	if (cmd->base().subtick_moves_size() == 0 || VerifySubtickMoves(cmd, forwardAxis, sideAxis) != SubtickRejection::None)
@@ -109,59 +112,60 @@ void KZAnticheatService::CreateInputEvents(PlayerCommand *cmd)
 		// In such scenario, SetupMove derives the impulses from the final button state
 		// and treat it as an input that happened at the very start of the tick.
 		u64 buttons = cmd->base().buttons_pb().buttonstate1();
-		f32 newForward = (buttons & (IN_FORWARD | IN_BACK)) ? SanitizeMoveValue(cmd->base().forwardmove()) : 0.0f;
-		f32 newSide = (buttons & (IN_MOVELEFT | IN_MOVERIGHT)) ? SanitizeMoveValue(cmd->base().leftmove()) : 0.0f;
-		emitTransition(heldButton(forwardAxis, IN_FORWARD, IN_BACK), heldButton(newForward, IN_FORWARD, IN_BACK), 0.0f, false);
-		emitTransition(heldButton(sideAxis, IN_MOVELEFT, IN_MOVERIGHT), heldButton(newSide, IN_MOVELEFT, IN_MOVERIGHT), 0.0f, false);
+		setHeld(IN_FORWARD, IN_BACK, buttons & (IN_FORWARD | IN_BACK), 0.0f, false);
+		setHeld(IN_MOVELEFT, IN_MOVERIGHT, buttons & (IN_MOVELEFT | IN_MOVERIGHT), 0.0f, false);
 		return;
 	}
 
 	for (i32 i = 0; i < cmd->base().subtick_moves_size(); ++i)
 	{
 		const CSubtickMoveStep &step = cmd->base().subtick_moves(i);
-		u64 oldForward = heldButton(forwardAxis, IN_FORWARD, IN_BACK);
-		u64 oldSide = heldButton(sideAxis, IN_MOVELEFT, IN_MOVERIGHT);
 
 		if (step.has_button() && step.button())
 		{
-			// Buttons that are not direction inputs are ignored.
 			u64 button = step.button();
+			u64 positive = 0;
+			u64 negative = 0;
 			f32 delta = step.pressed() ? 1.0f : -1.0f;
-			if (button == IN_FORWARD)
+			if (button == IN_FORWARD || button == IN_BACK)
 			{
-				forwardAxis += delta;
+				positive = IN_FORWARD;
+				negative = IN_BACK;
+				forwardAxis += (button == IN_FORWARD) ? delta : -delta;
 			}
-			else if (button == IN_BACK)
+			else if (button == IN_MOVELEFT || button == IN_MOVERIGHT)
 			{
-				forwardAxis -= delta;
-			}
-			else if (button == IN_MOVELEFT)
-			{
-				sideAxis += delta;
-			}
-			else if (button == IN_MOVERIGHT)
-			{
-				sideAxis -= delta;
+				positive = IN_MOVELEFT;
+				negative = IN_MOVERIGHT;
+				sideAxis += (button == IN_MOVELEFT) ? delta : -delta;
 			}
 			else
 			{
+				// Buttons that are not direction inputs are ignored.
 				continue;
 			}
+			// A key press says nothing about the opposite key, which may well stay held. Take the move at face
+			// value instead of reading the direction back off the axis, where holding both cancels out.
+			u64 held = heldButtons & (positive | negative);
+			setHeld(positive, negative, step.pressed() ? (held | button) : (held & ~button), step.when(), false);
 		}
 		else if (step.has_analog_forward_delta() || step.has_analog_left_delta())
 		{
+			// The engine never clamps the impulses. It only refuses the whole command if they leave the range
+			// VerifySubtickMoves checks, so anything reaching here accumulates as is.
 			forwardAxis += step.analog_forward_delta();
 			sideAxis += step.analog_left_delta();
+			// A stick carries no press or release, and only ever points one way, so the axis sign is the whole
+			// held state for it.
+			if (step.analog_forward_delta() != 0.0f)
+			{
+				setHeld(IN_FORWARD, IN_BACK, heldButton(forwardAxis, IN_FORWARD, IN_BACK), step.when(), true);
+			}
+			if (step.analog_left_delta() != 0.0f)
+			{
+				setHeld(IN_MOVELEFT, IN_MOVERIGHT, heldButton(sideAxis, IN_MOVELEFT, IN_MOVERIGHT), step.when(), true);
+			}
 		}
-		else
-		{
-			continue;
-		}
-
-		// The engine never clamps the impulses. It only refuses the whole command if they leave the range
-		// VerifySubtickMoves checks, so anything reaching here accumulates as is.
-		emitTransition(oldForward, heldButton(forwardAxis, IN_FORWARD, IN_BACK), step.when(), !step.has_button());
-		emitTransition(oldSide, heldButton(sideAxis, IN_MOVELEFT, IN_MOVERIGHT), step.when(), !step.has_button());
 	}
 }
 

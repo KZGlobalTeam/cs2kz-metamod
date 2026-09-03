@@ -147,7 +147,7 @@ public:
 		hasValidCvars = true;
 		recentForwardBackwardEvents.clear();
 		recentLeftRightEvents.clear();
-		lastButtons = 0;
+		heldMovementButtons = 0;
 		nullsFramerateBuffer.clear();
 		nullsUnderlapBuffer.clear();
 		suspiciousSubtickMoveTimes.clear();
@@ -206,7 +206,8 @@ public:
 
 	std::deque<InputEvent> recentForwardBackwardEvents;
 	std::deque<InputEvent> recentLeftRightEvents;
-	u64 lastButtons;
+	// Direction keys the input events say are down. Both directions of an axis can be down at once.
+	u64 heldMovementButtons;
 	std::vector<f32> nullsFramerateBuffer;
 	std::vector<f32> nullsUnderlapBuffer;
 
