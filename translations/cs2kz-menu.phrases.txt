@@ -4,551 +4,688 @@
 	"Menu - Title Options"
 	{
 		"en"		"Options"
+		"chi"		"选项"
 	}
 	"Menu - HUD"
 	{
 		"en"		"HUD"
+		"chi"		"HUD"
 	}
 	"Menu - On"
 	{
 		"en"		"ON"
+		"chi"		"开"
 	}
 	"Menu - Off"
 	{
 		"en"		"OFF"
+		"chi"		"关"
 	}
 	"Menu - Panel"
 	{
 		"en"		"Panel"
+		"chi"		"面板"
 	}
 	"Menu - Compact"
 	{
 		"en"		"Compact"
+		"chi"		"紧凑"
 	}
 	"Menu - Crosshair"
 	{
 		"en"		"Virtual crosshair"
+		"chi"		"虚拟准星"
 	}
 	"Menu - Compact Sub"
 	{
 		"en"		"Legacy panel only"
+		"chi"		"仅限旧版面板"
 	}
 	"Menu - Outline"
 	{
 		"en"		"Outline"
+		"chi"		"轮廓"
 	}
 	"Menu - Font"
 	{
 		"en"		"Font"
+		"chi"		"字体"
 	}
 	"Menu - Font Local Note"
 	{
 		"en"		"* depends on your local font installation"
+		"chi"		"* 取决于你本地安装的字体"
 	}
 	"Menu - Enabled"
 	{
 		"en"		"Enabled"
+		"chi"		"已启用"
 	}
 	"Menu - Position"
 	{
 		"en"		"Position"
+		"chi"		"位置"
 	}
 	"Menu - Size"
 	{
 		"en"		"Size"
+		"chi"		"大小"
 	}
 	"Menu - Reset"
 	{
 		"en"		"Reset to defaults"
+		"chi"		"重置为默认值"
 	}
 	"Menu - Timer"
 	{
 		"en"		"Timer"
+		"chi"		"计时器"
 	}
 	"Menu - Prespeed"
 	{
 		"en"		"Prespeed"
+		"chi"		"地速"
 	}
 	"Menu - Keys"
 	{
 		"en"		"Keys"
+		"chi"		"按键"
 	}
 	"Menu - Timer Detail"
 	{
 		"en"		"Show hundredths"
+		"chi"		"显示百分位"
 	}
 	"Menu - Keys Overlap"
 	{
 		"en"		"Overlap warning"
+		"chi"		"按键重叠警告"
 	}
 	"Menu - Color Base"
 	{
 		"en"		"Color"
+		"chi"		"颜色"
 	}
 	"Menu - Color CJ"
 	{
 		"en"		"Crouch jump color"
+		"chi"		"蹲跳颜色"
 	}
 	"Menu - Color Perf"
 	{
 		"en"		"Perf color"
+		"chi"		"Perf 颜色"
 	}
 	"Menu - Color Jumpbug"
 	{
 		"en"		"Jumpbug color"
+		"chi"		"Jumpbug 颜色"
 	}
 	"Menu - Color Pro"
 	{
 		"en"		"PRO color"
+		"chi"		"PRO 颜色"
 	}
 	"Menu - Color TP"
 	{
 		"en"		"TP color"
+		"chi"		"传送颜色"
 	}
 	"Menu - Color Paused"
 	{
 		"en"		"Paused color"
+		"chi"		"暂停颜色"
 	}
 	"Menu - Color Stopped"
 	{
 		"en"		"Stopped color"
+		"chi"		"停止颜色"
 	}
 	"Menu - Misc"
 	{
 		"en"		"General"
+		"chi"		"通用"
 	}
 	"Menu - General"
 	{
 		"en"		"General"
+		"chi"		"通用"
 	}
 	"Menu - Menu"
 	{
 		"en"		"Menu"
+		"chi"		"菜单"
 	}
 	"Menu - Style"
 	{
 		"en"		"Style"
+		"chi"		"风格"
 	}
 	"Menu - Style Layout"
 	{
 		"en"		"Layout"
+		"chi"		"布局"
 	}
 	"Menu - Style Legacy"
 	{
 		"en"		"Legacy"
+		"chi"		"旧版"
 	}
 	"Menu - Checkpoint"
 	{
 		"en"		"Checkpoints"
+		"chi"		"存点"
 	}
 	"Menu - Reset All"
 	{
 		"en"		"Reset everything to defaults"
+		"chi"		"全部重置为默认值"
 	}
 	"Menu - Keys Unpressed"
 	{
 		"en"		"Hide unpressed keys"
+		"chi"		"隐藏未按下的按键"
 	}
 	"Menu - Keys Letters"
 	{
 		"en"		"Use WASD letters"
+		"chi"		"使用 WASD 字母"
 	}
 	"Menu - Keys Square"
 	{
 		"en"		"Square keys"
+		"chi"		"方形按键"
 	}
 	"Menu - Color"
 	{
 		"en"		"Color"
+		"chi"		"颜色"
 	}
 	"Menu - Color Overlap"
 	{
 		"en"		"Overlap color"
+		"chi"		"重叠颜色"
 	}
 	"Menu - Mode"
 	{
 		"en"		"Mode"
+		"chi"		"模式"
 	}
 	"Menu - Pistol"
 	{
 		"en"		"Pistol"
+		"chi"		"手枪"
 	}
 	"Menu - Beam Offset"
 	{
 		"en"		"Beam offset"
+		"chi"		"光束偏移"
 	}
 	"Menu - Beam Offset Sub"
 	{
 		"en"		"Use !beamoffset for a finer value"
+		"chi"		"使用 !beamoffset 进行更精细的调整"
 	}
 	"Menu - Styles"
 	{
 		"en"		"Styles"
+		"chi"		"风格"
 	}
 	"Menu - Lang en"
 	{
 		"en"		"English"
+		"chi"		"English"
 	}
 	"Menu - Lang ar"
 	{
 		"en"		"العربية"
+		"chi"		"العربية"
 	}
 	"Menu - Lang pt"
 	{
 		"en"		"Português (Brasil)"
+		"chi"		"Português (Brasil)"
 	}
 	"Menu - Lang bg"
 	{
 		"en"		"Български"
+		"chi"		"Български"
 	}
 	"Menu - Lang cze"
 	{
 		"en"		"Čeština"
+		"chi"		"Čeština"
 	}
 	"Menu - Lang da"
 	{
 		"en"		"Dansk"
+		"chi"		"Dansk"
 	}
 	"Menu - Lang nl"
 	{
 		"en"		"Nederlands"
+		"chi"		"Nederlands"
 	}
 	"Menu - Lang fi"
 	{
 		"en"		"Suomi"
+		"chi"		"Suomi"
 	}
 	"Menu - Lang fr"
 	{
 		"en"		"Français"
+		"chi"		"Français"
 	}
 	"Menu - Lang de"
 	{
 		"en"		"Deutsch"
+		"chi"		"Deutsch"
 	}
 	"Menu - Lang el"
 	{
 		"en"		"Ελληνικά"
+		"chi"		"Ελληνικά"
 	}
 	"Menu - Lang he"
 	{
 		"en"		"עברית"
+		"chi"		"עברית"
 	}
 	"Menu - Lang hu"
 	{
 		"en"		"Magyar"
+		"chi"		"Magyar"
 	}
 	"Menu - Lang it"
 	{
 		"en"		"Italiano"
+		"chi"		"Italiano"
 	}
 	"Menu - Lang jp"
 	{
 		"en"		"日本語"
+		"chi"		"日本語"
 	}
 	"Menu - Lang ko"
 	{
 		"en"		"한국어"
+		"chi"		"한국어"
 	}
 	"Menu - Lang lv"
 	{
 		"en"		"Latviešu"
+		"chi"		"Latviešu"
 	}
 	"Menu - Lang lt"
 	{
 		"en"		"Lietuvių"
+		"chi"		"Lietuvių"
 	}
 	"Menu - Lang no"
 	{
 		"en"		"Norsk"
+		"chi"		"Norsk"
 	}
 	"Menu - Lang pl"
 	{
 		"en"		"Polski"
+		"chi"		"Polski"
 	}
 	"Menu - Lang pt_p"
 	{
 		"en"		"Português"
+		"chi"		"Português"
 	}
 	"Menu - Lang ro"
 	{
 		"en"		"Română"
+		"chi"		"Română"
 	}
 	"Menu - Lang ru"
 	{
 		"en"		"Русский"
+		"chi"		"Русский"
 	}
 	"Menu - Lang chi"
 	{
 		"en"		"简体中文"
+		"chi"		"简体中文"
 	}
 	"Menu - Lang sk"
 	{
 		"en"		"Slovenčina"
+		"chi"		"Slovenčina"
 	}
 	"Menu - Lang es"
 	{
 		"en"		"Español"
+		"chi"		"Español"
 	}
 	"Menu - Lang sv"
 	{
 		"en"		"Svenska"
+		"chi"		"Svenska"
 	}
 	"Menu - Lang zho"
 	{
 		"en"		"繁體中文"
+		"chi"		"繁體中文"
 	}
 	"Menu - Lang th"
 	{
 		"en"		"ไทย"
+		"chi"		"ไทย"
 	}
 	"Menu - Lang tr"
 	{
 		"en"		"Türkçe"
+		"chi"		"Türkçe"
 	}
 	"Menu - Lang ua"
 	{
 		"en"		"Українська"
+		"chi"		"Українська"
 	}
 	"Menu - Lang vi"
 	{
 		"en"		"Tiếng Việt"
+		"chi"		"Tiếng Việt"
 	}
 	"Menu - Language"
 	{
 		"en"		"Language"
+		"chi"		"语言"
 	}
 	"Menu - Beam"
 	{
 		"en"		"Player beam"
+		"chi"		"玩家光束"
 	}
 	"Menu - Beam None"
 	{
 		"en"		"Off"
+		"chi"		"关闭"
 	}
 	"Menu - Beam Ground"
 	{
 		"en"		"Ground"
+		"chi"		"地面"
 	}
 	"Menu - Beam Feet"
 	{
 		"en"		"Feet"
+		"chi"		"脚下"
 	}
 	"Menu - FOV"
 	{
 		"en"		"Field of view"
+		"chi"		"视野"
 	}
 	"Menu - Record Volume Sub"
 	{
 		"en"		"Use !recordvolume for a finer value"
+		"chi"		"使用 !recordvolume 进行更精细的调整"
 	}
 	"Menu - JS Volume Sub"
 	{
 		"en"		"Use !jsvolume for a finer value"
+		"chi"		"使用 !jsvolume 进行更精细的调整"
 	}
 	"Menu - Record Volume"
 	{
 		"en"		"Record sound volume"
+		"chi"		"记录音效音量"
 	}
 	"Menu - JS Volume"
 	{
 		"en"		"Jumpstats sound volume"
+		"chi"		"起跳提示音音量"
 	}
 	"Menu - Timer Category"
 	{
 		"en"		"Timer"
+		"chi"		"计时器"
 	}
 	"Menu - Map Overlay"
 	{
 		"en"		"Map overlay integration"
+		"chi"		"地图叠加层集成"
 	}
 	"Menu - Timer Stop Sound"
 	{
 		"en"		"Timer stop sound"
+		"chi"		"计时器停止音效"
 	}
 	"Menu - Safeguard"
 	{
 		"en"		"Safeguard"
+		"chi"		"安全防护"
 	}
 	"Menu - Safeguard Off"
 	{
 		"en"		"Off"
+		"chi"		"关闭"
 	}
 	"Menu - Safeguard Nub"
 	{
 		"en"		"On (NUB)"
+		"chi"		"开 (NUB)"
 	}
 	"Menu - Safeguard Pro"
 	{
 		"en"		"On (PRO)"
+		"chi"		"开 (PRO)"
 	}
 	"Menu - Compare"
 	{
 		"en"		"Split comparison"
+		"chi"		"分段比较"
 	}
 	"Menu - Compare None"
 	{
 		"en"		"Off"
+		"chi"		"关闭"
 	}
 	"Menu - Compare Local PB"
 	{
 		"en"		"Local PB"
+		"chi"		"本地个人最佳"
 	}
 	"Menu - Compare Global PB"
 	{
 		"en"		"Global PB"
+		"chi"		"全球个人最佳"
 	}
 	"Menu - Compare Server Record"
 	{
 		"en"		"Server record"
+		"chi"		"服务器纪录"
 	}
 	"Menu - Compare World Record"
 	{
 		"en"		"World record"
+		"chi"		"世界纪录"
 	}
 	"Menu - Jumpstats"
 	{
 		"en"		"Jumpstats"
+		"chi"		"起跳数据"
 	}
 	"Menu - JS Reporting"
 	{
 		"en"		"Report my jumps"
+		"chi"		"报告我的跳跃"
 	}
 	"Menu - JS Always"
 	{
 		"en"		"Report every jump"
+		"chi"		"报告每次跳跃"
 	}
 	"Menu - JS Extended Stats"
 	{
 		"en"		"Extended chat stats"
+		"chi"		"聊天栏扩展统计"
 	}
 	"Menu - JS Failstats"
 	{
 		"en"		"Failstats"
+		"chi"		"失败统计"
 	}
 	"Menu - JS Failstats Console"
 	{
 		"en"		"Failstats in console"
+		"chi"		"控制台失败统计"
 	}
 	"Menu - JS Min Tier"
 	{
 		"en"		"Minimum chat tier"
+		"chi"		"聊天框跳跃数据最低等级"
 	}
 	"Menu - JS Min Tier Console"
 	{
 		"en"		"Minimum console tier"
+		"chi"		"控制台跳跃数据最低等级"
 	}
 	"Menu - JS Sound Min Tier"
 	{
 		"en"		"Minimum sound tier"
+		"chi"		"跳跃提示音最低等级"
 	}
 	"Menu - JS Broadcast Min Tier"
 	{
 		"en"		"Minimum broadcast tier"
+		"chi"		"广播跳跃数据最低等级"
 	}
 	"Menu - JS Broadcast Min Tier Console"
 	{
 		"en"		"Minimum broadcast console tier"
+		"chi"		"控制台广播跳跃数据最低等级"
 	}
 	"Menu - JS Broadcast Sound Min Tier"
 	{
 		"en"		"Minimum broadcast sound tier"
+		"chi"		"广播跳跃数据音效最低等级"
 	}
 	"Menu - Tier None"
 	{
 		"en"		"None"
+		"chi"		"无"
 	}
 	"Menu - Tier Meh"
 	{
 		"en"		"Meh"
+		"chi"		"Meh"
 	}
 	"Menu - Tier Impressive"
 	{
 		"en"		"Impressive"
+		"chi"		"Impressive"
 	}
 	"Menu - Tier Perfect"
 	{
 		"en"		"Perfect"
+		"chi"		"Perfect"
 	}
 	"Menu - Tier Godlike"
 	{
 		"en"		"Godlike"
+		"chi"		"Godlike"
 	}
 	"Menu - Tier Ownage"
 	{
 		"en"		"Ownage"
+		"chi"		"Ownage"
 	}
 	"Menu - Tier Wrecker"
 	{
 		"en"		"Wrecker"
+		"chi"		"Wrecker"
 	}
 	"Menu - Checkpoints"
 	{
 		"en"		"Checkpoints"
+		"chi"		"存点"
 	}
 	"Menu - Checkpoint Message"
 	{
 		"en"		"Checkpoint messages"
+		"chi"		"存点消息"
 	}
 	"Menu - Checkpoint Sound"
 	{
 		"en"		"Checkpoint sound"
+		"chi"		"存点音效"
 	}
 	"Menu - Teleport Sound"
 	{
 		"en"		"Teleport sound"
+		"chi"		"传送音效"
 	}
 	"Menu - Paint"
 	{
 		"en"		"Paint"
+		"chi"		"涂色"
 	}
 	"Menu - Paint Color Sub"
 	{
 		"en"		"Use !paintcolor <r> <g> <b> for an exact color"
+		"chi"		"使用 !paintcolor <r> <g> <b> 设置精确颜色"
 	}
 	"Menu - Show All Paint"
 	{
 		"en"		"Show everyone's paint"
+		"chi"		"显示所有人的涂色"
 	}
 	"Menu - Hide Other Players"
 	{
 		"en"		"Hide other players"
+		"chi"		"隐藏其他玩家"
 	}
 	"Menu - Hide Weapon"
 	{
 		"en"		"Hide weapon"
+		"chi"		"隐藏武器"
 	}
 	"Menu - Hide Legs"
 	{
 		"en"		"Hide legs"
+		"chi"		"隐藏腿部"
 	}
 	"Menu - Show Tips"
 	{
 		"en"		"Show tips"
+		"chi"		"显示提示"
 	}
 	"Menu - Export Prefs"
 	{
 		"en"		"Export preferences to console"
+		"chi"		"导出偏好设置到控制台"
 	}
 	"Prefs - Export Header"
 	{
 		"en"		"----- CS2KZ preferences: paste the lines below into another server's console -----"
+		"chi"		"----- CS2KZ 偏好设置: 将以下行粘贴到其他服务器的控制台 -----"
 	}
 	"Prefs - Export Footer"
 	{
 		"en"		"----- end. To stop a preference from following you, run: setinfo kzp_<name> \"\" -----"
+		"chi"		"----- 结束. 若要阻止某项偏好设置跟随你, 请运行: setinfo kzp_<name> \"\" -----"
 	}
 	"Prefs - Exported"
 	{
 		"#format"	"count:d"
 		"en"		"{grey}Exported {default}{count}{grey} preferences to your console."
+		"chi"		"{grey}已将 {default}{count}{grey} 项偏好设置导出到你的控制台."
 	}
 	"Prefs - Imported"
 	{
 		"#format"	"count:d"
 		"en"		"{grey}Imported {default}{count}{grey} preferences."
+		"chi"		"{grey}已导入 {default}{count}{grey} 项偏好设置."
 	}
 	"Menu - Unavailable"
 	{
 		"en"		"{grey}The options menu is currently unavailable."
+		"chi"		"{grey}选项菜单当前不可用."
 	}
 }
