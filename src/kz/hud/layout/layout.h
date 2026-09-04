@@ -25,10 +25,3 @@
 
 #define MHUD_DEFAULT_FONT "stratum2-bold-monodigit"
 #define KZ_MHUD_LAYOUT    "panorama/layout/custom_game/cs2kz/mhud.xml"
-
-// Returns the class name for the font preference of the given element.
-// Static storage, we can keep caching it by pointer.
-const char *MHUDFontClass(KZPlayer *player, MHUDElement element);
-
-// The HUD's pages in the options menu.
-void MHUDRegisterMenu();

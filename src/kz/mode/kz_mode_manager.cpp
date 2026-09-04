@@ -23,6 +23,11 @@ KZModeManager *g_pKZModeManager = &modeManager;
 
 CUtlVector<KZModeManager::ModePluginInfo> modeInfos;
 
+const CUtlVector<KZModeManager::ModePluginInfo> &KZModeManager::GetModes()
+{
+	return modeInfos;
+}
+
 static_global class KZDatabaseServiceEventListener_Modes : public KZDatabaseServiceEventListener
 {
 public:
@@ -266,6 +271,11 @@ bool KZModeManager::SwitchToMode(KZPlayer *player, const char *modeName, bool si
 
 	// If it's the same style, do nothing, unless it's forced.
 	if (!force && (V_stricmp(player->modeService->GetModeName(), modeName) == 0 || V_stricmp(player->modeService->GetModeShortName(), modeName) == 0))
+	{
+		return false;
+	}
+
+	if (!force && !player->timerService->CheckSafeguard(!silent))
 	{
 		return false;
 	}

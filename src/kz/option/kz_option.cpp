@@ -222,12 +222,52 @@ CON_COMMAND_F(kz_reload_config, "Reload server config file and reconnect to the 
 	KZ_LOG_INFO(LogChannel::General, "Changes to the local database and tip intervals will only take effect after a server restart.\n");
 }
 
+// 0 when there is no stamp, or when it is far enough ahead of this server's clock to be untrusted.
+static_function i64 ReadPrefsStamp(KeyValues3 *prefs)
+{
+	KeyValues3 *member = prefs->FindMember(KZ_PREF_UPDATED_AT);
+	if (!member)
+	{
+		return 0;
+	}
+	const i64 stamp = member->GetInt64(0);
+	time_t now = 0;
+	time(&now);
+	if (stamp <= 0 || stamp > (i64)now + KZ_PREF_STAMP_MAX_SKEW)
+	{
+		return 0;
+	}
+	return stamp;
+}
+
+void KZOptionService::StampPreferences()
+{
+	time_t now = 0;
+	time(&now);
+	this->prefKV.FindOrCreateMember(KZ_PREF_UPDATED_AT)->SetInt64((i64)now);
+}
+
+bool KZOptionService::ShouldApplyPrefs(i64 incomingStamp, i32 incomingTier)
+{
+	if (this->dataState == NONE)
+	{
+		return true;
+	}
+
+	if (incomingStamp && this->loadedStamp)
+	{
+		return incomingStamp > this->loadedStamp;
+	}
+	return incomingTier > (i32)this->dataState;
+}
+
 void KZOptionService::InitializeLocalPrefs(CUtlString text)
 {
-	if (this->dataState >= LOCAL)
+	if (this->localLoaded)
 	{
 		return;
 	}
+	this->localLoaded = true;
 	if (text.IsEmpty())
 	{
 		text = "{\n}";
@@ -243,8 +283,15 @@ void KZOptionService::InitializeLocalPrefs(CUtlString text)
 		return;
 	}
 
+	const i64 stamp = ReadPrefsStamp(&loadedPrefs);
+	if (!this->ShouldApplyPrefs(stamp, LOCAL))
+	{
+		return;
+	}
+
 	// Merge loaded preferences, excluding user-set preferences
 	MergePreferences(&this->prefKV, &loadedPrefs, &this->userSetPrefs);
+	this->loadedStamp = stamp;
 
 	this->dataState = LOCAL;
 	// Calling this before the player is ingame will create unwanted race conditions.
@@ -260,10 +307,11 @@ void KZOptionService::InitializeGlobalPrefs(std::string json)
 {
 	assert(!json.empty() && "API always sends at least an empty object");
 
-	if (this->dataState >= GLOBAL)
+	if (this->globalLoaded)
 	{
 		return;
 	}
+	this->globalLoaded = true;
 	// Load the preferences from the API into a temporary KV
 	KeyValues3 loadedPrefs(KV3_TYPEEX_TABLE, KV3_SUBTYPE_UNSPECIFIED);
 	CUtlString error;
@@ -275,12 +323,15 @@ void KZOptionService::InitializeGlobalPrefs(std::string json)
 		return;
 	}
 
+	const i64 stamp = ReadPrefsStamp(&loadedPrefs);
+	if (!this->ShouldApplyPrefs(stamp, GLOBAL))
+	{
+		return;
+	}
+
 	// Merge loaded preferences, excluding user-set preferences
-	// Global preferences override local preferences, but not user-set ones
-	// DebugPrintKV3(&this->prefKV);
-	// DebugPrintKV3(&loadedPrefs);
 	MergePreferences(&this->prefKV, &loadedPrefs, &this->userSetPrefs);
-	// DebugPrintKV3(&this->prefKV);
+	this->loadedStamp = stamp;
 
 	this->dataState = GLOBAL;
 
@@ -301,6 +352,7 @@ void KZOptionService::SaveLocalPrefs()
 	{
 		return;
 	}
+	this->StampPreferences();
 	CUtlString error, output;
 	SaveKV3AsJSON(&this->prefKV, &error, &output);
 	if (!error.IsEmpty())

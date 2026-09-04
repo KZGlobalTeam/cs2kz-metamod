@@ -23,7 +23,15 @@ static_global class KZOptionServiceEventListener_Quiet : public KZOptionServiceE
 {
 	virtual void OnPlayerPreferencesLoaded(KZPlayer *player)
 	{
-		player->quietService->OnPlayerPreferencesLoaded();
+		player->quietService->ApplyPreferences();
+	}
+
+	virtual void OnPlayerPreferenceChanged(KZPlayer *player, const char *optionName)
+	{
+		if (KZ_STREQI(optionName, "hideWeapon") || KZ_STREQI(optionName, "hideOtherPlayers"))
+		{
+			player->quietService->ApplyPreferences();
+		}
 	}
 } optionEventListener;
 
@@ -380,9 +388,8 @@ SCMD(kz_hideweapon, SCFL_PLAYER)
 
 void KZQuietService::ToggleHideWeapon()
 {
-	this->hideWeapon = !this->hideWeapon;
-	this->SendFullUpdate();
-	this->player->optionService->SetPreferenceBool("hideWeapon", this->hideWeapon);
+	auto *opts = this->player->optionService;
+	opts->SetPreferenceBool("hideWeapon", !opts->GetPreferenceBool("hideWeapon", false));
 	this->player->languageService->PrintChat(true, false,
 											 this->hideWeapon ? "Quiet Option - Show Weapon - Disable" : "Quiet Option - Show Weapon - Enable");
 	if (!this->hideWeapon)
@@ -393,29 +400,25 @@ void KZQuietService::ToggleHideWeapon()
 
 void KZQuietService::OnPhysicsSimulatePost() {}
 
-void KZQuietService::OnPlayerPreferencesLoaded()
+void KZQuietService::ApplyPreferences()
 {
-	this->hideWeapon = this->player->optionService->GetPreferenceBool("hideWeapon", false);
-	if (this->hideWeapon)
+	auto *opts = this->player->optionService;
+	const bool newHideWeapon = opts->GetPreferenceBool("hideWeapon", false);
+	const bool newHideOthers = opts->GetPreferenceBool("hideOtherPlayers", false);
+	const bool changed = newHideWeapon != this->hideWeapon || newHideOthers != this->hideOtherPlayers;
+	this->hideWeapon = newHideWeapon;
+	this->hideOtherPlayers = newHideOthers;
+
+	if (changed)
 	{
 		this->SendFullUpdate();
 	}
-	bool newShouldHide = this->player->optionService->GetPreferenceBool("hideOtherPlayers", false);
-	if (!newShouldHide && this->hideOtherPlayers && this->player->IsInGame())
-	{
-		this->SendFullUpdate();
-	}
-	this->hideOtherPlayers = newShouldHide;
 }
 
 void KZQuietService::ToggleHide()
 {
-	this->hideOtherPlayers = !this->hideOtherPlayers;
-	this->player->optionService->SetPreferenceBool("hideOtherPlayers", this->hideOtherPlayers);
-	if (!this->hideOtherPlayers)
-	{
-		this->SendFullUpdate();
-	}
+	auto *opts = this->player->optionService;
+	opts->SetPreferenceBool("hideOtherPlayers", !opts->GetPreferenceBool("hideOtherPlayers", false));
 }
 
 void KZQuietService::UpdateHideState()

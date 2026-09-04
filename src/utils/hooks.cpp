@@ -19,6 +19,7 @@
 #include "kz/hud/kz_hud.h"
 #include "kz/jumpstats/kz_jumpstats.h"
 #include "kz/option/kz_option.h"
+#include "kz/option/pref_registry.h"
 #include "kz/paint/kz_paint.h"
 #include "kz/quiet/kz_quiet.h"
 #include "kz/timer/kz_timer.h"
@@ -167,6 +168,15 @@ static_function CServerSideClientBase *Hook_ConnectClient(const char *, ns_addre
 static_function CServerSideClientBase *Hook_ConnectClientPost(const char *, ns_address *, uint32, C2S_CONNECT_Message *, const char *, const byte *,
 															  int, bool);
 
+// CServerSideClient
+static_global int respondCvarValueHook {};
+SH_DECL_HOOK1(CServerSideClientBase, ProcessRespondCvarValue, SH_NOATTRIB, 0, bool, const CNetMessagePB<CCLCMsg_RespondCvarValue> &);
+static_function bool Hook_ProcessRespondCvarValue(const CNetMessagePB<CCLCMsg_RespondCvarValue> &msg);
+
+static_global int setConVarHook {};
+SH_DECL_HOOK1(CServerSideClientBase, ProcessSetConVar, SH_NOATTRIB, 0, bool, const CNetMessagePB<CNETMsg_SetConVar> &);
+static_function bool Hook_ProcessSetConVar(const CNetMessagePB<CNETMsg_SetConVar> &msg);
+
 // IGameSystem
 static_global int serverGamePostSimulateHook {};
 SH_DECL_HOOK1_void(IGameSystem, OnServerGamePostSimulate, SH_NOATTRIB, false, const EventServerGamePostSimulate_t *);
@@ -223,15 +233,16 @@ bool hooks::Initialize()
 
 	SH_ADD_HOOK(IGameEventSystem, PostEventAbstract, interfaces::pGameEventSystem, SH_STATIC(Hook_PostEvent), false);
 
-	cvarquery::Init();
 	// clang-format off
 	CNetworkGameServerBase *networkGameServerVtbl = (CNetworkGameServerBase *)modules::engine->FindVirtualTable("CNetworkGameServer");
+	CServerSideClientBase *serverSideClientVtbl = (CServerSideClientBase *)modules::engine->FindVirtualTable("CServerSideClient");
 	IGameSystem *entityDebugGameSystemVtbl = (IGameSystem *)modules::server->FindVirtualTable("CEntityDebugGameSystem");
 	CEntitySystem *gameEntitySystemVtbl = (CEntitySystem *)modules::server->FindVirtualTable("CGameEntitySystem");
 	CSpawnGroupMgrGameSystem *spawnGroupMgrVtbl = (CSpawnGroupMgrGameSystem *)modules::server->FindVirtualTable("CSpawnGroupMgrGameSystem");
 	CCSPlayer_MovementServices *moveServicesVtbl = (CCSPlayer_MovementServices *)modules::server->FindVirtualTable("CCSPlayer_MovementServices");
 
-	if (!networkGameServerVtbl || !entityDebugGameSystemVtbl || !gameEntitySystemVtbl || !spawnGroupMgrVtbl || !moveServicesVtbl)
+	if (!networkGameServerVtbl || !serverSideClientVtbl || !entityDebugGameSystemVtbl || !gameEntitySystemVtbl || !spawnGroupMgrVtbl
+		|| !moveServicesVtbl)
 	{
 		KZ_LOG_WARN(LogChannel::General, "Failed to resolve one or more virtual tables required for hooking.\n");
 		return false;
@@ -257,6 +268,20 @@ bool hooks::Initialize()
 		ConnectClient,
 		networkGameServerVtbl,
 		SH_STATIC(Hook_ConnectClientPost),
+		true
+	);
+	respondCvarValueHook = SH_ADD_DVPHOOK(
+		CServerSideClientBase,
+		ProcessRespondCvarValue,
+		serverSideClientVtbl,
+		SH_STATIC(Hook_ProcessRespondCvarValue),
+		true
+	);
+	setConVarHook = SH_ADD_DVPHOOK(
+		CServerSideClientBase,
+		ProcessSetConVar,
+		serverSideClientVtbl,
+		SH_STATIC(Hook_ProcessSetConVar),
 		true
 	);
 	serverGamePostSimulateHook = SH_ADD_DVPHOOK(
@@ -338,6 +363,8 @@ void hooks::Cleanup()
 
 	SH_REMOVE_HOOK_ID(clientConnectHook);
 	SH_REMOVE_HOOK_ID(clientConnectPostHook);
+	SH_REMOVE_HOOK_ID(respondCvarValueHook);
+	SH_REMOVE_HOOK_ID(setConVarHook);
 
 	SH_REMOVE_HOOK_ID(changeTeamHook);
 
@@ -644,6 +671,7 @@ static_function void Hook_ClientDisconnect(CPlayerSlot slot, ENetworkDisconnecti
 	player->menuService->OnClientDisconnect();
 	player->hudService->OnClientDisconnect();
 	cvarquery::OnClientDisconnect(slot);
+	KZ::prefs::OnClientDisconnect(slot);
 	g_pKZPlayerManager->OnClientDisconnect(slot, reason, pszName, xuid, pszNetworkID);
 	RETURN_META(MRES_IGNORED);
 }
@@ -827,6 +855,34 @@ static_function CServerSideClientBase *Hook_ConnectClientPost(const char *pszNam
 {
 	g_pKZPlayerManager->OnConnectClientPost(pszName, pAddr, steam_handle, pConnectMsg, pszChallenge, pAuthTicket, nAuthTicketLength, bIsLowViolence);
 	RETURN_META_VALUE(MRES_IGNORED, 0);
+}
+
+// CServerSideClient
+static_function bool Hook_ProcessRespondCvarValue(const CNetMessagePB<CCLCMsg_RespondCvarValue> &msg)
+{
+	CServerSideClientBase *client = META_IFACEPTR(CServerSideClientBase);
+	if (client)
+	{
+		cvarquery::OnCvarValueResponse(client->GetPlayerSlot(), msg.cookie(), (cvarquery::Status)msg.status_code(), msg.name().c_str(),
+									   msg.value().c_str());
+	}
+	RETURN_META_VALUE(MRES_IGNORED, true);
+}
+
+// Every convar a client reports: the full userinfo set on connect, and each setinfo afterwards.
+static_function bool Hook_ProcessSetConVar(const CNetMessagePB<CNETMsg_SetConVar> &msg)
+{
+	CServerSideClientBase *client = META_IFACEPTR(CServerSideClientBase);
+	if (client)
+	{
+		const CMsg_CVars &list = msg.convars();
+		for (i32 i = 0; i < list.cvars_size(); i++)
+		{
+			const CMsg_CVars_CVar &cvar = list.cvars(i);
+			cvarquery::OnClientConVar(client->GetPlayerSlot(), cvar.name().c_str(), cvar.value().c_str());
+		}
+	}
+	RETURN_META_VALUE(MRES_IGNORED, true);
 }
 
 // IGameSystem

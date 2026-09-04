@@ -21,14 +21,13 @@ std::string KZHUDService::GetSpeedText(const char *language)
 	{
 		return KZLanguageService::PrepareMessageWithLang(language, "HUD - Speed Text", info.speed);
 	}
-	auto *opts = this->player->optionService;
+	const MHUDPrefs &prefs = this->GetPrefs();
 	// The legacy HTML HUD prints a hex color, which a gradient has no equivalent for, so a gradient
 	// preference falls back to that element's default color (the shared MHUD_DEF_* the layout HUD uses).
-	const Color baseCol = panorama::ResolveSolidColor(opts->GetPreferenceColor("mhudSpeedColor", MHUD_DEF_BASE_COLOR), MHUD_DEF_BASE_COLOR);
-	const Color perfCol = panorama::ResolveSolidColor(opts->GetPreferenceColor("mhudPrespeedPerfColor", MHUD_DEF_PERF_COLOR), MHUD_DEF_PERF_COLOR);
-	const Color jumpbugCol =
-		panorama::ResolveSolidColor(opts->GetPreferenceColor("mhudPrespeedJumpbugColor", MHUD_DEF_JUMPBUG_COLOR), MHUD_DEF_JUMPBUG_COLOR);
-	const Color cjCol = panorama::ResolveSolidColor(opts->GetPreferenceColor("mhudSpeedCjColor", MHUD_DEF_CJ_COLOR), MHUD_DEF_CJ_COLOR);
+	const Color baseCol = panorama::ResolveSolidColor(prefs.speed, MHUD_DEF_BASE_COLOR);
+	const Color perfCol = panorama::ResolveSolidColor(prefs.prespeedPerf, MHUD_DEF_PERF_COLOR);
+	const Color jumpbugCol = panorama::ResolveSolidColor(prefs.prespeedJumpbug, MHUD_DEF_JUMPBUG_COLOR);
+	const Color cjCol = panorama::ResolveSolidColor(prefs.speedCj, MHUD_DEF_CJ_COLOR);
 	Color tintCol = info.jumpbug ? jumpbugCol : (info.perf ? perfCol : baseCol);
 	char colorBuf[24];
 	V_snprintf(colorBuf, sizeof(colorBuf), "<font color='#%02x%02x%02x'>", tintCol.r(), tintCol.g(), tintCol.b());

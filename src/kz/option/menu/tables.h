@@ -1,9 +1,8 @@
 #pragma once
 #include "kz/kz.h"
 
-// Curated Panorama utility sheets, as tables. Only the font table and its element type are shared
-// (the menu indexes it directly); the colour and gradient tables, their element types, and the
-// palette/nearest helpers all live in tables.cpp and are reached through the functions declared here.
+// Curated Panorama utility sheets, as tables. Only the font table is shared; the colour and gradient
+// tables live in tables.cpp, reached through the functions declared here.
 struct PanoramaFontDef
 {
 	const char *slug; // stored preference value, and the class suffix
@@ -18,8 +17,8 @@ extern const i32 PANORAMA_FONT_COUNT;
 
 namespace panorama
 {
-	// A gradient color is stored as a marker Color: alpha == 1, red == gradient index. Solid colors
-	// are always stored with alpha 255, so alpha 1 is an unambiguous gradient flag.
+	// A gradient is stored as a marker Color: alpha == 1, red == gradient index. Solids always store
+	// alpha 255.
 	inline bool IsGradient(const Color &c)
 	{
 		return c.a() == 1;
@@ -35,8 +34,7 @@ namespace panorama
 		return c.r();
 	}
 
-	// A gradient has no single RGB, so anything that needs a real color (the legacy HTML HUD) resolves
-	// a gradient marker to the given fallback instead.
+	// A gradient has no single RGB, so callers that need a real color get the fallback.
 	inline Color ResolveSolidColor(const Color &c, const Color &fallback)
 	{
 		return IsGradient(c) ? fallback : c;
@@ -48,6 +46,8 @@ namespace panorama
 
 	// The color picker's combined entry space: solids first, then gradients.
 	i32 GetColorEntryCount();
+	// Just the solids, for items whose consumer cannot render a gradient.
+	i32 GetSolidColorCount();
 	const char *GetColorEntryBgClass(i32 entry);
 	Color GetColorEntryValue(i32 entry);    // the color to store when this entry is picked
 	i32 FindColorEntry(const Color &color); // which entry a stored color matches, -1 if none

@@ -325,8 +325,6 @@ private:
 		return timerRunning && this->GetTime() < EPSILON;
 	}
 
-	bool JustEndedTimer();
-
 public:
 	void PlayTimerEndSound();
 	void PlayTimerFalseEndSound();
@@ -377,6 +375,8 @@ public:
 
 	void ToggleTimerStopSound();
 
+	static void RegisterMenu();
+
 	// Safeguard
 	void ToggleSafeguard();
 	void ToggleProSafeguard();
@@ -398,5 +398,5 @@ public:
 	static void OnRoundStart();
 	void OnTeleport(const Vector *newPosition, const QAngle *newAngles, const Vector *newVelocity);
 
-	void OnPlayerPreferencesLoaded();
+	void ApplyPreferences();
 };

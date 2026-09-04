@@ -465,6 +465,13 @@
           <Button id="m_h_p1" class="step-btn"><Label class="step-btn-label" text="+1" /></Button>
           <Button id="m_h_p5" class="step-btn"><Label class="step-btn-label" text="+5" /></Button>
         </Panel>
+        <Panel id="m_step_z" class="step-row hidden">
+          <Button id="m_z_n5" class="step-btn"><Label class="step-btn-label" text="-5" /></Button>
+          <Button id="m_z_n1" class="step-btn"><Label class="step-btn-label" text="-1" /></Button>
+          <Label class="step-readout step-axis" text="Z" />
+          <Button id="m_z_p1" class="step-btn"><Label class="step-btn-label" text="+1" /></Button>
+          <Button id="m_z_p5" class="step-btn"><Label class="step-btn-label" text="+5" /></Button>
+        </Panel>
         <Panel id="m_step_down" class="step-row v-step hidden">
           <Button id="m_v_p1" class="step-btn"><Label class="step-btn-label" text="+1" /></Button>
           <Button id="m_v_p5" class="step-btn"><Label class="step-btn-label" text="+5" /></Button>

@@ -7,6 +7,11 @@
 #include "keyvalues3.h"
 #include "utils/eventlisteners.h"
 
+// Written into the set whenever it is saved, so the most recently written copy can be identified.
+#define KZ_PREF_UPDATED_AT "prefsUpdatedAt"
+// A server with a badly wrong clock would otherwise write a stamp that wins everywhere forever.
+#define KZ_PREF_STAMP_MAX_SKEW 86400
+
 class KZOptionServiceEventListener
 {
 public:
@@ -49,6 +54,16 @@ private:
 		GLOBAL
 	} dataState, currentState;
 
+	// The stamp of the set currently applied, and per-source arrival guards. Sources can arrive in
+	// either order, so which one is newest is not the same question as which one got here first.
+	i64 loadedStamp {};
+	bool localLoaded {};
+	bool globalLoaded {};
+
+	// True when a set carrying this stamp should replace what is already applied.
+	bool ShouldApplyPrefs(i64 incomingStamp, i32 incomingTier);
+	void StampPreferences();
+
 	KeyValues3 prefKV = KeyValues3(KV3_TYPEEX_TABLE, KV3_SUBTYPE_UNSPECIFIED);
 	CUtlVector<CUtlString> userSetPrefs; // Track user-modified preferences
 
@@ -57,6 +72,9 @@ public:
 	{
 		dataState = NONE;
 		currentState = NONE;
+		loadedStamp = 0;
+		localLoaded = false;
+		globalLoaded = false;
 		prefKV.SetToEmptyTable();
 		userSetPrefs.Purge();
 	}
@@ -78,7 +96,14 @@ public:
 
 	void GetPreferencesAsJSON(CUtlString *error, CUtlString *output)
 	{
+		this->StampPreferences();
 		SaveKV3AsJSON(&this->prefKV, error, output);
+	}
+
+	// True once the player has a value for this preference, as opposed to falling back to a default.
+	bool HasPreference(const char *optionName)
+	{
+		return prefKV.FindMember(optionName) != NULL;
 	}
 
 	// Due to the way keyvalues3.h is written, we can't template these functions.

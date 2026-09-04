@@ -32,20 +32,19 @@ void KZHUDService::UpdateTimerElement(CCSCustomHudLayout *layout, KZPlayer *sour
 	const bool running = replay ? KZ::replaysystem::GetEndTime() == 0.0f : source->timerService->GetTimerRunning();
 	const i32 teleports = replay ? KZ::replaysystem::GetTeleportCount() : source->checkpointService->GetTeleportCount();
 
-	auto *opts = this->player->optionService;
+	const MHUDPrefs &prefs = this->GetPrefs();
 	Color color;
 	if (paused)
 	{
-		color = opts->GetPreferenceColor("mhudTimerPausedColor", MHUD_DEF_TIMER_PAUSED_COLOR);
+		color = prefs.timerPaused;
 	}
 	else if (!running)
 	{
-		color = opts->GetPreferenceColor("mhudTimerStoppedColor", MHUD_DEF_TIMER_STOPPED_COLOR);
+		color = prefs.timerStopped;
 	}
 	else
 	{
-		color = teleports > 0 ? opts->GetPreferenceColor("mhudTimerTpColor", MHUD_DEF_TIMER_TP_COLOR)
-							  : opts->GetPreferenceColor("mhudTimerProColor", MHUD_DEF_TIMER_PRO_COLOR);
+		color = teleports > 0 ? prefs.timerTp : prefs.timerPro;
 	}
 
 	const bool show = this->IsMHUDElementEnabled(MHUDElement::Timer) && !text.empty();
@@ -57,9 +56,8 @@ void KZHUDService::UpdateSpeedElement(CCSCustomHudLayout *layout, const SpeedInf
 {
 	char text[16];
 	V_snprintf(text, sizeof(text), "%.0f", info.speed);
-	auto *opts = this->player->optionService;
-	const Color color = info.crouchJump ? opts->GetPreferenceColor("mhudSpeedCjColor", MHUD_DEF_CJ_COLOR)
-										: opts->GetPreferenceColor("mhudSpeedColor", MHUD_DEF_BASE_COLOR);
+	const MHUDPrefs &prefs = this->GetPrefs();
+	const Color color = info.crouchJump ? prefs.speedCj : prefs.speed;
 	this->UpdateLayoutElement(layout, MHUDElement::Speed, this->IsMHUDElementEnabled(MHUDElement::Speed), text, color, force);
 }
 
@@ -68,19 +66,19 @@ void KZHUDService::UpdatePrespeedElement(CCSCustomHudLayout *layout, const Speed
 {
 	char text[16];
 	V_snprintf(text, sizeof(text), "%.0f", info.takeoffSpeed);
-	auto *opts = this->player->optionService;
+	const MHUDPrefs &prefs = this->GetPrefs();
 	Color color;
 	if (info.jumpbug)
 	{
-		color = opts->GetPreferenceColor("mhudPrespeedJumpbugColor", MHUD_DEF_JUMPBUG_COLOR);
+		color = prefs.prespeedJumpbug;
 	}
 	else if (info.perf)
 	{
-		color = opts->GetPreferenceColor("mhudPrespeedPerfColor", MHUD_DEF_PERF_COLOR);
+		color = prefs.prespeedPerf;
 	}
 	else
 	{
-		color = opts->GetPreferenceColor("mhudPrespeedColor", MHUD_DEF_BASE_COLOR);
+		color = prefs.prespeed;
 	}
 	const bool show = this->IsMHUDElementEnabled(MHUDElement::Prespeed) && info.showTakeoff;
 	this->UpdateLayoutElement(layout, MHUDElement::Prespeed, show, text, color, force);
@@ -97,10 +95,9 @@ void KZHUDService::UpdateKeysElement(CCSCustomHudLayout *layout, KZPlayer *sourc
 	const bool left = pressed(IN_MOVELEFT), forward = pressed(IN_FORWARD), back = pressed(IN_BACK), right = pressed(IN_MOVERIGHT);
 	const bool keys[] = {pressed(IN_DUCK), forward, source->hudService->JumpedThisTick(), left, back, right};
 
-	auto *opts = this->player->optionService;
+	const MHUDPrefs &prefs = this->GetPrefs();
 	const bool overlap = (forward && back) || (left && right);
-	const Color color = overlap && this->IsMHUDKeysOverlapEnabled() ? opts->GetPreferenceColor("mhudKeysOverlapColor", MHUD_DEF_KEYS_OVERLAP_COLOR)
-																	: opts->GetPreferenceColor("mhudKeysColor", MHUD_DEF_BASE_COLOR);
+	const Color color = overlap && this->IsMHUDKeysOverlapEnabled() ? prefs.keysOverlap : prefs.keys;
 	const bool show = this->IsMHUDElementEnabled(MHUDElement::Keys);
 	this->UpdateLayoutElement(layout, MHUDElement::Keys, show, NULL, color, force);
 	if (force)
@@ -143,8 +140,7 @@ void KZHUDService::UpdateKeysElement(CCSCustomHudLayout *layout, KZPlayer *sourc
 		layout->SetHasClass(KEY_PANELS[i], "pressed", keys[i] ? k_eHudPanelClassStatus_HasClass : k_eHudPanelClassStatus_DoesNotHaveClass);
 	}
 
-	const MHUDElementDef &def = MHUD_ELEMENTS[(i32)MHUDElement::Keys];
-	const i32 size = panorama::SnapToStep((i32)opts->GetPreferenceFloat(def.sizeKey, def.sizeDefault), 0, 500);
+	const i32 size = panorama::SnapToStep((i32)prefs.elements[(i32)MHUDElement::Keys].size, 0, 500);
 	if (this->layoutKeys.fontSize != size)
 	{
 		char className[64];
@@ -161,7 +157,7 @@ void KZHUDService::UpdateKeysElement(CCSCustomHudLayout *layout, KZPlayer *sourc
 		this->layoutKeys.fontSize = size;
 	}
 
-	const char *fontClass = MHUDFontClass(this->player, MHUDElement::Keys);
+	const char *fontClass = KZHUDService::GetMHUDFontClass(this->player, MHUDElement::Keys);
 	if (this->layoutKeys.fontClass != fontClass)
 	{
 		for (i32 i = 0; i < KZ_ARRAYSIZE(KEY_PANELS); i++)
@@ -179,7 +175,7 @@ void KZHUDService::UpdateKeysElement(CCSCustomHudLayout *layout, KZPlayer *sourc
 void KZHUDService::UpdateCheckpointElement(CCSCustomHudLayout *layout, KZPlayer *source, bool force)
 {
 	std::string text = source->hudService->GetCheckpointText(this->player->languageService->GetLanguage());
-	const Color color = this->player->optionService->GetPreferenceColor("mhudCheckpointColor", MHUD_DEF_BASE_COLOR);
+	const Color color = this->GetPrefs().checkpoint;
 	const bool show = this->IsMHUDElementEnabled(MHUDElement::Checkpoint) && !text.empty();
 	this->UpdateLayoutElement(layout, MHUDElement::Checkpoint, show, text.c_str(), color, force);
 }
@@ -200,9 +196,7 @@ bool KZHUDService::UpdateHudLayout(KZPlayer *source)
 
 	if (!show)
 	{
-		// Panel off or the legacy style is selected: collapse every element. UpdateLayoutElement with
-		// show=false only applies the hidden class and returns before reading any value, so the text and
-		// color passed here are ignored (MHUD_DEF_BASE_COLOR is just a placeholder).
+		// show=false applies the hidden class and returns, so the text and color here are ignored.
 		for (i32 i = 0; i < (i32)MHUDElement::Count; i++)
 		{
 			this->UpdateLayoutElement(layout, (MHUDElement)i, false, NULL, MHUD_DEF_BASE_COLOR, force);

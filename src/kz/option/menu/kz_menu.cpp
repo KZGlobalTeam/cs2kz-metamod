@@ -23,13 +23,15 @@ extern ICS2Menus *g_pMenus;
 static_global const Color KZ_MENU_DEFAULT_COLOR(255, 255, 255, 255);
 
 // Color pages derive from the picker entry count (solids + gradients) and the per-page swatch count.
-static_function i32 GetColorPageCount()
+static_function i32 GetItemColorCount(const KZOptItem *item)
 {
-	return MAX(1, (panorama::GetColorEntryCount() + KZ_MENU_SWATCH - 1) / KZ_MENU_SWATCH);
+	return item && item->solidOnly ? panorama::GetSolidColorCount() : panorama::GetColorEntryCount();
 }
 
-// The menu registers its own appearance category. Defined in prefs/menu_prefs.cpp.
-void MenuRegisterChromePrefs();
+static_function i32 GetColorPageCount(const KZOptItem *item)
+{
+	return MAX(1, (GetItemColorCount(item) + KZ_MENU_SWATCH - 1) / KZ_MENU_SWATCH);
+}
 
 // === Panel id / dialog var helpers (each its own static buffer) ======================
 
@@ -80,7 +82,30 @@ static_function const char *GetTypeClass(KZOptItemType type)
 	return "type-button";
 }
 
-std::string KZMenuPhrase(KZPlayer *player, const char *key)
+// A Size item backs either an int or a float preference, so both ends go through these.
+static_function i32 GetSizeValue(KZOptionService *opts, const KZOptItem &item)
+{
+	if (item.storage == KZOptStorage::Int)
+	{
+		return (i32)opts->GetPreferenceInt(item.prefKey, item.idef);
+	}
+	const i32 scale = MAX(1, item.scale);
+	return (i32)(opts->GetPreferenceFloat(item.prefKey, (f64)item.idef / scale) * scale + 0.5);
+}
+
+static_function void SetSizeValue(KZOptionService *opts, const KZOptItem &item, i32 value)
+{
+	if (item.storage == KZOptStorage::Int)
+	{
+		opts->SetPreferenceInt(item.prefKey, value);
+	}
+	else
+	{
+		opts->SetPreferenceFloat(item.prefKey, (f64)value / MAX(1, item.scale));
+	}
+}
+
+std::string KZMenuService::GetPhrase(KZPlayer *player, const char *key)
 {
 	return player->languageService->PrepareMessage(key);
 }
@@ -133,7 +158,7 @@ void KZMenuService::DestroyOwnedLayout()
 
 void KZMenuService::Init()
 {
-	MenuRegisterChromePrefs();
+	KZMenuService::RegisterChromePrefs();
 }
 
 // === Write helpers ===================================================================
@@ -171,8 +196,7 @@ void KZMenuService::SetSwapClass(CCSCustomHudLayout *layout, const char *panelId
 
 void KZMenuService::SetVar(CCSCustomHudLayout *layout, const char *panelId, const char *var, const char *value)
 {
-	// Every SetDialogVariableString marks the whole entity for a full network resend, so writing an
-	// unchanged value is far from free. Skip it when the value has not changed since the last render.
+	// Every SetDialogVariableString marks the whole entity for a full network resend.
 	std::string &cached = this->writtenVars[var];
 	if (cached == value)
 	{
@@ -186,7 +210,7 @@ void KZMenuService::SetVar(CCSCustomHudLayout *layout, const char *panelId, cons
 
 KZOptNode *KZMenuService::ActiveNode()
 {
-	const std::vector<KZOptNode *> &tree = KZMenu::Tree();
+	const std::vector<KZOptNode *> &tree = KZ::menu::GetTree();
 	if (this->selectedCategory < 0 || this->selectedCategory >= (i32)tree.size())
 	{
 		return NULL;
@@ -205,7 +229,7 @@ KZOptNode *KZMenuService::ActiveNode()
 
 i32 KZMenuService::BuildLeft()
 {
-	const std::vector<KZOptNode *> &tree = KZMenu::Tree();
+	const std::vector<KZOptNode *> &tree = KZ::menu::GetTree();
 	i32 n = 0;
 	for (i32 ci = 0; ci < (i32)tree.size() && n < KZ_MENU_CATS; ci++)
 	{
@@ -230,12 +254,13 @@ const KZOptItem *KZMenuService::PopupItem()
 	{
 		return NULL;
 	}
-	// Only hand back an item whose type matches the open popup, so a stale index can never feed a
-	// mismatched item (e.g. a NULL prefKey) into rendering.
+	// Only hand back an item whose type matches the open popup, so a stale index cannot feed a
+	// mismatched item into rendering.
 	const KZOptItem &it = node->items[this->popupItemIndex];
-	const bool ok = (this->popup == Popup::Color && it.type == KZOptItemType::Color)
-					|| (this->popup == Popup::List && (it.type == KZOptItemType::Font || it.type == KZOptItemType::Choice))
-					|| (this->popup == Popup::Step && (it.type == KZOptItemType::Position || it.type == KZOptItemType::Size));
+	const bool ok =
+		(this->popup == Popup::Color && it.type == KZOptItemType::Color)
+		|| (this->popup == Popup::List && (it.type == KZOptItemType::Font || it.type == KZOptItemType::Choice))
+		|| (this->popup == Popup::Step && (it.type == KZOptItemType::Position || it.type == KZOptItemType::Size || it.type == KZOptItemType::Vector));
 	return ok ? &it : NULL;
 }
 
@@ -290,8 +315,7 @@ void KZMenuService::RenderChrome(CCSCustomHudLayout *layout)
 	const char *font = panorama::ResolveFontClass(opts->GetPreferenceStr("menuFont", KZ_MENU_DEFAULT_FONT), KZ_MENU_DEFAULT_FONT);
 	const char *color = panorama::ResolveColorClass(opts->GetPreferenceColor("menuColor", KZ_MENU_DEFAULT_COLOR));
 
-	// A child does pick up an inherited font/color class, but only when it is updated itself (its
-	// dialog string or its own font class changes). Stamping every text panel keeps them all in step.
+	// A child only picks up an inherited font/color class when it is updated itself, so stamp every text panel.
 	if (this->applied.menuFont != font || this->applied.menuColor != color)
 	{
 		const bool fontChanged = this->applied.menuFont != font;
@@ -333,8 +357,7 @@ void KZMenuService::RenderChrome(CCSCustomHudLayout *layout)
 		stamp("lp_page", true);
 		stamp("lp_note", true);
 		stamp("lp_title", true);
-		// List rows take the menu color, but never the menu font: RenderListPopup sets a per-row font
-		// class so the font picker previews each face, and a second font class here would fight it.
+		// Never the menu font: RenderListPopup sets a per-row font class so the picker previews faces.
 		for (i32 i = 0; i < KZ_MENU_LIST; i++)
 		{
 			stamp(LiLbl(i), false);
@@ -343,7 +366,7 @@ void KZMenuService::RenderChrome(CCSCustomHudLayout *layout)
 		this->applied.menuColor = color;
 	}
 
-	this->SetVar(layout, "menu_title", "title", KZMenuPhrase(this->player, "Menu - Title Options").c_str());
+	this->SetVar(layout, "menu_title", "title", KZMenuService::GetPhrase(this->player, "Menu - Title Options").c_str());
 }
 
 void KZMenuService::RenderLeft(CCSCustomHudLayout *layout)
@@ -356,12 +379,11 @@ void KZMenuService::RenderLeft(CCSCustomHudLayout *layout)
 		if (used)
 		{
 			const LeftEntry &e = this->leftSlots[i];
-			// Every top-level category is styled as a header (with or without subs, so a leaf category
-			// reads the same as one that owns subs). A category that owns subs is also inert once one of
-			// its subs is active - the user switches by clicking another category.
+			// Every top-level category is styled as a header, and one that owns subs is inert once a sub
+			// of it is active.
 			const bool isParent = !e.isSub;
 			const bool disabled = isParent && !e.node->subs.empty() && e.categoryIndex == this->selectedCategory;
-			this->SetVar(layout, CatLbl(i), CatVar(i), KZMenuPhrase(this->player, e.node->phraseKey).c_str());
+			this->SetVar(layout, CatLbl(i), CatVar(i), KZMenuService::GetPhrase(this->player, e.node->phraseKey).c_str());
 			this->SetBoolClass(layout, CatPanel(i), "indent", this->applied.catIndent[i], e.isSub);
 			this->SetBoolClass(layout, CatPanel(i), "cat-parent", this->applied.catParent[i], isParent);
 			this->SetBoolClass(layout, CatPanel(i), "disabled", this->applied.catDisabled[i], disabled);
@@ -384,7 +406,7 @@ void KZMenuService::RenderItems(CCSCustomHudLayout *layout)
 		if (used)
 		{
 			const KZOptItem &it = node->items[i];
-			this->SetVar(layout, ItemLbl(i), ItemLblVar(i), KZMenuPhrase(this->player, it.phraseKey).c_str());
+			this->SetVar(layout, ItemLbl(i), ItemLblVar(i), KZMenuService::GetPhrase(this->player, it.phraseKey).c_str());
 
 			std::string value;
 			const char *swatch = NULL;
@@ -393,7 +415,7 @@ void KZMenuService::RenderItems(CCSCustomHudLayout *layout)
 			{
 				case KZOptItemType::Toggle:
 					on = it.getCurrent ? it.getCurrent(this->player, it.tag) != 0 : opts->GetPreferenceBool(it.prefKey, it.idef != 0);
-					value = KZMenuPhrase(this->player, on ? "Menu - On" : "Menu - Off");
+					value = KZMenuService::GetPhrase(this->player, on ? "Menu - On" : "Menu - Off");
 					break;
 				case KZOptItemType::Color:
 					swatch = panorama::ResolveSwatchClass(opts->GetPreferenceColor(it.prefKey, it.cdef));
@@ -412,7 +434,15 @@ void KZMenuService::RenderItems(CCSCustomHudLayout *layout)
 				case KZOptItemType::Size:
 				{
 					char buf[16];
-					V_snprintf(buf, sizeof(buf), "%ipx", (i32)opts->GetPreferenceFloat(it.prefKey, it.idef));
+					V_snprintf(buf, sizeof(buf), "%i%s", GetSizeValue(opts, it), it.unit ? it.unit : "");
+					value = buf;
+					break;
+				}
+				case KZOptItemType::Vector:
+				{
+					const Vector v = opts->GetPreferenceVector(it.prefKey, Vector((f32)it.idef, (f32)it.iydef, (f32)it.izdef));
+					char buf[32];
+					V_snprintf(buf, sizeof(buf), "%i, %i, %i", (i32)v.x, (i32)v.y, (i32)v.z);
 					value = buf;
 					break;
 				}
@@ -420,17 +450,31 @@ void KZMenuService::RenderItems(CCSCustomHudLayout *layout)
 					break;
 				case KZOptItemType::Choice:
 				{
-					if (it.getChoices && it.getCurrent)
+					if (it.getChoices)
 					{
 						std::vector<KZChoice> choices;
 						it.getChoices(this->player, it.tag, choices);
-						const i64 cur = it.getCurrent(this->player, it.tag);
-						for (const KZChoice &c : choices)
+						if (it.getCurrent)
 						{
-							if (c.id == cur)
+							const i64 cur = it.getCurrent(this->player, it.tag);
+							for (const KZChoice &c : choices)
 							{
-								value = c.label;
-								break;
+								if (c.id == cur)
+								{
+									value = c.label;
+									break;
+								}
+							}
+						}
+						else
+						{
+							// A multi-select list has no single current row, so the value lists what is on.
+							for (const KZChoice &c : choices)
+							{
+								if (c.selected)
+								{
+									value += value.empty() ? c.label : ", " + c.label;
+								}
 							}
 						}
 					}
@@ -439,7 +483,7 @@ void KZMenuService::RenderItems(CCSCustomHudLayout *layout)
 			}
 
 			this->SetVar(layout, ItemVal(i), ItemValVar(i), value.c_str());
-			this->SetVar(layout, ItemSub(i), ItemSubVar(i), it.subKey ? KZMenuPhrase(this->player, it.subKey).c_str() : "");
+			this->SetVar(layout, ItemSub(i), ItemSubVar(i), it.subKey ? KZMenuService::GetPhrase(this->player, it.subKey).c_str() : "");
 			this->SetSwapClass(layout, ItemSw(i), this->applied.itemSwatch[i], swatch);
 			this->SetSwapClass(layout, ItemPanel(i), this->applied.itemType[i], GetTypeClass(it.type));
 			this->SetBoolClass(layout, ItemPanel(i), "on", this->applied.itemOn[i], on);
@@ -453,12 +497,13 @@ void KZMenuService::RenderItems(CCSCustomHudLayout *layout)
 void KZMenuService::RenderColorPopup(CCSCustomHudLayout *layout)
 {
 	// Highlight the entry matching the item's current color, if it is on this page.
+	const KZOptItem *it = this->PopupItem();
 	i32 curIdx = -1;
-	if (const KZOptItem *it = this->PopupItem())
+	if (it)
 	{
 		curIdx = panorama::FindColorEntry(this->player->optionService->GetPreferenceColor(it->prefKey, it->cdef));
 	}
-	const i32 total = panorama::GetColorEntryCount();
+	const i32 total = GetItemColorCount(it);
 	for (i32 i = 0; i < KZ_MENU_SWATCH; i++)
 	{
 		const i32 idx = this->popupPage * KZ_MENU_SWATCH + i;
@@ -471,15 +516,14 @@ void KZMenuService::RenderColorPopup(CCSCustomHudLayout *layout)
 		this->SetBoolClass(layout, SwPanel(i), "hidden", this->applied.swHidden[i], !used);
 	}
 	char page[16];
-	V_snprintf(page, sizeof(page), "%i/%i", this->popupPage + 1, GetColorPageCount());
+	V_snprintf(page, sizeof(page), "%i/%i", this->popupPage + 1, GetColorPageCount(it));
 	this->SetVar(layout, "cp_page", "cppage", page);
 }
 
 void KZMenuService::RenderListPopup(CCSCustomHudLayout *layout)
 {
 	const i32 n = (i32)this->listChoices.size();
-	// The font picker pages by family (one family per page, scrolling if it has many faces); a choice
-	// list just pages by slot count.
+	// The font picker pages by family; a choice list pages by slot count.
 	const i32 pages = this->popupFont ? MAX(1, (i32)this->fontPageStart.size()) : MAX(1, (n + KZ_MENU_LIST - 1) / KZ_MENU_LIST);
 	this->popupPage = Clamp(this->popupPage, 0, pages - 1);
 	i32 first = 0;
@@ -525,7 +569,7 @@ void KZMenuService::RenderListPopup(CCSCustomHudLayout *layout)
 		{
 			const KZChoice &c = this->listChoices[first + i];
 			this->SetVar(layout, LiLbl(i), LiVar(i), c.label.c_str());
-			this->SetBoolClass(layout, LiPanel(i), "selected", this->applied.liSel[i], c.id == curId);
+			this->SetBoolClass(layout, LiPanel(i), "selected", this->applied.liSel[i], c.selected || c.id == curId);
 			// Font rows preview their own face; choice rows use the menu font.
 			const char *face = this->popupFont ? PANORAMA_FONTS[c.id].className : menuFont;
 			this->SetSwapClass(layout, LiLbl(i), this->applied.liFont[i], face);
@@ -541,7 +585,7 @@ void KZMenuService::RenderListPopup(CCSCustomHudLayout *layout)
 	}
 	else if (it)
 	{
-		this->SetVar(layout, "lp_title", "lptitle", KZMenuPhrase(this->player, it->phraseKey).c_str());
+		this->SetVar(layout, "lp_title", "lptitle", KZMenuService::GetPhrase(this->player, it->phraseKey).c_str());
 	}
 	char page[16];
 	V_snprintf(page, sizeof(page), "%i/%i", this->popupPage + 1, pages);
@@ -550,7 +594,7 @@ void KZMenuService::RenderListPopup(CCSCustomHudLayout *layout)
 	this->SetBoolClass(layout, "lp_note", "hidden", this->applied.noteHidden, !this->popupFont);
 	if (this->popupFont)
 	{
-		this->SetVar(layout, "lp_note", "lpnote", KZMenuPhrase(this->player, "Menu - Font Local Note").c_str());
+		this->SetVar(layout, "lp_note", "lpnote", KZMenuService::GetPhrase(this->player, "Menu - Font Local Note").c_str());
 	}
 }
 
@@ -561,26 +605,37 @@ void KZMenuService::RenderStepPopup(CCSCustomHudLayout *layout)
 	{
 		return;
 	}
-	const bool vstep = it->type == KZOptItemType::Position;
+	const bool zstep = it->type == KZOptItemType::Vector;
+	const bool vstep = it->type == KZOptItemType::Position || zstep;
 	if (this->applied.vstepHidden != !vstep)
 	{
 		this->applied.vstepHidden = !vstep;
 		this->SetClass(layout, "m_step_up", "hidden", !vstep);
 		this->SetClass(layout, "m_step_down", "hidden", !vstep);
 	}
+	if (this->applied.zstepHidden != !zstep)
+	{
+		this->applied.zstepHidden = !zstep;
+		this->SetClass(layout, "m_step_z", "hidden", !zstep);
+	}
 	auto *opts = this->player->optionService;
 	char readout[32];
-	if (vstep)
+	if (zstep)
+	{
+		const Vector v = opts->GetPreferenceVector(it->prefKey, Vector((f32)it->idef, (f32)it->iydef, (f32)it->izdef));
+		V_snprintf(readout, sizeof(readout), "%i, %i, %i", (i32)v.x, (i32)v.y, (i32)v.z);
+	}
+	else if (vstep)
 	{
 		V_snprintf(readout, sizeof(readout), "%i%%, %i%%", (i32)opts->GetPreferenceFloat(it->prefKey, it->idef),
 				   (i32)opts->GetPreferenceFloat(it->yKey, it->iydef));
 	}
 	else
 	{
-		V_snprintf(readout, sizeof(readout), "%ipx", (i32)opts->GetPreferenceFloat(it->prefKey, it->idef));
+		V_snprintf(readout, sizeof(readout), "%i%s", GetSizeValue(opts, *it), it->unit ? it->unit : "");
 	}
 	this->SetVar(layout, "step_readout", "step", readout);
-	this->SetVar(layout, "step_label", "steplabel", KZMenuPhrase(this->player, it->phraseKey).c_str());
+	this->SetVar(layout, "step_label", "steplabel", KZMenuService::GetPhrase(this->player, it->phraseKey).c_str());
 }
 
 // === Interaction =====================================================================
@@ -591,8 +646,8 @@ void KZMenuService::SelectLeft(i32 slot)
 	{
 		return;
 	}
-	// The panes stay live while a picker is open; a click on them just closes the picker first, so it
-	// can never be left pointing at an item the node change removed.
+	// The panes stay live while a picker is open, so close it first: it must never be left pointing
+	// at an item the node change removed.
 	if (this->popup != Popup::None)
 	{
 		this->ClosePopup();
@@ -610,7 +665,7 @@ void KZMenuService::SelectLeft(i32 slot)
 			return;
 		}
 		this->selectedCategory = e.categoryIndex;
-		KZOptNode *cat = KZMenu::Tree()[this->selectedCategory];
+		KZOptNode *cat = KZ::menu::GetTree()[this->selectedCategory];
 		this->selectedSub = cat->subs.empty() ? -1 : 0;
 	}
 	this->Render();
@@ -650,6 +705,7 @@ void KZMenuService::ActivateItem(i32 slot)
 			break;
 		case KZOptItemType::Position:
 		case KZOptItemType::Size:
+		case KZOptItemType::Vector:
 			this->OpenPopup(Popup::Step, slot);
 			break;
 		case KZOptItemType::Button:
@@ -681,8 +737,7 @@ void KZMenuService::OpenPopup(Popup kind, i32 itemIdx)
 		this->fontPageStart.clear();
 		if (this->popupFont)
 		{
-			// One page per family, listing that family's faces by variant. The table is already
-			// ordered by family, so a single pass finds the page boundaries.
+			// The table is already ordered by family, so a single pass finds the page boundaries.
 			const char *family = NULL;
 			for (i32 f = 0; f < PANORAMA_FONT_COUNT; f++)
 			{
@@ -749,7 +804,7 @@ void KZMenuService::PopupPageStep(i32 delta)
 	i32 pages = 1;
 	if (this->popup == Popup::Color)
 	{
-		pages = GetColorPageCount();
+		pages = GetColorPageCount(this->PopupItem());
 	}
 	else if (this->popup == Popup::List)
 	{
@@ -770,7 +825,7 @@ void KZMenuService::PopupPick(i32 slot)
 	if (this->popup == Popup::Color)
 	{
 		const i32 idx = this->popupPage * KZ_MENU_SWATCH + slot;
-		if (idx >= 0 && idx < panorama::GetColorEntryCount())
+		if (idx >= 0 && idx < GetItemColorCount(it))
 		{
 			this->player->optionService->SetPreferenceColor(it->prefKey, panorama::GetColorEntryValue(idx));
 			this->Render(); // move the selected-swatch highlight; HUD previews on its own entity
@@ -789,20 +844,27 @@ void KZMenuService::PopupPick(i32 slot)
 		{
 			return;
 		}
-		const KZChoice &c = this->listChoices[idx];
+		const i64 choiceId = this->listChoices[idx].id;
 		if (this->popupFont)
 		{
-			this->player->optionService->SetPreferenceStr(it->prefKey, PANORAMA_FONTS[c.id].slug);
+			this->player->optionService->SetPreferenceStr(it->prefKey, PANORAMA_FONTS[choiceId].slug);
 		}
 		else if (it->onPick)
 		{
-			it->onPick(this->player, it->tag, c.id);
+			it->onPick(this->player, it->tag, choiceId);
+			// A multi-select list keeps each row's state in the row, so rebuild for the highlight to
+			// follow the pick. A single-select one re-reads getCurrent every render.
+			this->listChoices.clear();
+			if (it->getChoices)
+			{
+				it->getChoices(this->player, it->tag, this->listChoices);
+			}
 		}
 		this->Render(); // move the selected highlight
 	}
 }
 
-void KZMenuService::Step(bool vertical, i32 delta)
+void KZMenuService::Step(i32 axis, i32 delta)
 {
 	const KZOptItem *it = this->PopupItem();
 	if (!it)
@@ -812,15 +874,21 @@ void KZMenuService::Step(bool vertical, i32 delta)
 	auto *opts = this->player->optionService;
 	if (it->type == KZOptItemType::Position)
 	{
-		const char *key = vertical ? it->yKey : it->prefKey;
-		const i32 def = vertical ? it->iydef : it->idef;
+		const char *key = axis == 1 ? it->yKey : it->prefKey;
+		const i32 def = axis == 1 ? it->iydef : it->idef;
 		const i32 value = (i32)opts->GetPreferenceFloat(key, def) + delta;
 		opts->SetPreferenceFloat(key, panorama::SnapToStep(value, -100, 100));
 	}
+	else if (it->type == KZOptItemType::Vector)
+	{
+		Vector value = opts->GetPreferenceVector(it->prefKey, Vector((f32)it->idef, (f32)it->iydef, (f32)it->izdef));
+		f32 &component = axis == 2 ? value.z : (axis == 1 ? value.y : value.x);
+		component = (f32)panorama::SnapToStep((i32)component + delta, it->lo, it->hi);
+		opts->SetPreferenceVector(it->prefKey, value);
+	}
 	else if (it->type == KZOptItemType::Size)
 	{
-		const i32 value = (i32)opts->GetPreferenceFloat(it->prefKey, it->idef) + delta;
-		opts->SetPreferenceFloat(it->prefKey, panorama::SnapToStep(value, it->lo, it->hi));
+		SetSizeValue(opts, *it, panorama::SnapToStep(GetSizeValue(opts, *it) + delta, it->lo, it->hi));
 	}
 	this->Render();
 }
@@ -858,35 +926,51 @@ void KZMenuService::OnCustomHudClicked(CPlayerSlot slot, CCSCustomHudLayout *lay
 	}
 	else if (V_strcmp(buttonId, "m_v_n5") == 0)
 	{
-		menu->Step(true, -5);
+		menu->Step(1, -5);
 	}
 	else if (V_strcmp(buttonId, "m_v_n1") == 0)
 	{
-		menu->Step(true, -1);
+		menu->Step(1, -1);
 	}
 	else if (V_strcmp(buttonId, "m_v_p1") == 0)
 	{
-		menu->Step(true, 1);
+		menu->Step(1, 1);
 	}
 	else if (V_strcmp(buttonId, "m_v_p5") == 0)
 	{
-		menu->Step(true, 5);
+		menu->Step(1, 5);
 	}
 	else if (V_strcmp(buttonId, "m_h_n5") == 0)
 	{
-		menu->Step(false, -5);
+		menu->Step(0, -5);
 	}
 	else if (V_strcmp(buttonId, "m_h_n1") == 0)
 	{
-		menu->Step(false, -1);
+		menu->Step(0, -1);
 	}
 	else if (V_strcmp(buttonId, "m_h_p1") == 0)
 	{
-		menu->Step(false, 1);
+		menu->Step(0, 1);
 	}
 	else if (V_strcmp(buttonId, "m_h_p5") == 0)
 	{
-		menu->Step(false, 5);
+		menu->Step(0, 5);
+	}
+	else if (V_strcmp(buttonId, "m_z_n5") == 0)
+	{
+		menu->Step(2, -5);
+	}
+	else if (V_strcmp(buttonId, "m_z_n1") == 0)
+	{
+		menu->Step(2, -1);
+	}
+	else if (V_strcmp(buttonId, "m_z_p1") == 0)
+	{
+		menu->Step(2, 1);
+	}
+	else if (V_strcmp(buttonId, "m_z_p5") == 0)
+	{
+		menu->Step(2, 5);
 	}
 	else if (V_strncmp(buttonId, "cat", 3) == 0 && V_isdigit(buttonId[3]))
 	{
@@ -914,9 +998,8 @@ void KZMenuService::DropCapture()
 	this->popup = Popup::None;
 	this->popupItemIndex = -1;
 	this->listChoices.clear();
-	// The already-spawned entity, not MenuLayout(): that one refuses to hand anything back once the
-	// plugin is unloading, which is exactly when the capture most needs dropping. Nothing is captured
-	// without an entity anyway, so there is never a reason to spawn one here.
+	// The already-spawned entity, not MenuLayout(): that one hands nothing back while the plugin is
+	// unloading, which is exactly when the capture needs dropping.
 	if (CBaseEntity *ent = this->layoutEntity.Get())
 	{
 		CCSCustomHudLayout *layout = (CCSCustomHudLayout *)ent;
@@ -955,7 +1038,7 @@ void KZMenuService::Toggle()
 		this->player->languageService->PrintChat(true, false, "Menu - Unavailable");
 		return;
 	}
-	if (KZMenu::Tree().empty())
+	if (KZ::menu::GetTree().empty())
 	{
 		return;
 	}
@@ -969,15 +1052,13 @@ void KZMenuService::Toggle()
 	this->open = true;
 	this->popup = Popup::None;
 	this->selectedCategory = 0;
-	this->selectedSub = KZMenu::Tree()[0]->subs.empty() ? -1 : 0;
+	this->selectedSub = KZ::menu::GetTree()[0]->subs.empty() ? -1 : 0;
 	layout->SetInputCaptureEnabled(slot, true);
 	this->Render();
 }
 
 void KZMenuService::Reset()
 {
-	// Like the HUD service, Reset keeps the owned entity (it survives respawns/map changes and is
-	// recreated lazily); only OnClientDisconnect destroys it.
 	if (this->open)
 	{
 		this->open = false;

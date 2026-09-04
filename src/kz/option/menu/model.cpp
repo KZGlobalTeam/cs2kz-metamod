@@ -3,11 +3,11 @@
 
 #include "tier0/memdbgon.h"
 
-namespace KZMenu
+namespace KZ::menu
 {
 	static std::vector<KZOptNode *> g_tree;
 
-	const std::vector<KZOptNode *> &Tree()
+	const std::vector<KZOptNode *> &GetTree()
 	{
 		return g_tree;
 	}
@@ -25,6 +25,39 @@ namespace KZMenu
 		if (!node->items.empty())
 		{
 			node->items.back().dividerAfter = true;
+		}
+	}
+
+	void SetItemPref(KZOptNode *node, const char *prefKey, KZOptStorage storage)
+	{
+		if (!node->items.empty())
+		{
+			node->items.back().prefKey = prefKey;
+			node->items.back().storage = storage;
+		}
+	}
+
+	void SetItemUnit(KZOptNode *node, const char *unit)
+	{
+		if (!node->items.empty())
+		{
+			node->items.back().unit = unit;
+		}
+	}
+
+	void SetItemScale(KZOptNode *node, i32 scale)
+	{
+		if (!node->items.empty())
+		{
+			node->items.back().scale = scale;
+		}
+	}
+
+	void SetItemSolidOnly(KZOptNode *node)
+	{
+		if (!node->items.empty())
+		{
+			node->items.back().solidOnly = true;
 		}
 	}
 
@@ -49,6 +82,7 @@ namespace KZMenu
 		KZOptItem item;
 		item.phraseKey = phraseKey;
 		item.type = KZOptItemType::Toggle;
+		item.storage = KZOptStorage::Bool;
 		item.prefKey = prefKey;
 		item.idef = def ? 1 : 0;
 		item.tag = tag;
@@ -71,6 +105,7 @@ namespace KZMenu
 		KZOptItem item;
 		item.phraseKey = phraseKey;
 		item.type = KZOptItemType::Color;
+		item.storage = KZOptStorage::Int;
 		item.prefKey = prefKey;
 		item.cdef = def;
 		item.tag = tag;
@@ -83,6 +118,7 @@ namespace KZMenu
 		KZOptItem item;
 		item.phraseKey = phraseKey;
 		item.type = KZOptItemType::Font;
+		item.storage = KZOptStorage::Str;
 		item.prefKey = prefKey;
 		item.sdef = def;
 		item.tag = tag;
@@ -96,6 +132,7 @@ namespace KZMenu
 		KZOptItem item;
 		item.phraseKey = phraseKey;
 		item.type = KZOptItemType::Position;
+		item.storage = KZOptStorage::Float;
 		item.prefKey = xKey;
 		item.yKey = yKey;
 		item.lo = -100;
@@ -112,10 +149,31 @@ namespace KZMenu
 		KZOptItem item;
 		item.phraseKey = phraseKey;
 		item.type = KZOptItemType::Size;
+		item.storage = KZOptStorage::Float;
+		item.unit = "px";
+		item.scale = 1;
 		item.prefKey = prefKey;
 		item.lo = lo;
 		item.hi = hi;
 		item.idef = def;
+		item.tag = tag;
+		item.onEdit = onEdit;
+		node->items.push_back(item);
+	}
+
+	void AddVector(KZOptNode *node, const char *phraseKey, const char *prefKey, const Vector &def, i32 lo, i32 hi, i64 tag,
+				   void (*onEdit)(KZPlayer *, i64, bool))
+	{
+		KZOptItem item;
+		item.phraseKey = phraseKey;
+		item.type = KZOptItemType::Vector;
+		item.storage = KZOptStorage::Vector;
+		item.prefKey = prefKey;
+		item.lo = lo;
+		item.hi = hi;
+		item.idef = (i32)def.x;
+		item.iydef = (i32)def.y;
+		item.izdef = (i32)def.z;
 		item.tag = tag;
 		item.onEdit = onEdit;
 		node->items.push_back(item);
@@ -172,12 +230,22 @@ namespace KZMenu
 					opts->SetPreferenceFloat(item.prefKey, (f32)item.idef);
 					opts->SetPreferenceFloat(item.yKey, (f32)item.iydef);
 					break;
+				case KZOptItemType::Vector:
+					opts->SetPreferenceVector(item.prefKey, Vector((f32)item.idef, (f32)item.iydef, (f32)item.izdef));
+					break;
 				case KZOptItemType::Size:
-					opts->SetPreferenceFloat(item.prefKey, (f32)item.idef);
+					if (item.storage == KZOptStorage::Int)
+					{
+						opts->SetPreferenceInt(item.prefKey, item.idef);
+					}
+					else
+					{
+						opts->SetPreferenceFloat(item.prefKey, (f64)item.idef / MAX(1, item.scale));
+					}
 					break;
 				default:
 					break;
 			}
 		}
 	}
-} // namespace KZMenu
+} // namespace KZ::menu

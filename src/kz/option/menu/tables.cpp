@@ -367,6 +367,11 @@ i32 panorama::GetColorEntryCount()
 	return PANORAMA_COLOR_COUNT + PANORAMA_GRADIENT_COUNT;
 }
 
+i32 panorama::GetSolidColorCount()
+{
+	return PANORAMA_COLOR_COUNT;
+}
+
 const char *panorama::GetColorEntryBgClass(i32 entry)
 {
 	if (entry < PANORAMA_COLOR_COUNT)

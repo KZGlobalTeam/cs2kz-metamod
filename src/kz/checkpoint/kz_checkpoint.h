@@ -10,6 +10,7 @@ public:
 	}
 
 	static void Init();
+	static void RegisterMenu();
 	virtual void Reset() override;
 
 	// Checkpoint stuff

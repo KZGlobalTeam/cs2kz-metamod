@@ -45,7 +45,7 @@ static_global constexpr MHUDColorPrefDef CHECKPOINT_COLOR_PREFS[] =
 };
 // clang-format on
 
-const MHUDColorPrefDef *MHUDElementColorPrefs(MHUDElement element, i32 &count)
+const MHUDColorPrefDef *KZHUDService::GetMHUDElementColorPrefs(MHUDElement element, i32 &count)
 {
 	switch (element)
 	{

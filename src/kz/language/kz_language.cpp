@@ -90,6 +90,62 @@ const char *KZLanguageService::GetBaseAddon()
 	return addonsKV->GetString(KZ_BASE_ADDON_KEY, KZ_WORKSHOP_ADDON_ID);
 }
 
+static_global std::vector<KZLanguageService::AvailableLanguage> availableLanguages;
+
+const std::vector<KZLanguageService::AvailableLanguage> &KZLanguageService::GetAvailableLanguages()
+{
+	if (!availableLanguages.empty() || !translationKV)
+	{
+		return availableLanguages;
+	}
+
+	std::vector<i32> phraseCounts;
+	i32 totalPhrases = 0;
+	for (KeyValues *phrase = translationKV->GetFirstSubKey(); phrase; phrase = phrase->GetNextKey())
+	{
+		totalPhrases++;
+		for (KeyValues *lang = phrase->GetFirstSubKey(); lang; lang = lang->GetNextKey())
+		{
+			const char *code = lang->GetName();
+			if (!code || code[0] == '#')
+			{
+				continue;
+			}
+			i32 index = -1;
+			for (i32 i = 0; i < (i32)availableLanguages.size(); i++)
+			{
+				if (V_stricmp(availableLanguages[i].code.Get(), code) == 0)
+				{
+					index = i;
+					break;
+				}
+			}
+			if (index < 0)
+			{
+				// config.txt maps a Steam language name to each code; use the first one as the label.
+				CUtlString steamName = code;
+				for (KeyValues *named = languagesKV ? languagesKV->GetFirstSubKey() : nullptr; named; named = named->GetNextKey())
+				{
+					if (V_stricmp(named->GetString(nullptr, ""), code) == 0)
+					{
+						steamName = named->GetName();
+						break;
+					}
+				}
+				availableLanguages.push_back({code, steamName, 0});
+				phraseCounts.push_back(0);
+				index = (i32)availableLanguages.size() - 1;
+			}
+			phraseCounts[index]++;
+		}
+	}
+	for (i32 i = 0; i < (i32)availableLanguages.size(); i++)
+	{
+		availableLanguages[i].coverage = totalPhrases > 0 ? phraseCounts[i] * 100 / totalPhrases : 0;
+	}
+	return availableLanguages;
+}
+
 void KZLanguageService::LoadLanguages()
 {
 	char fullPath[1024];

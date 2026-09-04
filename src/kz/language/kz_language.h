@@ -12,6 +12,17 @@ class KZLanguageService : public KZBaseService
 public:
 	static void Init();
 	static void LoadConfigFiles();
+
+	struct AvailableLanguage
+	{
+		CUtlString code;
+		CUtlString name;
+		i32 coverage {}; // percent of the loaded phrases that carry this language
+	};
+
+	// The language codes the loaded phrase files actually carry, with a display name where config.txt
+	// names one. Built on first use.
+	static const std::vector<AvailableLanguage> &GetAvailableLanguages();
 	static void LoadLanguages();
 	static void LoadTranslations();
 	static void Cleanup();

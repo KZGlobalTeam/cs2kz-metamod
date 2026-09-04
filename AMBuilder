@@ -149,6 +149,13 @@ def configure_main(sdk_target, sdk, cxx):
     os.path.join(builder.sourcePath, 'src', 'kz', 'hud', 'layout', 'entity.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'hud', 'layout', 'mhud.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'hud', 'prefs', 'hud_prefs.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'checkpoint', 'prefs', 'checkpoint_prefs.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'paint', 'prefs', 'paint_prefs.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'misc', 'prefs', 'misc_prefs.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'timer', 'prefs', 'timer_prefs.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'jumpstats', 'prefs', 'jumpstats_prefs.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'option', 'pref_registry.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'option', 'prefs_transfer.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'hud', 'layout', 'preferences.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'hud', 'layout', 'tables.cpp'),
 

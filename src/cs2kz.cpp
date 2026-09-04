@@ -24,7 +24,10 @@
 #include "kz/quiet/kz_quiet.h"
 #include "kz/ztopwatch/kz_ztopwatch.h"
 #include "kz/tip/kz_tip.h"
+#include "kz/jumpstats/kz_jumpstats.h"
+#include "kz/paint/kz_paint.h"
 #include "kz/option/kz_option.h"
+#include "kz/option/pref_registry.h"
 #include "kz/language/kz_language.h"
 #include "kz/mappingapi/kz_mappingapi.h"
 #include "kz/global/kz_global.h"
@@ -81,6 +84,8 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 		snprintf(error, maxlen, "Failed to initialize movement detours.");
 		return false;
 	}
+
+	KZ::misc::Init();
 	KZCheckpointService::Init();
 	KZTimerService::Init();
 	KZSpecService::Init();
@@ -90,9 +95,11 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 	KZLanguageService::Init();
 	KZBeamService::Init();
 	KZPistolService::Init();
-	KZ::misc::Init();
+	KZPaintService::Init();
+	KZJumpstatsService::Init();
 	KZQuietService::Init();
 	KZZtopwatchService::Init();
+	KZ::prefs::Init();
 	AsyncFileIO::Init();
 	KZRecordingService::Init();
 	// Must come after KZTimerService::Init, it hooks into the timer's event listeners.

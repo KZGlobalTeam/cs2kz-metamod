@@ -70,7 +70,15 @@ static_global class KZOptionServiceEventListener_Timer : public KZOptionServiceE
 {
 	virtual void OnPlayerPreferencesLoaded(KZPlayer *player)
 	{
-		player->timerService->OnPlayerPreferencesLoaded();
+		player->timerService->ApplyPreferences();
+	}
+
+	virtual void OnPlayerPreferenceChanged(KZPlayer *player, const char *optionName)
+	{
+		if (KZ_STREQI(optionName, "preferredCompareType") || KZ_STREQI(optionName, "timerStopSound"))
+		{
+			player->timerService->ApplyPreferences();
+		}
 	}
 } optionEventListener;
 
@@ -497,11 +505,6 @@ void KZTimerService::InvalidateRun()
 bool KZTimerService::HasValidMoveType()
 {
 	return KZTimerService::IsValidMoveType(this->player->GetMoveType());
-}
-
-bool KZTimerService::JustEndedTimer()
-{
-	return g_pKZUtils->GetServerGlobals()->curtime - this->lastEndTime > 1.0f;
 }
 
 void KZTimerService::PlayTimerEndSound()
@@ -1739,9 +1742,10 @@ void KZTimerService::Init()
 {
 	KZDatabaseService::RegisterEventListener(&databaseEventListener);
 	KZOptionService::RegisterEventListener(&optionEventListener);
+	KZTimerService::RegisterMenu();
 }
 
-void KZTimerService::OnPlayerPreferencesLoaded()
+void KZTimerService::ApplyPreferences()
 {
 	if (this->player->optionService->GetPreferenceInt("preferredCompareType", COMPARE_GPB) > COMPARETYPE_COUNT)
 	{

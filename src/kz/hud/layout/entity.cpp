@@ -76,10 +76,10 @@ void KZHUDService::UpdateLayoutElement(CCSCustomHudLayout *layout, MHUDElement e
 		layout->SetDialogVariableString(def.panelId, def.varName, text);
 	}
 
-	auto *opts = this->player->optionService;
-	this->SetLayoutValueClass(layout, def.panelId, state.x, (i32)opts->GetPreferenceFloat(def.xKey, def.xDefault), "x", true);
-	this->SetLayoutValueClass(layout, def.panelId, state.y, (i32)opts->GetPreferenceFloat(def.yKey, def.yDefault), "y", true);
-	this->SetLayoutValueClass(layout, def.panelId, state.fontSize, (i32)opts->GetPreferenceFloat(def.sizeKey, def.sizeDefault), "font-size", false);
+	const MHUDPrefs::Element &cached = this->GetPrefs().elements[(i32)element];
+	this->SetLayoutValueClass(layout, def.panelId, state.x, (i32)cached.x, "x", true);
+	this->SetLayoutValueClass(layout, def.panelId, state.y, (i32)cached.y, "y", true);
+	this->SetLayoutValueClass(layout, def.panelId, state.fontSize, (i32)cached.size, "font-size", false);
 	const u32 packed = ((u32)color.r() << 24) | ((u32)color.g() << 16) | ((u32)color.b() << 8) | (u32)color.a();
 	if (!state.colorComputed || state.lastColorPacked != packed)
 	{
@@ -88,7 +88,7 @@ void KZHUDService::UpdateLayoutElement(CCSCustomHudLayout *layout, MHUDElement e
 		state.colorClassComputed = panorama::ResolveColorClass(color);
 	}
 	this->SetLayoutClass(layout, def.panelId, state.colorClass, state.colorClassComputed);
-	this->SetLayoutClass(layout, def.panelId, state.fontClass, MHUDFontClass(this->player, element));
+	this->SetLayoutClass(layout, def.panelId, state.fontClass, KZHUDService::GetMHUDFontClass(this->player, element));
 
 	const bool outline = this->IsMHUDOutlineEnabled(element);
 	if (state.outline != outline)
@@ -133,8 +133,7 @@ void KZHUDService::DestroyOwnedLayout()
 		g_pKZUtils->RemoveEntity(ent);
 	}
 	this->ownedLayout = nullptr;
-	// Next EnsureOwnedLayout reports created=true, which resets these anyway; clear now so a stale
-	// cache never survives a destroy without a matching entity.
+	// Cleared here so a stale cache never survives a destroy without a matching entity.
 	for (i32 i = 0; i < (i32)MHUDElement::Count; i++)
 	{
 		this->layoutElements[i] = LayoutElementState();

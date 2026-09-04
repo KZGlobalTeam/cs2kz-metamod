@@ -30,7 +30,13 @@ static_global class KZOptionServiceEventListener_HUD : public KZOptionServiceEve
 {
 	virtual void OnPlayerPreferencesLoaded(KZPlayer *player)
 	{
+		player->hudService->InvalidatePrefs();
 		player->hudService->ResetShowPanel();
+	}
+
+	virtual void OnPlayerPreferenceChanged(KZPlayer *player, const char *optionName)
+	{
+		player->hudService->InvalidatePrefs();
 	}
 } optionEventListener;
 
@@ -38,7 +44,7 @@ void KZHUDService::Init()
 {
 	KZTimerService::RegisterEventListener(&timerEventListener);
 	KZOptionService::RegisterEventListener(&optionEventListener);
-	MHUDRegisterMenu();
+	KZHUDService::RegisterMenu();
 
 	// A server launched with -addon mhud is already serving the HUD addon itself, so the layout
 	// resolves client side with no MultiAddonManager in the picture.
@@ -237,7 +243,7 @@ void KZTimerServiceEventListener_HUD::OnTimerEndPost(KZPlayer *player, u32 cours
 
 bool KZHUDService::IsCompactPanel()
 {
-	return this->player->optionService->GetPreferenceBool("compactPanel");
+	return this->GetPrefs().compactPanel;
 }
 
 void KZHUDService::ToggleCompactPanel()

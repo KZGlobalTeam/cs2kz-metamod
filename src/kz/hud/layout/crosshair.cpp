@@ -11,7 +11,7 @@
 // Panorama's reference height is 1080, so screenHeight is 1080 and the scale is constant.
 //
 // Each arm is anchored to the inner edge of its own half of the screen: a width, a height and a
-// margin class, instead of one per (length, gap, thickness) combination.
+// margin class.
 
 #include "kz/hud/layout/layout.h"
 #include "kz/hud/kz_hud.h"
@@ -149,7 +149,7 @@ void KZHUDService::OnCrosshairCvarValue(const char *name, const char *value)
 // === Rendering =====================================================================
 
 // cl_crosshaircolor 0..4 are presets; 5 means the cl_crosshaircolor_* values.
-static_function Color CrosshairColor(const MHUDCrosshairSettings &settings)
+static_function Color GetCrosshairColor(const MHUDCrosshairSettings &settings)
 {
 	switch (settings.color)
 	{
@@ -168,9 +168,8 @@ static_function Color CrosshairColor(const MHUDCrosshairSettings &settings)
 	}
 }
 
-// Move one numeric class family from oldValue to newValue on every listed panel. The caller owns the
-// cache: one value can drive two families (a thickness is a width on the vertical arms, a height on
-// the horizontal ones).
+// Moves one numeric class family from oldValue to newValue on every listed panel. The caller owns
+// the cache: one value can drive two families.
 static_function void ApplyValueClass(CCSCustomHudLayout *layout, const char *const *panels, i32 count, const char *prefix, i32 oldValue, i32 newValue)
 {
 	if (oldValue == newValue)
@@ -208,7 +207,7 @@ void KZHUDService::ApplyCrosshair(CCSCustomHudLayout *layout, bool show, bool fo
 		state = LayoutCrosshairState();
 	}
 
-	const bool enabled = show && this->player->optionService->GetPreferenceBool("mhudCrosshair", false);
+	const bool enabled = show && this->GetPrefs().crosshair;
 	ApplyFlagClass(layout, "mhud_crosshair", "hidden", state.shown, !enabled);
 	if (!enabled)
 	{
@@ -230,7 +229,7 @@ void KZHUDService::ApplyCrosshair(CCSCustomHudLayout *layout, bool show, bool fo
 	// The game paints the outline with the bars' alpha.
 	const i32 alpha = Clamp(settings.useAlpha ? settings.alpha : 200, 0, 255);
 	const i32 opacity = alpha * MHUD_XH_OPACITY_STEPS / 255;
-	const char *colorClass = panorama::ResolveSwatchClass(CrosshairColor(settings));
+	const char *colorClass = panorama::ResolveSwatchClass(GetCrosshairColor(settings));
 
 	ApplyValueClass(layout, XH_HORIZONTAL, KZ_ARRAYSIZE(XH_HORIZONTAL), "xh-w--", state.armLength, armLength);
 	ApplyValueClass(layout, XH_VERTICAL, KZ_ARRAYSIZE(XH_VERTICAL), "xh-h--", state.armLength, armLength);

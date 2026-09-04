@@ -76,11 +76,13 @@
 
 .close-btn:hover {
 	wash-color: #ffffff;
+	sound: "UIPanorama.generic_button_rollover";
 }
 
 .close-btn:active {
 	wash-color: #ffffff;
 	background-size: 17px 17px;
+	sound: "UIPanorama.generic_button_press";
 }
 
 .panes {
@@ -137,6 +139,14 @@
 	background-color: #00000000;
 }
 
+.cat:not(.disabled):hover {
+	sound: "UIPanorama.generic_button_rollover";
+}
+
+.cat:not(.disabled):active {
+	sound: "UIPanorama.generic_button_press";
+}
+
 .cat.hidden {
 	visibility: collapse;
 }
@@ -183,6 +193,11 @@
 
 .item:hover {
 	background-color: #ffffff14;
+	sound: "UIPanorama.generic_button_rollover";
+}
+
+.item:active {
+	sound: "UIPanorama.generic_button_press";
 }
 
 .item.hidden {
@@ -308,6 +323,11 @@
 
 .swatch:hover {
 	border-color: #ffffffff;
+	sound: "UIPanorama.generic_button_rollover";
+}
+
+.swatch:active {
+	sound: "UIPanorama.generic_button_press";
 }
 
 .swatch.hidden {
@@ -335,6 +355,11 @@
 
 .li:hover {
 	background-color: #ffffff1a;
+	sound: "UIPanorama.generic_button_rollover";
+}
+
+.li:active {
+	sound: "UIPanorama.generic_button_press";
 }
 
 .li.selected {
@@ -379,6 +404,11 @@
 
 .popup-btn:hover {
 	background-color: #ffffff40;
+	sound: "UIPanorama.generic_button_rollover";
+}
+
+.popup-btn:active {
+	sound: "UIPanorama.generic_button_press";
 }
 
 .popup-btn-label {
@@ -394,8 +424,17 @@
 
 // --- stepper popup -----------------------------------------------------------------
 
+/* Wider than the other popups, so it needs its own offset to keep the same gap from the menu box
+   instead of growing back over it. */
+/* The z row reuses the readout slot for an axis label, since the main readout already shows all
+   three components. */
+.step-axis {
+	opacity: 0.5;
+}
+
 .step-popup {
 	width: 340px;
+	x: 614px;
 }
 
 .popup-title {
@@ -430,6 +469,11 @@
 
 .step-btn:hover {
 	background-color: #ffffff40;
+	sound: "UIPanorama.generic_button_rollover";
+}
+
+.step-btn:active {
+	sound: "UIPanorama.generic_button_press";
 }
 
 .step-btn-label {

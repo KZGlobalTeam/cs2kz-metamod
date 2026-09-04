@@ -33,8 +33,6 @@ struct MHUDElementDef
 	i32 sizeDefault;
 };
 
-// One tintable state of an element: the label the options menu shows, the preference behind it,
-// and the color it falls back to.
 struct MHUDColorPrefDef
 {
 	const char *phraseKey;
@@ -43,16 +41,12 @@ struct MHUDColorPrefDef
 	u8 r, g, b;
 };
 
-// The color states of one element, in menu order.
-const MHUDColorPrefDef *MHUDElementColorPrefs(MHUDElement element, i32 &count);
-
 extern const MHUDElementDef MHUD_ELEMENTS[(i32)MHUDElement::Count];
 
 #define MHUD_SIZE_MIN 8
 #define MHUD_SIZE_MAX 100
 
-// Default element colors, shared by both the layout HUD (as pal-fg classes) and the legacy HTML HUD
-// (as hex), so the two never disagree on what an unset preference looks like.
+// Shared by the layout HUD (as pal-fg classes) and the legacy HTML HUD (as hex).
 static_global const Color MHUD_DEF_BASE_COLOR(255, 255, 255, 255);
 static_global const Color MHUD_DEF_PERF_COLOR(0x40, 0xFF, 0x40, 0xFF);
 static_global const Color MHUD_DEF_JUMPBUG_COLOR(0xFF, 0xFF, 0x20, 0xFF);
@@ -63,8 +57,7 @@ static_global const Color MHUD_DEF_TIMER_PAUSED_COLOR(0xFF, 0x80, 0x00, 0xFF);
 static_global const Color MHUD_DEF_TIMER_STOPPED_COLOR(0xFF, 0xA0, 0xA0, 0xFF);
 static_global const Color MHUD_DEF_KEYS_OVERLAP_COLOR(0xFF, 0x40, 0x40, 0xFF);
 
-// The player's own cl_crosshair* values, as read back from the client. The defaults are the game's,
-// used verbatim until a query answers, or forever if one never does.
+// The player's own cl_crosshair* values. The game's defaults stand until a query answers.
 struct MHUDCrosshairSettings
 {
 	f32 size {5.0f};
@@ -78,6 +71,34 @@ struct MHUDCrosshairSettings
 	bool drawOutline {true};
 	bool dot {false};
 	bool tStyle {false};
+};
+
+struct MHUDPrefs
+{
+	struct Element
+	{
+		bool enabled {true};
+		f32 x {}, y {}, size {};
+		const char *fontClass {};
+		bool outline {true};
+	};
+
+	Element elements[(i32)MHUDElement::Count] {};
+
+	Color timerPaused, timerStopped, timerTp, timerPro;
+	Color speed, speedCj;
+	Color prespeed, prespeedPerf, prespeedJumpbug;
+	Color keys, keysOverlap;
+	Color checkpoint;
+
+	bool legacyStyle {};
+	bool compactPanel {};
+	bool crosshair {};
+	bool timerDetailed {true};
+	bool keysOverlapEnabled {true};
+	bool keysHideUnpressed {};
+	bool keysLetters {};
+	bool keysSquare {};
 };
 
 class KZHUDService : public KZBaseService
@@ -96,12 +117,26 @@ public:
 	virtual void Reset() override;
 	static void Init();
 
-	// Returns true when the layout based HUD can be used at all.
+	static const MHUDColorPrefDef *GetMHUDElementColorPrefs(MHUDElement element, i32 &count);
+
+	// Static storage, so callers can keep caching the result by pointer.
+	static const char *GetMHUDFontClass(KZPlayer *player, MHUDElement element);
+
+	// The cached preference set, refilled on first use after a preference changed.
+	const MHUDPrefs &GetPrefs();
+
+	// Any preference change refills the whole set rather than working out which key it was.
+	void InvalidatePrefs()
+	{
+		this->prefsDirty = true;
+	}
+
+	static void RegisterMenu();
+
 	// Either the MultiAddonManager is present and the MHUD addon is mounted,
 	// or we are on `-tools -addon mhud`, or kz_force_mhud is set to 1.
 	static bool IsLayoutHudAvailable();
 
-	// The layout style, once the addon is there and the player has not asked for the legacy HUD.
 	bool IsUsingLayoutStyle();
 	void ToggleStyle();
 
@@ -172,16 +207,12 @@ public:
 			   && g_pKZUtils->GetServerGlobals()->curtime - timerStoppedTime < KZ_HUD_TIMER_STOPPED_GRACE_TIME;
 	}
 
-	// Drives this player's MHUD layout, taking its values from source (the same player, or the
-	// spectated one). When the panel is off or the legacy style is selected, every element collapses
-	// rather than blanking, so the values survive a toggle.
+	// source is the same player, or the spectated one.
 	bool UpdateHudLayout(KZPlayer *source);
 
-	// Per-element enable flags.
 	bool IsMHUDElementEnabled(MHUDElement element);
 
-	// While the options menu has a stepper page open for an element, that element is drawn even if
-	// its enable flag is off: the player would otherwise be adjusting something invisible.
+	// An element with a stepper page open is drawn even when its enable flag is off.
 	void SetMHUDForcedElement(MHUDElement element, bool forced)
 	{
 		this->forcedElement = forced ? (i32)element : -1;
@@ -230,8 +261,7 @@ private:
 		i32 y {INT_MIN};
 		bool hidden {true};
 		bool outline {false};
-		// Cache the resolved color class so the nearest-palette search (O(palette)) only runs when the
-		// color actually changes, not every tick.
+		// Cached so the nearest-palette search only runs when the color changes, not every tick.
 		const char *colorClassComputed {};
 		u32 lastColorPacked {};
 		bool colorComputed {};
@@ -247,8 +277,7 @@ private:
 		const char *fontClass {};
 	};
 
-	// The classes last applied to the crosshair panels. Every field is the numeric suffix of its class
-	// family (-1 = nothing applied yet), so a settings change only rewrites what actually moved.
+	// Numeric suffix of each class family last applied, -1 for nothing yet.
 	struct LayoutCrosshairState
 	{
 		i32 shown {-1};
@@ -269,8 +298,7 @@ private:
 	MHUDCrosshairSettings crosshair {};
 	LayoutCrosshairState layoutCrosshair {};
 
-	// Not an MHUDElement: the crosshair has no text, so none of the per-element font/size/color
-	// machinery applies to it.
+	// Not an MHUDElement: the crosshair has no text, so no font/size/color machinery applies.
 	void ApplyCrosshair(CCSCustomHudLayout *layout, bool show, bool force);
 
 	CHandle<CBaseEntity> ownedLayout {};
@@ -293,34 +321,29 @@ private:
 public:
 	static CCSCustomHudLayout *GetLayoutEntity(const char *layoutPath, CHandle<CBaseEntity> &cache);
 
-	// Destroy this player's owned entity (disconnect / unload). Safe to call when there is none.
 	void DestroyOwnedLayout();
 
-	// Tear down the owned entity when the player leaves, matching the other services' hook. Reset()
-	// keeps the entity (it survives respawns/map changes and is recreated lazily); only a disconnect
-	// destroys it.
 	void OnClientDisconnect()
 	{
 		this->DestroyOwnedLayout();
 	}
 
-	// Send one round of async cl_crosshair* queries. Also called when the player switches the virtual
-	// crosshair on, so it updates immediately instead of at the next poll.
+	// Also called when the crosshair is switched on, so it updates before the next poll.
 	void QueryCrosshairCvars();
 
-	// Called back with one cl_crosshair* value the client reported.
 	void OnCrosshairCvarValue(const char *name, const char *value);
 
 	// Query once now, then keep re-querying so settings changed mid-session are picked up.
 	void StartCrosshairPolling();
 
-	// Destroy every player's owned entity. Called on plugin unload.
 	static void Cleanup();
 
-	// Masks every player's owned mhud entity away from every client but its owner. Called from
-	// Hook_CheckTransmit.
+	// Masks every player's owned entity away from every client but its owner.
 	static void OnCheckTransmit(CCheckTransmitInfo **pInfo, int infoCount);
 
 private:
 	i32 forcedElement {-1};
+	MHUDPrefs prefs {};
+	bool prefsDirty {true};
+	void RefreshPrefs();
 };

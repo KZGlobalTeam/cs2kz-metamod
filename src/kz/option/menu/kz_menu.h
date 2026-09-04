@@ -15,17 +15,16 @@ class CCheckTransmitInfo;
 #define KZ_MENU_LIST   32 // must cover the largest font family (Stratum2, 29 faces)
 #define KZ_MENU_SWATCH 40 // 10 columns x 4 rows per color page
 
-std::string KZMenuPhrase(KZPlayer *player, const char *key);
-
-// Renders the KZMenu model tree into the three-pane menu.xml on the player's own (masked) layout
-// entity, and routes clicks back to it. No page stack: categories/subcategories on the left, the
-// selected node's typed items in the middle, and color / list / stepper popups docked to the side.
+// Renders the KZ::menu model tree into menu.xml on the player's own masked layout entity, and
+// routes clicks back to it.
 class KZMenuService : public KZBaseService
 {
 	using KZBaseService::KZBaseService;
 
 public:
 	static void Init();
+	static void RegisterChromePrefs();
+	static std::string GetPhrase(KZPlayer *player, const char *key);
 	virtual void Reset() override;
 
 	void Toggle();
@@ -37,13 +36,10 @@ public:
 	}
 
 	static void OnCustomHudClicked(CPlayerSlot slot, CCSCustomHudLayout *layout, const char *buttonId);
-	// The plugin is going away with the click handler in it, so nothing may stay captured.
 	static void Cleanup();
-	// Masks each player's owned menu entity away from every client but its owner. Called from
-	// Hook_CheckTransmit.
+	// Masks each player's owned entity away from every client but its owner.
 	static void OnCheckTransmit(CCheckTransmitInfo **pInfo, int infoCount);
 
-	// Closes the menu and destroys this player's owned entity when they leave.
 	void OnClientDisconnect();
 
 private:
@@ -63,25 +59,19 @@ private:
 		i32 subIndex {};
 	};
 
-	// This player's own menu entity, masked to them (OnCheckTransmit) and lazily spawned. `created` is
-	// set true when this call spawned a fresh one, so the caller can rebuild its per-entity caches.
+	// Lazily spawned. `created` is set when this call spawned a fresh one, so the caller can rebuild its per-entity caches.
 	CCSCustomHudLayout *EnsureMenuLayout(bool &created);
-	// EnsureMenuLayout for callers that do not care whether it was just created.
 	CCSCustomHudLayout *MenuLayout();
-	// Remove this player's menu entity. Safe to call when there is none.
 	void DestroyOwnedLayout();
-	// Hand movement control back to the player: drop cursor capture and release the cs2menus slot.
+	// Drops cursor capture and releases the cs2menus slot.
 	void DropCapture();
 
-	// The category or subcategory whose items are currently shown, or NULL if none is selectable.
 	KZOptNode *ActiveNode();
-	// Flatten the visible left column (categories plus the selected category's subs) into leftSlots;
-	// returns the entry count.
+	// Flattens categories plus the selected category's subs into leftSlots; returns the count.
 	i32 BuildLeft();
 
-	// Push the whole menu state to the layout. Cheap to call repeatedly: writes are diff-cached.
+	// Cheap to call repeatedly: writes are diff-cached.
 	void Render();
-	// Render one region of the menu (all called from Render).
 	void RenderChrome(CCSCustomHudLayout *layout);
 	void RenderLeft(CCSCustomHudLayout *layout);
 	void RenderItems(CCSCustomHudLayout *layout);
@@ -89,21 +79,18 @@ private:
 	void RenderListPopup(CCSCustomHudLayout *layout);
 	void RenderStepPopup(CCSCustomHudLayout *layout);
 
-	// Click handlers: pick a left-column entry, activate a middle item, drive the open popup.
 	void SelectLeft(i32 slot);
 	void ActivateItem(i32 slot);
 	void OpenPopup(Popup kind, i32 itemIdx);
 	void ClosePopup();
 	void PopupPageStep(i32 delta);
 	void PopupPick(i32 slot);
-	void Step(bool vertical, i32 delta);
+	// axis: 0 = x, 1 = y, 2 = z.
+	void Step(i32 axis, i32 delta);
 
-	// The item the open popup is editing, or NULL if the popup kind and the item's type disagree.
 	const KZOptItem *PopupItem();
 
-	// Class writes are diff-cached: additive classes are never cleared wholesale, so a stale one is
-	// removed by hand when it changes. SetVar diff-caches dialog variables too (see writtenVars) since
-	// each write marks the whole entity for a full network resend.
+	// Writes are diff-cached: every write marks the whole entity for a full network resend.
 	void SetClass(CCSCustomHudLayout *layout, const char *panelId, const char *className, bool on);
 	void SetBoolClass(CCSCustomHudLayout *layout, const char *panelId, const char *className, bool &cache, bool want);
 	void SetSwapClass(CCSCustomHudLayout *layout, const char *panelId, const char *&cache, const char *want);
@@ -131,9 +118,8 @@ private:
 	// Last value written for each dialog variable, so an unchanged value is not resent.
 	std::unordered_map<std::string, std::string> writtenVars;
 
-	// The classes currently applied on the layout, so a render only writes what changed. Additive
-	// classes are never cleared wholesale (see SetSwapClass/SetBoolClass), so every toggled class is
-	// tracked here. Pointer fields hold the class string last applied on that panel (NULL = none).
+	// The classes currently applied on the layout, so a render only writes what changed. Pointer
+	// fields hold the class string last applied on that panel, NULL for none.
 	struct Applied
 	{
 		const char *menuFont {};  // menu font class stamped on the text panels
@@ -142,7 +128,8 @@ private:
 		bool colorHidden {true};  // color_popup "hidden"
 		bool listHidden {true};   // list_popup "hidden"
 		bool stepHidden {true};   // step_popup "hidden"
-		bool vstepHidden {true};  // the stepper's vertical rows "hidden" (shown only for Position)
+		bool vstepHidden {true};  // the stepper's vertical rows "hidden" (Position and Vector)
+		bool zstepHidden {true};  // the stepper's z row "hidden" (Vector only)
 		bool noteHidden {true};   // the list popup's "* is a system font" footnote "hidden"
 		// Left column, one slot each:
 		bool catHidden[KZ_MENU_CATS] {};   // slot "hidden" (unused)
