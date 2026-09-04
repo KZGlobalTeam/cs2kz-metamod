@@ -1089,12 +1089,12 @@ void KZMenuService::Cleanup()
 
 void KZMenuService::OnCheckTransmit(CCheckTransmitInfo **pInfo, int infoCount)
 {
-	static_persist const int offset = g_pGameConfig->GetOffset("QuietPlayerSlot");
-	for (int i = 0; i < infoCount; i++)
+	static_persist const i32 offset = g_pGameConfig->GetOffset("QuietPlayerSlot");
+	for (i32 i = 0; i < infoCount; i++)
 	{
 		TransmitInfo *info = reinterpret_cast<TransmitInfo *>(pInfo[i]);
-		const int recipient = *reinterpret_cast<int *>(reinterpret_cast<uintptr_t>(info) + offset);
-		for (int owner = 0; owner < MAXPLAYERS; owner++)
+		const i32 recipient = *reinterpret_cast<int *>(reinterpret_cast<uintptr_t>(info) + offset);
+		for (i32 owner = 0; owner < MAXPLAYERS; owner++)
 		{
 			if (owner == recipient)
 			{
