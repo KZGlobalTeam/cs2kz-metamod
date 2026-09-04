@@ -2,6 +2,8 @@
 
 #include "../kz.h"
 
+#define KZ_PAINT_DEFAULT_COLOR Color(255, 0, 0, 255)
+
 class KZPaintService : public KZBaseService
 {
 	using KZBaseService::KZBaseService;
@@ -31,6 +33,9 @@ public:
 	bool SetColorRGB(u8 r, u8 g, u8 b, u8 a = 255);
 
 	static constexpr f32 DEFAULT_PAINT_SIZE = 8.0f;
+
+	static void Init();
+	static void RegisterMenu();
 
 	// Set paint size
 	bool SetSize(f32 value);

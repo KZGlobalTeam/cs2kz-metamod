@@ -9,6 +9,7 @@
 #include "jumpstats/kz_jumpstats.h"
 #include "language/kz_language.h"
 #include "measure/kz_measure.h"
+#include "option/menu/kz_menu.h"
 #include "mode/kz_mode.h"
 #include "noclip/kz_noclip.h"
 #include "option/kz_option.h"
@@ -60,6 +61,7 @@ void KZPlayer::DestroyServices()
 	delete this->racingService;
 	delete this->globalService;
 	delete this->measureService;
+	delete this->menuService;
 	delete this->profileService;
 	delete this->pistolService;
 	delete this->fovService;
@@ -87,6 +89,7 @@ void KZPlayer::DestroyServices()
 	this->racingService = nullptr;
 	this->globalService = nullptr;
 	this->measureService = nullptr;
+	this->menuService = nullptr;
 	this->profileService = nullptr;
 	this->pistolService = nullptr;
 	this->fovService = nullptr;
@@ -123,6 +126,7 @@ void KZPlayer::Init()
 	this->racingService = new KZRacingService(this);
 	this->globalService = new KZGlobalService(this);
 	this->measureService = new KZMeasureService(this);
+	this->menuService = new KZMenuService(this);
 	this->profileService = new KZProfileService(this);
 	this->pistolService = new KZPistolService(this);
 	this->fovService = new KZFOVService(this);
@@ -152,6 +156,7 @@ void KZPlayer::Reset()
 	this->specService->Reset();
 	this->triggerService->Reset();
 	this->measureService->Reset();
+	this->menuService->Reset();
 	this->beamService->Reset();
 	this->telemetryService->Reset();
 	this->recordingService->Reset();
@@ -195,6 +200,7 @@ void KZPlayer::OnPlayerActive()
 void KZPlayer::OnPlayerFullyConnect()
 {
 	this->anticheatService->OnPlayerFullyConnect();
+	this->hudService->StartCrosshairPolling();
 }
 
 void KZPlayer::OnAuthorized()
@@ -243,11 +249,13 @@ void KZPlayer::OnPhysicsSimulatePost()
 	}
 	this->timerService->OnPhysicsSimulatePost();
 	KZ::replaysystem::OnPhysicsSimulatePost(this);
+	// Called even while dead and not spectating: the MHUD layout has to be told to collapse, it
+	// does not fade out on its own the way the html centre panel did.
 	if (this->specService->GetSpectatedPlayer())
 	{
 		KZHUDService::DrawPanels(this->specService->GetSpectatedPlayer(), this);
 	}
-	else if (this->IsAlive())
+	else
 	{
 		KZHUDService::DrawPanels(this, this);
 	}
@@ -310,7 +318,6 @@ void KZPlayer::OnProcessMovement()
 
 	this->DisableTurnbinds();
 	this->anticheatService->OnProcessMovement();
-	this->hudService->OnProcessMovement();
 	this->triggerService->OnProcessMovement();
 	this->modeService->OnProcessMovement();
 	FOR_EACH_VEC(this->styleServices, i)

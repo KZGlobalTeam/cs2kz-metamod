@@ -852,6 +852,11 @@ f32 KZJumpstatsService::GetLastJumpRelease()
 	return previousJump.release;
 }
 
+void KZJumpstatsService::Init()
+{
+	KZJumpstatsService::RegisterMenu();
+}
+
 void KZJumpstatsService::Reset()
 {
 	this->jumps.Purge();

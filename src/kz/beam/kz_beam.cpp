@@ -13,11 +13,19 @@ static_global class KZOptionServiceEventListener_Beam : public KZOptionServiceEv
 {
 	virtual void OnPlayerPreferencesLoaded(KZPlayer *player)
 	{
-		player->beamService->OnPlayerPreferencesLoaded();
+		player->beamService->ApplyPreferences();
+	}
+
+	virtual void OnPlayerPreferenceChanged(KZPlayer *player, const char *optionName)
+	{
+		if (KZ_STREQI(optionName, "desiredBeamType") || KZ_STREQI(optionName, "beamOffset"))
+		{
+			player->beamService->ApplyPreferences();
+		}
 	}
 } optionEventListener;
 
-void KZBeamService::OnPlayerPreferencesLoaded()
+void KZBeamService::ApplyPreferences()
 {
 	this->SetBeamType(this->player->optionService->GetPreferenceInt("desiredBeamType"));
 	this->playerBeamOffset = this->player->optionService->GetPreferenceVector("beamOffset", KZBeamService::defaultOffset);

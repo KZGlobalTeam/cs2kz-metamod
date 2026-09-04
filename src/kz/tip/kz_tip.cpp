@@ -5,9 +5,7 @@
 #include "kz/global/kz_global.h"
 
 #include <vendor/MultiAddonManager/public/imultiaddonmanager.h>
-#include <vendor/ClientCvarValue/public/iclientcvarvalue.h>
 
-extern IClientCvarValue *g_pClientCvarValue;
 static_global KeyValues *pTipKeyValues;
 static_global CUtlVector<const char *> tipNames;
 static_global f64 tipInterval;

@@ -21,6 +21,7 @@ static_global const Vector NULL_VECTOR = Vector(0, 0, 0);
 void KZCheckpointService::Init()
 {
 	KZOptionService::RegisterEventListener(&optionEventListener);
+	KZCheckpointService::RegisterMenu();
 }
 
 void KZCheckpointService::Reset()

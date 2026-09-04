@@ -39,6 +39,7 @@ class KZJumpstatsService;
 class KZLanguageService;
 class KZMapService;
 class KZMeasureService;
+class KZMenuService;
 class KZModeService;
 class KZNoclipService;
 class KZOptionService;
@@ -169,6 +170,7 @@ public:
 	KZJumpstatsService *jumpstatsService {};
 	KZLanguageService *languageService {};
 	KZMeasureService *measureService {};
+	KZMenuService *menuService {};
 	KZModeService *modeService {};
 	KZNoclipService *noclipService {};
 	KZOptionService *optionService {};
@@ -277,6 +279,7 @@ namespace KZ
 	namespace misc
 	{
 		void Init();
+		void RegisterMenu();
 		void OnActivateServer();
 		void JoinTeam(KZPlayer *player, int newTeam, bool restorePos = true);
 		void ProcessConCommand(ConCommandRef cmd, const CCommandContext &ctx, const CCommand &args);

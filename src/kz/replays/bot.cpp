@@ -105,17 +105,6 @@ namespace KZ::replaysystem::bot
 		bot->GetPlayerPawn()->m_flViewmodelFOV() = header.viewmodel_fov();
 	}
 
-	void MoveBotToSpec()
-	{
-		auto bot = g_replayBot.Get();
-		if (!bot)
-		{
-			return;
-		}
-		KZPlayer *player = g_pKZPlayerManager->ToPlayer(bot);
-		KZ::misc::JoinTeam(player, CS_TEAM_SPECTATOR, false);
-	}
-
 	CCSPlayerController *GetBot()
 	{
 		return g_replayBot.Get();

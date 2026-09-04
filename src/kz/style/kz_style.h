@@ -196,6 +196,7 @@ public:
 	void ClearStyles(KZPlayer *player, bool silent = false, bool updatePreference = true);
 	void RefreshStyles(KZPlayer *player, bool updatePreference = true);
 	CUtlString GetStylesString(KZPlayer *player);
+	static const CUtlVector<StylePluginInfo> &GetStyles();
 	void PrintActiveStyles(KZPlayer *player);
 	void PrintAllStyles(KZPlayer *player);
 

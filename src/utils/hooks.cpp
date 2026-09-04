@@ -19,6 +19,7 @@
 #include "kz/hud/kz_hud.h"
 #include "kz/jumpstats/kz_jumpstats.h"
 #include "kz/option/kz_option.h"
+#include "kz/option/pref_registry.h"
 #include "kz/paint/kz_paint.h"
 #include "kz/quiet/kz_quiet.h"
 #include "kz/timer/kz_timer.h"
@@ -36,7 +37,11 @@
 #include "kz/replays/kz_replaysystem.h"
 #include "kz/racing/kz_racing.h"
 #include "utils/utils.h"
+#include "utils/cvarquery.h"
 #include "sdk/entity/cbasetrigger.h"
+#include "cstrike15_usermessages.pb.h"
+#include "sdk/entity/ccscustomhudlayout.h"
+#include "kz/option/menu/kz_menu.h"
 #include "sdk/usercmd.h"
 
 #include "vprof.h"
@@ -115,6 +120,8 @@ SH_DECL_HOOK1_void(ISource2GameClients, ClientVoice, SH_NOATTRIB, false, CPlayer
 static_function void Hook_ClientVoice(CPlayerSlot slot);
 
 SH_DECL_HOOK2_void(ISource2GameClients, ClientCommand, SH_NOATTRIB, false, CPlayerSlot, const CCommand &);
+SH_DECL_HOOK4_void(ISource2GameClients, ClientSvcUserMessage, SH_NOATTRIB, false, CPlayerSlot, int, uint32, const void *);
+static_function void Hook_ClientSvcUserMessage(CPlayerSlot slot, int type, uint32 size, const void *buf);
 static_function void Hook_ClientCommand(CPlayerSlot slot, const CCommand &args);
 
 // INetworkServerService
@@ -160,6 +167,15 @@ static_function CServerSideClientBase *Hook_ConnectClient(const char *, ns_addre
 														  bool);
 static_function CServerSideClientBase *Hook_ConnectClientPost(const char *, ns_address *, uint32, C2S_CONNECT_Message *, const char *, const byte *,
 															  int, bool);
+
+// CServerSideClient
+static_global int respondCvarValueHook {};
+SH_DECL_HOOK1(CServerSideClientBase, ProcessRespondCvarValue, SH_NOATTRIB, 0, bool, const CNetMessagePB<CCLCMsg_RespondCvarValue> &);
+static_function bool Hook_ProcessRespondCvarValue(const CNetMessagePB<CCLCMsg_RespondCvarValue> &msg);
+
+static_global int setConVarHook {};
+SH_DECL_HOOK1(CServerSideClientBase, ProcessSetConVar, SH_NOATTRIB, 0, bool, const CNetMessagePB<CNETMsg_SetConVar> &);
+static_function bool Hook_ProcessSetConVar(const CNetMessagePB<CNETMsg_SetConVar> &msg);
 
 // IGameSystem
 static_global int serverGamePostSimulateHook {};
@@ -207,6 +223,7 @@ bool hooks::Initialize()
 	SH_ADD_HOOK(ISource2GameClients, ClientDisconnect, g_pSource2GameClients, SH_STATIC(Hook_ClientDisconnect), true);
 	SH_ADD_HOOK(ISource2GameClients, ClientVoice, g_pSource2GameClients, SH_STATIC(Hook_ClientVoice), false);
 	SH_ADD_HOOK(ISource2GameClients, ClientCommand, g_pSource2GameClients, SH_STATIC(Hook_ClientCommand), false);
+	SH_ADD_HOOK(ISource2GameClients, ClientSvcUserMessage, g_pSource2GameClients, SH_STATIC(Hook_ClientSvcUserMessage), false);
 
 	SH_ADD_HOOK(INetworkServerService, StartupServer, g_pNetworkServerService, SH_STATIC(Hook_StartupServer), true);
 
@@ -215,14 +232,17 @@ bool hooks::Initialize()
 	SH_ADD_HOOK(ICvar, DispatchConCommand, g_pCVar, SH_STATIC(Hook_DispatchConCommand), false);
 
 	SH_ADD_HOOK(IGameEventSystem, PostEventAbstract, interfaces::pGameEventSystem, SH_STATIC(Hook_PostEvent), false);
+
 	// clang-format off
 	CNetworkGameServerBase *networkGameServerVtbl = (CNetworkGameServerBase *)modules::engine->FindVirtualTable("CNetworkGameServer");
+	CServerSideClientBase *serverSideClientVtbl = (CServerSideClientBase *)modules::engine->FindVirtualTable("CServerSideClient");
 	IGameSystem *entityDebugGameSystemVtbl = (IGameSystem *)modules::server->FindVirtualTable("CEntityDebugGameSystem");
 	CEntitySystem *gameEntitySystemVtbl = (CEntitySystem *)modules::server->FindVirtualTable("CGameEntitySystem");
 	CSpawnGroupMgrGameSystem *spawnGroupMgrVtbl = (CSpawnGroupMgrGameSystem *)modules::server->FindVirtualTable("CSpawnGroupMgrGameSystem");
 	CCSPlayer_MovementServices *moveServicesVtbl = (CCSPlayer_MovementServices *)modules::server->FindVirtualTable("CCSPlayer_MovementServices");
 
-	if (!networkGameServerVtbl || !entityDebugGameSystemVtbl || !gameEntitySystemVtbl || !spawnGroupMgrVtbl || !moveServicesVtbl)
+	if (!networkGameServerVtbl || !serverSideClientVtbl || !entityDebugGameSystemVtbl || !gameEntitySystemVtbl || !spawnGroupMgrVtbl
+		|| !moveServicesVtbl)
 	{
 		KZ_LOG_WARN(LogChannel::General, "Failed to resolve one or more virtual tables required for hooking.\n");
 		return false;
@@ -248,6 +268,20 @@ bool hooks::Initialize()
 		ConnectClient,
 		networkGameServerVtbl,
 		SH_STATIC(Hook_ConnectClientPost),
+		true
+	);
+	respondCvarValueHook = SH_ADD_DVPHOOK(
+		CServerSideClientBase,
+		ProcessRespondCvarValue,
+		serverSideClientVtbl,
+		SH_STATIC(Hook_ProcessRespondCvarValue),
+		true
+	);
+	setConVarHook = SH_ADD_DVPHOOK(
+		CServerSideClientBase,
+		ProcessSetConVar,
+		serverSideClientVtbl,
+		SH_STATIC(Hook_ProcessSetConVar),
 		true
 	);
 	serverGamePostSimulateHook = SH_ADD_DVPHOOK(
@@ -313,6 +347,7 @@ void hooks::Cleanup()
 	SH_REMOVE_HOOK(ISource2GameClients, ClientDisconnect, g_pSource2GameClients, SH_STATIC(Hook_ClientDisconnect), true);
 	SH_REMOVE_HOOK(ISource2GameClients, ClientVoice, g_pSource2GameClients, SH_STATIC(Hook_ClientVoice), false);
 	SH_REMOVE_HOOK(ISource2GameClients, ClientCommand, g_pSource2GameClients, SH_STATIC(Hook_ClientCommand), false);
+	SH_REMOVE_HOOK(ISource2GameClients, ClientSvcUserMessage, g_pSource2GameClients, SH_STATIC(Hook_ClientSvcUserMessage), false);
 
 	SH_REMOVE_HOOK(INetworkServerService, StartupServer, g_pNetworkServerService, SH_STATIC(Hook_StartupServer), true);
 
@@ -322,10 +357,14 @@ void hooks::Cleanup()
 
 	SH_REMOVE_HOOK(IGameEventSystem, PostEventAbstract, interfaces::pGameEventSystem, SH_STATIC(Hook_PostEvent), false);
 
+	cvarquery::Shutdown();
+
 	SH_REMOVE_HOOK_ID(activateServerHook);
 
 	SH_REMOVE_HOOK_ID(clientConnectHook);
 	SH_REMOVE_HOOK_ID(clientConnectPostHook);
+	SH_REMOVE_HOOK_ID(respondCvarValueHook);
+	SH_REMOVE_HOOK_ID(setConVarHook);
 
 	SH_REMOVE_HOOK_ID(changeTeamHook);
 
@@ -534,6 +573,8 @@ static_function void Hook_CheckTransmit(CCheckTransmitInfo **pInfos, int infoCou
 {
 	KZ::quiet::OnCheckTransmit(pInfos, infoCount);
 	KZProfileService::OnCheckTransmit();
+	KZMenuService::OnCheckTransmit(pInfos, infoCount);
+	KZHUDService::OnCheckTransmit(pInfos, infoCount);
 	RETURN_META(MRES_IGNORED);
 }
 
@@ -627,7 +668,10 @@ static_function void Hook_ClientDisconnect(CPlayerSlot slot, ENetworkDisconnecti
 	player->optionService->OnClientDisconnect();
 	player->racingService->OnClientDisconnect();
 	player->globalService->OnClientDisconnect();
+	player->menuService->OnClientDisconnect();
 	player->hudService->OnClientDisconnect();
+	cvarquery::OnClientDisconnect(slot);
+	KZ::prefs::OnClientDisconnect(slot);
 	g_pKZPlayerManager->OnClientDisconnect(slot, reason, pszName, xuid, pszNetworkID);
 	RETURN_META(MRES_IGNORED);
 }
@@ -648,6 +692,30 @@ static_function void Hook_ClientCommand(CPlayerSlot slot, const CCommand &args)
 	{
 		RETURN_META(result);
 	}
+	RETURN_META(MRES_IGNORED);
+}
+
+static_function void Hook_ClientSvcUserMessage(CPlayerSlot slot, int type, uint32 size, const void *buf)
+{
+	if (type != CS_UM_CustomHudClicked)
+	{
+		RETURN_META(MRES_IGNORED);
+	}
+
+	CCSUsrMsg_CustomHudClicked msg;
+
+	if (!msg.ParseFromArray(buf, size))
+	{
+		RETURN_META(MRES_IGNORED);
+	}
+
+	KZ_LOG_DEBUG(LogChannel::General, "Client %i clicked custom HUD button %s in layout %i\n", slot.Get(), msg.button_id().c_str(),
+				 msg.custom_hud_layout());
+	if (CCSCustomHudLayout *layout = CCSCustomHudLayout::FromClickHandle(msg.custom_hud_layout()))
+	{
+		KZMenuService::OnCustomHudClicked(slot, layout, msg.button_id().c_str());
+	}
+
 	RETURN_META(MRES_IGNORED);
 }
 
@@ -789,6 +857,34 @@ static_function CServerSideClientBase *Hook_ConnectClientPost(const char *pszNam
 	RETURN_META_VALUE(MRES_IGNORED, 0);
 }
 
+// CServerSideClient
+static_function bool Hook_ProcessRespondCvarValue(const CNetMessagePB<CCLCMsg_RespondCvarValue> &msg)
+{
+	CServerSideClientBase *client = META_IFACEPTR(CServerSideClientBase);
+	if (client)
+	{
+		cvarquery::OnCvarValueResponse(client->GetPlayerSlot(), msg.cookie(), (cvarquery::Status)msg.status_code(), msg.name().c_str(),
+									   msg.value().c_str());
+	}
+	RETURN_META_VALUE(MRES_IGNORED, true);
+}
+
+// Every convar a client reports: the full userinfo set on connect, and each setinfo afterwards.
+static_function bool Hook_ProcessSetConVar(const CNetMessagePB<CNETMsg_SetConVar> &msg)
+{
+	CServerSideClientBase *client = META_IFACEPTR(CServerSideClientBase);
+	if (client)
+	{
+		const CMsg_CVars &list = msg.convars();
+		for (i32 i = 0; i < list.cvars_size(); i++)
+		{
+			const CMsg_CVars_CVar &cvar = list.cvars(i);
+			cvarquery::OnClientConVar(client->GetPlayerSlot(), cvar.name().c_str(), cvar.value().c_str());
+		}
+	}
+	RETURN_META_VALUE(MRES_IGNORED, true);
+}
+
 // IGameSystem
 static_function void Hook_ServerGamePostSimulate(const EventServerGamePostSimulate_t *)
 {
@@ -810,7 +906,6 @@ static_function void Hook_BuildGameSessionManifest(const EventBuildGameSessionMa
 	{
 		Warning("[CS2KZ] Precache kz soundevents \n");
 		pResourceManifest->AddResource(KZ_WORKSHOP_ADDON_SNDEVENT_FILE);
-		KZHUDService::PrecacheParticles(pResourceManifest);
 	}
 	pResourceManifest->AddResource("particles/ui/hud/ui_map_def_utility_trail.vpcf");
 	pResourceManifest->AddResource("particles/ui/annotation/ui_annotation_line_segment.vpcf");

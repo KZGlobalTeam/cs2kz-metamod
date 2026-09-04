@@ -242,6 +242,7 @@ public:
 	// clang-format on
 
 	virtual void UnregisterMode(PluginId id);
+	static const CUtlVector<ModePluginInfo> &GetModes();
 	bool SwitchToMode(KZPlayer *player, const char *modeName, bool silent = false, bool force = false, bool updatePreference = true);
 	void Cleanup();
 };

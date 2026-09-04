@@ -153,6 +153,46 @@ static bool InitSchemaFieldsForClass(SchemaTableMap_t &tableMap, const char *cla
 	return true;
 }
 
+static SchemaClassInfoData_t *FindClassInfo(const char *className)
+{
+	CSchemaSystemTypeScope *pType = g_pSchemaSystem->FindTypeScopeForModule(MODULE_PREFIX "server" MODULE_EXT);
+	return pType ? pType->FindDeclaredClass(className).Get() : NULL;
+}
+
+SchemaCollectionManipulatorFn_t schema::GetCollectionManipulator(const char *className, const char *fieldName)
+{
+	SchemaClassInfoData_t *pClassInfo = FindClassInfo(className);
+
+	if (!pClassInfo)
+	{
+		Warning("schema::GetCollectionManipulator(): '%s' was not found!\n", className);
+		return NULL;
+	}
+
+	for (int i = 0; i < pClassInfo->m_nFieldCount; ++i)
+	{
+		SchemaClassFieldData_t &field = pClassInfo->m_pFields[i];
+
+		if (V_strcmp(field.m_pszName, fieldName) != 0)
+		{
+			continue;
+		}
+
+		CSchemaType *pFieldType = field.m_pType;
+
+		if (!pFieldType || pFieldType->m_eTypeCategory != SCHEMA_TYPE_ATOMIC || pFieldType->m_eAtomicCategory != SCHEMA_ATOMIC_COLLECTION_OF_T)
+		{
+			Warning("schema::GetCollectionManipulator(): '%s::%s' is not a collection!\n", className, fieldName);
+			return NULL;
+		}
+
+		return static_cast<CSchemaType_Atomic_CollectionOfT *>(pFieldType)->m_pfnManipulator;
+	}
+
+	Warning("schema::GetCollectionManipulator(): '%s' was not found in '%s'!\n", fieldName, className);
+	return NULL;
+}
+
 int16_t schema::FindChainOffset(const char *className, uint32_t classNameHash)
 {
 	return schema::GetOffset(className, classNameHash, "__m_pChainEntity", g_ChainKey).offset;

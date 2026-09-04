@@ -23,7 +23,7 @@ public:
 	virtual void Reset() override;
 
 	void OnPhysicsSimulatePost();
-	void OnPlayerPreferencesLoaded();
+	void ApplyPreferences();
 	void ToggleHide();
 	void UpdateHideState();
 	void SendFullUpdate();

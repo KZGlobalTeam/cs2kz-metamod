@@ -197,7 +197,7 @@ public: // Message Handlers
 	virtual bool ProcessStringCmd(const CNetMessagePB<CNETMsg_StringCmd> &msg) = 0;
 
 public:
-	virtual bool ApplyConVars(const CMsg_CVars &list) = 0;
+	virtual bool ProcessSetConVar(const CNetMessagePB<CNETMsg_SetConVar> &msg) = 0;
 
 private:
 	virtual bool unk_28() = 0;

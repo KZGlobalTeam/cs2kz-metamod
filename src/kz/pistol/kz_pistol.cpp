@@ -11,11 +11,24 @@ static_global class : public KZOptionServiceEventListener
 {
 	void OnPlayerPreferencesLoaded(KZPlayer *player) override
 	{
-		player->pistolService->preferredPistol =
-			KZPistolService::GetPistolIndexByName(player->optionService->GetPreferenceStr("preferredPistol", "weapon_usp_silencer"));
-		player->pistolService->UpdatePistol();
+		player->pistolService->ApplyPreferences();
+	}
+
+	void OnPlayerPreferenceChanged(KZPlayer *player, const char *optionName) override
+	{
+		if (KZ_STREQI(optionName, "preferredPistol"))
+		{
+			player->pistolService->ApplyPreferences();
+		}
 	}
 } optionEventListener;
+
+void KZPistolService::ApplyPreferences()
+{
+	this->preferredPistol =
+		KZPistolService::GetPistolIndexByName(this->player->optionService->GetPreferenceStr("preferredPistol", "weapon_usp_silencer"));
+	this->UpdatePistol();
+}
 
 void KZPistolService::Init()
 {

@@ -29,7 +29,6 @@ namespace KZ::replaysystem::playback
 	void StartReplay();
 
 	// Navigation support
-	void NavigateToTick(u32 targetTick);
 	void ApplyTickState(KZPlayer *player, const TickData *tickData);
 } // namespace KZ::replaysystem::playback
 
