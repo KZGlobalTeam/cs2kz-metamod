@@ -15,7 +15,7 @@ struct EconInfo
 	struct MainInfo
 	{
 		i32 itemDef {};
-		i32 quality {};
+		i32 quality = -1;
 		i32 level = 1;
 		i32 accountID {};
 		i64 itemID {};

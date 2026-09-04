@@ -206,9 +206,6 @@ public:
 	virtual bool OnTriggerTouch(CBaseTrigger *trigger) override;
 	virtual bool OnTriggerEndTouch(CBaseTrigger *trigger) override;
 
-	// Insert subtick timing to be called later. Should only call this in PhysicsSimulate.
-	void InsertSubtickTiming(float time);
-
 	void InterpolateViewAngles();
 	void RestoreInterpolatedViewAngles();
 

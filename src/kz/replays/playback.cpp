@@ -10,7 +10,6 @@
 
 namespace KZ::replaysystem::playback
 {
-
 	void OnPhysicsSimulate(KZPlayer *player)
 	{
 		if (!player || !bot::IsValidBot(player->GetController()))
@@ -319,6 +318,31 @@ namespace KZ::replaysystem::playback
 			return;
 		}
 		EconInfo desiredWeapon = replay->weapons[found];
+		gear_slot_t desiredGearSlot = KZ::replaysystem::item::GetWeaponGearSlot(desiredWeapon.mainInfo.itemDef);
+		if (desiredGearSlot == gear_slot_t::GEAR_SLOT_C4)
+		{
+			// The bot can't keep hold of the C4: the game takes it straight back off it and the dropped
+			// entity is never destroyed, so replaying it verbatim spawns one world entity per tick.
+			// Play it back as a knife instead, preferring one the bot already carries so that nothing
+			// has to be given at all.
+			desiredGearSlot = gear_slot_t::GEAR_SLOT_KNIFE;
+			desiredWeapon = EconInfo();
+			desiredWeapon.mainInfo.itemDef = KZ::replaysystem::item::GetDefaultKnifeItemDef();
+
+			CUtlVector<CHandle<CBasePlayerWeapon>> *inventory = player.GetPlayerPawn()->m_pWeaponServices()->m_hMyWeapons();
+			for (i32 i = 0; i < inventory->Count(); i++)
+			{
+				CBasePlayerWeapon *invWeapon = inventory->Element(i).Get();
+				if (invWeapon
+					&& KZ::replaysystem::item::GetWeaponGearSlot(invWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex())
+						   == gear_slot_t::GEAR_SLOT_KNIFE)
+				{
+					desiredWeapon = EconInfo(invWeapon);
+					break;
+				}
+			}
+		}
+
 		EconInfo activeWeapon = player.GetPlayerPawn()->m_pWeaponServices()->m_hActiveWeapon().Get();
 
 		if (desiredWeapon != activeWeapon)
@@ -342,8 +366,13 @@ namespace KZ::replaysystem::playback
 				}
 			}
 
+			std::string weaponName = KZ::replaysystem::item::GetWeaponName(desiredWeapon.mainInfo.itemDef);
+			if (weaponName.empty())
+			{
+				return;
+			}
+
 			// Check if we can get away with not stripping all weapons here.
-			gear_slot_t desiredGearSlot = KZ::replaysystem::item::GetWeaponGearSlot(desiredWeapon.mainInfo.itemDef);
 			for (i32 i = 0; i < weapons->Count(); i++)
 			{
 				CBasePlayerWeapon *invWeapon = weapons->Element(i).Get();
@@ -357,7 +386,6 @@ namespace KZ::replaysystem::playback
 				}
 			}
 
-			std::string weaponName = KZ::replaysystem::item::GetWeaponName(desiredWeapon.mainInfo.itemDef);
 			CBasePlayerWeapon *newWeapon = player.GetPlayerPawn()->m_pItemServices()->GiveNamedItem(weaponName.c_str());
 			if (newWeapon)
 			{

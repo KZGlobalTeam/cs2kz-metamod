@@ -261,4 +261,5 @@ void *CModule::FindVirtualTable(const std::string &name)
 	Warning("Failed to find vtable for %s\n", name.c_str());
 	return nullptr;
 }
+
 #endif

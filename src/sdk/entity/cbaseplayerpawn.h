@@ -24,7 +24,8 @@ public:
 	void CommitSuicide(bool bExplode, bool bForce)
 	{
 		this->m_bTakesDamage(true);
-		CALL_VIRTUAL(void, g_pGameConfig->GetOffset("CommitSuicide"), this, bExplode, bForce);
+		static_persist const int offset = g_pGameConfig->GetOffset("CommitSuicide");
+		CALL_VIRTUAL(void, offset, this, bExplode, bForce);
 		this->m_bTakesDamage(false);
 	}
 

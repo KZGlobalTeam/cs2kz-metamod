@@ -11,11 +11,19 @@
 #define SUBTICK_INVALID_COMMAND_THRESHOLD  5
 #define SUBTICK_SUSPICIOUS_MOVES_WINDOW    0.5f
 #define SUBTICK_SUSPICIOUS_MOVES_THRESHOLD 20
+#define SUBTICK_YAW_DELTA_THRESHOLD        2
 #define SUBTICK_SUBTICK_INPUTS_WINDOW      20.0f
 #define SUBTICK_SUBTICK_INPUTS_THRESHOLD   30
 #define SUBTICK_ZERO_WHEN_RATIO_THRESHOLD  0.9f
 
-CConVar<bool> kz_ac_subtick_debug("kz_ac_subtick_debug", FCVAR_CHEAT, "Enable subtick abuse detector debug messages", false);
+// The engine's own limits on a subtick move list, from CCSPlayer_MovementServices.
+// Not to be confused with MAX_SUBTICK_MOVES, which is how many the replay format stores.
+#define ENGINE_MAX_SUBTICK_MOVES 32
+#define MAX_SUBTICK_MOVE_IMPULSE 2.0f
+// One button per subtick move, and only the ones the engine knows how to apply.
+#define SUBTICK_MOVE_BUTTON_MASK (IN_ATTACK | IN_ATTACK2 | IN_JUMP | IN_DUCK | IN_FORWARD | IN_BACK | IN_MOVELEFT | IN_MOVERIGHT)
+
+CConVar<bool> kz_ac_subtick_debug("kz_ac_subtick_debug", FCVAR_NONE, "Enable subtick abuse detector debug messages", false);
 
 // Every command should have all button presses/releases accounted for in subtick moves.
 // Only cheats that modify buttons without updating subtick moves would fail this.
@@ -24,13 +32,16 @@ static_global bool VerifyCommand(const PlayerCommand &cmd)
 	// Expect a press/release this tick
 	u64 expectedButtons = cmd.base().buttons_pb().buttonstate2() | cmd.base().buttons_pb().buttonstate3();
 	// We only care about certain movement buttons.
-	expectedButtons &= (IN_FORWARD | IN_BACK | IN_MOVELEFT | IN_MOVERIGHT | IN_JUMP | IN_DUCK);
+	expectedButtons &= (/*IN_FORWARD | IN_BACK | IN_MOVELEFT | IN_MOVERIGHT |*/ IN_JUMP | IN_DUCK);
 	for (i32 i = 0; i < cmd.base().subtick_moves_size(); i++)
 	{
 		if (cmd.base().subtick_moves(i).has_button())
 		{
 			expectedButtons &= ~cmd.base().subtick_moves(i).button();
 		}
+		// This is commented out for now because `forwardback 1 0 0` in console will produce moves
+		// with no subtick presses/releases every time the user alt-tabs out and back in.
+		/*
 		else
 		{
 			// analog input?
@@ -43,6 +54,7 @@ static_global bool VerifyCommand(const PlayerCommand &cmd)
 				expectedButtons &= ~(IN_MOVELEFT | IN_MOVERIGHT);
 			}
 		}
+		*/
 	}
 	if (expectedButtons != 0)
 	{
@@ -51,66 +63,106 @@ static_global bool VerifyCommand(const PlayerCommand &cmd)
 	return expectedButtons == 0;
 }
 
-// Yaw/pitch alias abuse detection: If there's too many subtick moves with the same button + timing and non-zero angles, flag it.
+// Yaw alias abuse detection: A legitimate client only produces a handful of angle changes per command, unless they are scrolling to jump.
+// If there's more than SUBTICK_YAW_DELTA_THRESHOLD subtick moves carrying an actual yaw change in a single tick, flag it.
 static_global bool HasExcessiveSubtickMovesWithAngles(const PlayerCommand &cmd)
 {
-	if (cmd.base().subtick_moves_size() < 2)
-	{
-		return false;
-	}
-	std::set<std::pair<u64, f32>> buttonTimes;
-	// Get a list of all button presses with timings
+	i32 numYawDeltas = 0;
 	for (i32 i = 0; i < cmd.base().subtick_moves_size(); i++)
 	{
 		const CSubtickMoveStep &step = cmd.base().subtick_moves(i);
-		if (!step.pressed() || !step.has_button())
+		// Only count moves that actually turn the player.
+		if (!step.has_yaw_delta() || step.yaw_delta() == 0.0f)
 		{
 			continue;
 		}
-		// Ignore attack buttons and turn binds (since they wouldn't work anyway)
-		if (step.button() == IN_ATTACK || step.button() == IN_ATTACK2 || step.button() == IN_USE || step.button() == IN_RELOAD
-			|| step.button() == IN_TURNLEFT || step.button() == IN_TURNRIGHT)
+		numYawDeltas++;
+		if (numYawDeltas > SUBTICK_YAW_DELTA_THRESHOLD)
 		{
-			continue;
-		}
-		if (step.has_pitch_delta() || step.has_yaw_delta())
-		{
-			buttonTimes.insert({step.button(), step.when()});
-		}
-	}
-	// Go through the list again. If we find the same button + timing again on release, it's suspicious.
-	i32 numSuspicious = 0;
-	for (i32 i = 0; i < cmd.base().subtick_moves_size(); i++)
-	{
-		const CSubtickMoveStep &step = cmd.base().subtick_moves(i);
-		if (step.pressed() || !step.has_button())
-		{
-			continue;
-		}
-		auto it = buttonTimes.find({step.button(), step.when()});
-		if (it != buttonTimes.end())
-		{
-			numSuspicious++;
-			if (numSuspicious >= 2)
+			if (kz_ac_subtick_debug.GetBool())
 			{
-				if (kz_ac_subtick_debug.GetBool())
-				{
-					KZ_LOG_INFO(LogChannel::AC, "Suspicious subtick moves with angles detected in command %d: %s\n", cmd.cmdNum,
-								cmd.DebugString().c_str());
-				}
-				return true;
+				KZ_LOG_INFO(LogChannel::AC, "Suspicious subtick moves with angles detected in command %d: %s\n", cmd.cmdNum,
+							cmd.DebugString().c_str());
 			}
+			return true;
 		}
 	}
 	return false;
 }
 
-static_global bool PossibleDesubtickedCommand(const PlayerCommand &cmd)
+// The engine validates the whole subtick move list before it applies any of it, and throws all of it away if
+// any move fails. A command that fails this moves the player from its final button state for the whole tick,
+// the same as a command that carried no subtick moves at all.
+KZAnticheatService::SubtickRejection KZAnticheatService::VerifySubtickMoves(const PlayerCommand *cmd, f32 forwardAxis, f32 sideAxis)
+{
+	if (cmd->base().subtick_moves_size() > ENGINE_MAX_SUBTICK_MOVES)
+	{
+		return SubtickRejection::MoveCount;
+	}
+	f32 lastWhen = 0.0f;
+	for (i32 i = 0; i < cmd->base().subtick_moves_size(); i++)
+	{
+		const CSubtickMoveStep &step = cmd->base().subtick_moves(i);
+		// The moves have to be ordered and land inside the tick.
+		if (step.when() < lastWhen || step.when() > 1.0f)
+		{
+			return SubtickRejection::When;
+		}
+		lastWhen = step.when();
+		u64 button = step.button();
+		if (button)
+		{
+			// Only one button can be pressed at a time, and it must be a valid button.
+			if ((button & (button - 1)) != 0 || (button & SUBTICK_MOVE_BUTTON_MASK) == 0)
+			{
+				return SubtickRejection::Button;
+			}
+			f32 delta = step.pressed() ? 1.0f : -1.0f;
+			if (button == IN_FORWARD)
+			{
+				forwardAxis += delta;
+			}
+			else if (button == IN_BACK)
+			{
+				forwardAxis -= delta;
+			}
+			else if (button == IN_MOVELEFT)
+			{
+				sideAxis += delta;
+			}
+			else if (button == IN_MOVERIGHT)
+			{
+				sideAxis -= delta;
+			}
+		}
+		else
+		{
+			forwardAxis += step.analog_forward_delta();
+			sideAxis += step.analog_left_delta();
+		}
+		// Neither a stick nor a keyboard can push an axis past this.
+		if (fabsf(forwardAxis) > MAX_SUBTICK_MOVE_IMPULSE || fabsf(sideAxis) > MAX_SUBTICK_MOVE_IMPULSE)
+		{
+			return SubtickRejection::ImpulseLimit;
+		}
+	}
+	return SubtickRejection::None;
+}
+
+static_global bool PossibleDesubtickedCommand(const PlayerCommand &cmd, const Vector &impulses)
 {
 	// Can't tell if there are no subtick moves.
 	if (cmd.base().subtick_moves_size() == 0)
 	{
 		return false;
+	}
+
+	// An oversized analog delta makes the engine discard the whole list, and falls back to the buttonstates alone.
+	// This can be achieved by using `forwardback 5 0 0` for instance.
+	// See KZAnticheatService::CreateInputEvents for more details.
+	if (KZAnticheatService::VerifySubtickMoves(&cmd, impulses.x, impulses.y) == KZAnticheatService::SubtickRejection::ImpulseLimit)
+	{
+		return true;
 	}
 
 	// If there are subtick moves but the timing is at exactly 0, it's suspicious... unless it's controller-issued commands.
@@ -153,7 +205,7 @@ void KZAnticheatService::CheckSubtickAbuse(PlayerCommand *cmd)
 	{
 		this->numCommandsWithSubtickInputs.push_back(g_pKZUtils->GetServerGlobals()->curtime);
 	}
-	if (PossibleDesubtickedCommand(*cmd))
+	if (PossibleDesubtickedCommand(*cmd, this->player->GetMoveServices()->m_vecLastMovementImpulses))
 	{
 		this->zeroWhenCommandTimes.push_back(g_pKZUtils->GetServerGlobals()->curtime);
 	}

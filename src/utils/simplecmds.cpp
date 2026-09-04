@@ -57,6 +57,35 @@ struct ScmdManager
 
 static_global ScmdManager g_cmdManager = {};
 
+#define SCMD_COOLDOWN 0.2f
+
+// Blocks commands from clients who aren't fully in-game yet, and enforces a cooldown between commands.
+// Silent when blocking for not-in-game (client can't receive chat yet); prints the remaining wait when on cooldown.
+static_global bool CanRunCommand(KZPlayer *player, u64 flags)
+{
+	if (!player->IsInGame())
+	{
+		return false;
+	}
+
+	// Certain commands are exempt from the cooldown, since they're expected to be spammed.
+	if (flags & (SCFL_CHECKPOINT | SCFL_MEASURE | SCFL_PREFERENCE))
+	{
+		return true;
+	}
+
+	f32 curtime = g_pKZUtils->GetServerGlobals()->curtime;
+	f32 remaining = SCMD_COOLDOWN - (curtime - player->lastCommandTime);
+	if (remaining > 0.0f)
+	{
+		player->languageService->PrintChat(true, false, "Command Cooldown (Time Remaining)", remaining);
+		return false;
+	}
+
+	player->lastCommandTime = curtime;
+	return true;
+}
+
 static_global void PrintCategoryCommands(KZPlayer *player, i32 category, bool printEmpty)
 {
 	char tableName[64];
@@ -260,7 +289,8 @@ META_RES scmd::OnClientCommand(CPlayerSlot &slot, const CCommand &args)
 
 	CCSPlayerController *controller = (CCSPlayerController *)GameEntitySystem()->GetEntityInstance(CEntityIndex((i32)slot.Get() + 1));
 
-	if (!controller || !g_pKZPlayerManager->ToPlayer(controller))
+	KZPlayer *player = controller ? g_pKZPlayerManager->ToPlayer(controller) : nullptr;
+	if (!controller || !player)
 	{
 		return MRES_IGNORED;
 	}
@@ -276,6 +306,10 @@ META_RES scmd::OnClientCommand(CPlayerSlot &slot, const CCommand &args)
 
 		if (!V_stricmp(g_cmdManager.cmds[i].name, args[0]))
 		{
+			if (!CanRunCommand(player, g_cmdManager.cmds[i].flags))
+			{
+				return MRES_SUPERCEDE;
+			}
 			result = g_cmdManager.cmds[i].callback(controller, &args);
 			if (result == MRES_SUPERCEDE)
 			{
@@ -297,7 +331,8 @@ META_RES scmd::OnDispatchConCommand(ConCommandRef cmd, const CCommandContext &ct
 
 	CCSPlayerController *controller = (CCSPlayerController *)utils::GetController(slot);
 
-	if (!cmd.IsValidRef() || !controller || !g_pKZPlayerManager->ToPlayer(controller))
+	KZPlayer *player = controller ? g_pKZPlayerManager->ToPlayer(controller) : nullptr;
+	if (!cmd.IsValidRef() || !controller || !player)
 	{
 		return MRES_IGNORED;
 	}
@@ -305,6 +340,12 @@ META_RES scmd::OnDispatchConCommand(ConCommandRef cmd, const CCommandContext &ct
 
 	if (!V_stricmp(commandName, "say") || !V_stricmp(commandName, "say_team"))
 	{
+		// A client that isn't fully in-game yet can't legitimately chat at all, command or not.
+		if (!player->IsInGame())
+		{
+			return MRES_SUPERCEDE;
+		}
+
 		if (args.ArgC() < 2)
 		{
 			// no argument somehow
@@ -341,6 +382,10 @@ META_RES scmd::OnDispatchConCommand(ConCommandRef cmd, const CCommandContext &ct
 			const char *cmdName = cmds[i].hasConsolePrefix ? cmds[i].name + strlen(SCMD_CONSOLE_PREFIX) : cmds[i].name;
 			if (!V_stricmp(arg, cmdName))
 			{
+				if (!CanRunCommand(player, cmds[i].flags))
+				{
+					return MRES_SUPERCEDE;
+				}
 				META_RES result = cmds[i].callback(controller, &cmdArgs);
 				if (args[1][0] == SCMD_CHAT_SILENT_TRIGGER || result == MRES_SUPERCEDE)
 				{
@@ -365,6 +410,10 @@ META_RES scmd::OnDispatchConCommand(ConCommandRef cmd, const CCommandContext &ct
 			const char *cmdName = cmds[i].hasConsolePrefix ? cmds[i].name + strlen(SCMD_CONSOLE_PREFIX) : cmds[i].name;
 			if (!V_stricmp(commandName, cmdName))
 			{
+				if (!CanRunCommand(player, cmds[i].flags))
+				{
+					return MRES_SUPERCEDE;
+				}
 				META_RES result = g_cmdManager.cmds[i].callback(controller, &args);
 				if (result == MRES_SUPERCEDE)
 				{

@@ -8,9 +8,12 @@
 #include "utils/hooks.h"
 #include "utils/gameconfig.h"
 #include "utils/async_file_io.h"
+#include "utils/ctimer.h"
+#include "utils/http.h"
 
 #include "movement/movement.h"
 #include "kz/kz.h"
+#include "kz/option/menu/kz_menu.h"
 #include "kz/anticheat/kz_anticheat.h"
 #include "kz/db/kz_db.h"
 #include "kz/hud/kz_hud.h"
@@ -21,7 +24,10 @@
 #include "kz/quiet/kz_quiet.h"
 #include "kz/ztopwatch/kz_ztopwatch.h"
 #include "kz/tip/kz_tip.h"
+#include "kz/jumpstats/kz_jumpstats.h"
+#include "kz/paint/kz_paint.h"
 #include "kz/option/kz_option.h"
+#include "kz/option/pref_registry.h"
 #include "kz/language/kz_language.h"
 #include "kz/mappingapi/kz_mappingapi.h"
 #include "kz/global/kz_global.h"
@@ -30,9 +36,9 @@
 #include "kz/recording/kz_recording.h"
 #include "kz/replays/kz_replaysystem.h"
 #include "kz/racing/kz_racing.h"
+#include "kz/pubapi/kz_pubapi.h"
 
 #include <vendor/MultiAddonManager/public/imultiaddonmanager.h>
-#include <vendor/ClientCvarValue/public/iclientcvarvalue.h>
 #include <vendor/ixwebsocket/ixwebsocket/IXNetSystem.h>
 #include <vendor/mm-cs2menus/src/public/ics2menus.h>
 
@@ -40,7 +46,6 @@
 KZPlugin g_KZPlugin;
 
 IMultiAddonManager *g_pMultiAddonManager;
-IClientCvarValue *g_pClientCvarValue;
 ICS2Menus *g_pMenus;
 CSteamGameServerAPIContext g_steamAPI;
 
@@ -51,6 +56,7 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 	setlocale(LC_ALL, "en_US.utf8");
 	PLUGIN_SAVEVARS();
 	modules::Initialize();
+
 	if (!interfaces::Initialize(ismm, error, maxlen))
 	{
 		return false;
@@ -78,19 +84,26 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 		snprintf(error, maxlen, "Failed to initialize movement detours.");
 		return false;
 	}
+
+	KZ::misc::Init();
 	KZCheckpointService::Init();
 	KZTimerService::Init();
 	KZSpecService::Init();
 	KZGotoService::Init();
 	KZHUDService::Init();
+	KZMenuService::Init();
 	KZLanguageService::Init();
 	KZBeamService::Init();
 	KZPistolService::Init();
-	KZ::misc::Init();
+	KZPaintService::Init();
+	KZJumpstatsService::Init();
 	KZQuietService::Init();
 	KZZtopwatchService::Init();
+	KZ::prefs::Init();
 	AsyncFileIO::Init();
 	KZRecordingService::Init();
+	// Must come after KZTimerService::Init, it hooks into the timer's event listeners.
+	KZ::pubapi::Init();
 	if (!KZ::mode::CheckModeCvars())
 	{
 		return false;
@@ -125,6 +138,10 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 bool KZPlugin::Unload(char *error, size_t maxlen)
 {
 	this->unloading = true;
+	// Before anything else: this drops any input capture the options menu still holds.
+	KZMenuService::Cleanup();
+	KZHUDService::Cleanup();
+	KZ::pubapi::Shutdown();
 	KZ::misc::UnrestrictTimeLimit();
 	KZRecordingService::Shutdown();
 	AsyncFileIO::Cleanup();
@@ -135,11 +152,16 @@ bool KZPlugin::Unload(char *error, size_t maxlen)
 	g_pPlayerManager->Cleanup();
 	KZDatabaseService::Cleanup();
 	KZGlobalService::Cleanup();
+	// Not in KZGlobalService::Cleanup(): ReloadConfig() calls that at runtime and keeps using the refs.
+	KZGlobalService::CleanupConVars();
 	KZLanguageService::Cleanup();
 	KZOptionService::Cleanup();
 	KZ::replaysystem::Cleanup();
 	KZAnticheatService::CleanupSvCheatsWatcher();
 	hooks::Cleanup();
+	HTTP::Cleanup();
+	RemoveAllTimers();
+	KZ::mode::CleanupModeCvarRefs();
 	utils::Cleanup();
 	LoggingSystem_UnregisterLoggingListener(&g_KZLoggingListener);
 	kz_log_to_file.Set(false);
@@ -156,21 +178,18 @@ void KZPlugin::AllPluginsLoaded()
 	g_pKZPlayerManager->ResetPlayers();
 	this->UpdateSelfMD5();
 	g_pMultiAddonManager = (IMultiAddonManager *)g_SMAPI->MetaFactory(MULTIADDONMANAGER_INTERFACE, nullptr, nullptr);
-	g_pClientCvarValue = (IClientCvarValue *)g_SMAPI->MetaFactory(CLIENTCVARVALUE_INTERFACE, nullptr, nullptr);
 	g_pMenus = (ICS2Menus *)g_SMAPI->MetaFactory(CS2MENUS_INTERFACE, nullptr, nullptr);
 }
 
 void KZPlugin::OnPluginLoad(PluginId id)
 {
 	g_pMultiAddonManager = (IMultiAddonManager *)g_SMAPI->MetaFactory(MULTIADDONMANAGER_INTERFACE, nullptr, nullptr);
-	g_pClientCvarValue = (IClientCvarValue *)g_SMAPI->MetaFactory(CLIENTCVARVALUE_INTERFACE, nullptr, nullptr);
 	g_pMenus = (ICS2Menus *)g_SMAPI->MetaFactory(CS2MENUS_INTERFACE, nullptr, nullptr);
 }
 
 void KZPlugin::OnPluginUnload(PluginId id)
 {
 	g_pMultiAddonManager = (IMultiAddonManager *)g_SMAPI->MetaFactory(MULTIADDONMANAGER_INTERFACE, nullptr, nullptr);
-	g_pClientCvarValue = (IClientCvarValue *)g_SMAPI->MetaFactory(CLIENTCVARVALUE_INTERFACE, nullptr, nullptr);
 	g_pMenus = (ICS2Menus *)g_SMAPI->MetaFactory(CS2MENUS_INTERFACE, nullptr, nullptr);
 }
 
@@ -233,6 +252,11 @@ void *KZPlugin::OnMetamodQuery(const char *iface, int *ret)
 	{
 		*ret = META_IFACE_OK;
 		return g_pMappingApi;
+	}
+	else if (strcmp(iface, CS2KZ_INTERFACE) == 0)
+	{
+		*ret = META_IFACE_OK;
+		return KZ::pubapi::GetAPI();
 	}
 	*ret = META_IFACE_FAILED;
 

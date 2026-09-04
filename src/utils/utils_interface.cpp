@@ -103,6 +103,7 @@ void KZUtils::RemoveTimer(CTimerBase *timer)
 		if (g_PersistentTimers.Element(i) == timer)
 		{
 			g_PersistentTimers.Remove(i);
+			delete timer;
 			return;
 		}
 	}
@@ -111,6 +112,7 @@ void KZUtils::RemoveTimer(CTimerBase *timer)
 		if (g_NonPersistentTimers.Element(i) == timer)
 		{
 			g_NonPersistentTimers.Remove(i);
+			delete timer;
 			return;
 		}
 	}
@@ -376,18 +378,22 @@ u32 KZUtils::GetPlayerCount()
 
 void KZUtils::AddTriangleOverlay(Vector const &p1, Vector const &p2, Vector const &p3, u8 r, u8 g, u8 b, u8 a, bool noDepthTest, f64 flDuration)
 {
-	void *debugoverlay = CALL_VIRTUAL(void *, g_pGameConfig->GetOffset("GetDebugOverlay"), interfaces::pServer);
+	static_persist const int overlayOffset = g_pGameConfig->GetOffset("GetDebugOverlay");
+	void *debugoverlay = CALL_VIRTUAL(void *, overlayOffset, interfaces::pServer);
 	if (debugoverlay)
 	{
-		CALL_VIRTUAL(void, g_pGameConfig->GetOffset("DebugTriangle"), debugoverlay, &p1, &p2, &p3, r, g, b, a, noDepthTest, flDuration);
+		static_persist const int offset = g_pGameConfig->GetOffset("DebugTriangle");
+		CALL_VIRTUAL(void, offset, debugoverlay, &p1, &p2, &p3, r, g, b, a, noDepthTest, flDuration);
 	}
 }
 
 void KZUtils::ClearOverlays()
 {
-	void *debugoverlay = CALL_VIRTUAL(void *, g_pGameConfig->GetOffset("GetDebugOverlay"), interfaces::pServer);
+	static_persist const int overlayOffset = g_pGameConfig->GetOffset("GetDebugOverlay");
+	void *debugoverlay = CALL_VIRTUAL(void *, overlayOffset, interfaces::pServer);
 	if (debugoverlay)
 	{
-		CALL_VIRTUAL(void, g_pGameConfig->GetOffset("ClearOverlays"), debugoverlay);
+		static_persist const int offset = g_pGameConfig->GetOffset("ClearOverlays");
+		CALL_VIRTUAL(void, offset, debugoverlay);
 	}
 }

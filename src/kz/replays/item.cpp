@@ -15,10 +15,11 @@ static_global std::unordered_map<u32, bool> paintKitUsesLegacyModel;
 struct ItemData
 {
 	std::string name {};
-	gear_slot_t gearSlot {};
+	gear_slot_t gearSlot {gear_slot_t::GEAR_SLOT_INVALID};
 };
 
 static_global std::unordered_map<u16, ItemData> weaponItemMapping;
+static_global u16 defaultKnifeItemDef = 0;
 
 static_function gear_slot_t GetGearSlot(const char *name)
 {
@@ -30,7 +31,7 @@ static_function gear_slot_t GetGearSlot(const char *name)
 	{
 		return gear_slot_t::GEAR_SLOT_PISTOL;
 	}
-	if (KZ_STREQI(name, "knife"))
+	if (KZ_STREQI(name, "melee"))
 	{
 		return gear_slot_t::GEAR_SLOT_KNIFE;
 	}
@@ -140,17 +141,32 @@ void KZ::replaysystem::item::InitItemAttributes()
 		}
 		weaponItemMapping[id].gearSlot = GetGearSlot(gearSlotStr);
 	}
+	// Cache the plain knife, used as a stand-in during playback for items the bot can't hold.
+	for (const auto &[id, itemData] : weaponItemMapping)
+	{
+		if (itemData.name == "weapon_knife")
+		{
+			defaultKnifeItemDef = id;
+			break;
+		}
+	}
 	delete kv;
 }
 
 std::string KZ::replaysystem::item::GetItemAttributeName(u16 id)
 {
-	return itemAttributes[id];
+	auto it = itemAttributes.find(id);
+	return it == itemAttributes.end() ? std::string() : it->second;
 }
 
 std::string KZ::replaysystem::item::GetWeaponName(u16 id)
 {
-	std::string name = weaponItemMapping[id].name;
+	auto it = weaponItemMapping.find(id);
+	if (it == weaponItemMapping.end())
+	{
+		return std::string();
+	}
+	const std::string &name = it->second.name;
 	if (V_strstr(name.c_str(), "weapon_knife_") || name == "weapon_bayonet")
 	{
 		return "weapon_knife";
@@ -158,14 +174,22 @@ std::string KZ::replaysystem::item::GetWeaponName(u16 id)
 	return name;
 }
 
+u16 KZ::replaysystem::item::GetDefaultKnifeItemDef()
+{
+	return defaultKnifeItemDef;
+}
+
 gear_slot_t KZ::replaysystem::item::GetWeaponGearSlot(u16 id)
 {
-	return weaponItemMapping[id].gearSlot;
+	auto it = weaponItemMapping.find(id);
+	// Unknown items must not fall back to 0, which is GEAR_SLOT_RIFLE.
+	return it == weaponItemMapping.end() ? gear_slot_t::GEAR_SLOT_INVALID : it->second.gearSlot;
 }
 
 bool KZ::replaysystem::item::DoesPaintKitUseLegacyModel(float paintKit)
 {
-	return paintKitUsesLegacyModel[static_cast<u32>(paintKit)];
+	auto it = paintKitUsesLegacyModel.find(static_cast<u32>(paintKit));
+	return it != paintKitUsesLegacyModel.end() && it->second;
 }
 
 void KZ::replaysystem::item::ApplyItemAttributesToWeapon(CBasePlayerWeapon &weapon, const EconInfo &info)

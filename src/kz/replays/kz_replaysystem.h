@@ -43,6 +43,7 @@ namespace KZ::replaysystem
 	f32 GetTime();
 	f32 GetEndTime();
 	bool GetPaused();
+	const char *GetCourseName();
 
 	void InitWatcher();
 	void CleanupWatcher();

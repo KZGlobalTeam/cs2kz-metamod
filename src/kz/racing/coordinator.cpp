@@ -89,6 +89,22 @@ void KZRacingService::Cleanup()
 	KZ_LOG_INFO(LogChannel::Racing, "RacingService cleaned up.\n");
 }
 
+void KZRacingService::ReloadConfig()
+{
+	KZRacingService::Cleanup();
+	KZRacingService::Init();
+
+	if (KZRacingService::state.load() != KZRacingService::State::Configured)
+	{
+		return;
+	}
+
+	KZ_LOG_INFO(LogChannel::Racing, "Starting WebSocket...\n");
+	KZRacingService::socket->setPingInterval(10);
+	KZRacingService::state.store(KZRacingService::State::Connecting);
+	KZRacingService::socket->start();
+}
+
 void KZRacingService::OnActivateServer()
 {
 	if (KZRacingService::state.load() == KZRacingService::State::Uninitialized)
@@ -149,6 +165,9 @@ void KZRacingService::ProcessMainThreadCallbacks()
 
 void KZRacingService::OnWebSocketMessage(const ix::WebSocketMessagePtr &message)
 {
+	// Runs on the ixwebsocket thread. Every event handler below parses JSON and allocates a
+	// std::function onto the main-thread queue, so one scope here covers all of them.
+
 	switch (message->type)
 	{
 		case ix::WebSocketMessageType::Open:

@@ -15,6 +15,9 @@ class CTimerBase
 public:
 	CTimerBase(f64 initialInterval, bool useRealTime) : interval(initialInterval), useRealTime(useRealTime) {};
 
+	// Timers are always deleted through CTimerBase*, and CTimer holds a std::tuple of arguments.
+	virtual ~CTimerBase() = default;
+
 	virtual bool Execute() = 0;
 
 	f64 interval {};
@@ -24,6 +27,9 @@ public:
 
 void ProcessTimers();
 void RemoveNonPersistentTimers();
+
+// Deletes every remaining timer, persistent ones included. Plugin unload only.
+void RemoveAllTimers();
 
 extern CUtlVector<CTimerBase *> g_NonPersistentTimers;
 extern CUtlVector<CTimerBase *> g_PersistentTimers;

@@ -20,7 +20,8 @@
 #define KZ_TIMER_SND_STOP             "tr.PuckFail"
 #define KZ_TIMER_SND_MISSED_TIME      "UI.RankDown"
 
-#define KZ_PAUSE_COOLDOWN 1.0f
+#define KZ_PAUSE_COOLDOWN  1.0f
+#define KZ_PAUSE_MAX_SPEED 150.0f
 
 #define KZ_SAFEGUARD_RESTART_MIN_DELAY 0.6f
 #define KZ_SAFEGUARD_RESTART_MAX_DELAY 5.0f
@@ -195,6 +196,7 @@ public:
 	static void UpdateLocalRecordCache();
 	static void InsertRecordToCache(f64 time, const KZCourseDescriptor *courseName, PluginId modeID, bool hasTeleports, bool global,
 									CUtlString metadata = "");
+	static const PBData *GetGlobalCachedRecord(const KZCourseDescriptor *course, PluginId modeID);
 
 	void ClearPBCache();
 	const PBData *GetGlobalCachedPB(const KZCourseDescriptor *course, PluginId modeID);
@@ -323,8 +325,6 @@ private:
 		return timerRunning && this->GetTime() < EPSILON;
 	}
 
-	bool JustEndedTimer();
-
 public:
 	void PlayTimerEndSound();
 	void PlayTimerFalseEndSound();
@@ -348,6 +348,8 @@ private:
 	bool hasResumedInThisRun {};
 	f32 lastDuckValue {};
 	f32 lastStaminaValue {};
+	f32 lastDuckTimeValue {};
+	i32 lastLandedTickValue {};
 	bool touchedGroundSinceTouchingStartZone {};
 	bool shouldPlayTimerStopSound = true;
 
@@ -373,6 +375,8 @@ public:
 
 	void ToggleTimerStopSound();
 
+	static void RegisterMenu();
+
 	// Safeguard
 	void ToggleSafeguard();
 	void ToggleProSafeguard();
@@ -394,5 +398,5 @@ public:
 	static void OnRoundStart();
 	void OnTeleport(const Vector *newPosition, const QAngle *newAngles, const Vector *newVelocity);
 
-	void OnPlayerPreferencesLoaded();
+	void ApplyPreferences();
 };

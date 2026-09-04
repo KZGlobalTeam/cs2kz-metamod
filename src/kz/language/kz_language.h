@@ -12,9 +12,21 @@ class KZLanguageService : public KZBaseService
 public:
 	static void Init();
 	static void LoadConfigFiles();
+
+	struct AvailableLanguage
+	{
+		CUtlString code;
+		CUtlString name;
+		i32 coverage {}; // percent of the loaded phrases that carry this language
+	};
+
+	// The language codes the loaded phrase files actually carry, with a display name where config.txt
+	// names one. Built on first use.
+	static const std::vector<AvailableLanguage> &GetAvailableLanguages();
 	static void LoadLanguages();
 	static void LoadTranslations();
 	static void Cleanup();
+	static void OnActivateServer();
 	static const char *GetBaseAddon();
 
 	struct LanguageInfo
@@ -104,8 +116,7 @@ public:
 		formattedTemplateCache.clear();
 	}
 
-	template<typename... Args>
-	static std::string PrepareMessageWithLang(const char *language, const char *message, Args &&...args)
+	static const TemplateEntry &GetTemplateEntry(const char *language, const char *message)
 	{
 		std::string cacheKey;
 		cacheKey.reserve(strlen(language) + 1 + strlen(message));
@@ -131,7 +142,18 @@ public:
 			}
 			it = formattedTemplateCache.emplace(std::move(cacheKey), std::move(entry)).first;
 		}
-		const TemplateEntry &entry = it->second;
+		return it->second;
+	}
+
+	static bool IsMessageEmpty(const char *language, const char *message)
+	{
+		return GetTemplateEntry(language, message).str.empty();
+	}
+
+	template<typename... Args>
+	static std::string PrepareMessageWithLang(const char *language, const char *message, Args &&...args)
+	{
+		const TemplateEntry &entry = GetTemplateEntry(language, message);
 		if (!entry.hasFormat)
 		{
 			return entry.str;

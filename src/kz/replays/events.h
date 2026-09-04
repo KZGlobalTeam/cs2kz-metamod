@@ -18,7 +18,6 @@ namespace KZ::replaysystem::events
 
 	// Specific event handlers
 	void HandleTimerEvent(KZPlayer &player, const RpEvent *event, data::ReplayPlayback *replay);
-	void HandleCheckpointEvent(const RpEvent *event, data::ReplayPlayback *replay);
 	void HandleModeChangeEvent(KZPlayer &player, const RpEvent *event);
 	void HandleStyleChangeEvent(KZPlayer &player, const RpEvent *event);
 	void HandleTeleportEvent(KZPlayer &player, const RpEvent *event);

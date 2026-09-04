@@ -108,12 +108,14 @@ public:
 
 	bool IsPawn()
 	{
-		return CALL_VIRTUAL(bool, g_pGameConfig->GetOffset("IsEntityPawn"), this);
+		static_persist const int offset = g_pGameConfig->GetOffset("IsEntityPawn");
+		return CALL_VIRTUAL(bool, offset, this);
 	}
 
 	bool IsController()
 	{
-		return CALL_VIRTUAL(bool, g_pGameConfig->GetOffset("IsEntityController"), this);
+		static_persist const int offset = g_pGameConfig->GetOffset("IsEntityController");
+		return CALL_VIRTUAL(bool, offset, this);
 	}
 
 	bool IsAlive()
@@ -129,7 +131,8 @@ public:
 
 	void CollisionRulesChanged()
 	{
-		CALL_VIRTUAL(void, g_pGameConfig->GetOffset("CollisionRulesChanged"), this);
+		static_persist const int offset = g_pGameConfig->GetOffset("CollisionRulesChanged");
+		CALL_VIRTUAL(void, offset, this);
 	}
 
 	int GetTeam()
@@ -139,24 +142,30 @@ public:
 
 	void StartTouch(CBaseEntity *pOther)
 	{
-		CALL_VIRTUAL(bool, g_pGameConfig->GetOffset("StartTouch"), this, pOther);
+		static_persist const int offset = g_pGameConfig->GetOffset("StartTouch");
+		CALL_VIRTUAL(bool, offset, this, pOther);
 	}
 
 	void Touch(CBaseEntity *pOther)
 	{
-		CALL_VIRTUAL(bool, g_pGameConfig->GetOffset("Touch"), this, pOther);
+		static_persist const int offset = g_pGameConfig->GetOffset("Touch");
+		CALL_VIRTUAL(bool, offset, this, pOther);
 	}
 
 	void EndTouch(CBaseEntity *pOther)
 	{
-		CALL_VIRTUAL(bool, g_pGameConfig->GetOffset("EndTouch"), this, pOther);
+		static_persist const int offset = g_pGameConfig->GetOffset("EndTouch");
+		CALL_VIRTUAL(bool, offset, this, pOther);
 	}
 
 	void Teleport(const Vector *newPosition, const QAngle *newAngles, const Vector *newVelocity)
 	{
-		CALL_VIRTUAL(bool, g_pGameConfig->GetOffset("Teleport"), this, newPosition, newAngles, newVelocity);
+		static_persist const int offset = g_pGameConfig->GetOffset("Teleport");
+		CALL_VIRTUAL(bool, offset, this, newPosition, newAngles, newVelocity);
 	}
 
+	// Note for users: You have to create a CEntityKeyValues through `new` and you must NOT delete it.
+	// The game will delete it for you after the entity is spawned.
 	void DispatchSpawn(CEntityKeyValues *pEntityKeyValues = nullptr)
 	{
 		g_pKZUtils->DispatchSpawn(this, pEntityKeyValues);
@@ -164,8 +173,14 @@ public:
 
 	void SetGravityScale(float scale)
 	{
-		this->m_flActualGravityScale(scale);
-		this->m_flGravityScale(scale);
+		if (this->m_flActualGravityScale() != scale)
+		{
+			this->m_flActualGravityScale(scale);
+		}
+		if (this->m_flGravityScale() != scale)
+		{
+			this->m_flGravityScale(scale);
+		}
 	}
 };
 #endif

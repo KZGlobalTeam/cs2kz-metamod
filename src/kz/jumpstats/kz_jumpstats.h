@@ -496,6 +496,9 @@ public:
 		this->tpmVelocity = Vector(0, 0, 0);
 	}
 
+	static void Init();
+	static void RegisterMenu();
+
 	// Jumpstats
 	CUtlVector<Jump> jumps;
 	// One pose per subtick movement of the current jump, consumed by the tail jump's failstat tracking.

@@ -39,13 +39,13 @@ class KZJumpstatsService;
 class KZLanguageService;
 class KZMapService;
 class KZMeasureService;
+class KZMenuService;
 class KZModeService;
 class KZNoclipService;
 class KZOptionService;
 class KZPaintService;
 class KZQuietService;
 class KZRacingService;
-class KZSavelocService;
 class KZSpecService;
 class KZGotoService;
 class KZProfileService;
@@ -65,6 +65,11 @@ public:
 	KZPlayer(i32 i) : MovementPlayer(i)
 	{
 		this->Init();
+	}
+
+	~KZPlayer() override
+	{
+		this->DestroyServices();
 	}
 
 	// General events
@@ -152,6 +157,9 @@ private:
 	f32 lastValidYaw {};
 	bool oldUsingTurnbinds {};
 
+	// Deletes and nulls every service this player owns.
+	void DestroyServices();
+
 public:
 	KZAnticheatService *anticheatService {};
 	KZBeamService *beamService {};
@@ -162,13 +170,13 @@ public:
 	KZJumpstatsService *jumpstatsService {};
 	KZLanguageService *languageService {};
 	KZMeasureService *measureService {};
+	KZMenuService *menuService {};
 	KZModeService *modeService {};
 	KZNoclipService *noclipService {};
 	KZOptionService *optionService {};
 	KZPaintService *paintService {};
 	KZQuietService *quietService {};
 	KZRacingService *racingService {};
-	KZSavelocService *savelocService {};
 	KZSpecService *specService {};
 	KZGotoService *gotoService {};
 	KZProfileService *profileService {};
@@ -181,6 +189,9 @@ public:
 	KZRecordingService *recordingService {};
 	KZFOVService *fovService {};
 	KZZtopwatchService *ztopwatchService {};
+
+	// Timestamp (curtime) of the last accepted scmd command, used for the per-command cooldown.
+	f32 lastCommandTime {};
 
 	void DisableTurnbinds();
 	void EnableGodMode();
@@ -219,6 +230,10 @@ public:
 	{
 		this->player = player;
 	}
+
+	// Services are routinely deleted through KZBaseService/KZModeService/KZStyleService pointers
+	// (mode switching, style toggling, player teardown), so this has to be virtual.
+	virtual ~KZBaseService() = default;
 
 	// To be implemented by each service class
 	virtual void Reset() {}
@@ -264,6 +279,7 @@ namespace KZ
 	namespace misc
 	{
 		void Init();
+		void RegisterMenu();
 		void OnActivateServer();
 		void JoinTeam(KZPlayer *player, int newTeam, bool restorePos = true);
 		void ProcessConCommand(ConCommandRef cmd, const CCommandContext &ctx, const CCommand &args);

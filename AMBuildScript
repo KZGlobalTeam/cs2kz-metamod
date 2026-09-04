@@ -407,6 +407,7 @@ const char *PLUGIN_REVISION_COUNT = \"{revision_count}\";
     # Platform-specifics
     if cxx.target.platform == 'linux':
       cxx.defines += ['LINUX', '_LINUX', 'POSIX', '_FILE_OFFSET_BITS=64']
+      cxx.linkflags += ['-Wl,-z,noexecstack']
       if cxx.family == 'gcc':
         cxx.linkflags += ['-static-libgcc']
       elif cxx.family == 'clang':

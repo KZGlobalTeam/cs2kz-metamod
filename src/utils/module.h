@@ -87,6 +87,18 @@ public:
 #endif
 	}
 
+	// dlmount() is dlopen()/LoadLibrary(), so it took a reference we have to give back.
+	~CModule()
+	{
+		if (m_hModule)
+		{
+			dlclose(m_hModule);
+		}
+	}
+
+	CModule(const CModule &) = delete;
+	CModule &operator=(const CModule &) = delete;
+
 	void *FindSignature(const byte *pData, size_t iSigLength, int &error)
 	{
 		unsigned char *pMemory;

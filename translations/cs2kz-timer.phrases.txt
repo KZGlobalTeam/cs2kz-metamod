@@ -56,21 +56,9 @@
 
 	"Beat Course Info - Basic"
 	{
-		// GameChaos finished "blocks2006" in 10:06.84 | VNL | PRO
-		"#format"	"player_name:s,course_name:s,time:s,mode_style_text:s,tp_count_text:s"
-		"en"		"{lime}{player_name} {grey}finished {default}{course_name}{grey} in {default}{time}{grey} | {mode_style_text} | {tp_count_text}"
-		"chi"		"{lime}{player_name} {grey}完成 {default}{course_name}{grey} 用时 {default}{time}{grey} | {mode_style_text} | {tp_count_text}"
-		"pl"		"{lime}{player_name} {grey}ukończył {default}{course_name}{grey} z czasem {default}{time}{grey} | {mode_style_text} | {tp_count_text}"
-		"ru"		"{lime}{player_name} {grey}завершил {default}{course_name}{grey} за {default}{time}{grey} | {mode_style_text} | {tp_count_text}"
-		"fi"		"{lime}{player_name} {grey}läpäisi {default}{course_name}{grey} ajassa {default}{time}{grey} | {mode_style_text} | {tp_count_text}"
-		"sv"		"{lime}{player_name} {grey}klarade {default}{course_name}{grey} på {default}{time}{grey} | {mode_style_text} | {tp_count_text}"
-		"ua"		"{lime}{player_name} {grey}завершив {default}{course_name}{grey} за {default}{time}{grey} | {mode_style_text} | {tp_count_text}"
-		"tr"		"{lime}{player_name} {grey}bitirdi {default}{course_name}{grey} süre {default}{time}{grey} | {mode_style_text} | {tp_count_text}"
-		"it"		"{lime}{player_name} {grey}ha completato {default}{course_name}{grey} in {default}{time}{grey} | {mode_style_text} | {tp_count_text}"
-		"es"		"{lime}{player_name} {grey}finalizó {default}{course_name}{grey} en {default}{time}{grey} | {mode_style_text} | {tp_count_text}"
-		"de"		"{lime}{player_name} {grey}hat {default}{course_name}{grey} in {default}{time}{grey} beendet | {mode_style_text} | {tp_count_text}"
-		"ko"		"{lime}{player_name} {grey}님이 {default}{course_name}{grey} 코스를 {default}{time}{grey} 동안 완료했습니다 | {mode_style_text} | {tp_count_text}"
-		"lv"		"{lime}{player_name} {grey}pabeidza {default}{course_name}{grey} {default}{time}{grey} laikā | {mode_style_text} | {tp_count_text}"
+		// Player finished Course on Map in 10:06.84 | VNL | PRO
+		"#format"	"player_name:s,map_name:s,course_name:s,time:s,mode_style_text:s,tp_count_text:s"
+		"en"		"{lime}{player_name} {grey}finished {default}{course_name}{grey} on {default}{map_name}{grey} in {default}{time}{grey} | {mode_style_text} | {tp_count_text}"
 	}
 
 	"Beat Course Info - Local (TP)"
@@ -253,6 +241,10 @@
 		"de"		"{darkred}Du kannst in der Luft nicht pausieren."
 		"ko"		"{darkred}공중에서는 일시 정지를 할 수 없습니다."
 		"lv"		"{darkred}Tu nevari pauzēt, atrodoties gaisā."
+	}
+	"Can't Pause (Too Fast)"
+	{
+		"en"		"{darkred}You can't pause while moving this fast."
 	}
 	"Can't Pause (Just Landed)"
 	{
@@ -970,9 +962,9 @@
 	}
 	"Started Run on Non Ranked Course"
 	{
-		// Warning:  Course Main is not ranked. Runs on this course will not affect your global player rating.
+		// Warning:  Course Main is not ranked for the current mode. Runs on this course will not affect your global player rating.
 		"#format"	"course_name:s"
-		"en"		"{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked. Runs on this course will not affect your global player rating."
+		"en"		"{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked for the current mode. Runs on this course will not affect your global player rating."
 		"chi"		"{yellow}警告: {grey} 关卡 {default}{course_name}{grey} 没有排行. 在这个关卡上跳图不会影响你的全球玩家评分."
 		"ru"		"{yellow}Внимание: {grey} Маршрут {default}{course_name}{grey} не является рейтинговым. Прохождение этого маршрута не повлияет на ваш глобальный рейтинг."
 		"ua"		"{yellow}Увага: {grey} Курс {default}{course_name}{grey} не є рейтинговим. Проходження на цьому курсі не будуть зараховані до вашого глобального рейтингу."

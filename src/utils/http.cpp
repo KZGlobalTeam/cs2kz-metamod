@@ -37,6 +37,10 @@ namespace HTTP
 			else
 			{
 				KZ_LOG_WARN(LogChannel::General, "[HTTP] Failed to send HTTP request as the steam API is not yet initialized.\n");
+				if (onError)
+				{
+					onError();
+				}
 				return;
 			}
 		}
@@ -66,6 +70,11 @@ namespace HTTP
 			if (!g_pHTTP->SetHTTPRequestRawPostBody(handle, "application/json", (u8 *)body.data(), body.size()))
 			{
 				KZ_LOG_WARN(LogChannel::General, "[HTTP] Failed to set request body.\n");
+				g_pHTTP->ReleaseHTTPRequest(handle);
+				if (onError)
+				{
+					onError();
+				}
 				return;
 			}
 		}
@@ -75,11 +84,18 @@ namespace HTTP
 			g_pHTTP->SetHTTPRequestHeaderValue(handle, name.c_str(), value.c_str());
 		}
 
-		SteamAPICall_t steamCallHandle;
+		SteamAPICall_t steamCallHandle = k_uAPICallInvalid;
 
 		if (!g_pHTTP->SendHTTPRequest(handle, &steamCallHandle))
 		{
 			KZ_LOG_WARN(LogChannel::General, "[HTTP] Failed to send HTTP request.\n");
+			// No call handle means the completion callback will never fire, so clean up here.
+			g_pHTTP->ReleaseHTTPRequest(handle);
+			if (onError)
+			{
+				onError();
+			}
+			return;
 		}
 		// Log detailed HTTP requests for debugging.
 		if (LoggingSystem_IsChannelEnabled(GetServiceChannel(LogChannel::General), LS_DETAILED))
@@ -182,6 +198,7 @@ namespace HTTP
 			{
 				onError();
 			}
+			// ~InFlightRequest releases the underlying HTTP request.
 			delete this;
 			return;
 		}
@@ -199,13 +216,22 @@ namespace HTTP
 				KZ_LOG_DEBUG(LogChannel::General, "[HTTP] Response body: %s\n", response.Body()->c_str());
 			}
 		}
-		onResponse(response);
-
-		if (g_pHTTP)
+		if (onResponse)
 		{
-			g_pHTTP->ReleaseHTTPRequest(completedRequest->m_hRequest);
+			onResponse(response);
 		}
 
+		// ~InFlightRequest releases the underlying HTTP request. It has to outlive onResponse
+		// because Response reads the body lazily through that handle.
 		delete this;
+	}
+
+	void Cleanup()
+	{
+		while (!g_InFlightRequests.empty())
+		{
+			// The destructor removes the request from g_InFlightRequests and releases its handle.
+			delete g_InFlightRequests.back();
+		}
 	}
 } // namespace HTTP

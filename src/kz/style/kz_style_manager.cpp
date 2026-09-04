@@ -20,6 +20,11 @@ static_global KZStyleManager styleManager;
 KZStyleManager *g_pKZStyleManager = &styleManager;
 static_global CUtlVector<KZStyleManager::StylePluginInfo> styleInfos;
 
+const CUtlVector<KZStyleManager::StylePluginInfo> &KZStyleManager::GetStyles()
+{
+	return styleInfos;
+}
+
 static_global class KZDatabaseServiceEventListener_Styles : public KZDatabaseServiceEventListener
 {
 public:
@@ -223,6 +228,12 @@ void KZStyleManager::AddStyle(KZPlayer *player, const char *styleName, bool sile
 		return;
 		// clang-format on
 	}
+
+	if (!player->timerService->CheckSafeguard(!silent))
+	{
+		return;
+	}
+
 	FOR_EACH_VEC(player->styleServices, i)
 	{
 		if (!V_stricmp(player->styleServices[i]->GetStyleName(), styleName) || !V_stricmp(player->styleServices[i]->GetStyleShortName(), styleName))
@@ -287,6 +298,11 @@ void KZStyleManager::RemoveStyle(KZPlayer *player, const char *styleName, bool s
 		return;
 	}
 
+	if (!player->timerService->CheckSafeguard(!silent))
+	{
+		return;
+	}
+
 	FOR_EACH_VEC(player->styleServices, i)
 	{
 		auto style = player->styleServices[i];
@@ -321,6 +337,11 @@ void KZStyleManager::ToggleStyle(KZPlayer *player, const char *styleName, bool s
 	{
 		player->languageService->PrintChat(true, false, "Toggle Style Command Usage");
 		KZStyleManager::PrintAllStyles(player);
+		return;
+	}
+
+	if (!player->timerService->CheckSafeguard(!silent))
+	{
 		return;
 	}
 

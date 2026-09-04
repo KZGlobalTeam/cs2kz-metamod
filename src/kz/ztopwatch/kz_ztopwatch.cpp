@@ -401,7 +401,7 @@ static_function void PrintStatus(KZPlayer *player)
 	PrintUsage(player);
 }
 
-SCMD(kz_ztopwatch, SCFL_MISC)
+SCMD(kz_ztopwatch, SCFL_MEASURE)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	if (player->timerService->GetTimerRunning())

@@ -219,6 +219,10 @@ struct PBRequest : public BaseRequest
 	void ReplyGlobal()
 	{
 		KZPlayer *player = g_pKZPlayerManager->ToPlayer(userID);
+		if (!this->gpbData.hasPB)
+		{
+			return;
+		}
 		std::string tpText;
 		if (this->gpbData.teleportsUsed > 0)
 		{
@@ -278,6 +282,10 @@ struct PBRequest : public BaseRequest
 	void ReplyLocal()
 	{
 		KZPlayer *player = g_pKZPlayerManager->ToPlayer(userID);
+		if (!this->pbData.hasPB)
+		{
+			return;
+		}
 		std::string tpText;
 		if (this->pbData.teleportsUsed > 0)
 		{
@@ -292,11 +300,7 @@ struct PBRequest : public BaseRequest
 
 		if (!globallyBanned)
 		{
-			if (!this->pbData.hasPB)
-			{
-				player->languageService->PrintChat(true, false, "PB Time - No Times");
-			}
-			else if (!this->pbData.hasPBPro)
+			if (!this->pbData.hasPBPro)
 			{
 				// KZ | Server: 12.34 (5 TPs) [Overall]
 				player->languageService->PrintChat(true, false, "PB Time - Overall (Server)", overallTime, tpText, this->pbData.rank,
@@ -318,11 +322,7 @@ struct PBRequest : public BaseRequest
 		}
 		else
 		{
-			if (!this->pbData.hasPB)
-			{
-				player->languageService->PrintChat(true, false, "PB Time - No Times");
-			}
-			else if (!this->pbData.hasPBPro)
+			if (!this->pbData.hasPBPro)
 			{
 				// KZ | Server: 12.34 (5 TPs) [Overall]
 				player->languageService->PrintChat(true, false, "PB Time - Overall Rankless (Server)", overallTime, tpText);

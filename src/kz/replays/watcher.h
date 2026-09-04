@@ -49,6 +49,12 @@ struct ReplayFilterCriteria
 	bool PassFilters(const ReplayHeader &header, bool exactMapMatch) const;
 };
 
+struct CachedReplayEntry
+{
+	ReplayHeader header;
+	long fileTime = 0;
+};
+
 // Keep track of replays on disk and their headers.
 class ReplayWatcher
 {
@@ -63,10 +69,13 @@ class ReplayWatcher
 	// External archival index: uuid -> archived unix timestamp
 	std::unordered_map<UUID_t, u64> archivedIndex;
 	bool archiveDirty = false;
+	std::unordered_map<UUID_t, CachedReplayEntry> replayCache;
+	std::unordered_map<UUID_t, CachedReplayEntry> downloadedReplayCache;
 
 	void WatchLoop();
 
 	void ScanReplays();
+	void SweepOrphanedChunks(u64 currentTime);
 	void ScanDownloadedReplays(u64 currentTime);
 
 	void MarkArchived(const UUID_t &uuid, u64 archiveTimestamp);

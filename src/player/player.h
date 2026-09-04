@@ -239,7 +239,8 @@ private:
 	std::vector<CPlayerSlot> authQueue; // Queue of players pending auth validation
 
 public:
-	Player *players[MAXPLAYERS + 1];
+	// Zero-initialized: PlayerManager's constructor deletes every slot before allocating.
+	Player *players[MAXPLAYERS + 1] {};
 };
 
 extern PlayerManager *g_pPlayerManager;

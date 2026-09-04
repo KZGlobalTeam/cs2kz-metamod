@@ -103,7 +103,7 @@ void AsyncFileIO::EnqueueTask(AsyncAnyTask &&task)
 
 void AsyncFileIO::RunFrame()
 {
-	std::queue<AsyncAnyResult> completed;
+	std::queue<AsyncAnyResult> &completed = m_currentBatch;
 	{
 		std::lock_guard<std::mutex> lock(m_completedLock);
 		completed.swap(m_completedTasks);
@@ -135,6 +135,9 @@ void AsyncFileIO::RunFrame()
 
 void AsyncFileIO::ThreadRun()
 {
+	// Our own thread, so nothing above it marks us as being inside cs2kz - the module scope has to
+	// start here. Read buffers are allocated on this thread and freed on the main thread.
+
 	auto processTask = [&](AsyncAnyTask &anyTask)
 	{
 		std::visit(

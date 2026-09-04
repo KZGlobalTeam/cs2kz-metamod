@@ -19,6 +19,7 @@ namespace KZ::replaysystem
 	{
 		bot::KickBot();
 		CleanupWatcher();
+		data::Shutdown();
 	}
 
 	void OnRoundStart()
@@ -117,6 +118,11 @@ namespace KZ::replaysystem
 	bool GetPaused()
 	{
 		return data::GetPaused();
+	}
+
+	const char *GetCourseName()
+	{
+		return data::GetCourseName();
 	}
 
 } // namespace KZ::replaysystem

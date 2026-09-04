@@ -85,8 +85,14 @@ void MovementPlayer::Teleport(const Vector *origin, const QAngle *angles, const 
 		return;
 	}
 	// We handle angles differently.
-	this->SetAngles(*angles);
-	pawn->Teleport(origin, NULL, velocity);
+	if (angles)
+	{
+		this->SetAngles(*angles);
+	}
+	if (origin || velocity)
+	{
+		pawn->Teleport(origin, NULL, velocity);
+	}
 }
 
 void MovementPlayer::SetOrigin(const Vector &origin)

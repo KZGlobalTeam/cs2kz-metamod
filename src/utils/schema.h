@@ -5,6 +5,7 @@
 #include "smartptr.h"
 #include "utldelegate.h"
 #include "entityinstance.h"
+#include "schemasystem/schematypes.h"
 #undef schema
 class CBasePlayerController;
 
@@ -37,7 +38,64 @@ namespace schema
 {
 	int16_t FindChainOffset(const char *className, uint32_t classNameHash);
 	SchemaKey GetOffset(const char *className, uint32_t classKey, const char *memberName, uint32_t memberKey);
+	// Manipulator for a CUtlVector/CNetworkUtlVectorBase field, NULL if the field is not a collection.
+	SchemaCollectionManipulatorFn_t GetCollectionManipulator(const char *className, const char *fieldName);
 } // namespace schema
+
+// Opaque stand-in for the game's schema collection fields like CNetworkUtlVectorBase<T> and CUtlVectorEmbeddedNetworkVar<T>
+class CSchemaCollectionField;
+
+template<typename T>
+class CSchemaCollection
+{
+public:
+	CSchemaCollection(CSchemaCollectionField *collection, SchemaCollectionManipulatorFn_t pfnManipulator)
+		: m_pCollection(collection), m_pfn(pfnManipulator)
+	{
+	}
+
+	bool IsValid() const
+	{
+		return m_pCollection && m_pfn;
+	}
+
+	int Count() const
+	{
+		return IsValid() ? (int)(intp)m_pfn(SCHEMA_COLLECTION_MANIPULATOR_ACTION_GET_COUNT, m_pCollection, 0, 0) : 0;
+	}
+
+	T *Element(int index) const
+	{
+		if (!IsValid() || index < 0 || index >= Count())
+		{
+			return NULL;
+		}
+		return (T *)m_pfn(SCHEMA_COLLECTION_MANIPULATOR_ACTION_GET_ELEMENT, m_pCollection, index, 0);
+	}
+
+	// Grows or shrinks the collection, constructing/destructing elements as the game would.
+	// Const because the wrapper is only a view; the collection it points at is not ours.
+	bool SetCount(int count) const
+	{
+		if (!IsValid())
+		{
+			return false;
+		}
+		m_pfn(SCHEMA_COLLECTION_MANIPULATOR_ACTION_SET_COUNT, m_pCollection, count, 0);
+		return Count() == count;
+	}
+
+	// Appends one default constructed element and returns it, NULL on failure.
+	T *AddToTail() const
+	{
+		int count = Count();
+		return SetCount(count + 1) ? Element(count) : NULL;
+	}
+
+private:
+	CSchemaCollectionField *const m_pCollection;
+	SchemaCollectionManipulatorFn_t const m_pfn;
+};
 
 constexpr uint32_t val_32_const = 0x811c9dc5;
 constexpr uint32_t prime_32_const = 0x1000193;
@@ -180,6 +238,51 @@ inline constexpr uint64_t hash_64_fnv1a_const(const char *const str, const uint6
 		/*Prevent accidentally copying this wrapper class instead of the underlying field*/                                  \
 		varName##_prop(const varName##_prop&) = delete;                                                                      \
 		static constexpr auto m_varNameHash = hash_32_fnv1a_const(#varName);                                                 \
+	} varName;
+
+// Use this for a CUtlVector-like field (CNetworkUtlVectorBase<T>, CUtlVectorEmbeddedNetworkVar<T>, ...).
+#define SCHEMA_FIELD_COLLECTION(type, varName)                                                                                   \
+	class varName##_prop                                                                                                         \
+	{                                                                                                                            \
+	public:                                                                                                                      \
+		CSchemaCollection<type> Get()                                                                                            \
+		{                                                                                                                        \
+			static const auto m_key = schema::GetOffset(m_className, m_classNameHash, #varName, m_varNameHash);                  \
+			static const auto m_manipulator = schema::GetCollectionManipulator(m_className, #varName);                           \
+			static const auto m_offset = offsetof(ThisClass, varName);                                                           \
+                                                                                                                                 \
+			uintptr_t pThisClass = ((uintptr_t)this - m_offset);                                                                 \
+                                                                                                                                 \
+			return CSchemaCollection<type>(reinterpret_cast<CSchemaCollectionField *>(pThisClass + m_key.offset), m_manipulator);\
+		}                                                                                                                        \
+		void NetworkStateChanged()                                                                                               \
+		{                                                                                                                        \
+			static const auto m_key = schema::GetOffset(m_className, m_classNameHash, #varName, m_varNameHash);                  \
+			static const auto m_chain = schema::FindChainOffset(m_className, m_classNameHash);                                   \
+			static const auto m_offset = offsetof(ThisClass, varName);                                                           \
+                                                                                                                                 \
+			uintptr_t pThisClass = ((uintptr_t)this - m_offset);                                                                 \
+                                                                                                                                 \
+			if (m_chain != 0 && m_key.networked)                                                                                 \
+			{                                                                                                                    \
+				::ChainNetworkStateChanged(pThisClass + m_chain, m_key.offset);                                                  \
+			}                                                                                                                    \
+			else if (m_key.networked)                                                                                            \
+			{                                                                                                                    \
+				if (m_networkStateChangedOffset == -1)                                                                           \
+					::EntityNetworkStateChanged(pThisClass, m_key.offset);                                                       \
+				else                                                                                                             \
+					::NetworkVarStateChanged(pThisClass, m_key.offset, m_networkStateChangedOffset);                             \
+			}                                                                                                                    \
+		}                                                                                                                        \
+		CSchemaCollection<type> operator()()                                                                                     \
+		{                                                                                                                        \
+			return Get();                                                                                                        \
+		}                                                                                                                        \
+	private:                                                                                                                     \
+		/*Prevent accidentally copying this wrapper class instead of the underlying field*/                                      \
+		varName##_prop(const varName##_prop&) = delete;                                                                          \
+		static constexpr auto m_varNameHash = hash_32_fnv1a_const(#varName);                                                     \
 	} varName;
 
 // Use this when you want the member's value itself

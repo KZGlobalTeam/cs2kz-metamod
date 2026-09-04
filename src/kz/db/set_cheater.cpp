@@ -10,16 +10,24 @@ void KZDatabaseService::Ban(u64 steamID64, const char *reason, f32 duration, con
 {
 	if (!KZDatabaseService::IsReady())
 	{
+		onFailure("Database not ready", -1);
 		return;
 	}
 
+	char expiryValue[128];
 	if (duration < 0.0f)
 	{
-		// No ban to be applied
-		return;
+		// No actual ban duration (e.g. a plain kick), but still record a 0 second (already expired) ban for audit purposes.
+		if (GetDatabaseType() == KZ::Database::DatabaseType::MySQL)
+		{
+			V_snprintf(expiryValue, sizeof(expiryValue), "CURRENT_TIMESTAMP");
+		}
+		else
+		{
+			V_snprintf(expiryValue, sizeof(expiryValue), "datetime('now')");
+		}
 	}
-	char expiryValue[128];
-	if (duration > 0.0f)
+	else if (duration > 0.0f)
 	{
 		// Temporary ban with specific duration in seconds
 		if (GetDatabaseType() == KZ::Database::DatabaseType::MySQL)
@@ -31,7 +39,7 @@ void KZDatabaseService::Ban(u64 steamID64, const char *reason, f32 duration, con
 			V_snprintf(expiryValue, sizeof(expiryValue), "datetime('now', '+%.0f seconds')", duration);
 		}
 	}
-	else if (duration == 0.0f)
+	else
 	{
 		// Permanent ban set to far future date
 		V_snprintf(expiryValue, sizeof(expiryValue), "'9999-12-31 23:59:59'");
@@ -45,6 +53,7 @@ void KZDatabaseService::AddOrUpdateBan(u64 steamID64, const char *reason, const 
 {
 	if (!KZDatabaseService::IsReady())
 	{
+		onFailure("Database not ready", -1);
 		return;
 	}
 	char query[2048];

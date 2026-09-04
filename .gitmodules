@@ -8,9 +8,6 @@
 [submodule "vendor/MultiAddonManager"]
 	path = vendor/MultiAddonManager
 	url = https://github.com/Source2ZE/MultiAddonManager
-[submodule "vendor/ClientCvarValue"]
-	path = vendor/ClientCvarValue
-	url = https://github.com/komashchenko/ClientCvarValue.git
 [submodule "vendor/sql_mm"]
 	path = vendor/sql_mm
 	url = https://github.com/zer0k-z/sql_mm.git

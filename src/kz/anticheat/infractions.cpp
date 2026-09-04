@@ -30,13 +30,6 @@ KZAnticheatService::Infraction *KZAnticheatService::GetPendingInfraction()
 
 void KZAnticheatService::CleanupInfractions()
 {
-	for (auto &infraction : KZAnticheatService::pendingBans)
-	{
-		if (infraction.submitted && infraction.replay == nullptr)
-		{
-			infraction.Finalize();
-		}
-	}
 	auto &infractions = KZAnticheatService::pendingBans;
 	// clang-format off
 	infractions.erase(std::remove_if(infractions.begin(), infractions.end(),
@@ -64,7 +57,10 @@ void KZAnticheatService::MarkInfraction(Infraction::Type type, const std::string
 	{
 		return;
 	}
-	this->isBanned = true;
+	this->MarkBanned(KZAnticheatBanSource::Detection, Infraction::kickInternalReasons[static_cast<u8>(type)]);
+
+	KZ_LOG_INFO(LogChannel::AC, "Marking infraction (%s) for player %s (%llu): %s\n", Infraction::kickInternalReasons[static_cast<u8>(type)],
+				this->player->GetName(), this->player->GetSteamId64(), details.c_str());
 
 	Infraction &infraction = KZAnticheatService::pendingBans.emplace_back();
 	infraction.type = type;
@@ -109,7 +105,7 @@ void KZAnticheatService::Infraction::OnGlobalSubmitFailure()
 
 void KZAnticheatService::Infraction::SubmitLocalInfraction()
 {
-	if (this->banDuration < 0.0f || !KZDatabaseService::IsReady())
+	if (!KZDatabaseService::IsReady())
 	{
 		this->Finalize();
 		return;

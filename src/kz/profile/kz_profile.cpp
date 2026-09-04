@@ -1,4 +1,5 @@
 #include "kz_profile.h"
+#include "cs2kz.h"
 #include "utils/http.h"
 #include "kz/anticheat/kz_anticheat.h"
 #include "kz/mode/kz_mode.h"
@@ -59,8 +60,25 @@ static_global const char *rankColors[NUM_RANKS] = {
 #define RATING_REFRESH_PERIOD 120.0f // seconds
 
 CConVar<bool> kz_profile_rating_badge_enabled("kz_profile_rating_badge_enabled", FCVAR_NONE, "Whether to show competitive rank in scoreboard.", true);
+
+static_function void OnClantagEnabledChanged(CConVar<bool> *ref, CSplitScreenSlot nSlot, const bool *newValue, const bool *oldValue)
+{
+	if (g_KZPlugin.loading || g_KZPlugin.unloading)
+	{
+		return;
+	}
+	for (i32 i = 0; i < MAXPLAYERS + 1; i++)
+	{
+		KZPlayer *player = g_pKZPlayerManager->ToPlayer(i);
+		if (player && player->profileService)
+		{
+			player->profileService->UpdateClantag();
+		}
+	}
+}
+
 CConVar<bool> kz_profile_clantag_enabled("kz_profile_clantag_enabled", FCVAR_NONE,
-										 "Whether to set the player's clan tag (mode and rank) in the scoreboard.", true);
+										 "Whether to set the player's clan tag (mode and rank) in the scoreboard.", true, OnClantagEnabledChanged);
 
 void KZProfileService::OnPlayerActive()
 {
@@ -194,14 +212,30 @@ bool KZProfileService::CanDisplayRank()
 	return KZ::api::DecodeModeString(this->player->modeService->GetModeShortName(), mode);
 }
 
+void KZProfileService::SetClanTagOverride(const char *tag)
+{
+	V_strncpy(this->clanTagOverride, tag ? tag : "", sizeof(this->clanTagOverride));
+	this->UpdateClantag();
+}
+
 void KZProfileService::UpdateClantag()
 {
-	if (!kz_profile_clantag_enabled.Get())
-	{
-		return;
-	}
 	if (!this->player->IsConnected()
 		|| (this->player->GetController() && this->player->GetController()->m_iConnected() != PlayerConnectedState::PlayerConnected))
+	{
+		if (this->player->GetController() && V_strlen(this->player->GetController()->m_szClan().String()) > 0)
+		{
+			this->SetClantag("");
+		}
+		return;
+	}
+
+	if (this->clanTagOverride[0] != '\0')
+	{
+		this->SetClantag(this->clanTagOverride);
+		return;
+	}
+	if (!kz_profile_clantag_enabled.Get())
 	{
 		if (this->player->GetController() && V_strlen(this->player->GetController()->m_szClan().String()) > 0)
 		{
@@ -256,6 +290,10 @@ void KZProfileService::UpdateCompetitiveRank()
 
 std::string KZProfileService::GetPrefix(bool colors)
 {
+	if (this->chatPrefixOverride[0] != '\0')
+	{
+		return this->chatPrefixOverride;
+	}
 	if (this->clanTag[0] == '\0')
 	{
 		this->UpdateClantag();

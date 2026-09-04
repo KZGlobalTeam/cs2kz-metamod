@@ -89,15 +89,13 @@ namespace KZ::replaysystem::data
 	AsyncLoadStatus *GetLoadStatus();
 	bool IsLoading();
 	void CancelAsyncLoad();
+
+	// Stops the loader thread and frees every replay buffer this module owns. Plugin unload only.
+	void Shutdown();
 	void ProcessAsyncLoadCompletion(); // Call this from main thread	// State queries
 	ReplayPlayback *GetCurrentReplay();
 	bool IsReplayValid();
 	bool IsReplayPlaying();
-
-	// Navigation support
-	void SetCurrentTick(u32 tick);
-	u32 GetCurrentTick();
-	u32 GetTickCount();
 
 	// Timer state accessors
 	i32 GetCurrentCpIndex();
@@ -106,6 +104,7 @@ namespace KZ::replaysystem::data
 	f32 GetReplayTime();
 	f32 GetEndTime();
 	bool GetPaused();
+	const char *GetCourseName();
 } // namespace KZ::replaysystem::data
 
 #endif // KZ_REPLAYDATA_H

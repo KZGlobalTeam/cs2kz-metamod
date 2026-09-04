@@ -29,6 +29,7 @@ public:
 
 	void Respawn()
 	{
-		CALL_VIRTUAL(void, g_pGameConfig->GetOffset("Respawn"), this);
+		static_persist const int offset = g_pGameConfig->GetOffset("Respawn");
+		CALL_VIRTUAL(void, offset, this);
 	}
 };

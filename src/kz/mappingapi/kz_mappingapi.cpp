@@ -508,6 +508,8 @@ void KZ::mapapi::Init()
 
 void KZ::mapapi::OnCreateLoadingSpawnGroupHook(const CUtlVector<const CEntityKeyValues *> *pKeyValues)
 {
+	// Entry point from the engine's spawn-group load; whole-map entity parse happens below it.
+
 	if (!pKeyValues)
 	{
 		return;

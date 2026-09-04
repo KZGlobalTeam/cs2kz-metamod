@@ -77,6 +77,7 @@ public:
 		this->UpdatePistol(true);
 	}
 
+	void ApplyPreferences();
 	void UpdatePistol(bool force = false);
 	// Return true if the player has a weapon that isn't a knife.
 	bool NeedWeaponStripping();

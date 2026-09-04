@@ -1,0 +1,554 @@
+"Phrases"
+{
+	// Rows of the options menu (!o / !options).
+	"Menu - Title Options"
+	{
+		"en"		"Options"
+	}
+	"Menu - HUD"
+	{
+		"en"		"HUD"
+	}
+	"Menu - On"
+	{
+		"en"		"ON"
+	}
+	"Menu - Off"
+	{
+		"en"		"OFF"
+	}
+	"Menu - Panel"
+	{
+		"en"		"Panel"
+	}
+	"Menu - Compact"
+	{
+		"en"		"Compact"
+	}
+	"Menu - Crosshair"
+	{
+		"en"		"Virtual crosshair"
+	}
+	"Menu - Compact Sub"
+	{
+		"en"		"Legacy panel only"
+	}
+	"Menu - Outline"
+	{
+		"en"		"Outline"
+	}
+	"Menu - Font"
+	{
+		"en"		"Font"
+	}
+	"Menu - Font Local Note"
+	{
+		"en"		"* depends on your local font installation"
+	}
+	"Menu - Enabled"
+	{
+		"en"		"Enabled"
+	}
+	"Menu - Position"
+	{
+		"en"		"Position"
+	}
+	"Menu - Size"
+	{
+		"en"		"Size"
+	}
+	"Menu - Reset"
+	{
+		"en"		"Reset to defaults"
+	}
+	"Menu - Timer"
+	{
+		"en"		"Timer"
+	}
+	"Menu - Prespeed"
+	{
+		"en"		"Prespeed"
+	}
+	"Menu - Keys"
+	{
+		"en"		"Keys"
+	}
+	"Menu - Timer Detail"
+	{
+		"en"		"Show hundredths"
+	}
+	"Menu - Keys Overlap"
+	{
+		"en"		"Overlap warning"
+	}
+	"Menu - Color Base"
+	{
+		"en"		"Color"
+	}
+	"Menu - Color CJ"
+	{
+		"en"		"Crouch jump color"
+	}
+	"Menu - Color Perf"
+	{
+		"en"		"Perf color"
+	}
+	"Menu - Color Jumpbug"
+	{
+		"en"		"Jumpbug color"
+	}
+	"Menu - Color Pro"
+	{
+		"en"		"PRO color"
+	}
+	"Menu - Color TP"
+	{
+		"en"		"TP color"
+	}
+	"Menu - Color Paused"
+	{
+		"en"		"Paused color"
+	}
+	"Menu - Color Stopped"
+	{
+		"en"		"Stopped color"
+	}
+	"Menu - Misc"
+	{
+		"en"		"General"
+	}
+	"Menu - General"
+	{
+		"en"		"General"
+	}
+	"Menu - Menu"
+	{
+		"en"		"Menu"
+	}
+	"Menu - Style"
+	{
+		"en"		"Style"
+	}
+	"Menu - Style Layout"
+	{
+		"en"		"Layout"
+	}
+	"Menu - Style Legacy"
+	{
+		"en"		"Legacy"
+	}
+	"Menu - Checkpoint"
+	{
+		"en"		"Checkpoints"
+	}
+	"Menu - Reset All"
+	{
+		"en"		"Reset everything to defaults"
+	}
+	"Menu - Keys Unpressed"
+	{
+		"en"		"Hide unpressed keys"
+	}
+	"Menu - Keys Letters"
+	{
+		"en"		"Use WASD letters"
+	}
+	"Menu - Keys Square"
+	{
+		"en"		"Square keys"
+	}
+	"Menu - Color"
+	{
+		"en"		"Color"
+	}
+	"Menu - Color Overlap"
+	{
+		"en"		"Overlap color"
+	}
+	"Menu - Mode"
+	{
+		"en"		"Mode"
+	}
+	"Menu - Pistol"
+	{
+		"en"		"Pistol"
+	}
+	"Menu - Beam Offset"
+	{
+		"en"		"Beam offset"
+	}
+	"Menu - Beam Offset Sub"
+	{
+		"en"		"Use !beamoffset for a finer value"
+	}
+	"Menu - Styles"
+	{
+		"en"		"Styles"
+	}
+	"Menu - Lang en"
+	{
+		"en"		"English"
+	}
+	"Menu - Lang ar"
+	{
+		"en"		"العربية"
+	}
+	"Menu - Lang pt"
+	{
+		"en"		"Português (Brasil)"
+	}
+	"Menu - Lang bg"
+	{
+		"en"		"Български"
+	}
+	"Menu - Lang cze"
+	{
+		"en"		"Čeština"
+	}
+	"Menu - Lang da"
+	{
+		"en"		"Dansk"
+	}
+	"Menu - Lang nl"
+	{
+		"en"		"Nederlands"
+	}
+	"Menu - Lang fi"
+	{
+		"en"		"Suomi"
+	}
+	"Menu - Lang fr"
+	{
+		"en"		"Français"
+	}
+	"Menu - Lang de"
+	{
+		"en"		"Deutsch"
+	}
+	"Menu - Lang el"
+	{
+		"en"		"Ελληνικά"
+	}
+	"Menu - Lang he"
+	{
+		"en"		"עברית"
+	}
+	"Menu - Lang hu"
+	{
+		"en"		"Magyar"
+	}
+	"Menu - Lang it"
+	{
+		"en"		"Italiano"
+	}
+	"Menu - Lang jp"
+	{
+		"en"		"日本語"
+	}
+	"Menu - Lang ko"
+	{
+		"en"		"한국어"
+	}
+	"Menu - Lang lv"
+	{
+		"en"		"Latviešu"
+	}
+	"Menu - Lang lt"
+	{
+		"en"		"Lietuvių"
+	}
+	"Menu - Lang no"
+	{
+		"en"		"Norsk"
+	}
+	"Menu - Lang pl"
+	{
+		"en"		"Polski"
+	}
+	"Menu - Lang pt_p"
+	{
+		"en"		"Português"
+	}
+	"Menu - Lang ro"
+	{
+		"en"		"Română"
+	}
+	"Menu - Lang ru"
+	{
+		"en"		"Русский"
+	}
+	"Menu - Lang chi"
+	{
+		"en"		"简体中文"
+	}
+	"Menu - Lang sk"
+	{
+		"en"		"Slovenčina"
+	}
+	"Menu - Lang es"
+	{
+		"en"		"Español"
+	}
+	"Menu - Lang sv"
+	{
+		"en"		"Svenska"
+	}
+	"Menu - Lang zho"
+	{
+		"en"		"繁體中文"
+	}
+	"Menu - Lang th"
+	{
+		"en"		"ไทย"
+	}
+	"Menu - Lang tr"
+	{
+		"en"		"Türkçe"
+	}
+	"Menu - Lang ua"
+	{
+		"en"		"Українська"
+	}
+	"Menu - Lang vi"
+	{
+		"en"		"Tiếng Việt"
+	}
+	"Menu - Language"
+	{
+		"en"		"Language"
+	}
+	"Menu - Beam"
+	{
+		"en"		"Player beam"
+	}
+	"Menu - Beam None"
+	{
+		"en"		"Off"
+	}
+	"Menu - Beam Ground"
+	{
+		"en"		"Ground"
+	}
+	"Menu - Beam Feet"
+	{
+		"en"		"Feet"
+	}
+	"Menu - FOV"
+	{
+		"en"		"Field of view"
+	}
+	"Menu - Record Volume Sub"
+	{
+		"en"		"Use !recordvolume for a finer value"
+	}
+	"Menu - JS Volume Sub"
+	{
+		"en"		"Use !jsvolume for a finer value"
+	}
+	"Menu - Record Volume"
+	{
+		"en"		"Record sound volume"
+	}
+	"Menu - JS Volume"
+	{
+		"en"		"Jumpstats sound volume"
+	}
+	"Menu - Timer Category"
+	{
+		"en"		"Timer"
+	}
+	"Menu - Map Overlay"
+	{
+		"en"		"Map overlay integration"
+	}
+	"Menu - Timer Stop Sound"
+	{
+		"en"		"Timer stop sound"
+	}
+	"Menu - Safeguard"
+	{
+		"en"		"Safeguard"
+	}
+	"Menu - Safeguard Off"
+	{
+		"en"		"Off"
+	}
+	"Menu - Safeguard Nub"
+	{
+		"en"		"On (NUB)"
+	}
+	"Menu - Safeguard Pro"
+	{
+		"en"		"On (PRO)"
+	}
+	"Menu - Compare"
+	{
+		"en"		"Split comparison"
+	}
+	"Menu - Compare None"
+	{
+		"en"		"Off"
+	}
+	"Menu - Compare Local PB"
+	{
+		"en"		"Local PB"
+	}
+	"Menu - Compare Global PB"
+	{
+		"en"		"Global PB"
+	}
+	"Menu - Compare Server Record"
+	{
+		"en"		"Server record"
+	}
+	"Menu - Compare World Record"
+	{
+		"en"		"World record"
+	}
+	"Menu - Jumpstats"
+	{
+		"en"		"Jumpstats"
+	}
+	"Menu - JS Reporting"
+	{
+		"en"		"Report my jumps"
+	}
+	"Menu - JS Always"
+	{
+		"en"		"Report every jump"
+	}
+	"Menu - JS Extended Stats"
+	{
+		"en"		"Extended chat stats"
+	}
+	"Menu - JS Failstats"
+	{
+		"en"		"Failstats"
+	}
+	"Menu - JS Failstats Console"
+	{
+		"en"		"Failstats in console"
+	}
+	"Menu - JS Min Tier"
+	{
+		"en"		"Minimum chat tier"
+	}
+	"Menu - JS Min Tier Console"
+	{
+		"en"		"Minimum console tier"
+	}
+	"Menu - JS Sound Min Tier"
+	{
+		"en"		"Minimum sound tier"
+	}
+	"Menu - JS Broadcast Min Tier"
+	{
+		"en"		"Minimum broadcast tier"
+	}
+	"Menu - JS Broadcast Min Tier Console"
+	{
+		"en"		"Minimum broadcast console tier"
+	}
+	"Menu - JS Broadcast Sound Min Tier"
+	{
+		"en"		"Minimum broadcast sound tier"
+	}
+	"Menu - Tier None"
+	{
+		"en"		"None"
+	}
+	"Menu - Tier Meh"
+	{
+		"en"		"Meh"
+	}
+	"Menu - Tier Impressive"
+	{
+		"en"		"Impressive"
+	}
+	"Menu - Tier Perfect"
+	{
+		"en"		"Perfect"
+	}
+	"Menu - Tier Godlike"
+	{
+		"en"		"Godlike"
+	}
+	"Menu - Tier Ownage"
+	{
+		"en"		"Ownage"
+	}
+	"Menu - Tier Wrecker"
+	{
+		"en"		"Wrecker"
+	}
+	"Menu - Checkpoints"
+	{
+		"en"		"Checkpoints"
+	}
+	"Menu - Checkpoint Message"
+	{
+		"en"		"Checkpoint messages"
+	}
+	"Menu - Checkpoint Sound"
+	{
+		"en"		"Checkpoint sound"
+	}
+	"Menu - Teleport Sound"
+	{
+		"en"		"Teleport sound"
+	}
+	"Menu - Paint"
+	{
+		"en"		"Paint"
+	}
+	"Menu - Paint Color Sub"
+	{
+		"en"		"Use !paintcolor <r> <g> <b> for an exact color"
+	}
+	"Menu - Show All Paint"
+	{
+		"en"		"Show everyone's paint"
+	}
+	"Menu - Hide Other Players"
+	{
+		"en"		"Hide other players"
+	}
+	"Menu - Hide Weapon"
+	{
+		"en"		"Hide weapon"
+	}
+	"Menu - Hide Legs"
+	{
+		"en"		"Hide legs"
+	}
+	"Menu - Show Tips"
+	{
+		"en"		"Show tips"
+	}
+	"Menu - Export Prefs"
+	{
+		"en"		"Export preferences to console"
+	}
+	"Prefs - Export Header"
+	{
+		"en"		"----- CS2KZ preferences: paste the lines below into another server's console -----"
+	}
+	"Prefs - Export Footer"
+	{
+		"en"		"----- end. To stop a preference from following you, run: setinfo kzp_<name> \"\" -----"
+	}
+	"Prefs - Exported"
+	{
+		"#format"	"count:d"
+		"en"		"{grey}Exported {default}{count}{grey} preferences to your console."
+	}
+	"Prefs - Imported"
+	{
+		"#format"	"count:d"
+		"en"		"{grey}Imported {default}{count}{grey} preferences."
+	}
+	"Menu - Unavailable"
+	{
+		"en"		"{grey}The options menu is currently unavailable."
+	}
+}

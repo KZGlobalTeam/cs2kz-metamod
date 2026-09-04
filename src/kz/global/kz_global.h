@@ -544,6 +544,13 @@ public:
 	static void Init();
 	static void Cleanup();
 
+	/**
+	 * Applies a reloaded server configuration by restarting the WebSocket connection.
+	 *
+	 * Must be called on the main thread. Blocks until the WebSocket thread has been joined.
+	 */
+	static void ReloadConfig();
+
 	inline static bool IsAvailable()
 	{
 		return state.load() == State::HandshakeCompleted;
@@ -560,6 +567,20 @@ public:
 		std::lock_guard _guard(currentMap.mutex);
 		const std::optional<KZ::api::Map> &mapInfo = currentMap.info;
 		return f(mapInfo);
+	}
+
+	/**
+	 * Like WithCurrentMap(), but also exposes whether the current map has been confirmed yet.
+	 * WithCurrentMap() alone can't distinguish "confirmed not-global" from "not yet known" —
+	 * both look like an empty optional. Use this when that distinction matters (e.g. deciding
+	 * whether to keep waiting instead of assuming non-global).
+	 */
+	template<typename F>
+	inline static auto WithCurrentMapState(F &&f)
+	{
+		std::lock_guard _guard(currentMap.mutex);
+		const std::optional<KZ::api::Map> &mapInfo = currentMap.info;
+		return f(mapInfo, currentMap.confirmed);
 	}
 
 	/**
@@ -778,6 +799,9 @@ public:
 
 	static void EnforceConVars();
 	static void RestoreConVars();
+
+	// Frees the heap-allocated ConVar references. Plugin unload only.
+	static void CleanupConVars();
 
 	void OnPlayerAuthorized();
 	void OnClientDisconnect();

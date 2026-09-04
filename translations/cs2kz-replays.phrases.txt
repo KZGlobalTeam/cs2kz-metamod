@@ -399,6 +399,10 @@
 		"de"		"{darkred}Manuelle Wiederholung konnte nicht gespeichert werden."
 		"ko"		"{darkred}수동 리플레이를 저장하지 못했습니다."
 	}
+	"Replay - Invalid Manual Replay Duration"
+	{
+		"en"		"{darkred}Invalid duration. Must be at least 1 second."
+	}
 	"Replay - Manual Replay Saved"
 	{
 		"#format"	"uuid:s,duration:.0f"

@@ -9,7 +9,7 @@
 #include "kz/timer/kz_timer.h"
 #include "kz/telemetry/kz_telemetry.h"
 #include "utils/ctimer.h"
-#include <vendor/ClientCvarValue/public/iclientcvarvalue.h>
+#include "utils/cvarquery.h"
 
 CConVarRef<bool> sv_cheats("sv_cheats");
 
@@ -24,12 +24,11 @@ bool KZAnticheatService::ShouldRunDetections() const
 	return !sv_cheats.Get();
 }
 
-extern IClientCvarValue *g_pClientCvarValue;
-
 #define INTEGRITY_CHECK_MIN_INTERVAL    1.0f
 #define INTEGRITY_CHECK_MAX_INTERVAL    5.0f
 #define KICK_DELAY                      5.0f
 #define MINIMUM_FPS_MAX                 64.0f
+#define MAXIMUM_FPS_MAX                 1000.0f
 #define MAXIMUM_M_YAW                   0.3f
 #define SV_CHEATS_MAX_PROPAGATION_DELAY 30.0f
 
@@ -105,9 +104,9 @@ f64 KZAnticheatService::KickPlayerInvalidSettings(CPlayerUserId userID)
 	return 0.0f;
 }
 
-static_function void ValidateQueriedCvar(CPlayerSlot nSlot, ECvarValueStatus eStatus, const char *pszCvarName, const char *pszCvarValue)
+static_function void ValidateQueriedCvar(CPlayerSlot nSlot, cvarquery::Status eStatus, const char *pszCvarName, const char *pszCvarValue)
 {
-	if (eStatus != ECvarValueStatus::ValueIntact)
+	if (eStatus != cvarquery::Status::ValueIntact)
 	{
 		KZ_LOG_WARN(LogChannel::AC, "Warning: Could not retrieve cvar value for player slot %d cvar %s, status %d\n", nSlot.Get(), pszCvarName,
 					(int)eStatus);
@@ -131,10 +130,10 @@ static_function void ValidateQueriedCvar(CPlayerSlot nSlot, ECvarValueStatus eSt
 	}
 	else if (KZ_STREQI(pszCvarName, "fps_max"))
 	{
-		f64 fps = atof(pszCvarValue);
+		f64 fps = Min(atof(pszCvarValue), (f64)MAXIMUM_FPS_MAX);
 		if (player->anticheatService->currentMaxFps == 0.0f)
 		{
-			player->anticheatService->currentMaxFps = atof(pszCvarValue);
+			player->anticheatService->currentMaxFps = fps;
 		}
 
 		if (fps > 0.0f && fps < MINIMUM_FPS_MAX)
@@ -312,13 +311,13 @@ static_function f64 CheckClientCvars(CPlayerUserId userID)
 	{
 		return 0.0f;
 	}
-	if (!g_pClientCvarValue || !player->anticheatService->ShouldCheckClientCvars())
+	if (!player->anticheatService->ShouldCheckClientCvars())
 	{
 		return 0.0f;
 	}
 	for (auto &name : cvarNames)
 	{
-		g_pClientCvarValue->QueryCvarValue(player->GetPlayerSlot(), name, ValidateQueriedCvar);
+		cvarquery::Query(player->GetPlayerSlot(), name, ValidateQueriedCvar);
 	}
 	return RandomFloat(INTEGRITY_CHECK_MIN_INTERVAL, INTEGRITY_CHECK_MAX_INTERVAL);
 }

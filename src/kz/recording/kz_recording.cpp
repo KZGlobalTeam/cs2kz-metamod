@@ -214,9 +214,12 @@ void KZRecordingService::RecordCommand(PlayerCommand *cmds, i32 numCmds)
 		time(&unixTime);
 		data.unixTime = (u64)unixTime;
 		INetChannelInfo *netchan = interfaces::pEngine->GetPlayerNetInfo(this->player->GetPlayerSlot());
-		netchan->GetRemoteFramerate(&data.framerate, nullptr, nullptr);
-		data.latency = netchan->GetEngineLatency();
-		data.avgLoss = netchan->GetAvgLoss(FLOW_INCOMING) + netchan->GetAvgChoke(FLOW_INCOMING);
+		if (netchan)
+		{
+			netchan->GetRemoteFramerate(&data.framerate, nullptr, nullptr);
+			data.latency = netchan->GetEngineLatency();
+			data.avgLoss = netchan->GetAvgLoss(FLOW_INCOMING) + netchan->GetAvgChoke(FLOW_INCOMING);
+		}
 		data.cmdNumber = pc.cmdNum;
 		data.clientTick = pc.base().client_tick();
 		data.forward = pc.base().has_forwardmove() ? pc.base().forwardmove() : 0;
@@ -285,8 +288,19 @@ void KZRecordingService::CheckRecorders()
 							{
 								callbackPlayer->languageService->PrintChat(true, false, "Replay - Run Replay Failed");
 							}
+							sub->OnReplayFailed();
 						}
 					});
+			}
+			else
+			{
+				// No file writer, so neither callback will ever run.
+				// This should never happen.
+				RunSubmission *sub = RunSubmission::GetByUUID(recorder.uuid);
+				if (sub)
+				{
+					sub->OnReplayFailed();
+				}
 			}
 			it = this->runRecorders.erase(it);
 		}
@@ -426,6 +440,8 @@ void KZRecordingService::EnsureCircularRecorderInitialized()
 {
 	if (!this->circularRecording)
 	{
+		// The single largest allocation the plugin makes: five circular buffers totalling roughly
+		// 17-18 MB for this one player.
 		this->circularRecording = new CircularRecorder();
 		KZ_LOG_INFO(LogChannel::Recording, "Initialized circular recorder for player %s\n", this->player->GetName());
 	}
@@ -542,6 +558,12 @@ SCMD(kz_rpsave, SCFL_REPLAY)
 	}
 
 	f32 duration = args->ArgC() > 1 ? utils::StringToFloat(args->Arg(1)) : 120.0f;
+	if (!(duration >= 1.0f))
+	{
+		player->languageService->PrintChat(true, false, "Replay - Invalid Manual Replay Duration");
+		return MRES_SUPERCEDE;
+	}
+
 	KZPlayer *target = player->IsAlive() ? player : player->specService->GetSpectatedPlayer();
 	if (!target)
 	{

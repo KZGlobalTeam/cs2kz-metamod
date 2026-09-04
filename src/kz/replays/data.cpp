@@ -93,21 +93,6 @@ namespace KZ::replaysystem::data
 		return g_currentReplay.playingReplay;
 	}
 
-	void SetCurrentTick(u32 tick)
-	{
-		g_currentReplay.currentTick = tick;
-	}
-
-	u32 GetCurrentTick()
-	{
-		return g_currentReplay.currentTick;
-	}
-
-	u32 GetTickCount()
-	{
-		return g_currentReplay.tickCount;
-	}
-
 	i32 GetCurrentCpIndex()
 	{
 		return g_currentReplay.currentCpIndex;
@@ -144,6 +129,11 @@ namespace KZ::replaysystem::data
 	bool GetPaused()
 	{
 		return g_currentReplay.paused;
+	}
+
+	const char *GetCourseName()
+	{
+		return g_currentReplay.courseName;
 	}
 
 	static_function void UpdateProgress(const char *cursor, const char *dataStart, size_t totalSize, std::atomic<f32> &progress)
@@ -372,12 +362,23 @@ namespace KZ::replaysystem::data
 		return LoadReplayFromMemory(data, size, uuid, progress, shouldCancel);
 	}
 
+	// Cancels the running load (if any) and waits for its thread to exit, so only one loader can
+	// ever touch g_loadStatus at a time.
+	static_function void StopLoadThread()
+	{
+		g_cancelLoad = true;
+		if (g_loadThread.joinable())
+		{
+			g_loadThread.join();
+		}
+		g_cancelLoad = false;
+	}
+
 	static_function void PrepareAsyncLoad(LoadSuccessCallback onSuccess, LoadFailureCallback onFailure)
 	{
-		CancelAsyncLoad();
+		StopLoadThread();
 		g_loadStatus.state = LoadingState::Loading;
 		g_loadStatus.progress = 0.0f;
-		g_cancelLoad = false;
 		{
 			std::lock_guard<std::mutex> lock(g_loadStatus.callbackMutex);
 			g_loadStatus.successCallback = onSuccess;
@@ -421,6 +422,7 @@ namespace KZ::replaysystem::data
 		// Success - store result for main thread to process
 		{
 			std::lock_guard<std::mutex> lock(g_loadStatus.replayMutex);
+			FreeReplayData(&g_loadStatus.completedReplay);
 			g_loadStatus.completedReplay = result;
 		}
 		g_loadStatus.state = LoadingState::Completed;
@@ -435,7 +437,6 @@ namespace KZ::replaysystem::data
 				ReplayPlayback result = LoadReplayWithProgress(path.c_str(), g_loadStatus.progress, g_cancelLoad);
 				HandleAsyncResult(result);
 			});
-		g_loadThread.detach();
 	}
 
 	void LoadReplayMemoryAsync(std::vector<char> data, UUID_t uuid, LoadSuccessCallback onSuccess, LoadFailureCallback onFailure)
@@ -447,7 +448,6 @@ namespace KZ::replaysystem::data
 				ReplayPlayback result = LoadReplayWithProgress(data.data(), data.size(), uuid, g_loadStatus.progress, g_cancelLoad);
 				HandleAsyncResult(result);
 			});
-		g_loadThread.detach();
 	}
 
 	AsyncLoadStatus *GetLoadStatus()
@@ -466,6 +466,15 @@ namespace KZ::replaysystem::data
 		{
 			g_cancelLoad = true;
 		}
+	}
+
+	void Shutdown()
+	{
+		StopLoadThread();
+		std::lock_guard<std::mutex> lock(g_loadStatus.replayMutex);
+		FreeReplayData(&g_loadStatus.completedReplay);
+		FreeReplayData(&g_currentReplay);
+		g_loadStatus.state = LoadingState::Idle;
 	}
 
 	void ProcessAsyncLoadCompletion()

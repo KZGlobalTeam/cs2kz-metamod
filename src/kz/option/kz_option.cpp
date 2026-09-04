@@ -1,7 +1,22 @@
 #include "kz_option.h"
 #include "kz/db/kz_db.h"
+#include "kz/global/kz_global.h"
+#include "kz/racing/kz_racing.h"
 #include "utils/eventlisteners.h"
+#include "utils/logging.h"
+
+#include <mutex>
+
 static_global KeyValues *pServerCfgKeyValues;
+
+// Recursive because logging itself reads options in `KZLoggingListener::OpenFile()`
+// so a log line emitted under this lock would cause deadlock otherwise.
+static_global std::recursive_mutex serverCfgMutex;
+
+static_function void GetServerCfgPath(char (&path)[1024])
+{
+	V_snprintf(path, sizeof(path), "%s%s", g_SMAPI->GetBaseDir(), "/cfg/cs2kz-server-config.txt");
+}
 
 IMPLEMENT_CLASS_EVENT_LISTENER(KZOptionService, KZOptionServiceEventListener);
 
@@ -118,30 +133,62 @@ static_function void MergePreferences(KeyValues3 *target, KeyValues3 *source, co
 void KZOptionService::LoadDefaultOptions()
 {
 	char serverCfgPath[1024];
-	V_snprintf(serverCfgPath, sizeof(serverCfgPath), "%s%s", g_SMAPI->GetBaseDir(), "/cfg/cs2kz-server-config.txt");
+	GetServerCfgPath(serverCfgPath);
+	{
+		std::lock_guard _guard(serverCfgMutex);
+		pServerCfgKeyValues = new KeyValues("ServerConfig");
+		pServerCfgKeyValues->LoadFromFile(g_pFullFileSystem, serverCfgPath, nullptr);
+	}
+}
 
-	pServerCfgKeyValues = new KeyValues("ServerConfig");
-	pServerCfgKeyValues->LoadFromFile(g_pFullFileSystem, serverCfgPath, nullptr);
+bool KZOptionService::ReloadOptions()
+{
+	char serverCfgPath[1024];
+	GetServerCfgPath(serverCfgPath);
+
+	// Check if the file is valid before replacing the existing.
+	KeyValues *probe = new KeyValues("ServerConfig");
+	bool valid = probe->LoadFromFile(g_pFullFileSystem, serverCfgPath, nullptr);
+	delete probe;
+
+	if (!valid)
+	{
+		KZ_LOG_WARN(LogChannel::General, "Failed to parse `cfg/cs2kz-server-config.txt`; keeping the current configuration.\n");
+		return false;
+	}
+
+	std::lock_guard _guard(serverCfgMutex);
+	if (!pServerCfgKeyValues)
+	{
+		return false;
+	}
+
+	pServerCfgKeyValues->Clear();
+	return pServerCfgKeyValues->LoadFromFile(g_pFullFileSystem, serverCfgPath, nullptr);
 }
 
 const char *KZOptionService::GetOptionStr(const char *optionName, const char *defaultValue)
 {
-	return pServerCfgKeyValues->GetString(optionName, defaultValue);
+	std::lock_guard _guard(serverCfgMutex);
+	return pServerCfgKeyValues ? pServerCfgKeyValues->GetString(optionName, defaultValue) : defaultValue;
 }
 
 f64 KZOptionService::GetOptionFloat(const char *optionName, f64 defaultValue)
 {
-	return pServerCfgKeyValues->GetFloat(optionName, defaultValue);
+	std::lock_guard _guard(serverCfgMutex);
+	return pServerCfgKeyValues ? pServerCfgKeyValues->GetFloat(optionName, defaultValue) : defaultValue;
 }
 
 i64 KZOptionService::GetOptionInt(const char *optionName, i64 defaultValue)
 {
-	return pServerCfgKeyValues->GetInt(optionName, defaultValue);
+	std::lock_guard _guard(serverCfgMutex);
+	return pServerCfgKeyValues ? pServerCfgKeyValues->GetInt(optionName, defaultValue) : defaultValue;
 }
 
 KeyValues *KZOptionService::GetOptionKV(const char *optionName)
 {
-	return pServerCfgKeyValues->FindKey(optionName);
+	std::lock_guard _guard(serverCfgMutex);
+	return pServerCfgKeyValues ? pServerCfgKeyValues->FindKey(optionName) : nullptr;
 }
 
 void KZOptionService::InitOptions()
@@ -151,18 +198,76 @@ void KZOptionService::InitOptions()
 
 void KZOptionService::Cleanup()
 {
+	std::lock_guard _guard(serverCfgMutex);
 	if (pServerCfgKeyValues)
 	{
 		delete pServerCfgKeyValues;
+		pServerCfgKeyValues = nullptr;
 	}
+}
+
+CON_COMMAND_F(kz_reload_config, "Reload server config file and reconnect to the API.", FCVAR_NONE)
+{
+	if (!KZOptionService::ReloadOptions())
+	{
+		return;
+	}
+
+	KZ_LOG_INFO(LogChannel::General, "Reloaded `cfg/cs2kz-server-config.txt`.\n");
+
+	kz_log_to_file.Set((bool)KZOptionService::GetOptionInt("logToFile", true));
+	KZGlobalService::ReloadConfig();
+	KZRacingService::ReloadConfig();
+
+	KZ_LOG_INFO(LogChannel::General, "Changes to the local database and tip intervals will only take effect after a server restart.\n");
+}
+
+// 0 when there is no stamp, or when it is far enough ahead of this server's clock to be untrusted.
+static_function i64 ReadPrefsStamp(KeyValues3 *prefs)
+{
+	KeyValues3 *member = prefs->FindMember(KZ_PREF_UPDATED_AT);
+	if (!member)
+	{
+		return 0;
+	}
+	const i64 stamp = member->GetInt64(0);
+	time_t now = 0;
+	time(&now);
+	if (stamp <= 0 || stamp > (i64)now + KZ_PREF_STAMP_MAX_SKEW)
+	{
+		return 0;
+	}
+	return stamp;
+}
+
+void KZOptionService::StampPreferences()
+{
+	time_t now = 0;
+	time(&now);
+	this->prefKV.FindOrCreateMember(KZ_PREF_UPDATED_AT)->SetInt64((i64)now);
+}
+
+bool KZOptionService::ShouldApplyPrefs(i64 incomingStamp, i32 incomingTier)
+{
+	if (this->dataState == NONE)
+	{
+		return true;
+	}
+
+	if (incomingStamp && this->loadedStamp)
+	{
+		return incomingStamp > this->loadedStamp;
+	}
+	return incomingTier > (i32)this->dataState;
 }
 
 void KZOptionService::InitializeLocalPrefs(CUtlString text)
 {
-	if (this->dataState >= LOCAL)
+	if (this->localLoaded)
 	{
 		return;
 	}
+	this->localLoaded = true;
 	if (text.IsEmpty())
 	{
 		text = "{\n}";
@@ -178,8 +283,15 @@ void KZOptionService::InitializeLocalPrefs(CUtlString text)
 		return;
 	}
 
+	const i64 stamp = ReadPrefsStamp(&loadedPrefs);
+	if (!this->ShouldApplyPrefs(stamp, LOCAL))
+	{
+		return;
+	}
+
 	// Merge loaded preferences, excluding user-set preferences
 	MergePreferences(&this->prefKV, &loadedPrefs, &this->userSetPrefs);
+	this->loadedStamp = stamp;
 
 	this->dataState = LOCAL;
 	// Calling this before the player is ingame will create unwanted race conditions.
@@ -195,10 +307,11 @@ void KZOptionService::InitializeGlobalPrefs(std::string json)
 {
 	assert(!json.empty() && "API always sends at least an empty object");
 
-	if (this->dataState >= GLOBAL)
+	if (this->globalLoaded)
 	{
 		return;
 	}
+	this->globalLoaded = true;
 	// Load the preferences from the API into a temporary KV
 	KeyValues3 loadedPrefs(KV3_TYPEEX_TABLE, KV3_SUBTYPE_UNSPECIFIED);
 	CUtlString error;
@@ -210,12 +323,15 @@ void KZOptionService::InitializeGlobalPrefs(std::string json)
 		return;
 	}
 
+	const i64 stamp = ReadPrefsStamp(&loadedPrefs);
+	if (!this->ShouldApplyPrefs(stamp, GLOBAL))
+	{
+		return;
+	}
+
 	// Merge loaded preferences, excluding user-set preferences
-	// Global preferences override local preferences, but not user-set ones
-	// DebugPrintKV3(&this->prefKV);
-	// DebugPrintKV3(&loadedPrefs);
 	MergePreferences(&this->prefKV, &loadedPrefs, &this->userSetPrefs);
-	// DebugPrintKV3(&this->prefKV);
+	this->loadedStamp = stamp;
 
 	this->dataState = GLOBAL;
 
@@ -236,6 +352,7 @@ void KZOptionService::SaveLocalPrefs()
 	{
 		return;
 	}
+	this->StampPreferences();
 	CUtlString error, output;
 	SaveKV3AsJSON(&this->prefKV, &error, &output);
 	if (!error.IsEmpty())

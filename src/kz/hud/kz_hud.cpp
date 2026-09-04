@@ -6,22 +6,19 @@
 #include "utils/simplecmds.h"
 
 #include "kz/option/kz_option.h"
+#include "kz/hud/layout/layout.h"
 #include "kz/timer/kz_timer.h"
-#include "kz/language/kz_language.h"
 #include "kz/checkpoint/kz_checkpoint.h"
+#include "kz/language/kz_language.h"
 #include "kz/replays/kz_replaysystem.h"
+#include "sdk/entity/ccscustomhudlayout.h"
 
 #include <vendor/MultiAddonManager/public/imultiaddonmanager.h>
 extern IMultiAddonManager *g_pMultiAddonManager;
 
-#include <vendor/mm-cs2menus/src/public/ics2menus.h>
-extern ICS2Menus *g_pMenus;
-
 #include "tier0/memdbgon.h"
 
-static CConVar<bool> kz_force_mhud("kz_force_mhud", FCVAR_NONE, "Force the particle-based MHUD even when MultiAddonManager is not available.", false);
-
-static CConVarRef<bool> sv_suppress_viewpunch("sv_suppress_viewpunch");
+static_global CConVar<bool> kz_force_mhud("kz_force_mhud", FCVAR_NONE, "Force the MHUD layout even when MultiAddonManager is not available.", false);
 
 static_global class KZTimerServiceEventListener_HUD : public KZTimerServiceEventListener
 {
@@ -33,7 +30,13 @@ static_global class KZOptionServiceEventListener_HUD : public KZOptionServiceEve
 {
 	virtual void OnPlayerPreferencesLoaded(KZPlayer *player)
 	{
+		player->hudService->InvalidatePrefs();
 		player->hudService->ResetShowPanel();
+	}
+
+	virtual void OnPlayerPreferenceChanged(KZPlayer *player, const char *optionName)
+	{
+		player->hudService->InvalidatePrefs();
 	}
 } optionEventListener;
 
@@ -41,41 +44,20 @@ void KZHUDService::Init()
 {
 	KZTimerService::RegisterEventListener(&timerEventListener);
 	KZOptionService::RegisterEventListener(&optionEventListener);
-	// Remove FCVAR_REPLICATED so we can send per-player values.
-	if (sv_suppress_viewpunch.IsValidRef() && sv_suppress_viewpunch.IsConVarDataAvailable())
+	KZHUDService::RegisterMenu();
+
+	// A server launched with -addon mhud is already serving the HUD addon itself, so the layout
+	// resolves client side with no MultiAddonManager in the picture.
+	const char *addons = CommandLine()->ParmValue("-addon", "");
+	if (addons && V_stristr(addons, "mhud"))
 	{
-		sv_suppress_viewpunch.GetConVarData()->RemoveFlags(FCVAR_REPLICATED);
+		kz_force_mhud.Set(true);
 	}
 }
 
-bool KZHUDService::IsMHUDAvailable()
+bool KZHUDService::IsLayoutHudAvailable()
 {
 	return g_pMultiAddonManager != nullptr || kz_force_mhud.Get();
-}
-
-void KZHUDService::OnProcessMovement()
-{
-	if (sv_suppress_viewpunch.IsValidRef())
-	{
-		// clang-format off
-		bool useParticles = KZHUDService::IsMHUDAvailable() && 
-		(
-			this->IsMHUDSpeedEnabled() 
-			|| this->IsMHUDPrespeedEnabled() 
-			|| this->IsMHUDTimerEnabled() 
-			|| this->IsMHUDKeysEnabled()
-		);
-		// clang-format on
-		if (useParticles != this->particlesActive)
-		{
-			this->particlesActive = useParticles;
-			utils::SendConVarValue(this->player->GetPlayerSlot(), sv_suppress_viewpunch, useParticles ? "1" : "0");
-			utils::SendConVarValue(this->player->GetPlayerSlot(), "view_punch_decay", useParticles ? "99999" : "18");
-		}
-		auto dst = sv_suppress_viewpunch.GetConVarData()->Value(-1);
-		auto traits = sv_suppress_viewpunch.TypeTraits();
-		traits->Copy(dst, CVValue_t(this->particlesActive));
-	}
 }
 
 void KZHUDService::OnProcessMovementPost()
@@ -99,67 +81,55 @@ void KZHUDService::Reset()
 	this->jumpedThisTick = false;
 	this->fromDuckbug = false;
 	this->crouchJumping = false;
-	this->particlesActive = false;
-	this->DestroyAllParticles();
 }
 
-std::string KZHUDService::GetSpeedText(const char *language)
+KZHUDService::SpeedInfo KZHUDService::GetSpeedInfo()
 {
+	SpeedInfo info {};
+	CCSPlayerPawn *pawn = this->player->GetPlayerPawn();
+	if (!pawn || !pawn->IsAlive())
+	{
+		// Probably in spectator mode.
+		CCSPlayerPawnBase *observer = this->player->GetObserverPawn();
+		if (observer)
+		{
+			info.speed = observer->m_vecAbsVelocity().Length2D();
+		}
+		return info;
+	}
 	Vector velocity, baseVelocity;
 	this->player->GetVelocity(&velocity);
 	this->player->GetBaseVelocity(&baseVelocity);
 	velocity += baseVelocity;
+	info.speed = velocity.Length2D();
 	// Keep the takeoff velocity on for a while after landing so the speed values flicker less.
 	if ((this->player->GetPlayerPawn()->m_fFlags & FL_ONGROUND
 		 && g_pKZUtils->GetServerGlobals()->curtime - this->player->landingTime > KZ_HUD_ON_GROUND_THRESHOLD)
 		|| (this->player->GetPlayerPawn()->m_MoveType == MOVETYPE_LADDER && !player->IsButtonPressed(IN_JUMP)))
 	{
-		return KZLanguageService::PrepareMessageWithLang(language, "HUD - Speed Text", velocity.Length2D());
+		return info;
 	}
-	const Color baseCol = this->GetMHUDColorPref("mhudSpeedColor", Color(0xFF, 0xFF, 0xFF, 0xFF));
-	const Color perfCol = this->GetMHUDColorPref("mhudPrespeedPerfColor", Color(0x40, 0xFF, 0x40, 0xFF));
-	const Color jumpbugCol = this->GetMHUDColorPref("mhudPrespeedJumpbugColor", Color(0xFF, 0xFF, 0x20, 0xFF));
-	const Color cjCol = this->GetMHUDColorPref("mhudSpeedCjColor", Color(0x71, 0xEE, 0xB8, 0xFF));
-	Color tintCol = baseCol;
+	info.showTakeoff = true;
+	info.takeoffSpeed = this->player->takeoffVelocity.Length2D();
+	info.crouchJump = this->crouchJumping;
 	if (this->player->IsPerfing() && !this->player->possibleLadderHop && !this->player->takeoffFromLadder)
 	{
-		tintCol = this->fromDuckbug ? jumpbugCol : perfCol;
+		info.jumpbug = this->fromDuckbug;
+		info.perf = !this->fromDuckbug;
 	}
-	char colorBuf[24];
-	V_snprintf(colorBuf, sizeof(colorBuf), "<font color='#%02x%02x%02x'>", tintCol.r(), tintCol.g(), tintCol.b());
-	char cjBuf[24];
-	V_snprintf(cjBuf, sizeof(cjBuf), "<font color='#%02x%02x%02x'>", cjCol.r(), cjCol.g(), cjCol.b());
-	std::string crouchJumpingText = this->crouchJumping ? std::string(" ") + cjBuf + "C</font>" : "";
-	return KZLanguageService::PrepareMessageWithLang(language, "HUD - Speed Text (Takeoff)", velocity.Length2D(), colorBuf,
-													 this->player->takeoffVelocity.Length2D(), crouchJumpingText.c_str());
+	return info;
 }
 
-std::string KZHUDService::GetKeyText(const char *language)
+CPlayer_MovementServices *KZHUDService::GetHudMoveServices()
 {
-	// clang-format off
-	return KZLanguageService::PrepareMessageWithLang(language, "HUD - Key Text",
-		this->player->IsButtonPressed(IN_MOVELEFT) ? 'A' : '_',
-		this->player->IsButtonPressed(IN_FORWARD) ? 'W' : '_',
-		this->player->IsButtonPressed(IN_BACK) ? 'S' : '_',
-		this->player->IsButtonPressed(IN_MOVERIGHT) ? 'D' : '_',
-		this->player->IsButtonPressed(IN_DUCK) ? 'C' : '_',
-		this->jumpedThisTick ? 'J' : '_'
-	);
-
-	// clang-format on
-}
-
-std::string KZHUDService::GetCheckpointText(const char *language)
-{
-	// clang-format off
-	
-	return KZLanguageService::PrepareMessageWithLang(language, "HUD - Checkpoint Text",
-		KZ::replaysystem::IsReplayBot(this->player) ? KZ::replaysystem::GetCurrentCpIndex() : this->player->checkpointService->GetCurrentCpIndex(),
-		KZ::replaysystem::IsReplayBot(this->player) ? KZ::replaysystem::GetCheckpointCount() : this->player->checkpointService->GetCheckpointCount(),
-		KZ::replaysystem::IsReplayBot(this->player) ? KZ::replaysystem::GetTeleportCount() : this->player->checkpointService->GetTeleportCount()
-	);
-
-	// clang-format on
+	CCSPlayerPawn *pawn = this->player->GetPlayerPawn();
+	if (pawn && pawn->IsAlive())
+	{
+		return this->player->GetMoveServices();
+	}
+	// Dead or spectating.
+	CCSPlayerPawnBase *observer = this->player->GetObserverPawn();
+	return observer ? observer->m_pMovementServices() : nullptr;
 }
 
 std::string KZHUDService::GetTimerText(const char *language)
@@ -199,7 +169,7 @@ std::string KZHUDService::GetTimerText(const char *language)
 				: this->currentTimeWhenTimerStopped;
 		bool timerRunning = this->player->timerService->GetTimerRunning();
 		bool paused = this->player->timerService->GetPaused();
-		
+
 		utils::FormatTime(time, timeText, sizeof(timeText));
 		return KZLanguageService::PrepareMessageWithLang(language, "HUD - Timer Text",
 			timeText,
@@ -211,94 +181,26 @@ std::string KZHUDService::GetTimerText(const char *language)
 	return std::string("");
 }
 
+std::string KZHUDService::GetCheckpointText(const char *language)
+{
+	// clang-format off
+	return KZLanguageService::PrepareMessageWithLang(language, "HUD - Checkpoint Text",
+		KZ::replaysystem::IsReplayBot(this->player) ? KZ::replaysystem::GetCurrentCpIndex() : this->player->checkpointService->GetCurrentCpIndex(),
+		KZ::replaysystem::IsReplayBot(this->player) ? KZ::replaysystem::GetCheckpointCount() : this->player->checkpointService->GetCheckpointCount(),
+		KZ::replaysystem::IsReplayBot(this->player) ? KZ::replaysystem::GetTeleportCount() : this->player->checkpointService->GetTeleportCount()
+	);
+	// clang-format on
+}
+
 void KZHUDService::DrawPanels(KZPlayer *player, KZPlayer *target)
 {
-	// Only update/show particles for alive players when MHUD is available.
-	bool useParticles = target->IsAlive() && KZHUDService::IsMHUDAvailable();
-	if (useParticles)
-	{
-		target->hudService->UpdateParticles();
-	}
-	else
-	{
-		target->hudService->DestroyAllParticles();
-	}
-
-	// Yield the center channel while a cs2menus HTML menu is open.
-	if (g_pMenus && g_pMenus->GetActiveMenuType(target->GetPlayerSlot().Get()) == MenuType::Html)
+	if (target->IsFakeClient())
 	{
 		return;
 	}
-	if (!target->hudService->IsShowingPanel())
-	{
-		return;
-	}
-	const char *language = target->languageService->GetLanguage();
+	target->hudService->UpdateHudLayout(player);
 
-	// Per-element panel suppression: only active when the particle HUD is live.
-	bool suppressSpeed = useParticles && target->hudService->IsMHUDSpeedEnabled();
-	bool suppressTimer = useParticles && target->hudService->IsMHUDTimerEnabled();
-	bool suppressKeys = useParticles && target->hudService->IsMHUDKeysEnabled();
-
-	std::string keyText = suppressKeys ? std::string("") : player->hudService->GetKeyText(language);
-	std::string checkpointText = player->hudService->GetCheckpointText(language);
-	std::string timerText = suppressTimer ? std::string("") : player->hudService->GetTimerText(language);
-	std::string speedText = suppressSpeed ? std::string("") : player->hudService->GetSpeedText(language);
-
-	bool compact = target->hudService->IsCompactPanel();
-
-	std::string centerText = "";
-	std::string htmlText = "";
-	std::string alertText = KZLanguageService::PrepareMessageWithLang(language, "HUD - Alert Text", keyText.c_str(), checkpointText.c_str(),
-																	  timerText.c_str(), speedText.c_str());
-
-	if (compact)
-	{
-		if (!timerText.empty() && !speedText.empty())
-		{
-			htmlText = timerText + "<br>" + speedText;
-		}
-		else
-		{
-			htmlText = timerText + speedText;
-		}
-	}
-	else
-	{
-		centerText = KZLanguageService::PrepareMessageWithLang(language, "HUD - Center Text", keyText.c_str(), checkpointText.c_str(),
-															   timerText.c_str(), speedText.c_str());
-		htmlText = KZLanguageService::PrepareMessageWithLang(language, "HUD - Html Center Text", keyText.c_str(), checkpointText.c_str(),
-															 timerText.c_str(), speedText.c_str());
-	}
-
-	centerText = centerText.substr(0, centerText.find_last_not_of('\n') + 1);
-	alertText = alertText.substr(0, alertText.find_last_not_of('\n') + 1);
-	htmlText = htmlText.substr(0, htmlText.find_last_not_of('\n') + 1);
-
-	// Strip leading/trailing <br> tags left behind by suppressed MHUD elements.
-	const std::string brTag = "<br>";
-	while (htmlText.find(brTag) == 0)
-	{
-		htmlText.erase(0, brTag.size());
-	}
-	while (htmlText.size() >= brTag.size() && htmlText.rfind(brTag) == htmlText.size() - brTag.size())
-	{
-		htmlText.erase(htmlText.size() - brTag.size());
-	}
-
-	// Remove trailing newlines just in case a line is empty.
-	if (!centerText.empty())
-	{
-		target->PrintCentre(false, false, centerText.c_str());
-	}
-	if (!alertText.empty())
-	{
-		target->PrintAlert(false, false, alertText.c_str());
-	}
-	if (!htmlText.empty())
-	{
-		target->PrintHTMLCentre(false, false, htmlText.c_str());
-	}
+	KZHUDService::DrawLegacyPanels(player, target);
 }
 
 void KZHUDService::ResetShowPanel()
@@ -341,7 +243,7 @@ void KZTimerServiceEventListener_HUD::OnTimerEndPost(KZPlayer *player, u32 cours
 
 bool KZHUDService::IsCompactPanel()
 {
-	return this->player->optionService->GetPreferenceBool("compactPanel");
+	return this->GetPrefs().compactPanel;
 }
 
 void KZHUDService::ToggleCompactPanel()

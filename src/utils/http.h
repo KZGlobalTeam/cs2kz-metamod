@@ -22,6 +22,10 @@ namespace HTTP
 	typedef std::function<void()> ErrorCallback;
 
 	extern std::vector<InFlightRequest *> g_InFlightRequests;
+	extern ISteamHTTP *g_pHTTP;
+
+	// Drops every outstanding request. Call on plugin unload, before the callbacks can be unmapped.
+	void Cleanup();
 
 	// HTTP methods we care about.
 	enum class Method
@@ -102,6 +106,10 @@ namespace HTTP
 					g_InFlightRequests.erase(req);
 					break;
 				}
+			}
+			if (g_pHTTP && handle != INVALID_HTTPREQUEST_HANDLE)
+			{
+				g_pHTTP->ReleaseHTTPRequest(handle);
 			}
 		}
 

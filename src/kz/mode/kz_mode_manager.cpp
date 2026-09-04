@@ -23,6 +23,11 @@ KZModeManager *g_pKZModeManager = &modeManager;
 
 CUtlVector<KZModeManager::ModePluginInfo> modeInfos;
 
+const CUtlVector<KZModeManager::ModePluginInfo> &KZModeManager::GetModes()
+{
+	return modeInfos;
+}
+
 static_global class KZDatabaseServiceEventListener_Modes : public KZDatabaseServiceEventListener
 {
 public:
@@ -213,6 +218,9 @@ void KZModeManager::UnregisterMode(PluginId id)
 				KZPlayer *player = g_pKZPlayerManager->ToPlayer(slot);
 				if (!player->IsInGame())
 				{
+					// The plugin owning this service is about to be unloaded, so the pointer would dangle.
+					// Reset it silently instead of running the full mode switch on a player who is not here.
+					KZ::mode::InitModeService(player);
 					continue;
 				}
 				if (!V_strcmp(player->modeService->GetModeName(), modeInfos[modeIdx].longModeName)
@@ -263,6 +271,11 @@ bool KZModeManager::SwitchToMode(KZPlayer *player, const char *modeName, bool si
 
 	// If it's the same style, do nothing, unless it's forced.
 	if (!force && (V_stricmp(player->modeService->GetModeName(), modeName) == 0 || V_stricmp(player->modeService->GetModeShortName(), modeName) == 0))
+	{
+		return false;
+	}
+
+	if (!force && !player->timerService->CheckSafeguard(!silent))
 	{
 		return false;
 	}

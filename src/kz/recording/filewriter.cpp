@@ -23,6 +23,8 @@ void ReplayFileWriter::SpawnThread(F &&work)
 	std::thread(
 		[this, work = std::forward<F>(work)]() mutable
 		{
+			// One scope here covers every replay write thread: serialization and zstd compression
+			// both run on this side, while the resulting buffer is freed on the main thread.
 			work();
 			if (--m_activeThreads == 0)
 			{
@@ -115,7 +117,7 @@ void ReplayFileWriter::QueueWriteToFile(std::unique_ptr<Recorder> recorder, Disk
 
 void ReplayFileWriter::RunFrame()
 {
-	std::queue<std::function<void()>> pending;
+	std::queue<std::function<void()>> &pending = m_currentBatch;
 	{
 		std::lock_guard<std::mutex> lock(m_completedLock);
 		pending.swap(m_completedCallbacks);

@@ -1,4 +1,5 @@
 #include "kz_paint.h"
+#include "kz/option/menu/tables.h"
 #include "kz/hud/kz_hud.h"
 #include "kz/language/kz_language.h"
 #include "kz/option/kz_option.h"
@@ -9,10 +10,15 @@
 #include "sdk/cglobalsymbol.h"
 #include "sdk/recipientfilters.h"
 
+void KZPaintService::Init()
+{
+	KZPaintService::RegisterMenu();
+}
+
 void KZPaintService::Reset()
 {
 	// Reset to default: red color and default size
-	player->optionService->SetPreferenceInt("paintColor", 0xFF0000FF); // Red (RGBA format)
+	player->optionService->SetPreferenceColor("paintColor", KZ_PAINT_DEFAULT_COLOR);
 	player->optionService->SetPreferenceFloat("paintSize", DEFAULT_PAINT_SIZE);
 	player->optionService->SetPreferenceBool("showAllPaint", false);
 
@@ -23,12 +29,10 @@ void KZPaintService::Reset()
 
 Color KZPaintService::GetColor() const
 {
-	u32 colorData = player->optionService->GetPreferenceInt("paintColor", 0xFF0000FF); // Default to red
-	u8 r = (colorData >> 24) & 0xFF;
-	u8 g = (colorData >> 16) & 0xFF;
-	u8 b = (colorData >> 8) & 0xFF;
-	u8 a = colorData & 0xFF;
-	return Color(r, g, b, a);
+	// The menu's color picker also offers gradients, which have no single RGB: fall back to the
+	// default for those, the same way the legacy HUD does.
+	const Color stored = player->optionService->GetPreferenceColor("paintColor", KZ_PAINT_DEFAULT_COLOR);
+	return panorama::ResolveSolidColor(stored, KZ_PAINT_DEFAULT_COLOR);
 }
 
 f32 KZPaintService::GetSize() const
@@ -328,6 +332,5 @@ SCMD(kz_cleardecals, SCFL_MISC)
 	}
 	listener->FireGameEvent(event);
 	interfaces::pGameEventManager->FreeEvent(event);
-	player->hudService->DestroyAllParticles();
 	return MRES_SUPERCEDE;
 }

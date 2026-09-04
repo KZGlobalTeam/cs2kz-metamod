@@ -27,6 +27,10 @@ struct RunSubmission
 	const u32 uid;       // unique ID for callbacks to look up this submission
 	const f64 timestamp; // realtime at creation, used for timeouts
 
+	// Value of currentMapGeneration when this run finished. If it no longer matches, a map change
+	// has happened since, and this submission belongs to a map nobody is on anymore.
+	const u32 mapGeneration;
+
 	const CPlayerUserId userID;
 
 	// -------------------------------------------------------------------------
@@ -43,9 +47,15 @@ struct RunSubmission
 	bool global {}; // will an API submission be attempted?
 	bool local {};  // will a local DB insert be attempted?
 
-	// Set to true when SubmitRecord returns Queued so CheckAll() keeps this submission
-	// alive until the API reconnects and delivers the ack. Cleared on map change via Clear().
+	// Set to true when SubmitRecord returns Queued, i.e. the message is parked in
+	// KZGlobalService::callbacks.queue waiting for a reconnect. CheckAll() keeps this submission
+	// alive indefinitely so the eventual ack can still reconcile the DB row and upload the replay;
+	// the run itself is announced immediately, without a global line, rather than waiting on it.
 	bool pendingQueuedSubmission {};
+
+	// True while we don't yet know whether this run's map is global (map_change reply still in
+	// flight, or the API connection itself is down/reconnecting).
+	bool mapResolutionPending {};
 
 	bool replayReady {};         // set when the file writer delivers the buffer
 	bool apiResponseReceived {}; // set when NewRecordAck arrives
@@ -53,8 +63,10 @@ struct RunSubmission
 	bool runAnnounced {};        // AnnounceRun()/AnnounceLocal()/AnnounceGlobal() have been called
 	bool localSubmitted {};      // set once SubmitLocal() has been called, prevents double-insert
 
-	// Replay buffer held in RAM from OnReplayReady() until QueueUpload() moves it away.
-	// After the move it is empty; DoLateAPIResponse() will fall back to a disk read.
+	// Replay buffer held in RAM from OnReplayReady() onwards, so the upload does not have to read
+	// back what was just written to disk. Released early for a queued submission, which may park
+	// for a long time waiting on its ack; DoLateAPIResponse() falls back to a disk read when it
+	// finds this empty.
 	std::vector<char> replayBuffer;
 
 	// -------------------------------------------------------------------------
@@ -90,6 +102,11 @@ struct RunSubmission
 	} course;
 
 	u16 globalFilterID {};
+
+	// Decoded API mode, snapshotted at construction. nullopt if this run's mode is not a valid
+	// global mode. Kept around (rather than only a local KZ::api::Mode variable) so that
+	// deferred filter-ID resolution in TryFinalize() can reuse it later.
+	std::optional<KZ::api::Mode> apiMode;
 
 	struct StyleInfo
 	{
@@ -156,6 +173,10 @@ struct RunSubmission
 	// Called when the file writer finishes serializing the replay. Main thread only.
 	void OnReplayReady(std::vector<char> &&buffer);
 
+	// Called when no replay buffer will ever arrive (serialization failed, or there is no file
+	// writer). Releases the replay gate in CheckAll() so the submission can finish and be freed.
+	void OnReplayFailed();
+
 	// Called when a NewRecordAck arrives from the global API. Main thread only.
 	void OnAPIResponse(const KZ::api::messages::NewRecordAck &ack);
 
@@ -187,13 +208,11 @@ struct RunSubmission
 	// Called once per frame from a timer tick to drive announcements and GC
 	static void CheckAll();
 
-	static void Clear()
+	static void OnMapChange();
+
+	bool IsFromPreviousMap() const
 	{
-		for (auto *s : submissions)
-		{
-			delete s;
-		}
-		submissions.clear();
+		return this->mapGeneration != RunSubmission::currentMapGeneration;
 	}
 
 private:
@@ -207,6 +226,11 @@ private:
 
 	// Submit to the global API; sets pendingQueuedSubmission if queued offline.
 	void SubmitGlobal();
+
+	// Attempts to resolve globalFilterID against the given confirmed map info, by matching this
+	// run's course name. Returns true (and sets globalFilterID) if apiMode is valid and a
+	// matching course is found.
+	bool ResolveGlobalFilterID(const KZ::api::Map &mapInfo);
 
 	// Insert the run into the local database using the provided UUID.
 	void SubmitLocal(const char *uuid);
@@ -224,6 +248,9 @@ private:
 
 	static inline std::vector<RunSubmission *> submissions;
 	static inline u32 idCount = 0;
+	// Bumped by OnMapChange(). Compared against each submission's snapshotted mapGeneration to
+	// tell whether it predates the current map.
+	static inline u32 currentMapGeneration = 0;
 	// How long to wait for the global API to respond before finalizing with localUUID.
 	static inline constexpr f64 timeout = 5.0f;
 	// How long to wait before force-announcing with whatever responses have arrived.

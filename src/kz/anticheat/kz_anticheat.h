@@ -1,12 +1,33 @@
 #pragma once
 #include "../kz.h"
 #include "kz/recording/kz_recording.h"
+#include "utils/eventlisteners.h"
 
 class KZBaseService;
 class Jump;
 
+// Where a ban came from. A player can only be marked banned once per session, so this is
+// whichever source got there first.
+enum class KZAnticheatBanSource : u8
+{
+	Detection = 0,  // the anticheat flagged them during this session
+	GlobalDatabase, // global auth reported an existing ban
+	LocalDatabase,  // this server's own ban table reported an existing ban
+};
+
+class KZAnticheatServiceEventListener
+{
+public:
+	// Fired once, when the player is first marked as banned. `reason` is "" when the source
+	// didn't provide one. The player may be kicked right after this returns, depending on
+	// kz_ac_autokick.
+	virtual void OnPlayerBannedPost(KZPlayer *player, KZAnticheatBanSource source, const char *reason) {}
+};
+
 class KZAnticheatService : public KZBaseService
 {
+	DECLARE_CLASS_EVENT_LISTENER(KZAnticheatServiceEventListener);
+
 public:
 	using KZBaseService::KZBaseService;
 
@@ -39,16 +60,21 @@ public:
 		};
 		static_assert(KZ_ARRAYSIZE(kickReasons) == static_cast<u8>(Infraction::Type::COUNT));
 
-		// Ban durations in seconds
-		// Note that the API might not agree with these durations, and the API will always take precedence.
-		// Big ban for players using hacked clients, medium ban for minor infractions
-		static inline f32 banDurations[] = {
+		/*
+			Ban durations in seconds
+			Note that the API might not agree with these durations, and the API will always take precedence.
+			Big ban for players using hacked clients, medium ban for minor infractions.
+			Note that the ban durations are not supposed to be long during beta, since we want to avoid banning players for false positives.
+			The ban durations will be increased after the beta, preferably with API having the final say on the ban durations.
+			Ban durations here are the minimum durations.
+		*/
+		static constexpr f32 banDurations[] = {
 			-1.0f,                // Other - no ban, just kick
-			31556926.0f * 5,      // StrafeHack - 5 years
-			31556926.0f * 5,      // BhopHack - 5 years
-			60.0f * 24 * 60 * 60, // Hyperscroll - 60 days
-			31556926.0f * 5,      // InvalidCvar - 5 years
-			60.0f * 24 * 60 * 60, // InvalidInput - 60 days
+			60.0f * 24 * 60 * 30, // StrafeHack - 30 days
+			60.0f * 24 * 60 * 30, // BhopHack - 30 days
+			60.0f * 24 * 60 * 7,  // Hyperscroll - 7 days
+			60.0f * 24 * 60 * 30, // InvalidCvar - 30 days
+			60.0f * 24 * 60 * 7,  // InvalidInput - 7 days
 			-1.0f,                // Nulls - no ban, just kick (for now)
 			-1.0f,                // SubtickSpam - no ban, just kick (for now)
 			-1.0f                 // Desubtick - kick only
@@ -121,7 +147,7 @@ public:
 		hasValidCvars = true;
 		recentForwardBackwardEvents.clear();
 		recentLeftRightEvents.clear();
-		lastButtons = 0;
+		heldMovementButtons = 0;
 		nullsFramerateBuffer.clear();
 		nullsUnderlapBuffer.clear();
 		suspiciousSubtickMoveTimes.clear();
@@ -180,7 +206,8 @@ public:
 
 	std::deque<InputEvent> recentForwardBackwardEvents;
 	std::deque<InputEvent> recentLeftRightEvents;
-	u64 lastButtons;
+	// Direction keys the input events say are down. Both directions of an axis can be down at once.
+	u64 heldMovementButtons;
 	std::vector<f32> nullsFramerateBuffer;
 	std::vector<f32> nullsUnderlapBuffer;
 
@@ -228,6 +255,21 @@ public:
 	void OnProcessMovementPost();
 
 	// ===========[ Subtick abuses ]===========
+
+	// Why the engine would throw away a command's entire subtick move list.
+	// When that happens it falls back to the final button state for the whole tick,
+	// effectively desubticking the command.
+	enum class SubtickRejection : u8
+	{
+		None = 0,
+		MoveCount,    // more moves than the engine accepts
+		When,         // out of order, or outside the tick
+		Button,       // more than one button at once, or a button the engine does not apply
+		ImpulseLimit, // the accumulated movement axis left the range a real input can reach
+	};
+
+	// `forwardAxis` and `sideAxis` are the movement impulses the command starts from.
+	static SubtickRejection VerifySubtickMoves(const PlayerCommand *cmd, f32 forwardAxis, f32 sideAxis);
 
 	std::deque<f32> suspiciousSubtickMoveTimes;
 	std::deque<f32> invalidCommandTimes;
@@ -295,4 +337,8 @@ public:
 
 	// Mark a detection, generate a replay if specified, and optionally ban/kick the player.
 	void MarkInfraction(Infraction::Type type, const std::string &reason);
+
+private:
+	// Mark the player as banned and broadcast the event. Does nothing if the player is already marked.
+	void MarkBanned(KZAnticheatBanSource source, const char *reason);
 };

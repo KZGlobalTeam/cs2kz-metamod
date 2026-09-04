@@ -70,7 +70,15 @@ static_global class KZOptionServiceEventListener_Timer : public KZOptionServiceE
 {
 	virtual void OnPlayerPreferencesLoaded(KZPlayer *player)
 	{
-		player->timerService->OnPlayerPreferencesLoaded();
+		player->timerService->ApplyPreferences();
+	}
+
+	virtual void OnPlayerPreferenceChanged(KZPlayer *player, const char *optionName)
+	{
+		if (KZ_STREQI(optionName, "preferredCompareType") || KZ_STREQI(optionName, "timerStopSound"))
+		{
+			player->timerService->ApplyPreferences();
+		}
 	}
 } optionEventListener;
 
@@ -269,31 +277,34 @@ bool KZTimerService::TimerStart(const KZCourseDescriptor *courseDesc, bool playS
 					}
 				});
 		}
-		else if (KZGlobalService::IsAvailable() && this->player->styleServices.Count() > 0)
+		else if (KZGlobalService::IsAvailable())
 		{
-			bool ranked = false;
-			KZGlobalService::WithCurrentMap(
-				[&](const std::optional<KZ::api::Map> &map)
-				{
-					if (map && map->state == KZ::api::Map::State::Approved)
+			bool ranked = this->player->styleServices.Count() > 0;
+			if (ranked)
+			{
+				KZGlobalService::WithCurrentMap(
+					[&](const std::optional<KZ::api::Map> &map)
 					{
-						for (const auto &apiCourse : map->courses)
+						if (map && map->state == KZ::api::Map::State::Approved)
 						{
-							if (apiCourse.id == courseDesc->globalDatabaseID)
+							for (const auto &apiCourse : map->courses)
 							{
-								ranked = (KZ_STREQI(this->player->modeService->GetModeName(), "Classic")
-										  && apiCourse.filters.classic.state == KZ::api::Map::Course::Filter::State::Ranked)
-										 || (KZ_STREQI(this->player->modeService->GetModeName(), "Vanilla")
-											 && apiCourse.filters.vanilla.state == KZ::api::Map::Course::Filter::State::Ranked);
-								break;
+								if (apiCourse.id == courseDesc->globalDatabaseID)
+								{
+									ranked = (KZ_STREQI(this->player->modeService->GetModeName(), "Classic")
+											  && apiCourse.filters.classic.state == KZ::api::Map::Course::Filter::State::Ranked)
+											 || (KZ_STREQI(this->player->modeService->GetModeName(), "Vanilla")
+												 && apiCourse.filters.vanilla.state == KZ::api::Map::Course::Filter::State::Ranked);
+									break;
+								}
 							}
 						}
-						if (!ranked)
-						{
-							this->player->languageService->PrintChat(true, false, "Started Run on Non Ranked Course", courseDesc->name);
-						}
-					}
-				});
+					});
+			}
+			if (!ranked)
+			{
+				this->player->languageService->PrintChat(true, false, "Started Run on Non Ranked Course", courseDesc->name);
+			}
 		}
 		SetCourse(courseDesc->guid);
 	}
@@ -496,11 +507,6 @@ bool KZTimerService::HasValidMoveType()
 	return KZTimerService::IsValidMoveType(this->player->GetMoveType());
 }
 
-bool KZTimerService::JustEndedTimer()
-{
-	return g_pKZUtils->GetServerGlobals()->curtime - this->lastEndTime > 1.0f;
-}
-
 void KZTimerService::PlayTimerEndSound()
 {
 	utils::PlaySoundToClient(this->player->GetPlayerSlot(), KZ_TIMER_SND_END);
@@ -577,6 +583,8 @@ void KZTimerService::Pause()
 	this->pausedOnLadder = this->player->GetMoveType() == MOVETYPE_LADDER;
 	this->lastDuckValue = this->player->GetMoveServices()->m_flDuckAmount;
 	this->lastStaminaValue = this->player->GetMoveServices()->m_flStamina;
+	this->lastDuckTimeValue = this->player->GetMoveServices()->m_flLastDuckTime;
+	this->lastLandedTickValue = this->player->GetMoveServices()->m_ModernJump().m_nLastLandedTick;
 	this->player->SetVelocity(vec3_origin);
 	this->player->SetMoveType(MOVETYPE_NONE);
 	this->player->GetPlayerPawn()->SetGravityScale(0);
@@ -620,6 +628,16 @@ bool KZTimerService::CanPause(bool showError)
 
 	Vector velocity;
 	this->player->GetVelocity(&velocity);
+
+	if (velocity.Length2D() >= KZ_PAUSE_MAX_SPEED)
+	{
+		if (showError)
+		{
+			this->player->languageService->PrintChat(true, false, "Can't Pause (Too Fast)");
+			this->player->PlayErrorSound();
+		}
+		return false;
+	}
 
 	if (this->GetTimerRunning())
 	{
@@ -689,6 +707,8 @@ void KZTimerService::Resume(bool force)
 	}
 	this->player->GetMoveServices()->m_flDuckAmount = this->lastDuckValue;
 	this->player->GetMoveServices()->m_flStamina = this->lastStaminaValue;
+	this->player->GetMoveServices()->m_flLastDuckTime = this->lastDuckTimeValue;
+	this->player->GetMoveServices()->m_ModernJump().m_nLastLandedTick = this->lastLandedTickValue;
 
 	FOR_EACH_VEC(eventListeners, i)
 	{
@@ -863,6 +883,8 @@ void KZTimerService::Reset()
 	this->hasResumedInThisRun = {};
 	this->lastDuckValue = {};
 	this->lastStaminaValue = {};
+	this->lastDuckTimeValue = {};
+	this->lastLandedTickValue = {};
 	this->validJump = {};
 	this->lastInvalidateTime = {};
 	this->touchedGroundSinceTouchingStartZone = {};
@@ -952,6 +974,8 @@ void KZTimerService::OnPlayerSpawn()
 	}
 	this->player->GetMoveServices()->m_flDuckAmount = this->lastDuckValue;
 	this->player->GetMoveServices()->m_flStamina = this->lastStaminaValue;
+	this->player->GetMoveServices()->m_flLastDuckTime = this->lastDuckTimeValue;
+	this->player->GetMoveServices()->m_ModernJump().m_nLastLandedTick = this->lastLandedTickValue;
 
 	FOR_EACH_VEC(eventListeners, i)
 	{
@@ -1249,6 +1273,18 @@ void KZTimerService::UpdateLocalRecordCache()
 		}
 	};
 	KZDatabaseService::QueryAllRecords(g_pKZUtils->GetCurrentMapName(), onQuerySuccess, KZDatabaseService::OnGenericTxnFailure);
+}
+
+const PBData *KZTimerService::GetGlobalCachedRecord(const KZCourseDescriptor *course, PluginId modeID)
+{
+	PBDataKey key = ToPBDataKey(modeID, course->guid);
+
+	if (KZTimerService::wrCache.find(key) == KZTimerService::wrCache.end())
+	{
+		return nullptr;
+	}
+
+	return &KZTimerService::wrCache[key];
 }
 
 void KZTimerService::InsertRecordToCache(f64 time, const KZCourseDescriptor *course, PluginId modeID, bool overall, bool global, CUtlString metadata)
@@ -1706,9 +1742,10 @@ void KZTimerService::Init()
 {
 	KZDatabaseService::RegisterEventListener(&databaseEventListener);
 	KZOptionService::RegisterEventListener(&optionEventListener);
+	KZTimerService::RegisterMenu();
 }
 
-void KZTimerService::OnPlayerPreferencesLoaded()
+void KZTimerService::ApplyPreferences()
 {
 	if (this->player->optionService->GetPreferenceInt("preferredCompareType", COMPARE_GPB) > COMPARETYPE_COUNT)
 	{
