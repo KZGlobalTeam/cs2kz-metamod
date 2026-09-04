@@ -1822,6 +1822,7 @@
 	"Command Description - kz_mhud"
 	{
 		"en"		"Configure the HUD. Usage: kz_mhud <speed|prespeed|timer|keys> [property] [value...]"
+		"chi"		"配置HUD. 用法: kz_mhud <speed|prespeed|timer|keys> [属性] [值...]"
 		"ua"		"Налаштувати HUD. Використання: kz_mhud <speed|prespeed|timer|keys> [властивість] [значення...]"
 		"ru"		"Настроить HUD. Применение: kz_mhud <speed|prespeed|timer|keys> [свойство] [значение...]"
 		"ko"		"HUD를 설정합니다. 사용법: kz_mhud <speed|prespeed|timer|keys> [속성] [값...]"

@@ -902,6 +902,7 @@
 	{
 		"#format"	"value:.2f"
 		"en"		" | {value} LandEdge"
+		"chi"		" | {value} 落地边缘"
 		"ru"		" | {value} Остаток"
 		"ua"		" | {value} Край"
 		"ko"		" | {value} 착지 엣지"
@@ -960,6 +961,7 @@
 	"Jumpstat Report - Console Graph - Strafe Keys"
 	{
 		"en"		"Strafe keys:"
+		"chi"		"加速按键:"
 		"ru"		"Кнопки:"
 		"ua"		"Клавіші:"
 		"ko"		"스트레이프 키:"
@@ -967,6 +969,7 @@
 	"Jumpstat Report - Console Graph - Mouse Movement"
 	{
 		"en"		"Mouse movement:"
+		"chi"		"鼠标移动:"
 		"ru"		"Движения мыши:"
 		"ua"		"Рухи миші:"
 		"ko"		"마우스 움직임:"
@@ -975,6 +978,7 @@
 	{
 		"#format"	"value:s"
 		"en"		"L: {value}"
+		"chi"		"左: {value}"
 		"ru"		"L: {value}"
 		"ua"		"L: {value}"
 		"ko"		"L: {value}"
@@ -983,6 +987,7 @@
 	{
 		"#format"	"value:s"
 		"en"		"R: {value}"
+		"chi"		"右: {value}"
 		"ru"		"R: {value}"
 		"ua"		"R: {value}"
 		"ko"		"R: {value}"

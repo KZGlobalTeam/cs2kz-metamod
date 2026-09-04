@@ -402,6 +402,7 @@
 	"Replay - Invalid Manual Replay Duration"
 	{
 		"en"		"{darkred}Invalid duration. Must be at least 1 second."
+		"chi"		"{darkred}无效的时长. 必须至少为 1 秒."
 	}
 	"Replay - Manual Replay Saved"
 	{
