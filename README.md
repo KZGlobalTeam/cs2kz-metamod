@@ -11,13 +11,13 @@ Automated translation linter reports for cs2kz-metamod.
 | **Total Languages** | 13 |
 | **Total Phrases** | 799 |
 | **Phrases Missing Translations** | 583 |
-| **Total Missing Entries** | 4006 |
+| **Total Missing Entries** | 3859 |
 | **Menu Files** | 11 |
 
 ## Language Coverage (Phrases)
 
 ```
-  chi (schinese)       [████████████████░░░░]  81.6% (652/799)
+  chi (schinese)       [████████████████████] 100.0% (799/799)
   de (german)          [████████████░░░░░░░░]  64.2% (513/799)
   en (english)         [████████████████████] 100.0% (799/799)
   es (spanish)         [████████████░░░░░░░░]  61.3% (490/799)
@@ -79,9 +79,9 @@ Automated translation linter reports for cs2kz-metamod.
 
 ## Last Updated
 
-- **Commit:** [`bde8b06`](https://github.com/KZGlobalTeam/cs2kz-metamod/commit/bde8b06b30d459bf280cee250e9d92417f4201ce)
-- **Time:** 2026-09-04 03:52:17 UTC
-- **Message:** Take advantage of layout-based HUD, remove ClientCvarValue dependency (#611)
+- **Commit:** [`000b4b1`](https://github.com/KZGlobalTeam/cs2kz-metamod/commit/000b4b171dde9a0ec3672b0f2a5228217181d799)
+- **Time:** 2026-09-04 20:28:01 UTC
+- **Message:** Update Chinese translations (#613)
 
 ---
 
