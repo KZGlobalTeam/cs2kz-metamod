@@ -403,6 +403,7 @@
 	{
 		"en"		"{darkred}Invalid duration. Must be at least 1 second."
 		"chi"		"{darkred}无效的时长. 必须至少为 1 秒."
+		"ua"		"{darkred}Невірна тривалість. Має бути не менше 1 секунди."
 	}
 	"Replay - Manual Replay Saved"
 	{

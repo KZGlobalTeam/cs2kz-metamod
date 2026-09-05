@@ -95,6 +95,7 @@
 		"#format"	"time:.2f"
 		"en"		"{grey}Please wait {default}{time}{grey} seconds before using another command."
 		"chi"		"{grey}请稍等 {default}{time}{grey} 秒后再使用另一个指令."
+		"ua"		"{grey}Будь ласка, зачекайте {default}{time}{grey} секунд перед викорстанням наступної команди."
 	}
 	"Beta Join Warning"
 	{

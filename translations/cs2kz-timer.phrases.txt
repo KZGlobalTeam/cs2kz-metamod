@@ -60,6 +60,7 @@
 		"#format"	"player_name:s,map_name:s,course_name:s,time:s,mode_style_text:s,tp_count_text:s"
 		"en"		"{lime}{player_name} {grey}finished {default}{course_name}{grey} on {default}{map_name}{grey} in {default}{time}{grey} | {mode_style_text} | {tp_count_text}"
 		"chi"		"{lime}{player_name} {grey}在 {default}{map_name}{grey} ({default}{course_name}{grey}) 中完成, 用时 {default}{time}{grey} | {mode_style_text} | {tp_count_text}"
+		"ua"		"{lime}{player_name} {grey}завершив {default}{course_name}{grey} на {default}{map_name}{grey} за {default}{time}{grey} | {mode_style_text} | {tp_count_text}"
 	}
 
 	"Beat Course Info - Local (TP)"
@@ -247,6 +248,7 @@
 	{
 		"en"		"{darkred}You can't pause while moving this fast."
 		"chi"		"{darkred}速度过快, 你现在不能暂停."
+		"ua"		"{darkred}Ви не можете поставити на паузу, рухаючись так швидко."
 	}
 	"Can't Pause (Just Landed)"
 	{

@@ -5,714 +5,858 @@
 	{
 		"en"		"Options"
 		"chi"		"选项"
+		"ua"		"Опції"
 	}
 	"Menu - HUD"
 	{
 		"en"		"HUD"
 		"chi"		"HUD"
+		"ua"		"HUD"
 	}
 	"Menu - On"
 	{
 		"en"		"ON"
 		"chi"		"开"
+		"ua"		"УВІМК."
 	}
 	"Menu - Off"
 	{
 		"en"		"OFF"
 		"chi"		"关"
+		"ua"		"ВИМК."
 	}
 	"Menu - Panel"
 	{
 		"en"		"Panel"
 		"chi"		"面板"
+		"ua"		"Панель"
 	}
 	"Menu - Compact"
 	{
 		"en"		"Compact"
 		"chi"		"紧凑"
+		"ua"		"Компактна"
 	}
 	"Menu - Crosshair"
 	{
 		"en"		"Virtual crosshair"
 		"chi"		"虚拟准星"
+		"ua"		"Віртуальний приціл"
 	}
 	"Menu - Compact Sub"
 	{
 		"en"		"Legacy panel only"
 		"chi"		"仅限旧版面板"
+		"ua"		"Тільки панель Legacy"
 	}
 	"Menu - Outline"
 	{
 		"en"		"Outline"
 		"chi"		"轮廓"
+		"ua"		"Контур"
 	}
 	"Menu - Font"
 	{
 		"en"		"Font"
 		"chi"		"字体"
+		"ua"		"Шрифт"
 	}
 	"Menu - Font Local Note"
 	{
 		"en"		"* depends on your local font installation"
 		"chi"		"* 取决于你本地安装的字体"
+		"ua"		"* залежить від вашого локального встановлення шрифту"
 	}
 	"Menu - Enabled"
 	{
 		"en"		"Enabled"
 		"chi"		"已启用"
+		"ua"		"Увімкнено"
 	}
 	"Menu - Position"
 	{
 		"en"		"Position"
 		"chi"		"位置"
+		"ua"		"Позиція"
 	}
 	"Menu - Size"
 	{
 		"en"		"Size"
 		"chi"		"大小"
+		"ua"		"Розмір"
 	}
 	"Menu - Reset"
 	{
 		"en"		"Reset to defaults"
 		"chi"		"重置为默认值"
+		"ua"		"Скинути до типових значень"
 	}
 	"Menu - Timer"
 	{
 		"en"		"Timer"
 		"chi"		"计时器"
+		"ua"		"Таймер"
 	}
 	"Menu - Prespeed"
 	{
 		"en"		"Prespeed"
 		"chi"		"地速"
+		"ua"		"Пре-швидкість"
 	}
 	"Menu - Keys"
 	{
 		"en"		"Keys"
 		"chi"		"按键"
+		"ua"		"Клавіші"
 	}
 	"Menu - Timer Detail"
 	{
 		"en"		"Show hundredths"
 		"chi"		"显示百分位"
+		"ua"		"Показувати соті секунди"
 	}
 	"Menu - Keys Overlap"
 	{
 		"en"		"Overlap warning"
 		"chi"		"按键重叠警告"
+		"ua"		"Попередження про Overlap"
 	}
 	"Menu - Color Base"
 	{
 		"en"		"Color"
 		"chi"		"颜色"
+		"ua"		"Колір"
 	}
 	"Menu - Color CJ"
 	{
 		"en"		"Crouch jump color"
 		"chi"		"蹲跳颜色"
+		"ua"		"Колір Crouch jump"
 	}
 	"Menu - Color Perf"
 	{
 		"en"		"Perf color"
 		"chi"		"Perf 颜色"
+		"ua"		"Колір Perf"
 	}
 	"Menu - Color Jumpbug"
 	{
 		"en"		"Jumpbug color"
 		"chi"		"Jumpbug 颜色"
+		"ua"		"Колір Jumpbug"
 	}
 	"Menu - Color Pro"
 	{
 		"en"		"PRO color"
 		"chi"		"PRO 颜色"
+		"ua"		"Колір PRO"
 	}
 	"Menu - Color TP"
 	{
 		"en"		"TP color"
 		"chi"		"传送颜色"
+		"ua"		"Колір TP"
 	}
 	"Menu - Color Paused"
 	{
 		"en"		"Paused color"
 		"chi"		"暂停颜色"
+		"ua"		"Колір паузи"
 	}
 	"Menu - Color Stopped"
 	{
 		"en"		"Stopped color"
 		"chi"		"停止颜色"
+		"ua"		"Колір зупинки таймера"
 	}
 	"Menu - Misc"
 	{
 		"en"		"General"
 		"chi"		"通用"
+		"ua"		"Загальне"
 	}
 	"Menu - General"
 	{
 		"en"		"General"
 		"chi"		"通用"
+		"ua"		"Загальне"
 	}
 	"Menu - Menu"
 	{
 		"en"		"Menu"
 		"chi"		"菜单"
+		"ua"		"Меню"
 	}
 	"Menu - Style"
 	{
 		"en"		"Style"
 		"chi"		"风格"
+		"ua"		"Стиль"
 	}
 	"Menu - Style Layout"
 	{
 		"en"		"Layout"
 		"chi"		"布局"
+		"ua"		"Розташування"
 	}
 	"Menu - Style Legacy"
 	{
 		"en"		"Legacy"
 		"chi"		"旧版"
+		"ua"		"Legacy"
 	}
 	"Menu - Checkpoint"
 	{
 		"en"		"Checkpoints"
 		"chi"		"存点"
+		"ua"		"Чекпоінти"
 	}
 	"Menu - Reset All"
 	{
 		"en"		"Reset everything to defaults"
 		"chi"		"全部重置为默认值"
+		"ua"		"Скинути все до типових значень"
 	}
 	"Menu - Keys Unpressed"
 	{
 		"en"		"Unpressed keys"
+		"ua"		"Не натиснуті клавіші"
 	}
 	"Menu - Keys Unpressed Show"
 	{
 		"en"		"Show"
+		"ua"		"Показати"
 	}
 	"Menu - Keys Unpressed Hide"
 	{
 		"en"		"Hide"
+		"ua"		"Приховати"
 	}
 	"Menu - Keys Unpressed Underscore"
 	{
 		"en"		"Underscore"
+		"ua"		"Підкреслювати"
 	}
 	"Menu - Keys Letters"
 	{
 		"en"		"Use WASD letters"
 		"chi"		"使用 WASD 字母"
+		"ua"		"Використовувати літери WASD"
 	}
 	"Menu - Keys Square"
 	{
 		"en"		"Square keys"
 		"chi"		"方形按键"
+		"ua"		"Квадратні клавіші"
 	}
 	"Menu - Keys Border"
 	{
 		"en"		"Key borders"
+		"ua"		"Контури клавіш"
 	}
 	"Menu - Keys Glow"
 	{
 		"en"		"Key glow"
+		"ua"		"Підсвітка клавіш"
 	}
 	"Menu - Sounds"
 	{
 		"en"		"Menu sounds"
+		"ua"		"Меню звуків"
 	}
 	"Menu - Color"
 	{
 		"en"		"Color"
 		"chi"		"颜色"
+		"ua"		"Колір"
 	}
 	"Menu - Color Overlap"
 	{
 		"en"		"Overlap color"
 		"chi"		"重叠颜色"
+		"ua"		"Колір перекриття"
 	}
 	"Menu - Color Glow"
 	{
 		"en"		"Glow color"
+		"ua"		"Колір світіння"
 	}
 	"Menu - Mode"
 	{
 		"en"		"Mode"
 		"chi"		"模式"
+		"ua"		"Режим"
 	}
 	"Menu - Pistol"
 	{
 		"en"		"Pistol"
 		"chi"		"手枪"
+		"ua"		"Пістолет"
 	}
 	"Menu - Beam Offset"
 	{
 		"en"		"Beam offset"
 		"chi"		"光束偏移"
+		"ua"		"Зсув променя"
 	}
 	"Menu - Beam Offset Sub"
 	{
 		"en"		"Use !beamoffset for a finer value"
 		"chi"		"使用 !beamoffset 进行更精细的调整"
+		"ua"		"Використовуйте !beamoffset для точнішого значення"
 	}
 	"Menu - Styles"
 	{
 		"en"		"Styles"
 		"chi"		"风格"
+		"ua"		"Стилі"
 	}
 	"Menu - Lang en"
 	{
 		"en"		"English"
 		"chi"		"English"
+		"ua"		"English"
 	}
 	"Menu - Lang ar"
 	{
 		"en"		"العربية"
 		"chi"		"العربية"
+		"ua"		"العربية"
 	}
 	"Menu - Lang pt"
 	{
 		"en"		"Português (Brasil)"
 		"chi"		"Português (Brasil)"
+		"ua"		"Português (Brasil)"
 	}
 	"Menu - Lang bg"
 	{
 		"en"		"Български"
 		"chi"		"Български"
+		"ua"		"Български"
 	}
 	"Menu - Lang cze"
 	{
 		"en"		"Čeština"
 		"chi"		"Čeština"
+		"ua"		"Čeština"
 	}
 	"Menu - Lang da"
 	{
 		"en"		"Dansk"
 		"chi"		"Dansk"
+		"ua"		"Dansk"
 	}
 	"Menu - Lang nl"
 	{
 		"en"		"Nederlands"
 		"chi"		"Nederlands"
+		"ua"		"Nederlands"
 	}
 	"Menu - Lang fi"
 	{
 		"en"		"Suomi"
 		"chi"		"Suomi"
+		"ua"		"Suomi"
 	}
 	"Menu - Lang fr"
 	{
 		"en"		"Français"
 		"chi"		"Français"
+		"ua"		"Français"
 	}
 	"Menu - Lang de"
 	{
 		"en"		"Deutsch"
 		"chi"		"Deutsch"
+		"ua"		"Deutsch"
 	}
 	"Menu - Lang el"
 	{
 		"en"		"Ελληνικά"
 		"chi"		"Ελληνικά"
+		"ua"		"Ελληνικά"
 	}
 	"Menu - Lang he"
 	{
 		"en"		"עברית"
 		"chi"		"עברית"
+		"ua"		"עברית"
 	}
 	"Menu - Lang hu"
 	{
 		"en"		"Magyar"
 		"chi"		"Magyar"
+		"ua"		"Magyar"
 	}
 	"Menu - Lang it"
 	{
 		"en"		"Italiano"
 		"chi"		"Italiano"
+		"ua"		"Italiano"
 	}
 	"Menu - Lang jp"
 	{
 		"en"		"日本語"
 		"chi"		"日本語"
+		"ua"		"日本語"
 	}
 	"Menu - Lang ko"
 	{
 		"en"		"한국어"
 		"chi"		"한국어"
+		"ua"		"한국어"
 	}
 	"Menu - Lang lv"
 	{
 		"en"		"Latviešu"
 		"chi"		"Latviešu"
+		"ua"		"Latviešu"
 	}
 	"Menu - Lang lt"
 	{
 		"en"		"Lietuvių"
 		"chi"		"Lietuvių"
+		"ua"		"Lietuvių"
 	}
 	"Menu - Lang no"
 	{
 		"en"		"Norsk"
 		"chi"		"Norsk"
+		"ua"		"Norsk"
 	}
 	"Menu - Lang pl"
 	{
 		"en"		"Polski"
 		"chi"		"Polski"
+		"ua"		"Polski"
 	}
 	"Menu - Lang pt_p"
 	{
 		"en"		"Português"
 		"chi"		"Português"
+		"ua"		"Português"
 	}
 	"Menu - Lang ro"
 	{
 		"en"		"Română"
 		"chi"		"Română"
+		"ua"		"Română"
 	}
 	"Menu - Lang ru"
 	{
 		"en"		"Русский"
 		"chi"		"Русский"
+		"ua"		"Русский"
 	}
 	"Menu - Lang chi"
 	{
 		"en"		"简体中文"
 		"chi"		"简体中文"
+		"ua"		"简体中文"
 	}
 	"Menu - Lang sk"
 	{
 		"en"		"Slovenčina"
 		"chi"		"Slovenčina"
+		"ua"		"Slovenčina"
 	}
 	"Menu - Lang es"
 	{
 		"en"		"Español"
 		"chi"		"Español"
+		"ua"		"Español"
 	}
 	"Menu - Lang sv"
 	{
 		"en"		"Svenska"
 		"chi"		"Svenska"
+		"ua"		"Svenska"
 	}
 	"Menu - Lang zho"
 	{
 		"en"		"繁體中文"
 		"chi"		"繁體中文"
+		"ua"		"繁體中文"
 	}
 	"Menu - Lang th"
 	{
 		"en"		"ไทย"
 		"chi"		"ไทย"
+		"ua"		"ไทย"
 	}
 	"Menu - Lang tr"
 	{
 		"en"		"Türkçe"
 		"chi"		"Türkçe"
+		"ua"		"Türkçe"
 	}
 	"Menu - Lang ua"
 	{
 		"en"		"Українська"
 		"chi"		"Українська"
+		"ua"		"Українська"
 	}
 	"Menu - Lang vi"
 	{
 		"en"		"Tiếng Việt"
 		"chi"		"Tiếng Việt"
+		"ua"		"Tiếng Việt"
 	}
 	"Menu - Language"
 	{
 		"en"		"Language"
 		"chi"		"语言"
+		"ua"		"Мова"
 	}
 	"Menu - Beam"
 	{
 		"en"		"Player beam"
 		"chi"		"玩家光束"
+		"ua"		"Промінь гравця"
 	}
 	"Menu - Beam None"
 	{
 		"en"		"Off"
 		"chi"		"关闭"
+		"ua"		"Вимк."
 	}
 	"Menu - Beam Ground"
 	{
 		"en"		"Ground"
 		"chi"		"地面"
+		"ua"		"Земля"
 	}
 	"Menu - Beam Feet"
 	{
 		"en"		"Feet"
 		"chi"		"脚下"
+		"ua"		"Ноги"
 	}
 	"Menu - FOV"
 	{
 		"en"		"Field of view"
 		"chi"		"视野"
+		"ua"		"Поле зору (FOV)"
 	}
 	"Menu - Record Volume Sub"
 	{
 		"en"		"Use !recordvolume for a finer value"
 		"chi"		"使用 !recordvolume 进行更精细的调整"
+		"ua"		"Використовуйте !recordvolume для точнішого значення"
 	}
 	"Menu - JS Volume Sub"
 	{
 		"en"		"Use !jsvolume for a finer value"
 		"chi"		"使用 !jsvolume 进行更精细的调整"
+		"ua"		"Використовуйте !jsvolume для точнішого значення"
 	}
 	"Menu - Record Volume"
 	{
 		"en"		"Record sound volume"
 		"chi"		"记录音效音量"
+		"ua"		"Гучність звуку рекорду"
 	}
 	"Menu - JS Volume"
 	{
 		"en"		"Jumpstats sound volume"
 		"chi"		"起跳提示音音量"
+		"ua"		"Гучність звуку статистики стрибків"
 	}
 	"Menu - Timer Category"
 	{
 		"en"		"Timer"
 		"chi"		"计时器"
+		"ua"		"Таймер"
 	}
 	"Menu - Map Overlay"
 	{
 		"en"		"Map overlay integration"
 		"chi"		"地图叠加层集成"
+		"ua"		"Інтеграція оверлею мапи"
 	}
 	"Menu - Timer Stop Sound"
 	{
 		"en"		"Timer stop sound"
 		"chi"		"计时器停止音效"
+		"ua"		"Звук зупинки таймера"
 	}
 	"Menu - Safeguard"
 	{
 		"en"		"Safeguard"
 		"chi"		"安全防护"
+		"ua"		"Захист"
 	}
 	"Menu - Safeguard Off"
 	{
 		"en"		"Off"
 		"chi"		"关闭"
+		"ua"		"Вимкнено"
 	}
 	"Menu - Safeguard Nub"
 	{
 		"en"		"On (NUB)"
 		"chi"		"开 (NUB)"
+		"ua"		"Увімкнено (NUB)"
 	}
 	"Menu - Safeguard Pro"
 	{
 		"en"		"On (PRO)"
 		"chi"		"开 (PRO)"
+		"ua"		"Увімкнено (PRO)"
 	}
 	"Menu - Compare"
 	{
 		"en"		"Split comparison"
 		"chi"		"分段比较"
+		"ua"		"Порівняння сплітів"
 	}
 	"Menu - Compare None"
 	{
 		"en"		"Off"
 		"chi"		"关闭"
+		"ua"		"Вимкнено"
 	}
 	"Menu - Compare Local PB"
 	{
 		"en"		"Local PB"
 		"chi"		"本地个人最佳"
+		"ua"		"Локальний PB"
 	}
 	"Menu - Compare Global PB"
 	{
 		"en"		"Global PB"
 		"chi"		"全球个人最佳"
+		"ua"		"Глобальний PB"
 	}
 	"Menu - Compare Server Record"
 	{
 		"en"		"Server record"
 		"chi"		"服务器纪录"
+		"ua"		"Серверний рекорд"
 	}
 	"Menu - Compare World Record"
 	{
 		"en"		"World record"
 		"chi"		"世界纪录"
+		"ua"		"Світовий рекорд"
 	}
 	"Menu - Jumpstats"
 	{
 		"en"		"Jumpstats"
 		"chi"		"起跳数据"
+		"ua"		"Статистика стрибків"
 	}
 	"Menu - JS Reporting"
 	{
 		"en"		"Report my jumps"
 		"chi"		"报告我的跳跃"
+		"ua"		"Повідомляти про мої стрибки"
 	}
 	"Menu - JS Always"
 	{
 		"en"		"Report every jump"
 		"chi"		"报告每次跳跃"
+		"ua"		"Повідомляти про кожен стрибок"
 	}
 	"Menu - JS Extended Stats"
 	{
 		"en"		"Extended chat stats"
 		"chi"		"聊天栏扩展统计"
+		"ua"		"Розширена статистика в чаті"
 	}
 	"Menu - JS Failstats"
 	{
 		"en"		"Failstats"
 		"chi"		"失败统计"
+		"ua"		"Статистика провалених стрибків"
 	}
 	"Menu - JS Failstats Console"
 	{
 		"en"		"Failstats in console"
 		"chi"		"控制台失败统计"
+		"ua"		"Статистика невдалих стрибків в консолі"
 	}
 	"Menu - JS Min Tier"
 	{
 		"en"		"Minimum chat tier"
 		"chi"		"聊天框跳跃数据最低等级"
+		"ua"		"Мінімальний поріг стрибку для відображення в чаті"
 	}
 	"Menu - JS Min Tier Console"
 	{
 		"en"		"Minimum console tier"
 		"chi"		"控制台跳跃数据最低等级"
+		"ua"		"Мінімальний поріг стрибку для відображення в консолі"
 	}
 	"Menu - JS Sound Min Tier"
 	{
 		"en"		"Minimum sound tier"
 		"chi"		"跳跃提示音最低等级"
+		"ua"		"Мінімальний поріг стрибку для відтворення звукового ефекту"
 	}
 	"Menu - JS Broadcast Min Tier"
 	{
 		"en"		"Minimum broadcast tier"
 		"chi"		"广播跳跃数据最低等级"
+		"ua"		"Мінімальний поріг стрибку для трансляції в чаті"
 	}
 	"Menu - JS Broadcast Min Tier Console"
 	{
 		"en"		"Minimum broadcast console tier"
 		"chi"		"控制台广播跳跃数据最低等级"
+		"ua"		"Мінімальний поріг стрибку для трансляції в консолі"
 	}
 	"Menu - JS Broadcast Sound Min Tier"
 	{
 		"en"		"Minimum broadcast sound tier"
 		"chi"		"广播跳跃数据音效最低等级"
+		"ua"		"Мінімальний поріг стрибку для трансляції звукового ефекту"
 	}
 	"Menu - Tier None"
 	{
 		"en"		"None"
 		"chi"		"无"
+		"ua"		"Жоден"
 	}
 	"Menu - Tier Meh"
 	{
 		"en"		"Meh"
 		"chi"		"Meh"
+		"ua"		"Meh"
 	}
 	"Menu - Tier Impressive"
 	{
 		"en"		"Impressive"
 		"chi"		"Impressive"
+		"ua"		"Impressive"
 	}
 	"Menu - Tier Perfect"
 	{
 		"en"		"Perfect"
 		"chi"		"Perfect"
+		"ua"		"Perfect"
 	}
 	"Menu - Tier Godlike"
 	{
 		"en"		"Godlike"
 		"chi"		"Godlike"
+		"ua"		"Godlike"
 	}
 	"Menu - Tier Ownage"
 	{
 		"en"		"Ownage"
 		"chi"		"Ownage"
+		"ua"		"Ownage"
 	}
 	"Menu - Tier Wrecker"
 	{
 		"en"		"Wrecker"
 		"chi"		"Wrecker"
+		"ua"		"Wrecker"
 	}
 	"Menu - Checkpoints"
 	{
 		"en"		"Checkpoints"
 		"chi"		"存点"
+		"ua"		"Чекпоінти"
 	}
 	"Menu - Checkpoint Message"
 	{
 		"en"		"Checkpoint messages"
 		"chi"		"存点消息"
+		"ua"		"Повідомлення про чекпоінти"
 	}
 	"Menu - Checkpoint Sound"
 	{
 		"en"		"Checkpoint sound"
 		"chi"		"存点音效"
+		"ua"		"Звук чекпоінту"
 	}
 	"Menu - Teleport Sound"
 	{
 		"en"		"Teleport sound"
 		"chi"		"传送音效"
+		"ua"		"Звук телепорту"
 	}
 	"Menu - Paint"
 	{
 		"en"		"Paint"
 		"chi"		"涂色"
+		"ua"		"Фарба"
 	}
 	"Menu - Paint Color Sub"
 	{
 		"en"		"Use !paintcolor <r> <g> <b> for an exact color"
 		"chi"		"使用 !paintcolor <r> <g> <b> 设置精确颜色"
+		"ua"		"Використовуйте !paintcolor <r> <g> <b> для точного кольору"
 	}
 	"Menu - Show All Paint"
 	{
 		"en"		"Show everyone's paint"
 		"chi"		"显示所有人的涂色"
+		"ua"		"Показати фарбу всіх гравців"
 	}
 	"Menu - Hide Other Players"
 	{
 		"en"		"Hide other players"
 		"chi"		"隐藏其他玩家"
+		"ua"		"Приховати інших гравців"
 	}
 	"Menu - Hide Weapon"
 	{
 		"en"		"Hide weapon"
 		"chi"		"隐藏武器"
+		"ua"		"Приховати зброю"
 	}
 	"Menu - Hide Legs"
 	{
 		"en"		"Hide legs"
 		"chi"		"隐藏腿部"
+		"ua"		"Приховати ноги"
 	}
 	"Menu - Show Tips"
 	{
 		"en"		"Show tips"
 		"chi"		"显示提示"
+		"ua"		"Показувати підказки"
 	}
 	"Menu - Export Prefs"
 	{
 		"en"		"Export preferences to console"
 		"chi"		"导出偏好设置到控制台"
+		"ua"		"Експортувати налаштування в консоль"
 	}
 	"Prefs - Export Header"
 	{
 		"en"		"----- CS2KZ preferences: paste the lines below into another server's console -----"
 		"chi"		"----- CS2KZ 偏好设置: 将以下行粘贴到其他服务器的控制台 -----"
+		"ua"		"----- Налаштування CS2KZ: вставте рядки нижче в консоль іншого сервера -----"
 	}
 	"Prefs - Export Footer"
 	{
 		"en"		"----- end. To stop a preference from following you, run: setinfo kzp_<name> \"\" -----"
 		"chi"		"----- 结束. 若要阻止某项偏好设置跟随你, 请运行: setinfo kzp_<name> \"\" -----"
+		"ua"		"----- кінець. Щоб зупинити відстеження налаштування, виконайте: setinfo kzp_<name> \"\" -----"
 	}
 	"Prefs - Exported"
 	{
 		"#format"	"count:d"
 		"en"		"{grey}Exported {default}{count}{grey} preferences to your console."
 		"chi"		"{grey}已将 {default}{count}{grey} 项偏好设置导出到你的控制台."
+		"ua"		"{grey}Експортовано {default}{count}{grey} налаштувань у вашу консоль."
 	}
 	"Prefs - Imported"
 	{
 		"#format"	"count:d"
 		"en"		"{grey}Imported {default}{count}{grey} preferences."
 		"chi"		"{grey}已导入 {default}{count}{grey} 项偏好设置."
+		"ua"		"{grey}Імпортовано {default}{count}{grey} налаштувань."
 	}
 	"Menu - Unavailable"
 	{
 		"en"		"{grey}The options menu is currently unavailable."
 		"chi"		"{grey}选项菜单当前不可用."
+		"ua"		"{grey}Меню опцій наразі недоступне."
 	}
 }
