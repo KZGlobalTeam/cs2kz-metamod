@@ -507,7 +507,10 @@ void KZClassicModeService::CalcPrestrafe()
 		punishRate = g_pKZUtils->GetGlobals()->frametime * PS_DECREMENT_RATIO;
 	}
 
-	if (this->player->GetPlayerPawn()->m_fFlags & FL_ONGROUND)
+	bool perfEligible = g_pKZUtils->GetGlobals()->curtime - g_pKZUtils->GetGlobals()->frametime - this->player->landingTime <= BH_PERF_WINDOW
+						&& !this->player->possibleLadderHop;
+
+	if ((this->player->GetPlayerPawn()->m_fFlags & FL_ONGROUND) && !perfEligible)
 	{
 		// Prevent instant full pre from crouched prestrafe.
 		Vector velocity;
