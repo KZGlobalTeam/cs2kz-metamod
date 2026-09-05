@@ -115,6 +115,26 @@
 		"chi"		"显示百分位"
 		"ua"		"Показувати соті секунди"
 	}
+	"Menu - Affect Legacy Sub"
+	{
+		"en"		"Also affects the legacy HUD"
+	}
+	"Menu - Decimal"
+	{
+		"en"		"Two decimal places"
+	}
+	"Menu - Prespeed Brackets"
+	{
+		"en"		"Parentheses"
+	}
+	"Menu - Prespeed Hide Walk Off"
+	{
+		"en"		"Hide when walking off"
+	}
+	"Menu - Prespeed Hide Walk Off Sub"
+	{
+		"en"		"Only show prespeed after a jump or a ladder"
+	}
 	"Menu - Keys Overlap"
 	{
 		"en"		"Overlap warning"

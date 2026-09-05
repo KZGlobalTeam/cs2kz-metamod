@@ -112,6 +112,7 @@ void KZHUDService::RegisterMenu()
 	KZ::menu::SetItemPref(general, "hudLegacyStyle", KZOptStorage::Bool);
 	KZ::menu::AddActionToggle(general, "Menu - Panel", GetPanelState, TogglePanelState);
 	KZ::menu::SetItemPref(general, "showPanel", KZOptStorage::Bool);
+	KZ::menu::SetItemSubtext(general, "Menu - Affect Legacy Sub");
 	KZ::menu::AddActionToggle(general, "Menu - Crosshair", GetCrosshairState, ToggleCrosshairState);
 	KZ::menu::AddToggle(general, "Menu - Compact", "compactPanel", false);
 	KZ::menu::SetItemEnabledBy(general, "showPanel");
@@ -136,26 +137,54 @@ void KZHUDService::RegisterMenu()
 		KZ::menu::AddToggle(sub, "Menu - Outline", def.outlineKey, true);
 		KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
 
-		if (e == (i32)MHUDElement::Timer)
+		switch ((MHUDElement)e)
 		{
-			KZ::menu::AddToggle(sub, "Menu - Timer Detail", "mhudTimerDetailed", true);
-			KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
-		}
-		else if (e == (i32)MHUDElement::Keys)
-		{
-			KZ::menu::AddToggle(sub, "Menu - Keys Overlap", "mhudKeysOverlap", true);
-			KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
-			KZ::menu::AddChoice(sub, "Menu - Keys Unpressed", GetKeysIdleChoices, GetCurrentKeysIdle, PickKeysIdle);
-			KZ::menu::SetItemPref(sub, "mhudKeysIdle", KZOptStorage::Int);
-			KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
-			KZ::menu::AddToggle(sub, "Menu - Keys Letters", "mhudKeysLetters", false);
-			KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
-			KZ::menu::AddToggle(sub, "Menu - Keys Square", "mhudKeysSquare", false);
-			KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
-			KZ::menu::AddToggle(sub, "Menu - Keys Border", "mhudKeysBorder", true);
-			KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
-			KZ::menu::AddToggle(sub, "Menu - Keys Glow", "mhudKeysGlow", true);
-			KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
+			case MHUDElement::Timer:
+			{
+				KZ::menu::AddToggle(sub, "Menu - Timer Detail", "mhudTimerDetailed", true);
+				KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
+				break;
+			}
+
+			case MHUDElement::Speed:
+			{
+				KZ::menu::AddToggle(sub, "Menu - Decimal", "mhudSpeedPrecise", false);
+				KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
+				break;
+			}
+
+			case MHUDElement::Prespeed:
+			{
+				KZ::menu::AddToggle(sub, "Menu - Decimal", "mhudPrespeedPrecise", false);
+				KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
+				KZ::menu::AddToggle(sub, "Menu - Prespeed Brackets", "mhudPrespeedBrackets", false);
+				KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
+				KZ::menu::AddToggle(sub, "Menu - Prespeed Hide Walk Off", "mhudPrespeedHideWalkOff", false);
+				KZ::menu::SetItemSubtext(sub, "Menu - Prespeed Hide Walk Off Sub");
+				KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
+				break;
+			}
+
+			case MHUDElement::Keys:
+			{
+				KZ::menu::AddToggle(sub, "Menu - Keys Overlap", "mhudKeysOverlap", true);
+				KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
+				KZ::menu::AddChoice(sub, "Menu - Keys Unpressed", GetKeysIdleChoices, GetCurrentKeysIdle, PickKeysIdle);
+				KZ::menu::SetItemPref(sub, "mhudKeysIdle", KZOptStorage::Int);
+				KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
+				KZ::menu::AddToggle(sub, "Menu - Keys Letters", "mhudKeysLetters", false);
+				KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
+				KZ::menu::AddToggle(sub, "Menu - Keys Square", "mhudKeysSquare", false);
+				KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
+				KZ::menu::AddToggle(sub, "Menu - Keys Border", "mhudKeysBorder", true);
+				KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
+				KZ::menu::AddToggle(sub, "Menu - Keys Glow", "mhudKeysGlow", true);
+				KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
+				break;
+			}
+
+			default:
+				break;
 		}
 
 		KZ::menu::SetItemDivider(sub); // rule between the layout controls and the colors
@@ -168,6 +197,10 @@ void KZHUDService::RegisterMenu()
 			if (colors[i].solidOnly)
 			{
 				KZ::menu::SetItemSolidOnly(sub);
+			}
+			if (colors[i].affectLegacy)
+			{
+				KZ::menu::SetItemSubtext(sub, "Menu - Affect Legacy Sub");
 			}
 			KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
 			if (colors[i].enabledBy)

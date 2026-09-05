@@ -112,6 +112,7 @@ KZHUDService::SpeedInfo KZHUDService::GetSpeedInfo()
 	info.showTakeoff = true;
 	info.takeoffSpeed = this->player->takeoffVelocity.Length2D();
 	info.crouchJump = this->crouchJumping;
+	info.walkedOff = !this->player->jumped && !this->player->takeoffFromLadder;
 	if (this->player->IsPerfing() && !this->player->possibleLadderHop && !this->player->takeoffFromLadder)
 	{
 		info.jumpbug = this->fromDuckbug;

@@ -17,14 +17,14 @@ extern ICS2Menus *g_pMenus;
 std::string KZHUDService::GetSpeedText(const char *language)
 {
 	const SpeedInfo info = this->GetSpeedInfo();
-	if (!info.showTakeoff)
+	const MHUDPrefs &prefs = this->GetPrefs();
+	if (!info.showTakeoff || (prefs.prespeedHideWalkOff && info.walkedOff))
 	{
 		return KZLanguageService::PrepareMessageWithLang(language, "HUD - Speed Text", info.speed);
 	}
-	const MHUDPrefs &prefs = this->GetPrefs();
 	// The legacy HTML HUD prints a hex color, which a gradient has no equivalent for, so a gradient
 	// preference falls back to that element's default color (the shared MHUD_DEF_* the layout HUD uses).
-	const Color baseCol = panorama::ResolveSolidColor(prefs.speed, MHUD_DEF_BASE_COLOR);
+	const Color baseCol = panorama::ResolveSolidColor(prefs.prespeed, MHUD_DEF_BASE_COLOR);
 	const Color perfCol = panorama::ResolveSolidColor(prefs.prespeedPerf, MHUD_DEF_PERF_COLOR);
 	const Color jumpbugCol = panorama::ResolveSolidColor(prefs.prespeedJumpbug, MHUD_DEF_JUMPBUG_COLOR);
 	const Color cjCol = panorama::ResolveSolidColor(prefs.speedCj, MHUD_DEF_CJ_COLOR);

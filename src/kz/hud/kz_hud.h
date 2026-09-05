@@ -41,6 +41,8 @@ struct MHUDColorPrefDef
 	u8 r, g, b;
 	bool solidOnly {};
 	const char *enabledBy {};
+	// The legacy HTML HUD tints its speed line from these, so they are not layout-only like the rest.
+	bool affectLegacy {};
 };
 
 extern const MHUDElementDef MHUD_ELEMENTS[(i32)MHUDElement::Count];
@@ -106,6 +108,10 @@ struct MHUDPrefs
 	bool compactPanel {};
 	bool crosshair {};
 	bool timerDetailed {true};
+	bool speedPrecise {};
+	bool prespeedPrecise {};
+	bool prespeedBrackets {};
+	bool prespeedHideWalkOff {};
 	bool keysOverlapEnabled {true};
 	bool keysLetters {};
 	bool keysSquare {};
@@ -237,6 +243,7 @@ private:
 		bool perf {};
 		bool jumpbug {};
 		bool crouchJump {};
+		bool walkedOff {}; // left the ground without jumping and not off a ladder
 	};
 
 	// Shared by the HTML panel and the MHUD layout so the two never disagree about a takeoff.

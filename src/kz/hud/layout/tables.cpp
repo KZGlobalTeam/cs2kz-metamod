@@ -22,15 +22,15 @@ static_global constexpr MHUDColorPrefDef TIMER_COLOR_PREFS[] =
 
 static_global constexpr MHUDColorPrefDef SPEED_COLOR_PREFS[] =
 {
-	{"Menu - Color Base",     "mhudSpeedColor",        0xFF, 0xFF, 0xFF},
-	{"Menu - Color CJ",       "mhudSpeedCjColor",      0x71, 0xEE, 0xB8},
+	{"Menu - Color Base",     "mhudSpeedColor",        0xFF, 0xFF, 0xFF, false, NULL, true},
+	{"Menu - Color CJ",       "mhudSpeedCjColor",      0x71, 0xEE, 0xB8, false, NULL, true},
 };
 
 static_global constexpr MHUDColorPrefDef PRESPEED_COLOR_PREFS[] =
 {
-	{"Menu - Color Base",     "mhudPrespeedColor",         0xFF, 0xFF, 0xFF},
-	{"Menu - Color Perf",     "mhudPrespeedPerfColor",     0x40, 0xFF, 0x40},
-	{"Menu - Color Jumpbug",  "mhudPrespeedJumpbugColor",  0xFF, 0xFF, 0x20},
+	{"Menu - Color Base",     "mhudPrespeedColor",         0xFF, 0xFF, 0xFF, false, NULL, true},
+	{"Menu - Color Perf",     "mhudPrespeedPerfColor",     0x40, 0xFF, 0x40, false, NULL, true},
+	{"Menu - Color Jumpbug",  "mhudPrespeedJumpbugColor",  0xFF, 0xFF, 0x20, false, NULL, true},
 };
 
 static_global constexpr MHUDColorPrefDef KEYS_COLOR_PREFS[] =

@@ -51,22 +51,21 @@ void KZHUDService::UpdateTimerElement(CCSCustomHudLayout *layout, KZPlayer *sour
 	this->UpdateLayoutElement(layout, MHUDElement::Timer, show, text.c_str(), color, force);
 }
 
-// TODO: add preference for decimal places.
 void KZHUDService::UpdateSpeedElement(CCSCustomHudLayout *layout, const SpeedInfo &info, bool force)
 {
-	char text[16];
-	V_snprintf(text, sizeof(text), "%.0f", info.speed);
 	const MHUDPrefs &prefs = this->GetPrefs();
+	char text[16];
+	V_snprintf(text, sizeof(text), prefs.speedPrecise ? "%.2f" : "%.0f", info.speed);
 	const Color color = info.crouchJump ? prefs.speedCj : prefs.speed;
 	this->UpdateLayoutElement(layout, MHUDElement::Speed, this->IsMHUDElementEnabled(MHUDElement::Speed), text, color, force);
 }
 
-// TODO: add preference for decimal places.
 void KZHUDService::UpdatePrespeedElement(CCSCustomHudLayout *layout, const SpeedInfo &info, bool force)
 {
-	char text[16];
-	V_snprintf(text, sizeof(text), "%.0f", info.takeoffSpeed);
 	const MHUDPrefs &prefs = this->GetPrefs();
+	char text[16];
+	const char *format = prefs.prespeedBrackets ? (prefs.prespeedPrecise ? "(%.2f)" : "(%.0f)") : (prefs.prespeedPrecise ? "%.2f" : "%.0f");
+	V_snprintf(text, sizeof(text), format, info.takeoffSpeed);
 	Color color;
 	if (info.jumpbug)
 	{
@@ -80,7 +79,7 @@ void KZHUDService::UpdatePrespeedElement(CCSCustomHudLayout *layout, const Speed
 	{
 		color = prefs.prespeed;
 	}
-	const bool show = this->IsMHUDElementEnabled(MHUDElement::Prespeed) && info.showTakeoff;
+	const bool show = this->IsMHUDElementEnabled(MHUDElement::Prespeed) && info.showTakeoff && !(prefs.prespeedHideWalkOff && info.walkedOff);
 	this->UpdateLayoutElement(layout, MHUDElement::Prespeed, show, text, color, force);
 }
 

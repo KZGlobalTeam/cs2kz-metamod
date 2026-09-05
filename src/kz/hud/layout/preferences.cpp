@@ -38,6 +38,10 @@ void KZHUDService::RefreshPrefs()
 	this->prefs.compactPanel = opts->GetPreferenceBool("compactPanel", false);
 	this->prefs.crosshair = opts->GetPreferenceBool("mhudCrosshair", false);
 	this->prefs.timerDetailed = opts->GetPreferenceBool("mhudTimerDetailed", true);
+	this->prefs.speedPrecise = opts->GetPreferenceBool("mhudSpeedPrecise", false);
+	this->prefs.prespeedPrecise = opts->GetPreferenceBool("mhudPrespeedPrecise", false);
+	this->prefs.prespeedBrackets = opts->GetPreferenceBool("mhudPrespeedBrackets", false);
+	this->prefs.prespeedHideWalkOff = opts->GetPreferenceBool("mhudPrespeedHideWalkOff", false);
 	this->prefs.keysOverlapEnabled = opts->GetPreferenceBool("mhudKeysOverlap", true);
 	this->prefs.keysLetters = opts->GetPreferenceBool("mhudKeysLetters", false);
 	this->prefs.keysSquare = opts->GetPreferenceBool("mhudKeysSquare", false);
