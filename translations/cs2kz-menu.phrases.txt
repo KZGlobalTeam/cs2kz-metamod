@@ -129,7 +129,7 @@
 	}
 	"Menu - Decimal"
 	{
-		"en"		"Two decimal places"
+		"en"		"Use decimal places"
 	}
 	"Menu - Prespeed Brackets"
 	{
