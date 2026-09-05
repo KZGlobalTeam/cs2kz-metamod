@@ -118,30 +118,37 @@
 	"Menu - Affect Legacy Sub"
 	{
 		"en"		"Also affects the legacy HUD"
+		"ua"		"Також впливає на Legacy HUD"
 	}
 	"Menu - Crosshair Scale"
 	{
 		"en"		"Crosshair scale"
+		"ua"		"Масштаб прицілу"
 	}
 	"Menu - Crosshair Scale Sub"
 	{
 		"en"		"Pick the one matching your resolution"
+		"ua"		"Виберіть той, що відповідає роздільній здатності вашого екрану"
 	}
 	"Menu - Decimal"
 	{
 		"en"		"Use decimal places"
+		"ua"		"Використовувати десяткові знаки"
 	}
 	"Menu - Prespeed Brackets"
 	{
 		"en"		"Parentheses"
+		"ua"		"Дужки"
 	}
 	"Menu - Prespeed Hide Walk Off"
 	{
 		"en"		"Hide when walking off"
+		"ua"		"Приховувати при сходженні з платформи"
 	}
 	"Menu - Prespeed Hide Walk Off Sub"
 	{
 		"en"		"Only show prespeed after a jump or a ladder"
+		"ua"		"Показувати пре-швидкість лише після стрибка або драбини"
 	}
 	"Menu - Keys Overlap"
 	{
@@ -225,7 +232,7 @@
 	{
 		"en"		"Layout"
 		"chi"		"布局"
-		"ua"		"Розташування"
+		"ua"		"Компонування (mhud стиль)"
 	}
 	"Menu - Style Legacy"
 	{
@@ -285,10 +292,12 @@
 	"Menu - Keys Fill"
 	{
 		"en"		"Key fill"
+		"ua"		"Заливка клавіш"
 	}
 	"Menu - Opacity"
 	{
 		"en"		"Opacity"
+		"ua"		"Непрозорість"
 	}
 	"Menu - Keys Glow"
 	{
@@ -298,11 +307,12 @@
 	"Menu - Sounds"
 	{
 		"en"		"Menu sounds"
-		"ua"		"Меню звуків"
+		"ua"		"Звуки в меню"
 	}
 	"Menu - Popup Shift"
 	{
 		"en"		"Shift menu for popups"
+		"ua"		"Зсув меню для спливаючих вікон"
 	}
 	"Menu - Color"
 	{
@@ -319,6 +329,7 @@
 	"Menu - Color Pressed"
 	{
 		"en"		"Pressed color"
+		"ua"		"Колір натиснутої клавіші"
 	}
 	"Menu - Mode"
 	{
@@ -624,7 +635,7 @@
 	{
 		"en"		"Safeguard"
 		"chi"		"安全防护"
-		"ua"		"Захист"
+		"ua"		"Захист (Safeguard)"
 	}
 	"Menu - Safeguard Off"
 	{
@@ -672,7 +683,7 @@
 	{
 		"en"		"Server record"
 		"chi"		"服务器纪录"
-		"ua"		"Серверний рекорд"
+		"ua"		"Рекорд сервера"
 	}
 	"Menu - Compare World Record"
 	{
@@ -708,7 +719,7 @@
 	{
 		"en"		"Failstats"
 		"chi"		"失败统计"
-		"ua"		"Статистика провалених стрибків"
+		"ua"		"Статистика невдалих стрибків"
 	}
 	"Menu - JS Failstats Console"
 	{
@@ -875,6 +886,7 @@
 	"Prefs - Export Launch Option"
 	{
 		"en"		"setinfo is ignored on workshop maps.\nEither paste these from the main menu before joining a server, or add -disable_workshop_command_filtering to your CS2 launch options.\nThe console only takes 512 characters at a time, so paste a few lines at a time or execute them from a config file instead."
+		"ua"		"setinfo ігнорується на мапах з майстерні.\nАбо вставте їх з головного меню перед приєднанням до сервера, або додайте -disable_workshop_command_filtering до параметрів запуску CS2.\nКонсоль приймає лише 512 символів за раз, тому вставляйте кілька рядків за раз або виконуйте їх із конфігураційного файлу."
 	}
 	"Prefs - Export Footer"
 	{
