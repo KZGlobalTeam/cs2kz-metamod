@@ -288,6 +288,10 @@ void KZMenuService::Render()
 
 	this->SetBoolClass(layout, "menu_root", "snd", this->applied.sounds, this->player->optionService->GetPreferenceBool("menuSounds", true));
 
+	// Nudge the whole menu left while one is open for 4:3 aspect ratio.
+	const bool shift = this->popup != Popup::None && this->player->optionService->GetPreferenceBool("menuPopupShift", true);
+	this->SetBoolClass(layout, "menu_root", "shift", this->applied.shift, shift);
+
 	// The box stays put and centred; a popup is a third panel that appears to its right.
 	this->SetBoolClass(layout, "color_popup", "hidden", this->applied.colorHidden, this->popup != Popup::Color);
 	this->SetBoolClass(layout, "list_popup", "hidden", this->applied.listHidden, this->popup != Popup::List);
@@ -1024,6 +1028,9 @@ void KZMenuService::DropCapture()
 		CCSCustomHudLayout *layout = (CCSCustomHudLayout *)ent;
 		this->SetClass(layout, "menu_root", "hidden", true);
 		this->applied.rootHidden = true;
+		// Undo the popup shift here too, or the next open animates the whole menu back from the left.
+		this->SetClass(layout, "menu_root", "shift", false);
+		this->applied.shift = false;
 		layout->SetInputCaptureEnabled(slot, false);
 	}
 	if (g_pMenus)

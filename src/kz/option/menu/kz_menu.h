@@ -127,6 +127,7 @@ private:
 		const char *menuColor {}; // menu color (pal-fg) class stamped on the text panels
 		bool rootHidden {true};   // menu_root "hidden"
 		bool sounds {};           // menu_root "snd", gating every hover/click sound in menu.css
+		bool shift {};            // menu_root "shift", nudging the menu left so an open popup clears a 4:3/5:4 screen edge
 		bool colorHidden {true};  // color_popup "hidden"
 		bool listHidden {true};   // list_popup "hidden"
 		bool stepHidden {true};   // step_popup "hidden"

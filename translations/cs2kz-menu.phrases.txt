@@ -284,6 +284,10 @@
 		"en"		"Menu sounds"
 		"ua"		"Меню звуків"
 	}
+	"Menu - Popup Shift"
+	{
+		"en"		"Shift menu for popups"
+	}
 	"Menu - Color"
 	{
 		"en"		"Color"
