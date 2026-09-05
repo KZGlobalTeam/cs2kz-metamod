@@ -286,6 +286,8 @@ void KZMenuService::Render()
 		return;
 	}
 
+	this->SetBoolClass(layout, "menu_root", "snd", this->applied.sounds, this->player->optionService->GetPreferenceBool("menuSounds", true));
+
 	// The box stays put and centred; a popup is a third panel that appears to its right.
 	this->SetBoolClass(layout, "color_popup", "hidden", this->applied.colorHidden, this->popup != Popup::Color);
 	this->SetBoolClass(layout, "list_popup", "hidden", this->applied.listHidden, this->popup != Popup::List);
@@ -489,6 +491,7 @@ void KZMenuService::RenderItems(CCSCustomHudLayout *layout)
 			this->SetBoolClass(layout, ItemPanel(i), "on", this->applied.itemOn[i], on);
 			this->SetBoolClass(layout, ItemPanel(i), "has-sub", this->applied.itemSub[i], it.subKey != NULL);
 			this->SetBoolClass(layout, ItemPanel(i), "divider", this->applied.itemDiv[i], it.dividerAfter);
+			this->SetBoolClass(layout, ItemPanel(i), "disabled", this->applied.itemDisabled[i], !this->IsItemEnabled(it));
 		}
 		this->SetBoolClass(layout, ItemPanel(i), "hidden", this->applied.itemHidden[i], !used);
 	}
@@ -671,6 +674,18 @@ void KZMenuService::SelectLeft(i32 slot)
 	this->Render();
 }
 
+bool KZMenuService::IsItemEnabled(const KZOptItem &item)
+{
+	for (i32 i = 0; i < KZ_ARRAYSIZE(item.enabledBy); i++)
+	{
+		if (item.enabledBy[i] && !this->player->optionService->GetPreferenceBool(item.enabledBy[i], true))
+		{
+			return false;
+		}
+	}
+	return true;
+}
+
 void KZMenuService::ActivateItem(i32 slot)
 {
 	if (slot < 0 || slot >= this->itemCount || !this->itemSlots[slot])
@@ -683,6 +698,10 @@ void KZMenuService::ActivateItem(i32 slot)
 		this->ClosePopup();
 	}
 	const KZOptItem &it = *this->itemSlots[slot];
+	if (!this->IsItemEnabled(it))
+	{
+		return;
+	}
 	switch (it.type)
 	{
 		case KZOptItemType::Toggle:

@@ -344,6 +344,11 @@ static_global const PanoramaGradientDef PANORAMA_GRADIENTS[] =
 
 static_global const i32 PANORAMA_GRADIENT_COUNT = KZ_ARRAYSIZE(PANORAMA_GRADIENTS);
 
+i32 panorama::GetNearestSolidIndex(const Color &c)
+{
+	return GetNearestColorIndex(c);
+}
+
 const char *panorama::ResolveColorClass(const Color &c)
 {
 	if (IsGradient(c))

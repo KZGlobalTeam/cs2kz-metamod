@@ -20,17 +20,14 @@
 
 .menu-box {
 	horizontal-align: center;
-	vertical-align: center;
+	vertical-align: middle;
 	flow-children: down;
 	transition-property: width, height;
 	transition-duration: 1s;
 	transition-timing-function: ease-in-out;
 	background-img-opacity: 0.01;
-	horizontal-align: center;
-	vertical-align: middle;
-	min-width: 860px;
+	width: 860px;
 	height: 620px;
-	flow-children: down;
 	padding: 18px;
 	border: 1px solid #5f494926;
 	border-radius: 5px;
@@ -76,13 +73,11 @@
 
 .close-btn:hover {
 	wash-color: #ffffff;
-	sound: "UIPanorama.generic_button_rollover";
 }
 
 .close-btn:active {
 	wash-color: #ffffff;
 	background-size: 17px 17px;
-	sound: "UIPanorama.generic_button_press";
 }
 
 .panes {
@@ -139,14 +134,6 @@
 	background-color: #00000000;
 }
 
-.cat:not(.disabled):hover {
-	sound: "UIPanorama.generic_button_rollover";
-}
-
-.cat:not(.disabled):active {
-	sound: "UIPanorama.generic_button_press";
-}
-
 .cat.hidden {
 	visibility: collapse;
 }
@@ -193,11 +180,15 @@
 
 .item:hover {
 	background-color: #ffffff14;
-	sound: "UIPanorama.generic_button_rollover";
 }
 
-.item:active {
-	sound: "UIPanorama.generic_button_press";
+/* An item whose enabledBy preference is off: still readable, but inert. */
+.item.disabled {
+	opacity: 0.35;
+}
+
+.item.disabled:hover {
+	background-color: #00000000;
 }
 
 .item.hidden {
@@ -302,13 +293,20 @@
 	visibility: collapse;
 }
 
+/* .popup's 16px padding comes out of this width, so the grid below gets 340 - 32 = 308px.
+   .popup centres before applying x, so the extra 40px of width has to be met by half of it in x
+   (594 + 20) to keep the same gap from the menu box as the narrower popups. */
 .color-popup {
-	width: 316px;
+	width: 340px;
+	x: 614px;
 }
 
+/* A swatch occupies 24px + 2px border + 4px margin = 30px, so 10 columns need exactly 300px.
+   Keep this in step with KZ_MENU_SWATCH. */
 .swatch-grid {
 	flow-children: right-wrap;
-	width: 280px;
+	width: 300px;
+	horizontal-align: center;
 }
 
 .swatch {
@@ -323,11 +321,6 @@
 
 .swatch:hover {
 	border-color: #ffffffff;
-	sound: "UIPanorama.generic_button_rollover";
-}
-
-.swatch:active {
-	sound: "UIPanorama.generic_button_press";
 }
 
 .swatch.hidden {
@@ -355,11 +348,6 @@
 
 .li:hover {
 	background-color: #ffffff1a;
-	sound: "UIPanorama.generic_button_rollover";
-}
-
-.li:active {
-	sound: "UIPanorama.generic_button_press";
 }
 
 .li.selected {
@@ -404,11 +392,6 @@
 
 .popup-btn:hover {
 	background-color: #ffffff40;
-	sound: "UIPanorama.generic_button_rollover";
-}
-
-.popup-btn:active {
-	sound: "UIPanorama.generic_button_press";
 }
 
 .popup-btn-label {
@@ -469,11 +452,6 @@
 
 .step-btn:hover {
 	background-color: #ffffff40;
-	sound: "UIPanorama.generic_button_rollover";
-}
-
-.step-btn:active {
-	sound: "UIPanorama.generic_button_press";
 }
 
 .step-btn-label {
@@ -494,4 +472,62 @@
 
 .window-header .close-btn {
 	margin-bottom: 0px;
+}
+
+/* menuSounds: the server adds `snd` to menu_root when the player leaves them on. */
+
+.snd .close-btn:hover {
+	sound: "UIPanorama.generic_button_rollover";
+}
+
+.snd .close-btn:active {
+	sound: "UIPanorama.generic_button_press";
+}
+
+.snd .cat:not(.disabled):hover {
+	sound: "UIPanorama.generic_button_rollover";
+}
+
+.snd .cat:not(.disabled):active {
+	sound: "UIPanorama.generic_button_press";
+}
+
+.snd .item:not(.disabled):hover {
+	sound: "UIPanorama.generic_button_rollover";
+}
+
+.snd .item:not(.disabled):active {
+	sound: "UIPanorama.generic_button_press";
+}
+
+.snd .swatch:hover {
+	sound: "UIPanorama.generic_button_rollover";
+}
+
+.snd .swatch:active {
+	sound: "UIPanorama.generic_button_press";
+}
+
+.snd .li:hover {
+	sound: "UIPanorama.generic_button_rollover";
+}
+
+.snd .li:active {
+	sound: "UIPanorama.generic_button_press";
+}
+
+.snd .popup-btn:hover {
+	sound: "UIPanorama.generic_button_rollover";
+}
+
+.snd .popup-btn:active {
+	sound: "UIPanorama.generic_button_press";
+}
+
+.snd .step-btn:hover {
+	sound: "UIPanorama.generic_button_rollover";
+}
+
+.snd .step-btn:active {
+	sound: "UIPanorama.generic_button_press";
 }

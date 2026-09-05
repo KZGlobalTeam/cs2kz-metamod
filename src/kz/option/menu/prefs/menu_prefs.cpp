@@ -12,6 +12,7 @@ void KZMenuService::RegisterChromePrefs()
 	KZOptNode *cat = KZ::menu::AddCategory("Menu - Menu");
 	KZ::menu::AddFont(cat, "Menu - Font", "menuFont", KZ_MENU_DEFAULT_FONT);
 	KZ::menu::AddColor(cat, "Menu - Color", "menuColor", Color(255, 255, 255, 255));
+	KZ::menu::AddToggle(cat, "Menu - Sounds", "menuSounds", true);
 	KZ::menu::SetItemDivider(cat);
 	KZ::prefs::RegisterMenu(cat);
 }

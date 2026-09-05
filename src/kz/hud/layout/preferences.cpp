@@ -31,6 +31,7 @@ void KZHUDService::RefreshPrefs()
 	this->prefs.prespeedJumpbug = opts->GetPreferenceColor("mhudPrespeedJumpbugColor", MHUD_DEF_JUMPBUG_COLOR);
 	this->prefs.keys = opts->GetPreferenceColor("mhudKeysColor", MHUD_DEF_BASE_COLOR);
 	this->prefs.keysOverlap = opts->GetPreferenceColor("mhudKeysOverlapColor", MHUD_DEF_KEYS_OVERLAP_COLOR);
+	this->prefs.keysGlow = opts->GetPreferenceColor("mhudKeysGlowColor", MHUD_DEF_KEYS_GLOW_COLOR);
 	this->prefs.checkpoint = opts->GetPreferenceColor("mhudCheckpointColor", MHUD_DEF_BASE_COLOR);
 
 	this->prefs.legacyStyle = opts->GetPreferenceBool("hudLegacyStyle", false);
@@ -38,9 +39,15 @@ void KZHUDService::RefreshPrefs()
 	this->prefs.crosshair = opts->GetPreferenceBool("mhudCrosshair", false);
 	this->prefs.timerDetailed = opts->GetPreferenceBool("mhudTimerDetailed", true);
 	this->prefs.keysOverlapEnabled = opts->GetPreferenceBool("mhudKeysOverlap", true);
-	this->prefs.keysHideUnpressed = opts->GetPreferenceBool("mhudKeysHideUnpressed", false);
 	this->prefs.keysLetters = opts->GetPreferenceBool("mhudKeysLetters", false);
 	this->prefs.keysSquare = opts->GetPreferenceBool("mhudKeysSquare", false);
+	this->prefs.keysBorder = opts->GetPreferenceBool("mhudKeysBorder", true);
+	this->prefs.keysGlowEnabled = opts->GetPreferenceBool("mhudKeysGlow", true);
+	// mhudKeysIdle replaced the mhudKeysHideUnpressed toggle; carry the old setting over once.
+	const i32 idle = opts->HasPreference("mhudKeysIdle")
+						 ? (i32)opts->GetPreferenceInt("mhudKeysIdle", (i64)MHUDKeysIdle::Show)
+						 : (opts->GetPreferenceBool("mhudKeysHideUnpressed", false) ? (i32)MHUDKeysIdle::Hide : (i32)MHUDKeysIdle::Show);
+	this->prefs.keysIdle = (MHUDKeysIdle)Clamp(idle, (i32)MHUDKeysIdle::Show, (i32)MHUDKeysIdle::Underscore);
 
 	this->prefsDirty = false;
 }
@@ -61,37 +68,12 @@ const char *KZHUDService::GetMHUDFontClass(KZPlayer *player, MHUDElement element
 
 bool KZHUDService::IsMHUDElementEnabled(MHUDElement element)
 {
-	// An element the options menu is currently positioning is drawn regardless.
-	if (this->forcedElement == (i32)element)
-	{
-		return true;
-	}
 	return this->GetPrefs().elements[(i32)element].enabled;
 }
 
 bool KZHUDService::IsMHUDTimerDetailed()
 {
 	return this->GetPrefs().timerDetailed;
-}
-
-bool KZHUDService::IsMHUDKeysOverlapEnabled()
-{
-	return this->GetPrefs().keysOverlapEnabled;
-}
-
-bool KZHUDService::IsMHUDKeysHidingUnpressed()
-{
-	return this->GetPrefs().keysHideUnpressed;
-}
-
-bool KZHUDService::IsMHUDKeysUsingLetters()
-{
-	return this->GetPrefs().keysLetters;
-}
-
-bool KZHUDService::IsMHUDKeysSquare()
-{
-	return this->GetPrefs().keysSquare;
 }
 
 bool KZHUDService::IsMHUDOutlineEnabled(MHUDElement element)

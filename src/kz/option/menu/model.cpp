@@ -45,6 +45,23 @@ namespace KZ::menu
 		}
 	}
 
+	void SetItemEnabledBy(KZOptNode *node, const char *prefKey)
+	{
+		if (node->items.empty())
+		{
+			return;
+		}
+		KZOptItem &item = node->items.back();
+		for (i32 i = 0; i < KZ_ARRAYSIZE(item.enabledBy); i++)
+		{
+			if (!item.enabledBy[i])
+			{
+				item.enabledBy[i] = prefKey;
+				return;
+			}
+		}
+	}
+
 	void SetItemScale(KZOptNode *node, i32 scale)
 	{
 		if (!node->items.empty())

@@ -14,12 +14,6 @@ static_global constexpr const char *ELEMENT_PHRASE[(i32)MHUDElement::Count] = {"
 static_global KZOptNode *generalNode {};
 static_global KZOptNode *elementNodes[(i32)MHUDElement::Count] {};
 
-// Force an element on screen while any popup for it is open.
-static_function void OnHudEdit(KZPlayer *player, i64 tag, bool begin)
-{
-	player->hudService->SetMHUDForcedElement((MHUDElement)tag, begin);
-}
-
 // --- General page callbacks ---------------------------------------------------------
 
 static_function void GetStyleChoices(KZPlayer *player, i64, std::vector<KZChoice> &out)
@@ -84,6 +78,27 @@ static_function void ResetElement(KZPlayer *player, i64 tag)
 	KZ::menu::ResetNode(player, elementNodes[tag]);
 }
 
+// Indexed by MHUDKeysIdle, so a picked row id is the stored value.
+static_global const char *const KEYS_IDLE_LABELS[] = {"Menu - Keys Unpressed Show", "Menu - Keys Unpressed Hide", "Menu - Keys Unpressed Underscore"};
+
+static_function void GetKeysIdleChoices(KZPlayer *player, i64, std::vector<KZChoice> &out)
+{
+	for (i32 i = 0; i < KZ_ARRAYSIZE(KEYS_IDLE_LABELS); i++)
+	{
+		out.push_back({KZMenuService::GetPhrase(player, KEYS_IDLE_LABELS[i]), i, NULL});
+	}
+}
+
+static_function i64 GetCurrentKeysIdle(KZPlayer *player, i64)
+{
+	return (i64)player->hudService->GetPrefs().keysIdle;
+}
+
+static_function void PickKeysIdle(KZPlayer *player, i64, i64 id)
+{
+	player->optionService->SetPreferenceInt("mhudKeysIdle", Clamp(id, (i64)MHUDKeysIdle::Show, (i64)MHUDKeysIdle::Underscore));
+}
+
 // --- Registration -------------------------------------------------------------------
 
 void KZHUDService::RegisterMenu()
@@ -99,6 +114,7 @@ void KZHUDService::RegisterMenu()
 	KZ::menu::SetItemPref(general, "showPanel", KZOptStorage::Bool);
 	KZ::menu::AddActionToggle(general, "Menu - Crosshair", GetCrosshairState, ToggleCrosshairState);
 	KZ::menu::AddToggle(general, "Menu - Compact", "compactPanel", false);
+	KZ::menu::SetItemEnabledBy(general, "showPanel");
 	KZ::menu::SetItemSubtext(general, "Menu - Compact Sub");
 	KZ::menu::SetItemDivider(general);
 	KZ::menu::AddButton(general, "Menu - Reset All", ResetAll);
@@ -109,22 +125,37 @@ void KZHUDService::RegisterMenu()
 		KZOptNode *sub = KZ::menu::AddSub(hud, ELEMENT_PHRASE[e]);
 		elementNodes[e] = sub;
 
+		// Everything below the Enabled toggle only affects a visible element, so it greys out with it.
 		KZ::menu::AddToggle(sub, "Menu - Enabled", def.enabledKey, true);
-		KZ::menu::AddPosition(sub, "Menu - Position", def.xKey, def.yKey, def.xDefault, def.yDefault, e, OnHudEdit);
-		KZ::menu::AddSize(sub, "Menu - Size", def.sizeKey, def.sizeDefault, MHUD_SIZE_MIN, MHUD_SIZE_MAX, e, OnHudEdit);
-		KZ::menu::AddFont(sub, "Menu - Font", def.fontKey, MHUD_DEFAULT_FONT, e, OnHudEdit);
+		KZ::menu::AddPosition(sub, "Menu - Position", def.xKey, def.yKey, def.xDefault, def.yDefault, e);
+		KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
+		KZ::menu::AddSize(sub, "Menu - Size", def.sizeKey, def.sizeDefault, MHUD_SIZE_MIN, MHUD_SIZE_MAX, e);
+		KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
+		KZ::menu::AddFont(sub, "Menu - Font", def.fontKey, MHUD_DEFAULT_FONT, e);
+		KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
 		KZ::menu::AddToggle(sub, "Menu - Outline", def.outlineKey, true);
+		KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
 
 		if (e == (i32)MHUDElement::Timer)
 		{
 			KZ::menu::AddToggle(sub, "Menu - Timer Detail", "mhudTimerDetailed", true);
+			KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
 		}
 		else if (e == (i32)MHUDElement::Keys)
 		{
 			KZ::menu::AddToggle(sub, "Menu - Keys Overlap", "mhudKeysOverlap", true);
-			KZ::menu::AddToggle(sub, "Menu - Keys Unpressed", "mhudKeysHideUnpressed", false);
+			KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
+			KZ::menu::AddChoice(sub, "Menu - Keys Unpressed", GetKeysIdleChoices, GetCurrentKeysIdle, PickKeysIdle);
+			KZ::menu::SetItemPref(sub, "mhudKeysIdle", KZOptStorage::Int);
+			KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
 			KZ::menu::AddToggle(sub, "Menu - Keys Letters", "mhudKeysLetters", false);
+			KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
 			KZ::menu::AddToggle(sub, "Menu - Keys Square", "mhudKeysSquare", false);
+			KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
+			KZ::menu::AddToggle(sub, "Menu - Keys Border", "mhudKeysBorder", true);
+			KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
+			KZ::menu::AddToggle(sub, "Menu - Keys Glow", "mhudKeysGlow", true);
+			KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
 		}
 
 		KZ::menu::SetItemDivider(sub); // rule between the layout controls and the colors
@@ -133,7 +164,16 @@ void KZHUDService::RegisterMenu()
 		const MHUDColorPrefDef *colors = KZHUDService::GetMHUDElementColorPrefs((MHUDElement)e, count);
 		for (i32 i = 0; i < count; i++)
 		{
-			KZ::menu::AddColor(sub, colors[i].phraseKey, colors[i].prefKey, Color(colors[i].r, colors[i].g, colors[i].b, 255), e, OnHudEdit);
+			KZ::menu::AddColor(sub, colors[i].phraseKey, colors[i].prefKey, Color(colors[i].r, colors[i].g, colors[i].b, 255), e);
+			if (colors[i].solidOnly)
+			{
+				KZ::menu::SetItemSolidOnly(sub);
+			}
+			KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
+			if (colors[i].enabledBy)
+			{
+				KZ::menu::SetItemEnabledBy(sub, colors[i].enabledBy);
+			}
 		}
 
 		KZ::menu::AddButton(sub, "Menu - Reset", ResetElement, e);

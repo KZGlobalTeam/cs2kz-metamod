@@ -39,6 +39,8 @@ struct MHUDColorPrefDef
 	const char *prefKey;
 	// TODO: Use `Color` instead?
 	u8 r, g, b;
+	bool solidOnly {};
+	const char *enabledBy {};
 };
 
 extern const MHUDElementDef MHUD_ELEMENTS[(i32)MHUDElement::Count];
@@ -56,6 +58,7 @@ static_global const Color MHUD_DEF_TIMER_PRO_COLOR(0x5F, 0x99, 0xD9, 0xFF);
 static_global const Color MHUD_DEF_TIMER_PAUSED_COLOR(0xFF, 0x80, 0x00, 0xFF);
 static_global const Color MHUD_DEF_TIMER_STOPPED_COLOR(0xFF, 0xA0, 0xA0, 0xFF);
 static_global const Color MHUD_DEF_KEYS_OVERLAP_COLOR(0xFF, 0x40, 0x40, 0xFF);
+static_global const Color MHUD_DEF_KEYS_GLOW_COLOR(0x3B, 0xED, 0xA0, 0xFF);
 
 // The player's own cl_crosshair* values. The game's defaults stand until a query answers.
 struct MHUDCrosshairSettings
@@ -73,6 +76,14 @@ struct MHUDCrosshairSettings
 	bool tStyle {false};
 };
 
+// What an unpressed key looks like.
+enum class MHUDKeysIdle
+{
+	Show,
+	Hide,
+	Underscore,
+};
+
 struct MHUDPrefs
 {
 	struct Element
@@ -88,7 +99,7 @@ struct MHUDPrefs
 	Color timerPaused, timerStopped, timerTp, timerPro;
 	Color speed, speedCj;
 	Color prespeed, prespeedPerf, prespeedJumpbug;
-	Color keys, keysOverlap;
+	Color keys, keysOverlap, keysGlow;
 	Color checkpoint;
 
 	bool legacyStyle {};
@@ -96,9 +107,11 @@ struct MHUDPrefs
 	bool crosshair {};
 	bool timerDetailed {true};
 	bool keysOverlapEnabled {true};
-	bool keysHideUnpressed {};
 	bool keysLetters {};
 	bool keysSquare {};
+	bool keysBorder {true};
+	bool keysGlowEnabled {true};
+	MHUDKeysIdle keysIdle {MHUDKeysIdle::Show};
 };
 
 class KZHUDService : public KZBaseService
@@ -212,17 +225,7 @@ public:
 
 	bool IsMHUDElementEnabled(MHUDElement element);
 
-	// An element with a stepper page open is drawn even when its enable flag is off.
-	void SetMHUDForcedElement(MHUDElement element, bool forced)
-	{
-		this->forcedElement = forced ? (i32)element : -1;
-	}
-
 	bool IsMHUDTimerDetailed();
-	bool IsMHUDKeysOverlapEnabled();
-	bool IsMHUDKeysHidingUnpressed();
-	bool IsMHUDKeysUsingLetters();
-	bool IsMHUDKeysSquare();
 	bool IsMHUDOutlineEnabled(MHUDElement element);
 
 private:
@@ -270,9 +273,12 @@ private:
 	struct LayoutKeysState
 	{
 		bool pressed[6] {};
-		bool hideIdle {};
+		i32 idle {-1};
 		i32 letters {-1};
 		i32 square {-1};
+		i32 noBorder {-1};
+		i32 noGlow {-1};
+		i32 glow {-1};
 		i32 fontSize {INT_MIN};
 		const char *fontClass {};
 	};
@@ -342,7 +348,6 @@ public:
 	static void OnCheckTransmit(CCheckTransmitInfo **pInfo, int infoCount);
 
 private:
-	i32 forcedElement {-1};
 	MHUDPrefs prefs {};
 	bool prefsDirty {true};
 	void RefreshPrefs();

@@ -1,0 +1,643 @@
+/* Generated from PANORAMA_COLORS in src/kz/option/menu/tables.cpp. Keep the count in step. */
+/* mhudKeysGlowColor tints the pressed key fill and its glow. */
+
+.key-button.key-glow-0.pressed {
+	background-color: #00000080;
+	box-shadow: 0 0 10px #00000080;
+}
+.key-button.key-glow-1.pressed {
+	background-color: #5e5e5e80;
+	box-shadow: 0 0 10px #5e5e5e80;
+}
+.key-button.key-glow-2.pressed {
+	background-color: #82828280;
+	box-shadow: 0 0 10px #82828280;
+}
+.key-button.key-glow-3.pressed {
+	background-color: #9c9c9c80;
+	box-shadow: 0 0 10px #9c9c9c80;
+}
+.key-button.key-glow-4.pressed {
+	background-color: #b2b2b280;
+	box-shadow: 0 0 10px #b2b2b280;
+}
+.key-button.key-glow-5.pressed {
+	background-color: #c5c5c580;
+	box-shadow: 0 0 10px #c5c5c580;
+}
+.key-button.key-glow-6.pressed {
+	background-color: #d5d5d580;
+	box-shadow: 0 0 10px #d5d5d580;
+}
+.key-button.key-glow-7.pressed {
+	background-color: #e4e4e480;
+	box-shadow: 0 0 10px #e4e4e480;
+}
+.key-button.key-glow-8.pressed {
+	background-color: #f2f2f280;
+	box-shadow: 0 0 10px #f2f2f280;
+}
+.key-button.key-glow-9.pressed {
+	background-color: #ffffff80;
+	box-shadow: 0 0 10px #ffffff80;
+}
+.key-button.key-glow-10.pressed {
+	background-color: #ff000080;
+	box-shadow: 0 0 10px #ff000080;
+}
+.key-button.key-glow-11.pressed {
+	background-color: #ff800080;
+	box-shadow: 0 0 10px #ff800080;
+}
+.key-button.key-glow-12.pressed {
+	background-color: #ffff0080;
+	box-shadow: 0 0 10px #ffff0080;
+}
+.key-button.key-glow-13.pressed {
+	background-color: #80ff0080;
+	box-shadow: 0 0 10px #80ff0080;
+}
+.key-button.key-glow-14.pressed {
+	background-color: #00ff5580;
+	box-shadow: 0 0 10px #00ff5580;
+}
+.key-button.key-glow-15.pressed {
+	background-color: #00ffea80;
+	box-shadow: 0 0 10px #00ffea80;
+}
+.key-button.key-glow-16.pressed {
+	background-color: #00aaff80;
+	box-shadow: 0 0 10px #00aaff80;
+}
+.key-button.key-glow-17.pressed {
+	background-color: #0000ff80;
+	box-shadow: 0 0 10px #0000ff80;
+}
+.key-button.key-glow-18.pressed {
+	background-color: #aa00ff80;
+	box-shadow: 0 0 10px #aa00ff80;
+}
+.key-button.key-glow-19.pressed {
+	background-color: #ff00aa80;
+	box-shadow: 0 0 10px #ff00aa80;
+}
+.key-button.key-glow-20.pressed {
+	background-color: #8c000080;
+	box-shadow: 0 0 10px #8c000080;
+}
+.key-button.key-glow-21.pressed {
+	background-color: #8c460080;
+	box-shadow: 0 0 10px #8c460080;
+}
+.key-button.key-glow-22.pressed {
+	background-color: #8c8c0080;
+	box-shadow: 0 0 10px #8c8c0080;
+}
+.key-button.key-glow-23.pressed {
+	background-color: #468c0080;
+	box-shadow: 0 0 10px #468c0080;
+}
+.key-button.key-glow-24.pressed {
+	background-color: #008c2f80;
+	box-shadow: 0 0 10px #008c2f80;
+}
+.key-button.key-glow-25.pressed {
+	background-color: #008c8180;
+	box-shadow: 0 0 10px #008c8180;
+}
+.key-button.key-glow-26.pressed {
+	background-color: #005e8c80;
+	box-shadow: 0 0 10px #005e8c80;
+}
+.key-button.key-glow-27.pressed {
+	background-color: #00008c80;
+	box-shadow: 0 0 10px #00008c80;
+}
+.key-button.key-glow-28.pressed {
+	background-color: #5e008c80;
+	box-shadow: 0 0 10px #5e008c80;
+}
+.key-button.key-glow-29.pressed {
+	background-color: #8c005e80;
+	box-shadow: 0 0 10px #8c005e80;
+}
+.key-button.key-glow-30.pressed {
+	background-color: #ffa6a680;
+	box-shadow: 0 0 10px #ffa6a680;
+}
+.key-button.key-glow-31.pressed {
+	background-color: #ffd2a680;
+	box-shadow: 0 0 10px #ffd2a680;
+}
+.key-button.key-glow-32.pressed {
+	background-color: #ffffa680;
+	box-shadow: 0 0 10px #ffffa680;
+}
+.key-button.key-glow-33.pressed {
+	background-color: #d2ffa680;
+	box-shadow: 0 0 10px #d2ffa680;
+}
+.key-button.key-glow-34.pressed {
+	background-color: #a6ffc480;
+	box-shadow: 0 0 10px #a6ffc480;
+}
+.key-button.key-glow-35.pressed {
+	background-color: #a6fff880;
+	box-shadow: 0 0 10px #a6fff880;
+}
+.key-button.key-glow-36.pressed {
+	background-color: #a6e1ff80;
+	box-shadow: 0 0 10px #a6e1ff80;
+}
+.key-button.key-glow-37.pressed {
+	background-color: #a6a6ff80;
+	box-shadow: 0 0 10px #a6a6ff80;
+}
+.key-button.key-glow-38.pressed {
+	background-color: #e1a6ff80;
+	box-shadow: 0 0 10px #e1a6ff80;
+}
+.key-button.key-glow-39.pressed {
+	background-color: #ffa6e180;
+	box-shadow: 0 0 10px #ffa6e180;
+}
+.key-button.key-glow-40.pressed {
+	background-color: #fee4e280;
+	box-shadow: 0 0 10px #fee4e280;
+}
+.key-button.key-glow-41.pressed {
+	background-color: #fde6d780;
+	box-shadow: 0 0 10px #fde6d780;
+}
+.key-button.key-glow-42.pressed {
+	background-color: #f5ebce80;
+	box-shadow: 0 0 10px #f5ebce80;
+}
+.key-button.key-glow-43.pressed {
+	background-color: #e5f0d480;
+	box-shadow: 0 0 10px #e5f0d480;
+}
+.key-button.key-glow-44.pressed {
+	background-color: #d9f3dd80;
+	box-shadow: 0 0 10px #d9f3dd80;
+}
+.key-button.key-glow-45.pressed {
+	background-color: #d0f5eb80;
+	box-shadow: 0 0 10px #d0f5eb80;
+}
+.key-button.key-glow-46.pressed {
+	background-color: #cef3fc80;
+	box-shadow: 0 0 10px #cef3fc80;
+}
+.key-button.key-glow-47.pressed {
+	background-color: #e0ecfe80;
+	box-shadow: 0 0 10px #e0ecfe80;
+}
+.key-button.key-glow-48.pressed {
+	background-color: #eee7fe80;
+	box-shadow: 0 0 10px #eee7fe80;
+}
+.key-button.key-glow-49.pressed {
+	background-color: #fde2f680;
+	box-shadow: 0 0 10px #fde2f680;
+}
+.key-button.key-glow-50.pressed {
+	background-color: #ffc8c380;
+	box-shadow: 0 0 10px #ffc8c380;
+}
+.key-button.key-glow-51.pressed {
+	background-color: #fdccab80;
+	box-shadow: 0 0 10px #fdccab80;
+}
+.key-button.key-glow-52.pressed {
+	background-color: #e9d79f80;
+	box-shadow: 0 0 10px #e9d79f80;
+}
+.key-button.key-glow-53.pressed {
+	background-color: #cce1ab80;
+	box-shadow: 0 0 10px #cce1ab80;
+}
+.key-button.key-glow-54.pressed {
+	background-color: #b5e6be80;
+	box-shadow: 0 0 10px #b5e6be80;
+}
+.key-button.key-glow-55.pressed {
+	background-color: #a1e8d780;
+	box-shadow: 0 0 10px #a1e8d780;
+}
+.key-button.key-glow-56.pressed {
+	background-color: #9de5f780;
+	box-shadow: 0 0 10px #9de5f780;
+}
+.key-button.key-glow-57.pressed {
+	background-color: #c0d9ff80;
+	box-shadow: 0 0 10px #c0d9ff80;
+}
+.key-button.key-glow-58.pressed {
+	background-color: #decefe80;
+	box-shadow: 0 0 10px #decefe80;
+}
+.key-button.key-glow-59.pressed {
+	background-color: #f8c5eb80;
+	box-shadow: 0 0 10px #f8c5eb80;
+}
+.key-button.key-glow-60.pressed {
+	background-color: #fea69e80;
+	box-shadow: 0 0 10px #fea69e80;
+}
+.key-button.key-glow-61.pressed {
+	background-color: #f8ae7b80;
+	box-shadow: 0 0 10px #f8ae7b80;
+}
+.key-button.key-glow-62.pressed {
+	background-color: #dabf6980;
+	box-shadow: 0 0 10px #dabf6980;
+}
+.key-button.key-glow-63.pressed {
+	background-color: #b1ce7d80;
+	box-shadow: 0 0 10px #b1ce7d80;
+}
+.key-button.key-glow-64.pressed {
+	background-color: #8cd59b80;
+	box-shadow: 0 0 10px #8cd59b80;
+}
+.key-button.key-glow-65.pressed {
+	background-color: #66d8c180;
+	box-shadow: 0 0 10px #66d8c180;
+}
+.key-button.key-glow-66.pressed {
+	background-color: #5fd3ed80;
+	box-shadow: 0 0 10px #5fd3ed80;
+}
+.key-button.key-glow-67.pressed {
+	background-color: #9bc3fe80;
+	box-shadow: 0 0 10px #9bc3fe80;
+}
+.key-button.key-glow-68.pressed {
+	background-color: #ccb1fe80;
+	box-shadow: 0 0 10px #ccb1fe80;
+}
+.key-button.key-glow-69.pressed {
+	background-color: #eda6dd80;
+	box-shadow: 0 0 10px #eda6dd80;
+}
+.key-button.key-glow-70.pressed {
+	background-color: #f5807980;
+	box-shadow: 0 0 10px #f5807980;
+}
+.key-button.key-glow-71.pressed {
+	background-color: #ec8c4480;
+	box-shadow: 0 0 10px #ec8c4480;
+}
+.key-button.key-glow-72.pressed {
+	background-color: #c8a41680;
+	box-shadow: 0 0 10px #c8a41680;
+}
+.key-button.key-glow-73.pressed {
+	background-color: #93b74780;
+	box-shadow: 0 0 10px #93b74780;
+}
+.key-button.key-glow-74.pressed {
+	background-color: #5bc17580;
+	box-shadow: 0 0 10px #5bc17580;
+}
+.key-button.key-glow-75.pressed {
+	background-color: #0cc2a880;
+	box-shadow: 0 0 10px #0cc2a880;
+}
+.key-button.key-glow-76.pressed {
+	background-color: #1bbbd880;
+	box-shadow: 0 0 10px #1bbbd880;
+}
+.key-button.key-glow-77.pressed {
+	background-color: #70a9fd80;
+	box-shadow: 0 0 10px #70a9fd80;
+}
+.key-button.key-glow-78.pressed {
+	background-color: #b691f580;
+	box-shadow: 0 0 10px #b691f580;
+}
+.key-button.key-glow-79.pressed {
+	background-color: #df82cc80;
+	box-shadow: 0 0 10px #df82cc80;
+}
+.key-button.key-glow-80.pressed {
+	background-color: #c54d4980;
+	box-shadow: 0 0 10px #c54d4980;
+}
+.key-button.key-glow-81.pressed {
+	background-color: #b85f0280;
+	box-shadow: 0 0 10px #b85f0280;
+}
+.key-button.key-glow-82.pressed {
+	background-color: #93770e80;
+	box-shadow: 0 0 10px #93770e80;
+}
+.key-button.key-glow-83.pressed {
+	background-color: #67880980;
+	box-shadow: 0 0 10px #67880980;
+}
+.key-button.key-glow-84.pressed {
+	background-color: #11924580;
+	box-shadow: 0 0 10px #11924580;
+}
+.key-button.key-glow-85.pressed {
+	background-color: #138e7a80;
+	box-shadow: 0 0 10px #138e7a80;
+}
+.key-button.key-glow-86.pressed {
+	background-color: #12899f80;
+	box-shadow: 0 0 10px #12899f80;
+}
+.key-button.key-glow-87.pressed {
+	background-color: #3979d480;
+	box-shadow: 0 0 10px #3979d480;
+}
+.key-button.key-glow-88.pressed {
+	background-color: #8961c780;
+	box-shadow: 0 0 10px #8961c780;
+}
+.key-button.key-glow-89.pressed {
+	background-color: #b0519e80;
+	box-shadow: 0 0 10px #b0519e80;
+}
+.key-button.key-glow-90.pressed {
+	background-color: #9f323180;
+	box-shadow: 0 0 10px #9f323180;
+}
+.key-button.key-glow-91.pressed {
+	background-color: #8e480480;
+	box-shadow: 0 0 10px #8e480480;
+}
+.key-button.key-glow-92.pressed {
+	background-color: #715b0380;
+	box-shadow: 0 0 10px #715b0380;
+}
+.key-button.key-glow-93.pressed {
+	background-color: #4f680880;
+	box-shadow: 0 0 10px #4f680880;
+}
+.key-button.key-glow-94.pressed {
+	background-color: #08713380;
+	box-shadow: 0 0 10px #08713380;
+}
+.key-button.key-glow-95.pressed {
+	background-color: #0d6d5e80;
+	box-shadow: 0 0 10px #0d6d5e80;
+}
+.key-button.key-glow-96.pressed {
+	background-color: #0e697a80;
+	box-shadow: 0 0 10px #0e697a80;
+}
+.key-button.key-glow-97.pressed {
+	background-color: #215bad80;
+	box-shadow: 0 0 10px #215bad80;
+}
+.key-button.key-glow-98.pressed {
+	background-color: #6b45a280;
+	box-shadow: 0 0 10px #6b45a280;
+}
+.key-button.key-glow-99.pressed {
+	background-color: #8c377d80;
+	box-shadow: 0 0 10px #8c377d80;
+}
+.key-button.key-glow-100.pressed {
+	background-color: #72242380;
+	box-shadow: 0 0 10px #72242380;
+}
+.key-button.key-glow-101.pressed {
+	background-color: #67320080;
+	box-shadow: 0 0 10px #67320080;
+}
+.key-button.key-glow-102.pressed {
+	background-color: #51410680;
+	box-shadow: 0 0 10px #51410680;
+}
+.key-button.key-glow-103.pressed {
+	background-color: #374a0280;
+	box-shadow: 0 0 10px #374a0280;
+}
+.key-button.key-glow-104.pressed {
+	background-color: #04512280;
+	box-shadow: 0 0 10px #04512280;
+}
+.key-button.key-glow-105.pressed {
+	background-color: #004e4280;
+	box-shadow: 0 0 10px #004e4280;
+}
+.key-button.key-glow-106.pressed {
+	background-color: #034b5880;
+	box-shadow: 0 0 10px #034b5880;
+}
+.key-button.key-glow-107.pressed {
+	background-color: #18417c80;
+	box-shadow: 0 0 10px #18417c80;
+}
+.key-button.key-glow-108.pressed {
+	background-color: #4c317380;
+	box-shadow: 0 0 10px #4c317380;
+}
+.key-button.key-glow-109.pressed {
+	background-color: #64275980;
+	box-shadow: 0 0 10px #64275980;
+}
+.key-button.key-glow-110.pressed {
+	background-color: #4c171680;
+	box-shadow: 0 0 10px #4c171680;
+}
+.key-button.key-glow-111.pressed {
+	background-color: #461f0080;
+	box-shadow: 0 0 10px #461f0080;
+}
+.key-button.key-glow-112.pressed {
+	background-color: #352a0380;
+	box-shadow: 0 0 10px #352a0380;
+}
+.key-button.key-glow-113.pressed {
+	background-color: #23310180;
+	box-shadow: 0 0 10px #23310180;
+}
+.key-button.key-glow-114.pressed {
+	background-color: #00361480;
+	box-shadow: 0 0 10px #00361480;
+}
+.key-button.key-glow-115.pressed {
+	background-color: #02342b80;
+	box-shadow: 0 0 10px #02342b80;
+}
+.key-button.key-glow-116.pressed {
+	background-color: #05313a80;
+	box-shadow: 0 0 10px #05313a80;
+}
+.key-button.key-glow-117.pressed {
+	background-color: #0f2a5280;
+	box-shadow: 0 0 10px #0f2a5280;
+}
+.key-button.key-glow-118.pressed {
+	background-color: #32204d80;
+	box-shadow: 0 0 10px #32204d80;
+}
+.key-button.key-glow-119.pressed {
+	background-color: #42193b80;
+	box-shadow: 0 0 10px #42193b80;
+}
+.key-button.key-glow-120.pressed {
+	background-color: #2a6b8f80;
+	box-shadow: 0 0 10px #2a6b8f80;
+}
+.key-button.key-glow-121.pressed {
+	background-color: #3281ac80;
+	box-shadow: 0 0 10px #3281ac80;
+}
+.key-button.key-glow-122.pressed {
+	background-color: #1b608580;
+	box-shadow: 0 0 10px #1b608580;
+}
+.key-button.key-glow-123.pressed {
+	background-color: #32637e80;
+	box-shadow: 0 0 10px #32637e80;
+}
+.key-button.key-glow-124.pressed {
+	background-color: #4aa8ff80;
+	box-shadow: 0 0 10px #4aa8ff80;
+}
+.key-button.key-glow-125.pressed {
+	background-color: #5dc6ff80;
+	box-shadow: 0 0 10px #5dc6ff80;
+}
+.key-button.key-glow-126.pressed {
+	background-color: #b5d4ee80;
+	box-shadow: 0 0 10px #b5d4ee80;
+}
+.key-button.key-glow-127.pressed {
+	background-color: #b1c8ec80;
+	box-shadow: 0 0 10px #b1c8ec80;
+}
+.key-button.key-glow-128.pressed {
+	background-color: #44447780;
+	box-shadow: 0 0 10px #44447780;
+}
+.key-button.key-glow-129.pressed {
+	background-color: #1f123180;
+	box-shadow: 0 0 10px #1f123180;
+}
+.key-button.key-glow-130.pressed {
+	background-color: #ffd70080;
+	box-shadow: 0 0 10px #ffd70080;
+}
+.key-button.key-glow-131.pressed {
+	background-color: #ead18a80;
+	box-shadow: 0 0 10px #ead18a80;
+}
+.key-button.key-glow-132.pressed {
+	background-color: #eabe5480;
+	box-shadow: 0 0 10px #eabe5480;
+}
+.key-button.key-glow-133.pressed {
+	background-color: #eab54180;
+	box-shadow: 0 0 10px #eab54180;
+}
+.key-button.key-glow-134.pressed {
+	background-color: #d8760e80;
+	box-shadow: 0 0 10px #d8760e80;
+}
+.key-button.key-glow-135.pressed {
+	background-color: #ff990080;
+	box-shadow: 0 0 10px #ff990080;
+}
+.key-button.key-glow-136.pressed {
+	background-color: #b1af2d80;
+	box-shadow: 0 0 10px #b1af2d80;
+}
+.key-button.key-glow-137.pressed {
+	background-color: #b1992e80;
+	box-shadow: 0 0 10px #b1992e80;
+}
+.key-button.key-glow-138.pressed {
+	background-color: #5e686980;
+	box-shadow: 0 0 10px #5e686980;
+}
+.key-button.key-glow-139.pressed {
+	background-color: #444f5280;
+	box-shadow: 0 0 10px #444f5280;
+}
+.key-button.key-glow-140.pressed {
+	background-color: #ff000080;
+	box-shadow: 0 0 10px #ff000080;
+}
+.key-button.key-glow-141.pressed {
+	background-color: #dd000080;
+	box-shadow: 0 0 10px #dd000080;
+}
+.key-button.key-glow-142.pressed {
+	background-color: #e1000080;
+	box-shadow: 0 0 10px #e1000080;
+}
+.key-button.key-glow-143.pressed {
+	background-color: #eb4b4b80;
+	box-shadow: 0 0 10px #eb4b4b80;
+}
+.key-button.key-glow-144.pressed {
+	background-color: #00ff0080;
+	box-shadow: 0 0 10px #00ff0080;
+}
+.key-button.key-glow-145.pressed {
+	background-color: #4caf5080;
+	box-shadow: 0 0 10px #4caf5080;
+}
+.key-button.key-glow-146.pressed {
+	background-color: #5fff6c80;
+	box-shadow: 0 0 10px #5fff6c80;
+}
+.key-button.key-glow-147.pressed {
+	background-color: #25d96d80;
+	box-shadow: 0 0 10px #25d96d80;
+}
+.key-button.key-glow-148.pressed {
+	background-color: #2ddd3380;
+	box-shadow: 0 0 10px #2ddd3380;
+}
+.key-button.key-glow-149.pressed {
+	background-color: #22a52780;
+	box-shadow: 0 0 10px #22a52780;
+}
+.key-button.key-glow-150.pressed {
+	background-color: #40ff4080;
+	box-shadow: 0 0 10px #40ff4080;
+}
+.key-button.key-glow-151.pressed {
+	background-color: #71eeb880;
+	box-shadow: 0 0 10px #71eeb880;
+}
+.key-button.key-glow-152.pressed {
+	background-color: #ffff2080;
+	box-shadow: 0 0 10px #ffff2080;
+}
+.key-button.key-glow-153.pressed {
+	background-color: #5f99d980;
+	box-shadow: 0 0 10px #5f99d980;
+}
+.key-button.key-glow-154.pressed {
+	background-color: #ffa0a080;
+	box-shadow: 0 0 10px #ffa0a080;
+}
+.key-button.key-glow-155.pressed {
+	background-color: #ff404080;
+	box-shadow: 0 0 10px #ff404080;
+}
+.key-button.key-glow-156.pressed {
+	background-color: #24f09780;
+	box-shadow: 0 0 10px #24f09780;
+}
+.key-button.key-glow-157.pressed {
+	background-color: #ffff0080;
+	box-shadow: 0 0 10px #ffff0080;
+}
+.key-button.key-glow-158.pressed {
+	background-color: #3d444880;
+	box-shadow: 0 0 10px #3d444880;
+}
+.key-button.key-glow-159.pressed {
+	background-color: #3e3e3e80;
+	box-shadow: 0 0 10px #3e3e3e80;
+}

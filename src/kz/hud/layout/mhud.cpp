@@ -97,7 +97,7 @@ void KZHUDService::UpdateKeysElement(CCSCustomHudLayout *layout, KZPlayer *sourc
 
 	const MHUDPrefs &prefs = this->GetPrefs();
 	const bool overlap = (forward && back) || (left && right);
-	const Color color = overlap && this->IsMHUDKeysOverlapEnabled() ? prefs.keysOverlap : prefs.keys;
+	const Color color = overlap && prefs.keysOverlapEnabled ? prefs.keysOverlap : prefs.keys;
 	const bool show = this->IsMHUDElementEnabled(MHUDElement::Keys);
 	this->UpdateLayoutElement(layout, MHUDElement::Keys, show, NULL, color, force);
 	if (force)
@@ -109,27 +109,57 @@ void KZHUDService::UpdateKeysElement(CCSCustomHudLayout *layout, KZPlayer *sourc
 		return;
 	}
 
-	const bool hideIdle = this->IsMHUDKeysHidingUnpressed();
-	if (this->layoutKeys.hideIdle != hideIdle)
+	const char *const keysPanel = MHUD_ELEMENTS[(i32)MHUDElement::Keys].panelId;
+	const i32 idle = (i32)prefs.keysIdle;
+	if (this->layoutKeys.idle != idle)
 	{
-		this->layoutKeys.hideIdle = hideIdle;
-		layout->SetHasClass(MHUD_ELEMENTS[(i32)MHUDElement::Keys].panelId, "hide-idle",
-							hideIdle ? k_eHudPanelClassStatus_HasClass : k_eHudPanelClassStatus_DoesNotHaveClass);
+		this->layoutKeys.idle = idle;
+		layout->SetHasClass(keysPanel, "hide-idle",
+							idle == (i32)MHUDKeysIdle::Hide ? k_eHudPanelClassStatus_HasClass : k_eHudPanelClassStatus_DoesNotHaveClass);
+		layout->SetHasClass(keysPanel, "keys-underscore",
+							idle == (i32)MHUDKeysIdle::Underscore ? k_eHudPanelClassStatus_HasClass : k_eHudPanelClassStatus_DoesNotHaveClass);
 	}
-	const i32 letters = this->IsMHUDKeysUsingLetters() ? 1 : 0;
+	const i32 noBorder = prefs.keysBorder ? 0 : 1;
+	if (this->layoutKeys.noBorder != noBorder)
+	{
+		this->layoutKeys.noBorder = noBorder;
+		layout->SetHasClass(keysPanel, "keys-noborder", noBorder ? k_eHudPanelClassStatus_HasClass : k_eHudPanelClassStatus_DoesNotHaveClass);
+	}
+	const i32 noGlow = prefs.keysGlowEnabled ? 0 : 1;
+	if (this->layoutKeys.noGlow != noGlow)
+	{
+		this->layoutKeys.noGlow = noGlow;
+		layout->SetHasClass(keysPanel, "keys-noglow", noGlow ? k_eHudPanelClassStatus_HasClass : k_eHudPanelClassStatus_DoesNotHaveClass);
+	}
+	const i32 letters = prefs.keysLetters ? 1 : 0;
 	if (this->layoutKeys.letters != letters)
 	{
 		this->layoutKeys.letters = letters;
-		layout->SetHasClass(MHUD_ELEMENTS[(i32)MHUDElement::Keys].panelId, "keys-letters",
-							letters ? k_eHudPanelClassStatus_HasClass : k_eHudPanelClassStatus_DoesNotHaveClass);
+		layout->SetHasClass(keysPanel, "keys-letters", letters ? k_eHudPanelClassStatus_HasClass : k_eHudPanelClassStatus_DoesNotHaveClass);
 	}
-	const i32 square = this->IsMHUDKeysSquare() ? 1 : 0;
+	const i32 square = prefs.keysSquare ? 1 : 0;
 	if (this->layoutKeys.square != square)
 	{
 		this->layoutKeys.square = square;
-		layout->SetHasClass(MHUD_ELEMENTS[(i32)MHUDElement::Keys].panelId, "keys-square",
-							square ? k_eHudPanelClassStatus_HasClass : k_eHudPanelClassStatus_DoesNotHaveClass);
+		layout->SetHasClass(keysPanel, "keys-square", square ? k_eHudPanelClassStatus_HasClass : k_eHudPanelClassStatus_DoesNotHaveClass);
 	}
+	const i32 glow = panorama::GetNearestSolidIndex(panorama::ResolveSolidColor(prefs.keysGlow, MHUD_DEF_KEYS_GLOW_COLOR));
+	if (this->layoutKeys.glow != glow)
+	{
+		char glowClass[32];
+		for (i32 i = 0; i < KZ_ARRAYSIZE(KEY_PANELS); i++)
+		{
+			if (this->layoutKeys.glow >= 0)
+			{
+				V_snprintf(glowClass, sizeof(glowClass), "key-glow-%i", this->layoutKeys.glow);
+				layout->SetHasClass(KEY_PANELS[i], glowClass, k_eHudPanelClassStatus_DoesNotHaveClass);
+			}
+			V_snprintf(glowClass, sizeof(glowClass), "key-glow-%i", glow);
+			layout->SetHasClass(KEY_PANELS[i], glowClass, k_eHudPanelClassStatus_HasClass);
+		}
+		this->layoutKeys.glow = glow;
+	}
+
 	for (i32 i = 0; i < KZ_ARRAYSIZE(KEY_PANELS); i++)
 	{
 		if (this->layoutKeys.pressed[i] == keys[i])

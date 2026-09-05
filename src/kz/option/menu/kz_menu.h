@@ -80,6 +80,7 @@ private:
 	void RenderStepPopup(CCSCustomHudLayout *layout);
 
 	void SelectLeft(i32 slot);
+	bool IsItemEnabled(const KZOptItem &item);
 	void ActivateItem(i32 slot);
 	void OpenPopup(Popup kind, i32 itemIdx);
 	void ClosePopup();
@@ -125,6 +126,7 @@ private:
 		const char *menuFont {};  // menu font class stamped on the text panels
 		const char *menuColor {}; // menu color (pal-fg) class stamped on the text panels
 		bool rootHidden {true};   // menu_root "hidden"
+		bool sounds {};           // menu_root "snd", gating every hover/click sound in menu.css
 		bool colorHidden {true};  // color_popup "hidden"
 		bool listHidden {true};   // list_popup "hidden"
 		bool stepHidden {true};   // step_popup "hidden"
@@ -138,10 +140,11 @@ private:
 		bool catParent[KZ_MENU_CATS] {};   // "cat-parent" (top-level header styling)
 		bool catDisabled[KZ_MENU_CATS] {}; // "disabled" (active category with a sub open)
 		// Middle column, one slot each:
-		bool itemHidden[KZ_MENU_ITEMS] {};        // slot "hidden" (unused)
-		const char *itemType[KZ_MENU_ITEMS] {};   // the "type-*" control class
-		bool itemOn[KZ_MENU_ITEMS] {};            // toggle "on"
-		bool itemSub[KZ_MENU_ITEMS] {};           // "has-sub" (subtext line shown)
+		bool itemHidden[KZ_MENU_ITEMS] {};      // slot "hidden" (unused)
+		const char *itemType[KZ_MENU_ITEMS] {}; // the "type-*" control class
+		bool itemOn[KZ_MENU_ITEMS] {};          // toggle "on"
+		bool itemSub[KZ_MENU_ITEMS] {};
+		bool itemDisabled[KZ_MENU_ITEMS] {};      // "disabled" (its enabledBy preference is off)           // "has-sub" (subtext line shown)
 		bool itemDiv[KZ_MENU_ITEMS] {};           // "divider" (rule under the item, unused)
 		const char *itemSwatch[KZ_MENU_ITEMS] {}; // color item's pal-bg swatch class
 		// List popup rows, one slot each:

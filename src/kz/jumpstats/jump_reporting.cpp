@@ -428,10 +428,6 @@ void KZJumpstatsService::AnnounceJump(Jump *jump)
 		// If the player is the one who did the jump or is spectating the jumper, we show more details in chat.
 		if (player == jump->GetJumpPlayer() || player->specService->GetSpectatedPlayer() == jump->GetJumpPlayer())
 		{
-			if (isFailstat && !player->optionService->GetPreferenceBool("jsFailstats", true))
-			{
-				continue;
-			}
 			if ((jump->GetOffset() <= -JS_EPSILON || !jump->IsValid()) && !isFailstat && !player->optionService->GetPreferenceBool("jsAlways", false))
 			{
 				continue;
@@ -440,7 +436,13 @@ void KZJumpstatsService::AnnounceJump(Jump *jump)
 			{
 				continue;
 			}
-			KZJumpstatsService::PrintJumpToChat(player, jump, player->optionService->GetPreferenceBool("jsExtendedChatStats", false));
+			// jsFailstats gates the chat line only; PrintJumpToConsole reads jsFailstatsConsole for
+			// itself, so either channel can report a failstat without the other. PlayJumpstatSound
+			// returns on any failstat, so there is nothing to gate there.
+			if (!isFailstat || player->optionService->GetPreferenceBool("jsFailstats", true))
+			{
+				KZJumpstatsService::PrintJumpToChat(player, jump, player->optionService->GetPreferenceBool("jsExtendedChatStats", false));
+			}
 			KZJumpstatsService::PrintJumpToConsole(player, jump);
 			KZJumpstatsService::PlayJumpstatSound(player, jump);
 		}

@@ -183,8 +183,19 @@
 	}
 	"Menu - Keys Unpressed"
 	{
-		"en"		"Hide unpressed keys"
-		"chi"		"隐藏未按下的按键"
+		"en"		"Unpressed keys"
+	}
+	"Menu - Keys Unpressed Show"
+	{
+		"en"		"Show"
+	}
+	"Menu - Keys Unpressed Hide"
+	{
+		"en"		"Hide"
+	}
+	"Menu - Keys Unpressed Underscore"
+	{
+		"en"		"Underscore"
 	}
 	"Menu - Keys Letters"
 	{
@@ -196,6 +207,18 @@
 		"en"		"Square keys"
 		"chi"		"方形按键"
 	}
+	"Menu - Keys Border"
+	{
+		"en"		"Key borders"
+	}
+	"Menu - Keys Glow"
+	{
+		"en"		"Key glow"
+	}
+	"Menu - Sounds"
+	{
+		"en"		"Menu sounds"
+	}
 	"Menu - Color"
 	{
 		"en"		"Color"
@@ -205,6 +228,10 @@
 	{
 		"en"		"Overlap color"
 		"chi"		"重叠颜色"
+	}
+	"Menu - Color Glow"
+	{
+		"en"		"Glow color"
 	}
 	"Menu - Mode"
 	{

@@ -44,6 +44,9 @@ namespace panorama
 	const char *ResolveColorClass(const Color &color);  // text (color)
 	const char *ResolveSwatchClass(const Color &color); // swatch (background-color)
 
+	// Index into the palette, for class families keyed by it (key-glow-N).
+	i32 GetNearestSolidIndex(const Color &color);
+
 	// The color picker's combined entry space: solids first, then gradients.
 	i32 GetColorEntryCount();
 	// Just the solids, for items whose consumer cannot render a gradient.
