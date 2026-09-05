@@ -79,9 +79,9 @@ Automated translation linter reports for cs2kz-metamod.
 
 ## Last Updated
 
-- **Commit:** [`228ef25`](https://github.com/KZGlobalTeam/cs2kz-metamod/commit/228ef255668b218ce0194f6e7e52562e78b4576b)
-- **Time:** 2026-09-05 16:32:11 UTC
-- **Message:** Add opacity control for HUD elements, add background toggle for keypresses, upda
+- **Commit:** [`5d3ef87`](https://github.com/KZGlobalTeam/cs2kz-metamod/commit/5d3ef87e0e24461a64512d6c44d5478bb808be9c)
+- **Time:** 2026-09-05 16:36:16 UTC
+- **Message:** Rephrase decimal line
 
 ---
 

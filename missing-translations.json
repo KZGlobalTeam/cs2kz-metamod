@@ -83,7 +83,7 @@
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Decimal",
           "line": 130,
-          "english_text": "Two decimal places"
+          "english_text": "Use decimal places"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
@@ -797,7 +797,7 @@
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Decimal",
           "line": 130,
-          "english_text": "Two decimal places"
+          "english_text": "Use decimal places"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
@@ -2250,7 +2250,7 @@
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Decimal",
           "line": 130,
-          "english_text": "Two decimal places"
+          "english_text": "Use decimal places"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
@@ -5281,7 +5281,7 @@
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Decimal",
           "line": 130,
-          "english_text": "Two decimal places"
+          "english_text": "Use decimal places"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
@@ -8821,7 +8821,7 @@
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Decimal",
           "line": 130,
-          "english_text": "Two decimal places"
+          "english_text": "Use decimal places"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
@@ -11251,7 +11251,7 @@
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Decimal",
           "line": 130,
-          "english_text": "Two decimal places"
+          "english_text": "Use decimal places"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
@@ -13064,7 +13064,7 @@
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Decimal",
           "line": 130,
-          "english_text": "Two decimal places"
+          "english_text": "Use decimal places"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
@@ -15615,7 +15615,7 @@
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Decimal",
           "line": 130,
-          "english_text": "Two decimal places"
+          "english_text": "Use decimal places"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
@@ -16990,7 +16990,7 @@
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Decimal",
           "line": 130,
-          "english_text": "Two decimal places"
+          "english_text": "Use decimal places"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
@@ -18545,7 +18545,7 @@
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Decimal",
           "line": 130,
-          "english_text": "Two decimal places"
+          "english_text": "Use decimal places"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
@@ -21612,7 +21612,7 @@
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Decimal",
           "line": 130,
-          "english_text": "Two decimal places"
+          "english_text": "Use decimal places"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
@@ -23760,7 +23760,7 @@
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Decimal",
           "line": 130,
-          "english_text": "Two decimal places"
+          "english_text": "Use decimal places"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
@@ -28769,7 +28769,7 @@
         {
           "name": "Menu - Decimal",
           "line": 130,
-          "english_text": "Two decimal places",
+          "english_text": "Use decimal places",
           "existing_languages": [
             "en"
           ],
