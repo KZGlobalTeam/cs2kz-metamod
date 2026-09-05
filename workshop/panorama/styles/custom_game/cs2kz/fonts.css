@@ -236,9 +236,8 @@
 	font-family: monospace, "Arial Unicode MS";
 }
 
-// System fonts: not shipped with the game, so these only render if the player has them installed
-// (marked with * in the picker). Their weights come from font-weight rather than a family name,
-// because Windows exposes one "Trebuchet MS"/"Lato" family rather than a family per weight.
+// System fonts: only render if the player has them installed, marked with * in the picker. Weights
+// come from font-weight, since Windows exposes one family rather than one per weight.
 .font-family--trebuchet {
 	font-family: "Trebuchet MS", "Arial Unicode MS";
 }

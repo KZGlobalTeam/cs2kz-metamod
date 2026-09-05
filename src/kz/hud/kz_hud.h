@@ -28,6 +28,7 @@ struct MHUDElementDef
 	const char *sizeKey;
 	const char *fontKey;
 	const char *outlineKey;
+	const char *opacityKey;
 	i32 xDefault;
 	i32 yDefault;
 	i32 sizeDefault;
@@ -60,7 +61,7 @@ static_global const Color MHUD_DEF_TIMER_PRO_COLOR(0x5F, 0x99, 0xD9, 0xFF);
 static_global const Color MHUD_DEF_TIMER_PAUSED_COLOR(0xFF, 0x80, 0x00, 0xFF);
 static_global const Color MHUD_DEF_TIMER_STOPPED_COLOR(0xFF, 0xA0, 0xA0, 0xFF);
 static_global const Color MHUD_DEF_KEYS_OVERLAP_COLOR(0xFF, 0x40, 0x40, 0xFF);
-static_global const Color MHUD_DEF_KEYS_GLOW_COLOR(0x3B, 0xED, 0xA0, 0xFF);
+static_global const Color MHUD_DEF_KEYS_PRESSED_COLOR(0x3B, 0xED, 0xA0, 0xFF);
 
 // The player's own cl_crosshair* values. The game's defaults stand until a query answers.
 struct MHUDCrosshairSettings
@@ -94,6 +95,7 @@ struct MHUDPrefs
 		f32 x {}, y {}, size {};
 		const char *fontClass {};
 		bool outline {true};
+		i32 opacity {100};
 	};
 
 	Element elements[(i32)MHUDElement::Count] {};
@@ -101,12 +103,13 @@ struct MHUDPrefs
 	Color timerPaused, timerStopped, timerTp, timerPro;
 	Color speed, speedCj;
 	Color prespeed, prespeedPerf, prespeedJumpbug;
-	Color keys, keysOverlap, keysGlow;
+	Color keys, keysOverlap, keysPressed;
 	Color checkpoint;
 
 	bool legacyStyle {};
 	bool compactPanel {};
 	bool crosshair {};
+	i32 crosshairScale {100}; // layout units per device pixel, as a percent
 	bool timerDetailed {true};
 	bool speedPrecise {};
 	bool prespeedPrecise {};
@@ -117,6 +120,7 @@ struct MHUDPrefs
 	bool keysSquare {};
 	bool keysBorder {true};
 	bool keysGlowEnabled {true};
+	bool keysFillEnabled {true};
 	MHUDKeysIdle keysIdle {MHUDKeysIdle::Show};
 };
 
@@ -271,6 +275,7 @@ private:
 		i32 y {INT_MIN};
 		bool hidden {true};
 		bool outline {false};
+		i32 opacity {INT_MIN};
 		// Cached so the nearest-palette search only runs when the color changes, not every tick.
 		const char *colorClassComputed {};
 		u32 lastColorPacked {};
@@ -285,6 +290,7 @@ private:
 		i32 square {-1};
 		i32 noBorder {-1};
 		i32 noGlow {-1};
+		i32 noFill {-1};
 		i32 glow {-1};
 		i32 fontSize {INT_MIN};
 		const char *fontClass {};
@@ -298,10 +304,6 @@ private:
 		i32 thickness {-1};
 		i32 margin {-1};
 		i32 outline {-1};
-		i32 outlineLength {-1};
-		i32 outlineThickness {-1};
-		i32 outlineMargin {-1};
-		i32 outlineDot {-1};
 		i32 opacity {-1};
 		i32 dot {-1};
 		i32 noTopArm {-1};

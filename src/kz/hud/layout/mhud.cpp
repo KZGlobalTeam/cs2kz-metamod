@@ -130,6 +130,12 @@ void KZHUDService::UpdateKeysElement(CCSCustomHudLayout *layout, KZPlayer *sourc
 		this->layoutKeys.noGlow = noGlow;
 		layout->SetHasClass(keysPanel, "keys-noglow", noGlow ? k_eHudPanelClassStatus_HasClass : k_eHudPanelClassStatus_DoesNotHaveClass);
 	}
+	const i32 noFill = prefs.keysFillEnabled ? 0 : 1;
+	if (this->layoutKeys.noFill != noFill)
+	{
+		this->layoutKeys.noFill = noFill;
+		layout->SetHasClass(keysPanel, "keys-nofill", noFill ? k_eHudPanelClassStatus_HasClass : k_eHudPanelClassStatus_DoesNotHaveClass);
+	}
 	const i32 letters = prefs.keysLetters ? 1 : 0;
 	if (this->layoutKeys.letters != letters)
 	{
@@ -142,7 +148,7 @@ void KZHUDService::UpdateKeysElement(CCSCustomHudLayout *layout, KZPlayer *sourc
 		this->layoutKeys.square = square;
 		layout->SetHasClass(keysPanel, "keys-square", square ? k_eHudPanelClassStatus_HasClass : k_eHudPanelClassStatus_DoesNotHaveClass);
 	}
-	const i32 glow = panorama::GetNearestSolidIndex(panorama::ResolveSolidColor(prefs.keysGlow, MHUD_DEF_KEYS_GLOW_COLOR));
+	const i32 glow = panorama::GetNearestSolidIndex(panorama::ResolveSolidColor(prefs.keysPressed, MHUD_DEF_KEYS_PRESSED_COLOR));
 	if (this->layoutKeys.glow != glow)
 	{
 		char glowClass[32];

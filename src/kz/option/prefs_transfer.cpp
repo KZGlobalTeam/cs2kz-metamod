@@ -174,6 +174,8 @@ static_global class KZOptionServiceEventListener_PrefsTransfer : public KZOption
 static_function void ExportPrefs(KZPlayer *player, i64)
 {
 	player->languageService->PrintConsole(false, false, "Prefs - Export Header");
+	// setinfo is filtered on workshop maps unless the client launches with it disabled.
+	player->languageService->PrintConsole(false, false, "Prefs - Export Launch Option");
 	player->PrintConsole(false, false, "setinfo %s %lli;", KZ_PREF_STAMP_CVAR, (long long)time(NULL));
 
 	i32 count = 0;

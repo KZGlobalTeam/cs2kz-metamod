@@ -90,6 +90,20 @@ void KZHUDService::UpdateLayoutElement(CCSCustomHudLayout *layout, MHUDElement e
 	this->SetLayoutClass(layout, def.panelId, state.colorClass, state.colorClassComputed);
 	this->SetLayoutClass(layout, def.panelId, state.fontClass, KZHUDService::GetMHUDFontClass(this->player, element));
 
+	const i32 opacity = Clamp(cached.opacity, 0, 100);
+	if (state.opacity != opacity)
+	{
+		char className[32];
+		if (state.opacity != INT_MIN)
+		{
+			V_snprintf(className, sizeof(className), "opacity--%ipct", state.opacity);
+			layout->SetHasClass(def.panelId, className, k_eHudPanelClassStatus_DoesNotHaveClass);
+		}
+		V_snprintf(className, sizeof(className), "opacity--%ipct", opacity);
+		layout->SetHasClass(def.panelId, className, k_eHudPanelClassStatus_HasClass);
+		state.opacity = opacity;
+	}
+
 	const bool outline = this->IsMHUDOutlineEnabled(element);
 	if (state.outline != outline)
 	{

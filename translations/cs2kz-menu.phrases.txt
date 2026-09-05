@@ -119,6 +119,14 @@
 	{
 		"en"		"Also affects the legacy HUD"
 	}
+	"Menu - Crosshair Scale"
+	{
+		"en"		"Crosshair scale"
+	}
+	"Menu - Crosshair Scale Sub"
+	{
+		"en"		"Pick the one matching your resolution"
+	}
 	"Menu - Decimal"
 	{
 		"en"		"Two decimal places"
@@ -274,6 +282,14 @@
 		"en"		"Key borders"
 		"ua"		"Контури клавіш"
 	}
+	"Menu - Keys Fill"
+	{
+		"en"		"Key fill"
+	}
+	"Menu - Opacity"
+	{
+		"en"		"Opacity"
+	}
 	"Menu - Keys Glow"
 	{
 		"en"		"Key glow"
@@ -300,10 +316,9 @@
 		"chi"		"重叠颜色"
 		"ua"		"Колір перекриття"
 	}
-	"Menu - Color Glow"
+	"Menu - Color Pressed"
 	{
-		"en"		"Glow color"
-		"ua"		"Колір світіння"
+		"en"		"Pressed color"
 	}
 	"Menu - Mode"
 	{
@@ -856,6 +871,10 @@
 		"en"		"----- CS2KZ preferences: paste the lines below into another server's console -----"
 		"chi"		"----- CS2KZ 偏好设置: 将以下行粘贴到其他服务器的控制台 -----"
 		"ua"		"----- Налаштування CS2KZ: вставте рядки нижче в консоль іншого сервера -----"
+	}
+	"Prefs - Export Launch Option"
+	{
+		"en"		"setinfo is ignored on workshop maps.\nEither paste these from the main menu before joining a server, or add -disable_workshop_command_filtering to your CS2 launch options.\nThe console only takes 512 characters at a time, so paste a few lines at a time or execute them from a config file instead."
 	}
 	"Prefs - Export Footer"
 	{

@@ -43,22 +43,17 @@
     <Label id="mhud_checkpoint" class="element checkpoint hidden" text="{s:checkpoint}" hittest="false" />
     <Panel id="mhud_crosshair" class="crosshair hidden" hittest="false">
       <Panel class="xh-half-left" hittest="false">
-        <Panel id="xh_ol_left" class="xh-arm xh-outline" hittest="false" />
         <Panel id="xh_left" class="xh-arm" hittest="false" />
       </Panel>
       <Panel class="xh-half-right" hittest="false">
-        <Panel id="xh_ol_right" class="xh-arm xh-outline" hittest="false" />
         <Panel id="xh_right" class="xh-arm" hittest="false" />
       </Panel>
       <Panel class="xh-half-top" hittest="false">
-        <Panel id="xh_ol_top" class="xh-arm xh-outline" hittest="false" />
         <Panel id="xh_top" class="xh-arm" hittest="false" />
       </Panel>
       <Panel class="xh-half-bottom" hittest="false">
-        <Panel id="xh_ol_bottom" class="xh-arm xh-outline" hittest="false" />
         <Panel id="xh_bottom" class="xh-arm" hittest="false" />
       </Panel>
-      <Panel id="xh_ol_dot" class="xh-arm xh-dot xh-outline hidden" hittest="false" />
       <Panel id="xh_dot" class="xh-arm xh-dot hidden" hittest="false" />
     </Panel>
 

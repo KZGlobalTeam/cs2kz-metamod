@@ -18,6 +18,7 @@ void KZHUDService::RefreshPrefs()
 		element.size = (f32)opts->GetPreferenceFloat(def.sizeKey, def.sizeDefault);
 		element.fontClass = panorama::ResolveFontClass(opts->GetPreferenceStr(def.fontKey, MHUD_DEFAULT_FONT), MHUD_DEFAULT_FONT);
 		element.outline = opts->GetPreferenceBool(def.outlineKey, true);
+		element.opacity = (i32)opts->GetPreferenceInt(def.opacityKey, 100);
 	}
 
 	this->prefs.timerPaused = opts->GetPreferenceColor("mhudTimerPausedColor", MHUD_DEF_TIMER_PAUSED_COLOR);
@@ -31,12 +32,13 @@ void KZHUDService::RefreshPrefs()
 	this->prefs.prespeedJumpbug = opts->GetPreferenceColor("mhudPrespeedJumpbugColor", MHUD_DEF_JUMPBUG_COLOR);
 	this->prefs.keys = opts->GetPreferenceColor("mhudKeysColor", MHUD_DEF_BASE_COLOR);
 	this->prefs.keysOverlap = opts->GetPreferenceColor("mhudKeysOverlapColor", MHUD_DEF_KEYS_OVERLAP_COLOR);
-	this->prefs.keysGlow = opts->GetPreferenceColor("mhudKeysGlowColor", MHUD_DEF_KEYS_GLOW_COLOR);
+	this->prefs.keysPressed = opts->GetPreferenceColor("mhudKeysPressedColor", MHUD_DEF_KEYS_PRESSED_COLOR);
 	this->prefs.checkpoint = opts->GetPreferenceColor("mhudCheckpointColor", MHUD_DEF_BASE_COLOR);
 
 	this->prefs.legacyStyle = opts->GetPreferenceBool("hudLegacyStyle", false);
 	this->prefs.compactPanel = opts->GetPreferenceBool("compactPanel", false);
 	this->prefs.crosshair = opts->GetPreferenceBool("mhudCrosshair", false);
+	this->prefs.crosshairScale = (i32)opts->GetPreferenceInt("mhudCrosshairScale", 100);
 	this->prefs.timerDetailed = opts->GetPreferenceBool("mhudTimerDetailed", true);
 	this->prefs.speedPrecise = opts->GetPreferenceBool("mhudSpeedPrecise", false);
 	this->prefs.prespeedPrecise = opts->GetPreferenceBool("mhudPrespeedPrecise", false);
@@ -47,6 +49,7 @@ void KZHUDService::RefreshPrefs()
 	this->prefs.keysSquare = opts->GetPreferenceBool("mhudKeysSquare", false);
 	this->prefs.keysBorder = opts->GetPreferenceBool("mhudKeysBorder", true);
 	this->prefs.keysGlowEnabled = opts->GetPreferenceBool("mhudKeysGlow", true);
+	this->prefs.keysFillEnabled = opts->GetPreferenceBool("mhudKeysFill", true);
 	// mhudKeysIdle replaced the mhudKeysHideUnpressed toggle; carry the old setting over once.
 	const i32 idle = opts->HasPreference("mhudKeysIdle")
 						 ? (i32)opts->GetPreferenceInt("mhudKeysIdle", (i64)MHUDKeysIdle::Show)

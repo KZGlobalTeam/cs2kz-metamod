@@ -1,6 +1,5 @@
-/* Virtual crosshair. Each arm sits in its own half of the screen, anchored to the inner edge - the
-   screen centre. Sizes and margins come from the player's cl_crosshair* settings; see
-   src/kz/hud/layout/crosshair.cpp. */
+/* Virtual crosshair. Each arm is anchored to the inner edge of its own half of the screen.
+   Geometry comes from cl_crosshair*; see src/kz/hud/layout/crosshair.cpp. */
 
 .crosshair {
 	width: 100%;
@@ -61,14 +60,43 @@
 	vertical-align: center;
 }
 
-/* cl_crosshair_drawoutline / cl_crosshair_outlinethickness: a black panel behind each arm, grown by
-   the outline thickness on every side, as the game draws it. */
-.xh-outline {
-	background-color: #000000ff;
+/* cl_crosshair_drawoutline / cl_crosshair_outlinethickness. A border, not a panel behind: two
+   panels round to device pixels separately and come out uneven off 1080p. The border draws inside
+   the box, so crosshair.cpp sizes the arm to the outlined bar. */
+.xh-ol--0 {
+	border-width: 0px;
 }
 
-.xh-noline {
-	visibility: collapse;
+.xh-ol--1 {
+	border: 1px solid #000000ff;
+}
+
+.xh-ol--2 {
+	border: 2px solid #000000ff;
+}
+
+.xh-ol--3 {
+	border: 3px solid #000000ff;
+}
+
+.xh-ol--4 {
+	border: 4px solid #000000ff;
+}
+
+.xh-ol--5 {
+	border: 5px solid #000000ff;
+}
+
+.xh-ol--6 {
+	border: 6px solid #000000ff;
+}
+
+.xh-ol--7 {
+	border: 7px solid #000000ff;
+}
+
+.xh-ol--8 {
+	border: 8px solid #000000ff;
 }
 
 /* cl_crosshairalpha, in twentieths. */
@@ -157,8 +185,7 @@
 	opacity: 1;
 }
 
-/* Distance from the screen centre to an arm's inner edge, biased by 8 so a negative gap still
-   lands on a class. */
+/* Screen centre to an arm's inner edge, biased by 8 so a negative gap still lands on a class. */
 
 .xh-half-left .xh-m--0 {
 	margin-right: -8px;

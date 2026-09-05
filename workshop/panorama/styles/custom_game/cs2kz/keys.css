@@ -1,5 +1,5 @@
-/* Generated from PANORAMA_COLORS in src/kz/option/menu/tables.cpp. Keep the count in step. */
-/* mhudKeysGlowColor tints the pressed key fill and its glow. */
+/* Generated from PANORAMA_COLORS in src/kz/option/menu/tables.cpp; keep the count in step.
+   mhudKeysPressedColor tints the pressed key fill and its glow. */
 
 .key-button.key-glow-0.pressed {
 	background-color: #00000080;

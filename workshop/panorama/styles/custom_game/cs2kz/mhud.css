@@ -4,6 +4,7 @@
 @import url("file://{resources}/styles/custom_game/cs2kz/positions.css");
 @import url("file://{resources}/styles/custom_game/cs2kz/crosshair.css");
 @import url("file://{resources}/styles/custom_game/cs2kz/keys.css");
+@import url("file://{resources}/styles/custom_game/cs2kz/opacity.css");
 
 .root {
 	width: 100%;
@@ -38,8 +39,7 @@
 }
 
 .key-button {
-	/* The glyph's line box is taller than the 23px of content this leaves, so the top and bottom of
-	   every glyph would be clipped. */
+	/* The glyph's line box outgrows the 23px of content below, and would be clipped. */
 	overflow: noclip noclip;
 	width: 55px;
 	height: 35px;
@@ -57,16 +57,20 @@
 
 .key-button.pressed {
 	background-color: #24f09780;
-	/* glow; keys.css overrides both from mhudKeysGlowColor */
+	/* glow; keys.css overrides both from mhudKeysPressedColor. */
 	box-shadow: 0 0 10px #3beda080;
 }
 
-/* mhudKeysGlow off: drop the glow but keep the fill, so a pressed key still reads as pressed. */
+/* keys.css sets the fill and glow together; these switch off one without the other. */
 .keys.keys-noglow .key-button.pressed {
 	box-shadow: 0 0 0 #00000000;
 }
 
-/* mhudKeysBorder off: keep the 2px so the layout does not shift, just stop drawing it. */
+.keys.keys-nofill .key-button.pressed {
+	background-color: #00000000;
+}
+
+/* mhudKeysBorder off: keep the 2px so the layout holds, just stop drawing it. */
 .keys-noborder .key-button {
 	border-color: #00000000;
 }
@@ -109,7 +113,7 @@
 	visibility: visible;
 }
 
-/* mhudKeysIdle = Underscore swaps an unpressed key's glyph for "_". */
+/* mhudKeysIdle = Underscore: an unpressed key shows a dash instead of its glyph. */
 .key-glyph-idle {
 	visibility: collapse;
 }

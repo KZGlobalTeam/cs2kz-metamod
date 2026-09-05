@@ -8,10 +8,6 @@
 //   arm       = [center + thickness/2 + gap, + length]
 //   dot       = thickness-sized square; cl_crosshair_t drops the top arm
 //   alpha     = cl_crosshairusealpha ? cl_crosshairalpha : 200
-// Panorama's reference height is 1080, so screenHeight is 1080 and the scale is constant.
-//
-// Each arm is anchored to the inner edge of its own half of the screen: a width, a height and a
-// margin class.
 
 #include "kz/hud/layout/layout.h"
 #include "kz/hud/kz_hud.h"
@@ -23,33 +19,31 @@
 
 #include "tier0/memdbgon.h"
 
-// Panorama's 1080px reference over the client's 480px crosshair scale.
-#define MHUD_XH_SCALE 2.25f
+// Panorama's 1080px reference over the client's 480px crosshair scale. Exact at 1080p; elsewhere
+// mhudCrosshairScale carries the correction, since no convar reports the client's resolution.
+#define MHUD_XH_SCALE     2.25f
+#define MHUD_XH_MIN_SCALE 25
+#define MHUD_XH_MAX_SCALE 400
 // Largest suffix xh-w--/xh-h-- define.
 #define MHUD_XH_MAX_PX 56
 // xh-m--N is a margin of N - MHUD_XH_MARGIN_BIAS pixels, so arms can cross the centre.
 #define MHUD_XH_MARGIN_BIAS 8
 #define MHUD_XH_MAX_MARGIN  24
-// The game caps cl_crosshair_outlinethickness at 3, in raw pixels.
-#define MHUD_XH_MAX_OUTLINE 3
+// The game caps cl_crosshair_outlinethickness at 3, in raw pixels; scaling up needs more classes.
+#define MHUD_XH_MAX_OUTLINE    3
+#define MHUD_XH_MAX_OUTLINE_PX 8
 // Opacity classes are 5% steps.
 #define MHUD_XH_OPACITY_STEPS 20
 #define MHUD_XH_POLL_INTERVAL 2.5f
 
-// Alpha goes on each painted panel, not the container: parent opacity does not reach children.
-static_global const char *const XH_PAINTED[] = {"xh_left",    "xh_right",    "xh_top",    "xh_bottom",    "xh_dot",
-												"xh_ol_left", "xh_ol_right", "xh_ol_top", "xh_ol_bottom", "xh_ol_dot"};
+// Alpha goes on each painted panel, not the container: parent opacity does not reach children. The
+// border carrying the outline is part of the same panel, so it fades with the bar as the game does.
+static_global const char *const XH_PAINTED[] = {"xh_left", "xh_right", "xh_top", "xh_bottom", "xh_dot"};
 static_global const char *const XH_ARMS[] = {"xh_left", "xh_right", "xh_top", "xh_bottom"};
 static_global const char *const XH_HORIZONTAL[] = {"xh_left", "xh_right"};
 static_global const char *const XH_VERTICAL[] = {"xh_top", "xh_bottom"};
 static_global const char *const XH_TINTED[] = {"xh_left", "xh_right", "xh_top", "xh_bottom", "xh_dot"};
 static_global const char *const XH_DOT[] = {"xh_dot"};
-// One black panel behind each arm, grown by the outline thickness on every side.
-static_global const char *const XH_OUTLINES[] = {"xh_ol_left", "xh_ol_right", "xh_ol_top", "xh_ol_bottom", "xh_ol_dot"};
-static_global const char *const XH_OUTLINE_ARMS[] = {"xh_ol_left", "xh_ol_right", "xh_ol_top", "xh_ol_bottom"};
-static_global const char *const XH_OUTLINE_H[] = {"xh_ol_left", "xh_ol_right"};
-static_global const char *const XH_OUTLINE_V[] = {"xh_ol_top", "xh_ol_bottom"};
-static_global const char *const XH_OUTLINE_DOT[] = {"xh_ol_dot"};
 
 // === Reading the client's convars ==================================================
 
@@ -189,6 +183,12 @@ static_function void ApplyValueClass(CCSCustomHudLayout *layout, const char *con
 	}
 }
 
+// The game works in device pixels. One device pixel is `scale` layout units.
+static_function i32 ToLayout(i32 devicePixels, f32 scale)
+{
+	return (i32)(devicePixels * scale + 0.5f);
+}
+
 static_function void ApplyFlagClass(CCSCustomHudLayout *layout, const char *panelId, const char *className, i32 &cache, bool set)
 {
 	if (cache == (i32)set)
@@ -216,46 +216,44 @@ void KZHUDService::ApplyCrosshair(CCSCustomHudLayout *layout, bool show, bool fo
 	}
 
 	const MHUDCrosshairSettings &settings = this->crosshair;
-	const i32 armLength = Clamp((i32)(MHUD_XH_SCALE * settings.size), 0, MHUD_XH_MAX_PX);
-	const i32 thickness = Clamp(MAX(1, (i32)(MHUD_XH_SCALE * settings.thickness)), 1, MHUD_XH_MAX_PX);
-	const i32 gap = (i32)(settings.gap + 4.0f);
-	const i32 outline = settings.drawOutline ? Clamp((i32)(settings.outlineThickness + 0.5f), 0, MHUD_XH_MAX_OUTLINE) : 0;
-	// Inner edge distance; the outline starts one thickness closer and is that much bigger.
-	const i32 inner = thickness / 2 + gap;
-	const i32 margin = Clamp(inner, -MHUD_XH_MARGIN_BIAS, MHUD_XH_MAX_MARGIN) + MHUD_XH_MARGIN_BIAS;
-	const i32 outlineMargin = Clamp(inner - outline, -MHUD_XH_MARGIN_BIAS, MHUD_XH_MAX_MARGIN) + MHUD_XH_MARGIN_BIAS;
-	const i32 outlineLength = Clamp(armLength + 2 * outline, 0, MHUD_XH_MAX_PX);
-	const i32 outlineThickness = Clamp(thickness + 2 * outline, 0, MHUD_XH_MAX_PX);
+	const f32 scale = Clamp(this->GetPrefs().crosshairScale, MHUD_XH_MIN_SCALE, MHUD_XH_MAX_SCALE) / 100.0f;
+	// Everything the game derives from the screen height, in the device pixels it would paint.
+	const f32 screenScale = MHUD_XH_SCALE / scale;
+	const i32 lengthDev = (i32)(screenScale * settings.size);
+	const i32 thicknessDev = MAX(1, (i32)(screenScale * settings.thickness));
+	// The gap and the outline are raw device pixels, not screen-scaled.
+	const i32 gapDev = (i32)(settings.gap + 4.0f);
+	const i32 outlineDev = settings.drawOutline ? Clamp((i32)(settings.outlineThickness + 0.5f), 0, MHUD_XH_MAX_OUTLINE) : 0;
+
+	const i32 armLength = Clamp(ToLayout(lengthDev, scale), 0, MHUD_XH_MAX_PX);
+	const i32 thickness = Clamp(MAX(1, ToLayout(thicknessDev, scale)), 1, MHUD_XH_MAX_PX);
+	const i32 outline = Clamp(ToLayout(outlineDev, scale), 0, MHUD_XH_MAX_OUTLINE_PX);
+	// The border draws inside the box, so size the arm to the outlined bar and pull the margin in by
+	// the same amount to leave armLength x thickness painted where it would sit without one.
+	const i32 boxLength = Clamp(armLength + 2 * outline, 0, MHUD_XH_MAX_PX);
+	const i32 boxThickness = Clamp(thickness + 2 * outline, 1, MHUD_XH_MAX_PX);
+	const i32 innerDev = thicknessDev / 2 + gapDev;
+	const i32 margin = Clamp(ToLayout(innerDev, scale) - outline, -MHUD_XH_MARGIN_BIAS, MHUD_XH_MAX_MARGIN) + MHUD_XH_MARGIN_BIAS;
 	// The game paints the outline with the bars' alpha.
 	const i32 alpha = Clamp(settings.useAlpha ? settings.alpha : 200, 0, 255);
 	const i32 opacity = alpha * MHUD_XH_OPACITY_STEPS / 255;
 	const char *colorClass = panorama::ResolveSwatchClass(GetCrosshairColor(settings));
 
-	ApplyValueClass(layout, XH_HORIZONTAL, KZ_ARRAYSIZE(XH_HORIZONTAL), "xh-w--", state.armLength, armLength);
-	ApplyValueClass(layout, XH_VERTICAL, KZ_ARRAYSIZE(XH_VERTICAL), "xh-h--", state.armLength, armLength);
-	state.armLength = armLength;
+	ApplyValueClass(layout, XH_HORIZONTAL, KZ_ARRAYSIZE(XH_HORIZONTAL), "xh-w--", state.armLength, boxLength);
+	ApplyValueClass(layout, XH_VERTICAL, KZ_ARRAYSIZE(XH_VERTICAL), "xh-h--", state.armLength, boxLength);
+	state.armLength = boxLength;
 
-	ApplyValueClass(layout, XH_HORIZONTAL, KZ_ARRAYSIZE(XH_HORIZONTAL), "xh-h--", state.thickness, thickness);
-	ApplyValueClass(layout, XH_VERTICAL, KZ_ARRAYSIZE(XH_VERTICAL), "xh-w--", state.thickness, thickness);
-	ApplyValueClass(layout, XH_DOT, KZ_ARRAYSIZE(XH_DOT), "xh-w--", state.thickness, thickness);
-	ApplyValueClass(layout, XH_DOT, KZ_ARRAYSIZE(XH_DOT), "xh-h--", state.thickness, thickness);
-	state.thickness = thickness;
+	ApplyValueClass(layout, XH_HORIZONTAL, KZ_ARRAYSIZE(XH_HORIZONTAL), "xh-h--", state.thickness, boxThickness);
+	ApplyValueClass(layout, XH_VERTICAL, KZ_ARRAYSIZE(XH_VERTICAL), "xh-w--", state.thickness, boxThickness);
+	ApplyValueClass(layout, XH_DOT, KZ_ARRAYSIZE(XH_DOT), "xh-w--", state.thickness, boxThickness);
+	ApplyValueClass(layout, XH_DOT, KZ_ARRAYSIZE(XH_DOT), "xh-h--", state.thickness, boxThickness);
+	state.thickness = boxThickness;
 
 	ApplyValueClass(layout, XH_ARMS, KZ_ARRAYSIZE(XH_ARMS), "xh-m--", state.margin, margin);
 	state.margin = margin;
 
-	ApplyValueClass(layout, XH_OUTLINE_H, KZ_ARRAYSIZE(XH_OUTLINE_H), "xh-w--", state.outlineLength, outlineLength);
-	ApplyValueClass(layout, XH_OUTLINE_V, KZ_ARRAYSIZE(XH_OUTLINE_V), "xh-h--", state.outlineLength, outlineLength);
-	state.outlineLength = outlineLength;
-
-	ApplyValueClass(layout, XH_OUTLINE_H, KZ_ARRAYSIZE(XH_OUTLINE_H), "xh-h--", state.outlineThickness, outlineThickness);
-	ApplyValueClass(layout, XH_OUTLINE_V, KZ_ARRAYSIZE(XH_OUTLINE_V), "xh-w--", state.outlineThickness, outlineThickness);
-	ApplyValueClass(layout, XH_OUTLINE_DOT, KZ_ARRAYSIZE(XH_OUTLINE_DOT), "xh-w--", state.outlineThickness, outlineThickness);
-	ApplyValueClass(layout, XH_OUTLINE_DOT, KZ_ARRAYSIZE(XH_OUTLINE_DOT), "xh-h--", state.outlineThickness, outlineThickness);
-	state.outlineThickness = outlineThickness;
-
-	ApplyValueClass(layout, XH_OUTLINE_ARMS, KZ_ARRAYSIZE(XH_OUTLINE_ARMS), "xh-m--", state.outlineMargin, outlineMargin);
-	state.outlineMargin = outlineMargin;
+	ApplyValueClass(layout, XH_PAINTED, KZ_ARRAYSIZE(XH_PAINTED), "xh-ol--", state.outline, outline);
+	state.outline = outline;
 
 	ApplyValueClass(layout, XH_PAINTED, KZ_ARRAYSIZE(XH_PAINTED), "xh-op--", state.opacity, opacity);
 	state.opacity = opacity;
@@ -273,23 +271,11 @@ void KZHUDService::ApplyCrosshair(CCSCustomHudLayout *layout, bool show, bool fo
 		state.colorClass = colorClass;
 	}
 
-	// With no outline the black panel matches the arm and would show through a translucent one.
-	if (state.outline != outline)
-	{
-		state.outline = outline;
-		for (const char *panelId : XH_OUTLINES)
-		{
-			layout->SetHasClass(panelId, "xh-noline", outline > 0 ? k_eHudPanelClassStatus_DoesNotHaveClass : k_eHudPanelClassStatus_HasClass);
-		}
-	}
-
 	ApplyFlagClass(layout, "xh_dot", "hidden", state.dot, !settings.dot);
-	ApplyFlagClass(layout, "xh_ol_dot", "hidden", state.outlineDot, !settings.dot);
 	if (state.noTopArm != (i32)settings.tStyle)
 	{
 		state.noTopArm = (i32)settings.tStyle;
 		const auto status = settings.tStyle ? k_eHudPanelClassStatus_HasClass : k_eHudPanelClassStatus_DoesNotHaveClass;
 		layout->SetHasClass("xh_top", "hidden", status);
-		layout->SetHasClass("xh_ol_top", "hidden", status);
 	}
 }

@@ -189,7 +189,7 @@
 	background-color: #ffffff14;
 }
 
-/* An item whose enabledBy preference is off: still readable, but inert. */
+/* enabledBy off: still readable, but inert. */
 .item.disabled {
 	opacity: 0.35;
 }
@@ -300,16 +300,15 @@
 	visibility: collapse;
 }
 
-/* .popup's 16px padding comes out of this width, so the grid below gets 340 - 32 = 308px.
-   .popup centres before applying x, so the extra 40px of width has to be met by half of it in x
-   (594 + 20) to keep the same gap from the menu box as the narrower popups. */
+/* .popup's padding comes out of this width, leaving the grid 308px. Centring happens before x, so
+   the extra 40px of width needs half of it back in x to keep the gap from the menu box. */
 .color-popup {
 	width: 340px;
 	x: 614px;
 }
 
-/* A swatch occupies 24px + 2px border + 4px margin = 30px, so 10 columns need exactly 300px.
-   Keep this in step with KZ_MENU_SWATCH. */
+/* A swatch occupies 24 + 2 border + 4 margin = 30px, so 10 columns need 300. Keep in step with
+   KZ_MENU_SWATCH. */
 .swatch-grid {
 	flow-children: right-wrap;
 	width: 300px;
@@ -414,10 +413,8 @@
 
 // --- stepper popup -----------------------------------------------------------------
 
-/* Wider than the other popups, so it needs its own offset to keep the same gap from the menu box
-   instead of growing back over it. */
-/* The z row reuses the readout slot for an axis label, since the main readout already shows all
-   three components. */
+/* Wider than the other popups, so it needs its own offset to keep the same gap. */
+/* The z row reuses the readout slot for an axis label; the main readout shows all three. */
 .step-axis {
 	opacity: 0.5;
 }
@@ -481,7 +478,7 @@
 	margin-bottom: 0px;
 }
 
-/* menuSounds: the server adds `snd` to menu_root when the player leaves them on. */
+/* menuSounds: the server adds `snd` to menu_root when they are on. */
 
 .snd .close-btn:hover {
 	sound: "UIPanorama.generic_button_rollover";
