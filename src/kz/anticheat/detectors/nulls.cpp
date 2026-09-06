@@ -29,7 +29,7 @@
 #define NEAR_PERFECT_MIN_DURATION    (ENGINE_FIXED_TICK_INTERVAL / 64.0f) // ~0.25ms
 #define NEAR_PERFECT_MAX_DURATION    0.001f                               // 1ms
 
-CConVar<bool> kz_ac_nulls_debug("kz_ac_nulls_debug", FCVAR_CHEAT, "Enable nulls detector debug messages", false);
+CConVar<bool> kz_ac_nulls_debug("kz_ac_nulls_debug", FCVAR_NONE, "Enable nulls detector debug messages", false);
 
 void KZAnticheatService::CreateInputEvents(PlayerCommand *cmd)
 {
