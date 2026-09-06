@@ -831,6 +831,7 @@ static_function bool Hook_ActivateServer()
 	KZRacingService::OnActivateServer();
 	KZGlobalService::OnActivateServer();
 	KZLanguageService::OnActivateServer();
+	KZHUDService::RefreshLayoutAvailability();
 
 	char md5[33];
 	g_pKZUtils->GetCurrentMapMD5(md5, sizeof(md5));

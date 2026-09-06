@@ -18,7 +18,7 @@ extern IMultiAddonManager *g_pMultiAddonManager;
 
 #include "tier0/memdbgon.h"
 
-static_global CConVar<bool> kz_force_mhud("kz_force_mhud", FCVAR_NONE, "Force the MHUD layout even when MultiAddonManager is not available.", false);
+static_global bool layoutAssetMounted = false;
 
 static_global class KZTimerServiceEventListener_HUD : public KZTimerServiceEventListener
 {
@@ -45,19 +45,17 @@ void KZHUDService::Init()
 	KZTimerService::RegisterEventListener(&timerEventListener);
 	KZOptionService::RegisterEventListener(&optionEventListener);
 	KZHUDService::RegisterMenu();
+	KZHUDService::RefreshLayoutAvailability();
+}
 
-	// A server launched with -addon mhud is already serving the HUD addon itself, so the layout
-	// resolves client side with no MultiAddonManager in the picture.
-	const char *addons = CommandLine()->ParmValue("-addon", "");
-	if (addons && V_stristr(addons, "mhud"))
-	{
-		kz_force_mhud.Set(true);
-	}
+void KZHUDService::RefreshLayoutAvailability()
+{
+	layoutAssetMounted = g_pFullFileSystem && g_pFullFileSystem->FileExists(KZ_MHUD_LAYOUT, NULL);
 }
 
 bool KZHUDService::IsLayoutHudAvailable()
 {
-	return g_pMultiAddonManager != nullptr || kz_force_mhud.Get();
+	return g_pMultiAddonManager != nullptr || layoutAssetMounted;
 }
 
 void KZHUDService::OnProcessMovementPost()

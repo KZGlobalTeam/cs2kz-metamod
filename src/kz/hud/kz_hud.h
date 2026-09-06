@@ -156,9 +156,10 @@ public:
 
 	static void RegisterMenu();
 
-	// Either the MultiAddonManager is present and the MHUD addon is mounted,
-	// or we are on `-tools -addon mhud`, or kz_force_mhud is set to 1.
 	static bool IsLayoutHudAvailable();
+	// Caches whether the layout asset is mounted here. Called on load and on every map change,
+	// since that is when mounts settle.
+	static void RefreshLayoutAvailability();
 
 	bool IsUsingLayoutStyle();
 	void ToggleStyle();
@@ -293,6 +294,7 @@ private:
 		i32 noFill {-1};
 		i32 glow {-1};
 		i32 fontSize {INT_MIN};
+		i32 boxSize {INT_MIN};
 		const char *fontClass {};
 	};
 

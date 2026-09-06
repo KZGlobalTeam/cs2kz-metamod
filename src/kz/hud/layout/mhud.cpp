@@ -175,6 +175,21 @@ void KZHUDService::UpdateKeysElement(CCSCustomHudLayout *layout, KZPlayer *sourc
 		layout->SetHasClass(KEY_PANELS[i], "pressed", keys[i] ? k_eHudPanelClassStatus_HasClass : k_eHudPanelClassStatus_DoesNotHaveClass);
 	}
 
+	// keys-size.css scales the boxes and their gaps with the glyph; one class on the keys panel.
+	const i32 boxSize = Clamp((i32)prefs.elements[(i32)MHUDElement::Keys].size, MHUD_SIZE_MIN, MHUD_SIZE_MAX);
+	if (this->layoutKeys.boxSize != boxSize)
+	{
+		char className[32];
+		if (this->layoutKeys.boxSize != INT_MIN)
+		{
+			V_snprintf(className, sizeof(className), "key-size--%i", this->layoutKeys.boxSize);
+			layout->SetHasClass(keysPanel, className, k_eHudPanelClassStatus_DoesNotHaveClass);
+		}
+		V_snprintf(className, sizeof(className), "key-size--%i", boxSize);
+		layout->SetHasClass(keysPanel, className, k_eHudPanelClassStatus_HasClass);
+		this->layoutKeys.boxSize = boxSize;
+	}
+
 	const i32 size = panorama::SnapToStep((i32)prefs.elements[(i32)MHUDElement::Keys].size, 0, 500);
 	if (this->layoutKeys.fontSize != size)
 	{

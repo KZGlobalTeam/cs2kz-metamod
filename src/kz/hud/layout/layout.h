@@ -24,4 +24,4 @@
 // Default element colors (MHUD_DEF_*_COLOR) live in kz_hud.h: both HUD styles share them.
 
 #define MHUD_DEFAULT_FONT "stratum2-bold-monodigit"
-#define KZ_MHUD_LAYOUT    "panorama/layout/custom_game/cs2kz/mhud.xml"
+#define KZ_MHUD_LAYOUT    "panorama/layout/custom_game/cs2kz/mhud.vxml_c"

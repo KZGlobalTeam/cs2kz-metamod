@@ -1,0 +1,1955 @@
+/* Generated: key box metrics per mhudKeysSize, proportional to the size-20 defaults
+   (wide 55x35, square 40x40, 10px gaps, 6px vertical padding). */
+
+.key-size--8 .key-button {
+	width: 22px;
+	height: 14px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+
+.key-size--8.keys-square .key-button {
+	width: 16px;
+	height: 16px;
+}
+
+.key-size--8 .key-button-middle {
+	margin-left: 4px;
+	margin-right: 4px;
+}
+
+.key-size--8 .key-row-1 {
+	margin-bottom: 4px;
+}
+
+.key-size--9 .key-button {
+	width: 25px;
+	height: 16px;
+	padding-top: 3px;
+	padding-bottom: 3px;
+}
+
+.key-size--9.keys-square .key-button {
+	width: 18px;
+	height: 18px;
+}
+
+.key-size--9 .key-button-middle {
+	margin-left: 4px;
+	margin-right: 4px;
+}
+
+.key-size--9 .key-row-1 {
+	margin-bottom: 4px;
+}
+
+.key-size--10 .key-button {
+	width: 28px;
+	height: 18px;
+	padding-top: 3px;
+	padding-bottom: 3px;
+}
+
+.key-size--10.keys-square .key-button {
+	width: 20px;
+	height: 20px;
+}
+
+.key-size--10 .key-button-middle {
+	margin-left: 5px;
+	margin-right: 5px;
+}
+
+.key-size--10 .key-row-1 {
+	margin-bottom: 5px;
+}
+
+.key-size--11 .key-button {
+	width: 30px;
+	height: 19px;
+	padding-top: 3px;
+	padding-bottom: 3px;
+}
+
+.key-size--11.keys-square .key-button {
+	width: 22px;
+	height: 22px;
+}
+
+.key-size--11 .key-button-middle {
+	margin-left: 6px;
+	margin-right: 6px;
+}
+
+.key-size--11 .key-row-1 {
+	margin-bottom: 6px;
+}
+
+.key-size--12 .key-button {
+	width: 33px;
+	height: 21px;
+	padding-top: 4px;
+	padding-bottom: 4px;
+}
+
+.key-size--12.keys-square .key-button {
+	width: 24px;
+	height: 24px;
+}
+
+.key-size--12 .key-button-middle {
+	margin-left: 6px;
+	margin-right: 6px;
+}
+
+.key-size--12 .key-row-1 {
+	margin-bottom: 6px;
+}
+
+.key-size--13 .key-button {
+	width: 36px;
+	height: 23px;
+	padding-top: 4px;
+	padding-bottom: 4px;
+}
+
+.key-size--13.keys-square .key-button {
+	width: 26px;
+	height: 26px;
+}
+
+.key-size--13 .key-button-middle {
+	margin-left: 6px;
+	margin-right: 6px;
+}
+
+.key-size--13 .key-row-1 {
+	margin-bottom: 6px;
+}
+
+.key-size--14 .key-button {
+	width: 38px;
+	height: 24px;
+	padding-top: 4px;
+	padding-bottom: 4px;
+}
+
+.key-size--14.keys-square .key-button {
+	width: 28px;
+	height: 28px;
+}
+
+.key-size--14 .key-button-middle {
+	margin-left: 7px;
+	margin-right: 7px;
+}
+
+.key-size--14 .key-row-1 {
+	margin-bottom: 7px;
+}
+
+.key-size--15 .key-button {
+	width: 41px;
+	height: 26px;
+	padding-top: 4px;
+	padding-bottom: 4px;
+}
+
+.key-size--15.keys-square .key-button {
+	width: 30px;
+	height: 30px;
+}
+
+.key-size--15 .key-button-middle {
+	margin-left: 8px;
+	margin-right: 8px;
+}
+
+.key-size--15 .key-row-1 {
+	margin-bottom: 8px;
+}
+
+.key-size--16 .key-button {
+	width: 44px;
+	height: 28px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+.key-size--16.keys-square .key-button {
+	width: 32px;
+	height: 32px;
+}
+
+.key-size--16 .key-button-middle {
+	margin-left: 8px;
+	margin-right: 8px;
+}
+
+.key-size--16 .key-row-1 {
+	margin-bottom: 8px;
+}
+
+.key-size--17 .key-button {
+	width: 47px;
+	height: 30px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+.key-size--17.keys-square .key-button {
+	width: 34px;
+	height: 34px;
+}
+
+.key-size--17 .key-button-middle {
+	margin-left: 8px;
+	margin-right: 8px;
+}
+
+.key-size--17 .key-row-1 {
+	margin-bottom: 8px;
+}
+
+.key-size--18 .key-button {
+	width: 50px;
+	height: 32px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+.key-size--18.keys-square .key-button {
+	width: 36px;
+	height: 36px;
+}
+
+.key-size--18 .key-button-middle {
+	margin-left: 9px;
+	margin-right: 9px;
+}
+
+.key-size--18 .key-row-1 {
+	margin-bottom: 9px;
+}
+
+.key-size--19 .key-button {
+	width: 52px;
+	height: 33px;
+	padding-top: 6px;
+	padding-bottom: 6px;
+}
+
+.key-size--19.keys-square .key-button {
+	width: 38px;
+	height: 38px;
+}
+
+.key-size--19 .key-button-middle {
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+.key-size--19 .key-row-1 {
+	margin-bottom: 10px;
+}
+
+.key-size--20 .key-button {
+	width: 55px;
+	height: 35px;
+	padding-top: 6px;
+	padding-bottom: 6px;
+}
+
+.key-size--20.keys-square .key-button {
+	width: 40px;
+	height: 40px;
+}
+
+.key-size--20 .key-button-middle {
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+.key-size--20 .key-row-1 {
+	margin-bottom: 10px;
+}
+
+.key-size--21 .key-button {
+	width: 58px;
+	height: 37px;
+	padding-top: 6px;
+	padding-bottom: 6px;
+}
+
+.key-size--21.keys-square .key-button {
+	width: 42px;
+	height: 42px;
+}
+
+.key-size--21 .key-button-middle {
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+.key-size--21 .key-row-1 {
+	margin-bottom: 10px;
+}
+
+.key-size--22 .key-button {
+	width: 60px;
+	height: 38px;
+	padding-top: 7px;
+	padding-bottom: 7px;
+}
+
+.key-size--22.keys-square .key-button {
+	width: 44px;
+	height: 44px;
+}
+
+.key-size--22 .key-button-middle {
+	margin-left: 11px;
+	margin-right: 11px;
+}
+
+.key-size--22 .key-row-1 {
+	margin-bottom: 11px;
+}
+
+.key-size--23 .key-button {
+	width: 63px;
+	height: 40px;
+	padding-top: 7px;
+	padding-bottom: 7px;
+}
+
+.key-size--23.keys-square .key-button {
+	width: 46px;
+	height: 46px;
+}
+
+.key-size--23 .key-button-middle {
+	margin-left: 12px;
+	margin-right: 12px;
+}
+
+.key-size--23 .key-row-1 {
+	margin-bottom: 12px;
+}
+
+.key-size--24 .key-button {
+	width: 66px;
+	height: 42px;
+	padding-top: 7px;
+	padding-bottom: 7px;
+}
+
+.key-size--24.keys-square .key-button {
+	width: 48px;
+	height: 48px;
+}
+
+.key-size--24 .key-button-middle {
+	margin-left: 12px;
+	margin-right: 12px;
+}
+
+.key-size--24 .key-row-1 {
+	margin-bottom: 12px;
+}
+
+.key-size--25 .key-button {
+	width: 69px;
+	height: 44px;
+	padding-top: 8px;
+	padding-bottom: 8px;
+}
+
+.key-size--25.keys-square .key-button {
+	width: 50px;
+	height: 50px;
+}
+
+.key-size--25 .key-button-middle {
+	margin-left: 12px;
+	margin-right: 12px;
+}
+
+.key-size--25 .key-row-1 {
+	margin-bottom: 12px;
+}
+
+.key-size--26 .key-button {
+	width: 72px;
+	height: 46px;
+	padding-top: 8px;
+	padding-bottom: 8px;
+}
+
+.key-size--26.keys-square .key-button {
+	width: 52px;
+	height: 52px;
+}
+
+.key-size--26 .key-button-middle {
+	margin-left: 13px;
+	margin-right: 13px;
+}
+
+.key-size--26 .key-row-1 {
+	margin-bottom: 13px;
+}
+
+.key-size--27 .key-button {
+	width: 74px;
+	height: 47px;
+	padding-top: 8px;
+	padding-bottom: 8px;
+}
+
+.key-size--27.keys-square .key-button {
+	width: 54px;
+	height: 54px;
+}
+
+.key-size--27 .key-button-middle {
+	margin-left: 14px;
+	margin-right: 14px;
+}
+
+.key-size--27 .key-row-1 {
+	margin-bottom: 14px;
+}
+
+.key-size--28 .key-button {
+	width: 77px;
+	height: 49px;
+	padding-top: 8px;
+	padding-bottom: 8px;
+}
+
+.key-size--28.keys-square .key-button {
+	width: 56px;
+	height: 56px;
+}
+
+.key-size--28 .key-button-middle {
+	margin-left: 14px;
+	margin-right: 14px;
+}
+
+.key-size--28 .key-row-1 {
+	margin-bottom: 14px;
+}
+
+.key-size--29 .key-button {
+	width: 80px;
+	height: 51px;
+	padding-top: 9px;
+	padding-bottom: 9px;
+}
+
+.key-size--29.keys-square .key-button {
+	width: 58px;
+	height: 58px;
+}
+
+.key-size--29 .key-button-middle {
+	margin-left: 14px;
+	margin-right: 14px;
+}
+
+.key-size--29 .key-row-1 {
+	margin-bottom: 14px;
+}
+
+.key-size--30 .key-button {
+	width: 82px;
+	height: 52px;
+	padding-top: 9px;
+	padding-bottom: 9px;
+}
+
+.key-size--30.keys-square .key-button {
+	width: 60px;
+	height: 60px;
+}
+
+.key-size--30 .key-button-middle {
+	margin-left: 15px;
+	margin-right: 15px;
+}
+
+.key-size--30 .key-row-1 {
+	margin-bottom: 15px;
+}
+
+.key-size--31 .key-button {
+	width: 85px;
+	height: 54px;
+	padding-top: 9px;
+	padding-bottom: 9px;
+}
+
+.key-size--31.keys-square .key-button {
+	width: 62px;
+	height: 62px;
+}
+
+.key-size--31 .key-button-middle {
+	margin-left: 16px;
+	margin-right: 16px;
+}
+
+.key-size--31 .key-row-1 {
+	margin-bottom: 16px;
+}
+
+.key-size--32 .key-button {
+	width: 88px;
+	height: 56px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.key-size--32.keys-square .key-button {
+	width: 64px;
+	height: 64px;
+}
+
+.key-size--32 .key-button-middle {
+	margin-left: 16px;
+	margin-right: 16px;
+}
+
+.key-size--32 .key-row-1 {
+	margin-bottom: 16px;
+}
+
+.key-size--33 .key-button {
+	width: 91px;
+	height: 58px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.key-size--33.keys-square .key-button {
+	width: 66px;
+	height: 66px;
+}
+
+.key-size--33 .key-button-middle {
+	margin-left: 16px;
+	margin-right: 16px;
+}
+
+.key-size--33 .key-row-1 {
+	margin-bottom: 16px;
+}
+
+.key-size--34 .key-button {
+	width: 94px;
+	height: 60px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.key-size--34.keys-square .key-button {
+	width: 68px;
+	height: 68px;
+}
+
+.key-size--34 .key-button-middle {
+	margin-left: 17px;
+	margin-right: 17px;
+}
+
+.key-size--34 .key-row-1 {
+	margin-bottom: 17px;
+}
+
+.key-size--35 .key-button {
+	width: 96px;
+	height: 61px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.key-size--35.keys-square .key-button {
+	width: 70px;
+	height: 70px;
+}
+
+.key-size--35 .key-button-middle {
+	margin-left: 18px;
+	margin-right: 18px;
+}
+
+.key-size--35 .key-row-1 {
+	margin-bottom: 18px;
+}
+
+.key-size--36 .key-button {
+	width: 99px;
+	height: 63px;
+	padding-top: 11px;
+	padding-bottom: 11px;
+}
+
+.key-size--36.keys-square .key-button {
+	width: 72px;
+	height: 72px;
+}
+
+.key-size--36 .key-button-middle {
+	margin-left: 18px;
+	margin-right: 18px;
+}
+
+.key-size--36 .key-row-1 {
+	margin-bottom: 18px;
+}
+
+.key-size--37 .key-button {
+	width: 102px;
+	height: 65px;
+	padding-top: 11px;
+	padding-bottom: 11px;
+}
+
+.key-size--37.keys-square .key-button {
+	width: 74px;
+	height: 74px;
+}
+
+.key-size--37 .key-button-middle {
+	margin-left: 18px;
+	margin-right: 18px;
+}
+
+.key-size--37 .key-row-1 {
+	margin-bottom: 18px;
+}
+
+.key-size--38 .key-button {
+	width: 104px;
+	height: 66px;
+	padding-top: 11px;
+	padding-bottom: 11px;
+}
+
+.key-size--38.keys-square .key-button {
+	width: 76px;
+	height: 76px;
+}
+
+.key-size--38 .key-button-middle {
+	margin-left: 19px;
+	margin-right: 19px;
+}
+
+.key-size--38 .key-row-1 {
+	margin-bottom: 19px;
+}
+
+.key-size--39 .key-button {
+	width: 107px;
+	height: 68px;
+	padding-top: 12px;
+	padding-bottom: 12px;
+}
+
+.key-size--39.keys-square .key-button {
+	width: 78px;
+	height: 78px;
+}
+
+.key-size--39 .key-button-middle {
+	margin-left: 20px;
+	margin-right: 20px;
+}
+
+.key-size--39 .key-row-1 {
+	margin-bottom: 20px;
+}
+
+.key-size--40 .key-button {
+	width: 110px;
+	height: 70px;
+	padding-top: 12px;
+	padding-bottom: 12px;
+}
+
+.key-size--40.keys-square .key-button {
+	width: 80px;
+	height: 80px;
+}
+
+.key-size--40 .key-button-middle {
+	margin-left: 20px;
+	margin-right: 20px;
+}
+
+.key-size--40 .key-row-1 {
+	margin-bottom: 20px;
+}
+
+.key-size--41 .key-button {
+	width: 113px;
+	height: 72px;
+	padding-top: 12px;
+	padding-bottom: 12px;
+}
+
+.key-size--41.keys-square .key-button {
+	width: 82px;
+	height: 82px;
+}
+
+.key-size--41 .key-button-middle {
+	margin-left: 20px;
+	margin-right: 20px;
+}
+
+.key-size--41 .key-row-1 {
+	margin-bottom: 20px;
+}
+
+.key-size--42 .key-button {
+	width: 116px;
+	height: 74px;
+	padding-top: 13px;
+	padding-bottom: 13px;
+}
+
+.key-size--42.keys-square .key-button {
+	width: 84px;
+	height: 84px;
+}
+
+.key-size--42 .key-button-middle {
+	margin-left: 21px;
+	margin-right: 21px;
+}
+
+.key-size--42 .key-row-1 {
+	margin-bottom: 21px;
+}
+
+.key-size--43 .key-button {
+	width: 118px;
+	height: 75px;
+	padding-top: 13px;
+	padding-bottom: 13px;
+}
+
+.key-size--43.keys-square .key-button {
+	width: 86px;
+	height: 86px;
+}
+
+.key-size--43 .key-button-middle {
+	margin-left: 22px;
+	margin-right: 22px;
+}
+
+.key-size--43 .key-row-1 {
+	margin-bottom: 22px;
+}
+
+.key-size--44 .key-button {
+	width: 121px;
+	height: 77px;
+	padding-top: 13px;
+	padding-bottom: 13px;
+}
+
+.key-size--44.keys-square .key-button {
+	width: 88px;
+	height: 88px;
+}
+
+.key-size--44 .key-button-middle {
+	margin-left: 22px;
+	margin-right: 22px;
+}
+
+.key-size--44 .key-row-1 {
+	margin-bottom: 22px;
+}
+
+.key-size--45 .key-button {
+	width: 124px;
+	height: 79px;
+	padding-top: 14px;
+	padding-bottom: 14px;
+}
+
+.key-size--45.keys-square .key-button {
+	width: 90px;
+	height: 90px;
+}
+
+.key-size--45 .key-button-middle {
+	margin-left: 22px;
+	margin-right: 22px;
+}
+
+.key-size--45 .key-row-1 {
+	margin-bottom: 22px;
+}
+
+.key-size--46 .key-button {
+	width: 126px;
+	height: 80px;
+	padding-top: 14px;
+	padding-bottom: 14px;
+}
+
+.key-size--46.keys-square .key-button {
+	width: 92px;
+	height: 92px;
+}
+
+.key-size--46 .key-button-middle {
+	margin-left: 23px;
+	margin-right: 23px;
+}
+
+.key-size--46 .key-row-1 {
+	margin-bottom: 23px;
+}
+
+.key-size--47 .key-button {
+	width: 129px;
+	height: 82px;
+	padding-top: 14px;
+	padding-bottom: 14px;
+}
+
+.key-size--47.keys-square .key-button {
+	width: 94px;
+	height: 94px;
+}
+
+.key-size--47 .key-button-middle {
+	margin-left: 24px;
+	margin-right: 24px;
+}
+
+.key-size--47 .key-row-1 {
+	margin-bottom: 24px;
+}
+
+.key-size--48 .key-button {
+	width: 132px;
+	height: 84px;
+	padding-top: 14px;
+	padding-bottom: 14px;
+}
+
+.key-size--48.keys-square .key-button {
+	width: 96px;
+	height: 96px;
+}
+
+.key-size--48 .key-button-middle {
+	margin-left: 24px;
+	margin-right: 24px;
+}
+
+.key-size--48 .key-row-1 {
+	margin-bottom: 24px;
+}
+
+.key-size--49 .key-button {
+	width: 135px;
+	height: 86px;
+	padding-top: 15px;
+	padding-bottom: 15px;
+}
+
+.key-size--49.keys-square .key-button {
+	width: 98px;
+	height: 98px;
+}
+
+.key-size--49 .key-button-middle {
+	margin-left: 24px;
+	margin-right: 24px;
+}
+
+.key-size--49 .key-row-1 {
+	margin-bottom: 24px;
+}
+
+.key-size--50 .key-button {
+	width: 138px;
+	height: 88px;
+	padding-top: 15px;
+	padding-bottom: 15px;
+}
+
+.key-size--50.keys-square .key-button {
+	width: 100px;
+	height: 100px;
+}
+
+.key-size--50 .key-button-middle {
+	margin-left: 25px;
+	margin-right: 25px;
+}
+
+.key-size--50 .key-row-1 {
+	margin-bottom: 25px;
+}
+
+.key-size--51 .key-button {
+	width: 140px;
+	height: 89px;
+	padding-top: 15px;
+	padding-bottom: 15px;
+}
+
+.key-size--51.keys-square .key-button {
+	width: 102px;
+	height: 102px;
+}
+
+.key-size--51 .key-button-middle {
+	margin-left: 26px;
+	margin-right: 26px;
+}
+
+.key-size--51 .key-row-1 {
+	margin-bottom: 26px;
+}
+
+.key-size--52 .key-button {
+	width: 143px;
+	height: 91px;
+	padding-top: 16px;
+	padding-bottom: 16px;
+}
+
+.key-size--52.keys-square .key-button {
+	width: 104px;
+	height: 104px;
+}
+
+.key-size--52 .key-button-middle {
+	margin-left: 26px;
+	margin-right: 26px;
+}
+
+.key-size--52 .key-row-1 {
+	margin-bottom: 26px;
+}
+
+.key-size--53 .key-button {
+	width: 146px;
+	height: 93px;
+	padding-top: 16px;
+	padding-bottom: 16px;
+}
+
+.key-size--53.keys-square .key-button {
+	width: 106px;
+	height: 106px;
+}
+
+.key-size--53 .key-button-middle {
+	margin-left: 26px;
+	margin-right: 26px;
+}
+
+.key-size--53 .key-row-1 {
+	margin-bottom: 26px;
+}
+
+.key-size--54 .key-button {
+	width: 148px;
+	height: 94px;
+	padding-top: 16px;
+	padding-bottom: 16px;
+}
+
+.key-size--54.keys-square .key-button {
+	width: 108px;
+	height: 108px;
+}
+
+.key-size--54 .key-button-middle {
+	margin-left: 27px;
+	margin-right: 27px;
+}
+
+.key-size--54 .key-row-1 {
+	margin-bottom: 27px;
+}
+
+.key-size--55 .key-button {
+	width: 151px;
+	height: 96px;
+	padding-top: 16px;
+	padding-bottom: 16px;
+}
+
+.key-size--55.keys-square .key-button {
+	width: 110px;
+	height: 110px;
+}
+
+.key-size--55 .key-button-middle {
+	margin-left: 28px;
+	margin-right: 28px;
+}
+
+.key-size--55 .key-row-1 {
+	margin-bottom: 28px;
+}
+
+.key-size--56 .key-button {
+	width: 154px;
+	height: 98px;
+	padding-top: 17px;
+	padding-bottom: 17px;
+}
+
+.key-size--56.keys-square .key-button {
+	width: 112px;
+	height: 112px;
+}
+
+.key-size--56 .key-button-middle {
+	margin-left: 28px;
+	margin-right: 28px;
+}
+
+.key-size--56 .key-row-1 {
+	margin-bottom: 28px;
+}
+
+.key-size--57 .key-button {
+	width: 157px;
+	height: 100px;
+	padding-top: 17px;
+	padding-bottom: 17px;
+}
+
+.key-size--57.keys-square .key-button {
+	width: 114px;
+	height: 114px;
+}
+
+.key-size--57 .key-button-middle {
+	margin-left: 28px;
+	margin-right: 28px;
+}
+
+.key-size--57 .key-row-1 {
+	margin-bottom: 28px;
+}
+
+.key-size--58 .key-button {
+	width: 160px;
+	height: 102px;
+	padding-top: 17px;
+	padding-bottom: 17px;
+}
+
+.key-size--58.keys-square .key-button {
+	width: 116px;
+	height: 116px;
+}
+
+.key-size--58 .key-button-middle {
+	margin-left: 29px;
+	margin-right: 29px;
+}
+
+.key-size--58 .key-row-1 {
+	margin-bottom: 29px;
+}
+
+.key-size--59 .key-button {
+	width: 162px;
+	height: 103px;
+	padding-top: 18px;
+	padding-bottom: 18px;
+}
+
+.key-size--59.keys-square .key-button {
+	width: 118px;
+	height: 118px;
+}
+
+.key-size--59 .key-button-middle {
+	margin-left: 30px;
+	margin-right: 30px;
+}
+
+.key-size--59 .key-row-1 {
+	margin-bottom: 30px;
+}
+
+.key-size--60 .key-button {
+	width: 165px;
+	height: 105px;
+	padding-top: 18px;
+	padding-bottom: 18px;
+}
+
+.key-size--60.keys-square .key-button {
+	width: 120px;
+	height: 120px;
+}
+
+.key-size--60 .key-button-middle {
+	margin-left: 30px;
+	margin-right: 30px;
+}
+
+.key-size--60 .key-row-1 {
+	margin-bottom: 30px;
+}
+
+.key-size--61 .key-button {
+	width: 168px;
+	height: 107px;
+	padding-top: 18px;
+	padding-bottom: 18px;
+}
+
+.key-size--61.keys-square .key-button {
+	width: 122px;
+	height: 122px;
+}
+
+.key-size--61 .key-button-middle {
+	margin-left: 30px;
+	margin-right: 30px;
+}
+
+.key-size--61 .key-row-1 {
+	margin-bottom: 30px;
+}
+
+.key-size--62 .key-button {
+	width: 170px;
+	height: 108px;
+	padding-top: 19px;
+	padding-bottom: 19px;
+}
+
+.key-size--62.keys-square .key-button {
+	width: 124px;
+	height: 124px;
+}
+
+.key-size--62 .key-button-middle {
+	margin-left: 31px;
+	margin-right: 31px;
+}
+
+.key-size--62 .key-row-1 {
+	margin-bottom: 31px;
+}
+
+.key-size--63 .key-button {
+	width: 173px;
+	height: 110px;
+	padding-top: 19px;
+	padding-bottom: 19px;
+}
+
+.key-size--63.keys-square .key-button {
+	width: 126px;
+	height: 126px;
+}
+
+.key-size--63 .key-button-middle {
+	margin-left: 32px;
+	margin-right: 32px;
+}
+
+.key-size--63 .key-row-1 {
+	margin-bottom: 32px;
+}
+
+.key-size--64 .key-button {
+	width: 176px;
+	height: 112px;
+	padding-top: 19px;
+	padding-bottom: 19px;
+}
+
+.key-size--64.keys-square .key-button {
+	width: 128px;
+	height: 128px;
+}
+
+.key-size--64 .key-button-middle {
+	margin-left: 32px;
+	margin-right: 32px;
+}
+
+.key-size--64 .key-row-1 {
+	margin-bottom: 32px;
+}
+
+.key-size--65 .key-button {
+	width: 179px;
+	height: 114px;
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
+
+.key-size--65.keys-square .key-button {
+	width: 130px;
+	height: 130px;
+}
+
+.key-size--65 .key-button-middle {
+	margin-left: 32px;
+	margin-right: 32px;
+}
+
+.key-size--65 .key-row-1 {
+	margin-bottom: 32px;
+}
+
+.key-size--66 .key-button {
+	width: 182px;
+	height: 116px;
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
+
+.key-size--66.keys-square .key-button {
+	width: 132px;
+	height: 132px;
+}
+
+.key-size--66 .key-button-middle {
+	margin-left: 33px;
+	margin-right: 33px;
+}
+
+.key-size--66 .key-row-1 {
+	margin-bottom: 33px;
+}
+
+.key-size--67 .key-button {
+	width: 184px;
+	height: 117px;
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
+
+.key-size--67.keys-square .key-button {
+	width: 134px;
+	height: 134px;
+}
+
+.key-size--67 .key-button-middle {
+	margin-left: 34px;
+	margin-right: 34px;
+}
+
+.key-size--67 .key-row-1 {
+	margin-bottom: 34px;
+}
+
+.key-size--68 .key-button {
+	width: 187px;
+	height: 119px;
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
+
+.key-size--68.keys-square .key-button {
+	width: 136px;
+	height: 136px;
+}
+
+.key-size--68 .key-button-middle {
+	margin-left: 34px;
+	margin-right: 34px;
+}
+
+.key-size--68 .key-row-1 {
+	margin-bottom: 34px;
+}
+
+.key-size--69 .key-button {
+	width: 190px;
+	height: 121px;
+	padding-top: 21px;
+	padding-bottom: 21px;
+}
+
+.key-size--69.keys-square .key-button {
+	width: 138px;
+	height: 138px;
+}
+
+.key-size--69 .key-button-middle {
+	margin-left: 34px;
+	margin-right: 34px;
+}
+
+.key-size--69 .key-row-1 {
+	margin-bottom: 34px;
+}
+
+.key-size--70 .key-button {
+	width: 192px;
+	height: 122px;
+	padding-top: 21px;
+	padding-bottom: 21px;
+}
+
+.key-size--70.keys-square .key-button {
+	width: 140px;
+	height: 140px;
+}
+
+.key-size--70 .key-button-middle {
+	margin-left: 35px;
+	margin-right: 35px;
+}
+
+.key-size--70 .key-row-1 {
+	margin-bottom: 35px;
+}
+
+.key-size--71 .key-button {
+	width: 195px;
+	height: 124px;
+	padding-top: 21px;
+	padding-bottom: 21px;
+}
+
+.key-size--71.keys-square .key-button {
+	width: 142px;
+	height: 142px;
+}
+
+.key-size--71 .key-button-middle {
+	margin-left: 36px;
+	margin-right: 36px;
+}
+
+.key-size--71 .key-row-1 {
+	margin-bottom: 36px;
+}
+
+.key-size--72 .key-button {
+	width: 198px;
+	height: 126px;
+	padding-top: 22px;
+	padding-bottom: 22px;
+}
+
+.key-size--72.keys-square .key-button {
+	width: 144px;
+	height: 144px;
+}
+
+.key-size--72 .key-button-middle {
+	margin-left: 36px;
+	margin-right: 36px;
+}
+
+.key-size--72 .key-row-1 {
+	margin-bottom: 36px;
+}
+
+.key-size--73 .key-button {
+	width: 201px;
+	height: 128px;
+	padding-top: 22px;
+	padding-bottom: 22px;
+}
+
+.key-size--73.keys-square .key-button {
+	width: 146px;
+	height: 146px;
+}
+
+.key-size--73 .key-button-middle {
+	margin-left: 36px;
+	margin-right: 36px;
+}
+
+.key-size--73 .key-row-1 {
+	margin-bottom: 36px;
+}
+
+.key-size--74 .key-button {
+	width: 204px;
+	height: 130px;
+	padding-top: 22px;
+	padding-bottom: 22px;
+}
+
+.key-size--74.keys-square .key-button {
+	width: 148px;
+	height: 148px;
+}
+
+.key-size--74 .key-button-middle {
+	margin-left: 37px;
+	margin-right: 37px;
+}
+
+.key-size--74 .key-row-1 {
+	margin-bottom: 37px;
+}
+
+.key-size--75 .key-button {
+	width: 206px;
+	height: 131px;
+	padding-top: 22px;
+	padding-bottom: 22px;
+}
+
+.key-size--75.keys-square .key-button {
+	width: 150px;
+	height: 150px;
+}
+
+.key-size--75 .key-button-middle {
+	margin-left: 38px;
+	margin-right: 38px;
+}
+
+.key-size--75 .key-row-1 {
+	margin-bottom: 38px;
+}
+
+.key-size--76 .key-button {
+	width: 209px;
+	height: 133px;
+	padding-top: 23px;
+	padding-bottom: 23px;
+}
+
+.key-size--76.keys-square .key-button {
+	width: 152px;
+	height: 152px;
+}
+
+.key-size--76 .key-button-middle {
+	margin-left: 38px;
+	margin-right: 38px;
+}
+
+.key-size--76 .key-row-1 {
+	margin-bottom: 38px;
+}
+
+.key-size--77 .key-button {
+	width: 212px;
+	height: 135px;
+	padding-top: 23px;
+	padding-bottom: 23px;
+}
+
+.key-size--77.keys-square .key-button {
+	width: 154px;
+	height: 154px;
+}
+
+.key-size--77 .key-button-middle {
+	margin-left: 38px;
+	margin-right: 38px;
+}
+
+.key-size--77 .key-row-1 {
+	margin-bottom: 38px;
+}
+
+.key-size--78 .key-button {
+	width: 214px;
+	height: 136px;
+	padding-top: 23px;
+	padding-bottom: 23px;
+}
+
+.key-size--78.keys-square .key-button {
+	width: 156px;
+	height: 156px;
+}
+
+.key-size--78 .key-button-middle {
+	margin-left: 39px;
+	margin-right: 39px;
+}
+
+.key-size--78 .key-row-1 {
+	margin-bottom: 39px;
+}
+
+.key-size--79 .key-button {
+	width: 217px;
+	height: 138px;
+	padding-top: 24px;
+	padding-bottom: 24px;
+}
+
+.key-size--79.keys-square .key-button {
+	width: 158px;
+	height: 158px;
+}
+
+.key-size--79 .key-button-middle {
+	margin-left: 40px;
+	margin-right: 40px;
+}
+
+.key-size--79 .key-row-1 {
+	margin-bottom: 40px;
+}
+
+.key-size--80 .key-button {
+	width: 220px;
+	height: 140px;
+	padding-top: 24px;
+	padding-bottom: 24px;
+}
+
+.key-size--80.keys-square .key-button {
+	width: 160px;
+	height: 160px;
+}
+
+.key-size--80 .key-button-middle {
+	margin-left: 40px;
+	margin-right: 40px;
+}
+
+.key-size--80 .key-row-1 {
+	margin-bottom: 40px;
+}
+
+.key-size--81 .key-button {
+	width: 223px;
+	height: 142px;
+	padding-top: 24px;
+	padding-bottom: 24px;
+}
+
+.key-size--81.keys-square .key-button {
+	width: 162px;
+	height: 162px;
+}
+
+.key-size--81 .key-button-middle {
+	margin-left: 40px;
+	margin-right: 40px;
+}
+
+.key-size--81 .key-row-1 {
+	margin-bottom: 40px;
+}
+
+.key-size--82 .key-button {
+	width: 226px;
+	height: 144px;
+	padding-top: 25px;
+	padding-bottom: 25px;
+}
+
+.key-size--82.keys-square .key-button {
+	width: 164px;
+	height: 164px;
+}
+
+.key-size--82 .key-button-middle {
+	margin-left: 41px;
+	margin-right: 41px;
+}
+
+.key-size--82 .key-row-1 {
+	margin-bottom: 41px;
+}
+
+.key-size--83 .key-button {
+	width: 228px;
+	height: 145px;
+	padding-top: 25px;
+	padding-bottom: 25px;
+}
+
+.key-size--83.keys-square .key-button {
+	width: 166px;
+	height: 166px;
+}
+
+.key-size--83 .key-button-middle {
+	margin-left: 42px;
+	margin-right: 42px;
+}
+
+.key-size--83 .key-row-1 {
+	margin-bottom: 42px;
+}
+
+.key-size--84 .key-button {
+	width: 231px;
+	height: 147px;
+	padding-top: 25px;
+	padding-bottom: 25px;
+}
+
+.key-size--84.keys-square .key-button {
+	width: 168px;
+	height: 168px;
+}
+
+.key-size--84 .key-button-middle {
+	margin-left: 42px;
+	margin-right: 42px;
+}
+
+.key-size--84 .key-row-1 {
+	margin-bottom: 42px;
+}
+
+.key-size--85 .key-button {
+	width: 234px;
+	height: 149px;
+	padding-top: 26px;
+	padding-bottom: 26px;
+}
+
+.key-size--85.keys-square .key-button {
+	width: 170px;
+	height: 170px;
+}
+
+.key-size--85 .key-button-middle {
+	margin-left: 42px;
+	margin-right: 42px;
+}
+
+.key-size--85 .key-row-1 {
+	margin-bottom: 42px;
+}
+
+.key-size--86 .key-button {
+	width: 236px;
+	height: 150px;
+	padding-top: 26px;
+	padding-bottom: 26px;
+}
+
+.key-size--86.keys-square .key-button {
+	width: 172px;
+	height: 172px;
+}
+
+.key-size--86 .key-button-middle {
+	margin-left: 43px;
+	margin-right: 43px;
+}
+
+.key-size--86 .key-row-1 {
+	margin-bottom: 43px;
+}
+
+.key-size--87 .key-button {
+	width: 239px;
+	height: 152px;
+	padding-top: 26px;
+	padding-bottom: 26px;
+}
+
+.key-size--87.keys-square .key-button {
+	width: 174px;
+	height: 174px;
+}
+
+.key-size--87 .key-button-middle {
+	margin-left: 44px;
+	margin-right: 44px;
+}
+
+.key-size--87 .key-row-1 {
+	margin-bottom: 44px;
+}
+
+.key-size--88 .key-button {
+	width: 242px;
+	height: 154px;
+	padding-top: 26px;
+	padding-bottom: 26px;
+}
+
+.key-size--88.keys-square .key-button {
+	width: 176px;
+	height: 176px;
+}
+
+.key-size--88 .key-button-middle {
+	margin-left: 44px;
+	margin-right: 44px;
+}
+
+.key-size--88 .key-row-1 {
+	margin-bottom: 44px;
+}
+
+.key-size--89 .key-button {
+	width: 245px;
+	height: 156px;
+	padding-top: 27px;
+	padding-bottom: 27px;
+}
+
+.key-size--89.keys-square .key-button {
+	width: 178px;
+	height: 178px;
+}
+
+.key-size--89 .key-button-middle {
+	margin-left: 44px;
+	margin-right: 44px;
+}
+
+.key-size--89 .key-row-1 {
+	margin-bottom: 44px;
+}
+
+.key-size--90 .key-button {
+	width: 248px;
+	height: 158px;
+	padding-top: 27px;
+	padding-bottom: 27px;
+}
+
+.key-size--90.keys-square .key-button {
+	width: 180px;
+	height: 180px;
+}
+
+.key-size--90 .key-button-middle {
+	margin-left: 45px;
+	margin-right: 45px;
+}
+
+.key-size--90 .key-row-1 {
+	margin-bottom: 45px;
+}
+
+.key-size--91 .key-button {
+	width: 250px;
+	height: 159px;
+	padding-top: 27px;
+	padding-bottom: 27px;
+}
+
+.key-size--91.keys-square .key-button {
+	width: 182px;
+	height: 182px;
+}
+
+.key-size--91 .key-button-middle {
+	margin-left: 46px;
+	margin-right: 46px;
+}
+
+.key-size--91 .key-row-1 {
+	margin-bottom: 46px;
+}
+
+.key-size--92 .key-button {
+	width: 253px;
+	height: 161px;
+	padding-top: 28px;
+	padding-bottom: 28px;
+}
+
+.key-size--92.keys-square .key-button {
+	width: 184px;
+	height: 184px;
+}
+
+.key-size--92 .key-button-middle {
+	margin-left: 46px;
+	margin-right: 46px;
+}
+
+.key-size--92 .key-row-1 {
+	margin-bottom: 46px;
+}
+
+.key-size--93 .key-button {
+	width: 256px;
+	height: 163px;
+	padding-top: 28px;
+	padding-bottom: 28px;
+}
+
+.key-size--93.keys-square .key-button {
+	width: 186px;
+	height: 186px;
+}
+
+.key-size--93 .key-button-middle {
+	margin-left: 46px;
+	margin-right: 46px;
+}
+
+.key-size--93 .key-row-1 {
+	margin-bottom: 46px;
+}
+
+.key-size--94 .key-button {
+	width: 258px;
+	height: 164px;
+	padding-top: 28px;
+	padding-bottom: 28px;
+}
+
+.key-size--94.keys-square .key-button {
+	width: 188px;
+	height: 188px;
+}
+
+.key-size--94 .key-button-middle {
+	margin-left: 47px;
+	margin-right: 47px;
+}
+
+.key-size--94 .key-row-1 {
+	margin-bottom: 47px;
+}
+
+.key-size--95 .key-button {
+	width: 261px;
+	height: 166px;
+	padding-top: 28px;
+	padding-bottom: 28px;
+}
+
+.key-size--95.keys-square .key-button {
+	width: 190px;
+	height: 190px;
+}
+
+.key-size--95 .key-button-middle {
+	margin-left: 48px;
+	margin-right: 48px;
+}
+
+.key-size--95 .key-row-1 {
+	margin-bottom: 48px;
+}
+
+.key-size--96 .key-button {
+	width: 264px;
+	height: 168px;
+	padding-top: 29px;
+	padding-bottom: 29px;
+}
+
+.key-size--96.keys-square .key-button {
+	width: 192px;
+	height: 192px;
+}
+
+.key-size--96 .key-button-middle {
+	margin-left: 48px;
+	margin-right: 48px;
+}
+
+.key-size--96 .key-row-1 {
+	margin-bottom: 48px;
+}
+
+.key-size--97 .key-button {
+	width: 267px;
+	height: 170px;
+	padding-top: 29px;
+	padding-bottom: 29px;
+}
+
+.key-size--97.keys-square .key-button {
+	width: 194px;
+	height: 194px;
+}
+
+.key-size--97 .key-button-middle {
+	margin-left: 48px;
+	margin-right: 48px;
+}
+
+.key-size--97 .key-row-1 {
+	margin-bottom: 48px;
+}
+
+.key-size--98 .key-button {
+	width: 270px;
+	height: 172px;
+	padding-top: 29px;
+	padding-bottom: 29px;
+}
+
+.key-size--98.keys-square .key-button {
+	width: 196px;
+	height: 196px;
+}
+
+.key-size--98 .key-button-middle {
+	margin-left: 49px;
+	margin-right: 49px;
+}
+
+.key-size--98 .key-row-1 {
+	margin-bottom: 49px;
+}
+
+.key-size--99 .key-button {
+	width: 272px;
+	height: 173px;
+	padding-top: 30px;
+	padding-bottom: 30px;
+}
+
+.key-size--99.keys-square .key-button {
+	width: 198px;
+	height: 198px;
+}
+
+.key-size--99 .key-button-middle {
+	margin-left: 50px;
+	margin-right: 50px;
+}
+
+.key-size--99 .key-row-1 {
+	margin-bottom: 50px;
+}
+
+.key-size--100 .key-button {
+	width: 275px;
+	height: 175px;
+	padding-top: 30px;
+	padding-bottom: 30px;
+}
+
+.key-size--100.keys-square .key-button {
+	width: 200px;
+	height: 200px;
+}
+
+.key-size--100 .key-button-middle {
+	margin-left: 50px;
+	margin-right: 50px;
+}
+
+.key-size--100 .key-row-1 {
+	margin-bottom: 50px;
+}
