@@ -107,8 +107,7 @@ namespace KZ::menu
 	void SetItemSubtext(KZOptNode *node, const char *phraseKey);
 	void SetItemDivider(KZOptNode *node);
 	// Declares the preference an action toggle or a choice persists to, for export and import.
-	// Purely declarative: nothing else reads prefKey for those item types.
-	void SetItemPref(KZOptNode *node, const char *prefKey, KZOptStorage storage);
+	void SetItemPref(KZOptNode *node, const char *prefKey, KZOptStorage storage, i32 idef = 0, const char *sdef = NULL);
 	// Greys the item out and ignores clicks on it while the named bool preference is off. Call it
 	// twice to require both.
 	void SetItemEnabledBy(KZOptNode *node, const char *prefKey);

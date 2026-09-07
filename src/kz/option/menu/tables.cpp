@@ -80,6 +80,11 @@ extern const PanoramaFontDef PANORAMA_FONTS[] =
 	{"noto-sans-thai-bold", "font-family--noto-sans-thai-bold", "Noto Sans Thai Bold", "Noto Sans Thai", "Bold"},
 	// System fonts: Panorama falls back to whatever the player has installed, so these may not render.
 	// The * carries through to the picker, where a footer explains it.
+	{"quicksand-light", "font-family--quicksand-light", "Quicksand Light*", "Quicksand*", "Light"},
+	{"quicksand", "font-family--quicksand", "Quicksand*", "Quicksand*", "Regular"},
+	{"quicksand-medium", "font-family--quicksand-medium", "Quicksand Medium*", "Quicksand*", "Medium"},
+	{"quicksand-semibold", "font-family--quicksand-semibold", "Quicksand SemiBold*", "Quicksand*", "SemiBold"},
+	{"quicksand-bold", "font-family--quicksand-bold", "Quicksand Bold*", "Quicksand*", "Bold"},
 	{"trebuchet", "font-family--trebuchet", "Trebuchet MS*", "Trebuchet MS*", "Regular"},
 	{"trebuchet-bold", "font-family--trebuchet-bold", "Trebuchet MS Bold*", "Trebuchet MS*", "Bold"},
 	{"trebuchet-italic", "font-family--trebuchet-italic", "Trebuchet MS Italic*", "Trebuchet MS*", "Italic"},
@@ -88,9 +93,6 @@ extern const PanoramaFontDef PANORAMA_FONTS[] =
 	{"lato-bold", "font-family--lato-bold", "Lato Bold*", "Lato*", "Bold"},
 	{"lato-black", "font-family--lato-black", "Lato Black*", "Lato*", "Black"},
 	{"arial", "font-family--arial", "Arial", "Arial", "Regular"},
-	{"sans-serif", "font-family--sans-serif", "sans-serif", "sans-serif", "Regular"},
-	{"serif", "font-family--serif", "serif", "serif", "Regular"},
-	{"monospace", "font-family--monospace", "monospace", "monospace", "Regular"},
 };
 // clang-format on
 

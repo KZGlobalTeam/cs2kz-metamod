@@ -282,6 +282,58 @@
           </Panel>
           <Panel id="item_div15" class="item-divider" />
         </Button>
+        <Button id="item16" class="item hidden">
+          <Panel class="item-row">
+            <Panel class="item-text">
+              <Label id="item_lbl16" class="item-label" text="{s:il16}" />
+              <Label id="item_sub16" class="item-sub" text="{s:is16}" />
+            </Panel>
+            <Panel class="item-ctl">
+              <Label id="item_val16" class="item-value" text="{s:iv16}" />
+              <Panel id="item_sw16" class="item-swatch" />
+            </Panel>
+          </Panel>
+          <Panel id="item_div16" class="item-divider" />
+        </Button>
+        <Button id="item17" class="item hidden">
+          <Panel class="item-row">
+            <Panel class="item-text">
+              <Label id="item_lbl17" class="item-label" text="{s:il17}" />
+              <Label id="item_sub17" class="item-sub" text="{s:is17}" />
+            </Panel>
+            <Panel class="item-ctl">
+              <Label id="item_val17" class="item-value" text="{s:iv17}" />
+              <Panel id="item_sw17" class="item-swatch" />
+            </Panel>
+          </Panel>
+          <Panel id="item_div17" class="item-divider" />
+        </Button>
+        <Button id="item18" class="item hidden">
+          <Panel class="item-row">
+            <Panel class="item-text">
+              <Label id="item_lbl18" class="item-label" text="{s:il18}" />
+              <Label id="item_sub18" class="item-sub" text="{s:is18}" />
+            </Panel>
+            <Panel class="item-ctl">
+              <Label id="item_val18" class="item-value" text="{s:iv18}" />
+              <Panel id="item_sw18" class="item-swatch" />
+            </Panel>
+          </Panel>
+          <Panel id="item_div18" class="item-divider" />
+        </Button>
+        <Button id="item19" class="item hidden">
+          <Panel class="item-row">
+            <Panel class="item-text">
+              <Label id="item_lbl19" class="item-label" text="{s:il19}" />
+              <Label id="item_sub19" class="item-sub" text="{s:is19}" />
+            </Panel>
+            <Panel class="item-ctl">
+              <Label id="item_val19" class="item-value" text="{s:iv19}" />
+              <Panel id="item_sw19" class="item-swatch" />
+            </Panel>
+          </Panel>
+          <Panel id="item_div19" class="item-divider" />
+        </Button>
           </Panel>
         </Panel>
 

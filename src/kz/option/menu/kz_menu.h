@@ -11,7 +11,7 @@ class CCheckTransmitInfo;
 
 // Fixed slot counts, kept in step with menu.xml.
 #define KZ_MENU_CATS   20
-#define KZ_MENU_ITEMS  16
+#define KZ_MENU_ITEMS  20 // the Keys page is the longest, at 19
 #define KZ_MENU_LIST   32 // must cover the largest font family (Stratum2, 29 faces)
 #define KZ_MENU_SWATCH 40 // 10 columns x 4 rows per color page
 
@@ -72,6 +72,7 @@ private:
 
 	// Cheap to call repeatedly: writes are diff-cached.
 	void Render();
+
 	void RenderChrome(CCSCustomHudLayout *layout);
 	void RenderLeft(CCSCustomHudLayout *layout);
 	void RenderItems(CCSCustomHudLayout *layout);
@@ -123,8 +124,8 @@ private:
 	// fields hold the class string last applied on that panel, NULL for none.
 	struct Applied
 	{
-		const char *menuFont {};  // menu font class stamped on the text panels
-		const char *menuColor {}; // menu color (pal-fg) class stamped on the text panels
+		const char *menuFont {};  // menu font class, set on menu_root and inherited
+		const char *menuColor {}; // menu color (pal-fg) class, likewise
 		bool rootHidden {true};   // menu_root "hidden"
 		bool sounds {};           // menu_root "snd", gating every hover/click sound in menu.css
 		bool shift {};            // menu_root "shift", nudging the menu left so an open popup clears a 4:3/5:4 screen edge

@@ -28,12 +28,20 @@ namespace KZ::menu
 		}
 	}
 
-	void SetItemPref(KZOptNode *node, const char *prefKey, KZOptStorage storage)
+	void SetItemPref(KZOptNode *node, const char *prefKey, KZOptStorage storage, i32 idef, const char *sdef)
 	{
-		if (!node->items.empty())
+		if (node->items.empty())
 		{
-			node->items.back().prefKey = prefKey;
-			node->items.back().storage = storage;
+			return;
+		}
+		KZOptItem &item = node->items.back();
+		item.prefKey = prefKey;
+		item.storage = storage;
+		// Every other item type already fills idef/sdef from its own Add call.
+		if (item.type == KZOptItemType::Choice || (item.type == KZOptItemType::Toggle && item.getCurrent))
+		{
+			item.idef = idef;
+			item.sdef = sdef;
 		}
 	}
 
@@ -258,6 +266,21 @@ namespace KZ::menu
 					else
 					{
 						opts->SetPreferenceFloat(item.prefKey, (f64)item.idef / MAX(1, item.scale));
+					}
+					break;
+				// A choice keeps its default wherever SetItemPref put it, and has no other one.
+				case KZOptItemType::Choice:
+					if (item.storage == KZOptStorage::Bool)
+					{
+						opts->SetPreferenceBool(item.prefKey, item.idef != 0);
+					}
+					else if (item.storage == KZOptStorage::Int)
+					{
+						opts->SetPreferenceInt(item.prefKey, item.idef);
+					}
+					else if (item.storage == KZOptStorage::Str && item.sdef)
+					{
+						opts->SetPreferenceStr(item.prefKey, item.sdef);
 					}
 					break;
 				default:

@@ -2,6 +2,8 @@
 #include "kz/option/menu/model.h"
 #include "kz/option/menu/kz_menu.h"
 #include "kz/option/pref_registry.h"
+#include "kz/language/kz_language.h"
+#include "utils/simplecmds.h"
 
 #include "tier0/memdbgon.h"
 
@@ -16,4 +18,12 @@ void KZMenuService::RegisterChromePrefs()
 	KZ::menu::AddToggle(cat, "Menu - Popup Shift", "menuPopupShift", true);
 	KZ::menu::SetItemDivider(cat);
 	KZ::prefs::RegisterMenu(cat);
+}
+
+SCMD(kz_fonts, SCFL_HUD)
+{
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
+	player->languageService->PrintChat(true, false, "Fonts - Help (Chat)");
+	player->languageService->PrintConsole(false, false, "Fonts - Help (Console)");
+	return MRES_SUPERCEDE;
 }

@@ -37,7 +37,7 @@ static_function void GetCrosshairScaleChoices(KZPlayer *, i64, std::vector<KZCho
 
 static_function i64 GetCurrentCrosshairScale(KZPlayer *player, i64)
 {
-	return player->hudService->GetPrefs().crosshairScale;
+	return player->hudService->GetOwnPrefs().crosshairScale;
 }
 
 static_function void PickCrosshairScale(KZPlayer *player, i64, i64 id)
@@ -120,7 +120,7 @@ static_function void GetKeysIdleChoices(KZPlayer *player, i64, std::vector<KZCho
 
 static_function i64 GetCurrentKeysIdle(KZPlayer *player, i64)
 {
-	return (i64)player->hudService->GetPrefs().keysIdle;
+	return (i64)player->hudService->GetOwnPrefs().keysIdle;
 }
 
 static_function void PickKeysIdle(KZPlayer *player, i64, i64 id)
@@ -140,13 +140,16 @@ void KZHUDService::RegisterMenu()
 	// Both run through callbacks, so naming the preference is what makes them transferable.
 	KZ::menu::SetItemPref(general, "hudLegacyStyle", KZOptStorage::Bool);
 	KZ::menu::AddActionToggle(general, "Menu - Panel", GetPanelState, TogglePanelState);
-	KZ::menu::SetItemPref(general, "showPanel", KZOptStorage::Bool);
+	KZ::menu::SetItemPref(general, "showPanel", KZOptStorage::Bool, 1);
 	KZ::menu::SetItemSubtext(general, "Menu - Affect Legacy Sub");
 	KZ::menu::AddActionToggle(general, "Menu - Crosshair", GetCrosshairState, ToggleCrosshairState);
+	KZ::menu::SetItemPref(general, "mhudCrosshair", KZOptStorage::Bool);
 	KZ::menu::AddChoice(general, "Menu - Crosshair Scale", GetCrosshairScaleChoices, GetCurrentCrosshairScale, PickCrosshairScale);
-	KZ::menu::SetItemPref(general, "mhudCrosshairScale", KZOptStorage::Int);
+	KZ::menu::SetItemPref(general, "mhudCrosshairScale", KZOptStorage::Int, 100);
 	KZ::menu::SetItemSubtext(general, "Menu - Crosshair Scale Sub");
 	KZ::menu::SetItemEnabledBy(general, "mhudCrosshair");
+	KZ::menu::AddToggle(general, "Menu - Mimic Spec", "mhudMimicSpec", false);
+	KZ::menu::SetItemSubtext(general, "Menu - Mimic Spec Sub");
 	KZ::menu::AddToggle(general, "Menu - Compact", "compactPanel", false);
 	KZ::menu::SetItemEnabledBy(general, "showPanel");
 	KZ::menu::SetItemSubtext(general, "Menu - Compact Sub");
@@ -205,8 +208,11 @@ void KZHUDService::RegisterMenu()
 			{
 				KZ::menu::AddToggle(sub, "Menu - Keys Overlap", "mhudKeysOverlap", true);
 				KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
+				KZ::menu::AddToggle(sub, "Menu - Keys Overlap Axis", "mhudKeysOverlapAxis", false);
+				KZ::menu::SetItemSubtext(sub, "Menu - Keys Overlap Axis Sub");
+				KZ::menu::SetItemEnabledBy(sub, "mhudKeysOverlap");
 				KZ::menu::AddChoice(sub, "Menu - Keys Unpressed", GetKeysIdleChoices, GetCurrentKeysIdle, PickKeysIdle);
-				KZ::menu::SetItemPref(sub, "mhudKeysIdle", KZOptStorage::Int);
+				KZ::menu::SetItemPref(sub, "mhudKeysIdle", KZOptStorage::Int, (i32)MHUDKeysIdle::Show);
 				KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
 				KZ::menu::AddToggle(sub, "Menu - Keys Letters", "mhudKeysLetters", false);
 				KZ::menu::SetItemEnabledBy(sub, def.enabledKey);

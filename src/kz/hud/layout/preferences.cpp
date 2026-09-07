@@ -2,6 +2,7 @@
 #include "kz/hud/layout/layout.h"
 #include "kz/option/kz_option.h"
 #include "kz/option/menu/tables.h"
+#include "kz/spec/kz_spec.h"
 
 #include "tier0/memdbgon.h"
 
@@ -33,6 +34,7 @@ void KZHUDService::RefreshPrefs()
 	this->prefs.keys = opts->GetPreferenceColor("mhudKeysColor", MHUD_DEF_BASE_COLOR);
 	this->prefs.keysOverlap = opts->GetPreferenceColor("mhudKeysOverlapColor", MHUD_DEF_KEYS_OVERLAP_COLOR);
 	this->prefs.keysPressed = opts->GetPreferenceColor("mhudKeysPressedColor", MHUD_DEF_KEYS_PRESSED_COLOR);
+	this->prefs.keysOverlapGlow = opts->GetPreferenceColor("mhudKeysOverlapGlowColor", MHUD_DEF_KEYS_OVERLAP_GLOW_COLOR);
 	this->prefs.checkpoint = opts->GetPreferenceColor("mhudCheckpointColor", MHUD_DEF_BASE_COLOR);
 
 	this->prefs.legacyStyle = opts->GetPreferenceBool("hudLegacyStyle", false);
@@ -45,6 +47,7 @@ void KZHUDService::RefreshPrefs()
 	this->prefs.prespeedBrackets = opts->GetPreferenceBool("mhudPrespeedBrackets", false);
 	this->prefs.prespeedHideWalkOff = opts->GetPreferenceBool("mhudPrespeedHideWalkOff", false);
 	this->prefs.keysOverlapEnabled = opts->GetPreferenceBool("mhudKeysOverlap", true);
+	this->prefs.keysOverlapAxis = opts->GetPreferenceBool("mhudKeysOverlapAxis", false);
 	this->prefs.keysLetters = opts->GetPreferenceBool("mhudKeysLetters", false);
 	this->prefs.keysSquare = opts->GetPreferenceBool("mhudKeysSquare", false);
 	this->prefs.keysBorder = opts->GetPreferenceBool("mhudKeysBorder", true);
@@ -55,17 +58,34 @@ void KZHUDService::RefreshPrefs()
 						 ? (i32)opts->GetPreferenceInt("mhudKeysIdle", (i64)MHUDKeysIdle::Show)
 						 : (opts->GetPreferenceBool("mhudKeysHideUnpressed", false) ? (i32)MHUDKeysIdle::Hide : (i32)MHUDKeysIdle::Show);
 	this->prefs.keysIdle = (MHUDKeysIdle)Clamp(idle, (i32)MHUDKeysIdle::Show, (i32)MHUDKeysIdle::Underscore);
+	this->prefs.mimicSpec = opts->GetPreferenceBool("mhudMimicSpec", false);
 
 	this->prefsDirty = false;
 }
 
-const MHUDPrefs &KZHUDService::GetPrefs()
+const MHUDPrefs &KZHUDService::GetOwnPrefs()
 {
 	if (this->prefsDirty)
 	{
 		this->RefreshPrefs();
 	}
 	return this->prefs;
+}
+
+const MHUDPrefs &KZHUDService::GetPrefs()
+{
+	const MHUDPrefs &own = this->GetOwnPrefs();
+	if (!own.mimicSpec)
+	{
+		return own;
+	}
+	// Bots have no preferences of their own, so mimicking a replay bot would just wipe the HUD.
+	KZPlayer *target = this->player->specService->GetSpectatedPlayer();
+	if (!target || target == this->player || target->IsFakeClient())
+	{
+		return own;
+	}
+	return target->hudService->GetOwnPrefs();
 }
 
 const char *KZHUDService::GetMHUDFontClass(KZPlayer *player, MHUDElement element)
@@ -90,7 +110,8 @@ bool KZHUDService::IsMHUDOutlineEnabled(MHUDElement element)
 
 bool KZHUDService::IsUsingLayoutStyle()
 {
-	return KZHUDService::IsLayoutHudAvailable() && !this->GetPrefs().legacyStyle;
+	// Own set on purpose: which HUD is drawn stays the player's choice even while mimicking.
+	return KZHUDService::IsLayoutHudAvailable() && !this->GetOwnPrefs().legacyStyle;
 }
 
 void KZHUDService::ToggleStyle()

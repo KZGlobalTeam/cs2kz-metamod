@@ -8,9 +8,9 @@
 static_global std::vector<KZ::prefs::Entry> registry;
 static_global bool registryBuilt = false;
 
-static_function void AddEntry(const char *key, KZOptStorage storage)
+static_function void AddEntry(const char *key, const KZOptItem &item, bool isY)
 {
-	if (!key || storage == KZOptStorage::None)
+	if (!key || item.storage == KZOptStorage::None)
 	{
 		return;
 	}
@@ -21,7 +21,7 @@ static_function void AddEntry(const char *key, KZOptStorage storage)
 			return;
 		}
 	}
-	registry.push_back({key, storage});
+	registry.push_back({key, item.storage, &item, isY});
 }
 
 static_function void CollectNode(KZOptNode *node)
@@ -32,8 +32,8 @@ static_function void CollectNode(KZOptNode *node)
 	}
 	for (const KZOptItem &item : node->items)
 	{
-		AddEntry(item.prefKey, item.storage);
-		AddEntry(item.yKey, item.storage);
+		AddEntry(item.prefKey, item, false);
+		AddEntry(item.yKey, item, true);
 	}
 	for (KZOptNode *sub : node->subs)
 	{
@@ -66,12 +66,74 @@ const KZ::prefs::Entry *KZ::prefs::FindEntry(const char *key)
 	return NULL;
 }
 
+// The value the preference reads as while the player has never set it, as the same console token
+// ReadValue writes. Exporting these is what lets a pasted block replace a recipient's whole set
+// instead of only the keys the sender happened to touch.
+static_function bool ReadDefaultValue(const KZ::prefs::Entry &entry, char *out, i32 outLen)
+{
+	const KZOptItem *item = entry.item;
+	if (!item)
+	{
+		return false;
+	}
+	switch (item->type)
+	{
+		case KZOptItemType::Color:
+		{
+			const Color &color = item->cdef;
+			i64 packed = ((i64)color.r() << 24) | ((i64)color.g() << 16) | ((i64)color.b() << 8) | (i64)color.a();
+			V_snprintf(out, outLen, "%lli", (long long)packed);
+			return true;
+		}
+		case KZOptItemType::Position:
+			V_snprintf(out, outLen, "%i", entry.isY ? item->iydef : item->idef);
+			return true;
+		case KZOptItemType::Vector:
+			V_snprintf(out, outLen, "\"%f %f %f\"", (f32)item->idef, (f32)item->iydef, (f32)item->izdef);
+			return true;
+		case KZOptItemType::Size:
+			if (item->storage == KZOptStorage::Int)
+			{
+				V_snprintf(out, outLen, "%i", item->idef);
+			}
+			else
+			{
+				V_snprintf(out, outLen, "%g", (f64)item->idef / MAX(1, item->scale));
+			}
+			return true;
+		default:
+			break;
+	}
+	switch (entry.storage)
+	{
+		case KZOptStorage::Bool:
+			V_snprintf(out, outLen, "%i", item->idef != 0 ? 1 : 0);
+			return true;
+		case KZOptStorage::Int:
+			V_snprintf(out, outLen, "%i", item->idef);
+			return true;
+		case KZOptStorage::Float:
+			V_snprintf(out, outLen, "%i", item->idef);
+			return true;
+		case KZOptStorage::Str:
+			// An empty value cannot travel: setinfo with one is how a player clears the convar.
+			if (!item->sdef || !item->sdef[0])
+			{
+				return false;
+			}
+			V_snprintf(out, outLen, "\"%s\"", item->sdef);
+			return true;
+		default:
+			return false;
+	}
+}
+
 bool KZ::prefs::ReadValue(KZPlayer *player, const KZ::prefs::Entry &entry, char *out, i32 outLen)
 {
 	auto *opts = player->optionService;
 	if (!opts->HasPreference(entry.key))
 	{
-		return false;
+		return ReadDefaultValue(entry, out, outLen);
 	}
 	switch (entry.storage)
 	{

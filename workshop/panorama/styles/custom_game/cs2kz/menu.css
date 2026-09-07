@@ -168,12 +168,31 @@
 	width: fill-parent-flow(1);
 	height: 100%;
 	overflow: squish scroll;
-	padding-right: 8px;
+}
+
+VerticalScrollBar {
+	width: 6px;
+	height: 100%;
+	horizontal-align: right;
+	layout-position: fixed;
+	margin: 2px 0px;
+	border-radius: 3px;
+	background-color: #ffffff14;
+}
+
+VerticalScrollBar .ScrollThumb {
+	width: 100%;
+	min-height: 32px;
+	border-radius: 3px;
+	background-color: #ffffff59;
+}
+
+VerticalScrollBar:hover .ScrollThumb {
+	background-color: #ffffff99;
 }
 
 .items VerticalScrollBar {
-	margin: 2px;
-	opacity: 0.25;
+	margin-right: 6px;
 }
 
 .item {
@@ -244,6 +263,7 @@
 	horizontal-align: right;
 	vertical-align: middle;
 	flow-children: right;
+	margin-right: 14px;
 	max-width: 46%;
 }
 
@@ -344,6 +364,7 @@
 	width: 260px;
 	height: 450px;
 	overflow: squish scroll;
+	padding-right: 10px;
 }
 
 .li {

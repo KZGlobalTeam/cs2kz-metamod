@@ -26,9 +26,11 @@
 #define MHUD_XH_MAX_SCALE 400
 // Largest suffix xh-w--/xh-h-- define.
 #define MHUD_XH_MAX_PX 56
-// xh-m--N is a margin of N - MHUD_XH_MARGIN_BIAS pixels, so arms can cross the centre.
+// xh-m--N is a margin of N quarter pixels, biased so arms can cross the centre. Quarters because a
+// whole layout unit is coarser than a device pixel wherever the scale is not 100%.
 #define MHUD_XH_MARGIN_BIAS 8
 #define MHUD_XH_MAX_MARGIN  24
+#define MHUD_XH_MARGIN_STEP 4
 // The game caps cl_crosshair_outlinethickness at 3, in raw pixels; scaling up needs more classes.
 #define MHUD_XH_MAX_OUTLINE    3
 #define MHUD_XH_MAX_OUTLINE_PX 8
@@ -39,7 +41,9 @@
 // Alpha goes on each painted panel, not the container: parent opacity does not reach children. The
 // border carrying the outline is part of the same panel, so it fades with the bar as the game does.
 static_global const char *const XH_PAINTED[] = {"xh_left", "xh_right", "xh_top", "xh_bottom", "xh_dot"};
-static_global const char *const XH_ARMS[] = {"xh_left", "xh_right", "xh_top", "xh_bottom"};
+// The centre pixel belongs to neither bar, so the far arms sit one device pixel further out.
+static_global const char *const XH_ARMS_NEAR[] = {"xh_left", "xh_top"};
+static_global const char *const XH_ARMS_FAR[] = {"xh_right", "xh_bottom"};
 static_global const char *const XH_HORIZONTAL[] = {"xh_left", "xh_right"};
 static_global const char *const XH_VERTICAL[] = {"xh_top", "xh_bottom"};
 static_global const char *const XH_TINTED[] = {"xh_left", "xh_right", "xh_top", "xh_bottom", "xh_dot"};
@@ -189,6 +193,14 @@ static_function i32 ToLayout(i32 devicePixels, f32 scale)
 	return (i32)(devicePixels * scale + 0.5f);
 }
 
+// Same conversion, but to the quarter-pixel class index the margins are generated at.
+static_function i32 ToMarginClass(i32 devicePixels, f32 scale, i32 outline)
+{
+	const i32 quarters = (i32)(devicePixels * scale * MHUD_XH_MARGIN_STEP + 0.5f) - outline * MHUD_XH_MARGIN_STEP;
+	return Clamp(quarters, -MHUD_XH_MARGIN_BIAS * MHUD_XH_MARGIN_STEP, MHUD_XH_MAX_MARGIN * MHUD_XH_MARGIN_STEP)
+		   + MHUD_XH_MARGIN_BIAS * MHUD_XH_MARGIN_STEP;
+}
+
 static_function void ApplyFlagClass(CCSCustomHudLayout *layout, const char *panelId, const char *className, i32 &cache, bool set)
 {
 	if (cache == (i32)set)
@@ -233,7 +245,8 @@ void KZHUDService::ApplyCrosshair(CCSCustomHudLayout *layout, bool show, bool fo
 	const i32 boxLength = Clamp(armLength + 2 * outline, 0, MHUD_XH_MAX_PX);
 	const i32 boxThickness = Clamp(thickness + 2 * outline, 1, MHUD_XH_MAX_PX);
 	const i32 innerDev = thicknessDev / 2 + gapDev;
-	const i32 margin = Clamp(ToLayout(innerDev, scale) - outline, -MHUD_XH_MARGIN_BIAS, MHUD_XH_MAX_MARGIN) + MHUD_XH_MARGIN_BIAS;
+	const i32 margin = ToMarginClass(innerDev, scale, outline);
+	const i32 marginFar = ToMarginClass(innerDev + 1, scale, outline);
 	// The game paints the outline with the bars' alpha.
 	const i32 alpha = Clamp(settings.useAlpha ? settings.alpha : 200, 0, 255);
 	const i32 opacity = alpha * MHUD_XH_OPACITY_STEPS / 255;
@@ -249,8 +262,11 @@ void KZHUDService::ApplyCrosshair(CCSCustomHudLayout *layout, bool show, bool fo
 	ApplyValueClass(layout, XH_DOT, KZ_ARRAYSIZE(XH_DOT), "xh-h--", state.thickness, boxThickness);
 	state.thickness = boxThickness;
 
-	ApplyValueClass(layout, XH_ARMS, KZ_ARRAYSIZE(XH_ARMS), "xh-m--", state.margin, margin);
+	ApplyValueClass(layout, XH_ARMS_NEAR, KZ_ARRAYSIZE(XH_ARMS_NEAR), "xh-m--", state.margin, margin);
 	state.margin = margin;
+
+	ApplyValueClass(layout, XH_ARMS_FAR, KZ_ARRAYSIZE(XH_ARMS_FAR), "xh-m--", state.marginFar, marginFar);
+	state.marginFar = marginFar;
 
 	ApplyValueClass(layout, XH_PAINTED, KZ_ARRAYSIZE(XH_PAINTED), "xh-ol--", state.outline, outline);
 	state.outline = outline;

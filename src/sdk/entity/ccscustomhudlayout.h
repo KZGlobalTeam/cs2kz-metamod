@@ -85,10 +85,11 @@ public:
 	bool SetHasClass(uint16 panelIdIndex, uint16 classNameIndex, EHudPanelClassStatus_t status)
 	{
 		CSchemaCollection<HUDPanelHasClass_t> classes = m_vecHasClasses();
+		const int count = classes.Count();
 
-		for (int i = 0; i < classes.Count(); ++i)
+		for (int i = 0; i < count; ++i)
 		{
-			HUDPanelHasClass_t *entry = classes.Element(i);
+			HUDPanelHasClass_t *entry = classes.ElementUnchecked(i);
 
 			if (*entry->m_nPanelIdIndex() == panelIdIndex && *entry->m_nClassNameIndex() == classNameIndex)
 			{
@@ -118,9 +119,11 @@ public:
 	{
 		CSchemaCollection<HUDPanelDialogVariableString_t> variables = m_vecDialogVariableStrings();
 
-		for (int i = 0; i < variables.Count(); ++i)
+		const int count = variables.Count();
+
+		for (int i = 0; i < count; ++i)
 		{
-			HUDPanelDialogVariableString_t *entry = variables.Element(i);
+			HUDPanelDialogVariableString_t *entry = variables.ElementUnchecked(i);
 
 			if (*entry->m_nPanelIdIndex() == panelIdIndex && *entry->m_nDialogVariableIndex() == dialogVariableIndex)
 			{
@@ -138,9 +141,11 @@ public:
 	{
 		CSchemaCollection<HUDPanelDialogVariableString_t> variables = m_vecDialogVariableStrings();
 
-		for (int i = 0; i < variables.Count(); ++i)
+		const int count = variables.Count();
+
+		for (int i = 0; i < count; ++i)
 		{
-			HUDPanelDialogVariableString_t *entry = variables.Element(i);
+			HUDPanelDialogVariableString_t *entry = variables.ElementUnchecked(i);
 
 			if (*entry->m_nPanelIdIndex() == panelIdIndex && *entry->m_nDialogVariableIndex() == dialogVariableIndex)
 			{
@@ -251,7 +256,7 @@ private:
 
 		for (int i = 0; i < count; ++i)
 		{
-			CUtlString *entry = strings.Element(i);
+			CUtlString *entry = strings.ElementUnchecked(i);
 
 			if (V_strcmp(entry->Get(), str) == 0)
 			{

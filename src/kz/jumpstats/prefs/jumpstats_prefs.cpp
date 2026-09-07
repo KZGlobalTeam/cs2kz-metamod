@@ -67,6 +67,7 @@ void KZJumpstatsService::RegisterMenu()
 	for (i32 i = 0; i < KZ_ARRAYSIZE(TIER_PREFS); i++)
 	{
 		KZ::menu::AddChoice(cat, TIER_PREFS[i].phraseKey, GetTierChoices, GetCurrentTier, PickTier, i);
-		KZ::menu::SetItemPref(cat, TIER_PREFS[i].prefKey, KZOptStorage::Int);
+		KZ::menu::SetItemPref(cat, TIER_PREFS[i].prefKey, KZOptStorage::Int,
+							  (i32)KZOptionService::GetOptionInt(TIER_PREFS[i].serverDefaultKey, TIER_PREFS[i].fallback));
 	}
 }

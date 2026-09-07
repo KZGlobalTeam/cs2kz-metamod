@@ -321,55 +321,13 @@ void KZMenuService::RenderChrome(CCSCustomHudLayout *layout)
 	const char *font = panorama::ResolveFontClass(opts->GetPreferenceStr("menuFont", KZ_MENU_DEFAULT_FONT), KZ_MENU_DEFAULT_FONT);
 	const char *color = panorama::ResolveColorClass(opts->GetPreferenceColor("menuColor", KZ_MENU_DEFAULT_COLOR));
 
-	// A child only picks up an inherited font/color class when it is updated itself, so stamp every text panel.
+	// The text panels inherit both from the root. A child does not restyle until something touches
+	// it, so the resend below is what makes the change land; without it the menu keeps the old font.
 	if (this->applied.menuFont != font || this->applied.menuColor != color)
 	{
-		const bool fontChanged = this->applied.menuFont != font;
-		const bool colorChanged = this->applied.menuColor != color;
-		auto stamp = [&](const char *panel, bool withFont)
-		{
-			if (fontChanged && withFont)
-			{
-				if (this->applied.menuFont)
-				{
-					this->SetClass(layout, panel, this->applied.menuFont, false);
-				}
-				this->SetClass(layout, panel, font, true);
-			}
-			if (colorChanged)
-			{
-				if (this->applied.menuColor)
-				{
-					this->SetClass(layout, panel, this->applied.menuColor, false);
-				}
-				this->SetClass(layout, panel, color, true);
-			}
-		};
-		stamp("menu_title", true);
-		for (i32 i = 0; i < KZ_MENU_CATS; i++)
-		{
-			stamp(CatLbl(i), true);
-		}
-		for (i32 i = 0; i < KZ_MENU_ITEMS; i++)
-		{
-			stamp(ItemLbl(i), true);
-			stamp(ItemSub(i), true);
-			stamp(ItemVal(i), true);
-		}
-		// The popups are part of the menu, so their text follows the menu font and color too.
-		stamp("step_label", true);
-		stamp("step_readout", true);
-		stamp("cp_page", true);
-		stamp("lp_page", true);
-		stamp("lp_note", true);
-		stamp("lp_title", true);
-		// Never the menu font: RenderListPopup sets a per-row font class so the picker previews faces.
-		for (i32 i = 0; i < KZ_MENU_LIST; i++)
-		{
-			stamp(LiLbl(i), false);
-		}
-		this->applied.menuFont = font;
-		this->applied.menuColor = color;
+		this->SetSwapClass(layout, "menu_root", this->applied.menuFont, font);
+		this->SetSwapClass(layout, "menu_root", this->applied.menuColor, color);
+		layout->GetGlobalLayoutState()->MarkFullChanged();
 	}
 
 	this->SetVar(layout, "menu_title", "title", KZMenuService::GetPhrase(this->player, "Menu - Title Options").c_str());
@@ -566,9 +524,6 @@ void KZMenuService::RenderListPopup(CCSCustomHudLayout *layout)
 		curId = it->getCurrent(this->player, it->tag);
 	}
 
-	const char *menuFont =
-		panorama::ResolveFontClass(this->player->optionService->GetPreferenceStr("menuFont", KZ_MENU_DEFAULT_FONT), KZ_MENU_DEFAULT_FONT);
-
 	for (i32 i = 0; i < KZ_MENU_LIST; i++)
 	{
 		const bool used = i < count;
@@ -577,8 +532,8 @@ void KZMenuService::RenderListPopup(CCSCustomHudLayout *layout)
 			const KZChoice &c = this->listChoices[first + i];
 			this->SetVar(layout, LiLbl(i), LiVar(i), c.label.c_str());
 			this->SetBoolClass(layout, LiPanel(i), "selected", this->applied.liSel[i], c.selected || c.id == curId);
-			// Font rows preview their own face; choice rows use the menu font.
-			const char *face = this->popupFont ? PANORAMA_FONTS[c.id].className : menuFont;
+			// Font rows preview their own face; a choice row inherits the menu font from the root.
+			const char *face = this->popupFont ? PANORAMA_FONTS[c.id].className : NULL;
 			this->SetSwapClass(layout, LiLbl(i), this->applied.liFont[i], face);
 		}
 		this->SetBoolClass(layout, LiPanel(i), "hidden", this->applied.liHidden[i], !used);

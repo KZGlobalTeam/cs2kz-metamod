@@ -86,6 +86,24 @@ void KZHUDService::UpdatePrespeedElement(CCSCustomHudLayout *layout, const Speed
 // Order matches the panels in mhud.xml: C W J on the top row, A S D on the bottom.
 static_global const char *KEY_PANELS[] = {"mhud_key_c", "mhud_key_w", "mhud_key_j", "mhud_key_a", "mhud_key_s", "mhud_key_d"};
 
+// The glyph labels inside those buttons. A child only restyles when it is touched itself, so the
+// font class goes on these rather than on the buttons.
+static_global const char *KEY_GLYPHS[] = {"mhud_kg_c_main",   "mhud_kg_c_idle", "mhud_kg_w_main",   "mhud_kg_w_letter",
+										  "mhud_kg_w_idle",   "mhud_kg_j_main", "mhud_kg_j_idle",   "mhud_kg_a_main",
+										  "mhud_kg_a_letter", "mhud_kg_a_idle", "mhud_kg_s_main",   "mhud_kg_s_letter",
+										  "mhud_kg_s_idle",   "mhud_kg_d_main", "mhud_kg_d_letter", "mhud_kg_d_idle"};
+
+// The movement axis each panel sits on, so an overlap can be shown on just the keys causing it.
+enum KeyAxis
+{
+	KEY_AXIS_NONE = -1,
+	KEY_AXIS_FORWARD_BACK,
+	KEY_AXIS_LEFT_RIGHT,
+};
+
+static_global const i32 KEY_AXES[] = {KEY_AXIS_NONE,       KEY_AXIS_FORWARD_BACK, KEY_AXIS_NONE,
+									  KEY_AXIS_LEFT_RIGHT, KEY_AXIS_FORWARD_BACK, KEY_AXIS_LEFT_RIGHT};
+
 void KZHUDService::UpdateKeysElement(CCSCustomHudLayout *layout, KZPlayer *source, bool force)
 {
 	CPlayer_MovementServices *ms = source->hudService->GetHudMoveServices();
@@ -95,8 +113,15 @@ void KZHUDService::UpdateKeysElement(CCSCustomHudLayout *layout, KZPlayer *sourc
 	const bool keys[] = {pressed(IN_DUCK), forward, source->hudService->JumpedThisTick(), left, back, right};
 
 	const MHUDPrefs &prefs = this->GetPrefs();
-	const bool overlap = (forward && back) || (left && right);
-	const Color color = overlap && prefs.keysOverlapEnabled ? prefs.keysOverlap : prefs.keys;
+	const bool overlap = ((forward && back) || (left && right)) && prefs.keysOverlapEnabled;
+	bool overlapped[KZ_ARRAYSIZE(KEY_PANELS)] {};
+	for (i32 i = 0; overlap && i < KZ_ARRAYSIZE(KEY_PANELS); i++)
+	{
+		overlapped[i] = !prefs.keysOverlapAxis || (KEY_AXES[i] == KEY_AXIS_FORWARD_BACK && forward && back)
+						|| (KEY_AXES[i] == KEY_AXIS_LEFT_RIGHT && left && right);
+	}
+	// Axis mode leaves the element on the base color and tints the offending keys one by one below.
+	const Color color = overlap && !prefs.keysOverlapAxis ? prefs.keysOverlap : prefs.keys;
 	const bool show = this->IsMHUDElementEnabled(MHUDElement::Keys);
 	this->UpdateLayoutElement(layout, MHUDElement::Keys, show, NULL, color, force);
 	if (force)
@@ -149,20 +174,28 @@ void KZHUDService::UpdateKeysElement(CCSCustomHudLayout *layout, KZPlayer *sourc
 		layout->SetHasClass(keysPanel, "keys-square", square ? k_eHudPanelClassStatus_HasClass : k_eHudPanelClassStatus_DoesNotHaveClass);
 	}
 	const i32 glow = panorama::GetNearestSolidIndex(panorama::ResolveSolidColor(prefs.keysPressed, MHUD_DEF_KEYS_PRESSED_COLOR));
-	if (this->layoutKeys.glow != glow)
+	const i32 glowOverlap =
+		overlap ? panorama::GetNearestSolidIndex(panorama::ResolveSolidColor(prefs.keysOverlapGlow, MHUD_DEF_KEYS_OVERLAP_GLOW_COLOR)) : glow;
+	const char *overlapClass = prefs.keysOverlapAxis ? panorama::ResolveColorClass(prefs.keysOverlap) : NULL;
+	for (i32 i = 0; i < KZ_ARRAYSIZE(KEY_PANELS); i++)
 	{
-		char glowClass[32];
-		for (i32 i = 0; i < KZ_ARRAYSIZE(KEY_PANELS); i++)
+		// The element's own color is inherited, so a class here overrides it for this key alone.
+		this->SetLayoutClass(layout, KEY_PANELS[i], this->layoutKeys.overlapClass[i], overlapped[i] ? overlapClass : NULL);
+
+		const i32 wanted = overlapped[i] ? glowOverlap : glow;
+		if (this->layoutKeys.glow[i] == wanted)
 		{
-			if (this->layoutKeys.glow >= 0)
-			{
-				V_snprintf(glowClass, sizeof(glowClass), "key-glow-%i", this->layoutKeys.glow);
-				layout->SetHasClass(KEY_PANELS[i], glowClass, k_eHudPanelClassStatus_DoesNotHaveClass);
-			}
-			V_snprintf(glowClass, sizeof(glowClass), "key-glow-%i", glow);
-			layout->SetHasClass(KEY_PANELS[i], glowClass, k_eHudPanelClassStatus_HasClass);
+			continue;
 		}
-		this->layoutKeys.glow = glow;
+		char glowClass[32];
+		if (this->layoutKeys.glow[i] >= 0)
+		{
+			V_snprintf(glowClass, sizeof(glowClass), "key-glow-%i", this->layoutKeys.glow[i]);
+			layout->SetHasClass(KEY_PANELS[i], glowClass, k_eHudPanelClassStatus_DoesNotHaveClass);
+		}
+		V_snprintf(glowClass, sizeof(glowClass), "key-glow-%i", wanted);
+		layout->SetHasClass(KEY_PANELS[i], glowClass, k_eHudPanelClassStatus_HasClass);
+		this->layoutKeys.glow[i] = wanted;
 	}
 
 	for (i32 i = 0; i < KZ_ARRAYSIZE(KEY_PANELS); i++)
@@ -210,13 +243,13 @@ void KZHUDService::UpdateKeysElement(CCSCustomHudLayout *layout, KZPlayer *sourc
 	const char *fontClass = KZHUDService::GetMHUDFontClass(this->player, MHUDElement::Keys);
 	if (this->layoutKeys.fontClass != fontClass)
 	{
-		for (i32 i = 0; i < KZ_ARRAYSIZE(KEY_PANELS); i++)
+		for (i32 i = 0; i < KZ_ARRAYSIZE(KEY_GLYPHS); i++)
 		{
 			if (this->layoutKeys.fontClass)
 			{
-				layout->SetHasClass(KEY_PANELS[i], this->layoutKeys.fontClass, k_eHudPanelClassStatus_DoesNotHaveClass);
+				layout->SetHasClass(KEY_GLYPHS[i], this->layoutKeys.fontClass, k_eHudPanelClassStatus_DoesNotHaveClass);
 			}
-			layout->SetHasClass(KEY_PANELS[i], fontClass, k_eHudPanelClassStatus_HasClass);
+			layout->SetHasClass(KEY_GLYPHS[i], fontClass, k_eHudPanelClassStatus_HasClass);
 		}
 		this->layoutKeys.fontClass = fontClass;
 	}

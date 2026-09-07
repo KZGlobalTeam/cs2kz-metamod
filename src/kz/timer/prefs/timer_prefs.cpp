@@ -67,11 +67,11 @@ void KZTimerService::RegisterMenu()
 	KZOptNode *cat = KZ::menu::AddCategory("Menu - Timer Category");
 	KZ::menu::AddToggle(cat, "Menu - Map Overlay", "mapOverlay", false);
 	KZ::menu::AddActionToggle(cat, "Menu - Timer Stop Sound", GetStopSoundState, ToggleStopSound);
-	KZ::menu::SetItemPref(cat, "timerStopSound", KZOptStorage::Bool);
+	KZ::menu::SetItemPref(cat, "timerStopSound", KZOptStorage::Bool, 1);
 	KZ::menu::AddChoice(cat, "Menu - Safeguard", GetSafeguardChoices, GetCurrentSafeguard, PickSafeguard);
-	KZ::menu::SetItemPref(cat, "safeguard", KZOptStorage::Int);
+	KZ::menu::SetItemPref(cat, "safeguard", KZOptStorage::Int, SAFEGUARD_DISABLED);
 	KZ::menu::AddChoice(cat, "Menu - Compare", GetCompareChoices, GetCurrentCompare, PickCompare);
-	KZ::menu::SetItemPref(cat, "preferredCompareType", KZOptStorage::Int);
+	KZ::menu::SetItemPref(cat, "preferredCompareType", KZOptStorage::Int, KZTimerService::COMPARE_GPB);
 	KZ::menu::AddSize(cat, "Menu - Record Volume", "recordVolume", 100, 0, 200);
 	KZ::menu::SetItemUnit(cat, "%");
 	KZ::menu::SetItemScale(cat, 100);

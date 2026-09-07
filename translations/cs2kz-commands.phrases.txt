@@ -527,6 +527,10 @@
 		"es"		"Activar/desactivar sonido de teleporte."
 		"ko"		"텔레포트 사운드 효과를 전환합니다."
 	}
+	"Command Description - kz_fonts"
+	{
+		"en"		"How to install the fonts marked * in the font picker."
+	}
 	"Command Description - kz_panel"
 	{
 		"en"		"Toggle centre panel display."

@@ -43,6 +43,14 @@
 		"chi"		"虚拟准星"
 		"ua"		"Віртуальний приціл"
 	}
+	"Menu - Mimic Spec"
+	{
+		"en"		"Mimic Spectated Player"
+	}
+	"Menu - Mimic Spec Sub"
+	{
+		"en"		"Use their HUD settings while spectating them"
+	}
 	"Menu - Compact Sub"
 	{
 		"en"		"Legacy panel only"
@@ -63,9 +71,7 @@
 	}
 	"Menu - Font Local Note"
 	{
-		"en"		"* depends on your local font installation"
-		"chi"		"* 取决于你本地安装的字体"
-		"ua"		"* залежить від вашого локального встановлення шрифту"
+		"en"		"* depends on your local font installation, type !fonts for more information"
 	}
 	"Menu - Enabled"
 	{
@@ -155,6 +161,14 @@
 		"en"		"Overlap warning"
 		"chi"		"按键重叠警告"
 		"ua"		"Попередження про Overlap"
+	}
+	"Menu - Keys Overlap Axis"
+	{
+		"en"		"Overlap on axis only"
+	}
+	"Menu - Keys Overlap Axis Sub"
+	{
+		"en"		"Warn on the two overlapping keys instead of the whole overlay"
 	}
 	"Menu - Color Base"
 	{
@@ -328,8 +342,11 @@
 	}
 	"Menu - Color Pressed"
 	{
-		"en"		"Pressed color"
-		"ua"		"Колір натиснутої клавіші"
+		"en"		"Glow/Pressed color"
+	}
+	"Menu - Color Overlap Glow"
+	{
+		"en"		"Overlap glow/pressed color"
 	}
 	"Menu - Mode"
 	{
@@ -887,6 +904,10 @@
 	{
 		"en"		"setinfo is ignored on workshop maps.\nEither paste these from the main menu before joining a server, or add -disable_workshop_command_filtering to your CS2 launch options.\nThe console only takes 512 characters at a time, so paste a few lines at a time or execute them from a config file instead."
 		"ua"		"setinfo ігнорується на мапах з майстерні.\nАбо вставте їх з головного меню перед приєднанням до сервера, або додайте -disable_workshop_command_filtering до параметрів запуску CS2.\nКонсоль приймає лише 512 символів за раз, тому вставляйте кілька рядків за раз або виконуйте їх із конфігураційного файлу."
+	}
+	"Prefs - Export Stamp Note"
+	{
+		"en"		"The stamp line below is what makes a block apply once instead of on every connect.\nKeep it when you are moving your own preferences to another server. Leave it out when you are sharing them with someone else."
 	}
 	"Prefs - Export Footer"
 	{

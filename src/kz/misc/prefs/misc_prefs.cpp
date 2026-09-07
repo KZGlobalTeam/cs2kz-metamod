@@ -192,9 +192,9 @@ void KZ::misc::RegisterMenu()
 	KZ::menu::SetItemPref(cat, "preferredStyles", KZOptStorage::Str);
 	KZ::menu::SetItemDivider(cat);
 	KZ::menu::AddChoice(cat, "Menu - Pistol", GetPistolChoices, GetCurrentPistol, PickPistol);
-	KZ::menu::SetItemPref(cat, "preferredPistol", KZOptStorage::Str);
+	KZ::menu::SetItemPref(cat, "preferredPistol", KZOptStorage::Str, 0, "weapon_usp_silencer");
 	KZ::menu::AddChoice(cat, "Menu - Beam", GetBeamChoices, GetCurrentBeam, PickBeam);
-	KZ::menu::SetItemPref(cat, "desiredBeamType", KZOptStorage::Int);
+	KZ::menu::SetItemPref(cat, "desiredBeamType", KZOptStorage::Int, KZBeamService::BEAM_NONE);
 	KZ::menu::AddVector(cat, "Menu - Beam Offset", "beamOffset", KZBeamService::defaultOffset, -64, 64);
 	KZ::menu::SetItemSubtext(cat, "Menu - Beam Offset Sub");
 	KZ::menu::AddChoice(cat, "Menu - Language", GetLanguageChoices, GetCurrentLanguage, PickLanguage);

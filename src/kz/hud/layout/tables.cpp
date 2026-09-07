@@ -38,6 +38,7 @@ static_global constexpr MHUDColorPrefDef KEYS_COLOR_PREFS[] =
 	{"Menu - Color Base",     "mhudKeysColor",         0xFF, 0xFF, 0xFF},
 	{"Menu - Color Overlap",  "mhudKeysOverlapColor",  0xFF, 0x40, 0x40, false, "mhudKeysOverlap"},
 	{"Menu - Color Pressed",  "mhudKeysPressedColor",     0x3B, 0xED, 0xA0, true},
+	{"Menu - Color Overlap Glow", "mhudKeysOverlapGlowColor", 0xFF, 0x40, 0x40, true, "mhudKeysOverlap"},
 };
 
 static_global constexpr MHUDColorPrefDef CHECKPOINT_COLOR_PREFS[] =

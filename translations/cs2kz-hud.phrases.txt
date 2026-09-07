@@ -273,5 +273,17 @@
 		"ua"		"{grey}Використання: {default}kz_panel <compact>{grey}."
 		"ko"		"{grey}사용법: {default}kz_panel <compact>{grey}."
 	}
-
+	"Fonts - Help (Chat)"
+	{
+		"en"		"{grey}Check console for instructions!"
+	}
+	"Fonts - Help"
+	{
+		// ----- Fonts marked * in the font picker -----
+		// The game only loads installed font files whose name matches an entry in fonts.conf.
+		// 1. Install the font for all users.
+		// 2. Open csgo\panorama\fonts\fonts.conf and add a line next to the others: <fontpattern>yourfontfilename</fontpattern>
+		// 3. Restart the game fully.
+		"en"		"----- Fonts marked * in the font picker -----\nThe game only loads installed font files whose name matches an entry in fonts.conf.\n1. Install the font for all users.\n2. Open csgo\panorama\fonts\fonts.conf and add a line next to the others: <fontpattern>yourfontfilename</fontpattern>\n3. Restart the game fully."
+	}
 }

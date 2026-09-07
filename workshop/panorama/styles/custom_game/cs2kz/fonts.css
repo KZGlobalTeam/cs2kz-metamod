@@ -224,18 +224,6 @@
 	font-family: Arial, "Arial Unicode MS";
 }
 
-.font-family--sans-serif {
-	font-family: sans-serif, "Arial Unicode MS";
-}
-
-.font-family--serif {
-	font-family: serif, "Arial Unicode MS";
-}
-
-.font-family--monospace {
-	font-family: monospace, "Arial Unicode MS";
-}
-
 // System fonts: only render if the player has them installed, marked with * in the picker. Weights
 // come from font-weight, since Windows exposes one family rather than one per weight.
 .font-family--trebuchet {
@@ -269,4 +257,27 @@
 .font-family--lato-black {
 	font-family: Lato, "Arial Unicode MS";
 	font-weight: black;
+}
+
+// Quicksand: Light/Medium/SemiBold register as their own families; Regular and Bold share
+// "Quicksand" and separate by weight.
+.font-family--quicksand-light {
+	font-family: "Quicksand Light", "Arial Unicode MS";
+}
+
+.font-family--quicksand {
+	font-family: Quicksand, "Arial Unicode MS";
+}
+
+.font-family--quicksand-medium {
+	font-family: "Quicksand Medium", "Arial Unicode MS";
+}
+
+.font-family--quicksand-semibold {
+	font-family: "Quicksand SemiBold", "Arial Unicode MS";
+}
+
+.font-family--quicksand-bold {
+	font-family: Quicksand, "Arial Unicode MS";
+	font-weight: bold;
 }

@@ -62,6 +62,7 @@ static_global const Color MHUD_DEF_TIMER_PAUSED_COLOR(0xFF, 0x80, 0x00, 0xFF);
 static_global const Color MHUD_DEF_TIMER_STOPPED_COLOR(0xFF, 0xA0, 0xA0, 0xFF);
 static_global const Color MHUD_DEF_KEYS_OVERLAP_COLOR(0xFF, 0x40, 0x40, 0xFF);
 static_global const Color MHUD_DEF_KEYS_PRESSED_COLOR(0x3B, 0xED, 0xA0, 0xFF);
+static_global const Color MHUD_DEF_KEYS_OVERLAP_GLOW_COLOR(0xFF, 0x40, 0x40, 0xFF);
 
 // The player's own cl_crosshair* values. The game's defaults stand until a query answers.
 struct MHUDCrosshairSettings
@@ -103,7 +104,7 @@ struct MHUDPrefs
 	Color timerPaused, timerStopped, timerTp, timerPro;
 	Color speed, speedCj;
 	Color prespeed, prespeedPerf, prespeedJumpbug;
-	Color keys, keysOverlap, keysPressed;
+	Color keys, keysOverlap, keysPressed, keysOverlapGlow;
 	Color checkpoint;
 
 	bool legacyStyle {};
@@ -116,12 +117,14 @@ struct MHUDPrefs
 	bool prespeedBrackets {};
 	bool prespeedHideWalkOff {};
 	bool keysOverlapEnabled {true};
+	bool keysOverlapAxis {}; // tint only the two keys causing the overlap, not the whole element
 	bool keysLetters {};
 	bool keysSquare {};
 	bool keysBorder {true};
 	bool keysGlowEnabled {true};
 	bool keysFillEnabled {true};
 	MHUDKeysIdle keysIdle {MHUDKeysIdle::Show};
+	bool mimicSpec {}; // read from the viewer's own set only, never from the player being mimicked
 };
 
 class KZHUDService : public KZBaseService
@@ -145,8 +148,11 @@ public:
 	// Static storage, so callers can keep caching the result by pointer.
 	static const char *GetMHUDFontClass(KZPlayer *player, MHUDElement element);
 
-	// The cached preference set, refilled on first use after a preference changed.
+	// The player's own preferences or the spectated player's, depending on the mimicSpec setting.
+	// If the player is not spectating, this is always their own.
 	const MHUDPrefs &GetPrefs();
+
+	const MHUDPrefs &GetOwnPrefs();
 
 	// Any preference change refills the whole set rather than working out which key it was.
 	void InvalidatePrefs()
@@ -286,13 +292,14 @@ private:
 	struct LayoutKeysState
 	{
 		bool pressed[6] {};
+		i32 glow[6] {-1, -1, -1, -1, -1, -1};
+		const char *overlapClass[6] {}; // per-key overlap tint, used by the axis-only mode
 		i32 idle {-1};
 		i32 letters {-1};
 		i32 square {-1};
 		i32 noBorder {-1};
 		i32 noGlow {-1};
 		i32 noFill {-1};
-		i32 glow {-1};
 		i32 fontSize {INT_MIN};
 		i32 boxSize {INT_MIN};
 		const char *fontClass {};
@@ -305,6 +312,7 @@ private:
 		i32 armLength {-1};
 		i32 thickness {-1};
 		i32 margin {-1};
+		i32 marginFar {-1};
 		i32 outline {-1};
 		i32 opacity {-1};
 		i32 dot {-1};

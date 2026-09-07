@@ -73,6 +73,13 @@ public:
 		return (T *)m_pfn(SCHEMA_COLLECTION_MANIPULATOR_ACTION_GET_ELEMENT, m_pCollection, index, 0);
 	}
 
+	// Element() without the bounds check, for a loop that has already hoisted Count(). Every access
+	// is a call into the game, so a scan that goes through Element() pays three of them per entry.
+	T *ElementUnchecked(int index) const
+	{
+		return (T *)m_pfn(SCHEMA_COLLECTION_MANIPULATOR_ACTION_GET_ELEMENT, m_pCollection, index, 0);
+	}
+
 	// Grows or shrinks the collection, constructing/destructing elements as the game would.
 	// Const because the wrapper is only a view; the collection it points at is not ours.
 	bool SetCount(int count) const
