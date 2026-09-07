@@ -10,18 +10,19 @@
 #define NUM_CONSECUTIVE_PERFECT_CSTRAFE_FOR_DETECTION_MAXIMUM 640
 
 // The higher the FPS, the less likely player can get perfect counter-strafes by chance.
-#define FPS_FOR_MINIMUM_SUSPICION   64.0f // We shouldn't count any attempt below this FPS.
-#define FPS_FOR_MAXIMUM_SUSPICION   256.0f
-#define ANALOG_CSTRAFE_WEIGHT       2.0f // Perfect analog strafes are extremely suspicious. Most (if not all) ingame null aliases abuse analog inputs.
-#define MIN_AIR_SPEED_FOR_DETECTION 100.0f // Only consider airstrafes with at least this airspeed to avoid false positives.
+#define FPS_FOR_MINIMUM_SUSPICION 64.0f // We shouldn't count any attempt below this FPS.
+#define FPS_FOR_MAXIMUM_SUSPICION 256.0f
+// A key bound to an analog command is not a controller, and there is no legitimate reason to fake a stick.
+#define SYNTHETIC_ANALOG_CSTRAFE_WEIGHT 4.0f
+// Analog deltas landing exactly on a hundredth. A real stick almost never does.
+#define SYNTHETIC_ANALOG_GRID         0.01f
+#define SYNTHETIC_ANALOG_GRID_EPSILON 1e-6f
+#define MIN_AIR_SPEED_FOR_DETECTION   100.0f // Only consider airstrafes with at least this airspeed to avoid false positives.
 // Only count counterstrafe attempts if the keypresses are at most this far apart, in either direction.
 // Consider higher values as brand new inputs rather than a counter-strafe attempt.
-#define GAP_DISCARD_THRESHOLD         0.2f
-#define UNDERLAP_PERCENTAGE_THRESHOLD 0.1f // At least 10% of the strafes should have underlap to consider the median underlap duration.
-// Higher underlap average means the player are unlikely to be nulling.
-// If the player's underlap average is above this value, we won't consider them for nulls detection.
-// If 10% or more of their strafes have underlap, we should start taking the threshold below into consideration.
-#define UNDERLAP_MEDIAN_FORGIVENESS_THRESHOLD 0.02f // ~10% of a flat ground jump, considering 7.5 strafes on average
+#define GAP_DISCARD_THRESHOLD 0.2f
+// Above this the player already loses enough of the jump that nulling would not meaningfully help them.
+#define SWITCH_LOSS_FORGIVENESS_THRESHOLD 0.02f // ~10% of a flat ground jump, considering 7.5 strafes on average
 
 // An exact comparison against 0 misses any null that carries a fraction of a subtick of jitter.
 // Treat a small gap in either direction as a perfect swap.
@@ -60,9 +61,9 @@ void KZAnticheatService::CreateInputEvents(PlayerCommand *cmd)
 	// This isn't the actual airspeed at the time of the input, but it's close enough for our purposes.
 	f32 airSpeed = airborne ? this->player->moveDataPost.m_vecVelocity.Length2D() : -1.0f;
 
-	auto push = [&](u64 button, bool pressed, f32 when, bool analog)
+	auto push = [&](u64 button, bool pressed, f32 when, bool analog, bool synthetic)
 	{
-		InputEvent event {cmd->cmdNum, when, -1.0f, button, pressed, analog, airSpeed};
+		InputEvent event {cmd->cmdNum, when, -1.0f, button, pressed, analog, airSpeed, synthetic};
 		netchan->GetRemoteFramerate(&event.framerate, nullptr, nullptr);
 		if (button == IN_FORWARD || button == IN_BACK)
 		{
@@ -78,7 +79,7 @@ void KZAnticheatService::CreateInputEvents(PlayerCommand *cmd)
 	// an axis can be held at once - that is exactly what an overlap is - so this cannot be derived from the
 	// movement impulses, which cancel to zero while both are down.
 	u64 &heldButtons = this->heldMovementButtons;
-	auto setHeld = [&](u64 positive, u64 negative, u64 target, f32 when, bool analog)
+	auto setHeld = [&](u64 positive, u64 negative, u64 target, f32 when, bool analog, bool synthetic = false)
 	{
 		u64 axisMask = positive | negative;
 		u64 held = heldButtons & axisMask;
@@ -89,19 +90,19 @@ void KZAnticheatService::CreateInputEvents(PlayerCommand *cmd)
 		// Release before press, so a swap with no gap reads as a perfect counter-strafe and not as an overlap.
 		if ((held & ~target) & positive)
 		{
-			push(positive, false, when, analog);
+			push(positive, false, when, analog, synthetic);
 		}
 		if ((held & ~target) & negative)
 		{
-			push(negative, false, when, analog);
+			push(negative, false, when, analog, synthetic);
 		}
 		if ((target & ~held) & positive)
 		{
-			push(positive, true, when, analog);
+			push(positive, true, when, analog, synthetic);
 		}
 		if ((target & ~held) & negative)
 		{
-			push(negative, true, when, analog);
+			push(negative, true, when, analog, synthetic);
 		}
 		heldButtons = (heldButtons & ~axisMask) | target;
 	};
@@ -157,13 +158,20 @@ void KZAnticheatService::CreateInputEvents(PlayerCommand *cmd)
 			sideAxis += step.analog_left_delta();
 			// A stick carries no press or release, and only ever points one way, so the axis sign is the whole
 			// held state for it.
+			// A stick sweeps continuously and lands on values like 1.3e-05. A key bound to an analog command
+			// emits whatever round number the alias was written with, so anything sitting exactly on a
+			// hundredth did not come from hardware.
+			auto isSynthetic = [](f32 delta)
+			{ return fabsf(delta - roundf(delta / SYNTHETIC_ANALOG_GRID) * SYNTHETIC_ANALOG_GRID) < SYNTHETIC_ANALOG_GRID_EPSILON; };
 			if (step.analog_forward_delta() != 0.0f)
 			{
-				setHeld(IN_FORWARD, IN_BACK, heldButton(forwardAxis, IN_FORWARD, IN_BACK), step.when(), true);
+				setHeld(IN_FORWARD, IN_BACK, heldButton(forwardAxis, IN_FORWARD, IN_BACK), step.when(), true,
+						isSynthetic(step.analog_forward_delta()));
 			}
 			if (step.analog_left_delta() != 0.0f)
 			{
-				setHeld(IN_MOVELEFT, IN_MOVERIGHT, heldButton(sideAxis, IN_MOVELEFT, IN_MOVERIGHT), step.when(), true);
+				setHeld(IN_MOVELEFT, IN_MOVERIGHT, heldButton(sideAxis, IN_MOVELEFT, IN_MOVERIGHT), step.when(), true,
+						isSynthetic(step.analog_left_delta()));
 			}
 		}
 	}
@@ -227,8 +235,10 @@ void KZAnticheatService::AnalyzeNullsForAxis(const std::deque<InputEvent> &event
 	u32 numPerfect = 0;
 	u32 numConsecutivePerfect = 0;
 	u32 maxConsecutivePerfect = 0;
-	this->nullsUnderlapBuffer.clear();
-	auto &underlapDurations = this->nullsUnderlapBuffer;
+	u32 numUnderlaps = 0;
+	// Unweighted, so that the weighting cannot move the impact gate.
+	u32 numAttempts = 0;
+	f32 totalSwitchLoss = 0.0f;
 
 	// Track the last release event and current press state for each direction
 	const InputEvent *lastButton1Release = nullptr;
@@ -267,7 +277,7 @@ void KZAnticheatService::AnalyzeNullsForAxis(const std::deque<InputEvent> &event
 		{
 			shouldAnalyze = false;
 		}
-		f32 weight = event.analog ? ANALOG_CSTRAFE_WEIGHT : 1.0f;
+		f32 weight = event.synthetic ? SYNTHETIC_ANALOG_CSTRAFE_WEIGHT : 1.0f;
 		// Note that InputEvent::framerate holds a frame time, not a rate.
 		f32 nearPerfect = NEAR_PERFECT_MAX_DURATION;
 		if (event.framerate > 0.0f)
@@ -297,6 +307,12 @@ void KZAnticheatService::AnalyzeNullsForAxis(const std::deque<InputEvent> &event
 				}
 			}
 
+			// Holding both directions is time spent not accelerating, same as a gap is.
+			if (foundRelease && event.airSpeed >= MIN_AIR_SPEED_FOR_DETECTION)
+			{
+				numAttempts++;
+				totalSwitchLoss += overlapDuration;
+			}
 			// Without a release inside the window there is nothing to classify: the player is simply holding
 			// both directions, which is not a counter-strafe attempt.
 			if (foundRelease)
@@ -372,6 +388,9 @@ void KZAnticheatService::AnalyzeNullsForAxis(const std::deque<InputEvent> &event
 			continue;
 		}
 
+		numAttempts++;
+		totalSwitchLoss += timeDiff;
+
 		// Note: timeDiff < 0 (overlap) is already handled earlier in the loop
 		if (timeDiff < nearPerfect)
 		{
@@ -394,50 +413,45 @@ void KZAnticheatService::AnalyzeNullsForAxis(const std::deque<InputEvent> &event
 				this->player->PrintConsole(false, true, "Underlap %.3f ms @ %f", timeDiff * 1000, event.cmdNum + event.fraction);
 			}
 			// Underlap: gap between release and press
-			underlapDurations.push_back(timeDiff);
+			numUnderlaps++;
 		}
 	}
-	f32 underlapMedian = 0.0f;
-	if (!underlapDurations.empty())
-	{
-		std::sort(underlapDurations.begin(), underlapDurations.end());
-		underlapMedian = underlapDurations[underlapDurations.size() / 2];
-	}
-
-	u32 total = numOverlaps + numPerfect + underlapDurations.size();
-	// Ban if criteria met
-	if (underlapMedian >= UNDERLAP_MEDIAN_FORGIVENESS_THRESHOLD && ((f32)underlapDurations.size() / (f32)(total) >= UNDERLAP_PERCENTAGE_THRESHOLD))
+	// Averaging over every attempt is what makes this a measure of impact rather than of style. Taking it
+	// over the misses alone ignores the switches that cost nothing, so a player who nulls most of the time
+	// and misses sloppily the rest reads as though every switch were sloppy.
+	f32 meanSwitchLoss = numAttempts > 0 ? totalSwitchLoss / (f32)numAttempts : 0.0f;
+	if (meanSwitchLoss >= SWITCH_LOSS_FORGIVENESS_THRESHOLD)
 	{
 		if (kz_ac_nulls_debug.Get())
 		{
-			this->player->PrintAlert(false, true, "Underlap median too high: %.2f ms", underlapMedian * 1000);
+			this->player->PrintAlert(false, true, "Counter-strafes already cost too much to be worth checking: %.2f ms each", meanSwitchLoss * 1000);
 		}
 		return;
 	}
 
-	// The higher the underlap median, the less likely the player is nulling.
-	// We scale up the required perfect cstrafes based on how high the underlap median is.
-	f32 underlapRatio = Clamp(underlapMedian / UNDERLAP_MEDIAN_FORGIVENESS_THRESHOLD, 0.0f, 1.0f);
-	// Squared because we want to be more strict on lower underlap medians.
+	// The more a player's counter-strafes cost them, the less nulling would have gained them.
+	// We scale up the required perfect cstrafes accordingly.
+	f32 lossRatio = Clamp(meanSwitchLoss / SWITCH_LOSS_FORGIVENESS_THRESHOLD, 0.0f, 1.0f);
+	// Squared because we want to be more strict when the switches cost the player almost nothing.
 	u32 adjustedRequiredPerfectCstrafes =
-		Lerp(underlapRatio * underlapRatio, requiredPerfectCstrafes, (u32)NUM_CONSECUTIVE_PERFECT_CSTRAFE_FOR_DETECTION_MAXIMUM);
+		Lerp(lossRatio * lossRatio, requiredPerfectCstrafes, (u32)NUM_CONSECUTIVE_PERFECT_CSTRAFE_FOR_DETECTION_MAXIMUM);
 
 	const char *axisName = (button1 == IN_FORWARD) ? "forward/backward" : "left/right";
 
 	// The streak is the best run anywhere in the window, not the run still open at the end of it.
 	if (maxConsecutivePerfect >= adjustedRequiredPerfectCstrafes)
 	{
-		std::string details = tinyformat::format("Nulls detection on axis %s. Streak: %d/%d, total %d/%d, OL: %d, DA median: %.2f ms, FPS: %.2f",
-												 axisName, maxConsecutivePerfect, adjustedRequiredPerfectCstrafes, numPerfect, total, numOverlaps,
-												 underlapMedian * 1000, 1 / medianFramerate);
+		std::string details = tinyformat::format(
+			"Nulls detection on axis %s. Streak: %d/%d, perfect %d, UL: %d, OL: %d, loss/switch: %.2f ms, FPS: %.2f", axisName, maxConsecutivePerfect,
+			adjustedRequiredPerfectCstrafes, numPerfect, numUnderlaps, numOverlaps, meanSwitchLoss * 1000, 1 / medianFramerate);
 		this->MarkInfraction(KZAnticheatService::Infraction::Type::Nulls, details);
 	}
 
 	if (kz_ac_nulls_debug.Get())
 	{
-		this->player->PrintAlert(false, true, "Perfect: %d (streak %d, ban %d) | Overlap %d\nUnderlap median: %.1f ms | FPS: %.1f | Sample count %d",
-								 numPerfect, maxConsecutivePerfect, adjustedRequiredPerfectCstrafes, numOverlaps, underlapMedian * 1000,
-								 1 / medianFramerate, (i32)(total));
+		this->player->PrintAlert(false, true, "Perfect: %d (streak %d, ban %d) | Overlap %d\nLoss/switch: %.2f ms | FPS: %.1f | Sample count %d",
+								 numPerfect, maxConsecutivePerfect, adjustedRequiredPerfectCstrafes, numOverlaps, meanSwitchLoss * 1000,
+								 1 / medianFramerate, numAttempts);
 	}
 }
 

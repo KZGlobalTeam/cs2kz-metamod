@@ -149,7 +149,6 @@ public:
 		recentLeftRightEvents.clear();
 		heldMovementButtons = 0;
 		nullsFramerateBuffer.clear();
-		nullsUnderlapBuffer.clear();
 		suspiciousSubtickMoveTimes.clear();
 		invalidCommandTimes.clear();
 		zeroWhenCommandTimes.clear();
@@ -202,6 +201,9 @@ public:
 		bool pressed;
 		bool analog = false;
 		f32 airSpeed = -1.0f;
+		// A nonzero whole-number analog delta. A stick sweeps continuously and never lands exactly on 1.0,
+		// so this only ever comes from a key bound to an analog command.
+		bool synthetic = false;
 	};
 
 	std::deque<InputEvent> recentForwardBackwardEvents;
@@ -209,7 +211,6 @@ public:
 	// Direction keys the input events say are down. Both directions of an axis can be down at once.
 	u64 heldMovementButtons;
 	std::vector<f32> nullsFramerateBuffer;
-	std::vector<f32> nullsUnderlapBuffer;
 
 	void CreateInputEvents(PlayerCommand *cmd);
 	void CheckNulls();
