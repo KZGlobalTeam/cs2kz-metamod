@@ -245,14 +245,14 @@ SCMD(kz_spec, SCFL_SPEC)
 	if (!player->specService->CanSpectate())
 	{
 		player->languageService->PrintChat(true, false, "Spectate Failure (Generic)");
-		return MRES_SUPERCEDE;
+		return true;
 	}
 
 	// Handle explicit target, this always takes priority over automatic spectating.
 	if (args->ArgC() >= 2)
 	{
 		player->specService->SpectatePlayer(args->Arg(1));
-		return MRES_SUPERCEDE;
+		return true;
 	}
 
 	// Find the first alive player other than the player themselves.
@@ -271,12 +271,12 @@ SCMD(kz_spec, SCFL_SPEC)
 	if (!firstAlivePlayer)
 	{
 		player->specService->SpectatePlayer("@me");
-		return MRES_SUPERCEDE;
+		return true;
 	}
 
 	// If no target is provided, default to the first alive player.
 	player->specService->SpectatePlayer(firstAlivePlayer);
-	return MRES_SUPERCEDE;
+	return true;
 }
 
 SCMD(kz_specs, SCFL_SPEC)
@@ -287,7 +287,7 @@ SCMD(kz_specs, SCFL_SPEC)
 	if (!targetPlayer)
 	{
 		player->languageService->PrintChat(true, false, "Spectator List (None)");
-		return MRES_SUPERCEDE;
+		return true;
 	}
 	CUtlVector<CUtlString> spectatorList;
 	targetPlayer->specService->GetSpectatorList(spectatorList);
@@ -323,7 +323,7 @@ SCMD(kz_specs, SCFL_SPEC)
 											   spectatorListString.Get());
 		}
 	}
-	return MRES_SUPERCEDE;
+	return true;
 }
 
 SCMD_LINK(kz_speclist, kz_specs);

@@ -1,6 +1,6 @@
 #include "kz.h"
 #include "utils/utils.h"
-#include "../kz/option/kz_option.h"
+#include "kz/option/kz_option.h"
 
 #include "sdk/recipientfilters.h"
 #include "tier0/memdbgon.h"

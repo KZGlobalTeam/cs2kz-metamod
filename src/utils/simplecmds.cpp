@@ -170,7 +170,7 @@ SCMD(kz_help, SCFL_MISC)
 			PrintCategoryCommands(player, i, false);
 		}
 	}
-	return MRES_SUPERCEDE;
+	return true;
 }
 
 bool scmd::RegisterCmd(const char *name, scmd::Callback_t *callback, const char *descKey, u64 flags)
@@ -279,9 +279,9 @@ bool scmd::UnregisterCmd(const char *name)
 	return false;
 }
 
-META_RES scmd::OnClientCommand(CPlayerSlot &slot, const CCommand &args)
+bool scmd::OnClientCommand(CPlayerSlot &slot, const CCommand &args)
 {
-	META_RES result = MRES_IGNORED;
+	bool result = false;
 	if (!GameEntitySystem())
 	{
 		return result;
@@ -292,7 +292,7 @@ META_RES scmd::OnClientCommand(CPlayerSlot &slot, const CCommand &args)
 	KZPlayer *player = controller ? g_pKZPlayerManager->ToPlayer(controller) : nullptr;
 	if (!controller || !player)
 	{
-		return MRES_IGNORED;
+		return false;
 	}
 
 	for (i32 i = 0; i < g_cmdManager.cmdCount; i++)
@@ -308,10 +308,10 @@ META_RES scmd::OnClientCommand(CPlayerSlot &slot, const CCommand &args)
 		{
 			if (!CanRunCommand(player, g_cmdManager.cmds[i].flags))
 			{
-				return MRES_SUPERCEDE;
+				return true;
 			}
 			result = g_cmdManager.cmds[i].callback(controller, &args);
-			if (result == MRES_SUPERCEDE)
+			if (result)
 			{
 				return result;
 			}
@@ -320,9 +320,9 @@ META_RES scmd::OnClientCommand(CPlayerSlot &slot, const CCommand &args)
 	return result;
 }
 
-META_RES scmd::OnDispatchConCommand(ConCommandRef cmd, const CCommandContext &ctx, const CCommand &args)
+bool scmd::OnDispatchConCommand(ConCommandRef cmd, const CCommandContext &ctx, const CCommand &args)
 {
-	META_RES result = MRES_IGNORED;
+	bool result = false;
 	if (!GameEntitySystem())
 	{
 		return result;
@@ -334,7 +334,7 @@ META_RES scmd::OnDispatchConCommand(ConCommandRef cmd, const CCommandContext &ct
 	KZPlayer *player = controller ? g_pKZPlayerManager->ToPlayer(controller) : nullptr;
 	if (!cmd.IsValidRef() || !controller || !player)
 	{
-		return MRES_IGNORED;
+		return false;
 	}
 	const char *commandName = cmd.GetName();
 
@@ -343,26 +343,26 @@ META_RES scmd::OnDispatchConCommand(ConCommandRef cmd, const CCommandContext &ct
 		// A client that isn't fully in-game yet can't legitimately chat at all, command or not.
 		if (!player->IsInGame())
 		{
-			return MRES_SUPERCEDE;
+			return true;
 		}
 
 		if (args.ArgC() < 2)
 		{
 			// no argument somehow
-			return MRES_IGNORED;
+			return false;
 		}
 
 		if (args[1][0] != SCMD_CHAT_TRIGGER && args[1][0] != SCMD_CHAT_SILENT_TRIGGER)
 		{
 			// no chat command trigger
-			return MRES_IGNORED;
+			return false;
 		}
 
 		i32 argLen = strlen(args[1]);
 		if (argLen < 1)
 		{
 			// arg is too short!
-			return MRES_IGNORED;
+			return false;
 		}
 		Scmd *cmds = g_cmdManager.cmds;
 
@@ -384,13 +384,13 @@ META_RES scmd::OnDispatchConCommand(ConCommandRef cmd, const CCommandContext &ct
 			{
 				if (!CanRunCommand(player, cmds[i].flags))
 				{
-					return MRES_SUPERCEDE;
+					return true;
 				}
-				META_RES result = cmds[i].callback(controller, &cmdArgs);
-				if (args[1][0] == SCMD_CHAT_SILENT_TRIGGER || result == MRES_SUPERCEDE)
+				bool result = cmds[i].callback(controller, &cmdArgs);
+				if (args[1][0] == SCMD_CHAT_SILENT_TRIGGER || result)
 				{
 					// don't send chat message
-					return MRES_SUPERCEDE;
+					return true;
 				}
 			}
 		}
@@ -412,10 +412,10 @@ META_RES scmd::OnDispatchConCommand(ConCommandRef cmd, const CCommandContext &ct
 			{
 				if (!CanRunCommand(player, cmds[i].flags))
 				{
-					return MRES_SUPERCEDE;
+					return true;
 				}
-				META_RES result = g_cmdManager.cmds[i].callback(controller, &args);
-				if (result == MRES_SUPERCEDE)
+				bool result = g_cmdManager.cmds[i].callback(controller, &args);
+				if (result)
 				{
 					return result;
 				}
@@ -423,5 +423,5 @@ META_RES scmd::OnDispatchConCommand(ConCommandRef cmd, const CCommandContext &ct
 		}
 	}
 
-	return MRES_IGNORED;
+	return false;
 }

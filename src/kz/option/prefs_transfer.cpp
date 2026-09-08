@@ -218,5 +218,5 @@ SCMD(kz_exportprefs, SCFL_PREFERENCE)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	ExportPrefs(player, 0);
-	return MRES_SUPERCEDE;
+	return true;
 }

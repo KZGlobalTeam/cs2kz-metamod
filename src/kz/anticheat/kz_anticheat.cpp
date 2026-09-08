@@ -1,4 +1,4 @@
-#include "../kz.h"
+#include "kz/kz.h"
 #include "kz_anticheat.h"
 #include "kz/language/kz_language.h"
 #include "kz/timer/kz_timer.h"

@@ -1,4 +1,4 @@
-#include "../kz.h"
+#include "kz/kz.h"
 #include "kz_checkpoint.h"
 #include "../option/kz_option.h"
 #include "../timer/kz_timer.h"

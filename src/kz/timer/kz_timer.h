@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../kz.h"
+#include "kz/kz.h"
 #include "../checkpoint/kz_checkpoint.h"
 #include "kz/mappingapi/kz_mappingapi.h"
 #include "utils/uuid.h"

@@ -1,5 +1,5 @@
 #pragma once
-#include "../kz.h"
+#include "kz/kz.h"
 
 #define KZ_JUST_NOCLIP_TIME 0.05f;
 

@@ -6,14 +6,14 @@ constexpr const char *blockedCommands[] = {
 	"sectorclear",     "inposition",  "reportingin", "getout",     "negative", "enemydown",
 };
 
-META_RES KZ::misc::CheckBlockedRadioCommands(const char *cmd)
+bool KZ::misc::CheckBlockedRadioCommands(const char *cmd)
 {
 	for (size_t i = 0; i < sizeof(blockedCommands) / sizeof(blockedCommands[0]); i++)
 	{
 		if (!V_stricmp(cmd, blockedCommands[i]))
 		{
-			return MRES_SUPERCEDE;
+			return true;
 		}
 	}
-	return MRES_IGNORED;
+	return false;
 }
