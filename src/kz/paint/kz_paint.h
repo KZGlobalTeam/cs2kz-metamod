@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../kz.h"
+#include "kz/kz.h"
 
 #define KZ_PAINT_DEFAULT_COLOR Color(255, 0, 0, 255)
 

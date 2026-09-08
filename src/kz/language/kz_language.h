@@ -1,7 +1,7 @@
 #pragma once
 #include "vendor/tinyformat.h"
 
-#include "../kz.h"
+#include "kz/kz.h"
 #include "../spec/kz_spec.h"
 #include "utils/eventlisteners.h"
 

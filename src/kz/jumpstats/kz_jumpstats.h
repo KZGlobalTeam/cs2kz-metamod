@@ -5,7 +5,7 @@
 #include "sdk/datatypes.h"
 #include "utils/circularfifobuffer.h"
 
-#include "../kz.h"
+#include "kz/kz.h"
 
 class KZPlayer;
 

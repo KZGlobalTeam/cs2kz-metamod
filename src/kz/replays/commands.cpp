@@ -839,13 +839,13 @@ SCMD(kz_replay, SCFL_REPLAY)
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	if (!g_pFullFileSystem || !player)
 	{
-		return MRES_SUPERCEDE;
+		return true;
 	}
 
 	if (args->ArgC() < 2)
 	{
 		player->languageService->PrintChat(true, false, "Replay - Usage Command");
-		return MRES_SUPERCEDE;
+		return true;
 	}
 
 	using namespace KZ::replaysystem::commands;
@@ -866,12 +866,12 @@ SCMD(kz_replay, SCFL_REPLAY)
 		if (KZ_STREQI(arg1, kw.keyword))
 		{
 			LoadReplayForRecord(player, kw.type, args->ArgC() >= 3 ? args->Arg(2) : "", args->ArgC() >= 4 ? args->Arg(3) : "");
-			return MRES_SUPERCEDE;
+			return true;
 		}
 	}
 
-	LoadReplay(player, arg1);
-	return MRES_SUPERCEDE;
+	KZ::replaysystem::commands::LoadReplay(player, args->Arg(1));
+	return true;
 }
 
 SCMD(kz_rpgoto, SCFL_REPLAY)
@@ -879,17 +879,17 @@ SCMD(kz_rpgoto, SCFL_REPLAY)
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	if (!player)
 	{
-		return MRES_SUPERCEDE;
+		return true;
 	}
 
 	if (args->ArgC() < 2)
 	{
 		player->languageService->PrintChat(true, false, "Replay - Usage Goto Time");
-		return MRES_SUPERCEDE;
+		return true;
 	}
 
 	KZ::replaysystem::commands::JumpToReplayTime(player, args->ArgS());
-	return MRES_SUPERCEDE;
+	return true;
 }
 
 SCMD(kz_rpgototick, SCFL_REPLAY)
@@ -897,17 +897,17 @@ SCMD(kz_rpgototick, SCFL_REPLAY)
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	if (!player)
 	{
-		return MRES_SUPERCEDE;
+		return true;
 	}
 
 	if (args->ArgC() < 2)
 	{
 		player->languageService->PrintChat(true, false, "Replay - Usage Goto Tick");
-		return MRES_SUPERCEDE;
+		return true;
 	}
 
 	KZ::replaysystem::commands::JumpToReplayTick(player, args->Arg(1));
-	return MRES_SUPERCEDE;
+	return true;
 }
 
 SCMD(kz_rpinfo, SCFL_REPLAY)
@@ -915,11 +915,11 @@ SCMD(kz_rpinfo, SCFL_REPLAY)
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	if (!player)
 	{
-		return MRES_SUPERCEDE;
+		return true;
 	}
 
 	KZ::replaysystem::commands::GetReplayInfo(player);
-	return MRES_SUPERCEDE;
+	return true;
 }
 
 SCMD_LINK(kz_rpseek, kz_rpgoto);
@@ -929,11 +929,11 @@ SCMD(kz_rppause, SCFL_REPLAY)
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	if (!player)
 	{
-		return MRES_SUPERCEDE;
+		return true;
 	}
 
 	KZ::replaysystem::commands::ToggleReplayPause(player);
-	return MRES_SUPERCEDE;
+	return true;
 }
 
 SCMD(kz_rploadprogress, SCFL_REPLAY)
@@ -941,11 +941,11 @@ SCMD(kz_rploadprogress, SCFL_REPLAY)
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	if (!player)
 	{
-		return MRES_SUPERCEDE;
+		return true;
 	}
 
 	KZ::replaysystem::commands::CheckReplayLoadProgress(player);
-	return MRES_SUPERCEDE;
+	return true;
 }
 
 SCMD(kz_rpcancelload, SCFL_REPLAY)
@@ -953,11 +953,11 @@ SCMD(kz_rpcancelload, SCFL_REPLAY)
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	if (!player)
 	{
-		return MRES_SUPERCEDE;
+		return true;
 	}
 
 	KZ::replaysystem::commands::CancelReplayLoad(player);
-	return MRES_SUPERCEDE;
+	return true;
 }
 
 SCMD(kz_replays, SCFL_REPLAY)
@@ -965,11 +965,11 @@ SCMD(kz_replays, SCFL_REPLAY)
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	if (!player)
 	{
-		return MRES_SUPERCEDE;
+		return true;
 	}
 
 	KZ::replaysystem::commands::ListReplays(player, args->ArgS());
-	return MRES_SUPERCEDE;
+	return true;
 }
 
 SCMD(kz_rphidelegs, SCFL_REPLAY)
@@ -977,8 +977,8 @@ SCMD(kz_rphidelegs, SCFL_REPLAY)
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	if (!player)
 	{
-		return MRES_SUPERCEDE;
+		return true;
 	}
 	KZ::replaysystem::commands::ToggleLegsVisibility(player);
-	return MRES_SUPERCEDE;
+	return true;
 }

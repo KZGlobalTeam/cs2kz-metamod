@@ -25,5 +25,5 @@ SCMD(kz_fonts, SCFL_HUD)
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->languageService->PrintChat(true, false, "Fonts - Help (Chat)");
 	player->languageService->PrintConsole(false, false, "Fonts - Help (Console)");
-	return MRES_SUPERCEDE;
+	return true;
 }
