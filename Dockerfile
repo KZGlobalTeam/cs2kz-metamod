@@ -5,7 +5,7 @@ ENV AR=llvm-ar-11
 WORKDIR /app
 VOLUME /app/build
 
-RUN apt update \
+RUN apt update -o Acquire::Check-Valid-Until=false \
 	&& apt install -y --no-install-recommends --no-install-suggests git python3-pip \
 	&& apt autoremove -y \
 	&& apt clean \
