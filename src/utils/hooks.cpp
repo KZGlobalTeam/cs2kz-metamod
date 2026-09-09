@@ -226,7 +226,6 @@ static KHook::Return<void> CheckTransmitPost(ISource2GameEntities *pThis, CCheck
 	KZMenuService::OnCheckTransmit(pInfos, infoCount);
 	KZHUDService::OnCheckTransmit(pInfos, infoCount);
 	return {KHook::Action::Ignore};
-
 }
 
 static KHook::Virtual<ISource2GameEntities, void, CCheckTransmitInfo **, int, CBitVec<16384> &, CBitVec<16384> &, const Entity2Networkable_t **,
@@ -419,8 +418,7 @@ static KHook::Return<void> ClientSvcUserMessagePre(ISource2GameClients *pThis, C
 	return {KHook::Action::Ignore};
 }
 
-static KHook::Virtual<ISource2GameClients, void, CPlayerSlot, int, uint32, const void *>
-	clientSvcUserMessageHook(ClientSvcUserMessagePre, nullptr);
+static KHook::Virtual<ISource2GameClients, void, CPlayerSlot, int, uint32, const void *> clientSvcUserMessageHook(ClientSvcUserMessagePre, nullptr);
 
 // ============================================================
 // INetworkServerService hooks
@@ -638,8 +636,8 @@ static KHook::Return<bool> ProcessRespondCvarValuePre(CServerSideClientBase *pTh
 	return {KHook::Action::Ignore, true};
 }
 
-static KHook::Virtual<CServerSideClientBase, bool, const CNetMessagePB<CCLCMsg_RespondCvarValue> &>
-	respondCvarValueHook(ProcessRespondCvarValuePre, nullptr);
+static KHook::Virtual<CServerSideClientBase, bool, const CNetMessagePB<CCLCMsg_RespondCvarValue> &> respondCvarValueHook(ProcessRespondCvarValuePre,
+																														 nullptr);
 
 // Every convar a client reports: the full userinfo set on connect, and each setinfo afterwards.
 static KHook::Return<bool> ProcessSetConVarPre(CServerSideClientBase *pThis, const CNetMessagePB<CNETMsg_SetConVar> &msg)
