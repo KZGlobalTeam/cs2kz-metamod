@@ -240,6 +240,17 @@ void KZHUDService::UpdateKeysElement(CCSCustomHudLayout *layout, KZPlayer *sourc
 		this->layoutKeys.fontSize = size;
 	}
 
+	const i32 outline = this->IsMHUDOutlineEnabled(MHUDElement::Keys) ? 1 : 0;
+	if (this->layoutKeys.outline != outline)
+	{
+		this->layoutKeys.outline = outline;
+		const auto status = outline ? k_eHudPanelClassStatus_HasClass : k_eHudPanelClassStatus_DoesNotHaveClass;
+		for (i32 i = 0; i < KZ_ARRAYSIZE(KEY_GLYPHS); i++)
+		{
+			layout->SetHasClass(KEY_GLYPHS[i], "outline", status);
+		}
+	}
+
 	const char *fontClass = KZHUDService::GetMHUDFontClass(this->player, MHUDElement::Keys);
 	if (this->layoutKeys.fontClass != fontClass)
 	{

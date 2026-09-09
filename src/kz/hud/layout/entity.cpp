@@ -104,7 +104,9 @@ void KZHUDService::UpdateLayoutElement(CCSCustomHudLayout *layout, MHUDElement e
 		state.opacity = opacity;
 	}
 
-	const bool outline = this->IsMHUDOutlineEnabled(element);
+	// Every element panel is a Label except the keys, whose glyphs are labels further down; putting
+	// text-shadow on that Panel would outline the box instead. UpdateKeysElement handles those.
+	const bool outline = this->IsMHUDOutlineEnabled(element) && element != MHUDElement::Keys;
 	if (state.outline != outline)
 	{
 		state.outline = outline;

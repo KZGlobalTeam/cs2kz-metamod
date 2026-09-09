@@ -300,6 +300,7 @@ private:
 		i32 noBorder {-1};
 		i32 noGlow {-1};
 		i32 noFill {-1};
+		i32 outline {-1};
 		i32 fontSize {INT_MIN};
 		i32 boxSize {INT_MIN};
 		const char *fontClass {};
