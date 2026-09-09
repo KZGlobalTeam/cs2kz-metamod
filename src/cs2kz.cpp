@@ -72,7 +72,6 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 		return false;
 	}
 
-	ConVar_Register();
 	hooks::Initialize();
 	ix::initNetSystem();
 
