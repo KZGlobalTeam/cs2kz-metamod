@@ -80,6 +80,16 @@ struct MHUDCrosshairSettings
 	bool tStyle {false};
 };
 
+enum class MHUDSpeedState
+{
+	Base,
+	CrouchJump,
+	Perf,
+	CrouchPerf,
+	Jumpbug,
+	Count,
+};
+
 // What an unpressed key looks like.
 enum class MHUDKeysIdle
 {
@@ -102,8 +112,8 @@ struct MHUDPrefs
 	Element elements[(i32)MHUDElement::Count] {};
 
 	Color timerPaused, timerStopped, timerTp, timerPro;
-	Color speed, speedCj;
-	Color prespeed, prespeedPerf, prespeedJumpbug;
+	Color speed[(i32)MHUDSpeedState::Count];
+	Color prespeed[(i32)MHUDSpeedState::Count];
 	Color keys, keysOverlap, keysPressed, keysOverlapGlow;
 	Color checkpoint;
 
@@ -255,6 +265,19 @@ private:
 		bool jumpbug {};
 		bool crouchJump {};
 		bool walkedOff {}; // left the ground without jumping and not off a ladder
+
+		MHUDSpeedState GetState() const
+		{
+			if (this->jumpbug)
+			{
+				return MHUDSpeedState::Jumpbug;
+			}
+			if (this->perf)
+			{
+				return this->crouchJump ? MHUDSpeedState::CrouchPerf : MHUDSpeedState::Perf;
+			}
+			return this->crouchJump ? MHUDSpeedState::CrouchJump : MHUDSpeedState::Base;
+		}
 	};
 
 	// Shared by the HTML panel and the MHUD layout so the two never disagree about a takeoff.

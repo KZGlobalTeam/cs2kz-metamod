@@ -142,6 +142,9 @@ void KZHUDService::RegisterMenu()
 	KZ::menu::AddActionToggle(general, "Menu - Panel", GetPanelState, TogglePanelState);
 	KZ::menu::SetItemPref(general, "showPanel", KZOptStorage::Bool, 1);
 	KZ::menu::SetItemSubtext(general, "Menu - Affect Legacy Sub");
+	KZ::menu::AddToggle(general, "Menu - Compact", "compactPanel", false);
+	KZ::menu::SetItemEnabledBy(general, "showPanel");
+	KZ::menu::SetItemSubtext(general, "Menu - Compact Sub");
 	KZ::menu::AddActionToggle(general, "Menu - Crosshair", GetCrosshairState, ToggleCrosshairState);
 	KZ::menu::SetItemPref(general, "mhudCrosshair", KZOptStorage::Bool);
 	KZ::menu::AddChoice(general, "Menu - Crosshair Scale", GetCrosshairScaleChoices, GetCurrentCrosshairScale, PickCrosshairScale);
@@ -150,9 +153,6 @@ void KZHUDService::RegisterMenu()
 	KZ::menu::SetItemEnabledBy(general, "mhudCrosshair");
 	KZ::menu::AddToggle(general, "Menu - Mimic Spec", "mhudMimicSpec", false);
 	KZ::menu::SetItemSubtext(general, "Menu - Mimic Spec Sub");
-	KZ::menu::AddToggle(general, "Menu - Compact", "compactPanel", false);
-	KZ::menu::SetItemEnabledBy(general, "showPanel");
-	KZ::menu::SetItemSubtext(general, "Menu - Compact Sub");
 	KZ::menu::SetItemDivider(general);
 	KZ::menu::AddButton(general, "Menu - Reset All", ResetAll);
 

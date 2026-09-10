@@ -26,11 +26,18 @@ void KZHUDService::RefreshPrefs()
 	this->prefs.timerStopped = opts->GetPreferenceColor("mhudTimerStoppedColor", MHUD_DEF_TIMER_STOPPED_COLOR);
 	this->prefs.timerTp = opts->GetPreferenceColor("mhudTimerTpColor", MHUD_DEF_TIMER_TP_COLOR);
 	this->prefs.timerPro = opts->GetPreferenceColor("mhudTimerProColor", MHUD_DEF_TIMER_PRO_COLOR);
-	this->prefs.speed = opts->GetPreferenceColor("mhudSpeedColor", MHUD_DEF_BASE_COLOR);
-	this->prefs.speedCj = opts->GetPreferenceColor("mhudSpeedCjColor", MHUD_DEF_CJ_COLOR);
-	this->prefs.prespeed = opts->GetPreferenceColor("mhudPrespeedColor", MHUD_DEF_BASE_COLOR);
-	this->prefs.prespeedPerf = opts->GetPreferenceColor("mhudPrespeedPerfColor", MHUD_DEF_PERF_COLOR);
-	this->prefs.prespeedJumpbug = opts->GetPreferenceColor("mhudPrespeedJumpbugColor", MHUD_DEF_JUMPBUG_COLOR);
+	// Indexed by MHUDSpeedState.
+	this->prefs.speed[(i32)MHUDSpeedState::Base] = opts->GetPreferenceColor("mhudSpeedColor", MHUD_DEF_BASE_COLOR);
+	this->prefs.speed[(i32)MHUDSpeedState::CrouchJump] = opts->GetPreferenceColor("mhudSpeedCjColor", MHUD_DEF_CJ_COLOR);
+	this->prefs.speed[(i32)MHUDSpeedState::Perf] = opts->GetPreferenceColor("mhudSpeedPerfColor", MHUD_DEF_BASE_COLOR);
+	this->prefs.speed[(i32)MHUDSpeedState::CrouchPerf] = opts->GetPreferenceColor("mhudSpeedCrouchPerfColor", MHUD_DEF_CJ_COLOR);
+	this->prefs.speed[(i32)MHUDSpeedState::Jumpbug] = opts->GetPreferenceColor("mhudSpeedJumpbugColor", MHUD_DEF_BASE_COLOR);
+
+	this->prefs.prespeed[(i32)MHUDSpeedState::Base] = opts->GetPreferenceColor("mhudPrespeedColor", MHUD_DEF_BASE_COLOR);
+	this->prefs.prespeed[(i32)MHUDSpeedState::CrouchJump] = opts->GetPreferenceColor("mhudPrespeedCjColor", MHUD_DEF_BASE_COLOR);
+	this->prefs.prespeed[(i32)MHUDSpeedState::Perf] = opts->GetPreferenceColor("mhudPrespeedPerfColor", MHUD_DEF_PERF_COLOR);
+	this->prefs.prespeed[(i32)MHUDSpeedState::CrouchPerf] = opts->GetPreferenceColor("mhudPrespeedCrouchPerfColor", MHUD_DEF_PERF_COLOR);
+	this->prefs.prespeed[(i32)MHUDSpeedState::Jumpbug] = opts->GetPreferenceColor("mhudPrespeedJumpbugColor", MHUD_DEF_JUMPBUG_COLOR);
 	this->prefs.keys = opts->GetPreferenceColor("mhudKeysColor", MHUD_DEF_BASE_COLOR);
 	this->prefs.keysOverlap = opts->GetPreferenceColor("mhudKeysOverlapColor", MHUD_DEF_KEYS_OVERLAP_COLOR);
 	this->prefs.keysPressed = opts->GetPreferenceColor("mhudKeysPressedColor", MHUD_DEF_KEYS_PRESSED_COLOR);

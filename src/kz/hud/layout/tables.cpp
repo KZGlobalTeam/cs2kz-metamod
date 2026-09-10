@@ -22,23 +22,28 @@ static_global constexpr MHUDColorPrefDef TIMER_COLOR_PREFS[] =
 
 static_global constexpr MHUDColorPrefDef SPEED_COLOR_PREFS[] =
 {
-	{"Menu - Color Base",     "mhudSpeedColor",        0xFF, 0xFF, 0xFF, false, NULL, true},
-	{"Menu - Color CJ",       "mhudSpeedCjColor",      0x71, 0xEE, 0xB8, false, NULL, true},
+	{"Menu - Color Base",       "mhudSpeedColor",           0xFF, 0xFF, 0xFF, false, NULL, true},
+	{"Menu - Color CJ",         "mhudSpeedCjColor",         0x71, 0xEE, 0xB8, false, NULL, true},
+	{"Menu - Color Perf",       "mhudSpeedPerfColor",       0xFF, 0xFF, 0xFF, false, NULL, true},
+	{"Menu - Color Crouch Perf","mhudSpeedCrouchPerfColor", 0x71, 0xEE, 0xB8, false, NULL, true},
+	{"Menu - Color Jumpbug",    "mhudSpeedJumpbugColor",    0xFF, 0xFF, 0xFF, false, NULL, true},
 };
 
 static_global constexpr MHUDColorPrefDef PRESPEED_COLOR_PREFS[] =
 {
-	{"Menu - Color Base",     "mhudPrespeedColor",         0xFF, 0xFF, 0xFF, false, NULL, true},
-	{"Menu - Color Perf",     "mhudPrespeedPerfColor",     0x40, 0xFF, 0x40, false, NULL, true},
-	{"Menu - Color Jumpbug",  "mhudPrespeedJumpbugColor",  0xFF, 0xFF, 0x20, false, NULL, true},
+	{"Menu - Color Base",       "mhudPrespeedColor",           0xFF, 0xFF, 0xFF, false, NULL, true},
+	{"Menu - Color CJ",         "mhudPrespeedCjColor",         0xFF, 0xFF, 0xFF, false, NULL, true},
+	{"Menu - Color Perf",       "mhudPrespeedPerfColor",       0x40, 0xFF, 0x40, false, NULL, true},
+	{"Menu - Color Crouch Perf","mhudPrespeedCrouchPerfColor", 0x40, 0xFF, 0x40, false, NULL, true},
+	{"Menu - Color Jumpbug",    "mhudPrespeedJumpbugColor",    0xFF, 0xFF, 0x20, false, NULL, true},
 };
 
 static_global constexpr MHUDColorPrefDef KEYS_COLOR_PREFS[] =
 {
 	{"Menu - Color Base",     "mhudKeysColor",         0xFF, 0xFF, 0xFF},
 	{"Menu - Color Overlap",  "mhudKeysOverlapColor",  0xFF, 0x40, 0x40, false, "mhudKeysOverlap"},
-	{"Menu - Color Pressed",  "mhudKeysPressedColor",     0x3B, 0xED, 0xA0, true},
 	{"Menu - Color Overlap Glow", "mhudKeysOverlapGlowColor", 0xFF, 0x40, 0x40, true, "mhudKeysOverlap"},
+	{"Menu - Color Pressed",      "mhudKeysPressedColor",     0x3B, 0xED, 0xA0, true},
 };
 
 static_global constexpr MHUDColorPrefDef CHECKPOINT_COLOR_PREFS[] =

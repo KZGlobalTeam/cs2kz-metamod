@@ -188,6 +188,10 @@
 		"chi"		"Perf 颜色"
 		"ua"		"Колір Perf"
 	}
+	"Menu - Color Crouch Perf"
+	{
+		"en"		"Crouch perf color"
+	}
 	"Menu - Color Jumpbug"
 	{
 		"en"		"Jumpbug color"
