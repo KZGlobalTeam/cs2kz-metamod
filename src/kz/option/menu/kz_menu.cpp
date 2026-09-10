@@ -1098,7 +1098,7 @@ void KZMenuService::OnCheckTransmit(CCheckTransmitInfo **pInfo, int infoCount)
 SCMD(kz_options, SCFL_PREFERENCE)
 {
 	g_pKZPlayerManager->ToPlayer(controller)->menuService->Toggle();
-	return MRES_SUPERCEDE;
+	return true;
 }
 
 SCMD_LINK(kz_o, kz_options);

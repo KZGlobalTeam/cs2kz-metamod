@@ -65,7 +65,6 @@ def configure_main(sdk_target, sdk, cxx):
       os.path.join(builder.sourcePath, 'hl2sdk-cs2', 'public', 'entity2'),
       os.path.join(builder.sourcePath, 'hl2sdk-cs2', 'game', 'shared'),
       os.path.join(builder.sourcePath, 'hl2sdk-cs2', 'game', 'server'),
-      os.path.join(builder.sourcePath, 'vendor', 'funchook', 'include'),
       os.path.join(builder.sourcePath, 'vendor', 'ixwebsocket'),
       os.path.join(builder.sourcePath, 'vendor', 'zstd', 'lib'),
   ]
@@ -84,7 +83,6 @@ def configure_main(sdk_target, sdk, cxx):
     os.path.join(builder.sourcePath, 'src', 'utils', 'utils_print.cpp'),
     os.path.join(builder.sourcePath, 'src', 'utils', 'gameconfig.cpp'),
     os.path.join(builder.sourcePath, 'src', 'utils', 'hooks.cpp'),
-    os.path.join(builder.sourcePath, 'src', 'utils', 'detours.cpp'),
     os.path.join(builder.sourcePath, 'src', 'utils', 'schema.cpp'),
     os.path.join(builder.sourcePath, 'src', 'utils', 'simplecmds.cpp'),
     os.path.join(builder.sourcePath, 'src', 'utils', 'ctimer.cpp'),
@@ -95,7 +93,6 @@ def configure_main(sdk_target, sdk, cxx):
     os.path.join(builder.sourcePath, 'src', 'player', 'player_manager.cpp'),
     os.path.join(builder.sourcePath, 'src', 'player', 'player.cpp'),
 
-    os.path.join(builder.sourcePath, 'src', 'movement', 'mv_hooks.cpp'),
     os.path.join(builder.sourcePath, 'src', 'movement', 'mv_manager.cpp'),
     os.path.join(builder.sourcePath, 'src', 'movement', 'mv_player.cpp'),
     
@@ -233,8 +230,6 @@ def configure_main(sdk_target, sdk, cxx):
     binary.compiler.postlink += [
       os.path.join(builder.sourcePath, 'vendor', 'libzstd.a'),
       os.path.join(builder.sourcePath, 'vendor', 'libixwebsocket.a'),
-      os.path.join(builder.sourcePath, 'vendor', 'funchook', 'lib', 'libfunchook.a'),
-      os.path.join(builder.sourcePath, 'vendor', 'funchook', 'lib', 'libdistorm.a'),
       os.path.join(sdk['path'], 'lib', 'linux64', 'mathlib.a'),
       '-lssl', '-lcrypto'
     ]
@@ -246,8 +241,6 @@ def configure_main(sdk_target, sdk, cxx):
       os.path.join('psapi.lib'),
       os.path.join(builder.sourcePath, 'vendor', 'zstd.lib'),
       os.path.join(builder.sourcePath, 'vendor', 'ixwebsocket.lib'),
-      os.path.join(builder.sourcePath, 'vendor', 'funchook', 'lib', 'funchook.lib'),
-      os.path.join(builder.sourcePath, 'vendor', 'funchook', 'lib', 'distorm.lib'),
       os.path.join(sdk['path'], 'lib', 'public', 'win64', 'mathlib.lib'),
       os.path.join(builder.sourcePath, 'vendor', 'steam_api64.lib'),
       os.path.join(builder.sourcePath, 'vendor', 'libssl.lib'),

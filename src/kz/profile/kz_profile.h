@@ -1,5 +1,5 @@
 #pragma once
-#include "../kz.h"
+#include "kz/kz.h"
 #include "kz/global/kz_global.h"
 
 class KZProfileService : public KZBaseService

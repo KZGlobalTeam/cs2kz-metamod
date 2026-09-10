@@ -4,13 +4,13 @@ WIP, not ready for release
 
 ## Requirements
 
-- [Metamod 2.0.0](https://www.metamodsource.net/downloads.php/?branch=master) build 1396 or later
+- [Metamod 2.0.0](https://www.metamodsource.net/downloads.php/?branch=master) build 1459 or later
 
-- Optional: [MultiAddonManager](https://github.com/Source2ZE/MultiAddonManager/releases/) v1.5 for radio menus, particle HUD and KZ sound effects (eg. jumpstats)
+- [MultiAddonManager](https://github.com/Source2ZE/MultiAddonManager/releases/) v1.6 for radio menus, layout-based HUD and KZ sound effects (eg. jumpstats)
 
-- Optional: [SQL_MM](https://github.com/zer0k-z/sql_mm/releases) v1.3.4.2 or later for local database support
+- Optional: [SQL_MM](https://github.com/zer0k-z/sql_mm/releases) v1.3.4.3 or later for local database support
 
-- Optional: [CS2Menus](https://github.com/FemboyKZ/mm-cs2menus) v1.5.0 or later for html menu support
+- Optional: [CS2Menus](https://github.com/FemboyKZ/mm-cs2menus) for html menu support
 
 ## Installation
 

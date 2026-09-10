@@ -1,28 +1,29 @@
-#include "networkbasetypes.pb.h"
 
-#include "common.h"
+#include "utils.h"
 #include "cs2kz.h"
+#include "player/player.h"
+#include "sdk/entity/cbasetrigger.h"
+#include "sdk/recipientfilters.h"
+#include "sdk/navphysicsinterface.h"
 #include "addresses.h"
 #include "logging.h"
 #include "gameconfig.h"
-#include "utils.h"
-#include "convar.h"
-#include "tier0/dbg.h"
-#include "interfaces/interfaces.h"
-#include "igameeventsystem.h"
-#include "sdk/recipientfilters.h"
-#include "sdk/navphysicsinterface.h"
-#include "public/networksystem/inetworkmessages.h"
-#include "bspflags.h"
-#include "gametrace.h"
 
 #include "module.h"
-#include "detours.h"
 #include "virtual.h"
 
-#include "steam/steam_gameserver.h"
-#include "filesystem.h"
+#include "networkbasetypes.pb.h"
 
+#include "convar.h"
+#include "igameeventsystem.h"
+#include "gametrace.h"
+#include "bspflags.h"
+#include "filesystem.h"
+#include "interfaces/interfaces.h"
+#include "networksystem/inetworkmessages.h"
+#include "steam/steam_gameserver.h"
+
+#include "tier0/dbg.h"
 #include "tier0/memdbgon.h"
 
 #define FCVAR_FLAGS_TO_REMOVE (FCVAR_HIDDEN | FCVAR_DEVELOPMENTONLY | FCVAR_DEFENSIVE)
@@ -92,13 +93,11 @@ bool utils::Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
 	utils::UnlockConVars();
 	utils::UnlockConCommands();
 	utils::UpdateServerVersion();
-	InitDetours();
 	return true;
 }
 
 void utils::Cleanup()
 {
-	FlushAllDetours();
 	delete g_pGameConfig;
 	g_pGameConfig = NULL;
 	delete g_pKZUtils;

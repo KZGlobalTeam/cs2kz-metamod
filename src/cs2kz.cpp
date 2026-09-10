@@ -72,18 +72,8 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 		return false;
 	}
 
-	ConVar_Register();
-	if (!hooks::Initialize())
-	{
-		snprintf(error, maxlen, "Failed to initialize hooks.");
-		return false;
-	}
-	if (!movement::InitDetours())
-	{
-		utils::Cleanup();
-		snprintf(error, maxlen, "Failed to initialize movement detours.");
-		return false;
-	}
+	hooks::Initialize();
+	ix::initNetSystem();
 
 	KZ::misc::Init();
 	KZCheckpointService::Init();

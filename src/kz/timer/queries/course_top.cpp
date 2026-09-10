@@ -377,7 +377,7 @@ SCMD(kz_ctop, SCFL_RECORD | SCFL_GLOBAL)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	CourseTopRequest::Create<CourseTopRequest>(player, CourseTopRequest::ctopFeatures, true, true, args);
-	return MRES_SUPERCEDE;
+	return true;
 }
 
 SCMD_LINK(kz_coursetop, kz_ctop);
@@ -387,7 +387,7 @@ SCMD(kz_gctop, SCFL_RECORD | SCFL_GLOBAL)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	CourseTopRequest::Create<CourseTopRequest>(player, CourseTopRequest::ctopFeatures, false, true, args);
-	return MRES_SUPERCEDE;
+	return true;
 }
 
 SCMD_LINK(kz_gcoursetop, kz_gctop);
@@ -397,7 +397,7 @@ SCMD(kz_sctop, SCFL_TIMER)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	CourseTopRequest::Create<CourseTopRequest>(player, CourseTopRequest::ctopFeatures, true, false, args);
-	return MRES_SUPERCEDE;
+	return true;
 }
 
 SCMD_LINK(kz_scoursetop, kz_sctop);
