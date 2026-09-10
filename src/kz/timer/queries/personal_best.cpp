@@ -445,19 +445,19 @@ SCMD(kz_pb, SCFL_RECORD | SCFL_GLOBAL)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	PBRequest::Create<PBRequest>(player, PBRequest::pbFeatures, true, true, args);
-	return MRES_SUPERCEDE;
+	return true;
 }
 
 SCMD(kz_spb, SCFL_RECORD)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	PBRequest::Create<PBRequest>(player, PBRequest::pbFeatures, true, false, args);
-	return MRES_SUPERCEDE;
+	return true;
 }
 
 SCMD(kz_gpb, SCFL_RECORD | SCFL_GLOBAL)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	PBRequest::Create<PBRequest>(player, PBRequest::pbFeatures, false, true, args);
-	return MRES_SUPERCEDE;
+	return true;
 }

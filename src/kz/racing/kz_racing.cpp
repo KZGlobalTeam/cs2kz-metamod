@@ -11,11 +11,11 @@ SCMD(kz_accept, SCFL_RACING)
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	if (!player)
 	{
-		return MRES_SUPERCEDE;
+		return true;
 	}
 
 	player->racingService->AcceptRace();
-	return MRES_SUPERCEDE;
+	return true;
 }
 
 SCMD(kz_surrender, SCFL_RACING)
@@ -23,11 +23,11 @@ SCMD(kz_surrender, SCFL_RACING)
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	if (!player)
 	{
-		return MRES_SUPERCEDE;
+		return true;
 	}
 
 	player->racingService->SurrenderRace();
-	return MRES_SUPERCEDE;
+	return true;
 }
 
 void KZRacingService::SendInitRace(u32 workshopID, std::string courseName, std::string modeName, f64 maxDurationSeconds, u32 maxTeleports)

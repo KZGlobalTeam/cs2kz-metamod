@@ -1,5 +1,5 @@
 #pragma once
-#include "../kz.h"
+#include "kz/kz.h"
 #include "utils/json.h"
 #include "public/steam/isteamugc.h"
 #include <vendor/ixwebsocket/ixwebsocket/IXWebSocket.h>

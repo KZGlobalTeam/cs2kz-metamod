@@ -407,12 +407,12 @@ SCMD(kz_ztopwatch, SCFL_MEASURE)
 	if (player->timerService->GetTimerRunning())
 	{
 		player->languageService->PrintChat(true, false, "Zone Stopwatch - Timer Running");
-		return MRES_SUPERCEDE;
+		return true;
 	}
 	if (args->ArgC() < 2)
 	{
 		player->ztopwatchService->Toggle();
-		return MRES_SUPERCEDE;
+		return true;
 	}
 	const char *sub = args->Arg(1);
 	if (KZ_STREQI(sub, "place"))
@@ -439,7 +439,7 @@ SCMD(kz_ztopwatch, SCFL_MEASURE)
 	{
 		PrintUsage(player);
 	}
-	return MRES_SUPERCEDE;
+	return true;
 }
 
 static_global SCmdLink kz_zw_link("kz_zw", "kz_ztopwatch");

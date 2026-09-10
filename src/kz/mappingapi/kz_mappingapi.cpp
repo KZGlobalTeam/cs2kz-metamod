@@ -948,7 +948,7 @@ SCMD(kz_courses, SCFL_MAP)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	ListCourses(player);
-	return MRES_SUPERCEDE;
+	return true;
 }
 
 SCMD(kz_course, SCFL_MAP)
@@ -962,7 +962,7 @@ SCMD(kz_course, SCFL_MAP)
 	{
 		KZ::misc::HandleTeleportToCourse(player, args);
 	}
-	return MRES_SUPERCEDE;
+	return true;
 }
 
 // TODO: Does this *really* belong here?
@@ -1198,7 +1198,7 @@ SCMD(kz_mapinfo, SCFL_MAP | SCFL_GLOBAL)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	PrintCurrentMapCoursesInfo(player);
-	return MRES_SUPERCEDE;
+	return true;
 }
 
 SCMD_LINK(kz_mi, kz_mapinfo)
@@ -1282,5 +1282,5 @@ SCMD(kz_tier, SCFL_MAP | SCFL_GLOBAL)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	PrintCourseTier(player, args);
-	return MRES_SUPERCEDE;
+	return true;
 }
