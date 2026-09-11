@@ -172,11 +172,7 @@ public:
 	}
 };
 
-// BUGS:
-// 1. Switching which player you observe merges HUD states instead of replacing them.
-// CustomHudLayout walks through m_vecHasClasses and m_vecDialogVariableStrings
-// and applies states where m_playerSlot equals the **observed** slot, not the player's own slot.
-// 2. SetHasClassForPlayer does not correctly propagate changes to its children,
+// BUG: SetHasClassForPlayer does not correctly propagate changes to its children,
 // the children's styles will only be updated when they are directly updated,
 // or when the layout file is completely reloaded.
 class CCSCustomHudLayout : public CBaseEntity

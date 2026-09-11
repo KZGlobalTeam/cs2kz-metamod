@@ -12,6 +12,9 @@
 
 // === Writing classes onto the layout (global) =================================
 
+// Indexed by MHUDAlign.
+static_global const char *const ALIGN_CLASSES[] = {"align-left", NULL, "align-right"};
+
 void KZHUDService::SetLayoutClass(CCSCustomHudLayout *layout, const char *panelId, const char *&cache, const char *className)
 {
 	if (cache == className)
@@ -77,7 +80,10 @@ void KZHUDService::UpdateLayoutElement(CCSCustomHudLayout *layout, MHUDElement e
 	}
 
 	const MHUDPrefs::Element &cached = this->GetPrefs().elements[(i32)element];
-	this->SetLayoutValueClass(layout, def.panelId, state.x, (i32)cached.x, "x", true);
+	// Edge alignment measures x from the screen edge; shift it so the stored x stays the anchor.
+	const i32 alignShift = cached.align == MHUDAlign::Left ? 50 : (cached.align == MHUDAlign::Right ? -50 : 0);
+	this->SetLayoutClass(layout, def.panelId, state.alignClass, ALIGN_CLASSES[(i32)cached.align]);
+	this->SetLayoutValueClass(layout, def.panelId, state.x, (i32)cached.x + alignShift, "x", true);
 	this->SetLayoutValueClass(layout, def.panelId, state.y, (i32)cached.y, "y", true);
 	this->SetLayoutValueClass(layout, def.panelId, state.fontSize, (i32)cached.size, "font-size", false);
 	const u32 packed = ((u32)color.r() << 24) | ((u32)color.g() << 16) | ((u32)color.b() << 8) | (u32)color.a();
@@ -104,8 +110,7 @@ void KZHUDService::UpdateLayoutElement(CCSCustomHudLayout *layout, MHUDElement e
 		state.opacity = opacity;
 	}
 
-	// Every element panel is a Label except the keys, whose glyphs are labels further down; putting
-	// text-shadow on that Panel would outline the box instead. UpdateKeysElement handles those.
+	// text-shadow only draws on text, so the keys Panel gets none; UpdateKeysElement outlines its glyphs.
 	const bool outline = this->IsMHUDOutlineEnabled(element) && element != MHUDElement::Keys;
 	if (state.outline != outline)
 	{
@@ -144,7 +149,8 @@ CCSCustomHudLayout *KZHUDService::EnsureOwnedLayout(bool &created)
 
 void KZHUDService::DestroyOwnedLayout()
 {
-	if (CBaseEntity *ent = this->ownedLayout.Get())
+	// Null on server exit.
+	if (CBaseEntity *ent = GameEntitySystem() ? this->ownedLayout.Get() : nullptr)
 	{
 		g_pKZUtils->RemoveEntity(ent);
 	}

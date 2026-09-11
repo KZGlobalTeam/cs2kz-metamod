@@ -29,6 +29,7 @@ struct MHUDElementDef
 	const char *fontKey;
 	const char *outlineKey;
 	const char *opacityKey;
+	const char *alignKey;
 	i32 xDefault;
 	i32 yDefault;
 	i32 sizeDefault;
@@ -90,6 +91,13 @@ enum class MHUDSpeedState
 	Count,
 };
 
+enum class MHUDAlign
+{
+	Left,
+	Center,
+	Right,
+};
+
 // What an unpressed key looks like.
 enum class MHUDKeysIdle
 {
@@ -107,6 +115,7 @@ struct MHUDPrefs
 		const char *fontClass {};
 		bool outline {true};
 		i32 opacity {100};
+		MHUDAlign align {MHUDAlign::Center};
 	};
 
 	Element elements[(i32)MHUDElement::Count] {};
@@ -122,6 +131,7 @@ struct MHUDPrefs
 	bool crosshair {};
 	i32 crosshairScale {100}; // layout units per device pixel, as a percent
 	bool timerDetailed {true};
+	bool timerShowState {true};
 	bool speedPrecise {};
 	bool prespeedPrecise {};
 	bool prespeedBrackets {};
@@ -131,6 +141,7 @@ struct MHUDPrefs
 	bool keysLetters {};
 	bool keysSquare {};
 	bool keysBorder {true};
+	bool keysBoxOutline {};
 	bool keysGlowEnabled {true};
 	bool keysFillEnabled {true};
 	MHUDKeysIdle keysIdle {MHUDKeysIdle::Show};
@@ -287,7 +298,7 @@ private:
 	CPlayer_MovementServices *GetHudMoveServices();
 
 	// Shared by both HUDs
-	std::string GetTimerText(const char *language = KZ_DEFAULT_LANGUAGE);
+	std::string GetTimerText(const char *language = KZ_DEFAULT_LANGUAGE, bool showState = true);
 	std::string GetCheckpointText(const char *language = KZ_DEFAULT_LANGUAGE);
 
 	static void DrawLegacyPanels(KZPlayer *player, KZPlayer *target);
@@ -306,6 +317,7 @@ private:
 		bool hidden {true};
 		bool outline {false};
 		i32 opacity {INT_MIN};
+		const char *alignClass {};
 		// Cached so the nearest-palette search only runs when the color changes, not every tick.
 		const char *colorClassComputed {};
 		u32 lastColorPacked {};
@@ -321,6 +333,7 @@ private:
 		i32 letters {-1};
 		i32 square {-1};
 		i32 noBorder {-1};
+		i32 boxOutline {-1};
 		i32 noGlow {-1};
 		i32 noFill {-1};
 		i32 outline {-1};

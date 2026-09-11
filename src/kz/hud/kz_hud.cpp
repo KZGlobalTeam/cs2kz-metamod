@@ -131,7 +131,7 @@ CPlayer_MovementServices *KZHUDService::GetHudMoveServices()
 	return observer ? observer->m_pMovementServices() : nullptr;
 }
 
-std::string KZHUDService::GetTimerText(const char *language)
+std::string KZHUDService::GetTimerText(const char *language, bool showState)
 {
 	if (KZ::replaysystem::IsReplayBot(this->player))
 	{
@@ -153,8 +153,8 @@ std::string KZHUDService::GetTimerText(const char *language)
 		// clang-format off
 		return KZLanguageService::PrepareMessageWithLang(language, "HUD - Timer Text",
 			timeText,
-			timerRunning ? "" : KZLanguageService::PrepareMessageWithLang(language, "HUD - Stopped Text").c_str(),
-			paused ? KZLanguageService::PrepareMessageWithLang(language, "HUD - Paused Text").c_str() : ""
+			timerRunning || !showState ? "" : KZLanguageService::PrepareMessageWithLang(language, "HUD - Stopped Text").c_str(),
+			paused && showState ? KZLanguageService::PrepareMessageWithLang(language, "HUD - Paused Text").c_str() : ""
 		);
 		// clang-format on
 	}
@@ -172,8 +172,8 @@ std::string KZHUDService::GetTimerText(const char *language)
 		utils::FormatTime(time, timeText, sizeof(timeText));
 		return KZLanguageService::PrepareMessageWithLang(language, "HUD - Timer Text",
 			timeText,
-			timerRunning ? "" : KZLanguageService::PrepareMessageWithLang(language, "HUD - Stopped Text").c_str(),
-			paused ? KZLanguageService::PrepareMessageWithLang(language, "HUD - Paused Text").c_str() : ""
+			timerRunning || !showState ? "" : KZLanguageService::PrepareMessageWithLang(language, "HUD - Stopped Text").c_str(),
+			paused && showState ? KZLanguageService::PrepareMessageWithLang(language, "HUD - Paused Text").c_str() : ""
 		);
 		// clang-format on
 	}

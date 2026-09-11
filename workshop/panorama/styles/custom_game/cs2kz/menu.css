@@ -48,6 +48,35 @@
 	visibility: collapse;
 }
 
+/* Labels keep their old font until their width changes; kz_menu.cpp flips this on every font change. */
+.font-reflow .menu-box {
+	padding-right: 17px;
+}
+
+.font-reflow .popup {
+	padding-right: 15px;
+}
+
+.font-reflow .cats {
+	padding-right: 11px;
+}
+
+.font-reflow .list-rows {
+	padding-right: 9px;
+}
+
+.font-reflow .step-btn {
+	width: 43px;
+}
+
+.font-reflow .step-readout {
+	width: 109px;
+}
+
+.font-reflow .popup-page {
+	width: 59px;
+}
+
 .window-header {
 	width: 100%;
 	flow-children: right;

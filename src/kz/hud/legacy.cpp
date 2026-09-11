@@ -77,7 +77,7 @@ void KZHUDService::DrawLegacyPanels(KZPlayer *player, KZPlayer *target)
 
 	std::string keyText = player->hudService->GetKeyText(language);
 	std::string checkpointText = player->hudService->GetCheckpointText(language);
-	std::string timerText = player->hudService->GetTimerText(language);
+	std::string timerText = player->hudService->GetTimerText(language, target->hudService->GetPrefs().timerShowState);
 	std::string speedText = player->hudService->GetSpeedText(language);
 
 	std::string centerText = "";

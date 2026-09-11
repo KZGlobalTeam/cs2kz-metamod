@@ -11,7 +11,8 @@
 
 void KZHUDService::UpdateTimerElement(CCSCustomHudLayout *layout, KZPlayer *source, bool force)
 {
-	std::string text = source->hudService->GetTimerText(this->player->languageService->GetLanguage());
+	const MHUDPrefs &prefs = this->GetPrefs();
+	std::string text = source->hudService->GetTimerText(this->player->languageService->GetLanguage(), prefs.timerShowState);
 	if (!this->IsMHUDTimerDetailed())
 	{
 		// Drop the fraction, keeping any (STOPPED)/(PAUSED) suffix.
@@ -32,7 +33,6 @@ void KZHUDService::UpdateTimerElement(CCSCustomHudLayout *layout, KZPlayer *sour
 	const bool running = replay ? KZ::replaysystem::GetEndTime() == 0.0f : source->timerService->GetTimerRunning();
 	const i32 teleports = replay ? KZ::replaysystem::GetTeleportCount() : source->checkpointService->GetTeleportCount();
 
-	const MHUDPrefs &prefs = this->GetPrefs();
 	Color color;
 	if (paused)
 	{
@@ -136,6 +136,12 @@ void KZHUDService::UpdateKeysElement(CCSCustomHudLayout *layout, KZPlayer *sourc
 	{
 		this->layoutKeys.noBorder = noBorder;
 		layout->SetHasClass(keysPanel, "keys-noborder", noBorder ? k_eHudPanelClassStatus_HasClass : k_eHudPanelClassStatus_DoesNotHaveClass);
+	}
+	const i32 boxOutline = prefs.keysBoxOutline ? 1 : 0;
+	if (this->layoutKeys.boxOutline != boxOutline)
+	{
+		this->layoutKeys.boxOutline = boxOutline;
+		layout->SetHasClass(keysPanel, "keys-boxoutline", boxOutline ? k_eHudPanelClassStatus_HasClass : k_eHudPanelClassStatus_DoesNotHaveClass);
 	}
 	const i32 noGlow = prefs.keysGlowEnabled ? 0 : 1;
 	if (this->layoutKeys.noGlow != noGlow)

@@ -147,7 +147,8 @@ CCSCustomHudLayout *KZMenuService::MenuLayout()
 
 void KZMenuService::DestroyOwnedLayout()
 {
-	if (CBaseEntity *ent = this->layoutEntity.Get())
+	// Null on server exit.
+	if (CBaseEntity *ent = GameEntitySystem() ? this->layoutEntity.Get() : nullptr)
 	{
 		g_pKZUtils->RemoveEntity(ent);
 	}
@@ -321,14 +322,13 @@ void KZMenuService::RenderChrome(CCSCustomHudLayout *layout)
 	const char *font = panorama::ResolveFontClass(opts->GetPreferenceStr("menuFont", KZ_MENU_DEFAULT_FONT), KZ_MENU_DEFAULT_FONT);
 	const char *color = panorama::ResolveColorClass(opts->GetPreferenceColor("menuColor", KZ_MENU_DEFAULT_COLOR));
 
-	// The text panels inherit both from the root. A child does not restyle until something touches
-	// it, so the resend below is what makes the change land; without it the menu keeps the old font.
-	if (this->applied.menuFont != font || this->applied.menuColor != color)
+	// Labels keep their old font until their text or width changes, so a font change also flips font-reflow.
+	if (this->applied.menuFont != font)
 	{
-		this->SetSwapClass(layout, "menu_root", this->applied.menuFont, font);
-		this->SetSwapClass(layout, "menu_root", this->applied.menuColor, color);
-		layout->GetGlobalLayoutState()->MarkFullChanged();
+		this->SetBoolClass(layout, "menu_root", "font-reflow", this->applied.fontReflow, !this->applied.fontReflow);
 	}
+	this->SetSwapClass(layout, "menu_root", this->applied.menuFont, font);
+	this->SetSwapClass(layout, "menu_root", this->applied.menuColor, color);
 
 	this->SetVar(layout, "menu_title", "title", KZMenuService::GetPhrase(this->player, "Menu - Title Options").c_str());
 }
@@ -978,7 +978,7 @@ void KZMenuService::DropCapture()
 	this->listChoices.clear();
 	// The already-spawned entity, not MenuLayout(): that one hands nothing back while the plugin is
 	// unloading, which is exactly when the capture needs dropping.
-	if (CBaseEntity *ent = this->layoutEntity.Get())
+	if (CBaseEntity *ent = GameEntitySystem() ? this->layoutEntity.Get() : nullptr)
 	{
 		CCSCustomHudLayout *layout = (CCSCustomHudLayout *)ent;
 		this->SetClass(layout, "menu_root", "hidden", true);

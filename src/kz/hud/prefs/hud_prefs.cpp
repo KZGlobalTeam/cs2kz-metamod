@@ -128,6 +128,27 @@ static_function void PickKeysIdle(KZPlayer *player, i64, i64 id)
 	player->optionService->SetPreferenceInt("mhudKeysIdle", Clamp(id, (i64)MHUDKeysIdle::Show, (i64)MHUDKeysIdle::Underscore));
 }
 
+// Indexed by MHUDAlign, so a picked row id is the stored value.
+static_global const char *const ALIGN_LABELS[] = {"Menu - Align Left", "Menu - Align Center", "Menu - Align Right"};
+
+static_function void GetAlignChoices(KZPlayer *player, i64, std::vector<KZChoice> &out)
+{
+	for (i32 i = 0; i < KZ_ARRAYSIZE(ALIGN_LABELS); i++)
+	{
+		out.push_back({KZMenuService::GetPhrase(player, ALIGN_LABELS[i]), i, NULL});
+	}
+}
+
+static_function i64 GetCurrentAlign(KZPlayer *player, i64 tag)
+{
+	return (i64)player->hudService->GetOwnPrefs().elements[tag].align;
+}
+
+static_function void PickAlign(KZPlayer *player, i64 tag, i64 id)
+{
+	player->optionService->SetPreferenceInt(MHUD_ELEMENTS[tag].alignKey, Clamp(id, (i64)MHUDAlign::Left, (i64)MHUDAlign::Right));
+}
+
 // --- Registration -------------------------------------------------------------------
 
 void KZHUDService::RegisterMenu()
@@ -166,12 +187,24 @@ void KZHUDService::RegisterMenu()
 		KZ::menu::AddToggle(sub, "Menu - Enabled", def.enabledKey, true);
 		KZ::menu::AddPosition(sub, "Menu - Position", def.xKey, def.yKey, def.xDefault, def.yDefault, e);
 		KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
+		if (def.alignKey)
+		{
+			KZ::menu::AddChoice(sub, "Menu - Align", GetAlignChoices, GetCurrentAlign, PickAlign, e);
+			KZ::menu::SetItemPref(sub, def.alignKey, KZOptStorage::Int, (i32)MHUDAlign::Center);
+			KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
+		}
 		KZ::menu::AddSize(sub, "Menu - Size", def.sizeKey, def.sizeDefault, MHUD_SIZE_MIN, MHUD_SIZE_MAX, e);
 		KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
 		KZ::menu::AddFont(sub, "Menu - Font", def.fontKey, MHUD_DEFAULT_FONT, e);
 		KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
-		KZ::menu::AddToggle(sub, "Menu - Outline", def.outlineKey, true);
+		const bool keys = e == (i32)MHUDElement::Keys;
+		KZ::menu::AddToggle(sub, keys ? "Menu - Text Outline" : "Menu - Outline", def.outlineKey, true);
 		KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
+		if (keys)
+		{
+			KZ::menu::AddToggle(sub, "Menu - Box Outline", "mhudKeysBoxOutline", false);
+			KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
+		}
 		KZ::menu::AddSize(sub, "Menu - Opacity", def.opacityKey, 100, 0, 100, e);
 		KZ::menu::SetItemUnit(sub, "%");
 		KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
@@ -181,6 +214,9 @@ void KZHUDService::RegisterMenu()
 			case MHUDElement::Timer:
 			{
 				KZ::menu::AddToggle(sub, "Menu - Timer Detail", "mhudTimerDetailed", true);
+				KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
+				KZ::menu::AddToggle(sub, "Menu - Timer State", "mhudTimerShowState", true);
+				KZ::menu::SetItemSubtext(sub, "Menu - Affect Legacy Sub");
 				KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
 				break;
 			}

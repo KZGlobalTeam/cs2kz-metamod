@@ -19,6 +19,14 @@
 	text-overflow: noclip;
 }
 
+.element.align-left {
+	horizontal-align: left;
+}
+
+.element.align-right {
+	horizontal-align: right;
+}
+
 .hidden {
 	visibility: collapse;
 }
@@ -74,6 +82,15 @@
 /* mhudKeysBorder off: keep the 2px so the layout holds, just stop drawing it. */
 .keys-noborder .key-button {
 	border-color: #00000000;
+}
+
+.keys-boxoutline .key-button {
+	box-shadow: 0px 0px 4px 1px #000000ff;
+}
+
+/* box-shadow holds one shadow: a pressed key shows its glow instead, or keeps the outline with glow off. */
+.keys.keys-boxoutline.keys-noglow .key-button.pressed {
+	box-shadow: 0px 0px 4px 1px #000000ff;
 }
 
 .hide-idle .key-button {

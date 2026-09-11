@@ -20,6 +20,8 @@ void KZHUDService::RefreshPrefs()
 		element.fontClass = panorama::ResolveFontClass(opts->GetPreferenceStr(def.fontKey, MHUD_DEFAULT_FONT), MHUD_DEFAULT_FONT);
 		element.outline = opts->GetPreferenceBool(def.outlineKey, true);
 		element.opacity = (i32)opts->GetPreferenceInt(def.opacityKey, 100);
+		const i64 align = def.alignKey ? opts->GetPreferenceInt(def.alignKey, (i64)MHUDAlign::Center) : (i64)MHUDAlign::Center;
+		element.align = (MHUDAlign)Clamp(align, (i64)MHUDAlign::Left, (i64)MHUDAlign::Right);
 	}
 
 	this->prefs.timerPaused = opts->GetPreferenceColor("mhudTimerPausedColor", MHUD_DEF_TIMER_PAUSED_COLOR);
@@ -49,6 +51,7 @@ void KZHUDService::RefreshPrefs()
 	this->prefs.crosshair = opts->GetPreferenceBool("mhudCrosshair", false);
 	this->prefs.crosshairScale = (i32)opts->GetPreferenceInt("mhudCrosshairScale", 100);
 	this->prefs.timerDetailed = opts->GetPreferenceBool("mhudTimerDetailed", true);
+	this->prefs.timerShowState = opts->GetPreferenceBool("mhudTimerShowState", true);
 	this->prefs.speedPrecise = opts->GetPreferenceBool("mhudSpeedPrecise", false);
 	this->prefs.prespeedPrecise = opts->GetPreferenceBool("mhudPrespeedPrecise", false);
 	this->prefs.prespeedBrackets = opts->GetPreferenceBool("mhudPrespeedBrackets", false);
@@ -58,6 +61,7 @@ void KZHUDService::RefreshPrefs()
 	this->prefs.keysLetters = opts->GetPreferenceBool("mhudKeysLetters", false);
 	this->prefs.keysSquare = opts->GetPreferenceBool("mhudKeysSquare", false);
 	this->prefs.keysBorder = opts->GetPreferenceBool("mhudKeysBorder", true);
+	this->prefs.keysBoxOutline = opts->GetPreferenceBool("mhudKeysBoxOutline", false);
 	this->prefs.keysGlowEnabled = opts->GetPreferenceBool("mhudKeysGlow", true);
 	this->prefs.keysFillEnabled = opts->GetPreferenceBool("mhudKeysFill", true);
 	// mhudKeysIdle replaced the mhudKeysHideUnpressed toggle; carry the old setting over once.

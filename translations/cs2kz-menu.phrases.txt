@@ -121,6 +121,34 @@
 		"chi"		"显示百分位"
 		"ua"		"Показувати соті секунди"
 	}
+	"Menu - Align"
+	{
+		"en"		"Alignment"
+	}
+	"Menu - Align Left"
+	{
+		"en"		"Left"
+	}
+	"Menu - Align Center"
+	{
+		"en"		"Center"
+	}
+	"Menu - Align Right"
+	{
+		"en"		"Right"
+	}
+	"Menu - Text Outline"
+	{
+		"en"		"Text outline"
+	}
+	"Menu - Box Outline"
+	{
+		"en"		"Box outline"
+	}
+	"Menu - Timer State"
+	{
+		"en"		"Show paused and stopped"
+	}
 	"Menu - Affect Legacy Sub"
 	{
 		"en"		"Also affects the legacy HUD"
