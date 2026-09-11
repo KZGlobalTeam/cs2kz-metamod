@@ -277,7 +277,7 @@
 	{
 		"en"		"{grey}Check console for instructions!"
 	}
-	"Fonts - Help"
+	"Fonts - Help (Console)"
 	{
 		// ----- Fonts marked * in the font picker -----
 		// The game only loads installed font files whose name matches an entry in fonts.conf.

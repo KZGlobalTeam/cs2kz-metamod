@@ -8,131 +8,131 @@
 			"CCSPlayerController_SwitchTeam"
 			{
 				"library" 	"server"
-				"windows"	"\x40\x53\x57\x48\x81\xEC\x2A\x2A\x2A\x2A\x48\x8B\xD9\x8B\xFA"
-				"linux"		"\x55\x48\x89\xE5\x41\x54\x49\x89\xFC\x89\xF7"
+				"windows"	"40 53 57 48 81 EC ?? ?? ?? ?? 48 8B D9 8B FA"
+				"linux"		"55 48 89 E5 41 54 49 89 FC 89 F7"
 			}
 			// Taken from cs2fixes/plugify
 			"CBasePlayerController_SetPawn"
 			{
 				"library" 	"server"
-				"windows"	"\x44\x88\x4C\x24\x2A\x53\x57\x41\x54\x41\x56\x41\x57\x48\x83\xEC"
-				"linux"		"\x55\x48\x8D\x87\x2A\x2A\x2A\x2A\x48\x89\xE5\x41\x57\x41\x56\x41\x89\xCE\x41\x55\x45\x89\xCD"
+				"windows"	"44 88 4C 24 ?? 53 57 41 54 41 56 41 57 48 83 EC"
+				"linux"		"55 48 8D 87 ?? ?? ?? ?? 48 89 E5 41 57 41 56 41 89 CE 41 55 45 89 CD"
 			}
 			// CSource2GameClients::StartHLTVServer: game event %s not found.
 			// Function right before the first virtual function call
 			"GetLegacyGameEventListener"
 			{
 				"library" 	"server"
-				"windows" 	"\x48\x8B\x15\x2A\x2A\x2A\x2A\x48\x85\xD2\x74\x2A\x85\xC9"
-				"linux" 	"\x48\x8B\x05\x2A\x2A\x2A\x2A\x48\x85\xC0\x74\x2A\x83\xFF\x2A\x77\x2A\x48\x63\xFF\x48\xC1\xE7\x2A\x48\x8D\x44\x38"
+				"windows" 	"48 8B 15 ?? ?? ?? ?? 48 85 D2 74 ?? 85 C9"
+				"linux" 	"48 8B 05 ?? ?? ?? ?? 48 85 C0 74 ?? 83 FF ?? 77 ?? 48 63 FF 48 C1 E7 ?? 48 8D 44 38"
 			}
 			// RecvServerBrowserPacketTask vtable reference
 			"RecvServerBrowserPacket"
 			{
 				"library" 	"steamnetworkingsockets"
-				"windows" 	"\x48\x89\x6C\x24\x18\x56\x48\x83\xEC\x20\x48\x8B\xF1\x48\x8B\xEA"
-				"linux" 	"\x41\x54\x55\x48\x89\xF5\x53\x48\x89\xFB\x48\x63\x47\x08"
+				"windows" 	"48 89 6C 24 18 56 48 83 EC 20 48 8B F1 48 8B EA"
+				"linux" 	"41 54 55 48 89 F5 53 48 89 FB 48 63 47 08"
 			}
 			// Find handler for setang console command, it's in the other branch that doesn't use "cpredictionevent_teleport" msg
 			"SnapViewAngles"
 			{
 				"library" 	"server"
-				"windows"	"\x48\x89\x5C\x24\x08\x48\x89\x74\x24\x10\x48\x89\x7C\x24\x18\x55\x48\x8D\x6C\x24\xA9\x48\x81\xEC\xC0\x00\x00\x00"
-				"linux" 	"\x55\x48\x89\xE5\x41\x57\x49\x89\xFF\x48\x89\xF7\x41\x56\x41\x55\x41\x54\x53\x48\x81\xEC\xB8\x00\x00\x00"
+				"windows"	"48 89 5C 24 08 48 89 74 24 10 48 89 7C 24 18 55 48 8D 6C 24 A9 48 81 EC C0 00 00 00"
+				"linux" 	"55 48 89 E5 41 57 49 89 FF 48 89 F7 41 56 41 55 41 54 53 48 81 EC B8 00 00 00"
 			}
 			// For debugging purposes only (windows)
 			// Physics/TraceShape (Server)
 			"TraceShape"
 			{
 				"library"	"server"
-				"windows"	"\x48\x89\x54\x24\x2A\x48\x89\x4C\x24\x2A\x55\x53\x56\x57\x41\x56\x41\x57\x48\x8D\xAC\x24\x2A\x2A\x2A\x2A\xB8"
-				"linux"		"\x55\x48\x89\xE5\x41\x57\x49\x89\xCF\x41\x56\x49\x89\xF6\x41\x55\x4D\x89\xC5\x41\x54\x49\x89\xD4"
+				"windows"	"48 89 54 24 ?? 48 89 4C 24 ?? 55 53 56 57 41 56 41 57 48 8D AC 24 ?? ?? ?? ?? B8"
+				"linux"		"55 48 89 E5 41 57 49 89 CF 41 56 49 89 F6 41 55 4D 89 C5 41 54 49 89 D4"
 			}
 			"CPhysicsGameSystemFrameBoundary"
 			{
 				"library"	"server"
-				"windows"	"\x4C\x8B\xDC\x49\x89\x5B\x08\x49\x89\x6B\x10\x49\x89\x73\x18\x57\x41\x56\x41\x57\x48\x83\xEC\x60\x49\xC7\x43\xB0\x5C\x05\x00\x00"
-				"linux"		"\x55\x48\x8D\x05\x2A\x2A\x2A\x2A\x48\x8D\x35\x2A\x2A\x2A\x2A\x48\x89\xE5\x41\x56\x41\x55\x48\x8D\x55\x2A\x41\x54\x49\x89\xFC"
+				"windows"	"4C 8B DC 49 89 5B 08 49 89 6B 10 49 89 73 18 57 41 56 41 57 48 83 EC 60 49 C7 43 B0 5C 05 00 00"
+				"linux"		"55 48 8D 05 ?? ?? ?? ?? 48 8D 35 ?? ?? ?? ?? 48 89 E5 41 56 41 55 48 8D 55 ?? 41 54 49 89 FC"
 			}
 			// sv_show_move_collisions -> 2nd functions with 8 params -> case 4 (mesh)
 			"DebugDrawMesh"
 			{
 				"library"	"server"
-				"windows"	"\x48\x8B\xC4\x44\x89\x48\x2A\x44\x89\x40\x2A\x48\x89\x48\x2A\x55"
-				"linux"		"\x55\x48\x89\xF0\x48\x89\xE5\x41\x57\x41\x56\x41\x55\x41\x54\x53\x48\x81\xEC\x48\x01\x00\x00"
+				"windows"	"48 8B C4 44 89 48 ?? 44 89 40 ?? 48 89 48 ?? 55"
+				"linux"		"55 48 89 F0 48 89 E5 41 57 41 56 41 55 41 54 53 48 81 EC 48 01 00 00"
 			}
 			// dev_create_move_report
 			"SetupMove"
 			{
 				"library"	"server"
-				"windows"	"\x40\x53\x56\x48\x83\xEC\x78\x48\x89\x6C\x24\x70"
-				"linux"		"\x55\x48\x89\xE5\x41\x57\x41\x56\x41\x55\x49\x89\xF5\x41\x54\x49\x89\xD4\x53\x48\x89\xFB\x48\x83\xEC\x48\xE8\x2A\x2A\x2A\x2A\x48\x8B\x43\x38"
+				"windows"	"40 53 56 48 83 EC 78 48 89 6C 24 70"
+				"linux"		"55 48 89 E5 41 57 41 56 41 55 49 89 F5 41 54 49 89 D4 53 48 89 FB 48 83 EC 48 E8 ?? ?? ?? ?? 48 8B 43 38"
 			}
 			// "pa start %f"
 			"ProcessMovement"
 			{
 				"library"	"server"
-				"windows"	"\x40\x57\x41\x57\x48\x81\xEC\xB8\x00\x00\x00"
-				"linux"		"\x55\x48\x89\xE5\x41\x57\x41\x56\x41\x55\x49\x89\xF5\x41\x54\x53\x48\x89\xFB\x48\x83\xEC\x2A\x48\x8B\x7F"
+				"windows"	"40 57 41 57 48 81 EC B8 00 00 00"
+				"linux"		"55 48 89 E5 41 57 41 56 41 55 49 89 F5 41 54 53 48 89 FB 48 83 EC ?? 48 8B 7F"
 			}
 			// called in ProcessMovement in between the strings "pa start %f" and "pa end %f", contains the string "Can't move"
 			"PlayerMove"
 			{
 				"library"	"server"
-				"windows"	"\x48\x89\x5C\x24\x20\x57\x48\x83\xEC\x70\x48\x83\x79\x38\x00"
-				"linux"		"\x55\x48\x89\xE5\x41\x57\x41\x56\x41\x55\x41\x54\x49\x89\xF4\x53\x48\x89\xFB\x48\x83\xEC\x18\x48\x8B\x7F\x38"
+				"windows"	"48 89 5C 24 20 57 48 83 EC 70 48 83 79 38 00"
+				"linux"		"55 48 89 E5 41 57 41 56 41 55 41 54 49 89 F4 53 48 89 FB 48 83 EC 18 48 8B 7F 38"
 			}
 			// sv_rollspeed second ref
 			"CheckParameters"
 			{
 				"library"	"server"
-				"windows"	"\x48\x8B\xC4\x55\x53\x56\x57\x41\x56\x41\x57\x48\x8D\x68\xA1"
-				"linux"		"\x55\x48\x89\xE5\x41\x57\x41\x56\x41\x55\x41\x54\x49\x89\xFC\x53\x48\x89\xF3\x48\x81\xEC\x88\x01\x00\x00\xE8"
+				"windows"	"48 8B C4 55 53 56 57 41 56 41 57 48 8D 68 A1"
+				"linux"		"55 48 89 E5 41 57 41 56 41 55 41 54 49 89 FC 53 48 89 F3 48 81 EC 88 01 00 00 E8"
 			}
 			// dev_cs_force_disable_move
 			"CanMove"
 			{
 				"library"	"server"
-				"windows"	"\x40\x57\x48\x83\xEC\x30\x48\x8B\xF9\xBA\xFF\xFF\xFF\xFF"
-				"linux"		"\x55\xBE\xFF\xFF\xFF\xFF\x48\x89\xE5\x41\x55\x41\x54\x53\x48\x89\xFB\x48\x8D\x3D\x2A\x2A\x2A\x2A\x48\x83\xEC\x08\xE8\x2A\x2A\x2A\x2A\x48\x85\xC0\x0F\x84"
+				"windows"	"40 57 48 83 EC 30 48 8B F9 BA FF FF FF FF"
+				"linux"		"55 BE FF FF FF FF 48 89 E5 41 55 41 54 53 48 89 FB 48 8D 3D ?? ?? ?? ?? 48 83 EC 08 E8 ?? ?? ?? ?? 48 85 C0 0F 84"
 			}
 			// string "PreSource1AirMove", xref
 			// Function containing cvar sv_legacy_jump, string "Water.PlayerEnter" and "Water.PlayerExit"
 			"FullWalkMove"
 			{
 				"library"	"server"
-				"windows"	"\x48\x89\x5C\x24\x2A\x57\x48\x83\xEC\x2A\x48\x8B\xFA\x48\x8B\xD9\x45\x84\xC0\x75"
-				"linux"		"\x55\x48\x89\xE5\x41\x54\x49\x89\xF4\x53\x48\x89\xFB\x84\xD2"
+				"windows"	"48 89 5C 24 ?? 57 48 83 EC ?? 48 8B FA 48 8B D9 45 84 C0 75"
+				"linux"		"55 48 89 E5 41 54 49 89 F4 53 48 89 FB 84 D2"
 			}
 			// sv_optimizedmovement + sv_use_playercache ref
 			// Can also be found by looking for "Water.PlayerEnter" and "Water.PlayerExit" (https://imgur.com/a/NQIeGRy)
 			"MoveInit"
 			{
 				"library"	"server"
-				"windows"	"\x48\x8B\xC4\x48\x89\x58\x2A\x48\x89\x70\x2A\x48\x89\x78\x2A\x41\x56\x48\x81\xEC\x2A\x2A\x2A\x2A\x48\x8B\xF2"
-				"linux"		"\x55\x48\x89\xE5\x41\x56\x41\x55\x41\x54\x49\x89\xF4\xBE\x2A\x2A\x2A\x2A\x53\x48\x89\xFB\x48\x8D\x3D\x2A\x2A\x2A\x2A\x48\x83\xEC\x2A\xE8\x2A\x2A\x2A\x2A\x4C\x89\xE7"
+				"windows"	"48 8B C4 48 89 58 ?? 48 89 70 ?? 48 89 78 ?? 41 56 48 81 EC ?? ?? ?? ?? 48 8B F2"
+				"linux"		"55 48 89 E5 41 56 41 55 41 54 49 89 F4 BE ?? ?? ?? ?? 53 48 89 FB 48 8D 3D ?? ?? ?? ?? 48 83 EC ?? E8 ?? ?? ?? ?? 4C 89 E7"
 			}
 			// somewhere in MoveInit. GLHF!
 			// In the function containing FullTossMovePreGravity, it's the second function called
 			"CheckWater"
 			{
 				"library"	"server"
-				"windows"	"\x48\x8B\xC4\x48\x89\x58\x2A\x55\x48\x8D\x6C\x24"
-				"linux"		"\x55\x48\x89\xE5\x41\x54\x49\x89\xF4\x53\x48\x89\xFB\x48\x81\xEC\x70\x01\x00\x00"
+				"windows"	"48 8B C4 48 89 58 ?? 55 48 8D 6C 24"
+				"linux"		"55 48 89 E5 41 54 49 89 F4 53 48 89 FB 48 81 EC 70 01 00 00"
 			}
 			// The third of a chain of 4 functions followed by "Water.PlayerEnter" eventually
 			"WaterMove"
 			{
 				"library"	"server"
-				"windows"	"\x48\x8B\xC4\x48\x89\x58\x2A\x48\x89\x70\x2A\x48\x89\x78\x2A\x4C\x89\x60\x2A\x55\x41\x56\x41\x57\x48\x8D\xA8\x2A\x2A\x2A\x2A\x48\x81\xEC\x2A\x2A\x2A\x2A\x0F\x29\x70\x2A\x48\x8B\xF9\x0F\x29\x78\x2A\x48\x8D\x4D\x2A\x44\x0F\x29\x40"
-				"linux"		"\x48\xB8\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x55\x66\x0F\xEF\xC0\x48\x89\xE5\x41\x57\x41\x56\x41\x55\x4C\x8D\xAD\x2A\x2A\x2A\x2A\x41\x54\x49\x89\xFC\x4C\x89\xEF\x53\x48\x89\xF3\x48\x81\xEC\x2A\x2A\x2A\x2A\x48\x89\x85\x2A\x2A\x2A\x2A\x48\x8B\x05\x2A\x2A\x2A\x2A\x0F\x29\x85\x2A\x2A\x2A\x2A\x48\xC7\x85\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x48\xC7\x45\x2A\x2A\x2A\x2A\x2A\x48\x89\x85\x2A\x2A\x2A\x2A\x48\xB8\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x48\x89\x45\x2A\xE8\x2A\x2A\x2A\x2A\x48\x8D\x8D"
+				"windows"	"48 8B C4 48 89 58 ?? 48 89 70 ?? 48 89 78 ?? 4C 89 60 ?? 55 41 56 41 57 48 8D A8 ?? ?? ?? ?? 48 81 EC ?? ?? ?? ?? 0F 29 70 ?? 48 8B F9 0F 29 78 ?? 48 8D 4D ?? 44 0F 29 40"
+				"linux"		"48 B8 ?? ?? ?? ?? ?? ?? ?? ?? 55 66 0F EF C0 48 89 E5 41 57 41 56 41 55 4C 8D AD ?? ?? ?? ?? 41 54 49 89 FC 4C 89 EF 53 48 89 F3 48 81 EC ?? ?? ?? ?? 48 89 85 ?? ?? ?? ?? 48 8B 05 ?? ?? ?? ?? 0F 29 85 ?? ?? ?? ?? 48 C7 85 ?? ?? ?? ?? ?? ?? ?? ?? 48 C7 45 ?? ?? ?? ?? ?? 48 89 85 ?? ?? ?? ?? 48 B8 ?? ?? ?? ?? ?? ?? ?? ?? 48 89 45 ?? E8 ?? ?? ?? ?? 48 8D 8D"
 			}
 			// "CCSPlayer_MovementServices(%s):  %d/%s Got a NaN velocity on %s\n"
 			"CheckVelocity"
 			{
 				"library"	"server"
-				"windows"	"\x48\x8B\xC4\x48\x89\x58\x2A\x4C\x89\x40\x2A\x55\x56\x57\x41\x54\x41\x55\x41\x56\x41\x57\x48\x8D\x68"
-				"linux"		"\x55\x48\x89\xE5\x41\x57\x41\x56\x41\x55\x49\x89\xFD\x41\x54\x49\x89\xF4\x53\x48\x83\xEC\x58\x48\x8B\x7F\x38"
+				"windows"	"48 8B C4 48 89 58 ?? 4C 89 40 ?? 55 56 57 41 54 41 55 41 56 41 57 48 8D 68"
+				"linux"		"55 48 89 E5 41 57 41 56 41 55 49 89 FD 41 54 49 89 F4 53 48 83 EC 58 48 8B 7F 38"
 			}
 			// called after MoveInit in PlayerMove in switch statement with movetype 5
 			// bot_crouch cvar
@@ -140,22 +140,22 @@
 			"Duck"
 			{
 				"library"	"server"
-				"windows"	"\x48\x8B\xC4\x55\x53\x56\x57\x41\x56\x41\x57\x48\x8D\xA8\x2A\x2A\x2A\x2A\x48\x81\xEC\x2A\x2A\x2A\x2A\x80\xB9"
-				"linux"		"\x55\x48\x89\xE5\x41\x57\x41\x56\x49\x89\xFE\x41\x55\x41\x54\x53\x48\x89\xF3\x48\x81\xEC\x2A\x2A\x2A\x2A\x48\x8D\x05\x2A\x2A\x2A\x2A\xF3\x0F\x10\x05"
+				"windows"	"48 8B C4 55 53 56 57 41 56 41 57 48 8D A8 ?? ?? ?? ?? 48 81 EC ?? ?? ?? ?? 80 B9"
+				"linux"		"55 48 89 E5 41 57 41 56 49 89 FE 41 55 41 54 53 48 89 F3 48 81 EC ?? ?? ?? ?? 48 8D 05 ?? ?? ?? ?? F3 0F 10 05"
 			}
 			// CTraceFilterForPlayerHeadCollision vtable
 			"CanUnduck"
 			{
 				"library"	"server"
-				"windows"	"\x40\x55\x56\x41\x55\x48\x8D\xAC\x24"
-				"linux"		"\x55\x48\x89\xE5\x41\x56\x41\x55\x41\x54\x49\x89\xF4\x53\x48\x89\xFB\x48\x81\xEC\x60\x01\x00\x00"
+				"windows"	"40 55 56 41 55 48 8D AC 24"
+				"linux"		"55 48 89 E5 41 56 41 55 41 54 49 89 F4 53 48 89 FB 48 81 EC 60 01 00 00"
 			}
 			// sv_ladder_dampen
 			"LadderMove"
 			{
 				"library"	"server"
-				"windows"	"\x40\x55\x53\x56\x57\x41\x57\x48\x8D\xAC\x24\x2A\x2A\x2A\x2A\x48\x81\xEC\x2A\x2A\x2A\x2A\x48\x8B\xF9"
-				"linux"		"\x48\xB8\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x55\x66\x0F\xEF\xC0\x48\x89\xE5\x41\x57\x41\x56\x41\x55\x4C\x8D\xAD\x2A\x2A\x2A\x2A\x41\x54\x49\x89\xF4"
+				"windows"	"40 55 53 56 57 41 57 48 8D AC 24 ?? ?? ?? ?? 48 81 EC ?? ?? ?? ?? 48 8B F9"
+				"linux"		"48 B8 ?? ?? ?? ?? ?? ?? ?? ?? 55 66 0F EF C0 48 89 E5 41 57 41 56 41 55 4C 8D AD ?? ?? ?? ?? 41 54 49 89 F4"
 			}
 			// Look for sv_jump_spam_penalty_time. This function has 3 xrefs.
 			//   v16 = sub_18145F890(&sv_legacy_jump, -1);
@@ -168,41 +168,41 @@
 			"CheckJumpButtonLegacy"
 			{
 				"library"	"server"
-				"windows"	"\x48\x89\x5C\x24\x10\x48\x89\x6C\x24\x18\x57\x48\x83\xEC\x40\x48\x8B\xEA"
-				"linux"		"\x55\x48\x89\xE5\x41\x55\x41\x54\x49\x89\xF4\xBE\x02\x00\x00\x00\x53\x48\x89\xFB\x48\x83\xEC\x68"
+				"windows"	"48 89 5C 24 10 48 89 6C 24 18 57 48 83 EC 40 48 8B EA"
+				"linux"		"55 48 89 E5 41 55 41 54 49 89 F4 BE 02 00 00 00 53 48 89 FB 48 83 EC 68"
 			}
 			"CheckJumpButtonModern"
 			{
 				"library"	"server"
-				"windows"	"\x40\x55\x53\x56\x57\x41\x54\x41\x55\x41\x56\x48\x8D\x6C\x24\x2A\x48\x81\xEC\x2A\x2A\x2A\x2A\x8B\x9A"
-				"linux"		"\x55\x48\x89\xE5\x41\x57\x41\x56\x4C\x8D\x75\x90\x41\x55\x41\x54\x49\x89\xF4"
+				"windows"	"40 55 53 56 57 41 54 41 55 41 56 48 8D 6C 24 ?? 48 81 EC ?? ?? ?? ?? 8B 9A"
+				"linux"		"55 48 89 E5 41 57 41 56 4C 8D 75 90 41 55 41 54 49 89 F4"
 			}
 			// "player_jump"
 			"OnJumpLegacy"
 			{
 				"library"	"server"
-				"windows"	"\x40\x55\x53\x56\x57\x48\x8D\x6C\x24\x2A\x48\x81\xEC\x2A\x2A\x2A\x2A\x48\x8B\x59"
-				"linux"		"\x55\x48\x89\xE5\x41\x57\x41\x56\x41\x55\x49\x89\xF5\x41\x54\x53\x48\x89\xFB\x48\x83\xEC\x2A\x4C\x8B\x67\x2A\x49\x8B\x7C\x24"
+				"windows"	"40 55 53 56 57 48 8D 6C 24 ?? 48 81 EC ?? ?? ?? ?? 48 8B 59"
+				"linux"		"55 48 89 E5 41 57 41 56 41 55 49 89 F5 41 54 53 48 89 FB 48 83 EC ?? 4C 8B 67 ?? 49 8B 7C 24"
 			}
 			"OnJumpModern"
 			{
 				"library"	"server"
-				"windows"	"\x40\x55\x56\x57\x41\x56\x48\x8D\x6C\x24\x2A\x48\x81\xEC\x2A\x2A\x2A\x2A\x4C\x8B\x71"
-				"linux"		"\x55\x48\x89\xE5\x41\x57\x41\x56\x41\x55\x49\x89\xF5\x41\x54\x53\x48\x89\xFB\x48\x81\xEC\x2A\x2A\x2A\x2A\x4C\x8B\x77\x2A\x4D\x8B\x66"
+				"windows"	"40 55 56 57 41 56 48 8D 6C 24 ?? 48 81 EC ?? ?? ?? ?? 4C 8B 71"
+				"linux"		"55 48 89 E5 41 57 41 56 41 55 49 89 F5 41 54 53 48 89 FB 48 81 EC ?? ?? ?? ?? 4C 8B 77 ?? 4D 8B 66"
 			}
 			// "PreSource1AirMove", cvar sv_airaccelerate
 			"AirMove"
 			{
 				"library"	"server"
-				"windows"	"\x48\x8B\xC4\x53\x55\x56\x57\x48\x81\xEC\x2A\x2A\x2A\x2A\x0F\x29\x70"
-				"linux"		"\x55\x48\x8D\x15\x2A\x2A\x2A\x2A\x48\x89\xE5\x41\x57\x41\x56\x4C\x8D\xB5\x2A\x2A\x2A\x2A\x41\x55\x41\x54"
+				"windows"	"48 8B C4 53 55 56 57 48 81 EC ?? ?? ?? ?? 0F 29 70"
+				"linux"		"55 48 8D 15 ?? ?? ?? ?? 48 89 E5 41 57 41 56 4C 8D B5 ?? ?? ?? ?? 41 55 41 54"
 			}
 			// Look for sv_air_max_wishspeed
 			"AirAccelerate"
 			{
 				"library"	"server"
-				"windows"	"\xF3\x0F\x11\x5C\x24\x20\x53\x56\x57\x48\x83\xEC\x60"
-				"linux"		"\x55\x48\x89\xE5\x41\x55\x49\x89\xD5\x41\x54\x49\x89\xFC\x53\x48\x89\xF3\x48\x83\xEC\x18\x48\x8B\x7F\x38"
+				"windows"	"F3 0F 11 5C 24 20 53 56 57 48 83 EC 60"
+				"linux"		"55 48 89 E5 41 55 49 89 D5 41 54 49 89 FC 53 48 89 F3 48 83 EC 18 48 8B 7F 38"
 			}
 			// sub_7FFE47869020(a1, a2); <- this function
 			// sub_7FFE47863820(a1, a2, "FullWalkMovePreMove"); 
@@ -211,120 +211,120 @@
 			"Friction"
 			{
 				"library"	"server"
-				"windows"	"\x48\x89\x5C\x24\x2A\x57\x48\x83\xEC\x2A\x48\x83\x79\x2A\x2A\x48\x8B\xFA\x0F\x29\x7C\x24"
-				"linux"		"\x55\x48\x89\xE5\x41\x54\x49\x89\xFC\x53\x48\x89\xF3\x48\x83\xEC\x2A\x48\x8B\x47"
+				"windows"	"48 89 5C 24 ?? 57 48 83 EC ?? 48 83 79 ?? ?? 48 8B FA 0F 29 7C 24"
+				"linux"		"55 48 89 E5 41 54 49 89 FC 53 48 89 F3 48 83 EC ?? 48 8B 47"
 			}
 			// "PreWalkMove"
 			"WalkMove"
 			{
 				"library"	"server"
-				"windows"	"\x48\x8B\xC4\x48\x89\x70\x2A\x48\x89\x78\x2A\x55\x41\x54\x41\x55\x41\x56\x41\x57\x48\x8D\xA8\x2A\x2A\x2A\x2A\x48\x81\xEC\x2A\x2A\x2A\x2A\x0F\x29\x70\x2A\x48\x8B\xF1"
-				"linux"		"\x48\xB8\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x55\x66\x0F\xEF\xC0\x48\x89\xE5\x41\x57\x41\x56\x4C\x8D\xB5\x2A\x2A\x2A\x2A\x41\x55\x41\xBD"
+				"windows"	"48 8B C4 48 89 70 ?? 48 89 78 ?? 55 41 54 41 55 41 56 41 57 48 8D A8 ?? ?? ?? ?? 48 81 EC ?? ?? ?? ?? 0F 29 70 ?? 48 8B F1"
+				"linux"		"48 B8 ?? ?? ?? ?? ?? ?? ?? ?? 55 66 0F EF C0 48 89 E5 41 57 41 56 4C 8D B5 ?? ?? ?? ?? 41 55 41 BD"
 			}
 			// sv_jump_precision_enable
 			"TryPlayerMove"
 			{
 				"library"	"server"
-				"windows"	"\x48\x8B\xC4\x4C\x89\x48\x2A\x4C\x89\x40\x2A\x48\x89\x50\x2A\x48\x89\x48\x2A\x55\x53\x56\x57\x41\x54\x41\x55\x41\x56\x41\x57\x48\x8D\xA8\x2A\x2A\x2A\x2A\x48\x81\xEC\x2A\x2A\x2A\x2A\x0F\x29\x70"
-				"linux"		"\x48\xB8\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x55\x66\x0F\xEF\xC0\x48\x89\xE5\x41\x57\x41\x56\x49\x89\xF6"
+				"windows"	"48 8B C4 4C 89 48 ?? 4C 89 40 ?? 48 89 50 ?? 48 89 48 ?? 55 53 56 57 41 54 41 55 41 56 41 57 48 8D A8 ?? ?? ?? ?? 48 81 EC ?? ?? ?? ?? 0F 29 70"
+				"linux"		"48 B8 ?? ?? ?? ?? ?? ?? ?? ?? 55 66 0F EF C0 48 89 E5 41 57 41 56 49 89 F6"
 			}
 			// sub_18061AF90(a1, a2, *(*(a1 + 48) + 864i64) & 1); <- this one
 			// sub_18061D5B0(a1, a2, "PlayerMove_PostMove");
 			"CategorizePosition"
 			{
 				"library"	"server"
-				"windows"	"\x40\x55\x56\x57\x41\x54\x41\x55\x48\x8D\xAC\x24\x2A\x2A\x2A\x2A\x48\x81\xEC\x2A\x2A\x2A\x2A\x48\x8B\xF9"
-				"linux"		"\x48\xB8\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x55\x66\x0F\xEF\xC0\x48\x89\xE5\x41\x57\x41\x56\x41\x55\x41\x89\xD5"
+				"windows"	"40 55 56 57 41 54 41 55 48 8D AC 24 ?? ?? ?? ?? 48 81 EC ?? ?? ?? ?? 48 8B F9"
+				"linux"		"48 B8 ?? ?? ?? ?? ?? ?? ?? ?? 55 66 0F EF C0 48 89 E5 41 57 41 56 41 55 41 89 D5"
 			}
 			// Land_WaterVol.StepLeft
 			"CheckFalling"
 			{
 				"library"	"server"
-				"windows"	"\x40\x55\x57\x48\x81\xEC\x2A\x2A\x2A\x2A\x48\x83\x79"
-				"linux"		"\x55\x48\x89\xE5\x41\x55\x41\x54\x49\x89\xF4\x53\x48\x89\xFB\x48\x83\xEC\x2A\x48\x8B\x7F\x2A\x48\x85\xFF\x0F\x84\x2A\x2A\x2A\x2A\x48\x8B\x07\xFF\x90\x2A\x2A\x2A\x2A\x48\x85\xC0\x0F\x84\x2A\x2A\x2A\x2A\xF3\x0F\x10\x8B"
+				"windows"	"40 55 57 48 81 EC ?? ?? ?? ?? 48 83 79"
+				"linux"		"55 48 89 E5 41 55 41 54 49 89 F4 53 48 89 FB 48 83 EC ?? 48 8B 7F ?? 48 85 FF 0F 84 ?? ?? ?? ?? 48 8B 07 FF 90 ?? ?? ?? ?? 48 85 C0 0F 84 ?? ?? ?? ?? F3 0F 10 8B"
 			}
 			// "exit_bombzone"
 			"PostThink"
 			{
 				"library"	"server"
-				"windows"	"\x40\x55\x56\x41\x54\x48\x8B\xEC"
-				"linux"		"\x55\x48\x89\xE5\x41\x56\x41\x55\x41\x54\x53\x48\x89\xFB\x48\x83\xEC\x2A\xE8\x2A\x2A\x2A\x2A\x80\xBB"
+				"windows"	"40 55 56 41 54 48 8B EC"
+				"linux"		"55 48 89 E5 41 56 41 55 41 54 53 48 89 FB 48 83 EC ?? E8 ?? ?? ?? ?? 80 BB"
 			}
 			// search for "CT_Water.StepLeft", this is called after that string is referenced (the one with 4 parameters).
 			"EmitSound"
 			{
 				"library"	"server"
-				"windows"	"\x40\x53\x48\x83\xEC\x2A\x4C\x89\x4C\x24\x2A\x48\x8B\xD9\x45\x8B\xC8"
-				"linux"		"\x55\x48\x89\xE5\x53\x48\x89\xFB\x48\x83\xEC\x2A\xE8\x2A\x2A\x2A\x2A\x48\x89\xD8\x48\x8B\x5D\x2A\xC9\xC3\xCC\xCC\xCC\xCC\xCC\xCC\x48\xB8"
+				"windows"	"40 53 48 83 EC ?? 4C 89 4C 24 ?? 48 8B D9 45 8B C8"
+				"linux"		"55 48 89 E5 53 48 89 FB 48 83 EC ?? E8 ?? ?? ?? ?? 48 89 D8 48 8B 5D ?? C9 C3 CC CC CC CC CC CC 48 B8"
 			}
 			// "%sRecv usercmd %d.  Margin:%5.1fms net +%2d queue =%5.1f"
 			"ProcessUsercmds"
 			{
 				"library"	"server"
-				"windows"	"\x48\x8B\xC4\x44\x88\x48\x20\x44\x89\x40\x18\x48\x89\x50\x10\x53"
-				"linux"		"\x55\x48\x89\xE5\x41\x57\x41\x56\x41\x55\x41\x54\x53\x48\x89\xFB\x48\x83\xEC\x48\x89\x4D"
+				"windows"	"48 8B C4 44 88 48 20 44 89 40 18 48 89 50 10 53"
+				"linux"		"55 48 89 E5 41 57 41 56 41 55 41 54 53 48 89 FB 48 83 EC 48 89 4D"
 			}
 			// "'%s' took %.1fms to execute %d commands, backlog is %d commands\n"
 			// This is actually CBasePlayerController::OnSimulateUserCommands
 			"PhysicsSimulate"
 			{
 				"library"	"server"
-				"windows"	"\x40\x55\x53\x56\x57\x41\x55\x41\x56\x48\x8D\xAC\x24\x08\xF9\xFF\xFF"
-				"linux"		"\x55\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x2A\x48\x89\xE5\x41\x57\x41\x56\x41\x55\x41\x54\x53\x48\x89\xFB\x48\x8D\x3D\x2A\x2A\x2A\x2A\x48\x81\xEC\x2A\x00\x00\x00"
+				"windows"	"40 55 53 56 57 41 55 41 56 48 8D AC 24 08 F9 FF FF"
+				"linux"		"55 ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? ?? 48 89 E5 41 57 41 56 41 55 41 54 53 48 89 FB 48 8D 3D ?? ?? ?? ?? 48 81 EC ?? 00 00 00"
 			}
 			// Check function associated with net_reloadgameevents
 			"GameEventManager"
 			{
 				"library"	"server"
-				"windows"	"\x48\x8D\x0D\x2A\x2A\x2A\x2A\x49\x8B\x04\x38"
-				"linux"		"\x4C\x8D\x25\x2A\x2A\x2A\x2A\x31\xDB\x48\x83\xEC\x08"
+				"windows"	"48 8D 0D ?? ?? ?? ?? 49 8B 04 38"
+				"linux"		"4C 8D 25 ?? ?? ?? ?? 31 DB 48 83 EC 08"
 			}
 			// All functions below are taken from cs2fixes
 			"CreateEntityByName"
 			{
 				"library"		"server"
-				"windows"		"\x48\x83\xEC\x48\xC6\x44\x24\x30\x00"
-				"linux"			"\x48\x8D\x05\x2A\x2A\x2A\x2A\x55\x48\x89\xFA"
+				"windows"		"48 83 EC 48 C6 44 24 30 00"
+				"linux"			"48 8D 05 ?? ?? ?? ?? 55 48 89 FA"
 			}
 			"DispatchSpawn"
 			{
 				"library"		"server"
-				"windows"		"\x48\x89\x5C\x24\x2A\x57\x48\x83\xEC\x2A\x48\x8B\xDA\x48\x8B\xF9\x48\x85\xC9\x0F\x84\x2A\x2A\x2A\x2A\x48\x85\xD2"
-				"linux"			"\x48\x85\xFF\x74\x2A\x55\x48\x89\xE5\x41\x55\x41\x54\x49\x89\xFC"
+				"windows"		"48 89 5C 24 ?? 57 48 83 EC ?? 48 8B DA 48 8B F9 48 85 C9 0F 84 ?? ?? ?? ?? 48 85 D2"
+				"linux"			"48 85 FF 74 ?? 55 48 89 E5 41 55 41 54 49 89 FC"
 			}
 			"RemoveEntity"
 			{
 				"library"		"server"
-				"windows"		"\x48\x85\xC9\x74\x2A\x48\x8B\xD1\x48\x8B\x0D\x2A\x2A\x2A\x2A"
-				"linux"			"\x48\x89\xFE\x48\x85\xFF\x74\x2A\x48\x8D\x05\x2A\x2A\x2A\x2A\x48"
+				"windows"		"48 85 C9 74 ?? 48 8B D1 48 8B 0D ?? ?? ?? ??"
+				"linux"			"48 89 FE 48 85 FF 74 ?? 48 8D 05 ?? ?? ?? ?? 48"
 			}
 			// search for "Unable to create bot: CreateFakeClient() returned null."
 			"CreateBot"
 			{
 				"library"		"server"
-				"windows"		"\x48\x89\x5C\x24\x10\x48\x89\x6C\x24\x18\x57\x48\x81\xEC\xC0\x00\x00\x00\x41\x0F\xB6\xD8"
-				"linux"			"\x55\x48\x89\xE5\x41\x57\x41\x56\x41\x55\x49\x89\xFD\x41\x54\x41\x89\xD4\x53\x48\x81\xEC\xC8\x00\x00\x00"
+				"windows"		"48 89 5C 24 10 48 89 6C 24 18 57 48 81 EC C0 00 00 00 41 0F B6 D8"
+				"linux"			"55 48 89 E5 41 57 41 56 41 55 49 89 FD 41 54 41 89 D4 53 48 81 EC C8 00 00 00"
 			}
 			// "set item texture prefab" "set item texture wear" then go into the function
 			"SetOrAddAttributeValueByName"
 			{
 				"library"		"server"
-				"windows"		"\x40\x53\x55\x41\x56\x48\x81\xEC\x90\x00\x00\x00"
-				"linux"			"\x55\x48\x89\xE5\x41\x57\x41\x56\x49\x89\xFE\x41\x55\x41\x54\x53\x48\x89\xF3\x48\x83\xEC\x78\xF3\x0F\x11\x85\x6C\xFF\xFF\xFF"
+				"windows"		"40 53 55 41 56 48 81 EC 90 00 00 00"
+				"linux"			"55 48 89 E5 41 57 41 56 49 89 FE 41 55 41 54 53 48 89 F3 48 83 EC 78 F3 0F 11 85 6C FF FF FF"
 			}
 			// taken from cs2fixes
 			"SetModel"
 			{
 				"library"			"server"
 				"allow_multi_match" "1"
-				"windows"			"\x40\x53\x48\x83\xEC\x2A\x48\x8B\xD9\x4C\x8B\xC2\x48\x8B\x0D\x2A\x2A\x2A\x2A\x48\x8D\x54\x24\x2A\x48\x8B\x01\xFF\x50\x2A\x48\x8B\x54\x24\x2A\x48\x8B\xCB\xE8\x2A\x2A\x2A\x2A\x48\x83\xC4\x2A\x5B\xC3"
-				"linux"				"\x55\x48\x89\xE5\x53\x48\x89\xFB\x48\x83\xEC\x2A\x48\x8D\x05\x2A\x2A\x2A\x2A\x48\x8B\x38\x48\x8B\x07\xFF\x50\x2A\x48\x89\xDF\x48\x8B\x5D\x2A\xC9\x48\x89\xC6\xE9\x2A\x2A\x2A\x2A"
+				"windows"			"40 53 48 83 EC ?? 48 8B D9 4C 8B C2 48 8B 0D ?? ?? ?? ?? 48 8D 54 24 ?? 48 8B 01 FF 50 ?? 48 8B 54 24 ?? 48 8B CB E8 ?? ?? ?? ?? 48 83 C4 ?? 5B C3"
+				"linux"				"55 48 89 E5 53 48 89 FB 48 83 EC ?? 48 8D 05 ?? ?? ?? ?? 48 8B 38 48 8B 07 FF 50 ?? 48 89 DF 48 8B 5D ?? C9 48 89 C6 E9 ?? ?? ?? ??"
 			}
 			"DecalTrace"
 			{
 				"library"		"server"
-				"windows"		"\x48\x83\xEC\x2A\xF3\x0F\x10\x81\x2A\x2A\x2A\x2A\x0F\x2E\x05"
-				"linux"			"\xF3\x0F\x10\x05\x2A\x2A\x2A\x2A\x0F\x2E\x87\x2A\x2A\x2A\x2A\x7A\x2A\x74\x2A\x48\x8B\x47"
+				"windows"		"48 83 EC ?? F3 0F 10 81 ?? ?? ?? ?? 0F 2E 05"
+				"linux"			"F3 0F 10 05 ?? ?? ?? ?? 0F 2E 87 ?? ?? ?? ?? 7A ?? 74 ?? 48 8B 47"
 			}
 		}
 		"Offsets"

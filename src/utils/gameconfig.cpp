@@ -2,10 +2,10 @@
 	Credit to CS2Fixes: https://github.com/Source2ZE/CS2Fixes/blame/main/src/gameconfig.cpp
 */
 
-#include <cstdint>
-#include <memory>
+#include <algorithm>
 #include "gameconfig.h"
 #include "addresses.h"
+#include "khook.hpp"
 
 CGameConfig::CGameConfig(const std::string &gameDir, const std::string &path)
 {
@@ -180,7 +180,6 @@ void *CGameConfig::ResolveSignature(const char *name)
 		Warning("Invalid Module %s\n", name);
 		return nullptr;
 	}
-	int error = SIG_OK;
 	void *address = nullptr;
 	if (this->IsSymbol(name))
 	{
@@ -195,23 +194,25 @@ void *CGameConfig::ResolveSignature(const char *name)
 	else
 	{
 		const char *signature = this->GetSignature(name);
-		if (!signature)
+		if (!signature || !signature[0])
 		{
 			Warning("Failed to find signature for %s\n", name);
 			return nullptr;
 		}
 
-		size_t iLength = 0;
-		std::unique_ptr<byte[]> pSignature(HexToByte(signature, iLength));
-		if (!pSignature)
+		byte *base = (byte *)(*module)->m_base;
+		size_t sigBytes = std::count(signature, signature + strlen(signature), ' ') + 1;
+		size_t scanSize = (*module)->m_size - sigBytes + 1;
+		address = KHook::LookupSignature(base, scanSize, signature);
+		// LookupSignature stops at the first match, so scan the rest of the module to reject ambiguous signatures.
+		if (address && !m_umAllowMultiMatch[name])
 		{
-			return nullptr;
-		}
-		address = (*module)->FindSignature(pSignature.get(), iLength, error);
-		if (error == SIG_FOUND_MULTIPLE && !m_umAllowMultiMatch[name])
-		{
-			Warning("Multiple addresses found for %s, defaulting to nullptr\n", name);
-			return nullptr;
+			byte *next = (byte *)address + 1;
+			if (KHook::LookupSignature(next, scanSize - (next - base), signature))
+			{
+				Warning("Multiple addresses found for %s, defaulting to nullptr\n", name);
+				return nullptr;
+			}
 		}
 	}
 
@@ -255,55 +256,4 @@ std::string CGameConfig::GetDirectoryName(const std::string &directoryPathInput)
 		return std::string(directoryPath, found + 1);
 	}
 	return "";
-}
-
-int CGameConfig::HexStringToUint8Array(const char *hexString, uint8_t *byteArray, size_t maxBytes)
-{
-	if (!hexString)
-	{
-		printf("Invalid hex string.\n");
-		return -1;
-	}
-
-	size_t hexStringLength = strlen(hexString);
-	size_t byteCount = hexStringLength / 4; // Each "\\x" represents one byte.
-
-	if (hexStringLength % 4 != 0 || byteCount == 0 || byteCount > maxBytes)
-	{
-		printf("Invalid hex string format or byte count.\n");
-		return -1; // Return an error code.
-	}
-
-	for (size_t i = 0; i < hexStringLength; i += 4)
-	{
-		if (sscanf(hexString + i, "\\x%2hhX", &byteArray[i / 4]) != 1)
-		{
-			printf("Failed to parse hex string at position %zu.\n", i);
-			return -1; // Return an error code.
-		}
-	}
-
-	byteArray[byteCount] = '\0'; // Add a null-terminating character.
-
-	return byteCount; // Return the number of bytes successfully converted.
-}
-
-byte *CGameConfig::HexToByte(const char *src, size_t &length)
-{
-	if (!src || strlen(src) <= 0)
-	{
-		Warning("Invalid hex string\n");
-		return nullptr;
-	}
-
-	length = strlen(src) / 4;
-	uint8_t *dest = new uint8_t[length + 1];
-	int byteCount = HexStringToUint8Array(src, dest, length);
-	if (byteCount <= 0)
-	{
-		Warning("Invalid hex format %s\n", src);
-		delete[] dest;
-		return nullptr;
-	}
-	return (byte *)dest;
 }
