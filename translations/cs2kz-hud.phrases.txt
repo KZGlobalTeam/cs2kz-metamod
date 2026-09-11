@@ -300,6 +300,7 @@
 	"Fonts - Help (Chat)"
 	{
 		"en"		"{grey}Check console for instructions!"
+		"ua"		"{grey}Перевірте консоль для інструкцій!"
 	}
 	"Fonts - Help (Console)"
 	{
@@ -309,5 +310,6 @@
 		// 2. Open csgo\panorama\fonts\fonts.conf and add a line next to the others: <fontpattern>yourfontfilename</fontpattern>
 		// 3. Restart the game fully.
 		"en"		"----- Fonts marked * in the font picker -----\nThe game only loads installed font files whose name matches an entry in fonts.conf.\n1. Install the font for all users.\n2. Open csgo\panorama\fonts\fonts.conf and add a line next to the others: <fontpattern>yourfontfilename</fontpattern>\n3. Restart the game fully."
+		"ua"		"----- Шрифти, позначені * у виборі шрифтів -----\nГра завантажує лише встановлені файли шрифтів, ім'я яких збігається з записом у fonts.conf.\n1. Встановіть шрифт для всіх користувачів.\n2. Відкрийте csgo\panorama\fonts\fonts.conf і додайте рядок поруч з іншими: <fontpattern>yourfontfilename</fontpattern>\n3. Повністю перезапустіть гру."
 	}
 }
