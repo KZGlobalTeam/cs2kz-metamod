@@ -50,10 +50,12 @@
 	"Menu - Mimic Spec"
 	{
 		"en"		"Mimic Spectated Player"
+		"ua"		"Використовувати налаштування гравця під час спостереження"
 	}
 	"Menu - Mimic Spec Sub"
 	{
 		"en"		"Use their HUD settings while spectating them"
+		"ua"		"Використовувати їхні налаштування HUD під час спостереження за ними"
 	}
 	"Menu - Compact Sub"
 	{
@@ -76,6 +78,7 @@
 	"Menu - Font Local Note"
 	{
 		"en"		"* depends on your local font installation, type !fonts for more information"
+		"ua"		"* залежить від того, які шрифти встановлено у вашій системі, для отримання додаткової інформації введіть команду !fonts"
 	}
 	"Menu - Enabled"
 	{
@@ -128,22 +131,27 @@
 	"Menu - Align"
 	{
 		"en"		"Alignment"
+		"ua"		"Вирівнювання"
 	}
 	"Menu - Align Left"
 	{
 		"en"		"Left"
+		"ua"		"Ліворуч"
 	}
 	"Menu - Align Center"
 	{
 		"en"		"Center"
+		"ua"		"По центру"
 	}
 	"Menu - Align Right"
 	{
 		"en"		"Right"
+		"ua"		"Праворуч"
 	}
 	"Menu - Timer State"
 	{
 		"en"		"Show paused and stopped"
+		"ua"		"Показувати паузу та зупинку таймера"
 	}
 	"Menu - Affect Legacy Sub"
 	{
@@ -326,10 +334,12 @@
 	"Menu - Keys Overlap Axis"
 	{
 		"en"		"Overlap on axis only"
+		"ua"		"Overlap лише по осі"		
 	}
 	"Menu - Keys Overlap Axis Sub"
 	{
 		"en"		"Warn on the two overlapping keys instead of the whole overlay"
+		"ua"		"Попереджати про Overlap двох клавіш замість всього оверлею"
 	}
 	"Menu - Color Base"
 	{
@@ -352,6 +362,7 @@
 	"Menu - Color Crouch Perf"
 	{
 		"en"		"Crouch perf color"
+		"ua"		"Колір Crouch perf"
 	}
 	"Menu - Color Jumpbug"
 	{
@@ -434,7 +445,7 @@
 	"Menu - Keys Unpressed"
 	{
 		"en"		"Unpressed keys"
-		"ua"		"Не натиснуті клавіші"
+		"ua"		"Ненатиснуті клавіші"
 	}
 	"Menu - Keys Unpressed Show"
 	{
@@ -511,15 +522,17 @@
 	{
 		"en"		"Overlap color"
 		"chi"		"重叠颜色"
-		"ua"		"Колір перекриття"
+		"ua"		"Колір Overlap"
 	}
 	"Menu - Color Pressed"
 	{
 		"en"		"Glow/Pressed color"
+		"ua"		"Колір підсвітки/натиснутої клавіші"
 	}
 	"Menu - Color Overlap Glow"
 	{
 		"en"		"Overlap glow/pressed color"
+		"ua"		"Колір підсвітки Overlap/натиснутої клавіші"
 	}
 	"Menu - Mode"
 	{
@@ -1097,6 +1110,7 @@
 	"Prefs - Export Stamp Note"
 	{
 		"en"		"The stamp line below is what makes a block apply once instead of on every connect.\nKeep it when you are moving your own preferences to another server. Leave it out when you are sharing them with someone else."
+		"ua"		"Рядок нижче змушує блок застосовуватися один раз замість кожного підключення.\nЗалиште його, коли ви переносите свої налаштування на інший сервер. Видаліть його, коли ви ділитеся ними з іншими."
 	}
 	"Prefs - Export Footer"
 	{
