@@ -128,6 +128,28 @@ static_function void PickKeysIdle(KZPlayer *player, i64, i64 id)
 	player->optionService->SetPreferenceInt("mhudKeysIdle", Clamp(id, (i64)MHUDKeysIdle::Show, (i64)MHUDKeysIdle::Underscore));
 }
 
+// Indexed by MHUDPrespeedShow, so a picked row id is the stored value.
+static_global const char *const PRESPEED_SHOW_LABELS[] = {"Menu - Prespeed Show Brief", "Menu - Prespeed Show Jump Only",
+														  "Menu - Prespeed Show Always"};
+
+static_function void GetPrespeedShowChoices(KZPlayer *player, i64, std::vector<KZChoice> &out)
+{
+	for (i32 i = 0; i < KZ_ARRAYSIZE(PRESPEED_SHOW_LABELS); i++)
+	{
+		out.push_back({KZMenuService::GetPhrase(player, PRESPEED_SHOW_LABELS[i]), i, NULL});
+	}
+}
+
+static_function i64 GetCurrentPrespeedShow(KZPlayer *player, i64)
+{
+	return (i64)player->hudService->GetOwnPrefs().prespeedShow;
+}
+
+static_function void PickPrespeedShow(KZPlayer *player, i64, i64 id)
+{
+	player->optionService->SetPreferenceInt("mhudPrespeedShow", Clamp(id, (i64)MHUDPrespeedShow::Brief, (i64)MHUDPrespeedShow::Always));
+}
+
 // Indexed by MHUDAlign, so a picked row id is the stored value.
 static_global const char *const ALIGN_LABELS[] = {"Menu - Align Left", "Menu - Align Center", "Menu - Align Right"};
 
@@ -162,7 +184,7 @@ void KZHUDService::RegisterMenu()
 	KZ::menu::SetItemPref(general, "hudLegacyStyle", KZOptStorage::Bool);
 	KZ::menu::AddActionToggle(general, "Menu - Panel", GetPanelState, TogglePanelState);
 	KZ::menu::SetItemPref(general, "showPanel", KZOptStorage::Bool, 1);
-	KZ::menu::SetItemSubtext(general, "Menu - Affect Legacy Sub");
+	KZ::menu::SetItemSubtext(general, "Menu - Panel Sub");
 	KZ::menu::AddToggle(general, "Menu - Compact", "compactPanel", false);
 	KZ::menu::SetItemEnabledBy(general, "showPanel");
 	KZ::menu::SetItemSubtext(general, "Menu - Compact Sub");
@@ -228,8 +250,9 @@ void KZHUDService::RegisterMenu()
 				KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
 				KZ::menu::AddToggle(sub, "Menu - Prespeed Brackets", "mhudPrespeedBrackets", false);
 				KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
-				KZ::menu::AddToggle(sub, "Menu - Prespeed Hide Walk Off", "mhudPrespeedHideWalkOff", false);
-				KZ::menu::SetItemSubtext(sub, "Menu - Prespeed Hide Walk Off Sub");
+				KZ::menu::AddChoice(sub, "Menu - Prespeed Show", GetPrespeedShowChoices, GetCurrentPrespeedShow, PickPrespeedShow);
+				KZ::menu::SetItemPref(sub, "mhudPrespeedShow", KZOptStorage::Int, (i32)MHUDPrespeedShow::Brief);
+				KZ::menu::SetItemSubtext(sub, "Menu - Prespeed Show Sub");
 				KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
 				break;
 			}
@@ -237,6 +260,7 @@ void KZHUDService::RegisterMenu()
 			case MHUDElement::Keys:
 			{
 				KZ::menu::AddToggle(sub, "Menu - Keys Overlap", "mhudKeysOverlap", true);
+				KZ::menu::SetItemSubtext(sub, "Menu - Keys Overlap Sub");
 				KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
 				KZ::menu::AddToggle(sub, "Menu - Keys Overlap Axis", "mhudKeysOverlapAxis", false);
 				KZ::menu::SetItemSubtext(sub, "Menu - Keys Overlap Axis Sub");
@@ -251,8 +275,10 @@ void KZHUDService::RegisterMenu()
 				KZ::menu::AddToggle(sub, "Menu - Keys Border", "mhudKeysBorder", true);
 				KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
 				KZ::menu::AddToggle(sub, "Menu - Keys Glow", "mhudKeysGlow", true);
+				KZ::menu::SetItemSubtext(sub, "Menu - Keys Glow Fill Sub");
 				KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
 				KZ::menu::AddToggle(sub, "Menu - Keys Fill", "mhudKeysFill", true);
+				KZ::menu::SetItemSubtext(sub, "Menu - Keys Glow Fill Sub");
 				KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
 				break;
 			}

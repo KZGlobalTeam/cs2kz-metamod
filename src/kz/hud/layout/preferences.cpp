@@ -55,7 +55,8 @@ void KZHUDService::RefreshPrefs()
 	this->prefs.speedPrecise = opts->GetPreferenceBool("mhudSpeedPrecise", false);
 	this->prefs.prespeedPrecise = opts->GetPreferenceBool("mhudPrespeedPrecise", false);
 	this->prefs.prespeedBrackets = opts->GetPreferenceBool("mhudPrespeedBrackets", false);
-	this->prefs.prespeedHideWalkOff = opts->GetPreferenceBool("mhudPrespeedHideWalkOff", false);
+	const i32 prespeedShow = (i32)opts->GetPreferenceInt("mhudPrespeedShow", (i64)MHUDPrespeedShow::Brief);
+	this->prefs.prespeedShow = (MHUDPrespeedShow)Clamp(prespeedShow, (i32)MHUDPrespeedShow::Brief, (i32)MHUDPrespeedShow::Always);
 	this->prefs.keysOverlapEnabled = opts->GetPreferenceBool("mhudKeysOverlap", true);
 	this->prefs.keysOverlapAxis = opts->GetPreferenceBool("mhudKeysOverlapAxis", false);
 	this->prefs.keysLetters = opts->GetPreferenceBool("mhudKeysLetters", false);

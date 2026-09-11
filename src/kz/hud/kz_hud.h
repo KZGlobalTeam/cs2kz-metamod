@@ -98,6 +98,14 @@ enum class MHUDAlign
 	Right,
 };
 
+// How long prespeed stays visible after landing.
+enum class MHUDPrespeedShow
+{
+	Brief,        // default: shows briefly after any landing
+	JumpOrLadder, // shows briefly, but only after a jump or ladder takeoff, not a walk-off
+	Always,       // stays visible while grounded, using the last known takeoff speed
+};
+
 // What an unpressed key looks like.
 enum class MHUDKeysIdle
 {
@@ -135,7 +143,7 @@ struct MHUDPrefs
 	bool speedPrecise {};
 	bool prespeedPrecise {};
 	bool prespeedBrackets {};
-	bool prespeedHideWalkOff {};
+	MHUDPrespeedShow prespeedShow {MHUDPrespeedShow::Brief};
 	bool keysOverlapEnabled {true};
 	bool keysOverlapAxis {}; // tint only the two keys causing the overlap, not the whole element
 	bool keysLetters {};

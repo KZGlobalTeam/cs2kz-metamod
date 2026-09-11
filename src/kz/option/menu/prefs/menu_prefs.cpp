@@ -16,6 +16,7 @@ void KZMenuService::RegisterChromePrefs()
 	KZ::menu::AddColor(cat, "Menu - Color", "menuColor", Color(255, 255, 255, 255));
 	KZ::menu::AddToggle(cat, "Menu - Sounds", "menuSounds", true);
 	KZ::menu::AddToggle(cat, "Menu - Popup Shift", "menuPopupShift", true);
+	KZ::menu::SetItemSubtext(cat, "Menu - Popup Shift Sub");
 	KZ::menu::SetItemDivider(cat);
 	KZ::prefs::RegisterMenu(cat);
 }

@@ -101,8 +101,10 @@ KZHUDService::SpeedInfo KZHUDService::GetSpeedInfo()
 	velocity += baseVelocity;
 	info.speed = velocity.Length2D();
 	// Keep the takeoff velocity on for a while after landing so the speed values flicker less.
-	if ((this->player->GetPlayerPawn()->m_fFlags & FL_ONGROUND
-		 && g_pKZUtils->GetServerGlobals()->curtime - this->player->landingTime > KZ_HUD_ON_GROUND_THRESHOLD)
+	// mhudPrespeedShow == Always skips this timeout, so the last takeoff speed keeps showing while grounded.
+	const bool pastGraceWindow = this->player->GetPlayerPawn()->m_fFlags & FL_ONGROUND
+								 && g_pKZUtils->GetServerGlobals()->curtime - this->player->landingTime > KZ_HUD_ON_GROUND_THRESHOLD;
+	if ((pastGraceWindow && this->GetPrefs().prespeedShow != MHUDPrespeedShow::Always)
 		|| (this->player->GetPlayerPawn()->m_MoveType == MOVETYPE_LADDER && !player->IsButtonPressed(IN_JUMP)))
 	{
 		return info;

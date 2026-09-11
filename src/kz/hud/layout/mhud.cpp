@@ -67,7 +67,8 @@ void KZHUDService::UpdatePrespeedElement(CCSCustomHudLayout *layout, const Speed
 	const char *format = prefs.prespeedBrackets ? (prefs.prespeedPrecise ? "(%.2f)" : "(%.0f)") : (prefs.prespeedPrecise ? "%.2f" : "%.0f");
 	V_snprintf(text, sizeof(text), format, info.takeoffSpeed);
 	const Color color = prefs.prespeed[(i32)info.GetState()];
-	const bool show = this->IsMHUDElementEnabled(MHUDElement::Prespeed) && info.showTakeoff && !(prefs.prespeedHideWalkOff && info.walkedOff);
+	const bool hideWalkOff = prefs.prespeedShow == MHUDPrespeedShow::JumpOrLadder;
+	const bool show = this->IsMHUDElementEnabled(MHUDElement::Prespeed) && info.showTakeoff && !(hideWalkOff && info.walkedOff);
 	this->UpdateLayoutElement(layout, MHUDElement::Prespeed, show, text, color, force);
 }
 

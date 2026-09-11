@@ -55,6 +55,7 @@ void KZJumpstatsService::RegisterMenu()
 	KZOptNode *cat = KZ::menu::AddCategory("Menu - Jumpstats");
 	KZ::menu::AddToggle(cat, "Menu - JS Reporting", "jsReporting", true);
 	KZ::menu::AddToggle(cat, "Menu - JS Always", "jsAlways", false);
+	KZ::menu::SetItemSubtext(cat, "Menu - JS Always Sub");
 	KZ::menu::AddToggle(cat, "Menu - JS Extended Stats", "jsExtendedChatStats", false);
 	KZ::menu::AddToggle(cat, "Menu - JS Failstats", "jsFailstats", true);
 	KZ::menu::AddToggle(cat, "Menu - JS Failstats Console", "jsFailstatsConsole", true);

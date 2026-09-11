@@ -25,6 +25,10 @@
 		"chi"		"关"
 		"ua"		"ВИМК."
 	}
+	"Menu - Panel Sub"
+	{
+		"en"		"The legacy centre-screen HUD; also affects the legacy layout HUD style"
+	}
 	"Menu - Panel"
 	{
 		"en"		"Panel"
@@ -166,15 +170,29 @@
 		"en"		"Parentheses"
 		"ua"		"Дужки"
 	}
-	"Menu - Prespeed Hide Walk Off"
+	"Menu - Prespeed Show"
 	{
-		"en"		"Hide when walking off"
-		"ua"		"Приховувати при сходженні з платформи"
+		"en"		"Visibility"
 	}
-	"Menu - Prespeed Hide Walk Off Sub"
+	"Menu - Prespeed Show Sub"
 	{
-		"en"		"Only show prespeed after a jump or a ladder"
-		"ua"		"Показувати пре-швидкість лише після стрибка або драбини"
+		"en"		"Jump/Ladder only ignores walk-offs, Always keeps it shown on the ground"
+	}
+	"Menu - Prespeed Show Brief"
+	{
+		"en"		"Normal"
+	}
+	"Menu - Prespeed Show Jump Only"
+	{
+		"en"		"Jump/Ladder only"
+	}
+	"Menu - Prespeed Show Always"
+	{
+		"en"		"Always"
+	}
+	"Menu - Keys Overlap Sub"
+	{
+		"en"		"Warns when opposite movement keys (W+S or A+D) are held at the same time"
 	}
 	"Menu - Keys Overlap"
 	{
@@ -337,6 +355,10 @@
 		"en"		"Opacity"
 		"ua"		"Непрозорість"
 	}
+	"Menu - Keys Glow Fill Sub"
+	{
+		"en"		"Only applies to a key while it is pressed"
+	}
 	"Menu - Keys Glow"
 	{
 		"en"		"Key glow"
@@ -351,6 +373,10 @@
 	{
 		"en"		"Shift menu for popups"
 		"ua"		"Зсув меню для спливаючих вікон"
+	}
+	"Menu - Popup Shift Sub"
+	{
+		"en"		"Moves the main menu to the left when a popup opens, so it fits on a 4:3 screen"
 	}
 	"Menu - Color"
 	{
@@ -660,6 +686,10 @@
 		"chi"		"计时器"
 		"ua"		"Таймер"
 	}
+	"Menu - Map Overlay Sub"
+	{
+		"en"		"Prints checkpoint/stage/split times to console for third-party map overlay tools to read"
+	}
 	"Menu - Map Overlay"
 	{
 		"en"		"Map overlay integration"
@@ -671,6 +701,10 @@
 		"en"		"Timer stop sound"
 		"chi"		"计时器停止音效"
 		"ua"		"Звук зупинки таймера"
+	}
+	"Menu - Safeguard Sub"
+	{
+		"en"		"Blocks commands that would reset your timer during a valid run"
 	}
 	"Menu - Safeguard"
 	{
@@ -695,6 +729,10 @@
 		"en"		"On (PRO)"
 		"chi"		"开 (PRO)"
 		"ua"		"Увімкнено (PRO)"
+	}
+	"Menu - Compare Sub"
+	{
+		"en"		"Which time your checkpoint/stage diffs are measured against during a run"
 	}
 	"Menu - Compare"
 	{
@@ -743,6 +781,10 @@
 		"en"		"Report my jumps"
 		"chi"		"报告我的跳跃"
 		"ua"		"Повідомляти про мої стрибки"
+	}
+	"Menu - JS Always Sub"
+	{
+		"en"		"Report every jump, ignoring the tier thresholds below"
 	}
 	"Menu - JS Always"
 	{

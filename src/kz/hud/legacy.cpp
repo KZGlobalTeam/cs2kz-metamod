@@ -18,7 +18,7 @@ std::string KZHUDService::GetSpeedText(const char *language)
 {
 	const SpeedInfo info = this->GetSpeedInfo();
 	const MHUDPrefs &prefs = this->GetPrefs();
-	if (!info.showTakeoff || (prefs.prespeedHideWalkOff && info.walkedOff))
+	if (!info.showTakeoff || (prefs.prespeedShow == MHUDPrespeedShow::JumpOrLadder && info.walkedOff))
 	{
 		return KZLanguageService::PrepareMessageWithLang(language, "HUD - Speed Text", info.speed);
 	}
