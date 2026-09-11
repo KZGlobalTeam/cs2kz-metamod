@@ -137,12 +137,6 @@ void KZHUDService::UpdateKeysElement(CCSCustomHudLayout *layout, KZPlayer *sourc
 		this->layoutKeys.noBorder = noBorder;
 		layout->SetHasClass(keysPanel, "keys-noborder", noBorder ? k_eHudPanelClassStatus_HasClass : k_eHudPanelClassStatus_DoesNotHaveClass);
 	}
-	const i32 boxOutline = prefs.keysBoxOutline ? 1 : 0;
-	if (this->layoutKeys.boxOutline != boxOutline)
-	{
-		this->layoutKeys.boxOutline = boxOutline;
-		layout->SetHasClass(keysPanel, "keys-boxoutline", boxOutline ? k_eHudPanelClassStatus_HasClass : k_eHudPanelClassStatus_DoesNotHaveClass);
-	}
 	const i32 noGlow = prefs.keysGlowEnabled ? 0 : 1;
 	if (this->layoutKeys.noGlow != noGlow)
 	{

@@ -61,7 +61,6 @@ void KZHUDService::RefreshPrefs()
 	this->prefs.keysLetters = opts->GetPreferenceBool("mhudKeysLetters", false);
 	this->prefs.keysSquare = opts->GetPreferenceBool("mhudKeysSquare", false);
 	this->prefs.keysBorder = opts->GetPreferenceBool("mhudKeysBorder", true);
-	this->prefs.keysBoxOutline = opts->GetPreferenceBool("mhudKeysBoxOutline", false);
 	this->prefs.keysGlowEnabled = opts->GetPreferenceBool("mhudKeysGlow", true);
 	this->prefs.keysFillEnabled = opts->GetPreferenceBool("mhudKeysFill", true);
 	// mhudKeysIdle replaced the mhudKeysHideUnpressed toggle; carry the old setting over once.

@@ -137,14 +137,6 @@
 	{
 		"en"		"Right"
 	}
-	"Menu - Text Outline"
-	{
-		"en"		"Text outline"
-	}
-	"Menu - Box Outline"
-	{
-		"en"		"Box outline"
-	}
 	"Menu - Timer State"
 	{
 		"en"		"Show paused and stopped"

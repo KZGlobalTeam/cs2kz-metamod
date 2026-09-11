@@ -141,7 +141,6 @@ struct MHUDPrefs
 	bool keysLetters {};
 	bool keysSquare {};
 	bool keysBorder {true};
-	bool keysBoxOutline {};
 	bool keysGlowEnabled {true};
 	bool keysFillEnabled {true};
 	MHUDKeysIdle keysIdle {MHUDKeysIdle::Show};
@@ -333,7 +332,6 @@ private:
 		i32 letters {-1};
 		i32 square {-1};
 		i32 noBorder {-1};
-		i32 boxOutline {-1};
 		i32 noGlow {-1};
 		i32 noFill {-1};
 		i32 outline {-1};
