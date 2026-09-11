@@ -293,13 +293,13 @@ VerticalScrollBar:hover .ScrollThumb {
 	vertical-align: middle;
 	flow-children: right;
 	margin-right: 14px;
-	max-width: 46%;
+	max-width: 100%;
 }
 
 .item-value {
 	vertical-align: middle;
 	font-size: 16px;
-	max-width: 300px;
+	white-space: nowrap;
 	text-overflow: ellipsis;
 }
 
