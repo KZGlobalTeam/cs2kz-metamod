@@ -246,7 +246,6 @@ void KZ::quiet::OnPostEvent(INetworkMessageInternal *pEvent, const CNetMessage *
 			break;
 		}
 		// Used by kz_misc to block valve's player say messages.
-		case CS_UM_SayText:
 		case UM_SayText:
 		{
 			if (!KZOptionService::GetOptionInt("overridePlayerChat", true))
@@ -264,7 +263,6 @@ void KZ::quiet::OnPostEvent(INetworkMessageInternal *pEvent, const CNetMessage *
 			}
 			return;
 		}
-		case CS_UM_SayText2:
 		case UM_SayText2:
 		{
 			if (!KZOptionService::GetOptionInt("overridePlayerChat", true))
