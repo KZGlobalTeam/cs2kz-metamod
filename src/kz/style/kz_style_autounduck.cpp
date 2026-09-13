@@ -218,7 +218,10 @@ void KZAutoUnduckStyleService::OnProcessMovement()
 
 void KZAutoUnduckStyleService::Cleanup()
 {
-	this->player->GetMoveServices()->m_flLastDuckTime(this->lastActualDuckTime);
+	if (CCSPlayer_MovementServices *ms = this->player->GetMoveServices())
+	{
+		ms->m_flLastDuckTime(this->lastActualDuckTime);
+	}
 }
 
 void KZAutoUnduckStyleService::UpdateDuckTime()
