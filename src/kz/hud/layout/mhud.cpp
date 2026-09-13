@@ -51,11 +51,20 @@ void KZHUDService::UpdateTimerElement(CCSCustomHudLayout *layout, KZPlayer *sour
 	this->UpdateLayoutElement(layout, MHUDElement::Timer, show, text.c_str(), color, force);
 }
 
+// The border never enters a format string, so the table stays inert data.
+static_function void FormatBordered(char *out, i32 outLen, const MHUDPrefs::Element &element, bool precise, f32 value)
+{
+	char number[16];
+	V_snprintf(number, sizeof(number), precise ? "%.2f" : "%.0f", value);
+	const MHUDBorderDef &border = MHUD_BORDERS[(i32)element.border];
+	V_snprintf(out, outLen, "%s%s%s", border.prefix, number, border.suffix);
+}
+
 void KZHUDService::UpdateSpeedElement(CCSCustomHudLayout *layout, const SpeedInfo &info, bool force)
 {
 	const MHUDPrefs &prefs = this->GetPrefs();
-	char text[16];
-	V_snprintf(text, sizeof(text), prefs.speedPrecise ? "%.2f" : "%.0f", info.speed);
+	char text[24];
+	FormatBordered(text, sizeof(text), prefs.elements[(i32)MHUDElement::Speed], prefs.speedPrecise, info.speed);
 	const Color color = prefs.speed[(i32)info.GetState()];
 	this->UpdateLayoutElement(layout, MHUDElement::Speed, this->IsMHUDElementEnabled(MHUDElement::Speed), text, color, force);
 }
@@ -63,9 +72,8 @@ void KZHUDService::UpdateSpeedElement(CCSCustomHudLayout *layout, const SpeedInf
 void KZHUDService::UpdatePrespeedElement(CCSCustomHudLayout *layout, const SpeedInfo &info, bool force)
 {
 	const MHUDPrefs &prefs = this->GetPrefs();
-	char text[16];
-	const char *format = prefs.prespeedBrackets ? (prefs.prespeedPrecise ? "(%.2f)" : "(%.0f)") : (prefs.prespeedPrecise ? "%.2f" : "%.0f");
-	V_snprintf(text, sizeof(text), format, info.takeoffSpeed);
+	char text[24];
+	FormatBordered(text, sizeof(text), prefs.elements[(i32)MHUDElement::Prespeed], prefs.prespeedPrecise, info.takeoffSpeed);
 	const Color color = prefs.prespeed[(i32)info.GetState()];
 	const bool hideWalkOff = prefs.prespeedShow == MHUDPrespeedShow::JumpOrLadder;
 	const bool show = this->IsMHUDElementEnabled(MHUDElement::Prespeed) && info.showTakeoff && !(hideWalkOff && info.walkedOff);
@@ -257,10 +265,36 @@ void KZHUDService::UpdateKeysElement(CCSCustomHudLayout *layout, KZPlayer *sourc
 
 void KZHUDService::UpdateCheckpointElement(CCSCustomHudLayout *layout, KZPlayer *source, bool force)
 {
+	const MHUDPrefs &prefs = this->GetPrefs();
 	std::string text = source->hudService->GetCheckpointText(this->player->languageService->GetLanguage());
-	const Color color = this->GetPrefs().checkpoint;
+	const bool replay = KZ::replaysystem::IsReplayBot(source);
+	const i32 teleports = replay ? KZ::replaysystem::GetTeleportCount() : source->checkpointService->GetTeleportCount();
+	const Color color = teleports > 0 ? prefs.checkpointTp : prefs.checkpoint;
 	const bool show = this->IsMHUDElementEnabled(MHUDElement::Checkpoint) && !text.empty();
 	this->UpdateLayoutElement(layout, MHUDElement::Checkpoint, show, text.c_str(), color, force);
+}
+
+void KZHUDService::UpdateIndicatorElements(CCSCustomHudLayout *layout, const SpeedInfo &info, bool force)
+{
+	const MHUDPrefs &prefs = this->GetPrefs();
+	// A jumpbug is a crouchbug plus a perf, so it lights the perf indicator too. MHUDSpeedState has to
+	// settle on one color for the speed number and keeps them exclusive; indicators are separate lamps.
+	const bool active[MHUD_INDICATOR_COUNT] = {info.perf || info.jumpbug, info.crouchJump, info.jumpbug};
+
+	for (i32 i = 0; i < MHUD_INDICATOR_COUNT; i++)
+	{
+		const MHUDIndicatorDef &indicator = MHUD_INDICATOR_DEFS[i];
+		const bool show = this->IsMHUDElementEnabled(indicator.element) && info.recentTakeoff && active[i];
+		if (!show)
+		{
+			// A hidden element keeps its last text, so there is nothing to resolve.
+			this->UpdateLayoutElement(layout, indicator.element, false, NULL, prefs.indicator[i], force);
+			continue;
+		}
+		const char *phrase = prefs.indicatorAcronym[i] ? indicator.shortPhrase : indicator.fullPhrase;
+		const std::string text = this->player->languageService->PrepareMessage(phrase);
+		this->UpdateLayoutElement(layout, indicator.element, true, text.c_str(), prefs.indicator[i], force);
+	}
 }
 
 bool KZHUDService::UpdateHudLayout(KZPlayer *source)
@@ -293,5 +327,6 @@ bool KZHUDService::UpdateHudLayout(KZPlayer *source)
 	this->UpdatePrespeedElement(layout, info, force);
 	this->UpdateKeysElement(layout, source, force);
 	this->UpdateCheckpointElement(layout, source, force);
+	this->UpdateIndicatorElements(layout, info, force);
 	return true;
 }

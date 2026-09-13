@@ -15,8 +15,27 @@ enum class MHUDElement
 	Prespeed,
 	Keys,
 	Checkpoint,
+	// The indicators are contiguous and last, so an element index maps straight onto the indicator tables.
+	Perf,
+	CrouchJump,
+	Jumpbug,
 	Count
 };
+
+#define MHUD_INDICATOR_COUNT 3
+
+static_assert((i32)MHUDElement::Count - (i32)MHUDElement::Perf == MHUD_INDICATOR_COUNT, "indicators must be the last three elements");
+
+inline i32 MHUDIndicatorIndex(MHUDElement element)
+{
+	return (i32)element - (i32)MHUDElement::Perf;
+}
+
+inline bool IsMHUDIndicator(MHUDElement element)
+{
+	const i32 index = MHUDIndicatorIndex(element);
+	return index >= 0 && index < MHUD_INDICATOR_COUNT;
+}
 
 struct MHUDElementDef
 {
@@ -30,6 +49,7 @@ struct MHUDElementDef
 	const char *outlineKey;
 	const char *opacityKey;
 	const char *alignKey;
+	const char *borderKey;
 	i32 xDefault;
 	i32 yDefault;
 	i32 sizeDefault;
@@ -98,6 +118,58 @@ enum class MHUDAlign
 	Right,
 };
 
+// Symbols wrapped around a numeric element's value.
+enum class MHUDBorder
+{
+	None,
+	Parens,   // (1234)
+	Dash,     // -1234-
+	Dashes,   // --1234--
+	Angles,   // <1234>
+	Brackets, // [1234]
+	Braces,   // {1234}
+	Under,    // _1234_
+	Unders,   // __1234__
+	Pipes,    // |1234|
+	Count,
+};
+
+struct MHUDBorderDef
+{
+	const char *prefix;
+	const char *suffix;
+	const char *label; // the symbols around a sample value, so the picker needs no phrase; NULL for None
+};
+
+extern const MHUDBorderDef MHUD_BORDERS[(i32)MHUDBorder::Count];
+
+// The rows each indicator contributes to the flattened Indicators page.
+enum class MHUDIndicatorRow
+{
+	Enabled,
+	Position,
+	Align,
+	Size,
+	Font,
+	Outline,
+	Opacity,
+	Color,
+	Acronym,
+	Count,
+};
+
+struct MHUDIndicatorDef
+{
+	MHUDElement element;
+	const char *acronymKey;  // bool preference: draw the short form instead of the full one
+	const char *fullPhrase;  // drawn in Full mode
+	const char *shortPhrase; // drawn in Acronym mode
+	// Indicator-qualified: all three share one page, where a bare "Size" would repeat three times.
+	const char *rowPhrase[(i32)MHUDIndicatorRow::Count];
+};
+
+extern const MHUDIndicatorDef MHUD_INDICATOR_DEFS[MHUD_INDICATOR_COUNT];
+
 // How long prespeed stays visible after landing.
 enum class MHUDPrespeedShow
 {
@@ -124,6 +196,7 @@ struct MHUDPrefs
 		bool outline {true};
 		i32 opacity {100};
 		MHUDAlign align {MHUDAlign::Center};
+		MHUDBorder border {MHUDBorder::None};
 	};
 
 	Element elements[(i32)MHUDElement::Count] {};
@@ -132,7 +205,9 @@ struct MHUDPrefs
 	Color speed[(i32)MHUDSpeedState::Count];
 	Color prespeed[(i32)MHUDSpeedState::Count];
 	Color keys, keysOverlap, keysPressed, keysOverlapGlow;
-	Color checkpoint;
+	Color checkpoint, checkpointTp;
+	Color indicator[MHUD_INDICATOR_COUNT];
+	bool indicatorAcronym[MHUD_INDICATOR_COUNT] {};
 
 	bool legacyStyle {};
 	bool compactPanel {};
@@ -142,7 +217,6 @@ struct MHUDPrefs
 	bool timerShowState {true};
 	bool speedPrecise {};
 	bool prespeedPrecise {};
-	bool prespeedBrackets {};
 	MHUDPrespeedShow prespeedShow {MHUDPrespeedShow::Brief};
 	bool keysOverlapEnabled {true};
 	bool keysOverlapAxis {}; // tint only the two keys causing the overlap, not the whole element
@@ -282,7 +356,8 @@ private:
 		bool perf {};
 		bool jumpbug {};
 		bool crouchJump {};
-		bool walkedOff {}; // left the ground without jumping and not off a ladder
+		bool walkedOff {};     // left the ground without jumping and not off a ladder
+		bool recentTakeoff {}; // airborne or inside the landing grace, even when showTakeoff is held on
 
 		MHUDSpeedState GetState() const
 		{
@@ -385,6 +460,7 @@ private:
 	void UpdatePrespeedElement(CCSCustomHudLayout *layout, const SpeedInfo &info, bool force);
 	void UpdateKeysElement(CCSCustomHudLayout *layout, KZPlayer *source, bool force);
 	void UpdateCheckpointElement(CCSCustomHudLayout *layout, KZPlayer *source, bool force);
+	void UpdateIndicatorElements(CCSCustomHudLayout *layout, const SpeedInfo &info, bool force);
 
 public:
 	static CCSCustomHudLayout *GetLayoutEntity(const char *layoutPath, CHandle<CBaseEntity> &cache);

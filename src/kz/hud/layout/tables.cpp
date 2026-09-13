@@ -5,11 +5,42 @@
 // clang-format off
 extern const MHUDElementDef MHUD_ELEMENTS[(i32)MHUDElement::Count] =
 {
-	{"mhud_timer",      "timer",      "mhudTimerEnabled",      "mhudTimerX",      "mhudTimerY",      "mhudTimerSize",      "mhudTimerFont",      "mhudTimerOutline", "mhudTimerOpacity",      "mhudTimerAlign",      MHUD_DEF_TIMER_X,      MHUD_DEF_TIMER_Y,      MHUD_DEF_TIMER_SIZE},
-	{"mhud_speed",      "speed",      "mhudSpeedEnabled",      "mhudSpeedX",      "mhudSpeedY",      "mhudSpeedSize",      "mhudSpeedFont",      "mhudSpeedOutline", "mhudSpeedOpacity",      "mhudSpeedAlign",      MHUD_DEF_SPEED_X,      MHUD_DEF_SPEED_Y,      MHUD_DEF_SPEED_SIZE},
-	{"mhud_prespeed",   "prespeed",   "mhudPrespeedEnabled",   "mhudPrespeedX",   "mhudPrespeedY",   "mhudPrespeedSize",   "mhudPrespeedFont",   "mhudPrespeedOutline", "mhudPrespeedOpacity",   "mhudPrespeedAlign",   MHUD_DEF_PRESPEED_X,   MHUD_DEF_PRESPEED_Y,   MHUD_DEF_PRESPEED_SIZE},
-	{"mhud_keys",       "keys",       "mhudKeysEnabled",       "mhudKeysX",       "mhudKeysY",       "mhudKeysSize",       "mhudKeysFont",       "mhudKeysOutline", "mhudKeysOpacity",       NULL,                  MHUD_DEF_KEYS_X,       MHUD_DEF_KEYS_Y,       MHUD_DEF_KEYS_SIZE},
-	{"mhud_checkpoint", "checkpoint", "mhudCheckpointEnabled", "mhudCheckpointX", "mhudCheckpointY", "mhudCheckpointSize", "mhudCheckpointFont", "mhudCheckpointOutline", "mhudCheckpointOpacity", "mhudCheckpointAlign", MHUD_DEF_CHECKPOINT_X, MHUD_DEF_CHECKPOINT_Y, MHUD_DEF_CHECKPOINT_SIZE},
+	{"mhud_timer",      "timer",      "mhudTimerEnabled",      "mhudTimerX",      "mhudTimerY",      "mhudTimerSize",      "mhudTimerFont",      "mhudTimerOutline",      "mhudTimerOpacity",      "mhudTimerAlign",      NULL,                  MHUD_DEF_TIMER_X,      MHUD_DEF_TIMER_Y,      MHUD_DEF_TIMER_SIZE},
+	{"mhud_speed",      "speed",      "mhudSpeedEnabled",      "mhudSpeedX",      "mhudSpeedY",      "mhudSpeedSize",      "mhudSpeedFont",      "mhudSpeedOutline",      "mhudSpeedOpacity",      "mhudSpeedAlign",      "mhudSpeedBorder",     MHUD_DEF_SPEED_X,      MHUD_DEF_SPEED_Y,      MHUD_DEF_SPEED_SIZE},
+	{"mhud_prespeed",   "prespeed",   "mhudPrespeedEnabled",   "mhudPrespeedX",   "mhudPrespeedY",   "mhudPrespeedSize",   "mhudPrespeedFont",   "mhudPrespeedOutline",   "mhudPrespeedOpacity",   "mhudPrespeedAlign",   "mhudPrespeedBorder",  MHUD_DEF_PRESPEED_X,   MHUD_DEF_PRESPEED_Y,   MHUD_DEF_PRESPEED_SIZE},
+	{"mhud_keys",       "keys",       "mhudKeysEnabled",       "mhudKeysX",       "mhudKeysY",       "mhudKeysSize",       "mhudKeysFont",       "mhudKeysOutline",       "mhudKeysOpacity",       NULL,                  NULL,                  MHUD_DEF_KEYS_X,       MHUD_DEF_KEYS_Y,       MHUD_DEF_KEYS_SIZE},
+	{"mhud_checkpoint", "checkpoint", "mhudCheckpointEnabled", "mhudCheckpointX", "mhudCheckpointY", "mhudCheckpointSize", "mhudCheckpointFont", "mhudCheckpointOutline", "mhudCheckpointOpacity", "mhudCheckpointAlign", NULL,                  MHUD_DEF_CHECKPOINT_X, MHUD_DEF_CHECKPOINT_Y, MHUD_DEF_CHECKPOINT_SIZE},
+	{"mhud_perf",       "perf",       "mhudPerfEnabled",       "mhudPerfX",       "mhudPerfY",       "mhudPerfSize",       "mhudPerfFont",       "mhudPerfOutline",       "mhudPerfOpacity",       "mhudPerfAlign",       NULL,                  MHUD_DEF_PERF_X,       MHUD_DEF_PERF_Y,       MHUD_DEF_PERF_SIZE},
+	{"mhud_cj",         "cj",         "mhudCjEnabled",         "mhudCjX",         "mhudCjY",         "mhudCjSize",         "mhudCjFont",         "mhudCjOutline",         "mhudCjOpacity",         "mhudCjAlign",         NULL,                  MHUD_DEF_CJ_X,         MHUD_DEF_CJ_Y,         MHUD_DEF_CJ_SIZE},
+	{"mhud_jumpbug",    "jumpbug",    "mhudJumpbugEnabled",    "mhudJumpbugX",    "mhudJumpbugY",    "mhudJumpbugSize",    "mhudJumpbugFont",    "mhudJumpbugOutline",    "mhudJumpbugOpacity",    "mhudJumpbugAlign",    NULL,                  MHUD_DEF_JUMPBUG_X,    MHUD_DEF_JUMPBUG_Y,    MHUD_DEF_JUMPBUG_SIZE},
+};
+
+// A sample value inside each pair, so the picker shows the symbols themselves and needs no phrases.
+extern const MHUDBorderDef MHUD_BORDERS[(i32)MHUDBorder::Count] =
+{
+	{"",   "",   NULL},
+	{"(",  ")",  "(0)"},
+	{"-",  "-",  "-0-"},
+	{"--", "--", "--0--"},
+	{"<",  ">",  "<0>"},
+	{"[",  "]",  "[0]"},
+	{"{",  "}",  "{0}"},
+	{"_",  "_",  "_0_"},
+	{"__", "__", "__0__"},
+	{"|",  "|",  "|0|"},
+};
+
+extern const MHUDIndicatorDef MHUD_INDICATOR_DEFS[MHUD_INDICATOR_COUNT] =
+{
+	{MHUDElement::Perf, "mhudPerfAcronym", "HUD - Perf Full", "HUD - Perf Short",
+	 {"Menu - Ind Perf", "Menu - Ind Perf Position", "Menu - Ind Perf Align", "Menu - Ind Perf Size", "Menu - Ind Perf Font",
+	  "Menu - Ind Perf Outline", "Menu - Ind Perf Opacity", "Menu - Ind Perf Color", "Menu - Ind Perf Acronym"}},
+	{MHUDElement::CrouchJump, "mhudCjAcronym", "HUD - Crouch Jump Full", "HUD - Crouch Jump Short",
+	 {"Menu - Ind CJ", "Menu - Ind CJ Position", "Menu - Ind CJ Align", "Menu - Ind CJ Size", "Menu - Ind CJ Font",
+	  "Menu - Ind CJ Outline", "Menu - Ind CJ Opacity", "Menu - Ind CJ Color", "Menu - Ind CJ Acronym"}},
+	{MHUDElement::Jumpbug, "mhudJumpbugAcronym", "HUD - Jumpbug Full", "HUD - Jumpbug Short",
+	 {"Menu - Ind JB", "Menu - Ind JB Position", "Menu - Ind JB Align", "Menu - Ind JB Size", "Menu - Ind JB Font",
+	  "Menu - Ind JB Outline", "Menu - Ind JB Opacity", "Menu - Ind JB Color", "Menu - Ind JB Acronym"}},
 };
 
 static_global constexpr MHUDColorPrefDef TIMER_COLOR_PREFS[] =
@@ -49,6 +80,23 @@ static_global constexpr MHUDColorPrefDef KEYS_COLOR_PREFS[] =
 static_global constexpr MHUDColorPrefDef CHECKPOINT_COLOR_PREFS[] =
 {
 	{"Menu - Color Base",     "mhudCheckpointColor",   0xFF, 0xFF, 0xFF},
+	{"Menu - Color TP",       "mhudCheckpointTpColor", 0xFF, 0xFF, 0xFF},
+};
+
+// One color each; the flattened Indicators page relabels the row with the indicator's own phrase.
+static_global constexpr MHUDColorPrefDef PERF_COLOR_PREFS[] =
+{
+	{"Menu - Color Base",     "mhudPerfColor",         0x40, 0xFF, 0x40},
+};
+
+static_global constexpr MHUDColorPrefDef CJ_COLOR_PREFS[] =
+{
+	{"Menu - Color Base",     "mhudCjColor",           0x71, 0xEE, 0xB8},
+};
+
+static_global constexpr MHUDColorPrefDef JUMPBUG_COLOR_PREFS[] =
+{
+	{"Menu - Color Base",     "mhudJumpbugColor",      0xFF, 0xFF, 0x20},
 };
 // clang-format on
 
@@ -71,6 +119,15 @@ const MHUDColorPrefDef *KZHUDService::GetMHUDElementColorPrefs(MHUDElement eleme
 		case MHUDElement::Checkpoint:
 			count = KZ_ARRAYSIZE(CHECKPOINT_COLOR_PREFS);
 			return CHECKPOINT_COLOR_PREFS;
+		case MHUDElement::Perf:
+			count = KZ_ARRAYSIZE(PERF_COLOR_PREFS);
+			return PERF_COLOR_PREFS;
+		case MHUDElement::CrouchJump:
+			count = KZ_ARRAYSIZE(CJ_COLOR_PREFS);
+			return CJ_COLOR_PREFS;
+		case MHUDElement::Jumpbug:
+			count = KZ_ARRAYSIZE(JUMPBUG_COLOR_PREFS);
+			return JUMPBUG_COLOR_PREFS;
 		default:
 			count = 0;
 			return NULL;

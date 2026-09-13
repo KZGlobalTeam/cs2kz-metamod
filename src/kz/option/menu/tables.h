@@ -1,7 +1,7 @@
 #pragma once
 #include "kz/kz.h"
 
-// Curated Panorama utility sheets, as tables. Only the font table is shared; the colour and gradient
+// Curated Panorama utility sheets, as tables. Only the font table is shared; the color and gradient
 // tables live in tables.cpp, reached through the functions declared here.
 struct PanoramaFontDef
 {

@@ -13,7 +13,8 @@ void KZHUDService::RefreshPrefs()
 	{
 		const MHUDElementDef &def = MHUD_ELEMENTS[e];
 		MHUDPrefs::Element &element = this->prefs.elements[e];
-		element.enabled = opts->GetPreferenceBool(def.enabledKey, true);
+		// Indicators are opt-in; every other element is on by default.
+		element.enabled = opts->GetPreferenceBool(def.enabledKey, !IsMHUDIndicator((MHUDElement)e));
 		element.x = (f32)opts->GetPreferenceFloat(def.xKey, def.xDefault);
 		element.y = (f32)opts->GetPreferenceFloat(def.yKey, def.yDefault);
 		element.size = (f32)opts->GetPreferenceFloat(def.sizeKey, def.sizeDefault);
@@ -22,6 +23,8 @@ void KZHUDService::RefreshPrefs()
 		element.opacity = (i32)opts->GetPreferenceInt(def.opacityKey, 100);
 		const i64 align = def.alignKey ? opts->GetPreferenceInt(def.alignKey, (i64)MHUDAlign::Center) : (i64)MHUDAlign::Center;
 		element.align = (MHUDAlign)Clamp(align, (i64)MHUDAlign::Left, (i64)MHUDAlign::Right);
+		const i64 border = def.borderKey ? opts->GetPreferenceInt(def.borderKey, (i64)MHUDBorder::None) : (i64)MHUDBorder::None;
+		element.border = (MHUDBorder)Clamp(border, (i64)MHUDBorder::None, (i64)MHUDBorder::Count - 1);
 	}
 
 	this->prefs.timerPaused = opts->GetPreferenceColor("mhudTimerPausedColor", MHUD_DEF_TIMER_PAUSED_COLOR);
@@ -45,6 +48,16 @@ void KZHUDService::RefreshPrefs()
 	this->prefs.keysPressed = opts->GetPreferenceColor("mhudKeysPressedColor", MHUD_DEF_KEYS_PRESSED_COLOR);
 	this->prefs.keysOverlapGlow = opts->GetPreferenceColor("mhudKeysOverlapGlowColor", MHUD_DEF_KEYS_OVERLAP_GLOW_COLOR);
 	this->prefs.checkpoint = opts->GetPreferenceColor("mhudCheckpointColor", MHUD_DEF_BASE_COLOR);
+	this->prefs.checkpointTp = opts->GetPreferenceColor("mhudCheckpointTpColor", MHUD_DEF_BASE_COLOR);
+
+	for (i32 i = 0; i < MHUD_INDICATOR_COUNT; i++)
+	{
+		const MHUDIndicatorDef &indicator = MHUD_INDICATOR_DEFS[i];
+		i32 count = 0;
+		const MHUDColorPrefDef *colors = KZHUDService::GetMHUDElementColorPrefs(indicator.element, count);
+		this->prefs.indicator[i] = opts->GetPreferenceColor(colors[0].prefKey, Color(colors[0].r, colors[0].g, colors[0].b, 255));
+		this->prefs.indicatorAcronym[i] = opts->GetPreferenceBool(indicator.acronymKey, false);
+	}
 
 	this->prefs.legacyStyle = opts->GetPreferenceBool("hudLegacyStyle", false);
 	this->prefs.compactPanel = opts->GetPreferenceBool("compactPanel", false);
@@ -54,7 +67,6 @@ void KZHUDService::RefreshPrefs()
 	this->prefs.timerShowState = opts->GetPreferenceBool("mhudTimerShowState", true);
 	this->prefs.speedPrecise = opts->GetPreferenceBool("mhudSpeedPrecise", false);
 	this->prefs.prespeedPrecise = opts->GetPreferenceBool("mhudPrespeedPrecise", false);
-	this->prefs.prespeedBrackets = opts->GetPreferenceBool("mhudPrespeedBrackets", false);
 	const i32 prespeedShow = (i32)opts->GetPreferenceInt("mhudPrespeedShow", (i64)MHUDPrespeedShow::Brief);
 	this->prefs.prespeedShow = (MHUDPrespeedShow)Clamp(prespeedShow, (i32)MHUDPrespeedShow::Brief, (i32)MHUDPrespeedShow::Always);
 	this->prefs.keysOverlapEnabled = opts->GetPreferenceBool("mhudKeysOverlap", true);

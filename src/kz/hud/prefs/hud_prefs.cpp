@@ -7,8 +7,10 @@
 
 #include "tier0/memdbgon.h"
 
-static_global constexpr const char *ELEMENT_PHRASE[(i32)MHUDElement::Count] = {"Menu - Timer", "Speed", "Menu - Prespeed", "Menu - Keys",
-																			   "Menu - Checkpoint"};
+static_global constexpr const char *ELEMENT_PHRASE[(i32)MHUDElement::Count] = {
+	"Menu - Timer", "Speed", "Menu - Prespeed", "Menu - Keys", "Menu - Checkpoint",
+	// The indicators share one flattened page, so these only name them; they are not sub titles.
+	"Menu - Ind Perf", "Menu - Ind CJ", "Menu - Ind JB"};
 
 // Kept from registration so the reset buttons hand the nodes straight back to the model.
 static_global KZOptNode *generalNode {};
@@ -150,6 +152,26 @@ static_function void PickPrespeedShow(KZPlayer *player, i64, i64 id)
 	player->optionService->SetPreferenceInt("mhudPrespeedShow", Clamp(id, (i64)MHUDPrespeedShow::Brief, (i64)MHUDPrespeedShow::Always));
 }
 
+static_function void GetBorderChoices(KZPlayer *player, i64, std::vector<KZChoice> &out)
+{
+	for (i32 i = 0; i < (i32)MHUDBorder::Count; i++)
+	{
+		const char *label = MHUD_BORDERS[i].label;
+		out.push_back({label ? std::string(label) : KZMenuService::GetPhrase(player, "Menu - Border None"), i, NULL});
+	}
+}
+
+// tag is the element index, the same one every other row on the page carries.
+static_function i64 GetCurrentBorder(KZPlayer *player, i64 tag)
+{
+	return (i64)player->hudService->GetOwnPrefs().elements[tag].border;
+}
+
+static_function void PickBorder(KZPlayer *player, i64 tag, i64 id)
+{
+	player->optionService->SetPreferenceInt(MHUD_ELEMENTS[tag].borderKey, Clamp(id, (i64)MHUDBorder::None, (i64)MHUDBorder::Count - 1));
+}
+
 // Indexed by MHUDAlign, so a picked row id is the stored value.
 static_global const char *const ALIGN_LABELS[] = {"Menu - Align Left", "Menu - Align Center", "Menu - Align Right"};
 
@@ -171,6 +193,53 @@ static_function void PickAlign(KZPlayer *player, i64 tag, i64 id)
 	player->optionService->SetPreferenceInt(MHUD_ELEMENTS[tag].alignKey, Clamp(id, (i64)MHUDAlign::Left, (i64)MHUDAlign::Right));
 }
 
+// All three indicators share one page, so every row carries the indicator's own label.
+static_function void RegisterIndicators(KZOptNode *hud)
+{
+	KZOptNode *sub = KZ::menu::AddSub(hud, "Menu - Indicators");
+	// Only the first index points at the shared node, so ResetAll resets the page once, not three times.
+	elementNodes[(i32)MHUDElement::Perf] = sub;
+
+	for (i32 i = 0; i < MHUD_INDICATOR_COUNT; i++)
+	{
+		const MHUDIndicatorDef &indicator = MHUD_INDICATOR_DEFS[i];
+		const i32 e = (i32)indicator.element;
+		const MHUDElementDef &def = MHUD_ELEMENTS[e];
+		const char *const *row = indicator.rowPhrase;
+
+		KZ::menu::AddToggle(sub, row[(i32)MHUDIndicatorRow::Enabled], def.enabledKey, false);
+		KZ::menu::AddPosition(sub, row[(i32)MHUDIndicatorRow::Position], def.xKey, def.yKey, def.xDefault, def.yDefault, e);
+		KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
+		KZ::menu::AddChoice(sub, row[(i32)MHUDIndicatorRow::Align], GetAlignChoices, GetCurrentAlign, PickAlign, e);
+		KZ::menu::SetItemPref(sub, def.alignKey, KZOptStorage::Int, (i32)MHUDAlign::Center);
+		KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
+		KZ::menu::AddSize(sub, row[(i32)MHUDIndicatorRow::Size], def.sizeKey, def.sizeDefault, MHUD_SIZE_MIN, MHUD_SIZE_MAX, e);
+		KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
+		KZ::menu::AddFont(sub, row[(i32)MHUDIndicatorRow::Font], def.fontKey, MHUD_DEFAULT_FONT, e);
+		KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
+		KZ::menu::AddToggle(sub, row[(i32)MHUDIndicatorRow::Outline], def.outlineKey, true);
+		KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
+		KZ::menu::AddSize(sub, row[(i32)MHUDIndicatorRow::Opacity], def.opacityKey, 100, 0, 100, e);
+		KZ::menu::SetItemUnit(sub, "%");
+		KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
+
+		i32 count = 0;
+		const MHUDColorPrefDef *colors = KZHUDService::GetMHUDElementColorPrefs(indicator.element, count);
+		for (i32 c = 0; c < count; c++)
+		{
+			KZ::menu::AddColor(sub, row[(i32)MHUDIndicatorRow::Color], colors[c].prefKey, Color(colors[c].r, colors[c].g, colors[c].b, 255), e);
+			KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
+		}
+
+		KZ::menu::AddToggle(sub, row[(i32)MHUDIndicatorRow::Acronym], indicator.acronymKey, false);
+		KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
+
+		KZ::menu::SetItemDivider(sub); // rule between this indicator's block and the next
+	}
+
+	KZ::menu::AddButton(sub, "Menu - Reset", ResetElement, (i64)MHUDElement::Perf);
+}
+
 // --- Registration -------------------------------------------------------------------
 
 void KZHUDService::RegisterMenu()
@@ -190,6 +259,7 @@ void KZHUDService::RegisterMenu()
 	KZ::menu::SetItemSubtext(general, "Menu - Compact Sub");
 	KZ::menu::AddActionToggle(general, "Menu - Crosshair", GetCrosshairState, ToggleCrosshairState);
 	KZ::menu::SetItemPref(general, "mhudCrosshair", KZOptStorage::Bool);
+	KZ::menu::SetItemSubtext(general, "Menu - Crosshair Sub");
 	KZ::menu::AddChoice(general, "Menu - Crosshair Scale", GetCrosshairScaleChoices, GetCurrentCrosshairScale, PickCrosshairScale);
 	KZ::menu::SetItemPref(general, "mhudCrosshairScale", KZOptStorage::Int, 100);
 	KZ::menu::SetItemSubtext(general, "Menu - Crosshair Scale Sub");
@@ -201,6 +271,10 @@ void KZHUDService::RegisterMenu()
 
 	for (i32 e = 0; e < (i32)MHUDElement::Count; e++)
 	{
+		if (IsMHUDIndicator((MHUDElement)e))
+		{
+			continue; // flattened onto the one Indicators page below
+		}
 		const MHUDElementDef &def = MHUD_ELEMENTS[e];
 		KZOptNode *sub = KZ::menu::AddSub(hud, ELEMENT_PHRASE[e]);
 		elementNodes[e] = sub;
@@ -241,6 +315,10 @@ void KZHUDService::RegisterMenu()
 			{
 				KZ::menu::AddToggle(sub, "Menu - Decimal", "mhudSpeedPrecise", false);
 				KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
+				KZ::menu::AddChoice(sub, "Menu - Border", GetBorderChoices, GetCurrentBorder, PickBorder, e);
+				KZ::menu::SetItemPref(sub, def.borderKey, KZOptStorage::Int, (i32)MHUDBorder::None);
+				KZ::menu::SetItemSubtext(sub, "Menu - Border Sub");
+				KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
 				break;
 			}
 
@@ -248,7 +326,9 @@ void KZHUDService::RegisterMenu()
 			{
 				KZ::menu::AddToggle(sub, "Menu - Decimal", "mhudPrespeedPrecise", false);
 				KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
-				KZ::menu::AddToggle(sub, "Menu - Prespeed Brackets", "mhudPrespeedBrackets", false);
+				KZ::menu::AddChoice(sub, "Menu - Border", GetBorderChoices, GetCurrentBorder, PickBorder, e);
+				KZ::menu::SetItemPref(sub, def.borderKey, KZOptStorage::Int, (i32)MHUDBorder::None);
+				KZ::menu::SetItemSubtext(sub, "Menu - Border Sub");
 				KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
 				KZ::menu::AddChoice(sub, "Menu - Prespeed Show", GetPrespeedShowChoices, GetCurrentPrespeedShow, PickPrespeedShow);
 				KZ::menu::SetItemPref(sub, "mhudPrespeedShow", KZOptStorage::Int, (i32)MHUDPrespeedShow::Brief);
@@ -311,4 +391,6 @@ void KZHUDService::RegisterMenu()
 
 		KZ::menu::AddButton(sub, "Menu - Reset", ResetElement, e);
 	}
+
+	RegisterIndicators(hud);
 }

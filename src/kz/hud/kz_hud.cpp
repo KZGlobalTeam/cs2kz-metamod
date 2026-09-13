@@ -110,6 +110,8 @@ KZHUDService::SpeedInfo KZHUDService::GetSpeedInfo()
 		return info;
 	}
 	info.showTakeoff = true;
+	// Always mode holds showTakeoff on while grounded; indicators must still stop at the landing grace.
+	info.recentTakeoff = !pastGraceWindow;
 	info.takeoffSpeed = this->player->takeoffVelocity.Length2D();
 	info.crouchJump = this->crouchJumping;
 	info.walkedOff = !this->player->jumped && !this->player->takeoffFromLadder;

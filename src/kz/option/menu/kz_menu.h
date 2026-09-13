@@ -11,7 +11,7 @@ class CCheckTransmitInfo;
 
 // Fixed slot counts, kept in step with menu.xml.
 #define KZ_MENU_CATS   20
-#define KZ_MENU_ITEMS  20 // the Keys page is the longest, at 19
+#define KZ_MENU_ITEMS  32 // the Indicators page is the longest, at 28
 #define KZ_MENU_LIST   32 // must cover the largest font family (Stratum2, 29 faces)
 #define KZ_MENU_SWATCH 40 // 10 columns x 4 rows per color page
 

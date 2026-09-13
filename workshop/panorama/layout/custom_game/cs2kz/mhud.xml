@@ -41,6 +41,9 @@
       </Panel>
     </Panel>
     <Label id="mhud_checkpoint" class="element checkpoint hidden" text="{s:checkpoint}" hittest="false" />
+    <Label id="mhud_perf" class="element hidden" text="{s:perf}" hittest="false" />
+    <Label id="mhud_cj" class="element hidden" text="{s:cj}" hittest="false" />
+    <Label id="mhud_jumpbug" class="element hidden" text="{s:jumpbug}" hittest="false" />
     <Panel id="mhud_crosshair" class="crosshair hidden" hittest="false">
       <Panel class="xh-half-left" hittest="false">
         <Panel id="xh_left" class="xh-arm" hittest="false" />

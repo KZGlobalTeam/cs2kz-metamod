@@ -16,6 +16,30 @@
 		"ko"	"속도"
 		"lv"	"Ātrums"
 	}
+	"HUD - Perf Full"
+	{
+		"en"		"PERFECT BHOP"
+	}
+	"HUD - Perf Short"
+	{
+		"en"		"PERF"
+	}
+	"HUD - Crouch Jump Full"
+	{
+		"en"		"CROUCH JUMP"
+	}
+	"HUD - Crouch Jump Short"
+	{
+		"en"		"CJ"
+	}
+	"HUD - Jumpbug Full"
+	{
+		"en"		"JUMPBUG"
+	}
+	"HUD - Jumpbug Short"
+	{
+		"en"		"JB"
+	}
 	"HUD - Stopped Text"
 	{
 		// (STOPPED)

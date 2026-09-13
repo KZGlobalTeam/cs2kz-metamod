@@ -150,6 +150,10 @@
 		"en"		"Also affects the legacy HUD"
 		"ua"		"Також впливає на Legacy HUD"
 	}
+	"Menu - Crosshair Sub"
+	{
+		"en"		"Draws a crosshair on your screen, for when !hideweapon hides your real one"
+	}
 	"Menu - Crosshair Scale"
 	{
 		"en"		"Crosshair scale"
@@ -165,10 +169,17 @@
 		"en"		"Use decimal places"
 		"ua"		"Використовувати десяткові знаки"
 	}
-	"Menu - Prespeed Brackets"
+	"Menu - Border"
 	{
-		"en"		"Parentheses"
-		"ua"		"Дужки"
+		"en"		"Border"
+	}
+	"Menu - Border None"
+	{
+		"en"		"None"
+	}
+	"Menu - Border Sub"
+	{
+		"en"		"Wraps the value in a pair of symbols"
 	}
 	"Menu - Prespeed Show"
 	{
@@ -189,6 +200,118 @@
 	"Menu - Prespeed Show Always"
 	{
 		"en"		"Always"
+	}
+	"Menu - Indicators"
+	{
+		"en"		"Indicators"
+	}
+	"Menu - Ind Perf"
+	{
+		"en"		"Perfect bhop"
+	}
+	"Menu - Ind Perf Position"
+	{
+		"en"		"Perfect bhop position"
+	}
+	"Menu - Ind Perf Align"
+	{
+		"en"		"Perfect bhop alignment"
+	}
+	"Menu - Ind Perf Size"
+	{
+		"en"		"Perfect bhop size"
+	}
+	"Menu - Ind Perf Font"
+	{
+		"en"		"Perfect bhop font"
+	}
+	"Menu - Ind Perf Outline"
+	{
+		"en"		"Perfect bhop outline"
+	}
+	"Menu - Ind Perf Opacity"
+	{
+		"en"		"Perfect bhop opacity"
+	}
+	"Menu - Ind Perf Color"
+	{
+		"en"		"Perfect bhop color"
+	}
+	"Menu - Ind Perf Acronym"
+	{
+		"en"		"Perfect bhop acronym"
+	}
+	"Menu - Ind CJ"
+	{
+		"en"		"Crouch jump"
+	}
+	"Menu - Ind CJ Position"
+	{
+		"en"		"Crouch jump position"
+	}
+	"Menu - Ind CJ Align"
+	{
+		"en"		"Crouch jump alignment"
+	}
+	"Menu - Ind CJ Size"
+	{
+		"en"		"Crouch jump size"
+	}
+	"Menu - Ind CJ Font"
+	{
+		"en"		"Crouch jump font"
+	}
+	"Menu - Ind CJ Outline"
+	{
+		"en"		"Crouch jump outline"
+	}
+	"Menu - Ind CJ Opacity"
+	{
+		"en"		"Crouch jump opacity"
+	}
+	"Menu - Ind CJ Color"
+	{
+		"en"		"Crouch jump color"
+	}
+	"Menu - Ind CJ Acronym"
+	{
+		"en"		"Crouch jump acronym"
+	}
+	"Menu - Ind JB"
+	{
+		"en"		"Jumpbug"
+	}
+	"Menu - Ind JB Position"
+	{
+		"en"		"Jumpbug position"
+	}
+	"Menu - Ind JB Align"
+	{
+		"en"		"Jumpbug alignment"
+	}
+	"Menu - Ind JB Size"
+	{
+		"en"		"Jumpbug size"
+	}
+	"Menu - Ind JB Font"
+	{
+		"en"		"Jumpbug font"
+	}
+	"Menu - Ind JB Outline"
+	{
+		"en"		"Jumpbug outline"
+	}
+	"Menu - Ind JB Opacity"
+	{
+		"en"		"Jumpbug opacity"
+	}
+	"Menu - Ind JB Color"
+	{
+		"en"		"Jumpbug color"
+	}
+	"Menu - Ind JB Acronym"
+	{
+		"en"		"Jumpbug acronym"
 	}
 	"Menu - Keys Overlap Sub"
 	{
