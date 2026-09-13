@@ -19,26 +19,32 @@
 	"HUD - Perf Full"
 	{
 		"en"		"PERFECT BHOP"
+		"ua"		"PERFECT BHOP"
 	}
 	"HUD - Perf Short"
 	{
 		"en"		"PERF"
+		"ua"		"PERF"
 	}
 	"HUD - Crouch Jump Full"
 	{
 		"en"		"CROUCH JUMP"
+		"ua"		"CROUCH JUMP"
 	}
 	"HUD - Crouch Jump Short"
 	{
 		"en"		"CJ"
+		"ua"		"CJ"
 	}
 	"HUD - Jumpbug Full"
 	{
 		"en"		"JUMPBUG"
+		"ua"		"JUMPBUG"
 	}
 	"HUD - Jumpbug Short"
 	{
 		"en"		"JB"
+		"ua"		"JB"
 	}
 	"HUD - Stopped Text"
 	{
