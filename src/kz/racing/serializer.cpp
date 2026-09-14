@@ -1,23 +1,34 @@
 #include "kz_racing.h"
 
+// The coordinator identifies modes by its own names instead of what CS2KZ uses.
+static_function void TranslateModeName(std::string &modeName)
+{
+	if (modeName == "cs2kz_classic")
+	{
+		modeName = "Classic";
+	}
+	else if (modeName == "cs2kz_vanilla")
+	{
+		modeName = "Vanilla";
+	}
+}
+
 bool KZ::racing::RaceConfig::FromJson(const Json &json)
 {
-	std::string workshopID;
-
-	if (!json.Get("map_workshop_id", workshopID))
-	{
-		return false;
-	}
-
-	this->workshopID = atoi(workshopID.c_str());
-
 	// clang-format off
-	return json.Get("map_name", this->mapName)
+	if (!(json.Get("map_workshop_id", this->workshopID)
+		&& json.Get("map_name", this->mapName)
 		&& json.Get("course_name", this->courseName)
 		&& json.Get("mode", this->modeName)
 		&& json.Get("max_duration", this->maxDurationSeconds)
-		&& json.Get("max_teleports", this->maxTeleports);
+		&& json.Get("max_teleports", this->maxTeleports)))
+	{
+		return false;
+	}
 	// clang-format on
+
+	TranslateModeName(this->modeName);
+	return true;
 }
 
 bool KZ::racing::RaceResult::FromJson(const Json &json)
