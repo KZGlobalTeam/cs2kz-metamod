@@ -1,5 +1,6 @@
 #pragma once
 
+#include <atomic>
 #include <condition_variable>
 #include <memory>
 #include <mutex>
@@ -137,8 +138,12 @@ private:
 	// Protects the message queues and synchronizes condition variable(s).
 	std::mutex mtx {};
 
-	// Used for waking up the dispatch thread when there is a new message for it to send, or during shutdown.
+	// Used for waking up the dispatch thread when there is a new message for it to send, when the connection opens, or
+	// during shutdown.
 	std::condition_variable dispatchThreadCvar {};
+
+	// The dispatch loop runs until this is set.
+	std::atomic<bool> shuttingDown {false};
 
 	// Temporary buffer for holding messages that have been received but not yet processed.
 	std::vector<Message> receiveQueue {};
