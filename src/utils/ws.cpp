@@ -103,6 +103,7 @@ void KZWebSocket::Handle::Shutdown(bool join)
 	if (std::shared_ptr<KZWebSocket> socket = this->socket.lock())
 	{
 		KZ_LOG_DEBUG(LogChannel::WS, "stopping socket");
+		socket->shuttingDown = true;
 		socket->socket.stop();
 		socket->dispatchThreadCvar.notify_one();
 	}
@@ -150,22 +151,6 @@ void KZWebSocket::OnMessage(const ix::WebSocketMessagePtr &message)
 	}
 }
 
-static_function bool DispatchLoopShouldContinue(ix::ReadyState socketState)
-{
-	switch (socketState)
-	{
-		case ix::ReadyState::Connecting:
-			/* fallthrough */
-		case ix::ReadyState::Open:
-			return true;
-
-		case ix::ReadyState::Closing:
-			/* fallthrough */
-		case ix::ReadyState::Closed:
-			return false;
-	}
-}
-
 void KZWebSocket::RunDispatchLoop()
 {
 	std::unique_lock<std::mutex> guard(this->mtx);
@@ -173,39 +158,36 @@ void KZWebSocket::RunDispatchLoop()
 
 	KZ_LOG_DEBUG(LogChannel::WS, "entering dispatch loop");
 
-	for (ix::ReadyState socketState = this->socket.getReadyState(); DispatchLoopShouldContinue(socketState);
-		 socketState = this->socket.getReadyState())
+	while (!this->shuttingDown)
 	{
-		for (auto it = this->sendQueue.begin(); it != this->sendQueue.end();)
+		if (this->socket.getReadyState() == ix::ReadyState::Open)
 		{
-			it->Encode(encodeBuffer);
-			KZ_LOG_DEBUG(LogChannel::WS, "sending message %s (%s)", it->id.c_str(), it->tag.c_str());
-			ix::WebSocketSendInfo sendInfo = socket.send(encodeBuffer.ToString());
-			encodeBuffer.Clear();
-
-			if (!sendInfo.success)
+			for (auto it = this->sendQueue.begin(); it != this->sendQueue.end();)
 			{
-				KZ_LOG_WARN(LogChannel::WS, "failed to send message %s (%s)", it->id.c_str(), it->tag.c_str());
-				break;
+				it->Encode(encodeBuffer);
+				KZ_LOG_DEBUG(LogChannel::WS, "sending message %s (%s)", it->id.c_str(), it->tag.c_str());
+				ix::WebSocketSendInfo sendInfo = socket.send(encodeBuffer.ToString());
+				encodeBuffer.Clear();
+
+				if (!sendInfo.success)
+				{
+					KZ_LOG_WARN(LogChannel::WS, "failed to send message %s (%s)", it->id.c_str(), it->tag.c_str());
+					break;
+				}
+
+				KZ_LOG_DEBUG(LogChannel::WS, "sent message %s (%s)", it->id.c_str(), it->tag.c_str());
+
+				it = this->sendQueue.erase(it);
 			}
-
-			KZ_LOG_DEBUG(LogChannel::WS, "sent message %s (%s)", it->id.c_str(), it->tag.c_str());
-
-			it = this->sendQueue.erase(it);
 		}
 
 		KZ_LOG_DEBUG(LogChannel::WS, "(dispatch loop) waiting");
 
 		// clang-format off
 		this->dispatchThreadCvar.wait(guard, [&] {
-			return !this->sendQueue.empty() || !DispatchLoopShouldContinue(socketState = this->socket.getReadyState());
+			return this->shuttingDown || (!this->sendQueue.empty() && this->socket.getReadyState() == ix::ReadyState::Open);
 		});
 		// clang-format on
-
-		if (!DispatchLoopShouldContinue(socketState))
-		{
-			break;
-		}
 	}
 
 	KZ_LOG_DEBUG(LogChannel::WS, "exiting dispatch loop");
@@ -230,6 +212,21 @@ void KZWebSocket::OnWebSocketMessage(const std::string &data, bool binary)
 void KZWebSocket::OnWebSocketOpen(const ix::WebSocketOpenInfo &info)
 {
 	KZ_LOG_INFO(LogChannel::WS, "connection established (uri=%s, protocol=%s)", info.uri.c_str(), info.protocol.c_str());
+
+	/*
+		This waits for the dispatch thread to actually park inside this->dispatchThreadCvar.wait() in RunDispatchLoop().
+		What will happen without this:
+		- The dispatch thread sees the socket as closed, predicate returns false, prepares to park itself.
+		- This function is called, this->dispatchThreadCvar.notify_one() does nothing because the dispatch thread
+		is not parked yet.
+		- The dispatch thread parks itself despite the socket now being open, and stays parked until the next
+		SendMessage() or Shutdown() happens to notify it, leaving queued messages unsent until then.
+	*/
+	{
+		std::lock_guard<std::mutex> _guard(this->mtx);
+	}
+
+	this->dispatchThreadCvar.notify_one();
 }
 
 void KZWebSocket::OnWebSocketClose(const ix::WebSocketCloseInfo &info)
