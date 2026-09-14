@@ -237,7 +237,7 @@ void KZProfileService::UpdateClantag()
 	}
 	if (!kz_profile_clantag_enabled.Get())
 	{
-		if (this->player->GetController() && V_strlen(this->player->GetController()->m_szClan().String()) > 0)
+		if (this->player->GetController() && this->clanTag[0] != '\0' && KZ_STREQ(this->player->GetController()->m_szClan().String(), this->clanTag))
 		{
 			this->SetClantag("");
 		}
