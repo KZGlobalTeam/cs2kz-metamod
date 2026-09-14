@@ -274,8 +274,16 @@ void KZRacingService::OnTimerEndPost(u32 courseGUID, f32 time, u32 teleportsUsed
 	{
 		return;
 	}
-	this->SendFinishRace(time + ((this->timerStartTickServer - KZRacingService::currentRace.earliestStartTick) * ENGINE_FIXED_TICK_INTERVAL),
-						 teleportsUsed);
+	// First to finish is decided on who crosses the finish line first, so the time spent before starting the run counts
+	// towards it. Fastest time only cares about the run itself.
+	f32 reportedTime = time;
+
+	if (KZRacingService::currentRace.conf.format == KZ::racing::RaceConfig::Format::FirstToFinish)
+	{
+		reportedTime += (this->timerStartTickServer - KZRacingService::currentRace.earliestStartTick) * ENGINE_FIXED_TICK_INTERVAL;
+	}
+
+	this->SendFinishRace(reportedTime, teleportsUsed);
 	// We do this in advance to avoid having to go text showing up for just finished players.
 	for (auto it = KZRacingService::currentRace.localParticipants.begin(); it != KZRacingService::currentRace.localParticipants.end(); ++it)
 	{

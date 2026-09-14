@@ -8,10 +8,19 @@ namespace KZ::racing
 {
 	struct RaceConfig
 	{
+		enum class Format
+		{
+			// The winner is whoever has the fastest run when the race ends.
+			FastestTime,
+			// The winner is whoever crosses the finish line first after the race starts.
+			FirstToFinish,
+		};
+
 		std::string mapName;
 		std::string courseName;
 		u64 workshopID;
 		std::string modeName;
+		Format format;
 		std::optional<u32> maxDurationSeconds;
 		std::optional<u32> maxTeleports;
 

@@ -15,17 +15,33 @@ static_function void TranslateModeName(std::string &modeName)
 
 bool KZ::racing::RaceConfig::FromJson(const Json &json)
 {
+	std::string format;
+
 	// clang-format off
 	if (!(json.Get("map_workshop_id", this->workshopID)
 		&& json.Get("map_name", this->mapName)
 		&& json.Get("course_name", this->courseName)
 		&& json.Get("mode", this->modeName)
+		&& json.Get("format", format)
 		&& json.Get("max_duration", this->maxDurationSeconds)
 		&& json.Get("max_teleports", this->maxTeleports)))
 	{
 		return false;
 	}
 	// clang-format on
+
+	if (format == "fastest_time")
+	{
+		this->format = Format::FastestTime;
+	}
+	else if (format == "first_to_finish")
+	{
+		this->format = Format::FirstToFinish;
+	}
+	else
+	{
+		return false;
+	}
 
 	TranslateModeName(this->modeName);
 	return true;
