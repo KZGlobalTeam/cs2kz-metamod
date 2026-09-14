@@ -530,6 +530,7 @@
 	"Command Description - kz_fonts"
 	{
 		"en"		"How to install the fonts marked * in the font picker."
+		"ua"		"Як встановити шрифти, позначені * у виборі шрифтів."
 	}
 	"Command Description - kz_panel"
 	{

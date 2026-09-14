@@ -28,6 +28,7 @@
 	"Menu - Panel Sub"
 	{
 		"en"		"The legacy centre-screen HUD; also affects the legacy layout HUD style"
+		"ua"		"Центральний HUD старого зразка; також впливає на стиль HUD старого компонування"
 	}
 	"Menu - Panel"
 	{
@@ -50,10 +51,12 @@
 	"Menu - Mimic Spec"
 	{
 		"en"		"Mimic Spectated Player"
+		"ua"		"Використовувати налаштування гравця під час спостереження"
 	}
 	"Menu - Mimic Spec Sub"
 	{
 		"en"		"Use their HUD settings while spectating them"
+		"ua"		"Використовувати їхні налаштування HUD під час спостереження за ними"
 	}
 	"Menu - Compact Sub"
 	{
@@ -76,6 +79,7 @@
 	"Menu - Font Local Note"
 	{
 		"en"		"* depends on your local font installation, type !fonts for more information"
+		"ua"		"* залежить від того, які шрифти встановлено у вашій системі, для отримання додаткової інформації введіть команду !fonts"
 	}
 	"Menu - Enabled"
 	{
@@ -128,22 +132,27 @@
 	"Menu - Align"
 	{
 		"en"		"Alignment"
+		"ua"		"Вирівнювання"
 	}
 	"Menu - Align Left"
 	{
 		"en"		"Left"
+		"ua"		"Ліворуч"
 	}
 	"Menu - Align Center"
 	{
 		"en"		"Center"
+		"ua"		"По центру"
 	}
 	"Menu - Align Right"
 	{
 		"en"		"Right"
+		"ua"		"Праворуч"
 	}
 	"Menu - Timer State"
 	{
 		"en"		"Show paused and stopped"
+		"ua"		"Показувати паузу та зупинку таймера"
 	}
 	"Menu - Affect Legacy Sub"
 	{
@@ -153,6 +162,7 @@
 	"Menu - Crosshair Sub"
 	{
 		"en"		"Draws a crosshair on your screen, for when !hideweapon hides your real one"
+		"ua"		"Малює приціл на екрані, коли команда !hideweapon приховує ваш реальний приціл"
 	}
 	"Menu - Crosshair Scale"
 	{
@@ -172,150 +182,187 @@
 	"Menu - Border"
 	{
 		"en"		"Border"
+		"ua"		"Контур"
 	}
 	"Menu - Border None"
 	{
 		"en"		"None"
+		"ua"		"Без контуру"
 	}
 	"Menu - Border Sub"
 	{
 		"en"		"Wraps the value in a pair of symbols"
+		"ua"		"Обрамляє значення символами з обох сторін"
 	}
 	"Menu - Prespeed Show"
 	{
 		"en"		"Visibility"
+		"ua"		"Видимість"
 	}
 	"Menu - Prespeed Show Sub"
 	{
 		"en"		"Jump/Ladder only ignores walk-offs, Always keeps it shown on the ground"
+		"ua"		"Стрибок/Драбина ігнорує лише випадки, коли ви сходите з блоку, і опція Завжди показує пре-швидкість на землі"
 	}
 	"Menu - Prespeed Show Brief"
 	{
 		"en"		"Normal"
+		"ua"		"Нормально"
 	}
 	"Menu - Prespeed Show Jump Only"
 	{
 		"en"		"Jump/Ladder only"
+		"ua"		"Тільки Стрибок/Драбина"
 	}
 	"Menu - Prespeed Show Always"
 	{
 		"en"		"Always"
+		"ua"		"Завжди"
 	}
 	"Menu - Indicators"
 	{
 		"en"		"Indicators"
+		"ua"		"Індикатори"
 	}
 	"Menu - Ind Perf"
 	{
 		"en"		"Perfect bhop"
+		"ua"		"Perfect bhop"
 	}
 	"Menu - Ind Perf Position"
 	{
 		"en"		"Perfect bhop position"
+		"ua"		"Позиція Perfect bhop"
 	}
 	"Menu - Ind Perf Align"
 	{
 		"en"		"Perfect bhop alignment"
+		"ua"		"Вирівнювання Perfect bhop"
 	}
 	"Menu - Ind Perf Size"
 	{
 		"en"		"Perfect bhop size"
+		"ua"		"Розмір Perfect bhop"
 	}
 	"Menu - Ind Perf Font"
 	{
 		"en"		"Perfect bhop font"
+		"ua"		"Шрифт Perfect bhop"
 	}
 	"Menu - Ind Perf Outline"
 	{
 		"en"		"Perfect bhop outline"
+		"ua"		"Контур Perfect bhop"
 	}
 	"Menu - Ind Perf Opacity"
 	{
 		"en"		"Perfect bhop opacity"
+		"ua"		"Непрозорість Perfect bhop"
 	}
 	"Menu - Ind Perf Color"
 	{
 		"en"		"Perfect bhop color"
+		"ua"		"Колір Perfect bhop"
 	}
 	"Menu - Ind Perf Acronym"
 	{
 		"en"		"Perfect bhop acronym"
+		"ua"		"Абревіатура Perfect bhop"
 	}
 	"Menu - Ind CJ"
 	{
 		"en"		"Crouch jump"
+		"ua"		"Crouch jump"
 	}
 	"Menu - Ind CJ Position"
 	{
 		"en"		"Crouch jump position"
+		"ua"		"Позиція Crouch jump"
 	}
 	"Menu - Ind CJ Align"
 	{
 		"en"		"Crouch jump alignment"
+		"ua"		"Вирівнювання Crouch jump"
 	}
 	"Menu - Ind CJ Size"
 	{
 		"en"		"Crouch jump size"
+		"ua"		"Розмір Crouch jump"
 	}
 	"Menu - Ind CJ Font"
 	{
 		"en"		"Crouch jump font"
+		"ua"		"Шрифт Crouch jump"
 	}
 	"Menu - Ind CJ Outline"
 	{
 		"en"		"Crouch jump outline"
+		"ua"		"Контур Crouch jump"
 	}
 	"Menu - Ind CJ Opacity"
 	{
 		"en"		"Crouch jump opacity"
+		"ua"		"Непрозорість Crouch jump"
 	}
 	"Menu - Ind CJ Color"
 	{
 		"en"		"Crouch jump color"
+		"ua"		"Колір Crouch jump"
 	}
 	"Menu - Ind CJ Acronym"
 	{
 		"en"		"Crouch jump acronym"
+		"ua"		"Абревіатура Crouch jump"
 	}
 	"Menu - Ind JB"
 	{
 		"en"		"Jumpbug"
+		"ua"		"Jumpbug"
 	}
 	"Menu - Ind JB Position"
 	{
 		"en"		"Jumpbug position"
+		"ua"		"Позиція Jumpbug"
 	}
 	"Menu - Ind JB Align"
 	{
 		"en"		"Jumpbug alignment"
+		"ua"		"Вирівнювання Jumpbug"
 	}
 	"Menu - Ind JB Size"
 	{
 		"en"		"Jumpbug size"
+		"ua"		"Розмір Jumpbug"
 	}
 	"Menu - Ind JB Font"
 	{
 		"en"		"Jumpbug font"
+		"ua"		"Шрифт Jumpbug"
 	}
 	"Menu - Ind JB Outline"
 	{
 		"en"		"Jumpbug outline"
+		"ua"		"Контур Jumpbug"
 	}
 	"Menu - Ind JB Opacity"
 	{
 		"en"		"Jumpbug opacity"
+		"ua"		"Непрозорість Jumpbug"
 	}
 	"Menu - Ind JB Color"
 	{
 		"en"		"Jumpbug color"
+		"ua"		"Колір Jumpbug"
 	}
 	"Menu - Ind JB Acronym"
 	{
 		"en"		"Jumpbug acronym"
+		"ua"		"Абревіатура Jumpbug"
 	}
 	"Menu - Keys Overlap Sub"
 	{
 		"en"		"Warns when opposite movement keys (W+S or A+D) are held at the same time"
+		"ua"		"Попереджає, коли протилежні клавіші руху (W+S або A+D) натиснуті одночасно"
 	}
 	"Menu - Keys Overlap"
 	{
@@ -326,10 +373,12 @@
 	"Menu - Keys Overlap Axis"
 	{
 		"en"		"Overlap on axis only"
+		"ua"		"Overlap лише по осі"		
 	}
 	"Menu - Keys Overlap Axis Sub"
 	{
 		"en"		"Warn on the two overlapping keys instead of the whole overlay"
+		"ua"		"Попереджати про Overlap двох клавіш замість всього оверлею"
 	}
 	"Menu - Color Base"
 	{
@@ -352,6 +401,7 @@
 	"Menu - Color Crouch Perf"
 	{
 		"en"		"Crouch perf color"
+		"ua"		"Колір Crouch perf"
 	}
 	"Menu - Color Jumpbug"
 	{
@@ -434,7 +484,7 @@
 	"Menu - Keys Unpressed"
 	{
 		"en"		"Unpressed keys"
-		"ua"		"Не натиснуті клавіші"
+		"ua"		"Ненатиснуті клавіші"
 	}
 	"Menu - Keys Unpressed Show"
 	{
@@ -481,6 +531,7 @@
 	"Menu - Keys Glow Fill Sub"
 	{
 		"en"		"Only applies to a key while it is pressed"
+		"ua"		"Застосовується до клавіші лише, коли вона натиснута"
 	}
 	"Menu - Keys Glow"
 	{
@@ -500,6 +551,7 @@
 	"Menu - Popup Shift Sub"
 	{
 		"en"		"Moves the main menu to the left when a popup opens, so it fits on a 4:3 screen"
+		"ua"		"Переміщує головне меню вліво, коли відкривається спливаюче вікно, щоб воно помістилося на екрані 4:3"
 	}
 	"Menu - Color"
 	{
@@ -511,15 +563,17 @@
 	{
 		"en"		"Overlap color"
 		"chi"		"重叠颜色"
-		"ua"		"Колір перекриття"
+		"ua"		"Колір Overlap"
 	}
 	"Menu - Color Pressed"
 	{
 		"en"		"Glow/Pressed color"
+		"ua"		"Колір підсвітки/натиснутої клавіші"
 	}
 	"Menu - Color Overlap Glow"
 	{
 		"en"		"Overlap glow/pressed color"
+		"ua"		"Колір підсвітки Overlap/натиснутої клавіші"
 	}
 	"Menu - Mode"
 	{
@@ -812,6 +866,7 @@
 	"Menu - Map Overlay Sub"
 	{
 		"en"		"Prints checkpoint/stage/split times to console for third-party map overlay tools to read"
+		"ua"		"Виводить чекпoinти/етапів/спліти в консоль для інструментів оверлею мапи сторонніх розробників"
 	}
 	"Menu - Map Overlay"
 	{
@@ -828,6 +883,7 @@
 	"Menu - Safeguard Sub"
 	{
 		"en"		"Blocks commands that would reset your timer during a valid run"
+		"ua"		"Блокує команди, які можуть скинути ваш таймер під час проходження мапи"
 	}
 	"Menu - Safeguard"
 	{
@@ -856,6 +912,7 @@
 	"Menu - Compare Sub"
 	{
 		"en"		"Which time your checkpoint/stage diffs are measured against during a run"
+		"ua"		"Який час використовується для порівняння різниці чекпоінтів/етапів під час проходження мапи"
 	}
 	"Menu - Compare"
 	{
@@ -908,6 +965,7 @@
 	"Menu - JS Always Sub"
 	{
 		"en"		"Report every jump, ignoring the tier thresholds below"
+		"ua"		"Повідомляти про кожен стрибок, ігноруючи пороги рівнів нижче"
 	}
 	"Menu - JS Always"
 	{
@@ -1097,6 +1155,7 @@
 	"Prefs - Export Stamp Note"
 	{
 		"en"		"The stamp line below is what makes a block apply once instead of on every connect.\nKeep it when you are moving your own preferences to another server. Leave it out when you are sharing them with someone else."
+		"ua"		"Рядок нижче змушує блок застосовуватися один раз замість кожного підключення.\nЗалиште його, коли ви переносите свої налаштування на інший сервер. Видаліть його, коли ви ділитеся ними з іншими."
 	}
 	"Prefs - Export Footer"
 	{
