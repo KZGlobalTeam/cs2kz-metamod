@@ -162,6 +162,7 @@
 	"Menu - Crosshair Sub"
 	{
 		"en"		"Draws a crosshair on your screen, for when !hideweapon hides your real one"
+		"ua"		"Малює приціл на екрані, коли команда !hideweapon приховує ваш реальний приціл"
 	}
 	"Menu - Crosshair Scale"
 	{
@@ -181,14 +182,17 @@
 	"Menu - Border"
 	{
 		"en"		"Border"
+		"ua"		"Контур"
 	}
 	"Menu - Border None"
 	{
 		"en"		"None"
+		"ua"		"Без контуру"
 	}
 	"Menu - Border Sub"
 	{
 		"en"		"Wraps the value in a pair of symbols"
+		"ua"		"Обрамляє значення символами з обох сторін"
 	}
 	"Menu - Prespeed Show"
 	{
@@ -218,119 +222,147 @@
 	"Menu - Indicators"
 	{
 		"en"		"Indicators"
+		"ua"		"Індикатори"
 	}
 	"Menu - Ind Perf"
 	{
 		"en"		"Perfect bhop"
+		"ua"		"Perfect bhop"
 	}
 	"Menu - Ind Perf Position"
 	{
 		"en"		"Perfect bhop position"
+		"ua"		"Позиція Perfect bhop"
 	}
 	"Menu - Ind Perf Align"
 	{
 		"en"		"Perfect bhop alignment"
+		"ua"		"Вирівнювання Perfect bhop"
 	}
 	"Menu - Ind Perf Size"
 	{
 		"en"		"Perfect bhop size"
+		"ua"		"Розмір Perfect bhop"
 	}
 	"Menu - Ind Perf Font"
 	{
 		"en"		"Perfect bhop font"
+		"ua"		"Шрифт Perfect bhop"
 	}
 	"Menu - Ind Perf Outline"
 	{
 		"en"		"Perfect bhop outline"
+		"ua"		"Контур Perfect bhop"
 	}
 	"Menu - Ind Perf Opacity"
 	{
 		"en"		"Perfect bhop opacity"
+		"ua"		"Непрозорість Perfect bhop"
 	}
 	"Menu - Ind Perf Color"
 	{
 		"en"		"Perfect bhop color"
+		"ua"		"Колір Perfect bhop"
 	}
 	"Menu - Ind Perf Acronym"
 	{
 		"en"		"Perfect bhop acronym"
+		"ua"		"Абревіатура Perfect bhop"
 	}
 	"Menu - Ind CJ"
 	{
 		"en"		"Crouch jump"
+		"ua"		"Crouch jump"
 	}
 	"Menu - Ind CJ Position"
 	{
 		"en"		"Crouch jump position"
+		"ua"		"Позиція Crouch jump"
 	}
 	"Menu - Ind CJ Align"
 	{
 		"en"		"Crouch jump alignment"
+		"ua"		"Вирівнювання Crouch jump"
 	}
 	"Menu - Ind CJ Size"
 	{
 		"en"		"Crouch jump size"
+		"ua"		"Розмір Crouch jump"
 	}
 	"Menu - Ind CJ Font"
 	{
 		"en"		"Crouch jump font"
+		"ua"		"Шрифт Crouch jump"
 	}
 	"Menu - Ind CJ Outline"
 	{
 		"en"		"Crouch jump outline"
+		"ua"		"Контур Crouch jump"
 	}
 	"Menu - Ind CJ Opacity"
 	{
 		"en"		"Crouch jump opacity"
+		"ua"		"Непрозорість Crouch jump"
 	}
 	"Menu - Ind CJ Color"
 	{
 		"en"		"Crouch jump color"
+		"ua"		"Колір Crouch jump"
 	}
 	"Menu - Ind CJ Acronym"
 	{
 		"en"		"Crouch jump acronym"
+		"ua"		"Абревіатура Crouch jump"
 	}
 	"Menu - Ind JB"
 	{
 		"en"		"Jumpbug"
+		"ua"		"Jumpbug"
 	}
 	"Menu - Ind JB Position"
 	{
 		"en"		"Jumpbug position"
+		"ua"		"Позиція Jumpbug"
 	}
 	"Menu - Ind JB Align"
 	{
 		"en"		"Jumpbug alignment"
+		"ua"		"Вирівнювання Jumpbug"
 	}
 	"Menu - Ind JB Size"
 	{
 		"en"		"Jumpbug size"
+		"ua"		"Розмір Jumpbug"
 	}
 	"Menu - Ind JB Font"
 	{
 		"en"		"Jumpbug font"
+		"ua"		"Шрифт Jumpbug"
 	}
 	"Menu - Ind JB Outline"
 	{
 		"en"		"Jumpbug outline"
+		"ua"		"Контур Jumpbug"
 	}
 	"Menu - Ind JB Opacity"
 	{
 		"en"		"Jumpbug opacity"
+		"ua"		"Непрозорість Jumpbug"
 	}
 	"Menu - Ind JB Color"
 	{
 		"en"		"Jumpbug color"
+		"ua"		"Колір Jumpbug"
 	}
 	"Menu - Ind JB Acronym"
 	{
 		"en"		"Jumpbug acronym"
+		"ua"		"Абревіатура Jumpbug"
 	}
 	"Menu - Keys Overlap Sub"
 	{
 		"en"		"Warns when opposite movement keys (W+S or A+D) are held at the same time"
-		"ua"		"Попереджає, коли протилежні клавіші руху (W+S або A+D) утримуються одночасно"
+		"ua"		"Попереджає, коли протилежні клавіші руху (W+S або A+D) натиснуті одночасно"
 	}
 	"Menu - Keys Overlap"
 	{
