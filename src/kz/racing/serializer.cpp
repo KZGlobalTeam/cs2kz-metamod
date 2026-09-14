@@ -13,7 +13,7 @@ bool KZ::racing::RaceConfig::FromJson(const Json &json)
 
 	// clang-format off
 	return json.Get("map_name", this->mapName)
-		&& json.Get("course", this->courseName)
+		&& json.Get("course_name", this->courseName)
 		&& json.Get("mode", this->modeName)
 		&& json.Get("max_duration", this->maxDurationSeconds)
 		&& json.Get("max_teleports", this->maxTeleports);
