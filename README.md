@@ -7,11 +7,11 @@ Automated translation linter reports for cs2kz-metamod.
 | Metric | Value |
 |--------|-------|
 | **Linter Errors** | 0 |
-| **Linter Warnings** | 22 |
+| **Linter Warnings** | 23 |
 | **Total Languages** | 13 |
 | **Total Phrases** | 880 |
 | **Phrases Missing Translations** | 664 |
-| **Total Missing Entries** | 4679 |
+| **Total Missing Entries** | 4611 |
 | **Menu Files** | 11 |
 
 ## Language Coverage (Phrases)
@@ -29,7 +29,7 @@ Automated translation linter reports for cs2kz-metamod.
   ru (russian)         [██████████████░░░░░░]  74.5% (656/880)
   sv (swedish)         [████████░░░░░░░░░░░░]  44.5% (392/880)
   tr (turkish)         [█████░░░░░░░░░░░░░░░]  29.8% (262/880)
-  ua (ukrainian)       [██████████████████░░]  92.3% (812/880)
+  ua (ukrainian)       [████████████████████] 100.0% (880/880)
 ```
 
 ## Menu Translation Status
@@ -79,9 +79,9 @@ Automated translation linter reports for cs2kz-metamod.
 
 ## Last Updated
 
-- **Commit:** [`7aeaa72`](https://github.com/KZGlobalTeam/cs2kz-metamod/commit/7aeaa72ea21a10e91ee7daeec6962d0f03f891db)
-- **Time:** 2026-09-13 19:21:34 UTC
-- **Message:** Add generic border to speed and prespeed, add crosshair subtext, add text indica
+- **Commit:** [`e5437ff`](https://github.com/KZGlobalTeam/cs2kz-metamod/commit/e5437ff6e14c6971d0d2db04c38cd43d515868e5)
+- **Time:** 2026-09-14 20:52:48 UTC
+- **Message:** Ukrainian translations (#629)
 
 ---
 
