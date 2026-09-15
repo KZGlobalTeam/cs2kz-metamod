@@ -167,6 +167,11 @@ void KZRacingService::ProcessMainThreadCallbacks()
 		}
 	}
 
+	if (!KZRacingService::socket)
+	{
+		return;
+	}
+
 	std::vector<KZWebSocket::Message> receivedMessages;
 	KZRacingService::socket->ReceiveMessages(receivedMessages);
 
