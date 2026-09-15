@@ -1,12 +1,4 @@
-// required for ws library
-#ifdef _WIN32
-#pragma comment(lib, "Ws2_32.Lib")
-#pragma comment(lib, "Crypt32.Lib")
-#endif
-
 #include <string_view>
-
-#include <ixwebsocket/IXNetSystem.h>
 
 #include "kz/kz.h"
 #include "kz/mode/kz_mode.h"
@@ -93,8 +85,6 @@ void KZGlobalService::Init()
 
 	KZGlobalService::EnforceConVars();
 
-	ix::initNetSystem();
-
 	KZGlobalService::WS::socket = std::make_unique<ix::WebSocket>();
 	KZGlobalService::WS::socket->setUrl(apiUrl);
 	KZGlobalService::WS::socket->setExtraHeaders({{"Authorization", std::string("Bearer ") + apiKey}});
@@ -111,8 +101,6 @@ void KZGlobalService::Cleanup()
 		KZGlobalService::WS::socket->stop();
 		KZGlobalService::state.store(KZGlobalService::State::Disconnected);
 		KZGlobalService::WS::socket.reset(nullptr);
-
-		ix::uninitNetSystem();
 	}
 
 	KZGlobalService::state.store(KZGlobalService::State::Uninitialized);
