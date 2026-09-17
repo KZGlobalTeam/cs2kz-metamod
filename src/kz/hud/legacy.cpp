@@ -14,10 +14,9 @@ extern ICS2Menus *g_pMenus;
 
 #include "tier0/memdbgon.h"
 
-std::string KZHUDService::GetSpeedText(const char *language)
+std::string KZHUDService::GetSpeedText(const MHUDPrefs &prefs, const char *language)
 {
-	const SpeedInfo info = this->GetSpeedInfo();
-	const MHUDPrefs &prefs = this->GetPrefs();
+	const SpeedInfo info = this->GetSpeedInfo(prefs);
 	if (!info.showTakeoff || (prefs.prespeedShow == MHUDPrespeedShow::JumpOrLadder && info.walkedOff))
 	{
 		return KZLanguageService::PrepareMessageWithLang(language, "HUD - Speed Text", info.speed);
@@ -59,15 +58,12 @@ void KZHUDService::DrawLegacyPanels(KZPlayer *player, KZPlayer *target)
 {
 	// Yield the center channel while a cs2menus HTML menu is open.
 	bool menuOpen = g_pMenus && g_pMenus->GetActiveMenuType(target->GetPlayerSlot().Get()) == MenuType::Html;
-	// The html/centre channels are per viewer, so these still follow the spectated player, and
-	// every getter below reads its pawn: they need a live one to draw for.
+
 	bool sourceLive = player->IsAlive() && player->GetPlayerPawn();
 	bool showPanel = target->hudService->IsShowingPanel() && !menuOpen && sourceLive;
 	bool compact = target->hudService->IsCompactPanel();
 
-	// The client renders the layout state of whoever it is watching, so the subject's style is
-	// what decides whether these channels would double up on it.
-	bool layoutLive = player->hudService->IsUsingLayoutStyle();
+	bool layoutLive = target->hudService->IsUsingLayoutStyle();
 
 	if (!showPanel || layoutLive)
 	{
@@ -77,8 +73,9 @@ void KZHUDService::DrawLegacyPanels(KZPlayer *player, KZPlayer *target)
 
 	std::string keyText = player->hudService->GetKeyText(language);
 	std::string checkpointText = player->hudService->GetCheckpointText(language);
-	std::string timerText = player->hudService->GetTimerText(language, target->hudService->GetPrefs().timerShowState);
-	std::string speedText = player->hudService->GetSpeedText(language);
+	const MHUDPrefs &prefs = target->hudService->GetPrefs();
+	std::string timerText = player->hudService->GetTimerText(language, prefs.timerShowState);
+	std::string speedText = player->hudService->GetSpeedText(prefs, language);
 
 	std::string centerText = "";
 	std::string htmlText = "";

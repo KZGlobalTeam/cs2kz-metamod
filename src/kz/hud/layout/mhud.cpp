@@ -321,7 +321,7 @@ bool KZHUDService::UpdateHudLayout(KZPlayer *source)
 		return true;
 	}
 
-	const SpeedInfo info = source->hudService->GetSpeedInfo();
+	const SpeedInfo info = source->hudService->GetSpeedInfo(this->GetPrefs());
 	this->UpdateTimerElement(layout, source, force);
 	this->UpdateSpeedElement(layout, info, force);
 	this->UpdatePrespeedElement(layout, info, force);

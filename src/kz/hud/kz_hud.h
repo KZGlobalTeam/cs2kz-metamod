@@ -373,8 +373,7 @@ private:
 		}
 	};
 
-	// Shared by the HTML panel and the MHUD layout so the two never disagree about a takeoff.
-	SpeedInfo GetSpeedInfo();
+	SpeedInfo GetSpeedInfo(const MHUDPrefs &prefs);
 
 	// Player pawn while alive, observer pawn otherwise.
 	CPlayer_MovementServices *GetHudMoveServices();
@@ -385,7 +384,7 @@ private:
 
 	static void DrawLegacyPanels(KZPlayer *player, KZPlayer *target);
 	// Legacy panels only.
-	std::string GetSpeedText(const char *language = KZ_DEFAULT_LANGUAGE);
+	std::string GetSpeedText(const MHUDPrefs &prefs, const char *language = KZ_DEFAULT_LANGUAGE);
 	std::string GetKeyText(const char *language = KZ_DEFAULT_LANGUAGE);
 
 	struct LayoutElementState

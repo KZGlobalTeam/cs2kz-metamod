@@ -81,7 +81,7 @@ void KZHUDService::Reset()
 	this->crouchJumping = false;
 }
 
-KZHUDService::SpeedInfo KZHUDService::GetSpeedInfo()
+KZHUDService::SpeedInfo KZHUDService::GetSpeedInfo(const MHUDPrefs &prefs)
 {
 	SpeedInfo info {};
 	CCSPlayerPawn *pawn = this->player->GetPlayerPawn();
@@ -104,7 +104,7 @@ KZHUDService::SpeedInfo KZHUDService::GetSpeedInfo()
 	// mhudPrespeedShow == Always skips this timeout, so the last takeoff speed keeps showing while grounded.
 	const bool pastGraceWindow = this->player->GetPlayerPawn()->m_fFlags & FL_ONGROUND
 								 && g_pKZUtils->GetServerGlobals()->curtime - this->player->landingTime > KZ_HUD_ON_GROUND_THRESHOLD;
-	if ((pastGraceWindow && this->GetPrefs().prespeedShow != MHUDPrespeedShow::Always)
+	if ((pastGraceWindow && prefs.prespeedShow != MHUDPrespeedShow::Always)
 		|| (this->player->GetPlayerPawn()->m_MoveType == MOVETYPE_LADDER && !player->IsButtonPressed(IN_JUMP)))
 	{
 		return info;
