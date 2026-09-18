@@ -890,6 +890,7 @@ void KZTimerService::Reset()
 	this->touchedGroundSinceTouchingStartZone = {};
 	this->shouldPlayTimerStopSound = true;
 	this->lastRestartAttemptTime = {};
+	this->ClearPBCache();
 }
 
 void KZTimerService::OnPhysicsSimulatePost()
