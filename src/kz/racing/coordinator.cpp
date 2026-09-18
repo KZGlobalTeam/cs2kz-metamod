@@ -23,13 +23,13 @@ void KZRacingService::Init()
 		return;
 	}
 
-	KZ_LOG_INFO(LogChannel::Racing, "Initializing RacingService...");
+	KZ_LOG_INFO(LogChannel::Racing, "Initializing RacingService...\n");
 
 	KeyValues *config = KZOptionService::GetOptionKV("GlobalKZ Race Coordinator");
 
 	if (!config)
 	{
-		KZ_LOG_INFO(LogChannel::Racing, "no configuration found; RacingService will be disabled");
+		KZ_LOG_INFO(LogChannel::Racing, "no configuration found; RacingService will be disabled\n");
 		return;
 	}
 
@@ -37,7 +37,7 @@ void KZRacingService::Init()
 
 	if (authToken.empty())
 	{
-		KZ_LOG_INFO(LogChannel::Racing, "auth token is empty; RacingService will be disabled");
+		KZ_LOG_INFO(LogChannel::Racing, "auth token is empty; RacingService will be disabled\n");
 		return;
 	}
 
@@ -45,7 +45,7 @@ void KZRacingService::Init()
 
 	if (url.empty())
 	{
-		KZ_LOG_INFO(LogChannel::Global, "base URL is empty; RacingService will be disabled");
+		KZ_LOG_INFO(LogChannel::Global, "base URL is empty; RacingService will be disabled\n");
 		return;
 	}
 
@@ -177,7 +177,7 @@ void KZRacingService::ProcessMainThreadCallbacks()
 
 	for (const KZWebSocket::Message &message : receivedMessages)
 	{
-		KZ_LOG_DEBUG(LogChannel::Racing, "processing message %s (%s)", message.id.c_str(), message.tag.c_str());
+		KZ_LOG_DEBUG(LogChannel::Racing, "processing message %s (%s)\n", message.id.c_str(), message.tag.c_str());
 
 		switch (KZRacingService::state.load())
 		{

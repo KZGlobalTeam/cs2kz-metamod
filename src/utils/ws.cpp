@@ -93,7 +93,7 @@ void KZWebSocket::Handle::Start()
 {
 	if (std::shared_ptr<KZWebSocket> socket = this->socket.lock())
 	{
-		KZ_LOG_DEBUG(LogChannel::WS, "starting socket");
+		KZ_LOG_DEBUG(LogChannel::WS, "starting socket\n");
 		socket->socket.start();
 	}
 }
@@ -102,7 +102,7 @@ void KZWebSocket::Handle::Shutdown(bool join)
 {
 	if (std::shared_ptr<KZWebSocket> socket = this->socket.lock())
 	{
-		KZ_LOG_DEBUG(LogChannel::WS, "stopping socket");
+		KZ_LOG_DEBUG(LogChannel::WS, "stopping socket\n");
 		socket->shuttingDown = true;
 		socket->socket.stop();
 		socket->dispatchThreadCvar.notify_one();
@@ -156,7 +156,7 @@ void KZWebSocket::RunDispatchLoop()
 	std::unique_lock<std::mutex> guard(this->mtx);
 	Json encodeBuffer;
 
-	KZ_LOG_DEBUG(LogChannel::WS, "entering dispatch loop");
+	KZ_LOG_DEBUG(LogChannel::WS, "entering dispatch loop\n");
 
 	while (!this->shuttingDown)
 	{
@@ -165,23 +165,23 @@ void KZWebSocket::RunDispatchLoop()
 			for (auto it = this->sendQueue.begin(); it != this->sendQueue.end();)
 			{
 				it->Encode(encodeBuffer);
-				KZ_LOG_DEBUG(LogChannel::WS, "sending message %s (%s)", it->id.c_str(), it->tag.c_str());
+				KZ_LOG_DEBUG(LogChannel::WS, "sending message %s (%s)\n", it->id.c_str(), it->tag.c_str());
 				ix::WebSocketSendInfo sendInfo = socket.send(encodeBuffer.ToString());
 				encodeBuffer.Clear();
 
 				if (!sendInfo.success)
 				{
-					KZ_LOG_WARN(LogChannel::WS, "failed to send message %s (%s)", it->id.c_str(), it->tag.c_str());
+					KZ_LOG_WARN(LogChannel::WS, "failed to send message %s (%s)\n", it->id.c_str(), it->tag.c_str());
 					break;
 				}
 
-				KZ_LOG_DEBUG(LogChannel::WS, "sent message %s (%s)", it->id.c_str(), it->tag.c_str());
+				KZ_LOG_DEBUG(LogChannel::WS, "sent message %s (%s)\n", it->id.c_str(), it->tag.c_str());
 
 				it = this->sendQueue.erase(it);
 			}
 		}
 
-		KZ_LOG_DEBUG(LogChannel::WS, "(dispatch loop) waiting");
+		KZ_LOG_DEBUG(LogChannel::WS, "(dispatch loop) waiting\n");
 
 		// clang-format off
 		this->dispatchThreadCvar.wait(guard, [&] {
@@ -190,20 +190,20 @@ void KZWebSocket::RunDispatchLoop()
 		// clang-format on
 	}
 
-	KZ_LOG_DEBUG(LogChannel::WS, "exiting dispatch loop");
+	KZ_LOG_DEBUG(LogChannel::WS, "exiting dispatch loop\n");
 }
 
 void KZWebSocket::OnWebSocketMessage(const std::string &data, bool binary)
 {
-	KZ_LOG_INFO(LogChannel::WS, "received %s message", binary ? "binary" : "text");
-	KZ_LOG_DEBUG(LogChannel::WS, "message payload:\n```\n%s\n```", data.c_str());
+	KZ_LOG_INFO(LogChannel::WS, "received %s message\n", binary ? "binary" : "text");
+	KZ_LOG_DEBUG(LogChannel::WS, "message payload:\n```\n%s\n```\n", data.c_str());
 
 	Json json(data);
 	Message message;
 
 	if (message.Decode(json))
 	{
-		KZ_LOG_DEBUG(LogChannel::WS, "decoded message %s (%s)", message.id.c_str(), message.tag.c_str());
+		KZ_LOG_DEBUG(LogChannel::WS, "decoded message %s (%s)\n", message.id.c_str(), message.tag.c_str());
 		std::lock_guard<std::mutex> _guard(this->mtx);
 		this->receiveQueue.push_back(std::move(message));
 	}
@@ -211,7 +211,7 @@ void KZWebSocket::OnWebSocketMessage(const std::string &data, bool binary)
 
 void KZWebSocket::OnWebSocketOpen(const ix::WebSocketOpenInfo &info)
 {
-	KZ_LOG_INFO(LogChannel::WS, "connection established (uri=%s, protocol=%s)", info.uri.c_str(), info.protocol.c_str());
+	KZ_LOG_INFO(LogChannel::WS, "connection established (uri=%s, protocol=%s)\n", info.uri.c_str(), info.protocol.c_str());
 
 	/*
 		This waits for the dispatch thread to actually park inside this->dispatchThreadCvar.wait() in RunDispatchLoop().
@@ -233,11 +233,11 @@ void KZWebSocket::OnWebSocketClose(const ix::WebSocketCloseInfo &info)
 {
 	if (!info.remote)
 	{
-		KZ_LOG_INFO(LogChannel::WS, "closed the connection (code=%i, reason=%s)", info.code, info.reason.c_str());
+		KZ_LOG_INFO(LogChannel::WS, "closed the connection (code=%i, reason=%s)\n", info.code, info.reason.c_str());
 		return;
 	}
 
-	KZ_LOG_WARN(LogChannel::WS, "remote closed the connection (code=%i, reason=%s)", info.code, info.reason.c_str());
+	KZ_LOG_WARN(LogChannel::WS, "remote closed the connection (code=%i, reason=%s)\n", info.code, info.reason.c_str());
 
 	switch (info.code)
 	{
@@ -266,7 +266,7 @@ void KZWebSocket::OnWebSocketClose(const ix::WebSocketCloseInfo &info)
 
 void KZWebSocket::OnWebSocketError(const ix::WebSocketErrorInfo &info)
 {
-	KZ_LOG_WARN(LogChannel::WS, "failed to establish connection (status=%i, reason=%s, decompressionError=%s, retries=%i, wait_time=%.2f)",
+	KZ_LOG_WARN(LogChannel::WS, "failed to establish connection (status=%i, reason=%s, decompressionError=%s, retries=%i, wait_time=%.2f)\n",
 				info.http_status, info.reason.c_str(), info.decompressionError ? "true" : "false", info.retries, info.wait_time);
 
 	switch (info.http_status)
@@ -288,10 +288,10 @@ void KZWebSocket::OnWebSocketError(const ix::WebSocketErrorInfo &info)
 
 void KZWebSocket::OnWebSocketPing()
 {
-	KZ_LOG_WARN(LogChannel::WS, "received ping");
+	KZ_LOG_WARN(LogChannel::WS, "received ping\n");
 }
 
 void KZWebSocket::OnWebSocketPong()
 {
-	KZ_LOG_DEBUG(LogChannel::WS, "received pong");
+	KZ_LOG_DEBUG(LogChannel::WS, "received pong\n");
 }
