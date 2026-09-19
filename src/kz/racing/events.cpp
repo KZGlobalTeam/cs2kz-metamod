@@ -14,9 +14,16 @@ void KZRacingService::OnChatMessage(const KZ::racing::events::ChatMessage &messa
 
 void KZRacingService::OnRaceConfigured(const KZ::racing::events::RaceConfigured &message)
 {
-	KZRacingService::currentRace.state = RaceInfo::State::Init;
 	KZRacingService::currentRace.conf = message.conf;
+	return KZRacingService::AfterRaceConfigured();
+}
+
+void KZRacingService::AfterRaceConfigured()
+{
+	KZRacingService::currentRace.state = RaceInfo::State::Init;
 	KZRacingService::currentRace.earliestStartTick = {};
+	KZRacingService::currentRace.localParticipants = {};
+	KZRacingService::currentRace.localFinishers = {};
 
 	KZRacingService::CheckMap();
 
@@ -72,7 +79,7 @@ void KZRacingService::OnRaceStarting(const KZ::racing::events::RaceStarting &mes
 
 void KZRacingService::OnRaceCancelled(const KZ::racing::events::RaceCancelled &message)
 {
-	KZRacingService::currentRace = {};
+	KZRacingService::AfterRaceConfigured();
 	KZLanguageService::PrintChatAll(true, "Racing - Race Cancelled");
 }
 
