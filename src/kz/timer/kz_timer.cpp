@@ -102,6 +102,11 @@ bool KZTimerService::UnregisterEventListener(KZTimerServiceEventListener *eventL
 	return eventListeners.FindAndRemove(eventListener);
 }
 
+void KZTimerService::DispatchRunSubmitted(const RunSubmission &submission)
+{
+	CALL_FORWARD(eventListeners, OnRunSubmittedPost, submission);
+}
+
 void KZTimerService::StartZoneStartTouch(const KZCourseDescriptor *course)
 {
 	this->touchedGroundSinceTouchingStartZone = !!(this->player->GetPlayerPawn()->m_fFlags & FL_ONGROUND);

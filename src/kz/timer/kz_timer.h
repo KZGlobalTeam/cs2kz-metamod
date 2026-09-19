@@ -88,6 +88,8 @@ inline void ConvertFromPBDataKey(PBDataKey key, uint32_t *modeID, uint32_t *cour
 	}
 }
 
+struct RunSubmission;
+
 class KZTimerServiceEventListener
 {
 public:
@@ -128,6 +130,9 @@ public:
 	virtual void OnCheckpointZoneTouchPost(KZPlayer *player, u32 checkpointZone) {}
 
 	virtual void OnStageZoneTouchPost(KZPlayer *player, u32 stageZone) {}
+
+	// Fires once per finished run when its ranks are announced, even if the player has left or the map has changed since.
+	virtual void OnRunSubmittedPost(const RunSubmission &submission) {}
 };
 
 class KZTimerService : public KZBaseService
@@ -221,6 +226,7 @@ public:
 	static void Init();
 	static bool RegisterEventListener(KZTimerServiceEventListener *eventListener);
 	static bool UnregisterEventListener(KZTimerServiceEventListener *eventListener);
+	static void DispatchRunSubmitted(const RunSubmission &submission);
 
 	bool GetTimerRunning()
 	{

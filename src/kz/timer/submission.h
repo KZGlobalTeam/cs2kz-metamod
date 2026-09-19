@@ -215,7 +215,14 @@ struct RunSubmission
 		return this->mapGeneration != RunSubmission::currentMapGeneration;
 	}
 
+	// Whether this run took #1 on the server / global leaderboard. False until the matching response arrives.
+	bool IsNewServerRecord(bool pro) const;
+	bool IsNewWorldRecord(bool pro) const;
+
 private:
+	// Announce the ranks to everyone and notify event listeners. Runs once per submission.
+	void Announce();
+
 	// Core decision point — called after any state change.
 	// Commits the run (disk write, DB insert, upload, announce) if all preconditions are met.
 	void TryFinalize();

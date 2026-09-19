@@ -712,16 +712,7 @@ void RunSubmission::CheckAll()
 
 			if (localReady && globalReady && !sub->runAnnounced)
 			{
-				sub->runAnnounced = true;
-				sub->AnnounceRun();
-				if (sub->local)
-				{
-					sub->AnnounceLocal();
-				}
-				if (sub->globalResponse.received)
-				{
-					sub->AnnounceGlobal();
-				}
+				sub->Announce();
 			}
 
 			// Keep alive until the queued submission gets its API response. 
@@ -752,16 +743,7 @@ void RunSubmission::CheckAll()
 
 				if (!sub->runAnnounced)
 				{
-					sub->runAnnounced = true;
-					sub->AnnounceRun();
-					if (sub->localResponse.received)
-					{
-						sub->AnnounceLocal();
-					}
-					if (sub->globalResponse.received)
-					{
-						sub->AnnounceGlobal();
-					}
+					sub->Announce();
 				}
 			}
 
@@ -803,8 +785,49 @@ void RunSubmission::OnGlobalRecordSubmitted(const KZ::api::messages::NewRecordAc
 }
 
 // ---------------------------------------------------------------------------
+// Record checks
+// ---------------------------------------------------------------------------
+
+bool RunSubmission::IsNewServerRecord(bool pro) const
+{
+	if (!this->localResponse.received || (pro && this->teleports > 0))
+	{
+		return false;
+	}
+	// The rank is that of the player's PB, so a slower run by the current record holder is also rank 1.
+	auto &data = pro ? this->localResponse.pro : this->localResponse.overall;
+	return data.rank == 1 && (data.firstTime || data.pbDiff < 0);
+}
+
+bool RunSubmission::IsNewWorldRecord(bool pro) const
+{
+	if (!this->globalResponse.received)
+	{
+		return false;
+	}
+	f64 oldPBTime = pro ? this->oldGPB.pro.time : this->oldGPB.overall.time;
+	u32 rank = pro ? this->globalResponse.pro.rank : this->globalResponse.overall.rank;
+	return rank == 1 && (oldPBTime == 0 || this->time < oldPBTime);
+}
+
+// ---------------------------------------------------------------------------
 // Announce methods
 // ---------------------------------------------------------------------------
+
+void RunSubmission::Announce()
+{
+	this->runAnnounced = true;
+	this->AnnounceRun();
+	if (this->localResponse.received)
+	{
+		this->AnnounceLocal();
+	}
+	if (this->globalResponse.received)
+	{
+		this->AnnounceGlobal();
+	}
+	KZTimerService::DispatchRunSubmitted(*this);
+}
 
 void RunSubmission::AnnounceRun()
 {
@@ -920,10 +943,8 @@ void RunSubmission::AnnounceGlobal()
 			: "";
 		// clang-format on
 
-		bool beatWR =
-			hasOldPB ? (this->time < this->oldGPB.overall.time && this->globalResponse.overall.rank == 1) : (this->globalResponse.overall.rank == 1);
-		bool beatWRPro =
-			hasOldPBPro ? (this->time < this->oldGPB.pro.time && this->globalResponse.pro.rank == 1) : (this->globalResponse.pro.rank == 1);
+		bool beatWR = this->IsNewWorldRecord(false);
+		bool beatWRPro = this->IsNewWorldRecord(true);
 
 		if (this->teleports > 0)
 		{

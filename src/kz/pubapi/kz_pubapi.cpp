@@ -11,6 +11,7 @@
 #include "kz/spec/kz_spec.h"
 #include "kz/style/kz_style.h"
 #include "kz/timer/kz_timer.h"
+#include "kz/timer/submission.h"
 
 #include <algorithm>
 #include <vector>
@@ -206,6 +207,45 @@ static_global class : public KZTimerServiceEventListener
 			return;
 		}
 		ForEachListener([slot, stageZone](ICS2KZEventListener *listener) { listener->OnStageZoneTouchPost(slot, stageZone); });
+	}
+
+	virtual void OnRunSubmittedPost(const RunSubmission &submission) override
+	{
+		// The player may have left by now, in which case the slot could already belong to someone else.
+		KZPlayer *player = g_pKZPlayerManager->ToPlayer(submission.userID);
+		i32 slot = player && player->IsInGame() ? SlotOf(player) : -1;
+
+		// Everything comes from the submission's own snapshot, not the live map, so this still works after a map change.
+		KZRunResult result {};
+		result.steamID64 = submission.player.steamid64;
+		result.playerName = submission.player.name.c_str();
+		result.mapName = submission.map.name.c_str();
+		result.courseName = submission.course.name.c_str();
+		result.modeShortName = submission.mode.name.c_str();
+		result.previousMap = submission.IsFromPreviousMap();
+		result.time = submission.time;
+		result.teleportsUsed = submission.teleports;
+		result.styleCount = static_cast<int32_t>(submission.styles.size());
+
+		result.localReceived = submission.localResponse.received;
+		if (result.localReceived)
+		{
+			result.serverRecord = submission.IsNewServerRecord(false);
+			result.serverRecordPro = submission.IsNewServerRecord(true);
+			result.localRank = submission.localResponse.overall.rank;
+			result.localRankPro = submission.localResponse.pro.rank;
+		}
+
+		result.globalReceived = submission.globalResponse.received;
+		if (result.globalReceived)
+		{
+			result.worldRecord = submission.IsNewWorldRecord(false);
+			result.worldRecordPro = submission.IsNewWorldRecord(true);
+			result.globalRank = submission.globalResponse.overall.rank;
+			result.globalRankPro = submission.globalResponse.pro.rank;
+		}
+
+		ForEachListener([slot, &result](ICS2KZEventListener *listener) { listener->OnRunSubmittedPost(slot, result); });
 	}
 } timerEventForwarder;
 

@@ -10,7 +10,7 @@
 //
 // Players are identified by slot (0 .. 63, i.e. entity index - 1). A slot that is not
 // occupied by an in-game player makes every getter return false / "" / 0.
-#define CS2KZ_INTERFACE "ICS2KZ001"
+#define CS2KZ_INTERFACE "ICS2KZ002"
 
 // Player button bits, matching the game's own input bitmask.
 // The implementation static_asserts these against the SDK values, so a game update that
@@ -122,6 +122,37 @@ struct KZTimerStatus
 	const char *modeName = "";      // e.g. "Classic"
 };
 
+// Outcome of a finished run's submission, handed out by OnRunSubmittedPost.
+// The strings alias the submission's own storage and are only valid inside the callback; copy them.
+struct KZRunResult
+{
+	uint64_t steamID64 = 0;
+	const char *playerName = "";    // name at the time the run finished
+	const char *mapName = "";
+	const char *courseName = "";
+	const char *modeShortName = ""; // e.g. "CKZ"
+	bool previousMap = false;       // the map changed between the run finishing and this callback
+	double time = 0.0;
+	uint32_t teleportsUsed = 0;
+	int32_t styleCount = 0; // styled runs aren't ranked on the local leaderboard
+
+	// Local (server database) leaderboard. localReceived is false when the run wasn't saved locally
+	// (no DB, styled run, banned/unauthenticated player) or the DB didn't answer in time.
+	bool localReceived = false;
+	bool serverRecord = false;    // new #1 on the overall server leaderboard
+	bool serverRecordPro = false; // new #1 on the PRO server leaderboard (0 teleports only)
+	uint32_t localRank = 0;
+	uint32_t localRankPro = 0;
+
+	// Global API leaderboard, same rules. globalReceived is also false for a run that was queued
+	// while the API was offline; its ack can arrive later, and this callback doesn't fire again.
+	bool globalReceived = false;
+	bool worldRecord = false;
+	bool worldRecordPro = false;
+	uint32_t globalRank = 0;
+	uint32_t globalRankPro = 0;
+};
+
 // Timer event notifications. Derive, override what you need, and register the instance
 // with ICS2KZ::RegisterEventListener.
 //
@@ -162,6 +193,12 @@ public:
 	// The player may be kicked immediately after this returns, depending on kz_ac_autokick,
 	// so read whatever you need from their slot inside the callback, not later.
 	virtual void OnPlayerBannedPost(int slot, KZBanSource source, const char *reason) {}
+
+	// The ranks for a finished run are in: fires exactly once per finished run, after OnTimerEndPost,
+	// when cs2kz announces them in chat (up to ~10 seconds later).
+	// Fires even if the player has left or the map has changed in the meantime. `slot` is -1 if the
+	// player is no longer on the server; use `result.steamID64` to identify them.
+	virtual void OnRunSubmittedPost(int slot, const KZRunResult &result) {}
 };
 
 class ICS2KZ
