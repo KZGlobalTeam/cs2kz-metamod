@@ -456,6 +456,11 @@ void KZJumpstatsService::AnnounceJump(Jump *jump)
 			{
 				continue;
 			}
+			// Banned players' jumps are never broadcast.
+			if (jump->GetJumpPlayer()->anticheatService->isBanned)
+			{
+				continue;
+			}
 			if (!player->optionService->GetPreferenceBool("jsReporting", true))
 			{
 				continue;

@@ -9,7 +9,7 @@
 
 IMPLEMENT_CLASS_EVENT_LISTENER(KZAnticheatService, KZAnticheatServiceEventListener);
 
-CConVar<bool> kz_ac_autokick("kz_ac_autokick", FCVAR_NONE, "Whether to kick players that are already banned", false);
+CConVar<bool> kz_ac_autokick("kz_ac_autokick", FCVAR_NONE, "Whether to kick players that are already banned", true);
 
 void KZAnticheatService::MarkBanned(KZAnticheatBanSource source, const char *reason)
 {
@@ -80,7 +80,8 @@ void KZAnticheatService::OnSetupMove(PlayerCommand *cmd)
 	{
 		return;
 	}
-	if (!this->ShouldRunDetections())
+	// Banned players can't receive another infraction, so running detections on them only spams the logs.
+	if (!this->ShouldRunDetections() || this->isBanned)
 	{
 		this->ClearDetectionBuffers();
 		return;
@@ -99,7 +100,7 @@ void KZAnticheatService::OnPhysicsSimulatePost()
 	{
 		return;
 	}
-	if (!this->ShouldRunDetections())
+	if (!this->ShouldRunDetections() || this->isBanned)
 	{
 		this->ClearDetectionBuffers();
 		return;

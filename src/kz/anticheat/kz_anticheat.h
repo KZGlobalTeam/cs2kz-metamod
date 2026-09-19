@@ -74,7 +74,7 @@ public:
 			60.0f * 24 * 60 * 30, // BhopHack - 30 days
 			60.0f * 24 * 60 * 7,  // Hyperscroll - 7 days
 			60.0f * 24 * 60 * 30, // InvalidCvar - 30 days
-			60.0f * 24 * 60 * 7,  // InvalidInput - 7 days
+			60.0f * 24 * 60 * 30, // InvalidInput - 30 days
 			-1.0f,                // Nulls - no ban, just kick (for now)
 			-1.0f,                // SubtickSpam - no ban, just kick (for now)
 			-1.0f                 // Desubtick - kick only
