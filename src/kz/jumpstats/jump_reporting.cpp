@@ -166,7 +166,7 @@ void KZJumpstatsService::PrintJumpToConsole(KZPlayer *target, Jump *jump, bool b
 	bool shouldPrint = minTier != DistanceTier_None && color >= minTier;
 	shouldPrint |= !broadcast && target->optionService->GetPreferenceBool("jsAlways", false);
 	shouldPrint |= target->IsCSTV();
-	if (broadcast && !jump->GetJumpPlayer()->anticheatService->isBanned)
+	if (broadcast && jump->GetJumpPlayer()->anticheatService->isBanned)
 	{
 		shouldPrint = false;
 	}
@@ -371,8 +371,6 @@ void KZJumpstatsService::BroadcastJumpToChat(KZPlayer *target, Jump *jump)
 			jumpTypeStr[jump->GetReportJumpType()],
 			jump->GetJumpPlayer()->modeService->GetModeName()
 		);
-		KZJumpstatsService::PrintJumpToConsole(target, jump);
-		KZJumpstatsService::PlayJumpstatSound(target, jump, true);
 		// clang-format on
 	}
 }
@@ -400,7 +398,7 @@ void KZJumpstatsService::PlayJumpstatSound(KZPlayer *target, Jump *jump, bool br
 	bool shouldPlay = soundMinTier != DistanceTier_None && tier >= soundMinTier && tier > DistanceTier_Meh;
 	shouldPlay |= target->IsCSTV();
 
-	if (broadcast && !jump->GetJumpPlayer()->anticheatService->isBanned)
+	if (broadcast && jump->GetJumpPlayer()->anticheatService->isBanned)
 	{
 		shouldPlay = false;
 	}
