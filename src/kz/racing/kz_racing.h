@@ -55,12 +55,12 @@ namespace KZ::racing
 
 			std::string content;
 
-			// SteamID or name depending on whether we are the sender or recipient
+			// name
 			std::string player;
 
 			ChatMessage() = default;
 
-			ChatMessage(const std::string &content, u64 steamID) : content(content), player(std::to_string(steamID)) {}
+			ChatMessage(const std::string &content, const char *playerName) : content(content), player(playerName) {}
 
 			bool ToJson(Json &json) const;
 			bool FromJson(const Json &json);
@@ -87,6 +87,13 @@ namespace KZ::racing
 		struct RaceCancelled
 		{
 			inline static constexpr const char *tag = "race_cancelled";
+
+			bool FromJson(const Json &json);
+		};
+
+		struct RaceDeleted
+		{
+			inline static constexpr const char *tag = "race_deleted";
 
 			bool FromJson(const Json &json);
 		};
@@ -248,6 +255,7 @@ public:
 	static void AfterRaceConfigured();
 	static void OnRaceStarting(const KZ::racing::events::RaceStarting &message);
 	static void OnRaceCancelled(const KZ::racing::events::RaceCancelled &message);
+	static void OnRaceDeleted(const KZ::racing::events::RaceDeleted &message);
 	static void OnRaceCompleted(const KZ::racing::events::RaceCompleted &message);
 	static void OnPlayerReady(const KZ::racing::events::PlayerReady &message);
 	static void OnPlayerFinished(const KZ::racing::events::PlayerFinished &message);

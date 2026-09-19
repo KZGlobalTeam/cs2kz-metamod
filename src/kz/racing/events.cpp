@@ -83,6 +83,12 @@ void KZRacingService::OnRaceCancelled(const KZ::racing::events::RaceCancelled &m
 	KZLanguageService::PrintChatAll(true, "Racing - Race Cancelled");
 }
 
+void KZRacingService::OnRaceDeleted(const KZ::racing::events::RaceDeleted &message)
+{
+	KZRacingService::currentRace = {};
+	KZLanguageService::PrintChatAll(true, "Racing - Race Cancelled");
+}
+
 void KZRacingService::OnRaceCompleted(const KZ::racing::events::RaceCompleted &message)
 {
 	KZLanguageService::PrintChatAll(true, "Racing - End Results Header");

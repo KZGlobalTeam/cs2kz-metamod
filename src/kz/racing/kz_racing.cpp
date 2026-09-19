@@ -56,7 +56,7 @@ void KZRacingService::SendFinishRace(f64 timeSeconds, u32 teleports)
 
 void KZRacingService::SendChatMessage(const std::string &content)
 {
-	KZ::racing::events::ChatMessage data(content, this->player->GetSteamId64());
+	KZ::racing::events::ChatMessage data(content, this->player->GetName());
 	KZRacingService::SendMessage(data);
 }
 
@@ -221,7 +221,8 @@ bool KZRacingService::CanTeleport()
 		}
 	}
 	// Can't teleport if max teleports reached.
-	if (this->player->checkpointService->GetTeleportCount() >= KZRacingService::currentRace.conf.maxTeleports)
+	if (KZRacingService::currentRace.conf.maxTeleports.has_value()
+		&& this->player->checkpointService->GetTeleportCount() >= KZRacingService::currentRace.conf.maxTeleports)
 	{
 		return false;
 	}
