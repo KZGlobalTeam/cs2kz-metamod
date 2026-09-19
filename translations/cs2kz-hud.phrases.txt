@@ -19,31 +19,37 @@
 	"HUD - Perf Full"
 	{
 		"en"		"PERFECT BHOP"
+		"chi"		"完美连跳"
 		"ua"		"PERFECT BHOP"
 	}
 	"HUD - Perf Short"
 	{
 		"en"		"PERF"
+		"chi"		"PERF"
 		"ua"		"PERF"
 	}
 	"HUD - Crouch Jump Full"
 	{
 		"en"		"CROUCH JUMP"
+		"chi"		"蹲跳"
 		"ua"		"CROUCH JUMP"
 	}
 	"HUD - Crouch Jump Short"
 	{
 		"en"		"CJ"
+		"chi"		"CJ"
 		"ua"		"CJ"
 	}
 	"HUD - Jumpbug Full"
 	{
 		"en"		"JUMPBUG"
+		"chi"		"JUMPBUG"
 		"ua"		"JUMPBUG"
 	}
 	"HUD - Jumpbug Short"
 	{
 		"en"		"JB"
+		"chi"		"JB"
 		"ua"		"JB"
 	}
 	"HUD - Stopped Text"
@@ -306,6 +312,7 @@
 	"Fonts - Help (Chat)"
 	{
 		"en"		"{grey}Check console for instructions!"
+		"chi"		"{grey}请查看控制台获取说明!"
 		"ua"		"{grey}Перевірте консоль для інструкцій!"
 	}
 	"Fonts - Help (Console)"
@@ -316,6 +323,7 @@
 		// 2. Open csgo\panorama\fonts\fonts.conf and add a line next to the others: <fontpattern>yourfontfilename</fontpattern>
 		// 3. Restart the game fully.
 		"en"		"----- Fonts marked * in the font picker -----\nThe game only loads installed font files whose name matches an entry in fonts.conf.\n1. Install the font for all users.\n2. Open csgo\panorama\fonts\fonts.conf and add a line next to the others: <fontpattern>yourfontfilename</fontpattern>\n3. Restart the game fully."
+		"chi"		"----- 字体选择器中标记为 * 的字体 -----\n游戏只会加载文件名与 fonts.conf 中条目匹配的已安装字体文件.\n1. 为所有用户安装该字体.\n2. 打开 csgo\panorama\fonts\fonts.conf, 在其他行旁边添加一行: <fontpattern>你的字体文件名</fontpattern>\n3. 完全重启游戏."
 		"ua"		"----- Шрифти, позначені * у виборі шрифтів -----\nГра завантажує лише встановлені файли шрифтів, ім'я яких збігається з записом у fonts.conf.\n1. Встановіть шрифт для всіх користувачів.\n2. Відкрийте csgo\panorama\fonts\fonts.conf і додайте рядок поруч з іншими: <fontpattern>yourfontfilename</fontpattern>\n3. Повністю перезапустіть гру."
 	}
 }

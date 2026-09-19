@@ -377,7 +377,7 @@
 	{
 		"#format"	"course_name:s"
 		"en"		"{darkred}Start position not found for course {default}{course_name}{darkred}!"
-		"chi"		"{darkred}{course_name} {darkred}的起始点无法找到!"
+		"chi"		"{darkred}无法找到关卡 {default}{course_name}{darkred} 的起始点!"
 		"pl"		"{darkred}Nie znaleziono pozycji startowej dla trasy {default}{course_name}{darkred}!"
 		"ru"		"{darkred}Стартовая позиция для маршрута {default}{course_name} {darkred}не найдена!"
 		"sv"		"{darkred}Startpositionen hittades inte för banan {default}{course_name}{darkred}!"
@@ -392,7 +392,7 @@
 	{
 		"#format"	"course_name:s"
 		"en"		"{darkred}End position not found for course {default}{course_name}{darkred}!"
-		"chi"		"{darkred}{course_name} {darkred}的终点无法找到!"
+		"chi"		"{darkred}无法找到关卡 {default}{course_name}{darkred} 的终点!"
 		"ua"		"{darkred}Не знайдено кінцеву позицію для курсу {default}{course_name}{darkred}!"
 		"ru"		"{darkred}Конечная позиция маршрута {default}{course_name} {darkred}не найдена!"
 		"es"		"{darkred}Posición final del recorrido no encontrada {default}{course_name}{darkred}!"
