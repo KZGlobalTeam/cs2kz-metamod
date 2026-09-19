@@ -270,43 +270,45 @@ bool KZTimerService::TimerStart(const KZCourseDescriptor *courseDesc, bool playS
 	if (this->currentCourseGUID != courseDesc->guid)
 	{
 		this->player->languageService->PrintChat(true, false, "Started Run on Course", courseDesc->name);
-		// First run of a course on any map. We can use this to print out a one-time message if the map is not global.
-		if (KZGlobalService::IsAvailable() && this->currentCourseGUID == 0)
+		if (KZGlobalService::IsAvailable())
 		{
+			bool mapApproved = false;
+			bool ranked = false;
 			KZGlobalService::WithCurrentMap(
 				[&](const std::optional<KZ::api::Map> &map)
 				{
 					if (!map || map->state != KZ::api::Map::State::Approved)
 					{
-						this->player->languageService->PrintChat(true, false, "Non Global Map Warning");
+						return;
+					}
+					mapApproved = true;
+					// Styled runs are never ranked.
+					if (this->player->styleServices.Count() > 0)
+					{
+						return;
+					}
+					for (const auto &apiCourse : map->courses)
+					{
+						if (apiCourse.id != courseDesc->globalDatabaseID)
+						{
+							continue;
+						}
+						using FilterState = KZ::api::Map::Course::Filter::State;
+						const char *modeName = this->player->modeService->GetModeName();
+						ranked = (KZ_STREQI(modeName, "Classic") && apiCourse.filters.classic.state == FilterState::Ranked)
+								 || (KZ_STREQI(modeName, "Vanilla") && apiCourse.filters.vanilla.state == FilterState::Ranked);
+						break;
 					}
 				});
-		}
-		else if (KZGlobalService::IsAvailable())
-		{
-			bool ranked = this->player->styleServices.Count() > 0;
-			if (ranked)
+			if (!mapApproved)
 			{
-				KZGlobalService::WithCurrentMap(
-					[&](const std::optional<KZ::api::Map> &map)
-					{
-						if (map && map->state == KZ::api::Map::State::Approved)
-						{
-							for (const auto &apiCourse : map->courses)
-							{
-								if (apiCourse.id == courseDesc->globalDatabaseID)
-								{
-									ranked = (KZ_STREQI(this->player->modeService->GetModeName(), "Classic")
-											  && apiCourse.filters.classic.state == KZ::api::Map::Course::Filter::State::Ranked)
-											 || (KZ_STREQI(this->player->modeService->GetModeName(), "Vanilla")
-												 && apiCourse.filters.vanilla.state == KZ::api::Map::Course::Filter::State::Ranked);
-									break;
-								}
-							}
-						}
-					});
+				// First run of a course on any map. Print a one-time message if the map is not global.
+				if (this->currentCourseGUID == 0)
+				{
+					this->player->languageService->PrintChat(true, false, "Non Global Map Warning");
+				}
 			}
-			if (!ranked)
+			else if (!ranked)
 			{
 				this->player->languageService->PrintChat(true, false, "Started Run on Non Ranked Course", courseDesc->name);
 			}

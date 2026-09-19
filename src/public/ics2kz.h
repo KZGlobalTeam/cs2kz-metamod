@@ -127,7 +127,7 @@ struct KZTimerStatus
 struct KZRunResult
 {
 	uint64_t steamID64 = 0;
-	const char *playerName = "";    // name at the time the run finished
+	const char *playerName = ""; // name at the time the run finished
 	const char *mapName = "";
 	const char *courseName = "";
 	const char *modeShortName = ""; // e.g. "CKZ"
