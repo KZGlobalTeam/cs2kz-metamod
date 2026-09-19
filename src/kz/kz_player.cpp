@@ -170,7 +170,7 @@ void KZPlayer::Reset()
 	CSplitString styles(KZOptionService::GetOptionStr("defaultStyles"), ",");
 	FOR_EACH_VEC(styles, i)
 	{
-		g_pKZStyleManager->AddStyle(this, styles[i]);
+		g_pKZStyleManager->AddStyle(this, styles[i], true, false);
 	}
 }
 
