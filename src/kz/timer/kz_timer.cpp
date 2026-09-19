@@ -128,7 +128,7 @@ void KZTimerService::SplitZoneStartTouch(const KZCourseDescriptor *course, i32 s
 		return;
 	}
 
-	assert(splitNumber > INVALID_SPLIT_NUMBER && splitNumber < KZ_MAX_SPLIT_ZONES);
+	assert(splitNumber > INVALID_SPLIT_NUMBER && splitNumber <= KZ_MAX_SPLIT_ZONES);
 
 	if (this->splitZoneTimes[splitNumber - 1] < 0)
 	{
@@ -156,7 +156,7 @@ void KZTimerService::CheckpointZoneStartTouch(const KZCourseDescriptor *course, 
 		return;
 	}
 
-	assert(cpNumber > INVALID_CHECKPOINT_NUMBER && cpNumber < KZ_MAX_CHECKPOINT_ZONES);
+	assert(cpNumber > INVALID_CHECKPOINT_NUMBER && cpNumber <= KZ_MAX_CHECKPOINT_ZONES);
 
 	if (this->cpZoneTimes[cpNumber - 1] < 0)
 	{
@@ -185,7 +185,7 @@ void KZTimerService::StageZoneStartTouch(const KZCourseDescriptor *course, i32 s
 		return;
 	}
 
-	assert(stageNumber > INVALID_STAGE_NUMBER && stageNumber < KZ_MAX_STAGE_ZONES);
+	assert(stageNumber > INVALID_STAGE_NUMBER && stageNumber <= KZ_MAX_STAGE_ZONES);
 
 	if (stageNumber > this->currentStage + 1)
 	{

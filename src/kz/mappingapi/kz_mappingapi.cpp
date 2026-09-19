@@ -245,7 +245,7 @@ static_function void Mapi_OnTriggerMultipleSpawn(const EntitySpawnInfo_t *info)
 			if (type == KZTRIGGER_ZONE_SPLIT)
 			{
 				trigger.zone.number = ekv->GetInt("timer_zone_split_number", INVALID_SPLIT_NUMBER);
-				if (trigger.zone.number <= INVALID_SPLIT_NUMBER)
+				if (trigger.zone.number <= INVALID_SPLIT_NUMBER || trigger.zone.number > KZ_MAX_SPLIT_ZONES)
 				{
 					Mapi_Error("Split zone number \"%i\" is invalid! Hammer ID %i, origin (%.0f %.0f %.0f)", trigger.zone.number, hammerId, origin.x,
 							   origin.y, origin.z);
@@ -257,7 +257,7 @@ static_function void Mapi_OnTriggerMultipleSpawn(const EntitySpawnInfo_t *info)
 			{
 				trigger.zone.number = ekv->GetInt("timer_zone_checkpoint_number", INVALID_CHECKPOINT_NUMBER);
 
-				if (trigger.zone.number <= INVALID_CHECKPOINT_NUMBER)
+				if (trigger.zone.number <= INVALID_CHECKPOINT_NUMBER || trigger.zone.number > KZ_MAX_CHECKPOINT_ZONES)
 				{
 					Mapi_Error("Checkpoint zone number \"%i\" is invalid! Hammer ID %i, origin (%.0f %.0f %.0f)", trigger.zone.number, hammerId,
 							   origin.x, origin.y, origin.z);
@@ -269,7 +269,7 @@ static_function void Mapi_OnTriggerMultipleSpawn(const EntitySpawnInfo_t *info)
 			{
 				trigger.zone.number = ekv->GetInt("timer_zone_stage_number", INVALID_STAGE_NUMBER);
 
-				if (trigger.zone.number <= INVALID_STAGE_NUMBER)
+				if (trigger.zone.number <= INVALID_STAGE_NUMBER || trigger.zone.number > KZ_MAX_STAGE_ZONES)
 				{
 					Mapi_Error("Stage zone number \"%i\" is invalid! Hammer ID %i, origin (%.0f %.0f %.0f)", trigger.zone.number, hammerId, origin.x,
 							   origin.y, origin.z);
@@ -646,12 +646,17 @@ void KZ::mapapi::OnRoundStart()
 	FOR_EACH_VEC(g_mappingApi.courseDescriptors, courseInd)
 	{
 		// Find the number of split/checkpoint/stage zones that a course has
-		//  and make sure that they all start from 1 and are consecutive by
-		//  XORing the values with a consecutive 1...n sequence.
-		//  https://florian.github.io/xor-trick/
-		i32 splitXor = 0;
-		i32 cpXor = 0;
-		i32 stageXor = 0;
+		//  and make sure that they are unique, start from 1 and are consecutive.
+		//  Zone numbers are already bounded to 1...KZ_MAX_*_ZONES when the triggers are parsed.
+		bool splitSeen[KZ_MAX_SPLIT_ZONES + 1] = {};
+		bool cpSeen[KZ_MAX_CHECKPOINT_ZONES + 1] = {};
+		bool stageSeen[KZ_MAX_STAGE_ZONES + 1] = {};
+		bool splitDuplicate = false;
+		bool cpDuplicate = false;
+		bool stageDuplicate = false;
+		i32 splitMax = 0;
+		i32 cpMax = 0;
+		i32 stageMax = 0;
 		i32 splitCount = 0;
 		i32 cpCount = 0;
 		i32 stageCount = 0;
@@ -669,34 +674,45 @@ void KZ::mapapi::OnRoundStart()
 				continue;
 			}
 
+			i32 number = trigger->zone.number;
 			switch (trigger->type)
 			{
 				case KZTRIGGER_ZONE_SPLIT:
-					splitXor ^= (++splitCount) ^ trigger->zone.number;
+					splitCount++;
+					splitDuplicate |= splitSeen[number];
+					splitSeen[number] = true;
+					splitMax = MAX(splitMax, number);
 					break;
 				case KZTRIGGER_ZONE_CHECKPOINT:
-					cpXor ^= (++cpCount) ^ trigger->zone.number;
+					cpCount++;
+					cpDuplicate |= cpSeen[number];
+					cpSeen[number] = true;
+					cpMax = MAX(cpMax, number);
 					break;
 				case KZTRIGGER_ZONE_STAGE:
-					stageXor ^= (++stageCount) ^ trigger->zone.number;
+					stageCount++;
+					stageDuplicate |= stageSeen[number];
+					stageSeen[number] = true;
+					stageMax = MAX(stageMax, number);
 					break;
 			}
 		}
 
+		// Unique numbers in 1...n with n zones means the set is exactly 1...n.
 		bool invalid = false;
-		if (splitXor != 0)
+		if (splitDuplicate || splitMax != splitCount)
 		{
 			Mapi_Error("Course \"%s\" Split zones aren't consecutive or don't start at 1!", courseDescriptor->name);
 			invalid = true;
 		}
 
-		if (cpXor != 0)
+		if (cpDuplicate || cpMax != cpCount)
 		{
 			Mapi_Error("Course \"%s\" Checkpoint zones aren't consecutive or don't start at 1!", courseDescriptor->name);
 			invalid = true;
 		}
 
-		if (stageXor != 0)
+		if (stageDuplicate || stageMax != stageCount)
 		{
 			Mapi_Error("Course \"%s\" Stage zones aren't consecutive or don't start at 1!", courseDescriptor->name);
 			invalid = true;
@@ -724,11 +740,18 @@ void KZ::mapapi::OnRoundStart()
 		{
 			g_mappingApi.courseDescriptors.FastRemove(courseInd);
 			courseInd--;
-			break;
+			continue;
 		}
 		courseDescriptor->splitCount = splitCount;
 		courseDescriptor->checkpointCount = cpCount;
 		courseDescriptor->stageCount = stageCount;
+	}
+
+	// FastRemove moves elements around, so the sorted pointers have to be rebuilt.
+	g_sortedCourses.RemoveAll();
+	FOR_EACH_VEC(g_mappingApi.courseDescriptors, courseInd)
+	{
+		g_sortedCourses.Insert(&g_mappingApi.courseDescriptors[courseInd]);
 	}
 }
 
