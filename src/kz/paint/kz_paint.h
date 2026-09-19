@@ -33,6 +33,8 @@ public:
 	bool SetColorRGB(u8 r, u8 g, u8 b, u8 a = 255);
 
 	static constexpr f32 DEFAULT_PAINT_SIZE = 8.0f;
+	static constexpr f32 MIN_PAINT_SIZE = 1.0f;
+	static constexpr f32 MAX_PAINT_SIZE = 1000000000.0f;
 
 	static void Init();
 	static void RegisterMenu();

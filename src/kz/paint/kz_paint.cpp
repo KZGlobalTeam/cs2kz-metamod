@@ -17,11 +17,6 @@ void KZPaintService::Init()
 
 void KZPaintService::Reset()
 {
-	// Reset to default: red color and default size
-	player->optionService->SetPreferenceColor("paintColor", KZ_PAINT_DEFAULT_COLOR);
-	player->optionService->SetPreferenceFloat("paintSize", DEFAULT_PAINT_SIZE);
-	player->optionService->SetPreferenceBool("showAllPaint", false);
-
 	this->autoPaintEnabled = false;
 	this->hasLastAutoPaintPosition = false;
 	this->nextAutoPaintTime = 0.0;
@@ -72,7 +67,7 @@ bool KZPaintService::SetSize(f32 value)
 		return false;
 	}
 
-	player->optionService->SetPreferenceFloat("paintSize", value);
+	player->optionService->SetPreferenceFloat("paintSize", MIN(value, MAX_PAINT_SIZE));
 	return true;
 }
 

@@ -4,9 +4,6 @@
 
 #include "tier0/memdbgon.h"
 
-#define KZ_PAINT_SIZE_MIN 1
-#define KZ_PAINT_SIZE_MAX 32
-
 void KZPaintService::RegisterMenu()
 {
 	KZOptNode *cat = KZ::menu::AddCategory("Menu - Paint");
@@ -14,6 +11,7 @@ void KZPaintService::RegisterMenu()
 	// Paint draws a decal with one solid color, so the gradients in the picker would not render.
 	KZ::menu::SetItemSolidOnly(cat);
 	KZ::menu::SetItemSubtext(cat, "Menu - Paint Color Sub");
-	KZ::menu::AddSize(cat, "Menu - Size", "paintSize", (i32)KZPaintService::DEFAULT_PAINT_SIZE, KZ_PAINT_SIZE_MIN, KZ_PAINT_SIZE_MAX);
+	KZ::menu::AddSize(cat, "Menu - Size", "paintSize", (i32)KZPaintService::DEFAULT_PAINT_SIZE, (i32)KZPaintService::MIN_PAINT_SIZE,
+					  (i32)KZPaintService::MAX_PAINT_SIZE);
 	KZ::menu::AddToggle(cat, "Menu - Show All Paint", "showAllPaint", false);
 }
