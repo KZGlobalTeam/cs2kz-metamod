@@ -216,6 +216,14 @@ void KZRacingService::ProcessMainThreadCallbacks()
 						KZRacingService::OnRaceCancelled(event);
 					}
 				}
+				else if (message.tag == "race_deleted")
+				{
+					KZ::racing::events::RaceDeleted event;
+					if (event.FromJson(message.data))
+					{
+						KZRacingService::OnRaceDeleted(event);
+					}
+				}
 				else if (message.tag == "race_completed")
 				{
 					KZ::racing::events::RaceCompleted event;

@@ -107,6 +107,11 @@ bool KZ::racing::events::RaceCancelled::FromJson(const Json &json)
 	return true;
 }
 
+bool KZ::racing::events::RaceDeleted::FromJson(const Json &json)
+{
+	return true;
+}
+
 bool KZ::racing::events::RaceCompleted::FromJson(const Json &json)
 {
 	return json.Get("results", this->results);
