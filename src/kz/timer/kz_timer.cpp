@@ -1675,9 +1675,8 @@ CUtlString KZTimerService::GetCurrentRunMetadata()
 		time->SetDouble(this->cpZoneTimes[i]);
 	}
 
-	splitZoneTimesKV->SetToEmptyArray();
-
 	KeyValues3 *stageZoneTimesKV = kv.FindOrCreateMember("stageZoneTimes");
+	stageZoneTimesKV->SetToEmptyArray();
 	FOR_EACH_VEC(this->stageZoneTimes, i)
 	{
 		KeyValues3 *time = stageZoneTimesKV->ArrayAddElementToTail();
