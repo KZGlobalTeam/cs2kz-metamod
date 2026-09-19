@@ -226,7 +226,7 @@ void KZModeManager::UnregisterMode(PluginId id)
 				if (!V_strcmp(player->modeService->GetModeName(), modeInfos[modeIdx].longModeName)
 					|| !V_strcmp(player->modeService->GetModeShortName(), modeInfos[modeIdx].shortModeName))
 				{
-					this->SwitchToMode(player, "VNL");
+					this->SwitchToMode(player, "VNL", false, true);
 				}
 			}
 

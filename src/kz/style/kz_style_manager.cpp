@@ -184,7 +184,7 @@ void KZStyleManager::UnregisterStyle(PluginId id)
 					if (!V_stricmp(player->styleServices[svcIdx]->GetStyleName(), styleInfos[styleIdx].longName)
 						|| !V_stricmp(player->styleServices[svcIdx]->GetStyleShortName(), styleInfos[styleIdx].shortName))
 					{
-						this->RemoveStyle(player, styleInfos[styleIdx].longName);
+						this->RemoveStyle(player, styleInfos[styleIdx].longName, false, true);
 						break;
 					}
 				}
@@ -290,7 +290,7 @@ void KZStyleManager::AddStyle(KZPlayer *player, const char *styleName, bool sile
 	player->profileService->UpdateClantag();
 }
 
-void KZStyleManager::RemoveStyle(KZPlayer *player, const char *styleName, bool silent, bool updatePreference)
+void KZStyleManager::RemoveStyle(KZPlayer *player, const char *styleName, bool silent, bool force, bool updatePreference)
 {
 	if (!styleName || !V_stricmp("", styleName))
 	{
@@ -298,7 +298,7 @@ void KZStyleManager::RemoveStyle(KZPlayer *player, const char *styleName, bool s
 		return;
 	}
 
-	if (!player->timerService->CheckSafeguard(!silent))
+	if (!force && !player->timerService->CheckSafeguard(!silent))
 	{
 		return;
 	}

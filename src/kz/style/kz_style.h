@@ -191,7 +191,7 @@ public:
 	void Cleanup();
 
 	void AddStyle(KZPlayer *player, const char *styleName, bool silent = false, bool updatePreference = true);
-	void RemoveStyle(KZPlayer *player, const char *styleName, bool silent = false, bool updatePreference = true);
+	void RemoveStyle(KZPlayer *player, const char *styleName, bool silent = false, bool force = false, bool updatePreference = true);
 	void ToggleStyle(KZPlayer *player, const char *styleName, bool silent = false, bool updatePreference = true);
 	void ClearStyles(KZPlayer *player, bool silent = false, bool updatePreference = true);
 	void RefreshStyles(KZPlayer *player, bool updatePreference = true);
