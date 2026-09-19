@@ -245,6 +245,7 @@ public:
 	// Called on the main thread.
 	static void OnChatMessage(const KZ::racing::events::ChatMessage &message);
 	static void OnRaceConfigured(const KZ::racing::events::RaceConfigured &message);
+	static void AfterRaceConfigured();
 	static void OnRaceStarting(const KZ::racing::events::RaceStarting &message);
 	static void OnRaceCancelled(const KZ::racing::events::RaceCancelled &message);
 	static void OnRaceCompleted(const KZ::racing::events::RaceCompleted &message);
