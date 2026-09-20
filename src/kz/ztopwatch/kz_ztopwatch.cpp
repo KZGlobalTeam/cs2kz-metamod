@@ -25,7 +25,7 @@ static_global class : public KZTimerServiceEventListener
 		player->ztopwatchService->OnTimerStop();
 	}
 
-	virtual void OnTimerEndPost(KZPlayer *player, u32 courseGUID, f32 time, u32 teleportsUsed) override
+	virtual void OnTimerEndPost(KZPlayer *player, u32 courseGUID, f32 time, u32 teleportsUsed, bool brokeRecord) override
 	{
 		player->ztopwatchService->OnTimerStop();
 	}

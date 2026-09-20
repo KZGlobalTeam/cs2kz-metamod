@@ -1,4 +1,5 @@
 #include "kz_timer.h"
+#include "kz/anticheat/kz_anticheat.h"
 #include "kz/db/kz_db.h"
 #include "kz/global/kz_global.h"
 #include "kz/language/kz_language.h"
@@ -423,9 +424,10 @@ bool KZTimerService::TimerEnd(const KZCourseDescriptor *courseDesc)
 	}
 	this->PlayTimerEndSound();
 
+	bool brokeRecord = this->HasBeatenWorldRecord(time, teleportsUsed);
 	FOR_EACH_VEC(eventListeners, i)
 	{
-		eventListeners[i]->OnTimerEndPost(this->player, this->currentCourseGUID, time, teleportsUsed);
+		eventListeners[i]->OnTimerEndPost(this->player, this->currentCourseGUID, time, teleportsUsed, brokeRecord);
 	}
 	// This must be called after OnTimerEndPost so that the run UUID is set correctly.
 	if (this->player->optionService->GetPreferenceBool("mapOverlay"))
@@ -1293,6 +1295,60 @@ const PBData *KZTimerService::GetGlobalCachedRecord(const KZCourseDescriptor *co
 	}
 
 	return &KZTimerService::wrCache[key];
+}
+
+bool KZTimerService::HasBeatenWorldRecord(f32 time, u32 teleportsUsed) const
+{
+	if (!this->validTime)
+	{
+		return false;
+	}
+	if (!this->player || this->player->styleServices.Count() > 0)
+	{
+		return false;
+	}
+	if (this->player->anticheatService && this->player->anticheatService->isBanned)
+	{
+		return false;
+	}
+	if (!this->player->IsAuthenticated())
+	{
+		return false;
+	}
+	const KZCourseDescriptor *course = KZ::course::GetCourse(this->currentCourseGUID);
+	if (!course)
+	{
+		return false;
+	}
+	auto modeInfo = KZ::mode::GetModeInfo(this->player->modeService);
+	if (modeInfo.id < 0)
+	{
+		return false;
+	}
+	PBDataKey key = ToPBDataKey(modeInfo.id, this->currentCourseGUID);
+	bool isPro = (teleportsUsed == 0);
+	f64 runTime = (f64)time;
+
+	// World records only. Strict: a cached WR time must exist and be beaten.
+	// No cache entry (or empty time) means unknown, not beaten. The authoritative
+	// result still arrives later via OnRunSubmittedPost.
+	auto wit = KZTimerService::wrCache.find(key);
+	if (wit == KZTimerService::wrCache.end())
+	{
+		return false;
+	}
+	const PBData &wr = wit->second;
+	if (!isPro)
+	{
+		if (wr.overall.pbTime <= 0.0)
+		{
+			return false;
+		}
+		return runTime + (f64)EPSILON < wr.overall.pbTime;
+	}
+	bool beatOverall = wr.overall.pbTime > 0.0 && runTime + (f64)EPSILON < wr.overall.pbTime;
+	bool beatPro = wr.pro.pbTime > 0.0 && runTime + (f64)EPSILON < wr.pro.pbTime;
+	return beatOverall || beatPro;
 }
 
 void KZTimerService::InsertRecordToCache(f64 time, const KZCourseDescriptor *course, PluginId modeID, bool overall, bool global, CUtlString metadata)

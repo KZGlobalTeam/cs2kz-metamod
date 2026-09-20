@@ -126,7 +126,7 @@ static_global class : public KZTimerServiceEventListener
 		ForEachListener([slot, &course](ICS2KZEventListener *listener) { listener->OnTimerStartPost(slot, course); });
 	}
 
-	virtual void OnTimerEndPost(KZPlayer *player, u32 courseGUID, f32 time, u32 teleportsUsed) override
+	virtual void OnTimerEndPost(KZPlayer *player, u32 courseGUID, f32 time, u32 teleportsUsed, bool brokeRecord) override
 	{
 		i32 slot = SlotOf(player);
 		if (slot < 0)
@@ -134,8 +134,8 @@ static_global class : public KZTimerServiceEventListener
 			return;
 		}
 		KZCourseInfo course = DescribeCourse(courseGUID);
-		ForEachListener([slot, &course, time, teleportsUsed](ICS2KZEventListener *listener)
-						{ listener->OnTimerEndPost(slot, course, time, teleportsUsed); });
+		ForEachListener([slot, &course, time, teleportsUsed, brokeRecord](ICS2KZEventListener *listener)
+						{ listener->OnTimerEndPost(slot, course, time, teleportsUsed, brokeRecord); });
 	}
 
 	virtual void OnTimerStopped(KZPlayer *player, u32 courseGUID) override

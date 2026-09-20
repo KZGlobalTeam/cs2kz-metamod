@@ -105,7 +105,7 @@ public:
 		return true;
 	}
 
-	virtual void OnTimerEndPost(KZPlayer *player, u32 courseGUID, f32 time, u32 teleportsUsed) {}
+	virtual void OnTimerEndPost(KZPlayer *player, u32 courseGUID, f32 time, u32 teleportsUsed, bool brokeRecord) {}
 
 	virtual void OnTimerStopped(KZPlayer *player, u32 courseGUID) {}
 
@@ -209,6 +209,13 @@ public:
 	void InsertPBToCache(f64 time, const KZCourseDescriptor *courseName, PluginId modeID, bool overall, bool global, CUtlString metadata = "",
 						 f64 points = 0);
 	void SetCompareTarget(const char *typeString);
+
+	// Synchronous estimate for OnTimerEndPost: true if this time beats the cached
+	// world record for this mode and course. Strict: a cached WR time must exist
+	// and be beaten, otherwise false. False for styled, banned, unauthenticated
+	// or otherwise non-submittable runs. Authoritative ranks still arrive later
+	// via OnRunSubmittedPost, so treat this as immediate feedback only.
+	bool HasBeatenWorldRecord(f32 time, u32 teleportsUsed) const;
 
 	void CheckMissedTime();
 

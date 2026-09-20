@@ -23,7 +23,7 @@ static_global bool layoutAssetMounted = false;
 static_global class KZTimerServiceEventListener_HUD : public KZTimerServiceEventListener
 {
 	virtual void OnTimerStopped(KZPlayer *player, u32 courseGUID) override;
-	virtual void OnTimerEndPost(KZPlayer *player, u32 courseGUID, f32 time, u32 teleportsUsed) override;
+	virtual void OnTimerEndPost(KZPlayer *player, u32 courseGUID, f32 time, u32 teleportsUsed, bool brokeRecord) override;
 } timerEventListener;
 
 static_global class KZOptionServiceEventListener_HUD : public KZOptionServiceEventListener
@@ -239,7 +239,7 @@ void KZTimerServiceEventListener_HUD::OnTimerStopped(KZPlayer *player, u32 cours
 	player->hudService->OnTimerStopped(player->timerService->GetTime());
 }
 
-void KZTimerServiceEventListener_HUD::OnTimerEndPost(KZPlayer *player, u32 courseGUID, f32 time, u32 teleportsUsed)
+void KZTimerServiceEventListener_HUD::OnTimerEndPost(KZPlayer *player, u32 courseGUID, f32 time, u32 teleportsUsed, bool brokeRecord)
 {
 	player->hudService->OnTimerStopped(time);
 }

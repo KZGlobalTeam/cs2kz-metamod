@@ -10,7 +10,7 @@
 //
 // Players are identified by slot (0 .. 63, i.e. entity index - 1). A slot that is not
 // occupied by an in-game player makes every getter return false / "" / 0.
-#define CS2KZ_INTERFACE "ICS2KZ002"
+#define CS2KZ_INTERFACE "ICS2KZ003"
 
 // Player button bits, matching the game's own input bitmask.
 // The implementation static_asserts these against the SDK values, so a game update that
@@ -168,7 +168,13 @@ public:
 	virtual void OnTimerStartPost(int slot, const KZCourseInfo &course) {}
 
 	// The player finished a run. `time` is the final run time in seconds.
-	virtual void OnTimerEndPost(int slot, const KZCourseInfo &course, float time, uint32_t teleportsUsed) {}
+	// `brokeRecord` is a synchronous world record estimate: true if the time
+	// beats the cached world record for this mode and course. False when no WR
+	// is cached, and for styled, banned, unauthenticated or otherwise
+	// non-submittable runs. It is immediate feedback only. Authoritative ranks
+	// still arrive later via OnRunSubmittedPost, which can disagree if the WR
+	// cache was stale.
+	virtual void OnTimerEndPost(int slot, const KZCourseInfo &course, float time, uint32_t teleportsUsed, bool brokeRecord) {}
 
 	// The run was stopped without finishing (left the course, died, /stop, ...).
 	virtual void OnTimerStoppedPost(int slot, const KZCourseInfo &course) {}

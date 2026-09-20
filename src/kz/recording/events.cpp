@@ -17,7 +17,7 @@ public:
 		player->recordingService->OnTimerStart();
 	}
 
-	virtual void OnTimerEndPost(KZPlayer *player, u32 courseGUID, f32 time, u32 teleportsUsed) override
+	virtual void OnTimerEndPost(KZPlayer *player, u32 courseGUID, f32 time, u32 teleportsUsed, bool brokeRecord) override
 	{
 		player->recordingService->OnTimerEnd();
 	}
