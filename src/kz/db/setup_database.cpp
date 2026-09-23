@@ -50,6 +50,10 @@ void KZDatabaseService::OnDatabaseConnected(bool connect)
 	{
 		KZ_LOG_INFO(LogChannel::DB, "LocalDB connected.\n");
 		KZDatabaseService::RunMigrations();
+		if (databaseType == DatabaseType::MySQL)
+		{
+			KZDatabaseService::StartHealthCheck();
+		}
 	}
 	else
 	{

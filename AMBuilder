@@ -121,6 +121,7 @@ def configure_main(sdk_target, sdk, cxx):
     os.path.join(builder.sourcePath, 'src', 'kz', 'db', 'find_pb.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'db', 'find_player.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'db', 'find_records.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'db', 'health_check.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'db', 'migrations.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'db', 'save_prefs.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'db', 'save_time.cpp'),

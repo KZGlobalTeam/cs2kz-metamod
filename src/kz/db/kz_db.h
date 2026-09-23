@@ -95,6 +95,7 @@ public:
 
 	static void SetupDatabase();
 	static void OnDatabaseConnected(bool connect);
+	static void StartHealthCheck();
 
 	static void RunMigrations();
 
