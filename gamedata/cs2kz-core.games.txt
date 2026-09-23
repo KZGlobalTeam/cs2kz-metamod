@@ -45,13 +45,13 @@
 			"TraceShape"
 			{
 				"library"	"server"
-				"windows"	"48 89 54 24 ?? 48 89 4C 24 ?? 55 53 56 57 41 56 41 57 48 8D AC 24 ?? ?? ?? ?? B8"
-				"linux"		"55 48 89 E5 41 57 49 89 CF 41 56 49 89 F6 41 55 4D 89 C5 41 54 49 89 D4"
+				"windows"	"48 89 54 24 ?? 48 89 4C 24 ?? 55 53 56 57 41 54 41 56 41 57"
+				"linux"		"55 48 8D 05 ?? ?? ?? ?? 48 89 E5 41 57 49 89 F7 41 56 48 8D 35 ?? ?? ?? ?? 49 89 CE"
 			}
 			"CPhysicsGameSystemFrameBoundary"
 			{
 				"library"	"server"
-				"windows"	"4C 8B DC 49 89 5B 08 49 89 6B 10 49 89 73 18 57 41 56 41 57 48 83 EC 60 49 C7 43 B0 5C 05 00 00"
+				"windows"	"4C 8B DC 49 89 5B ?? 49 89 6B ?? 49 89 73 ?? 57 41 56 41 57 48 83 EC 60 49 C7 43"
 				"linux"		"55 48 8D 05 ?? ?? ?? ?? 48 8D 35 ?? ?? ?? ?? 48 89 E5 41 56 41 55 48 8D 55 ?? 41 54 49 89 FC"
 			}
 			// sv_show_move_collisions -> 2nd functions with 8 params -> case 4 (mesh)
@@ -59,13 +59,13 @@
 			{
 				"library"	"server"
 				"windows"	"48 8B C4 44 89 48 ?? 44 89 40 ?? 48 89 48 ?? 55"
-				"linux"		"55 48 89 F0 48 89 E5 41 57 41 56 41 55 41 54 53 48 81 EC 48 01 00 00"
+				"linux"		"55 48 89 F0 48 89 E5 41 57 41 56 41 55 41 54 53 48 81 EC 38 01 00 00"
 			}
 			// dev_create_move_report
 			"SetupMove"
 			{
 				"library"	"server"
-				"windows"	"40 53 56 48 83 EC 78 48 89 6C 24 70"
+				"windows"	"40 53 56 48 83 EC 68 48 89 6C 24"
 				"linux"		"55 48 89 E5 41 57 41 56 41 55 49 89 F5 41 54 49 89 D4 53 48 89 FB 48 83 EC 48 E8 ?? ?? ?? ?? 48 8B 43 38"
 			}
 			// "pa start %f"
@@ -79,7 +79,7 @@
 			"PlayerMove"
 			{
 				"library"	"server"
-				"windows"	"48 89 5C 24 20 57 48 83 EC 70 48 83 79 38 00"
+				"windows"	"48 89 5C 24 ?? 57 48 83 EC 50 48 83 79"
 				"linux"		"55 48 89 E5 41 57 41 56 41 55 41 54 49 89 F4 53 48 89 FB 48 83 EC 18 48 8B 7F 38"
 			}
 			// sv_rollspeed second ref
@@ -93,8 +93,8 @@
 			"CanMove"
 			{
 				"library"	"server"
-				"windows"	"40 57 48 83 EC 30 48 8B F9 BA FF FF FF FF"
-				"linux"		"55 BE FF FF FF FF 48 89 E5 41 55 41 54 53 48 89 FB 48 8D 3D ?? ?? ?? ?? 48 83 EC 08 E8 ?? ?? ?? ?? 48 85 C0 0F 84"
+				"windows"	"48 89 74 24 ?? 57 48 83 EC 30 48 8B 05 ?? ?? ?? ?? 48 8B F9"
+				"linux"		"55 48 89 E5 41 55 41 54 53 48 83 EC 08 48 8B 05 ?? ?? ?? ?? 80 78 ?? ?? 74"
 			}
 			// string "PreSource1AirMove", xref
 			// Function containing cvar sv_legacy_jump, string "Water.PlayerEnter" and "Water.PlayerExit"
@@ -109,8 +109,8 @@
 			"MoveInit"
 			{
 				"library"	"server"
-				"windows"	"48 8B C4 48 89 58 ?? 48 89 70 ?? 48 89 78 ?? 41 56 48 81 EC ?? ?? ?? ?? 48 8B F2"
-				"linux"		"55 48 89 E5 41 56 41 55 41 54 49 89 F4 BE ?? ?? ?? ?? 53 48 89 FB 48 8D 3D ?? ?? ?? ?? 48 83 EC ?? E8 ?? ?? ?? ?? 4C 89 E7"
+				"windows"	"48 8B C4 48 89 58 ?? 48 89 68 ?? 56 57 41 54 48 81 EC D0 00 00 00"
+				"linux"		"55 48 89 E5 41 56 41 55 41 54 49 89 F4 53 48 89 FB 48 89 F7 48 83 EC 70"
 			}
 			// somewhere in MoveInit. GLHF!
 			// In the function containing FullTossMovePreGravity, it's the second function called
@@ -124,7 +124,7 @@
 			"WaterMove"
 			{
 				"library"	"server"
-				"windows"	"48 8B C4 48 89 58 ?? 48 89 70 ?? 48 89 78 ?? 4C 89 60 ?? 55 41 56 41 57 48 8D A8 ?? ?? ?? ?? 48 81 EC ?? ?? ?? ?? 0F 29 70 ?? 48 8B F9 0F 29 78 ?? 48 8D 4D ?? 44 0F 29 40"
+				"windows"	"48 8B C4 48 89 58 ?? 48 89 70 ?? 48 89 78 ?? 4C 89 60 ?? 55 41 56 41 57 48 8D A8 ?? ?? ?? ?? 48 81 EC 80 02 00 00"
 				"linux"		"48 B8 ?? ?? ?? ?? ?? ?? ?? ?? 55 66 0F EF C0 48 89 E5 41 57 41 56 41 55 4C 8D AD ?? ?? ?? ?? 41 54 49 89 FC 4C 89 EF 53 48 89 F3 48 81 EC ?? ?? ?? ?? 48 89 85 ?? ?? ?? ?? 48 8B 05 ?? ?? ?? ?? 0F 29 85 ?? ?? ?? ?? 48 C7 85 ?? ?? ?? ?? ?? ?? ?? ?? 48 C7 45 ?? ?? ?? ?? ?? 48 89 85 ?? ?? ?? ?? 48 B8 ?? ?? ?? ?? ?? ?? ?? ?? 48 89 45 ?? E8 ?? ?? ?? ?? 48 8D 8D"
 			}
 			// "CCSPlayer_MovementServices(%s):  %d/%s Got a NaN velocity on %s\n"
@@ -132,7 +132,7 @@
 			{
 				"library"	"server"
 				"windows"	"48 8B C4 48 89 58 ?? 4C 89 40 ?? 55 56 57 41 54 41 55 41 56 41 57 48 8D 68"
-				"linux"		"55 48 89 E5 41 57 41 56 41 55 49 89 FD 41 54 49 89 F4 53 48 83 EC 58 48 8B 7F 38"
+				"linux"		"55 48 89 E5 41 57 49 89 F7 41 56 41 55 41 54 53 48 89 FB 48 83 EC 68"
 			}
 			// called after MoveInit in PlayerMove in switch statement with movetype 5
 			// bot_crouch cvar
@@ -140,7 +140,7 @@
 			"Duck"
 			{
 				"library"	"server"
-				"windows"	"48 8B C4 55 53 56 57 41 56 41 57 48 8D A8 ?? ?? ?? ?? 48 81 EC ?? ?? ?? ?? 80 B9"
+				"windows"	"48 8B C4 55 53 56 41 54 41 56 48 8D A8"
 				"linux"		"55 48 89 E5 41 57 41 56 49 89 FE 41 55 41 54 53 48 89 F3 48 81 EC ?? ?? ?? ?? 48 8D 05 ?? ?? ?? ?? F3 0F 10 05"
 			}
 			// CTraceFilterForPlayerHeadCollision vtable
@@ -168,21 +168,21 @@
 			"CheckJumpButtonLegacy"
 			{
 				"library"	"server"
-				"windows"	"48 89 5C 24 10 48 89 6C 24 18 57 48 83 EC 40 48 8B EA"
-				"linux"		"55 48 89 E5 41 55 41 54 49 89 F4 BE 02 00 00 00 53 48 89 FB 48 83 EC 68"
+				"windows"	"48 89 5C 24 ?? 48 89 7C 24 ?? 41 56 48 83 EC 30 4C 8B F2"
+				"linux"		"55 48 89 E5 41 55 41 54 49 89 F4 BE 02 00 00 00 53 48 89 FB 48 83 EC 58"
 			}
 			"CheckJumpButtonModern"
 			{
 				"library"	"server"
 				"windows"	"40 55 53 56 57 41 54 41 55 41 56 48 8D 6C 24 ?? 48 81 EC ?? ?? ?? ?? 8B 9A"
-				"linux"		"55 48 89 E5 41 57 41 56 4C 8D 75 90 41 55 41 54 49 89 F4"
+				"linux"		"55 48 89 E5 41 57 49 89 FF 41 56 41 55 41 54 53 48 89 F3 48 83 EC 78 48 8B 7F"
 			}
 			// "player_jump"
 			"OnJumpLegacy"
 			{
 				"library"	"server"
-				"windows"	"40 55 53 56 57 48 8D 6C 24 ?? 48 81 EC ?? ?? ?? ?? 48 8B 59"
-				"linux"		"55 48 89 E5 41 57 41 56 41 55 49 89 F5 41 54 53 48 89 FB 48 83 EC ?? 4C 8B 67 ?? 49 8B 7C 24"
+				"windows"	"40 55 53 56 57 48 8D 6C 24 ?? 48 81 EC A8 00 00 00 48 8B 71"
+				"linux"		"55 48 89 E5 41 57 41 56 41 55 41 54 49 89 F4 53 48 89 FB 48 81 EC 88 00 00 00 4C 8B 6F"
 			}
 			"OnJumpModern"
 			{
@@ -194,8 +194,8 @@
 			"AirMove"
 			{
 				"library"	"server"
-				"windows"	"48 8B C4 53 55 56 57 48 81 EC ?? ?? ?? ?? 0F 29 70"
-				"linux"		"55 48 8D 15 ?? ?? ?? ?? 48 89 E5 41 57 41 56 4C 8D B5 ?? ?? ?? ?? 41 55 41 54"
+				"windows"	"48 8B C4 55 53 56 57 41 56 48 8D 68 ?? 48 81 EC 10 01 00 00"
+				"linux"		"55 48 8D 15 ?? ?? ?? ?? 48 89 E5 41 57 41 56 4C 8D BD"
 			}
 			// Look for sv_air_max_wishspeed
 			"AirAccelerate"
@@ -211,7 +211,7 @@
 			"Friction"
 			{
 				"library"	"server"
-				"windows"	"48 89 5C 24 ?? 57 48 83 EC ?? 48 83 79 ?? ?? 48 8B FA 0F 29 7C 24"
+				"windows"	"48 89 5C 24 ?? 57 48 81 EC A0 00 00 00 48 83 79"
 				"linux"		"55 48 89 E5 41 54 49 89 FC 53 48 89 F3 48 83 EC ?? 48 8B 47"
 			}
 			// "PreWalkMove"
@@ -219,7 +219,7 @@
 			{
 				"library"	"server"
 				"windows"	"48 8B C4 48 89 70 ?? 48 89 78 ?? 55 41 54 41 55 41 56 41 57 48 8D A8 ?? ?? ?? ?? 48 81 EC ?? ?? ?? ?? 0F 29 70 ?? 48 8B F1"
-				"linux"		"48 B8 ?? ?? ?? ?? ?? ?? ?? ?? 55 66 0F EF C0 48 89 E5 41 57 41 56 4C 8D B5 ?? ?? ?? ?? 41 55 41 BD"
+				"linux"		"48 B8 00 00 00 00 00 00 80 3F 55 66 0F EF C0 48 89 E5 41 57 41 56 4C 8D BD ?? ?? ?? ?? 41 55 49 89 F5"
 			}
 			// sv_jump_precision_enable
 			"TryPlayerMove"
@@ -240,14 +240,14 @@
 			"CheckFalling"
 			{
 				"library"	"server"
-				"windows"	"40 55 57 48 81 EC ?? ?? ?? ?? 48 83 79"
+				"windows"	"40 53 55 48 81 EC 88 00 00 00 48 83 79"
 				"linux"		"55 48 89 E5 41 55 41 54 49 89 F4 53 48 89 FB 48 83 EC ?? 48 8B 7F ?? 48 85 FF 0F 84 ?? ?? ?? ?? 48 8B 07 FF 90 ?? ?? ?? ?? 48 85 C0 0F 84 ?? ?? ?? ?? F3 0F 10 8B"
 			}
 			// "exit_bombzone"
 			"PostThink"
 			{
 				"library"	"server"
-				"windows"	"40 55 56 41 54 48 8B EC"
+				"windows"	"40 55 56 41 54 48 8B EC 48 83 EC 50"
 				"linux"		"55 48 89 E5 41 56 41 55 41 54 53 48 89 FB 48 83 EC ?? E8 ?? ?? ?? ?? 80 BB"
 			}
 			// search for "CT_Water.StepLeft", this is called after that string is referenced (the one with 4 parameters).
@@ -309,8 +309,8 @@
 			"SetOrAddAttributeValueByName"
 			{
 				"library"		"server"
-				"windows"		"40 53 55 41 56 48 81 EC 90 00 00 00"
-				"linux"			"55 48 89 E5 41 57 41 56 49 89 FE 41 55 41 54 53 48 89 F3 48 83 EC 78 F3 0F 11 85 6C FF FF FF"
+				"windows"		"48 89 4C 24 ?? 53 41 55 41 56"
+				"linux"			"55 48 89 E5 41 57 41 56 41 55 49 89 FD 41 54 53 48 89 F3 48 83 EC 78 F3 0F 11 85"
 			}
 			// taken from cs2fixes
 			"SetModel"
