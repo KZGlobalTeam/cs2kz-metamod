@@ -1365,11 +1365,75 @@ static KHook::Return<void> PostThinkPost(CCSPlayerPawnBase *pawn)
 
 static KHook::Member<CCSPlayerPawnBase, void> PostThink(PostThinkPre, PostThinkPost);
 
+struct SignatureHook
+{
+	const char *name;
+	void (*configure)(void *address);
+};
+
+#define SIGNATURE_HOOK(hook) {#hook, [](void *address) { hook.Configure(address); }}
+
+static_global const SignatureHook SIGNATURE_HOOKS[] = {
+	SIGNATURE_HOOK(RecvServerBrowserPacket),
+	SIGNATURE_HOOK(CPhysicsGameSystemFrameBoundary),
+#ifdef DEBUG_TPM
+	SIGNATURE_HOOK(TraceShape),
+#endif
+	SIGNATURE_HOOK(PhysicsSimulate),
+	SIGNATURE_HOOK(ProcessUsercmds),
+	SIGNATURE_HOOK(SetupMove),
+	SIGNATURE_HOOK(ProcessMovement),
+	SIGNATURE_HOOK(PlayerMove),
+	SIGNATURE_HOOK(CheckParameters),
+	SIGNATURE_HOOK(CanMove),
+	SIGNATURE_HOOK(FullWalkMove),
+	SIGNATURE_HOOK(MoveInit),
+	SIGNATURE_HOOK(CheckWater),
+	SIGNATURE_HOOK(WaterMove),
+	SIGNATURE_HOOK(CheckVelocity),
+	SIGNATURE_HOOK(Duck),
+	SIGNATURE_HOOK(CanUnduck),
+	SIGNATURE_HOOK(LadderMove),
+	SIGNATURE_HOOK(CheckJumpButtonLegacy),
+	SIGNATURE_HOOK(CheckJumpButtonModern),
+	SIGNATURE_HOOK(OnJumpLegacy),
+	SIGNATURE_HOOK(OnJumpModern),
+	SIGNATURE_HOOK(AirMove),
+	SIGNATURE_HOOK(AirAccelerate),
+	SIGNATURE_HOOK(Friction),
+	SIGNATURE_HOOK(WalkMove),
+	SIGNATURE_HOOK(TryPlayerMove),
+	SIGNATURE_HOOK(CategorizePosition),
+	SIGNATURE_HOOK(CheckFalling),
+	SIGNATURE_HOOK(PostThink),
+};
+
+#undef SIGNATURE_HOOK
+
 // ============================================================
 // hooks::Initialize
 // ============================================================
-void hooks::Initialize()
+bool hooks::Initialize(char *error, size_t maxlen)
 {
+	// Resolve every signature before anything is hooked, so outdated gamedata aborts the load instead of running with missing detours.
+	void *signatureAddresses[KZ_ARRAYSIZE(SIGNATURE_HOOKS)];
+	std::string missingSignatures;
+	for (u32 i = 0; i < KZ_ARRAYSIZE(SIGNATURE_HOOKS); i++)
+	{
+		signatureAddresses[i] = g_pGameConfig->ResolveSignature(SIGNATURE_HOOKS[i].name);
+		if (!signatureAddresses[i])
+		{
+			missingSignatures += missingSignatures.empty() ? "" : ", ";
+			missingSignatures += SIGNATURE_HOOKS[i].name;
+		}
+	}
+	if (!missingSignatures.empty())
+	{
+		snprintf(error, maxlen, "Failed to resolve signatures: %s", missingSignatures.c_str());
+		KZ_LOG_WARN(LogChannel::General, "%s\n", error);
+		return false;
+	}
+
 	playerManager = static_cast<MovementPlayerManager *>(g_pPlayerManager);
 
 	// Entity hooks
@@ -1480,40 +1544,11 @@ void hooks::Initialize()
 	}
 
 	// Signature-based hooks
-	RecvServerBrowserPacket.Configure((int (*)(RecvPktInfo_t &, void *))g_pGameConfig->ResolveSignature("RecvServerBrowserPacket"));
-	CPhysicsGameSystemFrameBoundary.Configure((void (*)(void *))g_pGameConfig->ResolveSignature("CPhysicsGameSystemFrameBoundary"));
-#ifdef DEBUG_TPM
-	TraceShape.Configure((bool (*)(const void *, const Ray_t &, const Vector &, const Vector &, const CTraceFilter *,
-								   trace_t *))g_pGameConfig->ResolveSignature("TraceShape"));
-#endif
-
-	PhysicsSimulate.Configure(g_pGameConfig->ResolveSignature("PhysicsSimulate"));
-	ProcessUsercmds.Configure(g_pGameConfig->ResolveSignature("ProcessUsercmds"));
-	SetupMove.Configure(g_pGameConfig->ResolveSignature("SetupMove"));
-	ProcessMovement.Configure(g_pGameConfig->ResolveSignature("ProcessMovement"));
-	PlayerMove.Configure(g_pGameConfig->ResolveSignature("PlayerMove"));
-	CheckParameters.Configure(g_pGameConfig->ResolveSignature("CheckParameters"));
-	CanMove.Configure(g_pGameConfig->ResolveSignature("CanMove"));
-	FullWalkMove.Configure(g_pGameConfig->ResolveSignature("FullWalkMove"));
-	MoveInit.Configure(g_pGameConfig->ResolveSignature("MoveInit"));
-	CheckWater.Configure(g_pGameConfig->ResolveSignature("CheckWater"));
-	WaterMove.Configure(g_pGameConfig->ResolveSignature("WaterMove"));
-	CheckVelocity.Configure(g_pGameConfig->ResolveSignature("CheckVelocity"));
-	Duck.Configure(g_pGameConfig->ResolveSignature("Duck"));
-	CanUnduck.Configure(g_pGameConfig->ResolveSignature("CanUnduck"));
-	LadderMove.Configure(g_pGameConfig->ResolveSignature("LadderMove"));
-	CheckJumpButtonLegacy.Configure(g_pGameConfig->ResolveSignature("CheckJumpButtonLegacy"));
-	CheckJumpButtonModern.Configure(g_pGameConfig->ResolveSignature("CheckJumpButtonModern"));
-	OnJumpLegacy.Configure(g_pGameConfig->ResolveSignature("OnJumpLegacy"));
-	OnJumpModern.Configure(g_pGameConfig->ResolveSignature("OnJumpModern"));
-	AirMove.Configure(g_pGameConfig->ResolveSignature("AirMove"));
-	AirAccelerate.Configure(g_pGameConfig->ResolveSignature("AirAccelerate"));
-	Friction.Configure(g_pGameConfig->ResolveSignature("Friction"));
-	WalkMove.Configure(g_pGameConfig->ResolveSignature("WalkMove"));
-	TryPlayerMove.Configure(g_pGameConfig->ResolveSignature("TryPlayerMove"));
-	CategorizePosition.Configure(g_pGameConfig->ResolveSignature("CategorizePosition"));
-	CheckFalling.Configure(g_pGameConfig->ResolveSignature("CheckFalling"));
-	PostThink.Configure(g_pGameConfig->ResolveSignature("PostThink"));
+	for (u32 i = 0; i < KZ_ARRAYSIZE(SIGNATURE_HOOKS); i++)
+	{
+		SIGNATURE_HOOKS[i].configure(signatureAddresses[i]);
+	}
+	return true;
 }
 
 void hooks::Cleanup()

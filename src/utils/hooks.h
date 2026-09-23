@@ -5,7 +5,7 @@
 
 namespace hooks
 {
-	void Initialize();
+	bool Initialize(char *error, size_t maxlen);
 	void Cleanup();
 	void HookEntities();
 

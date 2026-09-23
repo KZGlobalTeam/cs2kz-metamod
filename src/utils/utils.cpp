@@ -63,6 +63,8 @@ bool utils::Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
 	// Convoluted way of having GameEventManager regardless of lateloading
 	if (!(interfaces::pGameEventManager = (IGameEventManager2 *)g_pGameConfig->ResolveSignatureFromMov("GameEventManager")))
 	{
+		snprintf(error, maxlen, "Failed to resolve signature: GameEventManager");
+		KZ_LOG_WARN(LogChannel::General, "%s\n", error);
 		return false;
 	}
 
