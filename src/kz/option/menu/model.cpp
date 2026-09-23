@@ -59,12 +59,24 @@ namespace KZ::menu
 		{
 			return;
 		}
+		// The gate is read with the default of the toggle that owns it, so an off-by-default toggle
+		// greys its rows out before the player ever flips it. No such toggle on this page: on.
+		bool def = true;
+		for (const KZOptItem &other : node->items)
+		{
+			if (other.type == KZOptItemType::Toggle && other.prefKey && KZ_STREQ(other.prefKey, prefKey))
+			{
+				def = other.idef != 0;
+				break;
+			}
+		}
 		KZOptItem &item = node->items.back();
 		for (i32 i = 0; i < KZ_ARRAYSIZE(item.enabledBy); i++)
 		{
 			if (!item.enabledBy[i])
 			{
 				item.enabledBy[i] = prefKey;
+				item.enabledByDef[i] = def;
 				return;
 			}
 		}

@@ -637,7 +637,7 @@ bool KZMenuService::IsItemEnabled(const KZOptItem &item)
 {
 	for (i32 i = 0; i < KZ_ARRAYSIZE(item.enabledBy); i++)
 	{
-		if (item.enabledBy[i] && !this->player->optionService->GetPreferenceBool(item.enabledBy[i], true))
+		if (item.enabledBy[i] && !this->player->optionService->GetPreferenceBool(item.enabledBy[i], item.enabledByDef[i]))
 		{
 			return false;
 		}

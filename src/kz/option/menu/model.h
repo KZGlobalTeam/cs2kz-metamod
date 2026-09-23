@@ -46,6 +46,7 @@ struct KZOptItem
 	// Greyed out and unclickable while any of these bool preferences is off. Two is enough for the
 	// HUD, where an element's own toggle gates the whole page and a row can gate itself on top.
 	const char *enabledBy[2] {};
+	bool enabledByDef[2] {}; // what each enabledBy preference reads as while the player has not set it
 	bool dividerAfter {}; // draw a horizontal rule under this item
 	bool solidOnly {};    // Color: hide the gradients, for a consumer that cannot render one
 	KZOptItemType type {};
