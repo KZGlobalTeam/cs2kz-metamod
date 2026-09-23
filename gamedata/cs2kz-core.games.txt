@@ -341,84 +341,84 @@
 			}
 			"Teleport"
 			{
-				"windows"		"163"
-				"linux"			"162"
+				"windows"		"165"
+				"linux"			"164"
 			}
 			// 2 functions after one with "targethealthfrac"
 			"CollisionRulesChanged"
 			{
-				"windows"		"186"
-				"linux"			"185"
+				"windows"		"188"
+				"linux"			"187"
 			}
 			// 11 functions after one with "CBasePlayerPawn::PhysicsSimulate"
 			"IsEntityPawn"
 			{
-				"windows"		"169"
-				"linux"			"168"
+				"windows"		"171"
+				"linux"			"170"
 			}
 			// Right after IsEntityPawn
 			"IsEntityController"
 			{
-				"windows"		"170"
-				"linux"			"169"
+				"windows"		"172"
+				"linux"			"171"
 			}
 			// String: "%s<%i><%s><%s>" ChangeTeam() CTMDBG..."
 			"ControllerChangeTeam"
 			{
-				"windows"		"103"
-				"linux"			"102"
+				"windows"		"105"
+				"linux"			"104"
 			}
 			// Look for the kill command, go through its callback and you should a find call like this, with v9 being a pawn pointer:
 			// return (*(*v9 + 2832LL))(v9, v27, 0LL);
 			// 2832 (354 * 8) is the offset
 			"CommitSuicide"
 			{
-				"windows"		"384"
-				"linux"			"384"
+				"windows"		"387"
+				"linux"			"387"
 			}
 			"ControllerRespawn"
 			{
-				"windows"		"270"
-				"linux"			"272"
+				"windows"		"274"
+				"linux"			"276"
 			}
 			// "Player.Respawn"
 			"Respawn"
 			{
-				"windows"		"348"
-				"linux"			"349"
+				"windows"		"351"
+				"linux"			"352"
 			}
 			// Check sv_fullupdate
 			"ClientOffset"
 			{
-				"windows"		"584"
-				"linux"			"584"
+				"windows"		"616"
+				"linux"			"616"
 			}
 			// teleport_trigger_debug cvar
 			"StartTouch"
 			{
-				"windows"		"148"
-				"linux"			"147"
-			}
-			"Touch"
-			{
-				"windows"		"149"
-				"linux"			"148"
-			}
-			"EndTouch"
-			{
 				"windows"		"150"
 				"linux"			"149"
 			}
+			"Touch"
+			{
+				"windows"		"151"
+				"linux"			"150"
+			}
+			"EndTouch"
+			{
+				"windows"		"152"
+				"linux"			"151"
+			}
 			"PassesTriggerFilters"
 			{
-				"windows"		"269"
-				"linux"			"270"
+				"windows"		"271"
+				"linux"			"272"
 			}
 			// In DebugDrawMesh, offset used when solid=true
 			"DebugTriangle"
 			{
-				"windows"		"56"
-				"linux"			"56"
+				"windows"		"52"
+				"linux"			"52"
 			}
 			// CDebugOverlayGameSystem second vtable, offset 1 (windows):
 			//   result = debugoverlay;
@@ -430,8 +430,8 @@
 			
 			"GetDebugOverlay"
 			{
-				"windows"		"73"
-				"linux"			"73"
+				"windows"		"74"
+				"linux"			"74"
 			}
 			"ClearOverlays"
 			{
