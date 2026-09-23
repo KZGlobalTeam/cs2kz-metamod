@@ -47,8 +47,8 @@ struct KZOptItem
 	// HUD, where an element's own toggle gates the whole page and a row can gate itself on top.
 	const char *enabledBy[2] {};
 	bool enabledByDef[2] {}; // what each enabledBy preference reads as while the player has not set it
-	bool dividerAfter {}; // draw a horizontal rule under this item
-	bool solidOnly {};    // Color: hide the gradients, for a consumer that cannot render one
+	bool dividerAfter {};    // draw a horizontal rule under this item
+	bool solidOnly {};       // Color: hide the gradients, for a consumer that cannot render one
 	KZOptItemType type {};
 	KZOptStorage storage {};         // how prefKey (and yKey) are stored; None: nothing to export
 	const char *prefKey {};          // Toggle/Color/Font/Size; Position uses prefKey (x) + yKey
