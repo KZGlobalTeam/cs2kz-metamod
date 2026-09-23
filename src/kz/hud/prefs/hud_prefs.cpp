@@ -18,35 +18,6 @@ static_global KZOptNode *elementNodes[(i32)MHUDElement::Count] {};
 
 // --- General page callbacks ---------------------------------------------------------
 
-// 1080/screenHeight, since no convar reports the client's resolution. Labelled by the resolution
-// each one corrects for.
-static_global const struct
-{
-	i32 percent;
-	const char *label;
-} CROSSHAIR_SCALES[] = {
-	{50, "50% (2160p)"},  {75, "75% (1440p)"},  {90, "90% (1200p)"},  {100, "100% (1080p)"},
-	{120, "120% (900p)"}, {141, "141% (768p)"}, {150, "150% (720p)"},
-};
-
-static_function void GetCrosshairScaleChoices(KZPlayer *, i64, std::vector<KZChoice> &out)
-{
-	for (i32 i = 0; i < KZ_ARRAYSIZE(CROSSHAIR_SCALES); i++)
-	{
-		out.push_back({CROSSHAIR_SCALES[i].label, CROSSHAIR_SCALES[i].percent, NULL});
-	}
-}
-
-static_function i64 GetCurrentCrosshairScale(KZPlayer *player, i64)
-{
-	return player->hudService->GetOwnPrefs().crosshairScale;
-}
-
-static_function void PickCrosshairScale(KZPlayer *player, i64, i64 id)
-{
-	player->optionService->SetPreferenceInt("mhudCrosshairScale", id);
-}
-
 static_function void GetStyleChoices(KZPlayer *player, i64, std::vector<KZChoice> &out)
 {
 	out.push_back({KZMenuService::GetPhrase(player, "Menu - Style Legacy"), 0, NULL});
@@ -260,10 +231,6 @@ void KZHUDService::RegisterMenu()
 	KZ::menu::AddActionToggle(general, "Menu - Crosshair", GetCrosshairState, ToggleCrosshairState);
 	KZ::menu::SetItemPref(general, "mhudCrosshair", KZOptStorage::Bool);
 	KZ::menu::SetItemSubtext(general, "Menu - Crosshair Sub");
-	KZ::menu::AddChoice(general, "Menu - Crosshair Scale", GetCrosshairScaleChoices, GetCurrentCrosshairScale, PickCrosshairScale);
-	KZ::menu::SetItemPref(general, "mhudCrosshairScale", KZOptStorage::Int, 100);
-	KZ::menu::SetItemSubtext(general, "Menu - Crosshair Scale Sub");
-	KZ::menu::SetItemEnabledBy(general, "mhudCrosshair");
 	KZ::menu::AddToggle(general, "Menu - Mimic Spec", "mhudMimicSpec", false);
 	KZ::menu::SetItemSubtext(general, "Menu - Mimic Spec Sub");
 	KZ::menu::SetItemDivider(general);

@@ -62,7 +62,6 @@ void KZHUDService::RefreshPrefs()
 	this->prefs.legacyStyle = opts->GetPreferenceBool("hudLegacyStyle", false);
 	this->prefs.compactPanel = opts->GetPreferenceBool("compactPanel", false);
 	this->prefs.crosshair = opts->GetPreferenceBool("mhudCrosshair", false);
-	this->prefs.crosshairScale = (i32)opts->GetPreferenceInt("mhudCrosshairScale", 100);
 	this->prefs.timerDetailed = opts->GetPreferenceBool("mhudTimerDetailed", true);
 	this->prefs.timerShowState = opts->GetPreferenceBool("mhudTimerShowState", true);
 	this->prefs.speedPrecise = opts->GetPreferenceBool("mhudSpeedPrecise", false);

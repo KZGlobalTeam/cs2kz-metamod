@@ -88,14 +88,13 @@ static_global const Color MHUD_DEF_KEYS_OVERLAP_GLOW_COLOR(0xFF, 0x40, 0x40, 0xF
 // The player's own cl_crosshair* values. The game's defaults stand until a query answers.
 struct MHUDCrosshairSettings
 {
-	f32 size {5.0f};
-	f32 thickness {0.5f};
-	f32 gap {-2.0f};
-	f32 outlineThickness {1.0f};
-	i32 color {1};
-	i32 r {50}, g {250}, b {50};
-	i32 alpha {200};
-	bool useAlpha {true};
+	// Device pixels at screenHeight.
+	i32 length {8};
+	i32 thickness {2};
+	i32 gap {4};
+	i32 r {0}, g {255}, b {0}, a {255};
+	i32 style {7};
+	i32 screenHeight {1080};
 	bool drawOutline {true};
 	bool dot {false};
 	bool tStyle {false};
@@ -212,7 +211,6 @@ struct MHUDPrefs
 	bool legacyStyle {};
 	bool compactPanel {};
 	bool crosshair {};
-	i32 crosshairScale {100}; // layout units per device pixel, as a percent
 	bool timerDetailed {true};
 	bool timerShowState {true};
 	bool speedPrecise {};
@@ -425,15 +423,16 @@ private:
 	// Numeric suffix of each class family last applied, -1 for nothing yet.
 	struct LayoutCrosshairState
 	{
+		// Per crosshair panel: left, right, top, bottom, dot, ring outline, ring.
+		static constexpr i32 PANELS = 7;
 		i32 shown {-1};
-		i32 armLength {-1};
-		i32 thickness {-1};
-		i32 margin {-1};
-		i32 marginFar {-1};
-		i32 outline {-1};
+		i32 hidden[PANELS] {-1, -1, -1, -1, -1, -1, -1};
+		i32 width[PANELS] {-1, -1, -1, -1, -1, -1, -1};
+		i32 height[PANELS] {-1, -1, -1, -1, -1, -1, -1};
+		i32 marginX[PANELS] {-1, -1, -1, -1, -1, -1, -1};
+		i32 marginY[PANELS] {-1, -1, -1, -1, -1, -1, -1};
+		i32 border[PANELS] {-1, -1, -1, -1, -1, -1, -1};
 		i32 opacity {-1};
-		i32 dot {-1};
-		i32 noTopArm {-1};
 		const char *colorClass {};
 	};
 

@@ -1,13 +1,5 @@
-// Panorama replica of the player's own crosshair.
-
-// Geometry from client.dll's painter, classic static only (no recoil, friendly-fire warning or
-// weapon-based gap):
-//   length    = int(screenHeight / 480 * cl_crosshairsize)
-//   thickness = max(1, int(screenHeight / 480 * cl_crosshairthickness))
-//   gap       = int(cl_crosshairgap + 4)              raw pixels, not screen-scaled
-//   arm       = [center + thickness/2 + gap, + length]
-//   dot       = thickness-sized square; cl_crosshair_t drops the top arm
-//   alpha     = cl_crosshairusealpha ? cl_crosshairalpha : 200
+// Panorama replica of the player's own crosshair, from their cl_crosshair* values. Draws the static
+// styles (3 circle, 4 cross, 6 dot); every other style falls back to the cross.
 
 #include "kz/hud/layout/layout.h"
 #include "kz/hud/kz_hud.h"
@@ -19,35 +11,34 @@
 
 #include "tier0/memdbgon.h"
 
-// Panorama's 1080px reference over the client's 480px crosshair scale. Exact at 1080p; elsewhere
-// mhudCrosshairScale carries the correction, since no convar reports the client's resolution.
-#define MHUD_XH_SCALE     2.25f
-#define MHUD_XH_MIN_SCALE 25
-#define MHUD_XH_MAX_SCALE 400
-// Largest suffix xh-w--/xh-h-- define.
-#define MHUD_XH_MAX_PX 56
-// xh-m--N is a margin of N quarter pixels, biased so arms can cross the centre. Quarters because a
-// whole layout unit is coarser than a device pixel wherever the scale is not 100%.
-#define MHUD_XH_MARGIN_BIAS 8
-#define MHUD_XH_MAX_MARGIN  24
-#define MHUD_XH_MARGIN_STEP 4
-// The game caps cl_crosshair_outlinethickness at 3, in raw pixels; scaling up needs more classes.
-#define MHUD_XH_MAX_OUTLINE    3
-#define MHUD_XH_MAX_OUTLINE_PX 8
+#define MHUD_XH_REFERENCE_HEIGHT  1080.0f
+#define MHUD_XH_MIN_SCREEN_HEIGHT 240
+// Every crosshair class is generated in quarter layout pixels: a whole unit is coarser than a device
+// pixel above 1080p.
+#define MHUD_XH_STEP 4
+// Largest xh-w--/xh-h-- in pixels.
+#define MHUD_XH_MAX_SIZE 96
+// xh-m*--N covers -MHUD_XH_MARGIN_BIAS to MHUD_XH_MAX_MARGIN pixels, biased so it can go negative.
+#define MHUD_XH_MARGIN_BIAS 48
+#define MHUD_XH_MAX_MARGIN  48
+#define MHUD_XH_MAX_BORDER  16
 // Opacity classes are 5% steps.
 #define MHUD_XH_OPACITY_STEPS 20
 #define MHUD_XH_POLL_INTERVAL 2.5f
 
-// Alpha goes on each painted panel, not the container: parent opacity does not reach children. The
-// border carrying the outline is part of the same panel, so it fades with the bar as the game does.
-static_global const char *const XH_PAINTED[] = {"xh_left", "xh_right", "xh_top", "xh_bottom", "xh_dot"};
-// The centre pixel belongs to neither bar, so the far arms sit one device pixel further out.
-static_global const char *const XH_ARMS_NEAR[] = {"xh_left", "xh_top"};
-static_global const char *const XH_ARMS_FAR[] = {"xh_right", "xh_bottom"};
-static_global const char *const XH_HORIZONTAL[] = {"xh_left", "xh_right"};
-static_global const char *const XH_VERTICAL[] = {"xh_top", "xh_bottom"};
-static_global const char *const XH_TINTED[] = {"xh_left", "xh_right", "xh_top", "xh_bottom", "xh_dot"};
-static_global const char *const XH_DOT[] = {"xh_dot"};
+// Each panel sits in the quadrant whose corner is the screen centre and is pushed off that corner by
+// the margins on its two centre-facing sides.
+static_global const struct
+{
+	const char *id;
+	const char *marginX;
+	const char *marginY;
+	bool tinted;
+} XH_PANELS[] = {
+	{"xh_left", "xh-mr--", "xh-mb--", true},   {"xh_right", "xh-ml--", "xh-mb--", true}, {"xh_top", "xh-mr--", "xh-mb--", true},
+	{"xh_bottom", "xh-mr--", "xh-mt--", true}, {"xh_dot", "xh-mr--", "xh-mb--", true},   {"xh_ring_outline", "xh-mr--", "xh-mb--", false},
+	{"xh_ring", "xh-mr--", "xh-mb--", true},
+};
 
 // === Reading the client's convars ==================================================
 
@@ -65,19 +56,18 @@ static_function bool ParseBool(const char *value)
 
 // clang-format off
 static_global const MHUDCrosshairCvar CROSSHAIR_CVARS[] = {
-	{"cl_crosshairsize",             [](MHUDCrosshairSettings &s, const char *v) { s.size = (f32)atof(v); }},
-	{"cl_crosshairthickness",        [](MHUDCrosshairSettings &s, const char *v) { s.thickness = (f32)atof(v); }},
-	{"cl_crosshairgap",              [](MHUDCrosshairSettings &s, const char *v) { s.gap = (f32)atof(v); }},
-	{"cl_crosshair_outlinethickness",[](MHUDCrosshairSettings &s, const char *v) { s.outlineThickness = (f32)atof(v); }},
-	{"cl_crosshair_drawoutline",     [](MHUDCrosshairSettings &s, const char *v) { s.drawOutline = ParseBool(v); }},
-	{"cl_crosshairdot",              [](MHUDCrosshairSettings &s, const char *v) { s.dot = ParseBool(v); }},
-	{"cl_crosshair_t",               [](MHUDCrosshairSettings &s, const char *v) { s.tStyle = ParseBool(v); }},
-	{"cl_crosshaircolor",            [](MHUDCrosshairSettings &s, const char *v) { s.color = atoi(v); }},
-	{"cl_crosshaircolor_r",          [](MHUDCrosshairSettings &s, const char *v) { s.r = atoi(v); }},
-	{"cl_crosshaircolor_g",          [](MHUDCrosshairSettings &s, const char *v) { s.g = atoi(v); }},
-	{"cl_crosshaircolor_b",          [](MHUDCrosshairSettings &s, const char *v) { s.b = atoi(v); }},
-	{"cl_crosshairalpha",            [](MHUDCrosshairSettings &s, const char *v) { s.alpha = atoi(v); }},
-	{"cl_crosshairusealpha",         [](MHUDCrosshairSettings &s, const char *v) { s.useAlpha = ParseBool(v); }},
+	{"cl_crosshair_length",        [](MHUDCrosshairSettings &s, const char *v) { s.length = atoi(v); }},
+	{"cl_crosshair_thickness",     [](MHUDCrosshairSettings &s, const char *v) { s.thickness = atoi(v); }},
+	{"cl_crosshair_gap",           [](MHUDCrosshairSettings &s, const char *v) { s.gap = atoi(v); }},
+	{"cl_crosshair_drawoutline",   [](MHUDCrosshairSettings &s, const char *v) { s.drawOutline = ParseBool(v); }},
+	{"cl_crosshairdot",            [](MHUDCrosshairSettings &s, const char *v) { s.dot = ParseBool(v); }},
+	{"cl_crosshair_t",             [](MHUDCrosshairSettings &s, const char *v) { s.tStyle = ParseBool(v); }},
+	{"cl_crosshairstyle",          [](MHUDCrosshairSettings &s, const char *v) { s.style = atoi(v); }},
+	{"cl_crosshaircolor_r",        [](MHUDCrosshairSettings &s, const char *v) { s.r = atoi(v); }},
+	{"cl_crosshaircolor_g",        [](MHUDCrosshairSettings &s, const char *v) { s.g = atoi(v); }},
+	{"cl_crosshaircolor_b",        [](MHUDCrosshairSettings &s, const char *v) { s.b = atoi(v); }},
+	{"cl_crosshaircolor_a",        [](MHUDCrosshairSettings &s, const char *v) { s.a = atoi(v); }},
+	{"cl_crosshair_screen_height", [](MHUDCrosshairSettings &s, const char *v) { s.screenHeight = atoi(v); }},
 };
 // clang-format on
 
@@ -146,59 +136,22 @@ void KZHUDService::OnCrosshairCvarValue(const char *name, const char *value)
 
 // === Rendering =====================================================================
 
-// cl_crosshaircolor 0..4 are presets; 5 means the cl_crosshaircolor_* values.
-static_function Color GetCrosshairColor(const MHUDCrosshairSettings &settings)
+// Moves one numeric class family from the cached value to newValue on one panel.
+static_function void ApplyValueClass(CCSCustomHudLayout *layout, const char *panelId, const char *prefix, i32 &cache, i32 newValue)
 {
-	switch (settings.color)
-	{
-		case 0:
-			return Color(250, 50, 50, 255);
-		case 2:
-			return Color(250, 250, 50, 255);
-		case 3:
-			return Color(50, 50, 250, 255);
-		case 4:
-			return Color(50, 250, 250, 255);
-		case 5:
-			return Color(Clamp(settings.r, 0, 255), Clamp(settings.g, 0, 255), Clamp(settings.b, 0, 255), 255);
-		default:
-			return Color(50, 250, 50, 255);
-	}
-}
-
-// Moves one numeric class family from oldValue to newValue on every listed panel. The caller owns
-// the cache: one value can drive two families.
-static_function void ApplyValueClass(CCSCustomHudLayout *layout, const char *const *panels, i32 count, const char *prefix, i32 oldValue, i32 newValue)
-{
-	if (oldValue == newValue)
+	if (cache == newValue)
 	{
 		return;
 	}
 	char className[32];
-	for (i32 i = 0; i < count; i++)
+	if (cache >= 0)
 	{
-		if (oldValue >= 0)
-		{
-			V_snprintf(className, sizeof(className), "%s%i", prefix, oldValue);
-			layout->SetHasClass(panels[i], className, k_eHudPanelClassStatus_DoesNotHaveClass);
-		}
-		V_snprintf(className, sizeof(className), "%s%i", prefix, newValue);
-		layout->SetHasClass(panels[i], className, k_eHudPanelClassStatus_HasClass);
+		V_snprintf(className, sizeof(className), "%s%i", prefix, cache);
+		layout->SetHasClass(panelId, className, k_eHudPanelClassStatus_DoesNotHaveClass);
 	}
-}
-
-// The game works in device pixels. One device pixel is `scale` layout units.
-static_function i32 ToLayout(i32 devicePixels, f32 scale)
-{
-	return (i32)(devicePixels * scale + 0.5f);
-}
-
-// Same conversion, but to the quarter-pixel class index the margins are generated at.
-static_function i32 ToMarginClass(i32 devicePixels, f32 scale, i32 outline)
-{
-	const i32 quarters = (i32)(devicePixels * scale * MHUD_XH_MARGIN_STEP + 0.5f) - outline * MHUD_XH_MARGIN_STEP;
-	return Clamp(quarters, -MHUD_XH_MARGIN_BIAS * MHUD_XH_MARGIN_STEP, MHUD_XH_MAX_MARGIN * MHUD_XH_MARGIN_STEP)
-		   + MHUD_XH_MARGIN_BIAS * MHUD_XH_MARGIN_STEP;
+	V_snprintf(className, sizeof(className), "%s%i", prefix, newValue);
+	layout->SetHasClass(panelId, className, k_eHudPanelClassStatus_HasClass);
+	cache = newValue;
 }
 
 static_function void ApplyFlagClass(CCSCustomHudLayout *layout, const char *panelId, const char *className, i32 &cache, bool set)
@@ -211,8 +164,29 @@ static_function void ApplyFlagClass(CCSCustomHudLayout *layout, const char *pane
 	layout->SetHasClass(panelId, className, set ? k_eHudPanelClassStatus_HasClass : k_eHudPanelClassStatus_DoesNotHaveClass);
 }
 
+// Device pixels to the quarter-pixel class index, before clamping.
+static_function i32 ToQuarters(f32 devicePixels, f32 unitsPerPixel)
+{
+	return (i32)roundf(devicePixels * unitsPerPixel * MHUD_XH_STEP);
+}
+
+// Panorama rounds a box's anchored edge to the nearest device pixel but its size up, so a size a hair
+// over the target gains a whole pixel. Sizes quantize down instead, just under the exact value.
+static_function i32 ToSizeClass(f32 devicePixels, f32 unitsPerPixel)
+{
+	const i32 quarters = (i32)floorf(devicePixels * unitsPerPixel * MHUD_XH_STEP - 0.01f);
+	return Clamp(quarters, 0, MHUD_XH_MAX_SIZE * MHUD_XH_STEP);
+}
+
+static_function i32 ToMarginClass(f32 devicePixels, f32 unitsPerPixel)
+{
+	const i32 bias = MHUD_XH_MARGIN_BIAS * MHUD_XH_STEP;
+	return Clamp(ToQuarters(devicePixels, unitsPerPixel), -bias, MHUD_XH_MAX_MARGIN * MHUD_XH_STEP) + bias;
+}
+
 void KZHUDService::ApplyCrosshair(CCSCustomHudLayout *layout, bool show, bool force)
 {
+	static_assert((i32)KZ_ARRAYSIZE(XH_PANELS) == LayoutCrosshairState::PANELS);
 	LayoutCrosshairState &state = this->layoutCrosshair;
 	if (force)
 	{
@@ -228,70 +202,77 @@ void KZHUDService::ApplyCrosshair(CCSCustomHudLayout *layout, bool show, bool fo
 	}
 
 	const MHUDCrosshairSettings &settings = this->crosshair;
-	const f32 scale = Clamp(this->GetPrefs().crosshairScale, MHUD_XH_MIN_SCALE, MHUD_XH_MAX_SCALE) / 100.0f;
-	// Everything the game derives from the screen height, in the device pixels it would paint.
-	const f32 screenScale = MHUD_XH_SCALE / scale;
-	const i32 lengthDev = (i32)(screenScale * settings.size);
-	const i32 thicknessDev = MAX(1, (i32)(screenScale * settings.thickness));
-	// The gap and the outline are raw device pixels, not screen-scaled.
-	const i32 gapDev = (i32)(settings.gap + 4.0f);
-	const i32 outlineDev = settings.drawOutline ? Clamp((i32)(settings.outlineThickness + 0.5f), 0, MHUD_XH_MAX_OUTLINE) : 0;
+	// The client scales its sizes by screenHeight / cl_crosshair_screen_height and Panorama scales by
+	// screenHeight / 1080, so the actual screen height cancels out.
+	const f32 unitsPerPixel = MHUD_XH_REFERENCE_HEIGHT / MAX(settings.screenHeight, MHUD_XH_MIN_SCREEN_HEIGHT);
 
-	const i32 armLength = Clamp(ToLayout(lengthDev, scale), 0, MHUD_XH_MAX_PX);
-	const i32 thickness = Clamp(MAX(1, ToLayout(thicknessDev, scale)), 1, MHUD_XH_MAX_PX);
-	const i32 outline = Clamp(ToLayout(outlineDev, scale), 0, MHUD_XH_MAX_OUTLINE_PX);
-	// The border draws inside the box, so size the arm to the outlined bar and pull the margin in by
-	// the same amount to leave armLength x thickness painted where it would sit without one.
-	const i32 boxLength = Clamp(armLength + 2 * outline, 0, MHUD_XH_MAX_PX);
-	const i32 boxThickness = Clamp(thickness + 2 * outline, 1, MHUD_XH_MAX_PX);
-	const i32 innerDev = thicknessDev / 2 + gapDev;
-	const i32 margin = ToMarginClass(innerDev, scale, outline);
-	const i32 marginFar = ToMarginClass(innerDev + 1, scale, outline);
-	// The game paints the outline with the bars' alpha.
-	const i32 alpha = Clamp(settings.useAlpha ? settings.alpha : 200, 0, 255);
-	const i32 opacity = alpha * MHUD_XH_OPACITY_STEPS / 255;
-	const char *colorClass = panorama::ResolveSwatchClass(GetCrosshairColor(settings));
+	const i32 thickness = MAX(settings.thickness, 0);
+	const i32 length = MAX(settings.length, 0);
+	const i32 gap = MAX(settings.gap, 1);
+	const i32 outline = settings.drawOutline ? 1 : 0;
+	const bool circle = settings.style == 3;
+	const bool dotOnly = settings.style == 6;
 
-	ApplyValueClass(layout, XH_HORIZONTAL, KZ_ARRAYSIZE(XH_HORIZONTAL), "xh-w--", state.armLength, boxLength);
-	ApplyValueClass(layout, XH_VERTICAL, KZ_ARRAYSIZE(XH_VERTICAL), "xh-h--", state.armLength, boxLength);
-	state.armLength = boxLength;
+	// Rects are pixel edges from the screen centre, spanning [-ceil(t/2), floor(t/2)) across the bar. The
+	// border draws inside the box, so each box is the rect grown by the outline on every side.
+	const i32 lo = MAX(thickness, 1) / 2;
+	const i32 longSide = length + 2 * outline;
+	const i32 shortSide = thickness + 2 * outline;
+	const i32 nearEdge = gap - outline;
+	const i32 farEdge = gap - (thickness % 2) - outline;
+	const i32 crossEdge = -(lo + outline);
+	const bool bars = !circle && !dotOnly && thickness > 0 && length > 0;
 
-	ApplyValueClass(layout, XH_HORIZONTAL, KZ_ARRAYSIZE(XH_HORIZONTAL), "xh-h--", state.thickness, boxThickness);
-	ApplyValueClass(layout, XH_VERTICAL, KZ_ARRAYSIZE(XH_VERTICAL), "xh-w--", state.thickness, boxThickness);
-	ApplyValueClass(layout, XH_DOT, KZ_ARRAYSIZE(XH_DOT), "xh-w--", state.thickness, boxThickness);
-	ApplyValueClass(layout, XH_DOT, KZ_ARRAYSIZE(XH_DOT), "xh-h--", state.thickness, boxThickness);
-	state.thickness = boxThickness;
+	// The ring runs from radius - width to radius, centred half a pixel up and left for odd thicknesses
+	// like the rects. Its outline is a separate ring behind it, one pixel wider on each side.
+	const f32 ringCentre = (thickness % 2) ? -0.5f : 0.0f;
+	const i32 ringRadius = gap + thickness;
+	const i32 ringWidth = MAX(thickness - 1, 1);
+	const bool ring = circle && thickness > 0;
 
-	ApplyValueClass(layout, XH_ARMS_NEAR, KZ_ARRAYSIZE(XH_ARMS_NEAR), "xh-m--", state.margin, margin);
-	state.margin = margin;
-
-	ApplyValueClass(layout, XH_ARMS_FAR, KZ_ARRAYSIZE(XH_ARMS_FAR), "xh-m--", state.marginFar, marginFar);
-	state.marginFar = marginFar;
-
-	ApplyValueClass(layout, XH_PAINTED, KZ_ARRAYSIZE(XH_PAINTED), "xh-ol--", state.outline, outline);
-	state.outline = outline;
-
-	ApplyValueClass(layout, XH_PAINTED, KZ_ARRAYSIZE(XH_PAINTED), "xh-op--", state.opacity, opacity);
-	state.opacity = opacity;
-
-	if (state.colorClass != colorClass)
+	const struct
 	{
-		for (const char *panelId : XH_TINTED)
+		f32 width, height, marginX, marginY;
+		i32 border;
+		bool visible;
+	} boxes[] = {
+		{(f32)longSide, (f32)shortSide, (f32)nearEdge, (f32)crossEdge, outline, bars},
+		{(f32)longSide, (f32)shortSide, (f32)farEdge, (f32)crossEdge, outline, bars},
+		{(f32)shortSide, (f32)longSide, (f32)crossEdge, (f32)nearEdge, outline, bars && !settings.tStyle},
+		{(f32)shortSide, (f32)longSide, (f32)crossEdge, (f32)farEdge, outline, bars},
+		{(f32)shortSide, (f32)shortSide, (f32)crossEdge, (f32)crossEdge, outline, thickness > 0 && (settings.dot || dotOnly)},
+		{2.0f * (ringRadius + 1), 2.0f * (ringRadius + 1), -(ringCentre + ringRadius + 1), -(ringCentre + ringRadius + 1), ringWidth + 2,
+		 ring && outline},
+		{2.0f * ringRadius, 2.0f * ringRadius, -(ringCentre + ringRadius), -(ringCentre + ringRadius), ringWidth, ring},
+	};
+
+	// Alpha goes on each painted panel, not the container: parent opacity does not reach children. A
+	// bar's outline is its own border, so it fades with the bar as the game does.
+	const i32 opacity = Clamp(settings.a, 0, 255) * MHUD_XH_OPACITY_STEPS / 255;
+	const char *colorClass =
+		panorama::ResolveSwatchClass(Color(Clamp(settings.r, 0, 255), Clamp(settings.g, 0, 255), Clamp(settings.b, 0, 255), 255));
+	for (i32 i = 0; i < LayoutCrosshairState::PANELS; i++)
+	{
+		const char *id = XH_PANELS[i].id;
+		ApplyFlagClass(layout, id, "hidden", state.hidden[i], !boxes[i].visible);
+		ApplyValueClass(layout, id, "xh-w--", state.width[i], ToSizeClass(boxes[i].width, unitsPerPixel));
+		ApplyValueClass(layout, id, "xh-h--", state.height[i], ToSizeClass(boxes[i].height, unitsPerPixel));
+		ApplyValueClass(layout, id, XH_PANELS[i].marginX, state.marginX[i], ToMarginClass(boxes[i].marginX, unitsPerPixel));
+		ApplyValueClass(layout, id, XH_PANELS[i].marginY, state.marginY[i], ToMarginClass(boxes[i].marginY, unitsPerPixel));
+		ApplyValueClass(layout, id, "xh-b--", state.border[i],
+						Clamp(ToQuarters((f32)boxes[i].border, unitsPerPixel), 0, MHUD_XH_MAX_BORDER * MHUD_XH_STEP));
+
+		i32 opacityCache = state.opacity;
+		ApplyValueClass(layout, id, "xh-op--", opacityCache, opacity);
+		if (XH_PANELS[i].tinted && state.colorClass != colorClass)
 		{
 			if (state.colorClass)
 			{
-				layout->SetHasClass(panelId, state.colorClass, k_eHudPanelClassStatus_DoesNotHaveClass);
+				layout->SetHasClass(id, state.colorClass, k_eHudPanelClassStatus_DoesNotHaveClass);
 			}
-			layout->SetHasClass(panelId, colorClass, k_eHudPanelClassStatus_HasClass);
+			layout->SetHasClass(id, colorClass, k_eHudPanelClassStatus_HasClass);
 		}
-		state.colorClass = colorClass;
 	}
-
-	ApplyFlagClass(layout, "xh_dot", "hidden", state.dot, !settings.dot);
-	if (state.noTopArm != (i32)settings.tStyle)
-	{
-		state.noTopArm = (i32)settings.tStyle;
-		const auto status = settings.tStyle ? k_eHudPanelClassStatus_HasClass : k_eHudPanelClassStatus_DoesNotHaveClass;
-		layout->SetHasClass("xh_top", "hidden", status);
-	}
+	state.opacity = opacity;
+	state.colorClass = colorClass;
 }

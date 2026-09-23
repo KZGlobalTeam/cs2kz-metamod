@@ -171,21 +171,7 @@
 	}
 	"Menu - Crosshair Sub"
 	{
-		"en"		"Draws a crosshair on your screen, for when !hideweapon hides your real one"
-		"chi"		"在你的屏幕上绘制准星, 用于 !hideweapon 隐藏真实准星时"
-		"ua"		"Малює приціл на екрані, коли команда !hideweapon приховує ваш реальний приціл"
-	}
-	"Menu - Crosshair Scale"
-	{
-		"en"		"Crosshair scale"
-		"chi"		"准星缩放"
-		"ua"		"Масштаб прицілу"
-	}
-	"Menu - Crosshair Scale Sub"
-	{
-		"en"		"Pick the one matching your resolution"
-		"chi"		"选择与你的分辨率匹配的一项"
-		"ua"		"Виберіть той, що відповідає роздільній здатності вашого екрану"
+		"en"		"Draws a crosshair on your screen, for when !hideweapon hides your real one. Its scaling only updates after you change your crosshair settings"
 	}
 	"Menu - Decimal"
 	{
