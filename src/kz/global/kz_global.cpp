@@ -17,9 +17,9 @@
 #include "kz_global.h"
 #include "messages.h"
 
-static_function bool GetApiUrl(std::string &url)
+bool KZGlobalService::GetApiHttpUrl(std::string &url)
 {
-	url = KZOptionService::GetOptionStr("apiUrl", KZOptionService::GetOptionStr("apiUrl", "https://api.cs2kz.org"));
+	url = KZOptionService::GetOptionStr("apiUrl", "https://api.cs2kz.org");
 
 	if (url.empty())
 	{
@@ -33,13 +33,22 @@ static_function bool GetApiUrl(std::string &url)
 		return false;
 	}
 
-	url.replace(0, 4, "ws");
-
-	if (url.substr(url.size() - 1) != "/")
+	if (url.back() != '/')
 	{
 		url += "/";
 	}
 
+	return true;
+}
+
+static_function bool GetApiUrl(std::string &url)
+{
+	if (!KZGlobalService::GetApiHttpUrl(url))
+	{
+		return false;
+	}
+
+	url.replace(0, 4, "ws");
 	url += "auth/cs2";
 
 	return true;
@@ -360,6 +369,9 @@ void KZGlobalService::OnServerGamePostSimulate()
 	// Main-thread drain for everything the WebSocket thread queued up. The callbacks run here, so
 	// whatever they allocate belongs to Global too.
 
+	// Replays go over HTTP, so they don't have to wait for the WebSocket connection.
+	KZGlobalService::replayManager.ProcessUploads();
+
 	switch (KZGlobalService::state.load())
 	{
 		case KZGlobalService::State::Connected:
@@ -443,7 +455,7 @@ void KZGlobalService::OnServerGamePostSimulate()
 					}
 					else
 					{
-						callbackHandle.mapped()->OnResponse(it->id, it->payload, it->binaryData);
+						callbackHandle.mapped()->OnResponse(it->id, it->payload);
 					}
 
 					it = KZGlobalService::ws.receivedMessages.queue.erase(it);
@@ -472,8 +484,6 @@ void KZGlobalService::OnServerGamePostSimulate()
 					KZGlobalService::ws.messageCallbacks.callbacks.merge(messageCallbacks);
 				}
 			}
-
-			KZGlobalService::replayManager.ProcessUploads();
 		}
 		break;
 
@@ -645,25 +655,7 @@ void KZGlobalService::WS::OnMessage(const ix::WebSocketMessagePtr &message)
 				 "\n----------------------------------------\n",
 				 message->str.c_str());
 
-	// Binary frames carry: <json>\n<binary-data>
-	// Text frames are pure JSON.
-	std::string_view jsonPart = message->str;
-	std::vector<char> binaryPart;
-
-	if (message->binary)
-	{
-		auto newlinePos = message->str.find('\n');
-		if (newlinePos != std::string::npos)
-		{
-			jsonPart = std::string_view(message->str.data(), newlinePos);
-			const char *binStart = message->str.data() + newlinePos + 1;
-			size_t binLen = message->str.size() - newlinePos - 1;
-			binaryPart.assign(binStart, binStart + binLen);
-		}
-	}
-
-	std::string jsonStr(jsonPart);
-	Json payload(jsonStr);
+	Json payload(message->str);
 
 	if (!payload.IsValid())
 	{
@@ -712,7 +704,6 @@ void KZGlobalService::WS::OnMessage(const ix::WebSocketMessagePtr &message)
 			ReceivedMessage receivedMessage;
 			receivedMessage.id = messageID;
 			receivedMessage.isError = (event == "error");
-			receivedMessage.binaryData = std::move(binaryPart);
 
 			if (!payload.Get("data", receivedMessage.payload))
 			{

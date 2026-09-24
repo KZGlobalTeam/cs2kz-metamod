@@ -199,6 +199,8 @@ namespace KZ::api::messages
 		};
 
 		std::string recordId {};
+		// Single-use bearer token for `POST /records/{record_id}/replay`. Expires shortly after the ack is sent.
+		std::string replayUploadKey {};
 		RecordData overallData {};
 		RecordData proData {};
 
@@ -318,30 +320,5 @@ namespace KZ::api::messages
 		std::vector<Record> records {};
 
 		bool FromJson(const Json &json);
-	};
-
-	struct NewReplay
-	{
-		std::string_view replayID;
-
-		inline static const char *Name()
-		{
-			return "new-replay";
-		}
-
-		bool ToJson(Json &json) const;
-	};
-
-	struct ReplayData
-	{
-		inline static const char *Name()
-		{
-			return "replay-data";
-		}
-
-		bool FromJson(const Json &json)
-		{
-			return true;
-		}
 	};
 }; // namespace KZ::api::messages
