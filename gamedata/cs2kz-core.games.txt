@@ -38,7 +38,7 @@
 			{
 				"library" 	"server"
 				"windows"	"48 89 7C 24 ?? 55 48 8B EC 48 81 EC ?? ?? ?? ?? 48 8B F9 48 8D 4D ?? E8 ?? ?? ?? ?? F2 0F 10 87"
-				"linux" 	"55 48 89 E5 41 57 49 89 FF 48 89 F7 41 56 41 55 41 54 53 48 81 EC ? ? ? ? E8"
+				"linux" 	"55 48 89 E5 41 57 49 89 FF 48 89 F7 41 56 41 55 41 54 53 48 81 EC ?? ?? ?? ?? E8"
 			}
 			// For debugging purposes only (windows)
 			// Physics/TraceShape (Server)
