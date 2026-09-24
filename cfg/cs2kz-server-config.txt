@@ -94,6 +94,9 @@
 	"apiUrl"	"https://api.cs2kz.org"
 	"apiKey"	""
 
-	"racingCoordinatorUrl"		""
-	"racingSecret"				""
+	"GlobalKZ Race Coordinator"
+	{
+		"baseURL"	""
+		"token"		""
+	}
 }

@@ -124,16 +124,6 @@
 		"de"		"{lime}{player}{grey} hat das Rennen nicht beendet."
 		"ko"		"{lime}{player}{grey}님이 레이스를 완주하지 못했습니다."
 	}
-	"Racing - No Time Limit"
-	{
-		"en"		"No time limit"
-		"chi"		"无时间限制"
-    	"pl" 		"Brak limitu czasu"
-		"ru"		"Нет лимита по времени"
-		"ua"		"Без обмеження за часом"
-		"de"		"Kein Zeitlimit"
-		"ko"		"시간 제한 없음"
-	}
 	"Racing - Time Limit"
 	{
 		"#format"	"time:s"
@@ -145,7 +135,20 @@
 		"de"		"Zeitlimit: {time}"
 		"ko"		"시간 제한: {time}"
 	}
-	"Racing - Race Info"
+	"Racing - Race Info - No Teleport Limit"
+	{
+		// Race on course Main
+		// CKZ - Time limit : 01:30.00
+		"#format"	"course:s,mode:s,time_limit:s"
+		"en"		"Race on course {course}\n{mode} - {time_limit}"
+		"chi"		"比赛路线 {course}\n{mode} - {time_limit}"
+    	"pl" 		"Wyścig na trasie {course}\n{mode} - {time_limit}"
+		"ru"		"Гонка на маршруте {course}\n{mode} - {time_limit}"
+		"ua"		"Гонка на курсі {course}\n{mode} - {time_limit}"
+		"de"		"Rennen auf Route {course}\n{mode} - {time_limit}"
+		"ko"		"코스 {course}에서의 레이스\n{mode} - {time_limit}"
+	}
+	"Racing - Race Info - Teleport Limit"
 	{
 		// Race on course Main
 		// CKZ - Max TPs : 2 - Time limit : 01:30.00
@@ -158,7 +161,20 @@
 		"de"		"Rennen auf Route {course}\n{mode} - Max TPs: {teleport_count} - {time_limit}"
 		"ko"		"코스 {course}에서의 레이스\n{mode} - 최대 TP: {teleport_count} - {time_limit}"
 	}
-	"Racing - Race Info (Chat)"
+	"Racing - Race Info - No Teleport Limit (Chat)"
+	{
+		// A new race has been started!
+		// Course Main | No time limit0
+		"#format"	"course:s,mode:s,time_limit:s"
+		"en"		"{default}A new race has been started!\n{grey}Course: {default}{course}{grey} | {time_limit}"
+		"chi"		"{default}新比赛已启动!\n{grey}路线：{default}{course}{grey} | {time_limit}"
+    	"pl" 		"{default}Rozpoczęto nowy wyścig!\n{grey}Trasa: {default}{course}{grey} | {time_limit}"
+		"ru"		"{default}Началась новая гонка!\n{grey}Маршрут: {default}{course}{grey} | {time_limit}"
+		"ua"		"{default}Нова гонка розпочалася!\n{grey}Курс: {default}{course}{grey} | {time_limit}"
+		"de"		"{default}Ein neues Rennen wurde gestartet!\n{grey}Route: {default}{course}{grey} | {time_limit}"
+		"ko"		"{default}새 레이스가 시작되었습니다!\n{grey}코스: {default}{course}{grey} | {time_limit}"
+	}
+	"Racing - Race Info - Teleport Limit (Chat)"
 	{
 		// A new race has been started!
 		// Course Main | Max TPs: 0 | No time limit0

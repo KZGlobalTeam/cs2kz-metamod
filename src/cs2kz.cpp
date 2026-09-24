@@ -151,6 +151,7 @@ bool KZPlugin::Unload(char *error, size_t maxlen)
 	KZOptionService::Cleanup();
 	KZ::replaysystem::Cleanup();
 	KZAnticheatService::CleanupSvCheatsWatcher();
+	KZWebSocket::Cleanup();
 	hooks::Cleanup();
 	HTTP::Cleanup();
 	RemoveAllTimers();
