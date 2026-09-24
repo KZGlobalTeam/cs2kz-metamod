@@ -254,11 +254,12 @@ void KZProfileService::UpdateClantag()
 				break;
 			}
 		}
-		V_snprintf(this->clanTag, sizeof(this->clanTag), "[%s %s]", this->player->modeService->GetModeShortName(), rankNames[rank]);
+		// The client wraps clan tags in brackets itself.
+		V_snprintf(this->clanTag, sizeof(this->clanTag), "%s %s", this->player->modeService->GetModeShortName(), rankNames[rank]);
 	}
 	else
 	{
-		V_snprintf(this->clanTag, sizeof(this->clanTag), "[%s%s]", this->player->modeService->GetModeShortName(),
+		V_snprintf(this->clanTag, sizeof(this->clanTag), "%s%s", this->player->modeService->GetModeShortName(),
 				   this->player->styleServices.Count() > 0 ? "*" : "");
 	}
 
@@ -274,6 +275,15 @@ void KZProfileService::OnPhysicsSimulatePost()
 	if (g_pKZUtils->GetServerGlobals()->realtime >= this->timeToNextRatingRefresh)
 	{
 		this->RequestRating();
+	}
+
+	// The server overwrites m_szClan with the player's Steam group tag once their GC persona data arrives.
+	CCSPlayerController *controller = this->player->GetController();
+	bool ownsClanTag = this->clanTagOverride[0] != '\0' || kz_profile_clantag_enabled.Get();
+	if (ownsClanTag && this->clanTag[0] != '\0' && controller && controller->m_iConnected() == PlayerConnectedState::PlayerConnected
+		&& !KZ_STREQ(controller->m_szClan().String(), this->clanTag))
+	{
+		this->player->SetClan(this->clanTag);
 	}
 }
 

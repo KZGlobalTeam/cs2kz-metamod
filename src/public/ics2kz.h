@@ -247,7 +247,7 @@ public:
 	// or -1 when CS2KZ does not have one.
 	virtual double GetRating(int slot) = 0;
 
-	// The tag currently shown on the scoreboard, brackets included (e.g. "[CKZ Pro]").
+	// The tag currently shown on the scoreboard, without brackets (e.g. "CKZ Pro"); the game adds them.
 	// This is the override when one is set, otherwise what CS2KZ computed.
 	virtual const char *GetClanTag(int slot) = 0;
 
