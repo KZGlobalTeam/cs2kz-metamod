@@ -1,5 +1,5 @@
 // Panorama replica of the player's own crosshair, from their cl_crosshair* values. Draws the static
-// styles (3 circle, 4 cross, 6 dot); every other style falls back to the cross.
+// styles (3 circle, 4 cross, 6 dot, 8 square); every other style falls back to the cross.
 
 #include "kz/hud/layout/layout.h"
 #include "kz/hud/kz_hud.h"
@@ -27,17 +27,28 @@
 #define MHUD_XH_POLL_INTERVAL 2.5f
 
 // Each panel sits in the quadrant whose corner is the screen centre and is pushed off that corner by
-// the margins on its two centre-facing sides.
+// the margins on its two centre-facing sides. The four bars draw the square's sides too.
 static_global const struct
 {
 	const char *id;
-	const char *marginX;
-	const char *marginY;
+	bool leftQuadrant;
+	bool topQuadrant;
 	bool tinted;
 } XH_PANELS[] = {
-	{"xh_left", "xh-mr--", "xh-mb--", true},   {"xh_right", "xh-ml--", "xh-mb--", true}, {"xh_top", "xh-mr--", "xh-mb--", true},
-	{"xh_bottom", "xh-mr--", "xh-mt--", true}, {"xh_dot", "xh-mr--", "xh-mb--", true},   {"xh_ring_outline", "xh-mr--", "xh-mb--", false},
-	{"xh_ring", "xh-mr--", "xh-mb--", true},
+	{"xh_left", true, true, true}, {"xh_right", false, true, true},        {"xh_top", true, true, true},  {"xh_bottom", true, false, true},
+	{"xh_dot", true, true, true},  {"xh_ring_outline", true, true, false}, {"xh_ring", true, true, true},
+};
+
+enum XHPanel
+{
+	XH_LEFT,
+	XH_RIGHT,
+	XH_TOP,
+	XH_BOTTOM,
+	XH_DOT,
+	XH_RING_OUTLINE,
+	XH_RING,
+	XH_PANEL_COUNT,
 };
 
 // === Reading the client's convars ==================================================
@@ -59,7 +70,7 @@ static_global const MHUDCrosshairCvar CROSSHAIR_CVARS[] = {
 	{"cl_crosshair_length",        [](MHUDCrosshairSettings &s, const char *v) { s.length = atoi(v); }},
 	{"cl_crosshair_thickness",     [](MHUDCrosshairSettings &s, const char *v) { s.thickness = atoi(v); }},
 	{"cl_crosshair_gap",           [](MHUDCrosshairSettings &s, const char *v) { s.gap = atoi(v); }},
-	{"cl_crosshair_drawoutline",   [](MHUDCrosshairSettings &s, const char *v) { s.drawOutline = ParseBool(v); }},
+	{"cl_crosshair_drawoutline",   [](MHUDCrosshairSettings &s, const char *v) { s.outline = atoi(v); }},
 	{"cl_crosshairdot",            [](MHUDCrosshairSettings &s, const char *v) { s.dot = ParseBool(v); }},
 	{"cl_crosshair_t",             [](MHUDCrosshairSettings &s, const char *v) { s.tStyle = ParseBool(v); }},
 	{"cl_crosshairstyle",          [](MHUDCrosshairSettings &s, const char *v) { s.style = atoi(v); }},
@@ -184,9 +195,81 @@ static_function i32 ToMarginClass(f32 devicePixels, f32 unitsPerPixel)
 	return Clamp(ToQuarters(devicePixels, unitsPerPixel), -bias, MHUD_XH_MAX_MARGIN * MHUD_XH_STEP) + bias;
 }
 
+// Pixel edges from the screen centre, [x0, x1) by [y0, y1), and the border widths on each side. The
+// border draws inside the box, so the box already includes it.
+struct XHBox
+{
+	f32 x0, y0, x1, y1;
+	i32 borderTopLeft, borderBottomRight;
+	bool visible;
+};
+
+// cl_crosshair_drawoutline: a full outline is a pixel on every side, a half one only on the top and left.
+struct XHOutline
+{
+	i32 topLeft, bottomRight;
+};
+
+// A filled rect with the game's outline around it.
+static_function XHBox MakeOutlinedBox(f32 x0, f32 y0, f32 x1, f32 y1, XHOutline outline, bool visible)
+{
+	return {x0 - outline.topLeft,
+			y0 - outline.topLeft,
+			x1 + outline.bottomRight,
+			y1 + outline.bottomRight,
+			outline.topLeft,
+			outline.bottomRight,
+			visible};
+}
+
+// Bars span [-ceil(t/2), floor(t/2)) across; the far bars start a pixel closer for odd t.
+static_function void BuildCrossBoxes(const MHUDCrosshairSettings &settings, XHOutline outline, XHBox *boxes)
+{
+	const i32 t = settings.thickness;
+	const i32 length = settings.length;
+	const f32 hi = (f32)((t + 1) / 2);
+	const f32 lo = (f32)(t / 2);
+	const f32 nearEdge = (f32)-settings.gap;
+	const f32 farEdge = (f32)(settings.gap - t % 2);
+	const bool visible = t > 0 && length > 0;
+	boxes[XH_LEFT] = MakeOutlinedBox(nearEdge - length, -hi, nearEdge, lo, outline, visible);
+	boxes[XH_RIGHT] = MakeOutlinedBox(farEdge, -hi, farEdge + length, lo, outline, visible);
+	boxes[XH_TOP] = MakeOutlinedBox(-hi, nearEdge - length, lo, nearEdge, outline, visible && !settings.tStyle);
+	boxes[XH_BOTTOM] = MakeOutlinedBox(-hi, farEdge, lo, farEdge + length, outline, visible);
+}
+
+// Sides t thick around a 2 * gap hole; a dot with odd t pulls the top and left out a pixel. Top and
+// bottom stop where the right side, which spans the full height, begins.
+static_function void BuildSquareBoxes(const MHUDCrosshairSettings &settings, XHOutline outline, XHBox *boxes)
+{
+	const i32 t = settings.thickness;
+	const f32 outer = (f32)(-settings.gap - t - (settings.dot && t % 2 == 1));
+	const f32 inner = (f32)settings.gap;
+	boxes[XH_LEFT] = MakeOutlinedBox(outer, outer, outer + t, inner + t, outline, t > 0);
+	boxes[XH_RIGHT] = MakeOutlinedBox(inner, outer, inner + t, inner + t, outline, t > 0);
+	boxes[XH_TOP] = MakeOutlinedBox(outer, outer, inner, outer + t, outline, t > 0);
+	boxes[XH_BOTTOM] = MakeOutlinedBox(outer, inner, inner, inner + t, outline, t > 0);
+}
+
+// The ring runs from radius - width to radius, centred half a pixel up and left for odd t like the
+// bars. Its outline is a second ring behind it, grown on the sides the outline covers. The game fades a
+// half outline around the ring, so that one is only approximate.
+static_function void BuildRingBoxes(const MHUDCrosshairSettings &settings, XHOutline outline, XHBox *boxes)
+{
+	const i32 t = settings.thickness;
+	const f32 centre = t % 2 == 1 ? -0.5f : 0.0f;
+	const f32 radius = (f32)(MAX(settings.gap, 1) + t);
+	const i32 width = MAX(t - 1, 1);
+	const i32 outlineWidth = width + outline.topLeft + outline.bottomRight;
+	const f32 outlineStart = centre - radius - outline.topLeft;
+	const f32 outlineEnd = centre + radius + outline.bottomRight;
+	boxes[XH_RING_OUTLINE] = {outlineStart, outlineStart, outlineEnd, outlineEnd, outlineWidth, outlineWidth, t > 0 && outline.topLeft > 0};
+	boxes[XH_RING] = {centre - radius, centre - radius, centre + radius, centre + radius, width, width, t > 0};
+}
+
 void KZHUDService::ApplyCrosshair(CCSCustomHudLayout *layout, bool show, bool force)
 {
-	static_assert((i32)KZ_ARRAYSIZE(XH_PANELS) == LayoutCrosshairState::PANELS);
+	static_assert(XH_PANEL_COUNT == LayoutCrosshairState::PANELS && (i32)KZ_ARRAYSIZE(XH_PANELS) == XH_PANEL_COUNT);
 	LayoutCrosshairState &state = this->layoutCrosshair;
 	if (force)
 	{
@@ -201,66 +284,56 @@ void KZHUDService::ApplyCrosshair(CCSCustomHudLayout *layout, bool show, bool fo
 		return;
 	}
 
-	const MHUDCrosshairSettings &settings = this->crosshair;
+	MHUDCrosshairSettings settings = this->crosshair;
+	settings.thickness = MAX(settings.thickness, 0);
+	settings.length = MAX(settings.length, 0);
+	settings.gap = MAX(settings.gap, 0);
+	const XHOutline outline = {settings.outline > 0 ? 1 : 0, settings.outline == 1 ? 1 : 0};
+
+	// Everything not built below stays hidden.
+	XHBox boxes[XH_PANEL_COUNT] {};
+	switch (settings.style)
+	{
+		case 3:
+			BuildRingBoxes(settings, outline, boxes);
+			break;
+		case 6:
+			break;
+		case 8:
+			BuildSquareBoxes(settings, outline, boxes);
+			break;
+		default:
+			BuildCrossBoxes(settings, outline, boxes);
+			break;
+	}
+	const f32 hi = (f32)((settings.thickness + 1) / 2);
+	const f32 lo = (f32)(settings.thickness / 2);
+	boxes[XH_DOT] = MakeOutlinedBox(-hi, -hi, lo, lo, outline, settings.thickness > 0 && (settings.dot || settings.style == 6));
+
 	// The client scales its sizes by screenHeight / cl_crosshair_screen_height and Panorama scales by
 	// screenHeight / 1080, so the actual screen height cancels out.
 	const f32 unitsPerPixel = MHUD_XH_REFERENCE_HEIGHT / MAX(settings.screenHeight, MHUD_XH_MIN_SCREEN_HEIGHT);
-
-	const i32 thickness = MAX(settings.thickness, 0);
-	const i32 length = MAX(settings.length, 0);
-	const i32 gap = MAX(settings.gap, 1);
-	const i32 outline = settings.drawOutline ? 1 : 0;
-	const bool circle = settings.style == 3;
-	const bool dotOnly = settings.style == 6;
-
-	// Rects are pixel edges from the screen centre, spanning [-ceil(t/2), floor(t/2)) across the bar. The
-	// border draws inside the box, so each box is the rect grown by the outline on every side.
-	const i32 lo = MAX(thickness, 1) / 2;
-	const i32 longSide = length + 2 * outline;
-	const i32 shortSide = thickness + 2 * outline;
-	const i32 nearEdge = gap - outline;
-	const i32 farEdge = gap - (thickness % 2) - outline;
-	const i32 crossEdge = -(lo + outline);
-	const bool bars = !circle && !dotOnly && thickness > 0 && length > 0;
-
-	// The ring runs from radius - width to radius, centred half a pixel up and left for odd thicknesses
-	// like the rects. Its outline is a separate ring behind it, one pixel wider on each side.
-	const f32 ringCentre = (thickness % 2) ? -0.5f : 0.0f;
-	const i32 ringRadius = gap + thickness;
-	const i32 ringWidth = MAX(thickness - 1, 1);
-	const bool ring = circle && thickness > 0;
-
-	const struct
-	{
-		f32 width, height, marginX, marginY;
-		i32 border;
-		bool visible;
-	} boxes[] = {
-		{(f32)longSide, (f32)shortSide, (f32)nearEdge, (f32)crossEdge, outline, bars},
-		{(f32)longSide, (f32)shortSide, (f32)farEdge, (f32)crossEdge, outline, bars},
-		{(f32)shortSide, (f32)longSide, (f32)crossEdge, (f32)nearEdge, outline, bars && !settings.tStyle},
-		{(f32)shortSide, (f32)longSide, (f32)crossEdge, (f32)farEdge, outline, bars},
-		{(f32)shortSide, (f32)shortSide, (f32)crossEdge, (f32)crossEdge, outline, thickness > 0 && (settings.dot || dotOnly)},
-		{2.0f * (ringRadius + 1), 2.0f * (ringRadius + 1), -(ringCentre + ringRadius + 1), -(ringCentre + ringRadius + 1), ringWidth + 2,
-		 ring && outline},
-		{2.0f * ringRadius, 2.0f * ringRadius, -(ringCentre + ringRadius), -(ringCentre + ringRadius), ringWidth, ring},
-	};
-
+	const i32 maxBorder = MHUD_XH_MAX_BORDER * MHUD_XH_STEP;
 	// Alpha goes on each painted panel, not the container: parent opacity does not reach children. A
 	// bar's outline is its own border, so it fades with the bar as the game does.
 	const i32 opacity = Clamp(settings.a, 0, 255) * MHUD_XH_OPACITY_STEPS / 255;
 	const char *colorClass =
 		panorama::ResolveSwatchClass(Color(Clamp(settings.r, 0, 255), Clamp(settings.g, 0, 255), Clamp(settings.b, 0, 255), 255));
-	for (i32 i = 0; i < LayoutCrosshairState::PANELS; i++)
+	for (i32 i = 0; i < XH_PANEL_COUNT; i++)
 	{
 		const char *id = XH_PANELS[i].id;
-		ApplyFlagClass(layout, id, "hidden", state.hidden[i], !boxes[i].visible);
-		ApplyValueClass(layout, id, "xh-w--", state.width[i], ToSizeClass(boxes[i].width, unitsPerPixel));
-		ApplyValueClass(layout, id, "xh-h--", state.height[i], ToSizeClass(boxes[i].height, unitsPerPixel));
-		ApplyValueClass(layout, id, XH_PANELS[i].marginX, state.marginX[i], ToMarginClass(boxes[i].marginX, unitsPerPixel));
-		ApplyValueClass(layout, id, XH_PANELS[i].marginY, state.marginY[i], ToMarginClass(boxes[i].marginY, unitsPerPixel));
-		ApplyValueClass(layout, id, "xh-b--", state.border[i],
-						Clamp(ToQuarters((f32)boxes[i].border, unitsPerPixel), 0, MHUD_XH_MAX_BORDER * MHUD_XH_STEP));
+		const XHBox &box = boxes[i];
+		const f32 marginX = XH_PANELS[i].leftQuadrant ? -box.x1 : box.x0;
+		const f32 marginY = XH_PANELS[i].topQuadrant ? -box.y1 : box.y0;
+
+		ApplyFlagClass(layout, id, "hidden", state.hidden[i], !box.visible);
+		ApplyValueClass(layout, id, "xh-w--", state.width[i], ToSizeClass(box.x1 - box.x0, unitsPerPixel));
+		ApplyValueClass(layout, id, "xh-h--", state.height[i], ToSizeClass(box.y1 - box.y0, unitsPerPixel));
+		ApplyValueClass(layout, id, XH_PANELS[i].leftQuadrant ? "xh-mr--" : "xh-ml--", state.marginX[i], ToMarginClass(marginX, unitsPerPixel));
+		ApplyValueClass(layout, id, XH_PANELS[i].topQuadrant ? "xh-mb--" : "xh-mt--", state.marginY[i], ToMarginClass(marginY, unitsPerPixel));
+		ApplyValueClass(layout, id, "xh-btl--", state.borderTopLeft[i], Clamp(ToQuarters((f32)box.borderTopLeft, unitsPerPixel), 0, maxBorder));
+		ApplyValueClass(layout, id, "xh-bbr--", state.borderBottomRight[i],
+						Clamp(ToQuarters((f32)box.borderBottomRight, unitsPerPixel), 0, maxBorder));
 
 		i32 opacityCache = state.opacity;
 		ApplyValueClass(layout, id, "xh-op--", opacityCache, opacity);

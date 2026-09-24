@@ -95,7 +95,8 @@ struct MHUDCrosshairSettings
 	i32 r {0}, g {255}, b {0}, a {255};
 	i32 style {7};
 	i32 screenHeight {1080};
-	bool drawOutline {true};
+	// cl_crosshair_drawoutline: 0 none, 1 full, 2 top and left only.
+	i32 outline {1};
 	bool dot {false};
 	bool tStyle {false};
 };
@@ -431,7 +432,8 @@ private:
 		i32 height[PANELS] {-1, -1, -1, -1, -1, -1, -1};
 		i32 marginX[PANELS] {-1, -1, -1, -1, -1, -1, -1};
 		i32 marginY[PANELS] {-1, -1, -1, -1, -1, -1, -1};
-		i32 border[PANELS] {-1, -1, -1, -1, -1, -1, -1};
+		i32 borderTopLeft[PANELS] {-1, -1, -1, -1, -1, -1, -1};
+		i32 borderBottomRight[PANELS] {-1, -1, -1, -1, -1, -1, -1};
 		i32 opacity {-1};
 		const char *colorClass {};
 	};
