@@ -132,7 +132,7 @@
 [
 	ordinal(integer): "Ordinal"
     weapon(string): "Classname of item to equip" : "" : "Should be corresponding to ordinal:\n1 - weapon_awp\n2 - weapon_m4a1\n3 - weapon_knife\n4 - weapon_mp7\n5 - weapon_deagle\n6 - weapon_knife\n7 - weapon_m4a1_silencer\n8 - weapon_elite\n9 - weapon_negev\n10 - weapon_mp7"	
-	team_preview_position(choices) : "Team preview position" : "" : "" =
+	team_preview_position(choices) : "Team preview position" : "other" : "" =
 	[
 		"1" : "1"
 		"2" : "2"
@@ -159,7 +159,7 @@
 [
 	ordinal(integer): "Ordinal"
     weapon(string): "Classname of item to equip" : "" : "Should be corresponding to ordinal:\n1 - weapon_knife\n2 - weapon_awp\n3 - weapon_ak47\n4 - weapon_xm1014\n5 - weapon_deagle\n6 - weapon_knife\n7 - weapon_elite\n8 - weapon_deagle\n9 - weapon_ak47\n10 - weapon_xm1014"
-	team_preview_position(choices) : "Team preview position" : "" : "" =
+	team_preview_position(choices) : "Team preview position" : "other" : "" =
 	[
 		"1" : "1"
 		"2" : "2"
