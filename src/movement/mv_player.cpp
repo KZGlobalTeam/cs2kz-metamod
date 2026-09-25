@@ -358,7 +358,7 @@ void MovementPlayer::RegisterLanding(const Vector &landingVelocity, bool distbug
 		CConVarRef<float> sv_gravity("sv_gravity");
 		if (sv_gravity.IsValidRef() && sv_gravity.IsConVarDataAvailable())
 		{
-			gravity.z = sv_gravity.Get();
+			gravity.z = -sv_gravity.Get();
 		}
 
 		// basic x + vt + (0.5a)t^2 = 0;
