@@ -4,6 +4,7 @@
 #include "cs_gameevents.pb.h"
 
 #include "sdk/entity/cparticlesystem.h"
+#include "sdk/entity/ccscustomplayercamera.h"
 #include "sdk/services.h"
 
 #include "kz_quiet.h"
@@ -54,7 +55,6 @@ void KZ::quiet::OnCheckTransmit(CCheckTransmitInfo **pInfo, int infoCount)
 			continue;
 		}
 		targetPlayer->quietService->UpdateHideState();
-		CCSPlayerPawn *targetPlayerPawn = targetPlayer->GetPlayerPawn();
 
 		EntityInstanceByClassIter_t iterParticleSystem(NULL, "info_particle_system");
 
@@ -102,20 +102,6 @@ void KZ::quiet::OnCheckTransmit(CCheckTransmitInfo **pInfo, int infoCount)
 			 pawn = pawn->m_pEntity->m_pNextByClass ? static_cast<CCSPlayerPawn *>(pawn->m_pEntity->m_pNextByClass->m_pInstance) : nullptr)
 		// clang-format on
 		{
-			if (targetPlayerPawn == pawn && targetPlayer->quietService->ShouldHideWeapon())
-			{
-				auto pVecWeapons = pawn->m_pWeaponServices->m_hMyWeapons();
-
-				FOR_EACH_VEC(*pVecWeapons, i)
-				{
-					auto pWeapon = (*pVecWeapons)[i].Get();
-
-					if (pWeapon)
-					{
-						pTransmitInfo->m_pTransmitEdict->Clear(pWeapon->entindex());
-					}
-				}
-			}
 			// Bit is not even set, don't bother.
 			if (!pTransmitInfo->m_pTransmitEdict->IsBitSet(pawn->entindex()))
 			{
@@ -390,21 +376,82 @@ void KZQuietService::ToggleHideWeapon()
 	opts->SetPreferenceBool("hideWeapon", !opts->GetPreferenceBool("hideWeapon", false));
 	this->player->languageService->PrintChat(true, false,
 											 this->hideWeapon ? "Quiet Option - Show Weapon - Disable" : "Quiet Option - Show Weapon - Enable");
-	if (!this->hideWeapon)
+}
+
+void KZQuietService::OnPhysicsSimulatePost()
+{
+	this->UpdateWeaponCamera();
+}
+
+// A custom camera that follows the eyes is still the pawn's view entity, and the client skips the viewmodel
+// while one is set. The weapon itself stays networked, so the native crosshair keeps working.
+void KZQuietService::UpdateWeaponCamera()
+{
+	CCSPlayerPawn *pawn = this->player->GetPlayerPawn();
+	if (!this->hideWeapon || !pawn || !pawn->IsAlive())
 	{
-		this->player->pistolService->UpdatePistol();
+		this->ReleaseWeaponCamera();
+		return;
+	}
+	CCSCustomPlayerCamera *camera = static_cast<CCSCustomPlayerCamera *>(this->weaponCamera.Get());
+	if (!camera || camera->m_hPawn().Get() != pawn)
+	{
+		this->ReleaseWeaponCamera();
+		camera = CCSCustomPlayerCamera::Create(pawn);
+		if (!camera)
+		{
+			return;
+		}
+		// GetCustomCamera() finds a pawn's camera by designer name, so a map script never gets handed this one
+		// and spawns its own instead.
+		camera->m_pEntity->m_designerName = GameEntitySystem()->AllocPooledString("kz_weapon_camera");
+		camera->SetFollowConfig(pawn, true);
+		this->weaponCamera = camera->GetRefEHandle();
+	}
+	CPlayer_CameraServices *cameraServices = pawn->m_pCameraServices();
+	if (!cameraServices)
+	{
+		return;
+	}
+	// Only take the view while nothing else holds it: a map camera or point_viewcontrol keeps priority, and
+	// the weapon is hidden again as soon as it lets go.
+	CBaseEntity *viewEntity = cameraServices->m_hViewEntity().Get();
+	if (!viewEntity || viewEntity == pawn)
+	{
+		camera->SetMode(CUSTOM_CAMERA_MODE_FOLLOW_POSITION);
 	}
 }
 
-void KZQuietService::OnPhysicsSimulatePost() {}
+void KZQuietService::ReleaseWeaponCamera()
+{
+	// Null on server exit.
+	if (CCSCustomPlayerCamera *camera = GameEntitySystem() ? static_cast<CCSCustomPlayerCamera *>(this->weaponCamera.Get()) : nullptr)
+	{
+		// Only clears the view entity while it is still this camera.
+		camera->SetMode(CUSTOM_CAMERA_MODE_DISABLED);
+		g_pKZUtils->RemoveEntity(camera);
+	}
+	this->weaponCamera.Term();
+}
+
+void KZQuietService::Cleanup()
+{
+	for (i32 i = 0; i < MAXPLAYERS; i++)
+	{
+		KZPlayer *player = g_pKZPlayerManager->ToPlayer(CPlayerSlot(i));
+		if (player && player->quietService)
+		{
+			player->quietService->ReleaseWeaponCamera();
+		}
+	}
+}
 
 void KZQuietService::ApplyPreferences()
 {
 	auto *opts = this->player->optionService;
-	const bool newHideWeapon = opts->GetPreferenceBool("hideWeapon", false);
 	const bool newHideOthers = opts->GetPreferenceBool("hideOtherPlayers", false);
-	const bool changed = newHideWeapon != this->hideWeapon || newHideOthers != this->hideOtherPlayers;
-	this->hideWeapon = newHideWeapon;
+	const bool changed = newHideOthers != this->hideOtherPlayers;
+	this->hideWeapon = opts->GetPreferenceBool("hideWeapon", false);
 	this->hideOtherPlayers = newHideOthers;
 
 	if (changed)

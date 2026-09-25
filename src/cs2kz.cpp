@@ -134,6 +134,7 @@ bool KZPlugin::Unload(char *error, size_t maxlen)
 	// Before anything else: this drops any input capture the options menu still holds.
 	KZMenuService::Cleanup();
 	KZHUDService::Cleanup();
+	KZQuietService::Cleanup();
 	KZ::pubapi::Shutdown();
 	KZ::misc::UnrestrictTimeLimit();
 	KZRecordingService::Shutdown();

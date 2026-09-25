@@ -105,22 +105,6 @@ static_global const Color MHUD_DEF_KEYS_OVERLAP_COLOR(0xFF, 0x40, 0x40, 0xFF);
 static_global const Color MHUD_DEF_KEYS_PRESSED_COLOR(0x3B, 0xED, 0xA0, 0xFF);
 static_global const Color MHUD_DEF_KEYS_OVERLAP_GLOW_COLOR(0xFF, 0x40, 0x40, 0xFF);
 
-// The player's own cl_crosshair* values. The game's defaults stand until a query answers.
-struct MHUDCrosshairSettings
-{
-	// Device pixels at screenHeight.
-	i32 length {8};
-	i32 thickness {2};
-	i32 gap {4};
-	i32 r {0}, g {255}, b {0}, a {255};
-	i32 style {7};
-	i32 screenHeight {1080};
-	// cl_crosshair_drawoutline: 0 none, 1 full, 2 top and left only.
-	i32 outline {1};
-	bool dot {false};
-	bool tStyle {false};
-};
-
 enum class MHUDSpeedState
 {
 	Base,
@@ -231,7 +215,6 @@ struct MHUDPrefs
 
 	bool legacyStyle {};
 	bool compactPanel {};
-	bool crosshair {};
 	bool timerDetailed {true};
 	bool timerShowState {true};
 	bool speedPrecise {};
@@ -446,29 +429,6 @@ private:
 		const char *fontClass {};
 	};
 
-	// Numeric suffix of each class family last applied, -1 for nothing yet.
-	struct LayoutCrosshairState
-	{
-		// Per crosshair panel: left, right, top, bottom, dot, ring outline, ring.
-		static constexpr i32 PANELS = 7;
-		i32 shown {-1};
-		i32 hidden[PANELS] {-1, -1, -1, -1, -1, -1, -1};
-		i32 width[PANELS] {-1, -1, -1, -1, -1, -1, -1};
-		i32 height[PANELS] {-1, -1, -1, -1, -1, -1, -1};
-		i32 marginX[PANELS] {-1, -1, -1, -1, -1, -1, -1};
-		i32 marginY[PANELS] {-1, -1, -1, -1, -1, -1, -1};
-		i32 borderTopLeft[PANELS] {-1, -1, -1, -1, -1, -1, -1};
-		i32 borderBottomRight[PANELS] {-1, -1, -1, -1, -1, -1, -1};
-		i32 opacity {-1};
-		const char *colorClass {};
-	};
-
-	MHUDCrosshairSettings crosshair {};
-	LayoutCrosshairState layoutCrosshair {};
-
-	// Not an MHUDElement: the crosshair has no text, so no font/size/color machinery applies.
-	void ApplyCrosshair(CCSCustomHudLayout *layout, bool show, bool force);
-
 	CHandle<CBaseEntity> ownedLayout {};
 	LayoutElementState layoutElements[(i32)MHUDElement::Count] {};
 	LayoutKeysState layoutKeys {};
@@ -496,14 +456,6 @@ public:
 	{
 		this->DestroyOwnedLayout();
 	}
-
-	// Also called when the crosshair is switched on, so it updates before the next poll.
-	void QueryCrosshairCvars();
-
-	void OnCrosshairCvarValue(const char *name, const char *value);
-
-	// Query once now, then keep re-querying so settings changed mid-session are picked up.
-	void StartCrosshairPolling();
 
 	static void Cleanup();
 

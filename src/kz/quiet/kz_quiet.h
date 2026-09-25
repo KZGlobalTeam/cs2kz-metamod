@@ -16,10 +16,15 @@ class KZQuietService : public KZBaseService
 	u8 lastObserverMode;
 	CHandle<CBaseEntity> lastObserverTarget;
 	bool hideWeapon {};
+	CHandle<CBaseEntity> weaponCamera {};
+
+	void UpdateWeaponCamera();
+	void ReleaseWeaponCamera();
 
 public:
 	bool hideOtherPlayers {};
 	static void Init();
+	static void Cleanup();
 	virtual void Reset() override;
 
 	void OnPhysicsSimulatePost();
@@ -29,11 +34,6 @@ public:
 	void SendFullUpdate();
 	bool ShouldHide();
 	bool ShouldHideIndex(u32 targetIndex);
-
-	bool ShouldHideWeapon()
-	{
-		return this->hideWeapon;
-	}
 
 	void ToggleHideWeapon();
 };

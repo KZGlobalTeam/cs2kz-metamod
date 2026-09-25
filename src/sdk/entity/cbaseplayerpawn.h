@@ -3,6 +3,7 @@
 class CCSPlayer_WaterServices;
 class CPlayer_MovementServices;
 class CPlayer_ObserverServices;
+class CPlayer_CameraServices;
 class CCSPlayer_ItemServices;
 class CPlayer_WeaponServices;
 
@@ -19,6 +20,7 @@ public:
 	SCHEMA_FIELD(CPlayer_ObserverServices *, m_pObserverServices)
 	SCHEMA_FIELD(CPlayer_WeaponServices *, m_pWeaponServices)
 	SCHEMA_FIELD(CCSPlayer_WaterServices *, m_pWaterServices)
+	SCHEMA_FIELD(CPlayer_CameraServices *, m_pCameraServices)
 	SCHEMA_FIELD(QAngle, v_angle)
 	SCHEMA_FIELD(uint32, m_iHideHUD)
 

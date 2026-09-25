@@ -161,7 +161,6 @@ void KZHUDService::DestroyOwnedLayout()
 		this->layoutElements[i] = LayoutElementState();
 	}
 	this->layoutKeys = LayoutKeysState();
-	this->layoutCrosshair = LayoutCrosshairState();
 }
 
 void KZHUDService::Cleanup()

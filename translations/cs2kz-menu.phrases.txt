@@ -43,12 +43,6 @@
 		"chi"		"紧凑"
 		"ua"		"Компактна"
 	}
-	"Menu - Crosshair"
-	{
-		"en"		"Virtual crosshair"
-		"chi"		"虚拟准星"
-		"ua"		"Віртуальний приціл"
-	}
 	"Menu - Mimic Spec"
 	{
 		"en"		"Mimic Spectated Player"
@@ -200,10 +194,6 @@
 		"en"		"Also affects the legacy HUD"
 		"chi"		"同时影响旧版 HUD"
 		"ua"		"Також впливає на Legacy HUD"
-	}
-	"Menu - Crosshair Sub"
-	{
-		"en"		"Draws a crosshair on your screen, for when !hideweapon hides your real one. Its scaling only updates after you change your crosshair settings"
 	}
 	"Menu - Decimal"
 	{

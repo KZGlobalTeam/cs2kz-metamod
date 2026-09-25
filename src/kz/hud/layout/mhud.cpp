@@ -308,9 +308,6 @@ bool KZHUDService::UpdateHudLayout(KZPlayer *source)
 	const bool force = created;
 	const bool show = this->IsShowingPanel() && this->IsUsingLayoutStyle();
 
-	// The crosshair is independent of the elements below, so it is applied before the collapse path.
-	this->ApplyCrosshair(layout, show, force);
-
 	if (!show)
 	{
 		// show=false applies the hidden class and returns, so the text and color here are ignored.

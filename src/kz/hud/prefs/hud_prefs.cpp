@@ -51,22 +51,6 @@ static_function void TogglePanelState(KZPlayer *player, i64)
 	player->hudService->TogglePanel();
 }
 
-// Re-ask for the client's cl_crosshair* values whenever the option is switched on.
-static_function i64 GetCrosshairState(KZPlayer *player, i64)
-{
-	return player->optionService->GetPreferenceBool("mhudCrosshair", false) ? 1 : 0;
-}
-
-static_function void ToggleCrosshairState(KZPlayer *player, i64)
-{
-	const bool enabled = !player->optionService->GetPreferenceBool("mhudCrosshair", false);
-	player->optionService->SetPreferenceBool("mhudCrosshair", enabled);
-	if (enabled)
-	{
-		player->hudService->QueryCrosshairCvars();
-	}
-}
-
 static_function void ResetAll(KZPlayer *player, i64)
 {
 	KZ::menu::ResetNode(player, generalNode);
@@ -235,9 +219,6 @@ void KZHUDService::RegisterMenu()
 	KZ::menu::AddToggle(general, "Menu - Compact", "compactPanel", false);
 	KZ::menu::SetItemEnabledBy(general, "showPanel");
 	KZ::menu::SetItemSubtext(general, "Menu - Compact Sub");
-	KZ::menu::AddActionToggle(general, "Menu - Crosshair", GetCrosshairState, ToggleCrosshairState);
-	KZ::menu::SetItemPref(general, "mhudCrosshair", KZOptStorage::Bool);
-	KZ::menu::SetItemSubtext(general, "Menu - Crosshair Sub");
 	KZ::menu::AddToggle(general, "Menu - Mimic Spec", "mhudMimicSpec", false);
 	KZ::menu::SetItemSubtext(general, "Menu - Mimic Spec Sub");
 	KZ::menu::SetItemDivider(general);

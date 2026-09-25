@@ -44,21 +44,6 @@
     <Label id="mhud_perf" class="element hidden" text="{s:perf}" hittest="false" />
     <Label id="mhud_cj" class="element hidden" text="{s:cj}" hittest="false" />
     <Label id="mhud_jumpbug" class="element hidden" text="{s:jumpbug}" hittest="false" />
-    <Panel id="mhud_crosshair" class="crosshair hidden" hittest="false">
-      <Panel class="xh-q-tl" hittest="false">
-        <Panel id="xh_ring_outline" class="xh-box xh-ring hidden" hittest="false" />
-        <Panel id="xh_ring" class="xh-box xh-ring hidden" hittest="false" />
-        <Panel id="xh_left" class="xh-box" hittest="false" />
-        <Panel id="xh_top" class="xh-box" hittest="false" />
-        <Panel id="xh_dot" class="xh-box hidden" hittest="false" />
-      </Panel>
-      <Panel class="xh-q-tr" hittest="false">
-        <Panel id="xh_right" class="xh-box" hittest="false" />
-      </Panel>
-      <Panel class="xh-q-bl" hittest="false">
-        <Panel id="xh_bottom" class="xh-box" hittest="false" />
-      </Panel>
-    </Panel>
 
   </Panel>
 </root>

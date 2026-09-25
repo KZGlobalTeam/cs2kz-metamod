@@ -143,7 +143,6 @@ def configure_main(sdk_target, sdk, cxx):
     
     os.path.join(builder.sourcePath, 'src', 'kz', 'hud', 'kz_hud.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'hud', 'legacy.cpp'),
-    os.path.join(builder.sourcePath, 'src', 'kz', 'hud', 'layout', 'crosshair.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'hud', 'layout', 'entity.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'hud', 'layout', 'mhud.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'hud', 'prefs', 'hud_prefs.cpp'),

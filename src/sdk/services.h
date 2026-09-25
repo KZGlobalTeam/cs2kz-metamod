@@ -74,6 +74,16 @@ public:
 	SCHEMA_FIELD(CHandle<CBaseEntity>, m_hObserverTarget)
 };
 
+class CPlayer_CameraServices : public CPlayerPawnComponent
+{
+	virtual ~CPlayer_CameraServices() = 0;
+
+public:
+	DECLARE_SCHEMA_CLASS_ENTITY(CPlayer_CameraServices)
+	// If this resolves on the client, it skips the viewmodel render passes.
+	SCHEMA_FIELD(CHandle<CBaseEntity>, m_hViewEntity)
+};
+
 class CPlayer_MovementServices : public CPlayerPawnComponent
 {
 	virtual ~CPlayer_MovementServices() = 0;
