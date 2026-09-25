@@ -19,6 +19,11 @@
 		"lv"		"{grey}Tu nomainīji valodu uz {default}{language}{grey}."
 	}
 
+	"Language Command Usage"
+	{
+		"en"		"{grey}Usage: {default}kz_language <language>{grey}."
+	}
+
 	"Menu Hint"
 	{
 		// Menus are now accessible via your radio hotkeys, or radio/radio1/radio2 console commands!

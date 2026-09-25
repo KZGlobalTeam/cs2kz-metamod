@@ -246,7 +246,7 @@ void KZLanguageService::UpdateLanguage(u64 xuid, const char *langKey, LanguageIn
 		if (g_pMultiAddonManager)
 		{
 			g_pMultiAddonManager->RemoveClientAddon(langInfo.lastAddon, xuid);
-			g_pMultiAddonManager->AddClientAddon(addon, xuid, true);
+			g_pMultiAddonManager->AddClientAddon(addon, xuid, shouldReconnect);
 		}
 		V_strncpy(langInfo.lastAddon, addon, sizeof(langInfo.lastAddon));
 	}
@@ -285,11 +285,17 @@ KZLanguageService::LanguageInfo::LanguageInfo()
 SCMD(kz_language, SCFL_PREFERENCE)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
+	if (args->ArgC() < 2 || !args->Arg(1)[0])
+	{
+		player->languageService->PrintChat(true, false, "Language Command Usage");
+		return true;
+	}
 	char language[32] {};
 	V_snprintf(language, sizeof(language), "%s", args->Arg(1));
 	V_strlower(language);
 	bool shouldReconnect = !(player->checkpointService->GetCheckpointCount() || player->timerService->GetTimerRunning());
-	KZLanguageService::UpdateLanguage(player->GetSteamId64(false), language, KZLanguageService::LanguageInfo::CacheLevel::CACHE_OVERRIDE, true);
+	KZLanguageService::UpdateLanguage(player->GetSteamId64(false), language, KZLanguageService::LanguageInfo::CacheLevel::CACHE_OVERRIDE,
+									  shouldReconnect);
 	player->optionService->SetPreferenceStr("preferredLanguage", language);
 	if (!shouldReconnect)
 	{
