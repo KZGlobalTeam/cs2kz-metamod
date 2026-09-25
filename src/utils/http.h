@@ -48,8 +48,8 @@ namespace HTTP
 		// Set a header.
 		void SetHeader(std::string name, std::string value);
 
-		// Set the request body.
-		void SetBody(std::string body);
+		// Set the request body. Only JSON bodies are printed by the debug log.
+		void SetBody(std::string body, std::string contentType = "application/json");
 
 		// Send the request.
 		void Send(ResponseCallback onResponse, ErrorCallback onError = nullptr) const;
@@ -60,6 +60,7 @@ namespace HTTP
 		bool hasQueryParams {};
 		HeaderMap headers {};
 		std::string body {};
+		std::string contentType = "application/json";
 	};
 
 	// An HTTP response.
@@ -88,9 +89,8 @@ namespace HTTP
 	public:
 		InFlightRequest(const InFlightRequest &req) = delete;
 
-		InFlightRequest(HTTPRequestHandle handle, SteamAPICall_t steamCallHandle, std::string url, std::string body, ResponseCallback onResponse,
-						ErrorCallback onError)
-			: url(url), body(body), handle(handle), onResponse(onResponse), onError(onError)
+		InFlightRequest(HTTPRequestHandle handle, SteamAPICall_t steamCallHandle, std::string url, ResponseCallback onResponse, ErrorCallback onError)
+			: url(url), handle(handle), onResponse(onResponse), onError(onError)
 		{
 			callResult.SetGameserverFlag();
 			callResult.Set(steamCallHandle, this, &InFlightRequest::OnRequestCompleted);
@@ -115,7 +115,6 @@ namespace HTTP
 
 	private:
 		std::string url;
-		std::string body;
 		HTTPRequestHandle handle;
 		CCallResult<InFlightRequest, HTTPRequestCompleted_t> callResult;
 		ResponseCallback onResponse;

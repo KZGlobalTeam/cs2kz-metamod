@@ -137,6 +137,7 @@ struct RunSubmission
 	{
 		bool received {};
 		std::string recordId {};
+		std::string replayUploadKey {};
 
 		struct RunData
 		{
