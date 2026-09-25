@@ -232,7 +232,8 @@ void KZHUDService::UpdateGameHud()
 
 void KZHUDService::RestoreGameHud()
 {
-	CBasePlayerPawn *pawn = this->gameHudPawn.Get();
+	// Null on server exit.
+	CBasePlayerPawn *pawn = GameEntitySystem() ? this->gameHudPawn.Get() : nullptr;
 	if (pawn && (pawn->m_iHideHUD() & this->gameHudBits))
 	{
 		pawn->m_iHideHUD(pawn->m_iHideHUD() & ~this->gameHudBits);
