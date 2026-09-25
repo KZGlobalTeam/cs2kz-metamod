@@ -17,17 +17,17 @@ struct SchemaKey
 
 struct CNetworkVarChainer : public CSmartPtr<CEntityInstance>
 {
-	struct UnkStruct
+	struct ChainUpdateEntry_t
 	{
-		void *unk0;
 		CUtlDelegate<void(const CNetworkVarChainer &)> updateDelegate;
-		uint unk3;
+		const char *pszFieldName;
+		uint32 nOwnerOffset;
 	};
 
-	CUtlVector<UnkStruct> unk0;
+	CUtlVector<ChainUpdateEntry_t> m_ChainUpdates;
 	ChangeAccessorFieldPathIndex_t m_PathIndex;
 	// If true, the entity instance will have its NetworkStateChanged called when the value changes.
-	bool unknown2;
+	bool m_bNetworkingEnabled;
 };
 
 void EntityNetworkStateChanged(uintptr_t pEntity, uint nOffset);
