@@ -3,6 +3,8 @@
 
 #include "tier1/strtools.h"
 
+#include <cmath>
+
 #include "tier0/memdbgon.h"
 
 static_global std::vector<KZ::prefs::Entry> registry;
@@ -164,6 +166,34 @@ bool KZ::prefs::ReadValue(KZPlayer *player, const KZ::prefs::Entry &entry, char 
 	}
 }
 
+// The range the menu steps a value inside, in the units the preference is stored in. Imported values
+// come straight from client convars, so they get held to the same bounds.
+static_function bool GetValueRange(const KZ::prefs::Entry &entry, f64 &lo, f64 &hi)
+{
+	const KZOptItem *item = entry.item;
+	if (!item)
+	{
+		return false;
+	}
+	switch (item->type)
+	{
+		case KZOptItemType::Position:
+		case KZOptItemType::Vector:
+			lo = item->lo;
+			hi = item->hi;
+			return true;
+		case KZOptItemType::Size:
+		{
+			const f64 scale = entry.storage == KZOptStorage::Float ? MAX(1, item->scale) : 1;
+			lo = item->lo / scale;
+			hi = item->hi / scale;
+			return true;
+		}
+		default:
+			return false;
+	}
+}
+
 bool KZ::prefs::ApplyValue(KZPlayer *player, const KZ::prefs::Entry &entry, const char *value)
 {
 	if (!value || !value[0])
@@ -191,15 +221,25 @@ bool KZ::prefs::ApplyValue(KZPlayer *player, const KZ::prefs::Entry &entry, cons
 			{
 				return false;
 			}
+			f64 lo, hi;
+			if (GetValueRange(entry, lo, hi))
+			{
+				parsed = Clamp(parsed, (int64)lo, (int64)hi);
+			}
 			opts->SetPreferenceInt(entry.key, parsed);
 			return true;
 		}
 		case KZOptStorage::Float:
 		{
 			float64 parsed = 0.0;
-			if (!V_StringToValue<float64>(value, parsed))
+			if (!V_StringToValue<float64>(value, parsed) || !std::isfinite(parsed))
 			{
 				return false;
+			}
+			f64 lo, hi;
+			if (GetValueRange(entry, lo, hi))
+			{
+				parsed = Clamp(parsed, lo, hi);
 			}
 			opts->SetPreferenceFloat(entry.key, parsed);
 			return true;
@@ -210,9 +250,17 @@ bool KZ::prefs::ApplyValue(KZPlayer *player, const KZ::prefs::Entry &entry, cons
 		case KZOptStorage::Vector:
 		{
 			Vector parsed;
-			if (!V_StringToValue<Vector>(value, parsed))
+			if (!V_StringToValue<Vector>(value, parsed) || !parsed.IsValid())
 			{
 				return false;
+			}
+			f64 lo, hi;
+			if (GetValueRange(entry, lo, hi))
+			{
+				for (i32 i = 0; i < 3; i++)
+				{
+					parsed[i] = (f32)Clamp((f64)parsed[i], lo, hi);
+				}
 			}
 			opts->SetPreferenceVector(entry.key, parsed);
 			return true;

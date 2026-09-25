@@ -29,7 +29,9 @@ public:
 
 	u32 GetFOV()
 	{
-		return this->player->optionService->GetPreferenceInt("fov", this->GetDefaultFOV());
+		// Preferences can also arrive through an import, so hold them to the server's bounds here too.
+		i64 fov = this->player->optionService->GetPreferenceInt("fov", this->GetDefaultFOV());
+		return (u32)Clamp(fov, (i64)GetMinFOV(), (i64)GetMaxFOV());
 	}
 
 	void OnPhysicsSimulate();
