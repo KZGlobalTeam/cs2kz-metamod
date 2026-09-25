@@ -66,22 +66,34 @@ SCMD(kz_end, SCFL_MAP)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 
-	// If the player specify a course name, we first check if it's valid or not.
-	if (V_strlen(args->ArgS()) > 0)
-	{
-		const KZCourseDescriptor *course = KZ::course::GetCourse(args->ArgS(), false, true);
-
-		if (!course || !course || !course->hasEndPosition)
-		{
-			player->languageService->PrintChat(true, false, "No End Position For Course", args->ArgS());
-			return true;
-		}
-	}
-
 	bool shouldTeleport = false;
 	Vector tpOrigin;
 	QAngle tpAngles;
-	if (player->timerService->GetCourse())
+	// If the player specify a course name, we first check if it's valid or not.
+	if (V_strlen(args->ArgS()) > 0)
+	{
+		CUtlString courseArg = args->ArgS();
+		courseArg.Trim();
+		const KZCourseDescriptor *course = nullptr;
+		if (utils::IsNumeric(courseArg.Get()))
+		{
+			course = KZ::course::GetCourseByCourseID(atoi(courseArg.Get()));
+		}
+		else
+		{
+			course = KZ::course::GetCourse(courseArg.Get(), false, true);
+		}
+
+		if (!course || !course->hasEndPosition)
+		{
+			player->languageService->PrintChat(true, false, "No End Position For Course", courseArg.Get());
+			return true;
+		}
+		tpOrigin = course->endPosition;
+		tpAngles = course->endAngles;
+		shouldTeleport = true;
+	}
+	else if (player->timerService->GetCourse())
 	{
 		if (player->timerService->GetCourse()->hasEndPosition)
 		{
@@ -162,7 +174,7 @@ void KZ::misc::HandleTeleportToCourse(KZPlayer *player, const CCommand *args)
 			startPosCourse = KZ::course::GetCourse(courseArg.Get(), false, true);
 		}
 
-		if (!startPosCourse || !startPosCourse || !startPosCourse->hasStartPosition)
+		if (!startPosCourse || !startPosCourse->hasStartPosition)
 		{
 			player->languageService->PrintChat(true, false, "No Start Position For Course", courseArg.Get());
 			return;
