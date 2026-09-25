@@ -20,6 +20,7 @@ public:
 	SCHEMA_FIELD(CPlayer_WeaponServices *, m_pWeaponServices)
 	SCHEMA_FIELD(CCSPlayer_WaterServices *, m_pWaterServices)
 	SCHEMA_FIELD(QAngle, v_angle)
+	SCHEMA_FIELD(uint32, m_iHideHUD)
 
 	void CommitSuicide(bool bExplode, bool bForce)
 	{

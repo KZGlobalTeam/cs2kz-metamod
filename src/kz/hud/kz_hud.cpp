@@ -202,8 +202,42 @@ void KZHUDService::DrawPanels(KZPlayer *player, KZPlayer *target)
 		return;
 	}
 	target->hudService->UpdateHudLayout(player);
+	target->hudService->UpdateGameHud();
 
 	KZHUDService::DrawLegacyPanels(player, target);
+}
+
+void KZHUDService::UpdateGameHud()
+{
+	CBasePlayerPawn *pawn = this->player->GetCurrentPawn();
+	if (this->gameHudPawn.Get() != pawn)
+	{
+		// Switching between the player and observer pawns would otherwise leave the old one hidden.
+		this->RestoreGameHud();
+		this->gameHudPawn = pawn;
+	}
+	if (!pawn)
+	{
+		return;
+	}
+	const u32 wanted = this->GetOwnPrefs().hiddenGameHud;
+	const u32 current = pawn->m_iHideHUD();
+	const u32 desired = (current & ~this->gameHudBits) | wanted;
+	this->gameHudBits = wanted;
+	if (desired != current)
+	{
+		pawn->m_iHideHUD(desired);
+	}
+}
+
+void KZHUDService::RestoreGameHud()
+{
+	CBasePlayerPawn *pawn = this->gameHudPawn.Get();
+	if (pawn && (pawn->m_iHideHUD() & this->gameHudBits))
+	{
+		pawn->m_iHideHUD(pawn->m_iHideHUD() & ~this->gameHudBits);
+	}
+	this->gameHudBits = 0;
 }
 
 void KZHUDService::ResetShowPanel()

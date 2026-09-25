@@ -61,6 +61,38 @@
 		"chi"		"观察该玩家时使用其 HUD 设置"
 		"ua"		"Використовувати їхні налаштування HUD під час спостереження за ними"
 	}
+	"Menu - Game HUD"
+	{
+		"en"		"Game HUD"
+	}
+	"Menu - Game HUD All"
+	{
+		"en"		"Hide Everything"
+	}
+	"Menu - Game HUD All Sub"
+	{
+		"en"		"The only way to hide chat and the radar"
+	}
+	"Menu - Game HUD Crosshair"
+	{
+		"en"		"Hide Crosshair"
+	}
+	"Menu - Game HUD Weapons"
+	{
+		"en"		"Hide Weapon Selection, Health and Ammo"
+	}
+	"Menu - Game HUD Damage"
+	{
+		"en"		"Hide Damage Direction"
+	}
+	"Menu - Game HUD Notices"
+	{
+		"en"		"Hide Kill Feed and Alerts"
+	}
+	"Menu - Game HUD Voice"
+	{
+		"en"		"Hide Voice Chat Indicator"
+	}
 	"Menu - Compact Sub"
 	{
 		"en"		"Legacy panel only"

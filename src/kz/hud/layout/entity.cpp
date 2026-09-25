@@ -172,6 +172,7 @@ void KZHUDService::Cleanup()
 		if (player && player->hudService)
 		{
 			player->hudService->DestroyOwnedLayout();
+			player->hudService->RestoreGameHud();
 		}
 	}
 }

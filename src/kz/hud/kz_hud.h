@@ -5,6 +5,26 @@
 
 #define KZ_HUD_TIMER_STOPPED_GRACE_TIME 3.0f
 #define KZ_HUD_ON_GROUND_THRESHOLD      0.07f
+
+// The m_iHideHUD bits the client's own HUD elements check, as of CS2 1.41.8.3. Same values as HIDEHUD_* in
+// shareddefs.h, which clashes with the SDK definitions the plugin already has.
+#define KZ_HIDEHUD_WEAPONSELECTION (1 << 0)
+#define KZ_HIDEHUD_ALL             (1 << 2)
+#define KZ_HIDEHUD_HEALTH          (1 << 3)
+#define KZ_HIDEHUD_MISCSTATUS      (1 << 6)
+#define KZ_HIDEHUD_CHAT            (1 << 7)
+#define KZ_HIDEHUD_CROSSHAIR       (1 << 8)
+#define GAME_HUD_PART_COUNT        6
+
+// One toggle per m_iHideHUD bit on the Game HUD page.
+struct GameHudPartDef
+{
+	const char *phraseKey;
+	const char *prefKey; // bool preference
+	u32 bit;
+};
+
+extern const GameHudPartDef GAME_HUD_PARTS[GAME_HUD_PART_COUNT];
 class CCSCustomHudLayout;
 class CCheckTransmitInfo;
 
@@ -225,7 +245,8 @@ struct MHUDPrefs
 	bool keysGlowEnabled {true};
 	bool keysFillEnabled {true};
 	MHUDKeysIdle keysIdle {MHUDKeysIdle::Show};
-	bool mimicSpec {}; // read from the viewer's own set only, never from the player being mimicked
+	bool mimicSpec {};    // read from the viewer's own set only, never from the player being mimicked
+	u32 hiddenGameHud {}; // m_iHideHUD bits, also only ever read from the viewer's own set
 };
 
 class KZHUDService : public KZBaseService
@@ -273,6 +294,10 @@ public:
 
 	// Draw the panel from a player to a specific target.
 	static void DrawPanels(KZPlayer *player, KZPlayer *target);
+
+	// Only the bits this service added are ever cleared, since the server sets some of them itself.
+	void UpdateGameHud();
+	void RestoreGameHud();
 
 	void ResetShowPanel();
 	void TogglePanel();
@@ -489,4 +514,7 @@ private:
 	MHUDPrefs prefs {};
 	bool prefsDirty {true};
 	void RefreshPrefs();
+
+	CHandle<CBasePlayerPawn> gameHudPawn {};
+	u32 gameHudBits {};
 };

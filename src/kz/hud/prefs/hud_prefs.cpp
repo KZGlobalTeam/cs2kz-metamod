@@ -14,6 +14,7 @@ static_global constexpr const char *ELEMENT_PHRASE[(i32)MHUDElement::Count] = {
 
 // Kept from registration so the reset buttons hand the nodes straight back to the model.
 static_global KZOptNode *generalNode {};
+static_global KZOptNode *gameHudNode {};
 static_global KZOptNode *elementNodes[(i32)MHUDElement::Count] {};
 
 // --- General page callbacks ---------------------------------------------------------
@@ -69,6 +70,7 @@ static_function void ToggleCrosshairState(KZPlayer *player, i64)
 static_function void ResetAll(KZPlayer *player, i64)
 {
 	KZ::menu::ResetNode(player, generalNode);
+	KZ::menu::ResetNode(player, gameHudNode);
 	for (i32 i = 0; i < (i32)MHUDElement::Count; i++)
 	{
 		KZ::menu::ResetNode(player, elementNodes[i]);
@@ -78,6 +80,11 @@ static_function void ResetAll(KZPlayer *player, i64)
 static_function void ResetElement(KZPlayer *player, i64 tag)
 {
 	KZ::menu::ResetNode(player, elementNodes[tag]);
+}
+
+static_function void ResetGameHud(KZPlayer *player, i64)
+{
+	KZ::menu::ResetNode(player, gameHudNode);
 }
 
 // Indexed by MHUDKeysIdle, so a picked row id is the stored value.
@@ -235,6 +242,18 @@ void KZHUDService::RegisterMenu()
 	KZ::menu::SetItemSubtext(general, "Menu - Mimic Spec Sub");
 	KZ::menu::SetItemDivider(general);
 	KZ::menu::AddButton(general, "Menu - Reset All", ResetAll);
+
+	gameHudNode = KZ::menu::AddSub(hud, "Menu - Game HUD");
+	for (const GameHudPartDef &part : GAME_HUD_PARTS)
+	{
+		KZ::menu::AddToggle(gameHudNode, part.phraseKey, part.prefKey, false);
+		if (part.bit == KZ_HIDEHUD_ALL)
+		{
+			KZ::menu::SetItemSubtext(gameHudNode, "Menu - Game HUD All Sub");
+		}
+	}
+	KZ::menu::SetItemDivider(gameHudNode);
+	KZ::menu::AddButton(gameHudNode, "Menu - Reset", ResetGameHud);
 
 	for (i32 e = 0; e < (i32)MHUDElement::Count; e++)
 	{

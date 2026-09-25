@@ -81,6 +81,14 @@ void KZHUDService::RefreshPrefs()
 						 : (opts->GetPreferenceBool("mhudKeysHideUnpressed", false) ? (i32)MHUDKeysIdle::Hide : (i32)MHUDKeysIdle::Show);
 	this->prefs.keysIdle = (MHUDKeysIdle)Clamp(idle, (i32)MHUDKeysIdle::Show, (i32)MHUDKeysIdle::Underscore);
 	this->prefs.mimicSpec = opts->GetPreferenceBool("mhudMimicSpec", false);
+	this->prefs.hiddenGameHud = 0;
+	for (const GameHudPartDef &part : GAME_HUD_PARTS)
+	{
+		if (opts->GetPreferenceBool(part.prefKey, false))
+		{
+			this->prefs.hiddenGameHud |= part.bit;
+		}
+	}
 
 	this->prefsDirty = false;
 }
