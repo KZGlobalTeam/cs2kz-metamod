@@ -15,7 +15,7 @@ SUMMARY: 0 error(s), 23 warning(s)
 
 cs2kz-menu.phrases.txt (0 errors, 1 warnings)
 --------------------------------------------------
-  cs2kz-menu.phrases.txt:414: [WARNING] Formatting: Line has trailing whitespace
+  cs2kz-menu.phrases.txt:436: [WARNING] Formatting: Line has trailing whitespace
 
 menu/ (0 errors, 22 warnings)
 --------------------------------------------------
