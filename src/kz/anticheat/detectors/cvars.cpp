@@ -68,6 +68,10 @@ bool ShouldEnforceCheatCvars()
 static_global void OnCvarChanged(ConVarRefAbstract *ref, CSplitScreenSlot nSlot, const char *pNewValue, const char *pOldValue, void *__unk01)
 {
 	assert(sv_cheats.IsValidRef() && sv_cheats.IsConVarDataAvailable());
+	if (ref->GetConVarData() != sv_cheats.GetConVarData())
+	{
+		return;
+	}
 	time_t unixTime = 0;
 	time(&unixTime);
 	if (!sv_cheats.Get())

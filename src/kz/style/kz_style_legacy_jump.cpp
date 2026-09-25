@@ -103,5 +103,6 @@ void KZLegacyJumpStyleService::Cleanup()
 
 void KZLegacyJumpStyleService::OnProcessMovement()
 {
-	sv_legacy_jump.Set(true);
+	// Write the value directly like KZ::mode::ApplyModeSettings does, Set() would fire global change callbacks every tick.
+	sv_legacy_jump.TypeTraits()->Copy(sv_legacy_jump.GetConVarData()->Value(-1), true);
 }
