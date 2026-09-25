@@ -460,10 +460,15 @@ void utils::SendMultipleConVarValues(CPlayerSlot slot, ConVarRefAbstract **conVa
 	delete msg;
 }
 
-bool utils::IsSpawnValid(const Vector &origin)
+static_global const bbox_t PLAYER_BOUNDS = {{-16.0f, -16.0f, 0.0f}, {16.0f, 16.0f, 72.0f}};
+static_global const f32 PLAYER_EYE_HEIGHT = 64.0f;
+// Player half width along the axes of a trigger with any yaw, plus some room.
+static_global const f32 WALL_PROBE_DISTANCE = 16.0f * 1.41421356f + 1.0f;
+// Edges first, then corners.
+static_global const i32 WALL_PROBE_DIRECTIONS[8][2] = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}, {1, 1}, {1, -1}, {-1, 1}, {-1, -1}};
+
+static_function void InitSpawnTraceFilter(CTraceFilter &filter)
 {
-	bbox_t bounds = {{-16.0f, -16.0f, 0.0f}, {16.0f, 16.0f, 72.0f}};
-	CTraceFilter filter;
 	filter.m_bHitSolid = true;
 	filter.m_bHitSolidRequiresGenerateContacts = true;
 	filter.m_bShouldIgnoreDisabledPairs = true;
@@ -472,8 +477,76 @@ bool utils::IsSpawnValid(const Vector &origin)
 	filter.m_bUnknown = true;
 	filter.m_nObjectSetMask = RNQUERY_OBJECTS_ALL;
 	filter.m_nInteractsAs = 0x40000;
+}
+
+// Put the player on the trigger's floor at the given local position, or on whatever is above that floor.
+static_function bool FindFloorPosition(CBaseTrigger *trigger, const CTransform &transform, const Vector &local, Vector &feet)
+{
+	Vector mins = trigger->m_pCollision()->m_vecMins();
+	Vector maxs = trigger->m_pCollision()->m_vecMaxs();
+	Vector floor = utils::TransformPoint(transform, Vector(local.x, local.y, mins.z)) + Vector(0.0f, 0.0f, 0.03125f);
+	if (utils::IsSpawnValid(floor))
+	{
+		feet = floor;
+		return true;
+	}
+	Vector start = utils::TransformPoint(transform, Vector(local.x, local.y, (mins.z + maxs.z) / 2));
+	if (start.z <= floor.z || !utils::IsSpawnValid(start))
+	{
+		return false;
+	}
+	CTraceFilter filter;
+	InitSpawnTraceFilter(filter);
 	trace_t tr;
-	INavPhysicsInterface::TraceShape(Ray_t(bounds.mins, bounds.maxs), origin, origin, &filter, &tr);
+	INavPhysicsInterface::TraceShape(Ray_t(PLAYER_BOUNDS.mins, PLAYER_BOUNDS.maxs), start, floor, &filter, &tr);
+	feet = tr.m_vEndPos;
+	return true;
+}
+
+static_function Vector GetWallProbe(CBaseTrigger *trigger, i32 probe, bool outside)
+{
+	Vector mins = trigger->m_pCollision()->m_vecMins();
+	Vector maxs = trigger->m_pCollision()->m_vecMaxs();
+	Vector local = (mins + maxs) / 2;
+	for (i32 axis = 0; axis < 2; axis++)
+	{
+		f32 halfSize = (maxs[axis] - mins[axis]) / 2;
+		f32 offset = outside ? halfSize + WALL_PROBE_DISTANCE : MAX(halfSize - WALL_PROBE_DISTANCE, 0.0f);
+		local[axis] += WALL_PROBE_DIRECTIONS[probe][axis] * offset;
+	}
+	return local;
+}
+
+static_function bool CanSeeTrigger(CBaseTrigger *trigger, const CTransform &transform, const Vector &eye)
+{
+	Vector mins = trigger->m_pCollision()->m_vecMins();
+	Vector maxs = trigger->m_pCollision()->m_vecMaxs();
+	Vector local = utils::InverseTransformPoint(transform, eye);
+	for (i32 axis = 0; axis < 3; axis++)
+	{
+		local[axis] = Clamp(local[axis], mins[axis] + 0.03125f, maxs[axis] - 0.03125f);
+	}
+	CTraceFilter filter(MASK_PLAYERSOLID, COLLISION_GROUP_PLAYER_MOVEMENT, false);
+	trace_t tr;
+	INavPhysicsInterface::TraceLine(eye, utils::TransformPoint(transform, local), &filter, &tr);
+	return !tr.DidHit();
+}
+
+static_function QAngle GetYawTowards(const Vector &from, const Vector &to)
+{
+	QAngle angles;
+	VectorAngles(Vector(to.x - from.x, to.y - from.y, 0.0f), angles);
+	angles.x = 0.0f;
+	angles.z = 0.0f;
+	return angles;
+}
+
+bool utils::IsSpawnValid(const Vector &origin)
+{
+	CTraceFilter filter;
+	InitSpawnTraceFilter(filter);
+	trace_t tr;
+	INavPhysicsInterface::TraceShape(Ray_t(PLAYER_BOUNDS.mins, PLAYER_BOUNDS.maxs), origin, origin, &filter, &tr);
 	if (tr.m_flFraction != 1.0 || tr.m_bStartInSolid)
 	{
 		return false;
@@ -531,111 +604,62 @@ bool utils::FindValidSpawn(Vector &origin, QAngle &angles, bool ignoreStuckCheck
 	return foundValidSpawn || foundAnySpawn;
 }
 
-bool utils::CanSeeBox(Vector origin, Vector mins, Vector maxs)
-{
-	Vector traceDest;
-
-	for (int i = 0; i < 3; i++)
-	{
-		mins[i] += 0.03125;
-		maxs[i] -= 0.03125;
-		traceDest[i] = Clamp(origin[i], mins[i], maxs[i]);
-	}
-	CTraceFilter filter(MASK_PLAYERSOLID, COLLISION_GROUP_PLAYER_MOVEMENT, false);
-	trace_t trace;
-	INavPhysicsInterface::TraceLine(origin, traceDest, &filter, &trace);
-
-	return !trace.DidHit();
-}
-
-bool utils::FindValidPositionAroundCenter(Vector center, Vector distFromCenter, Vector extraOffset, Vector &originDest, QAngle &anglesDest)
-{
-	Vector testOrigin;
-	i32 x, y;
-
-	for (u32 i = 0; i < 3; i++)
-	{
-		x = i == 2 ? -1 : i;
-		for (int j = 0; j < 3; j++)
-		{
-			y = j == 2 ? -1 : j;
-			for (int z = -1; z <= 1; z++)
-			{
-				testOrigin = center;
-				testOrigin[0] = testOrigin[0] + (distFromCenter[0] + extraOffset[0]) * x + 32.0f * x * 0.5;
-				testOrigin[1] = testOrigin[1] + (distFromCenter[1] + extraOffset[1]) * y + 32.0f * y * 0.5;
-				testOrigin[2] = testOrigin[2] + (distFromCenter[2] + extraOffset[2]) * z + 72.0f * z;
-
-				if (utils::IsSpawnValid(testOrigin) && utils::CanSeeBox(testOrigin, center - distFromCenter, center + distFromCenter))
-				{
-					originDest = testOrigin;
-					// Always look towards the center.
-					Vector offsetVector;
-					offsetVector[0] = -(distFromCenter[0] + extraOffset[0]) * x;
-					offsetVector[1] = -(distFromCenter[1] + extraOffset[1]) * y;
-					offsetVector[2] = -(distFromCenter[2] + extraOffset[2]) * z;
-					VectorAngles(offsetVector, anglesDest);
-					anglesDest[2] = 0.0; // Roll should always be 0.0
-					return true;
-				}
-			}
-		}
-	}
-	return false;
-}
-
 bool utils::FindValidPositionForTrigger(CBaseTrigger *trigger, Vector &originDest, QAngle &anglesDest)
 {
 	if (!trigger)
 	{
 		return false;
 	}
-	// Let's just assume this trigger isn't rotated at all...
+	CGameSceneNode *node = trigger->m_CBodyComponent()->m_pSceneNode();
+	CTransform transform(node->m_vecAbsOrigin(), Quaternion(node->m_angAbsRotation()));
 	Vector mins = trigger->m_pCollision()->m_vecMins();
 	Vector maxs = trigger->m_pCollision()->m_vecMaxs();
-	Vector origin = trigger->m_CBodyComponent->m_pSceneNode->m_vecAbsOrigin();
-	Vector center = origin + (maxs + mins) / 2;
-	Vector distFromCenter = (maxs - mins) / 2;
+	Vector center = (mins + maxs) / 2;
+	Vector worldCenter = utils::TransformPoint(transform, center);
 
-	// If the center or the bottom center is valid (which should be the case most of the time), then we can skip all the complicated stuff.
-	Vector bottomCenter = center;
-	bottomCenter.z -= distFromCenter.z - 0.03125;
-	if (utils::IsSpawnValid(bottomCenter))
+	Vector feet;
+	if (FindFloorPosition(trigger, transform, center, feet))
 	{
-		originDest = bottomCenter;
+		originDest = feet;
 		anglesDest = vec3_angle;
 		return true;
 	}
-
-	if (utils::IsSpawnValid(center))
+	for (i32 probe = 0; probe < 8; probe++)
 	{
-		bbox_t bounds = {{-16.0f, -16.0f, 0.0f}, {16.0f, 16.0f, 72.0f}};
-		CTraceFilter filter;
-		filter.m_bHitSolid = true;
-		filter.m_bHitSolidRequiresGenerateContacts = true;
-		filter.m_bShouldIgnoreDisabledPairs = true;
-		filter.m_nCollisionGroup = COLLISION_GROUP_DEBRIS;
-		filter.m_nInteractsWith = 0x2c3011;
-		filter.m_bUnknown = true;
-		filter.m_nObjectSetMask = RNQUERY_OBJECTS_ALL;
-		filter.m_nInteractsAs = 0x40000;
-		trace_t tr;
-		INavPhysicsInterface::TraceShape(Ray_t(bounds.mins, bounds.maxs), center, bottomCenter, &filter, &tr);
-		originDest = tr.m_vEndPos;
-		anglesDest = vec3_angle;
-		return true;
+		if (FindFloorPosition(trigger, transform, GetWallProbe(trigger, probe, false), feet))
+		{
+			originDest = feet;
+			anglesDest = GetYawTowards(feet, worldCenter);
+			return true;
+		}
 	}
 
-	// TODO: This is mostly ported from GOKZ with no testing done on these. Might need to test this eventually.
-	Vector extraOffset = {-33.03125f, -33.03125f, -72.03125f}; // Negative because we want to go inwards.
-	if (FindValidPositionAroundCenter(center, distFromCenter, extraOffset, originDest, anglesDest))
+	// The whole trigger is obstructed (e.g. covered by a brush), try right outside of it.
+	for (i32 probe = 0; probe < 8; probe++)
 	{
-		return true;
+		if (FindFloorPosition(trigger, transform, GetWallProbe(trigger, probe, true), feet)
+			&& CanSeeTrigger(trigger, transform, feet + Vector(0.0f, 0.0f, PLAYER_EYE_HEIGHT)))
+		{
+			originDest = feet;
+			anglesDest = GetYawTowards(feet, worldCenter);
+			return true;
+		}
 	}
-	// Test the positions right next to the trigger if the tests above fail.
-	// This can fail when the trigger has a cover brush over it.
-	extraOffset = {0.03125f, 0.03125f, 0.03125f};
-	return FindValidPositionAroundCenter(center, distFromCenter, extraOffset, originDest, anglesDest);
+
+	// Lastly, on top of whatever covers it.
+	Vector top = utils::TransformPoint(transform, Vector(center.x, center.y, maxs.z)) + Vector(0.0f, 0.0f, 0.03125f);
+	Vector above = top + Vector(0.0f, 0.0f, PLAYER_BOUNDS.maxs.z);
+	if (!utils::IsSpawnValid(above))
+	{
+		return false;
+	}
+	CTraceFilter filter;
+	InitSpawnTraceFilter(filter);
+	trace_t tr;
+	INavPhysicsInterface::TraceShape(Ray_t(PLAYER_BOUNDS.mins, PLAYER_BOUNDS.maxs), above, top, &filter, &tr);
+	originDest = tr.m_vEndPos;
+	anglesDest = vec3_angle;
+	return true;
 }
 
 void utils::ResetMapIfEmpty()

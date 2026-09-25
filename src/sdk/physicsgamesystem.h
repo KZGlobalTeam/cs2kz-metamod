@@ -3,6 +3,7 @@
 #include "tier1/utlmap.h"
 #include "mathlib/transform.h"
 #include "tier1/utlvector.h"
+#include "tier1/utlleanvector.h"
 #include "tier1/utlstring.h"
 
 typedef CUtlVector<Vector> CUtlVectorSIMDPaddedVector;
@@ -18,16 +19,22 @@ struct alignas(8) RnSphereDesc_t;
 struct alignas(8) RnCapsuleDesc_t;
 struct alignas(8) RnHullDesc_t;
 struct alignas(8) RnMeshDesc_t;
+struct alignas(8) RnCompoundDesc_t;
 
 struct alignas(8) VPhysics2ShapeDef_t
 {
 public:
-	CUtlVector<RnSphereDesc_t> m_spheres;
-	CUtlVector<RnCapsuleDesc_t> m_capsules;
-	CUtlVector<RnHullDesc_t> m_hulls;
-	CUtlVector<RnMeshDesc_t> m_meshes;
+	CUtlLeanVector<RnSphereDesc_t> m_spheres;
+	CUtlLeanVector<RnCapsuleDesc_t> m_capsules;
+	CUtlLeanVector<RnHullDesc_t> m_hulls;
+	CUtlLeanVector<RnMeshDesc_t> m_meshes;
+	CUtlLeanVector<RnCompoundDesc_t> m_compounds;
 	CUtlVector<uint16> m_CollisionAttributeIndices;
 };
+
+static_assert(sizeof(VPhysics2ShapeDef_t) == 104, "VPhysics2ShapeDef_t size is incorrect");
+static_assert(offsetof(VPhysics2ShapeDef_t, m_hulls) == 0x20, "VPhysics2ShapeDef_t::m_hulls offset is incorrect");
+static_assert(offsetof(VPhysics2ShapeDef_t, m_meshes) == 0x30, "VPhysics2ShapeDef_t::m_meshes offset is incorrect");
 
 struct alignas(8) VPhysXBodyPart_t
 {
@@ -47,9 +54,13 @@ struct alignas(8) VPhysXBodyPart_t
 	float32 m_flInertiaScale;
 	float32 m_flLinearDamping;
 	float32 m_flAngularDamping;
+	float32 m_flLinearDrag;
+	float32 m_flAngularDrag;
 	bool m_bOverrideMassCenter;
 	Vector m_vMassCenterOverride;
 };
+
+static_assert(sizeof(VPhysXBodyPart_t) == 152, "VPhysXBodyPart_t size is incorrect");
 
 struct alignas(8) RnShapeDesc_t
 {
@@ -98,6 +109,7 @@ struct alignas(8) RnHull_t
 {
 	Vector m_vCentroid;
 	float32 m_flMaxAngularRadius;
+	float32 m_flMinCentroidRadius;
 	AABB_t m_Bounds;
 	Vector m_vOrthographicAreas;
 	matrix3x4_t m_MassProperties;
@@ -112,11 +124,17 @@ struct alignas(8) RnHull_t
 	CUtlVector<RnFace_t> m_Faces;
 };
 
+static_assert(sizeof(RnHull_t) == 248, "RnHull_t size is incorrect");
+static_assert(offsetof(RnHull_t, m_Bounds) == 0x14, "RnHull_t::m_Bounds offset is incorrect");
+static_assert(offsetof(RnHull_t, m_FacePlanes) == 0x88, "RnHull_t::m_FacePlanes offset is incorrect");
+
 struct alignas(8) RnHullDesc_t : public RnShapeDesc_t
 {
 public:
 	RnHull_t m_Hull;
 };
+
+static_assert(sizeof(RnHullDesc_t) == 272, "RnHullDesc_t size is incorrect");
 
 struct alignas(16) RnNode_t;
 
@@ -137,12 +155,21 @@ public:
 	Vector m_vOrthographicAreas;
 	uint32 m_nFlags;
 	uint32 m_nDebugFlags;
+	float32 m_flSurfaceArea;
 };
 
 struct alignas(8) RnMeshDesc_t : public RnShapeDesc_t
 {
 public:
 	RnMesh_t m_Mesh;
+};
+
+static_assert(sizeof(RnMeshDesc_t) == 216, "RnMeshDesc_t size is incorrect");
+
+// Opaque, only here so VPhysics2ShapeDef_t::m_compounds has the right element size.
+struct alignas(8) RnCompoundDesc_t : public RnShapeDesc_t
+{
+	uint8 m_Compound[352];
 };
 
 struct alignas(1) RnVertex_t

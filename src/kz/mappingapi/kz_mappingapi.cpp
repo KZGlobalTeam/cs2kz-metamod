@@ -277,19 +277,6 @@ static_function void Mapi_OnTriggerMultipleSpawn(const EntitySpawnInfo_t *info)
 					return;
 				}
 			}
-			else // Start/End zones
-			{
-				// Note: Triggers shouldn't be rotated most of the time anyway. If that ever happens for timer triggers, it's probably unintentional.
-				QAngle angles = ekv->GetQAngle("angles");
-
-				if (angles != vec3_angle)
-				{
-					Mapi_Error(
-						"Warning: Unexpected rotation for timer trigger, some functionalities might not work properly! Hammer ID %i, origin (%.0f "
-						"%.0f %.0f)",
-						hammerId, origin.x, origin.y, origin.z);
-				}
-			}
 		}
 		break;
 

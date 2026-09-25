@@ -72,10 +72,6 @@ namespace utils
 	bool IsSpawnValid(const Vector &origin);
 	bool FindValidSpawn(Vector &origin, QAngle &angles, bool ignoreStuckCheck = false);
 
-	// Return true if there's a direct line of sight from the box with specified bounds.
-	bool CanSeeBox(Vector origin, Vector mins, Vector maxs);
-	bool FindValidPositionAroundCenter(Vector center, Vector distFromCenter, Vector extraOffset, Vector &originDest, QAngle &anglesDest);
-
 	// Return true if there is a valid position for the trigger.
 	bool FindValidPositionForTrigger(CBaseTrigger *trigger, Vector &originDest, QAngle &anglesDest);
 
@@ -126,6 +122,12 @@ namespace utils
 					  tm.m_vPosition.z + (2.0f * tm.m_orientation.x * tm.m_orientation.z - 2.0f * tm.m_orientation.w * tm.m_orientation.y) * p.x
 						  + (2.0f * tm.m_orientation.y * tm.m_orientation.z + 2.0f * tm.m_orientation.w * tm.m_orientation.x) * p.y
 						  + (1.0f - 2.0f * tm.m_orientation.x * tm.m_orientation.x - 2.0f * tm.m_orientation.y * tm.m_orientation.y) * p.z);
+	}
+
+	inline Vector InverseTransformPoint(const CTransform &tm, const Vector &p)
+	{
+		CTransform inverse(vec3_origin, Quaternion(-tm.m_orientation.x, -tm.m_orientation.y, -tm.m_orientation.z, tm.m_orientation.w));
+		return TransformPoint(inverse, p - tm.m_vPosition);
 	}
 
 	template<typename T = CBaseEntity>
