@@ -5,6 +5,20 @@
 
 #include <vendor/sql_mm/src/public/sql_mm.h>
 
+static_function void InsertBan(Transaction &txn, u64 steamID64, const char *reason, const char *endTime, const UUID_t &banId,
+							   const UUID_t &replayUuid)
+{
+	char query[2048];
+	const UUID_t &useId = (banId == UUID_t(false)) ? UUID_t() : banId;
+	std::string banIdStr = useId.ToString();
+	std::string escapedReason = KZDatabaseService::GetDatabaseConnection()->Escape(reason ? reason : "No reason provided");
+	std::string replayUuidStr = replayUuid == UUID_t(false) ? "NULL" : ("'" + replayUuid.ToString() + "'");
+
+	const char *insertQuery = KZDatabaseService::GetDatabaseType() == KZ::Database::DatabaseType::MySQL ? mysql_bans_insert : sqlite_bans_insert;
+	V_snprintf(query, sizeof(query), insertQuery, banIdStr.c_str(), steamID64, escapedReason.c_str(), replayUuidStr.c_str(), endTime);
+	txn.queries.push_back(query);
+}
+
 void KZDatabaseService::Ban(u64 steamID64, const char *reason, f32 duration, const UUID_t banId, const UUID_t replayUuid,
 							TransactionSuccessCallbackFunc onSuccess, TransactionFailureCallbackFunc onFailure)
 {
@@ -44,8 +58,17 @@ void KZDatabaseService::Ban(u64 steamID64, const char *reason, f32 duration, con
 		// Permanent ban set to far future date
 		V_snprintf(expiryValue, sizeof(expiryValue), "'9999-12-31 23:59:59'");
 	}
-	KZDatabaseService::AddOrUpdateBan(steamID64, reason ? reason : "No reason provided", expiryValue, banId, replayUuid, onSuccess, onFailure);
-	// clang-format on
+
+	char query[2048];
+	Transaction txn;
+
+	// Only replace active bans that end sooner, a new infraction should never shorten an existing ban.
+	V_snprintf(query, sizeof(query), sql_bans_remove_active_before, steamID64, expiryValue);
+	txn.queries.push_back(query);
+
+	InsertBan(txn, steamID64, reason, expiryValue, banId, replayUuid);
+
+	GetDatabaseConnection()->ExecuteTransaction(txn, onSuccess, onFailure);
 }
 
 void KZDatabaseService::AddOrUpdateBan(u64 steamID64, const char *reason, const char *endTime, const UUID_t banId, const UUID_t replayUuid,
@@ -65,15 +88,7 @@ void KZDatabaseService::AddOrUpdateBan(u64 steamID64, const char *reason, const 
 	txn.queries.push_back(query);
 
 	// Insert or update a new ban record with specific end time
-	const UUID_t &useId = (banId == UUID_t(false)) ? UUID_t() : banId;
-	std::string banIdStr = useId.ToString();
-	std::string escapedReason = GetDatabaseConnection()->Escape(reason ? reason : "No reason provided");
-	std::string replayUuidStr = replayUuid == UUID_t(false) ? "NULL" : ("'" + replayUuid.ToString() + "'");
-
-	const char *insertQuery = GetDatabaseType() == KZ::Database::DatabaseType::MySQL ? mysql_bans_insert : sqlite_bans_insert;
-	V_snprintf(query, sizeof(query), insertQuery, banIdStr.c_str(), steamID64, escapedReason.c_str(), replayUuidStr.c_str(), endTime);
-
-	txn.queries.push_back(query);
+	InsertBan(txn, steamID64, reason, endTime, banId, replayUuid);
 
 	GetDatabaseConnection()->ExecuteTransaction(txn, onSuccess, onFailure);
 }

@@ -75,9 +75,9 @@ public:
 			60.0f * 24 * 60 * 7,  // Hyperscroll - 7 days
 			60.0f * 24 * 60 * 30, // InvalidCvar - 30 days
 			60.0f * 24 * 60 * 30, // InvalidInput - 30 days
-			-1.0f,                // Nulls - no ban, just kick (for now)
+			60.0f * 10,           // Nulls - 10 minutes
 			-1.0f,                // SubtickSpam - no ban, just kick (for now)
-			-1.0f                 // Desubtick - kick only
+			60.0f * 10            // Desubtick - 10 minutes
 		};
 		static_assert(KZ_ARRAYSIZE(banDurations) == static_cast<u8>(Infraction::Type::COUNT));
 
@@ -106,6 +106,11 @@ public:
 		};
 		// clang-format on
 		static_assert(KZ_ARRAYSIZE(kickInternalReasons) == static_cast<u8>(Infraction::Type::COUNT));
+
+		// Local ban reasons are stored as "<kickInternalReason>: <details>".
+		std::string GetBanReason() const;
+		// Kick reason for a player rejoining with an active local ban.
+		static ENetworkDisconnectionReason GetRejoinKickReason(const char *banReason);
 
 		bool submitted = false;
 		Type type = Type::Other;
@@ -142,6 +147,7 @@ public:
 	void Reset() override
 	{
 		isBanned = false;
+		banSource = KZAnticheatBanSource::Detection;
 		printedCheaterMessage = false;
 		canPrintCheaterMessage = false;
 		hasValidCvars = true;
@@ -162,7 +168,23 @@ public:
 
 	static void Init();
 	static void CleanupSvCheatsWatcher();
+
+	// What happens to players that join with an existing ban, see kz_ac_autokick.
+	enum class AutokickMode : i32
+	{
+		Never = 0,
+		OnJoin = 1,
+		OnReoffense = 2,
+	};
+
+	static AutokickMode GetAutokickMode();
+
 	bool isBanned = false;
+	// Only meaningful while isBanned is set.
+	KZAnticheatBanSource banSource = KZAnticheatBanSource::Detection;
+	// A ban from an earlier session can be renewed by a new detection when kz_ac_autokick is 2.
+	// A player detected during this session can't receive another infraction.
+	bool CanReceiveInfraction() const;
 	void ClearDetectionBuffers();
 	bool ShouldRunDetections() const;
 	static f64 PrintWarning(CPlayerUserId userID);
@@ -312,7 +334,7 @@ public:
 	void OnPlayerFullyConnect();
 	// TODO Anticheat: Connect this somewhere
 	void OnGlobalAuthFinished(BanInfo *banInfo);
-	void OnClientSetup(bool isBanned);
+	void OnClientSetup(bool isBanned, const char *banReason);
 
 	// ==========[ Strafes ]===========
 	enum class JumpStatus : u8

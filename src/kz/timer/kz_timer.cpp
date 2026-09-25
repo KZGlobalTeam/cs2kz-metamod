@@ -63,7 +63,7 @@ static_global class KZDatabaseServiceEventListener_Timer : public KZDatabaseServ
 {
 public:
 	virtual void OnMapSetup() override;
-	virtual void OnClientSetup(Player *player, u64 steamID64, bool isBanned) override;
+	virtual void OnClientSetup(Player *player, u64 steamID64, bool isBanned, const char *banReason) override;
 } databaseEventListener;
 
 static_global class KZOptionServiceEventListener_Timer : public KZOptionServiceEventListener
@@ -1769,7 +1769,7 @@ void KZDatabaseServiceEventListener_Timer::OnMapSetup()
 	KZTimerService::UpdateLocalRecordCache();
 }
 
-void KZDatabaseServiceEventListener_Timer::OnClientSetup(Player *player, u64 steamID64, bool isBanned)
+void KZDatabaseServiceEventListener_Timer::OnClientSetup(Player *player, u64 steamID64, bool isBanned, const char *banReason)
 {
 	KZPlayer *kzPlayer = g_pKZPlayerManager->ToKZPlayer(player);
 	kzPlayer->timerService->UpdateLocalPBCache();

@@ -86,14 +86,19 @@ void KZDatabaseService::SetupClient()
 			if (result)
 			{
 				bool isBanned = false;
+				const char *banReason = "";
 				if (banResult && banResult->FetchRow())
 				{
 					isBanned = true;
+					if (!banResult->IsNull(1))
+					{
+						banReason = banResult->GetString(1);
+					}
 				}
 				const char *prefs = result->FetchRow() ? result->GetString(0) : "";
 				this->isSetUp = true;
 				pl->optionService->InitializeLocalPrefs(prefs);
-				CALL_FORWARD(KZDatabaseService::eventListeners, OnClientSetup, pl, pl->GetSteamId64(), isBanned);
+				CALL_FORWARD(KZDatabaseService::eventListeners, OnClientSetup, pl, pl->GetSteamId64(), isBanned, banReason);
 			}
 		},
 		OnGenericTxnFailure);

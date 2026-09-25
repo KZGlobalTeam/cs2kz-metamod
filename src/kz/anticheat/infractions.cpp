@@ -53,11 +53,13 @@ void KZAnticheatService::MarkInfraction(Infraction::Type type, const std::string
 		return;
 	}
 
-	if (this->isBanned)
+	if (!this->CanReceiveInfraction())
 	{
 		return;
 	}
 	this->MarkBanned(KZAnticheatBanSource::Detection, Infraction::kickInternalReasons[static_cast<u8>(type)]);
+	// MarkBanned does nothing for a ban carried over from an earlier session.
+	this->banSource = KZAnticheatBanSource::Detection;
 
 	KZ_LOG_INFO(LogChannel::AC, "Marking infraction (%s) for player %s (%llu): %s\n", Infraction::kickInternalReasons[static_cast<u8>(type)],
 				this->player->GetName(), this->player->GetSteamId64(), details.c_str());
@@ -127,7 +129,29 @@ void KZAnticheatService::Infraction::SubmitLocalInfraction()
 			infraction->Finalize();
 		}
 	};
-	KZDatabaseService::Ban(this->steamID, this->details.c_str(), this->banDuration, this->id, this->replayUUID, onSuccess, onFailure);
+	KZDatabaseService::Ban(this->steamID, this->GetBanReason().c_str(), this->banDuration, this->id, this->replayUUID, onSuccess, onFailure);
+}
+
+std::string KZAnticheatService::Infraction::GetBanReason() const
+{
+	return tfm::format("%s: %s", kickInternalReasons[static_cast<u8>(this->type)], this->details);
+}
+
+ENetworkDisconnectionReason KZAnticheatService::Infraction::GetRejoinKickReason(const char *banReason)
+{
+	for (u8 i = 0; i < static_cast<u8>(Type::COUNT); i++)
+	{
+		if (kickReasons[i] != NETWORK_DISCONNECT_KICKED_INPUTAUTOMATION)
+		{
+			continue;
+		}
+		size_t length = strlen(kickInternalReasons[i]);
+		if (KZ_STREQLEN(banReason, kickInternalReasons[i], length) && banReason[length] == ':')
+		{
+			return NETWORK_DISCONNECT_KICKED_INPUTAUTOMATION;
+		}
+	}
+	return NETWORK_DISCONNECT_KICKED_UNTRUSTEDACCOUNT;
 }
 
 void KZAnticheatService::Infraction::SaveReplay(bool uploadToAPI)

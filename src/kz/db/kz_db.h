@@ -26,7 +26,8 @@ class KZDatabaseServiceEventListener
 public:
 	virtual void OnDatabaseSetup() {}
 
-	virtual void OnClientSetup(Player *player, u64 steamID64, bool isBanned) {}
+	// `banReason` is "" when the player isn't banned.
+	virtual void OnClientSetup(Player *player, u64 steamID64, bool isBanned, const char *banReason) {}
 
 	virtual void OnMapSetup() {}
 

@@ -61,6 +61,14 @@ constexpr char sql_bans_remove_active[] = R"(
         AND (ExpiresAt IS NULL OR ExpiresAt > CURRENT_TIMESTAMP)
 )";
 
+constexpr char sql_bans_remove_active_before[] = R"(
+    UPDATE Bans
+        SET ExpiresAt = CURRENT_TIMESTAMP
+        WHERE SteamID64=%llu
+        AND ExpiresAt > CURRENT_TIMESTAMP
+        AND ExpiresAt < %s
+)";
+
 constexpr char sql_bans_remove_by_id[] = R"(
     DELETE FROM Bans 
         WHERE ID='%s'

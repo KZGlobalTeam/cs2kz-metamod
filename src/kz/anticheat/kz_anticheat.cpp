@@ -9,7 +9,17 @@
 
 IMPLEMENT_CLASS_EVENT_LISTENER(KZAnticheatService, KZAnticheatServiceEventListener);
 
-CConVar<bool> kz_ac_autokick("kz_ac_autokick", FCVAR_NONE, "Whether to kick players that are already banned", true);
+CConVar<i32> kz_ac_autokick("kz_ac_autokick", FCVAR_NONE,
+							"How to handle players that are already banned. 0 = never kick, 1 = kick on join, 2 = let them play, but kick "
+							"and renew the ban if they get detected again",
+							static_cast<i32>(KZAnticheatService::AutokickMode::OnJoin), true,
+							static_cast<i32>(KZAnticheatService::AutokickMode::Never), true,
+							static_cast<i32>(KZAnticheatService::AutokickMode::OnReoffense));
+
+KZAnticheatService::AutokickMode KZAnticheatService::GetAutokickMode()
+{
+	return static_cast<AutokickMode>(kz_ac_autokick.Get());
+}
 
 void KZAnticheatService::MarkBanned(KZAnticheatBanSource source, const char *reason)
 {
@@ -18,7 +28,17 @@ void KZAnticheatService::MarkBanned(KZAnticheatBanSource source, const char *rea
 		return;
 	}
 	this->isBanned = true;
+	this->banSource = source;
 	CALL_FORWARD(eventListeners, OnPlayerBannedPost, this->player, source, reason ? reason : "");
+}
+
+bool KZAnticheatService::CanReceiveInfraction() const
+{
+	if (!this->isBanned)
+	{
+		return true;
+	}
+	return this->banSource != KZAnticheatBanSource::Detection && GetAutokickMode() == AutokickMode::OnReoffense;
 }
 
 CON_COMMAND_F(kz_unban, "Unban a player by their SteamID. Does not globally unban players. Only works if the server isn't globally connected.",
@@ -48,14 +68,14 @@ CON_COMMAND_F(kz_unban, "Unban a player by their SteamID. Does not globally unba
 static_global class : public KZDatabaseServiceEventListener
 {
 public:
-	virtual void OnClientSetup(Player *player, u64 steamID64, bool isBanned)
+	virtual void OnClientSetup(Player *player, u64 steamID64, bool isBanned, const char *banReason)
 	{
 		KZPlayer *kzPlayer = g_pKZPlayerManager->ToKZPlayer(player);
 		if (kzPlayer->IsFakeClient() || kzPlayer->IsCSTV())
 		{
 			return;
 		}
-		kzPlayer->anticheatService->OnClientSetup(isBanned);
+		kzPlayer->anticheatService->OnClientSetup(isBanned, banReason);
 	};
 } databaseEventListener;
 
@@ -80,8 +100,8 @@ void KZAnticheatService::OnSetupMove(PlayerCommand *cmd)
 	{
 		return;
 	}
-	// Banned players can't receive another infraction, so running detections on them only spams the logs.
-	if (!this->ShouldRunDetections() || this->isBanned)
+	// Running detections on players that can't receive another infraction only spams the logs.
+	if (!this->ShouldRunDetections() || !this->CanReceiveInfraction())
 	{
 		this->ClearDetectionBuffers();
 		return;
@@ -100,7 +120,7 @@ void KZAnticheatService::OnPhysicsSimulatePost()
 	{
 		return;
 	}
-	if (!this->ShouldRunDetections() || this->isBanned)
+	if (!this->ShouldRunDetections() || !this->CanReceiveInfraction())
 	{
 		this->ClearDetectionBuffers();
 		return;
@@ -145,7 +165,7 @@ void KZAnticheatService::OnGlobalAuthFinished(BanInfo *banInfo)
 			this->GetPendingInfraction()->replay = nullptr; // Wipe replay to avoid saving it
 			this->GetPendingInfraction()->submitted = true;
 		}
-		if (kz_ac_autokick.Get())
+		if (GetAutokickMode() == AutokickMode::OnJoin)
 		{
 			this->player->Kick("Marked as cheater in global database", NETWORK_DISCONNECT_KICKED_UNTRUSTEDACCOUNT);
 		}
@@ -168,7 +188,7 @@ void KZAnticheatService::OnGlobalAuthFinished(BanInfo *banInfo)
 	}
 }
 
-void KZAnticheatService::OnClientSetup(bool isBanned)
+void KZAnticheatService::OnClientSetup(bool isBanned, const char *banReason)
 {
 	if (this->player->IsFakeClient() || this->player->IsCSTV())
 	{
@@ -182,16 +202,16 @@ void KZAnticheatService::OnClientSetup(bool isBanned)
 	// Already banned? Kick the player and ignore any current infraction.
 	if (isBanned)
 	{
-		// The local ban table lookup only hands back a bool, so there's no reason to pass on.
 		this->MarkBanned(KZAnticheatBanSource::LocalDatabase, "");
-		if (this->GetPendingInfraction())
+		// A detection that beat the ban lookup renews the ban and kicks the player.
+		if (this->GetPendingInfraction() && GetAutokickMode() != AutokickMode::OnReoffense)
 		{
 			this->GetPendingInfraction()->replay = nullptr; // Wipe replay to avoid saving it
 			this->GetPendingInfraction()->submitted = true;
 		}
-		if (kz_ac_autokick.Get())
+		if (GetAutokickMode() == AutokickMode::OnJoin)
 		{
-			this->player->Kick("Marked as cheater in local database", NETWORK_DISCONNECT_KICKED_UNTRUSTEDACCOUNT);
+			this->player->Kick("Marked as cheater in local database", Infraction::GetRejoinKickReason(banReason));
 		}
 		else
 		{

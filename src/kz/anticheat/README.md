@@ -7,7 +7,7 @@ Each detection method is implemented separately in its own file under the `detec
 After a player is marked as cheating via `KZAnticheatService::MarkInfraction(...)`, the flow is:
 
 1. **Create pending infraction**
-	- Ignore duplicate processing if the player is already marked banned.
+	- Ignore duplicate processing if the player is already marked banned, unless the ban came from an earlier session and `kz_ac_autokick` is `2`.
 	- Create a pending infraction entry with type, details, and SteamID.
 	- Mark the player as banned for the current session (`isBanned = true`).
 
@@ -21,7 +21,8 @@ After a player is marked as cheating via `KZAnticheatService::MarkInfraction(...
 
 4. **Submit local ban**
 	- Apply type-based ban duration policy.
-	- If local DB is available and duration applies, write the local ban record.
+	- If local DB is available, write the local ban record (`<type>: <details>` as the reason). Kick-only infractions are recorded as already expired.
+	- Active bans that end sooner are expired. Longer ones are kept.
 
 5. **Save replay (if any)**
 	- Queue replay write and keep replay UUID metadata for tracking.
@@ -29,6 +30,14 @@ After a player is marked as cheating via `KZAnticheatService::MarkInfraction(...
 6. **Finalize enforcement**
 	- Finalization marks the infraction as submitted.
 	- If the player is still online, they are kicked using the infraction-mapped disconnect reason/internal label.
+
+## Players joining with an existing ban
+
+`kz_ac_autokick` decides what happens:
+
+- `0`: never kicked. Detections don't run on them.
+- `1` (default): kicked on join. Players banned for an input automation infraction are kicked with the input automation reason, everyone else as an untrusted account.
+- `2`: allowed to play. Detections keep running, and a new infraction renews the ban and kicks them.
 
 ## Auth and backend availability scenarios
 
