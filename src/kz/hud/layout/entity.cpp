@@ -163,19 +163,6 @@ void KZHUDService::DestroyOwnedLayout()
 	this->layoutKeys = LayoutKeysState();
 }
 
-void KZHUDService::Cleanup()
-{
-	for (i32 i = 0; i < MAXPLAYERS; i++)
-	{
-		KZPlayer *player = g_pKZPlayerManager->ToPlayer(CPlayerSlot(i));
-		if (player && player->hudService)
-		{
-			player->hudService->DestroyOwnedLayout();
-			player->hudService->RestoreGameHud();
-		}
-	}
-}
-
 void KZHUDService::OnCheckTransmit(CCheckTransmitInfo **pInfo, int infoCount)
 {
 	static_persist const i32 offset = g_pGameConfig->GetOffset("QuietPlayerSlot");

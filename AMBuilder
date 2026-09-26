@@ -149,10 +149,10 @@ def configure_main(sdk_target, sdk, cxx):
     os.path.join(builder.sourcePath, 'src', 'kz', 'global', 'replays.cpp'),
     
     os.path.join(builder.sourcePath, 'src', 'kz', 'hud', 'kz_hud.cpp'),
-    os.path.join(builder.sourcePath, 'src', 'kz', 'progress', 'route.cpp'),
-    os.path.join(builder.sourcePath, 'src', 'kz', 'progress', 'kz_progress.cpp'),
-    os.path.join(builder.sourcePath, 'src', 'kz', 'progress', 'routes.cpp'),
-    os.path.join(builder.sourcePath, 'src', 'kz', 'progress', 'replay_route.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'hud', 'progress', 'route.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'hud', 'progress.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'hud', 'progress_routes.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'hud', 'progress', 'replay_route.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'hud', 'legacy.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'hud', 'layout', 'entity.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'hud', 'layout', 'mhud.cpp'),
@@ -457,7 +457,6 @@ protobuf_binary = configure_protobuf(sdk, cxx, protoc_builder)
 # Main binary
 binary = configure_main(sdk_target, sdk, cxx)
 if builder.options.progress_tests:
-  binary.sources += [os.path.join(builder.sourcePath, 'tests', 'progress', 'runtime_test.cpp')]
   test_base = MMSPlugin.HL2Library(builder, cxx, 'progress-test-config', sdk)
   test = test_base.compiler.Program('progress-tests')
   link_protobuf(test, cxx, protobuf_binary)
@@ -469,14 +468,14 @@ if builder.options.progress_tests:
   if test.compiler.like('msvc'):
     test.compiler.linkflags = [flag for flag in test.compiler.linkflags if flag != '/SUBSYSTEM:WINDOWS']
     test.compiler.linkflags += ['/SUBSYSTEM:CONSOLE']
-  test.sources = ['tests/progress/route_test.cpp', 'src/kz/progress/route.cpp']
+  test.sources = ['tests/progress/route_test.cpp', 'src/kz/hud/progress/route.cpp']
   builder.Add(test)
   replay_test = test_base.compiler.Program('progress-replay-tests')
   replay_test.compiler = test.compiler.clone()
   replay_test.compiler.cxxincludes += [os.path.join(builder.sourcePath, 'vendor', 'zstd', 'lib')]
   replay_test.compiler.postlink += [os.path.join(builder.sourcePath, 'vendor', 'zstd.lib' if cxx.target.platform == 'windows' else 'libzstd.a')]
-  replay_test.sources = ['tests/progress/replay_test.cpp', 'src/kz/progress/route.cpp',
-                         'src/kz/progress/replay_route.cpp', 'src/kz/replays/compression.cpp']
+  replay_test.sources = ['tests/progress/replay_test.cpp', 'src/kz/hud/progress/route.cpp',
+                         'src/kz/hud/progress/replay_route.cpp', 'src/kz/replays/compression.cpp']
   builder.Add(replay_test)
 # Shared entity2/schema/gameconfig objects for the mode/style binaries
 common_binary = configure_common(sdk, cxx, protobuf_binary)

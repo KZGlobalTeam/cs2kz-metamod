@@ -43,6 +43,7 @@ struct PBData
 	void Reset()
 	{
 		overall.pbTime = {};
+		overall.replayUUID = "";
 		overall.pbSplitZoneTimes.SetCount(KZ_MAX_SPLIT_ZONES);
 		overall.pbSplitZoneTimes.FillWithValue(-1.0);
 		overall.pbCpZoneTimes.SetCount(KZ_MAX_CHECKPOINT_ZONES);
@@ -50,6 +51,7 @@ struct PBData
 		overall.pbStageZoneTimes.SetCount(KZ_MAX_STAGE_ZONES);
 		overall.pbStageZoneTimes.FillWithValue(-1.0);
 		pro.pbTime = {};
+		pro.replayUUID = "";
 		pro.pbSplitZoneTimes.SetCount(KZ_MAX_SPLIT_ZONES);
 		pro.pbSplitZoneTimes.FillWithValue(-1.0);
 		pro.pbCpZoneTimes.SetCount(KZ_MAX_CHECKPOINT_ZONES);
@@ -61,6 +63,7 @@ struct PBData
 	struct
 	{
 		f64 pbTime {};
+		CUtlString replayUUID;
 		f64 points {};
 		CUtlVectorFixed<f64, KZ_MAX_SPLIT_ZONES> pbSplitZoneTimes;
 		CUtlVectorFixed<f64, KZ_MAX_CHECKPOINT_ZONES> pbCpZoneTimes;
@@ -133,6 +136,9 @@ public:
 
 	// Fires once per finished run when its ranks are announced, even if the player has left or the map has changed since.
 	virtual void OnRunSubmittedPost(const RunSubmission &submission) {}
+
+	// Existing map-level SR/WR requests have published their results on the main thread.
+	virtual void OnRecordCacheUpdated() {}
 };
 
 class KZTimerService : public KZBaseService
@@ -167,6 +173,7 @@ private:
 	static std::unordered_map<PBDataKey, PBData> srCache;
 
 	static std::unordered_map<PBDataKey, PBData> wrCache;
+	static inline u64 recordCacheGeneration {};
 
 public:
 	enum CompareType : u8
@@ -200,8 +207,15 @@ public:
 	static void ClearRecordCache();
 	static void UpdateLocalRecordCache();
 	static void InsertRecordToCache(f64 time, const KZCourseDescriptor *courseName, PluginId modeID, bool hasTeleports, bool global,
-									CUtlString metadata = "");
+									CUtlString metadata = "", const char *replayUUID = "");
 	static const PBData *GetGlobalCachedRecord(const KZCourseDescriptor *course, PluginId modeID);
+	static const PBData *GetCachedRecord(const KZCourseDescriptor *course, PluginId modeID, bool global);
+	static void NotifyRecordCacheUpdated();
+
+	static u64 GetRecordCacheGeneration()
+	{
+		return recordCacheGeneration;
+	}
 
 	void ClearPBCache();
 	const PBData *GetGlobalCachedPB(const KZCourseDescriptor *course, PluginId modeID);

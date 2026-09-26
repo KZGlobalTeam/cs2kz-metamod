@@ -935,6 +935,24 @@ void ReplayWatcher::SweepOrphanedChunks(u64 currentTime)
 	g_pFullFileSystem->FindClose(findHandle);
 }
 
+template<typename MapT>
+static bool ReplayHeadersChanged(const MapT &oldHeaders, const MapT &newHeaders)
+{
+	if (oldHeaders.size() != newHeaders.size())
+	{
+		return true;
+	}
+	for (const auto &[id, header] : newHeaders)
+	{
+		auto old = oldHeaders.find(id);
+		if (old == oldHeaders.end() || old->second.SerializeAsString() != header.SerializeAsString())
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
 void ReplayWatcher::ScanReplays()
 {
 	char searchPath[MAX_PATH];
@@ -1086,6 +1104,10 @@ void ReplayWatcher::ScanReplays()
 	{
 		std::lock_guard<std::mutex> lock(this->replayMapsMutex);
 		this->cheaterReplays = std::move(newCheater);
+		if (ReplayHeadersChanged(this->runReplays, newRun))
+		{
+			++this->replayRevision;
+		}
 		this->runReplays = std::move(newRun);
 		this->jumpReplays = std::move(newJump);
 		this->manualReplays = std::move(newManual);
@@ -1193,6 +1215,10 @@ void ReplayWatcher::ScanDownloadedReplays(u64 currentTime)
 
 	{
 		std::lock_guard<std::mutex> lock(this->replayMapsMutex);
+		if (ReplayHeadersChanged(this->downloadedReplays, newDownloaded))
+		{
+			++this->replayRevision;
+		}
 		this->downloadedReplays = std::move(newDownloaded);
 	}
 }

@@ -1,6 +1,6 @@
 #pragma once
 #include "kz/kz.h"
-#include "kz/progress/route.h"
+#include "kz/hud/progress/route.h"
 
 class KZCheckpointService : public KZBaseService
 {

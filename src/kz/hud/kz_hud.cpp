@@ -1,6 +1,7 @@
 #include "kz/kz.h"
 #include "cs2kz.h"
 #include "kz_hud.h"
+#include "progress_routes.h"
 #include "sdk/datatypes.h"
 #include "utils/utils.h"
 #include "utils/simplecmds.h"
@@ -22,6 +23,21 @@ static_global bool layoutAssetMounted = false;
 
 static_global class KZTimerServiceEventListener_HUD : public KZTimerServiceEventListener
 {
+	void OnTimerStartPost(KZPlayer *player, u32 courseGUID) override
+	{
+		player->hudService->StartProgress(courseGUID);
+	}
+
+	void OnTimerInvalidated(KZPlayer *player) override
+	{
+		player->hudService->ResetProgress();
+	}
+
+	void OnRecordCacheUpdated() override
+	{
+		KZ::progress::InvalidateRoutes();
+	}
+
 	virtual void OnTimerStopped(KZPlayer *player, u32 courseGUID) override;
 	virtual void OnTimerEndPost(KZPlayer *player, u32 courseGUID, f32 time, u32 teleportsUsed) override;
 } timerEventListener;
@@ -73,6 +89,7 @@ void KZHUDService::OnProcessMovementPost()
 
 void KZHUDService::Reset()
 {
+	this->ResetProgress();
 	this->showPanel = this->player->optionService->GetPreferenceBool("showPanel", true);
 	this->timerStoppedTime = {};
 	this->currentTimeWhenTimerStopped = {};
@@ -271,11 +288,13 @@ void KZHUDService::OnTimerStopped(f64 currentTimeWhenTimerStopped)
 
 void KZTimerServiceEventListener_HUD::OnTimerStopped(KZPlayer *player, u32 courseGUID)
 {
+	player->hudService->StopProgress();
 	player->hudService->OnTimerStopped(player->timerService->GetTime());
 }
 
 void KZTimerServiceEventListener_HUD::OnTimerEndPost(KZPlayer *player, u32 courseGUID, f32 time, u32 teleportsUsed)
 {
+	player->hudService->FinishProgress(courseGUID);
 	player->hudService->OnTimerStopped(time);
 }
 
@@ -323,4 +342,40 @@ SCMD(kz_panel, SCFL_HUD)
 		player->languageService->PrintChat(true, false, "HUD Option - Info Panel - Disable");
 	}
 	return true;
+}
+
+void KZHUDService::OnPhysicsSimulatePost()
+{
+	this->UpdateProgress();
+}
+
+void KZHUDService::OnGameFrame()
+{
+	KZ::progress::OnGameFrame();
+}
+
+void KZHUDService::OnMapReady()
+{
+	KZ::progress::OnMapReady();
+}
+
+void KZHUDService::ClearProgressRoutes()
+{
+	KZ::progress::Clear();
+}
+
+void KZHUDService::Cleanup()
+{
+	KZTimerService::UnregisterEventListener(&timerEventListener);
+	KZOptionService::UnregisterEventListener(&optionEventListener);
+	KZHUDService::ClearProgressRoutes();
+	for (i32 i = 0; i < MAXPLAYERS; i++)
+	{
+		KZPlayer *player = g_pKZPlayerManager->ToPlayer(CPlayerSlot(i));
+		if (player && player->hudService)
+		{
+			player->hudService->DestroyOwnedLayout();
+			player->hudService->RestoreGameHud();
+		}
+	}
 }

@@ -186,7 +186,14 @@ void KZGlobalService::UpdateRecordCache()
 	}
 
 	KZ::api::messages::WantWorldRecordsForCache message {currentMapID};
-	KZGlobalService::MessageCallback<KZ::api::messages::WorldRecordsForCache> callback(KZGlobalService::OnWorldRecordsForCache);
+	KZGlobalService::MessageCallback<KZ::api::messages::WorldRecordsForCache> callback(
+		[generation = KZTimerService::GetRecordCacheGeneration()](const KZ::api::messages::WorldRecordsForCache &records)
+		{
+			if (generation == KZTimerService::GetRecordCacheGeneration())
+			{
+				KZGlobalService::OnWorldRecordsForCache(records);
+			}
+		});
 	KZGlobalService::WS::SendMessage(message, std::move(callback));
 }
 
@@ -209,7 +216,7 @@ void KZGlobalService::OnWorldRecordsForCache(const KZ::api::messages::WorldRecor
 
 		if (!cached || cached->overall.pbTime == 0 || record.time < cached->overall.pbTime)
 		{
-			KZTimerService::InsertRecordToCache(record.time, course, modeID, true, true);
+			KZTimerService::InsertRecordToCache(record.time, course, modeID, true, true, "", record.id.c_str());
 		}
 
 		// Inserting may rehash the cache and invalidate the pointer above.
@@ -217,9 +224,10 @@ void KZGlobalService::OnWorldRecordsForCache(const KZ::api::messages::WorldRecor
 
 		if (record.teleports == 0 && (!cached || cached->pro.pbTime == 0 || record.time < cached->pro.pbTime))
 		{
-			KZTimerService::InsertRecordToCache(record.time, course, modeID, false, true);
+			KZTimerService::InsertRecordToCache(record.time, course, modeID, false, true, "", record.id.c_str());
 		}
 	}
+	KZTimerService::NotifyRecordCacheUpdated();
 }
 
 void KZGlobalService::SubmitBan(u64 steamID, std::string reason, std::string details)

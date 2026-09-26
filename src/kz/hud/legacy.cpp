@@ -2,7 +2,6 @@
 #include "../kz.h"
 #include "cs2kz.h"
 #include "kz_hud.h"
-#include "kz/progress/kz_progress.h"
 #include "utils/utils.h"
 
 #include "kz/language/kz_language.h"
@@ -98,7 +97,7 @@ void KZHUDService::DrawLegacyPanels(KZPlayer *player, KZPlayer *target)
 															 timerText.c_str(), speedText.c_str());
 	}
 
-	const std::string progress = KZ::progress::HUDText(target, player);
+	const std::string progress = player->hudService->GetProgressText(prefs, language);
 	if (!progress.empty())
 	{
 		htmlText += (htmlText.empty() ? "" : "<br>") + progress;

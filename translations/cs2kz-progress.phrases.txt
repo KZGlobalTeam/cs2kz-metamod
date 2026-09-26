@@ -6,4 +6,23 @@
         "chi" "显示路线进度"
         "zho" "顯示路線進度"
     }
+    "HUD - Progress Text"
+    {
+        "#format" "percentage:s"
+        "en" "Progress: {percentage}"
+        "chi" "进度: {percentage}"
+        "zho" "進度: {percentage}"
+    }
+    "Progress - Enabled"
+    {
+        "en" "Progress enabled."
+        "chi" "已启用路线进度。"
+        "zho" "已啟用路線進度。"
+    }
+    "Progress - Disabled"
+    {
+        "en" "Progress disabled."
+        "chi" "已关闭路线进度。"
+        "zho" "已關閉路線進度。"
+    }
 }

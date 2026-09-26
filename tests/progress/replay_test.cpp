@@ -1,4 +1,4 @@
-#include "kz/progress/replay_route.h"
+#include "kz/hud/progress/replay_route.h"
 #include "kz/replays/compression.h"
 #include <fstream>
 #include <cstdio>

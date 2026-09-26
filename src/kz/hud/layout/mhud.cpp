@@ -1,5 +1,4 @@
 #include "kz/hud/layout/layout.h"
-#include "kz/progress/kz_progress.h"
 #include "kz/option/kz_option.h"
 #include "kz/option/menu/tables.h"
 #include "kz/language/kz_language.h"
@@ -56,7 +55,7 @@ void KZHUDService::UpdateTimerElement(CCSCustomHudLayout *layout, KZPlayer *sour
 		color = teleports > 0 ? prefs.timerTp : prefs.timerPro;
 	}
 
-	const std::string progress = KZ::progress::HUDText(this->player, source);
+	const std::string progress = source->hudService->GetProgressText(prefs, this->player->languageService->GetLanguage());
 	if (!progress.empty())
 	{
 		text += (text.empty() ? "" : "\n") + progress;

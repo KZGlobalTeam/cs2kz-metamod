@@ -30,7 +30,6 @@
 #include "pistol/kz_pistol.h"
 #include "fov/kz_fov.h"
 #include "ztopwatch/kz_ztopwatch.h"
-#include "progress/kz_progress.h"
 
 #include "sdk/datatypes.h"
 #include "sdk/entity/cbasetrigger.h"
@@ -67,7 +66,6 @@ void KZPlayer::DestroyServices()
 	delete this->pistolService;
 	delete this->fovService;
 	delete this->ztopwatchService;
-	delete this->progressService;
 	delete this->modeService;
 
 	this->anticheatService = nullptr;
@@ -96,7 +94,6 @@ void KZPlayer::DestroyServices()
 	this->pistolService = nullptr;
 	this->fovService = nullptr;
 	this->ztopwatchService = nullptr;
-	this->progressService = nullptr;
 	this->modeService = nullptr;
 
 	this->styleServices.PurgeAndDeleteElements();
@@ -134,7 +131,6 @@ void KZPlayer::Init()
 	this->pistolService = new KZPistolService(this);
 	this->fovService = new KZFOVService(this);
 	this->ztopwatchService = new KZZtopwatchService(this);
-	this->progressService = new KZProgressService(this);
 
 	KZ::mode::InitModeService(this);
 }
@@ -166,7 +162,6 @@ void KZPlayer::Reset()
 	this->recordingService->Reset();
 	this->paintService->Reset();
 	this->ztopwatchService->Reset();
-	this->progressService->Reset();
 	this->profileService->Reset();
 	this->pistolService->Reset();
 
@@ -253,7 +248,7 @@ void KZPlayer::OnPhysicsSimulatePost()
 	}
 	this->timerService->OnPhysicsSimulatePost();
 	KZ::replaysystem::OnPhysicsSimulatePost(this);
-	this->progressService->Update();
+	this->hudService->OnPhysicsSimulatePost();
 	// Called even while dead and not spectating: the MHUD layout has to be told to collapse, it
 	// does not fade out on its own the way the html centre panel did.
 	KZPlayer *hudSource = this->specService->GetSpectatedPlayer();
@@ -926,7 +921,7 @@ void KZPlayer::OnTeleport(const Vector *origin, const QAngle *angles, const Vect
 	this->modeService->OnTeleport(origin, angles, velocity);
 	this->timerService->OnTeleport(origin, angles, velocity);
 	this->recordingService->OnTeleport(origin, angles, velocity);
-	this->progressService->OnTeleport(origin);
+	this->hudService->OnProgressTeleport(origin);
 	if (origin)
 	{
 		this->beamService->OnTeleport();
