@@ -241,6 +241,7 @@ namespace KZ::course
 
 	// Get the number of courses on this map.
 	u32 GetCourseCount();
+	const KZCourseDescriptor *GetCourseByIndex(u32 index);
 
 	// Get a course's information given its map-defined course id.
 	const KZCourseDescriptor *GetCourseByCourseID(i32 id);

@@ -35,19 +35,26 @@ def configure_protobuf(sdk, cxx, protoc_builder):
   if protobuf_binary.compiler.family == 'gcc' or protobuf_binary.compiler.family == 'clang':
     protobuf_binary.compiler.defines += ['_GLIBCXX_USE_CXX11_ABI=0']
 
-  protobuf_binary.custom = [protoc_builder]
+  # Consumers need the generated headers themselves as dependencies. Depending only
+  # on the archive can compile them against stale headers during an incremental build.
+  output_folder = builder.AddFolder(os.path.join(protobuf_binary.name_, f'{cxx.target.platform}-{cxx.target.arch}'))
+  generated = protoc_builder.protoc.Generate(builder, protoc_builder.sources, [('cpp', output_folder)])['cpp']
+  protobuf_binary.compiler.cxxincludes += [protobuf_include_dir(cxx)]
+  protobuf_binary.compiler.sourcedeps += generated['headers']
+  # Preserve AMBuild output nodes; absolute path strings lose the producer edge.
+  protobuf_binary.sources += generated['sources']
 
-  return builder.Add(protobuf_binary).binary
+  return (builder.Add(protobuf_binary).binary, generated['headers'])
 
 def protobuf_include_dir(cxx):
   return os.path.join(builder.buildPath, f"{MMSPlugin.metadata['name']}-protobuf",
                        f'{cxx.target.platform}-{cxx.target.arch}')
 
 def link_protobuf(binary, cxx, protobuf_binary):
-  binary.compiler.postlink.insert(0, protobuf_binary)
+  binary.compiler.postlink.insert(0, protobuf_binary[0])
   binary.compiler.cxxincludes += [ protobuf_include_dir(cxx) ]
 
-  binary.compiler.sourcedeps += [ protobuf_binary ]
+  binary.compiler.sourcedeps += protobuf_binary[1]
 
 def configure_main(sdk_target, sdk, cxx):
   binary = MMSPlugin.HL2Library(builder, cxx, MMSPlugin.metadata['name'], sdk)
@@ -142,6 +149,10 @@ def configure_main(sdk_target, sdk, cxx):
     os.path.join(builder.sourcePath, 'src', 'kz', 'global', 'replays.cpp'),
     
     os.path.join(builder.sourcePath, 'src', 'kz', 'hud', 'kz_hud.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'progress', 'route.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'progress', 'kz_progress.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'progress', 'routes.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'progress', 'replay_route.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'hud', 'legacy.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'hud', 'layout', 'entity.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'hud', 'layout', 'mhud.cpp'),
@@ -445,6 +456,28 @@ protobuf_binary = configure_protobuf(sdk, cxx, protoc_builder)
 
 # Main binary
 binary = configure_main(sdk_target, sdk, cxx)
+if builder.options.progress_tests:
+  binary.sources += [os.path.join(builder.sourcePath, 'tests', 'progress', 'runtime_test.cpp')]
+  test_base = MMSPlugin.HL2Library(builder, cxx, 'progress-test-config', sdk)
+  test = test_base.compiler.Program('progress-tests')
+  link_protobuf(test, cxx, protobuf_binary)
+  test.compiler.cxxincludes += [os.path.join(builder.sourcePath, 'src')]
+  if test.compiler.family in ('gcc', 'clang'):
+    test.compiler.defines += ['_GLIBCXX_USE_CXX11_ABI=0']
+  if test.compiler.family == 'clang':
+    test.compiler.cxxflags += ['-Wno-register', '-frtti', '-Wno-invalid-offsetof', '-Wno-parentheses']
+  if test.compiler.like('msvc'):
+    test.compiler.linkflags = [flag for flag in test.compiler.linkflags if flag != '/SUBSYSTEM:WINDOWS']
+    test.compiler.linkflags += ['/SUBSYSTEM:CONSOLE']
+  test.sources = ['tests/progress/route_test.cpp', 'src/kz/progress/route.cpp']
+  builder.Add(test)
+  replay_test = test_base.compiler.Program('progress-replay-tests')
+  replay_test.compiler = test.compiler.clone()
+  replay_test.compiler.cxxincludes += [os.path.join(builder.sourcePath, 'vendor', 'zstd', 'lib')]
+  replay_test.compiler.postlink += [os.path.join(builder.sourcePath, 'vendor', 'zstd.lib' if cxx.target.platform == 'windows' else 'libzstd.a')]
+  replay_test.sources = ['tests/progress/replay_test.cpp', 'src/kz/progress/route.cpp',
+                         'src/kz/progress/replay_route.cpp', 'src/kz/replays/compression.cpp']
+  builder.Add(replay_test)
 # Shared entity2/schema/gameconfig objects for the mode/style binaries
 common_binary = configure_common(sdk, cxx, protobuf_binary)
 # Mode binaries

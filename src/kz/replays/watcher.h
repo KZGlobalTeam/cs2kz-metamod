@@ -90,6 +90,9 @@ class ReplayWatcher
 							  std::unordered_map<u64, std::vector<std::pair<UUID_t, u64>>> &manualReplaysBySteamID);
 
 public:
+	// Read-only snapshot under the watcher's lock; no playback state is changed.
+	std::vector<std::pair<UUID_t, ReplayHeader>> GetProgressCandidates(const char *map, const char *md5);
+
 	void Start()
 	{
 		running = true;

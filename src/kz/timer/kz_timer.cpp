@@ -1,4 +1,5 @@
 #include "kz_timer.h"
+#include "kz/progress/kz_progress.h"
 #include "kz/db/kz_db.h"
 #include "kz/global/kz_global.h"
 #include "kz/language/kz_language.h"
@@ -111,6 +112,7 @@ void KZTimerService::StartZoneStartTouch(const KZCourseDescriptor *course)
 {
 	this->touchedGroundSinceTouchingStartZone = !!(this->player->GetPlayerPawn()->m_fFlags & FL_ONGROUND);
 	this->TimerStop(false);
+	this->player->progressService->EnterStart(course->guid);
 }
 
 void KZTimerService::StartZoneEndTouch(const KZCourseDescriptor *course)
@@ -959,6 +961,7 @@ void KZTimerService::OnChangeMoveType(MoveType_t oldMoveType)
 void KZTimerService::OnTeleportToStart()
 {
 	this->TimerStop();
+	this->player->progressService->Reset();
 }
 
 void KZTimerService::OnClientDisconnect()

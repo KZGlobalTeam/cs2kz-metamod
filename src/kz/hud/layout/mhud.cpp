@@ -1,4 +1,5 @@
 #include "kz/hud/layout/layout.h"
+#include "kz/progress/kz_progress.h"
 #include "kz/option/kz_option.h"
 #include "kz/option/menu/tables.h"
 #include "kz/language/kz_language.h"
@@ -11,6 +12,14 @@
 
 void KZHUDService::UpdateTimerElement(CCSCustomHudLayout *layout, KZPlayer *source, bool force)
 {
+	const f64 now = g_pKZUtils->GetServerGlobals()->curtime;
+	CBaseEntity *sourcePawn = source->GetPlayerPawn();
+	if (!force && this->timerLayoutSource.Get() == sourcePawn && now < this->nextTimerLayoutUpdate && now >= this->nextTimerLayoutUpdate - 0.05)
+	{
+		return;
+	}
+	this->timerLayoutSource = sourcePawn;
+	this->nextTimerLayoutUpdate = now + 0.05;
 	const MHUDPrefs &prefs = this->GetPrefs();
 	std::string text = source->hudService->GetTimerText(this->player->languageService->GetLanguage(), prefs.timerShowState);
 	if (!this->IsMHUDTimerDetailed())
@@ -47,6 +56,11 @@ void KZHUDService::UpdateTimerElement(CCSCustomHudLayout *layout, KZPlayer *sour
 		color = teleports > 0 ? prefs.timerTp : prefs.timerPro;
 	}
 
+	const std::string progress = KZ::progress::HUDText(this->player, source);
+	if (!progress.empty())
+	{
+		text += (text.empty() ? "" : "\n") + progress;
+	}
 	const bool show = this->IsMHUDElementEnabled(MHUDElement::Timer) && !text.empty();
 	this->UpdateLayoutElement(layout, MHUDElement::Timer, show, text.c_str(), color, force);
 }

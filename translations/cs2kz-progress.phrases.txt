@@ -1,0 +1,9 @@
+"Phrases"
+{
+    "Progress - Show"
+    {
+        "en" "Show Progress"
+        "chi" "显示路线进度"
+        "zho" "顯示路線進度"
+    }
+}

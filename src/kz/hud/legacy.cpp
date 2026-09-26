@@ -2,6 +2,7 @@
 #include "../kz.h"
 #include "cs2kz.h"
 #include "kz_hud.h"
+#include "kz/progress/kz_progress.h"
 #include "utils/utils.h"
 
 #include "kz/language/kz_language.h"
@@ -97,6 +98,12 @@ void KZHUDService::DrawLegacyPanels(KZPlayer *player, KZPlayer *target)
 															 timerText.c_str(), speedText.c_str());
 	}
 
+	const std::string progress = KZ::progress::HUDText(target, player);
+	if (!progress.empty())
+	{
+		htmlText += (htmlText.empty() ? "" : "<br>") + progress;
+	}
+
 	centerText = centerText.substr(0, centerText.find_last_not_of('\n') + 1);
 	alertText = alertText.substr(0, alertText.find_last_not_of('\n') + 1);
 	htmlText = htmlText.substr(0, htmlText.find_last_not_of('\n') + 1);
@@ -111,6 +118,6 @@ void KZHUDService::DrawLegacyPanels(KZPlayer *player, KZPlayer *target)
 	}
 	if (!htmlText.empty())
 	{
-		target->PrintHTMLCentre(false, false, htmlText.c_str());
+		utils::PrintHTMLCentre(target->GetController(), "%s", htmlText.c_str());
 	}
 }

@@ -23,6 +23,7 @@
 #include "sdk/steamnetworkingsockets.h"
 
 #include "kz/kz.h"
+#include "kz/progress/kz_progress.h"
 #include "kz/anticheat/kz_anticheat.h"
 #include "kz/beam/kz_beam.h"
 #include "kz/language/kz_language.h"
@@ -248,6 +249,7 @@ static KHook::Return<void> GameFramePre(ISource2Server *pThis, bool simulating, 
 	KZBeamService::UpdateBeams();
 	KZPaintService::OnGameFrame();
 	KZ::replaysystem::OnGameFrame();
+	KZ::progress::OnGameFrame();
 	KZRacingService::BroadcastRaceInfo();
 	return {KHook::Action::Ignore};
 }
@@ -359,6 +361,7 @@ static KHook::Return<void> ClientDisconnectPost(ISource2GameClients *pThis, CPla
 	player->globalService->OnClientDisconnect();
 	player->menuService->OnClientDisconnect();
 	player->hudService->OnClientDisconnect();
+	player->progressService->Reset();
 	cvarquery::OnClientDisconnect(slot);
 	KZ::prefs::OnClientDisconnect(slot);
 	g_pKZPlayerManager->OnClientDisconnect(slot, reason, pszName, xuid, pszNetworkID);
@@ -429,6 +432,7 @@ static KHook::Return<void> StartupServerPost(INetworkServerService *pThis, const
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
 	g_KZPlugin.AddonInit();
+	KZ::progress::Clear();
 	KZ::course::ClearCourses();
 	KZ::mapapi::Init();
 	KZ::replaysystem::Init();
@@ -456,6 +460,7 @@ static KHook::Return<bool> FireEventPre(IGameEventManager2 *pThis, IGameEvent *e
 				if (player)
 				{
 					player->timerService->OnPlayerDeath();
+					player->progressService->Reset();
 					player->quietService->SendFullUpdate();
 				}
 			}
@@ -486,6 +491,14 @@ static KHook::Return<bool> FireEventPre(IGameEventManager2 *pThis, IGameEvent *e
 				if (player)
 				{
 					player->timerService->OnPlayerSpawn();
+					if (player->timerService->GetTimerRunning())
+					{
+						player->progressService->OnTeleport(&vec3_origin);
+					}
+					else
+					{
+						player->progressService->Reset();
+					}
 				}
 			}
 		}
@@ -589,6 +602,7 @@ static KHook::Return<bool> ActivateServerPost(CNetworkGameServerBase *pThis)
 	KZGlobalService::OnActivateServer();
 	KZLanguageService::OnActivateServer();
 	KZHUDService::RefreshLayoutAvailability();
+	KZ::progress::OnMapReady();
 
 	char md5[33];
 	g_pKZUtils->GetCurrentMapMD5(md5, sizeof(md5));

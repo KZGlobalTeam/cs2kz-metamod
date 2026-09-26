@@ -35,6 +35,7 @@ class KZDatabaseService;
 class KZGlobalService;
 class KZGlobalService;
 class KZHUDService;
+class KZProgressService;
 class KZJumpstatsService;
 class KZLanguageService;
 class KZMapService;
@@ -189,6 +190,7 @@ public:
 	KZRecordingService *recordingService {};
 	KZFOVService *fovService {};
 	KZZtopwatchService *ztopwatchService {};
+	KZProgressService *progressService {};
 
 	// Timestamp (curtime) of the last accepted scmd command, used for the per-command cooldown.
 	f32 lastCommandTime {};

@@ -432,6 +432,8 @@ private:
 	CHandle<CBaseEntity> ownedLayout {};
 	LayoutElementState layoutElements[(i32)MHUDElement::Count] {};
 	LayoutKeysState layoutKeys {};
+	f64 nextTimerLayoutUpdate {};
+	CHandle<CBaseEntity> timerLayoutSource {};
 
 	CCSCustomHudLayout *EnsureOwnedLayout(bool &created);
 

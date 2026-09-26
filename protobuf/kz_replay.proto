@@ -63,6 +63,8 @@ message RunReplayData {
 	repeated ModeStyleInfo styles = 3;  // Array of styles
 	optional float time = 4;
 	optional int32 num_teleports = 5;
+	// Older recordings omit this; Progress additionally validates their recorded trajectory.
+	optional bool timer_valid = 6;
 }
 
 message JumpReplayData {

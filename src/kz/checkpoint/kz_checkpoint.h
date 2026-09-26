@@ -1,5 +1,6 @@
 #pragma once
 #include "kz/kz.h"
+#include "kz/progress/route.h"
 
 class KZCheckpointService : public KZBaseService
 {
@@ -21,6 +22,7 @@ public:
 		Vector ladderNormal;
 		bool onLadder {};
 		CHandle<CBaseEntity> groundEnt;
+		KZ::progress::Anchor progress;
 	};
 
 	// UndoTeleport stuff

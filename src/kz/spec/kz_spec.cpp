@@ -216,7 +216,12 @@ KZPlayer *KZSpecService::GetSpectatedPlayer()
 		return NULL;
 	}
 	CCSPlayerPawn *pawn = this->player->GetPlayerPawn();
-	CBasePlayerPawn *target = (CBasePlayerPawn *)obsService->m_hObserverTarget().Get();
+	CBaseEntity *entity = obsService->m_hObserverTarget().Get();
+	if (!entity || !entity->IsPawn())
+	{
+		return nullptr;
+	}
+	CBasePlayerPawn *target = static_cast<CBasePlayerPawn *>(entity);
 	// If the player is spectating their own corpse, consider that as not spectating anyone.
 	return target == pawn ? nullptr : g_pKZPlayerManager->ToPlayer(target);
 }
