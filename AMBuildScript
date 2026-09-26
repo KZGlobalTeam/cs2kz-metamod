@@ -130,6 +130,14 @@ class MMSPluginConfig(object):
     }
 
     cxx = builder.DetectCxx(target_arch = 'x86_64')
+    # AMBuild's explicit CC/CXX path can omit environment props. Preserve the
+    # detected /showIncludes language so header changes rebuild ABI consumers.
+    if cxx.like('msvc') and cxx.vendor.extra_props:
+      tool_env = dict(cxx.env_data or ())
+      props = dict(tool_env.get('props', ()))
+      props.update(cxx.vendor.extra_props)
+      tool_env['props'] = tuple(sorted(props.items()))
+      cxx.env_data = tuple(sorted(tool_env.items()))
     self.target_arch = cxx.target.arch
     self.target = cxx
 
@@ -352,6 +360,7 @@ const char *PLUGIN_REVISION_COUNT = \"{revision_count}\";
       ]
 
       cxx.cflags += [
+        '/utf-8', # Source and translated UI strings are UTF-8 on every Windows locale.
         '/wd4267', # conversion from 'size_t' to 'type', possible loss of data
         '/wd4244', # 'argument' : conversion from 'uint64_t' to 'int', possible loss of data
         '/wd4146', # unary minus operator applied to unsigned type, result still unsigned

@@ -97,6 +97,12 @@ void KZHUDService::DrawLegacyPanels(KZPlayer *player, KZPlayer *target)
 															 timerText.c_str(), speedText.c_str());
 	}
 
+	const std::string progress = player->hudService->GetProgressText(prefs, language);
+	if (!progress.empty())
+	{
+		htmlText += (htmlText.empty() ? "" : "<br>") + progress;
+	}
+
 	centerText = centerText.substr(0, centerText.find_last_not_of('\n') + 1);
 	alertText = alertText.substr(0, alertText.find_last_not_of('\n') + 1);
 	htmlText = htmlText.substr(0, htmlText.find_last_not_of('\n') + 1);
@@ -111,6 +117,6 @@ void KZHUDService::DrawLegacyPanels(KZPlayer *player, KZPlayer *target)
 	}
 	if (!htmlText.empty())
 	{
-		target->PrintHTMLCentre(false, false, htmlText.c_str());
+		utils::PrintHTMLCentre(target->GetController(), "%s", htmlText.c_str());
 	}
 }

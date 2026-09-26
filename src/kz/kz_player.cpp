@@ -248,11 +248,13 @@ void KZPlayer::OnPhysicsSimulatePost()
 	}
 	this->timerService->OnPhysicsSimulatePost();
 	KZ::replaysystem::OnPhysicsSimulatePost(this);
+	this->hudService->OnPhysicsSimulatePost();
 	// Called even while dead and not spectating: the MHUD layout has to be told to collapse, it
 	// does not fade out on its own the way the html centre panel did.
-	if (this->specService->GetSpectatedPlayer())
+	KZPlayer *hudSource = this->specService->GetSpectatedPlayer();
+	if (hudSource)
 	{
-		KZHUDService::DrawPanels(this->specService->GetSpectatedPlayer(), this);
+		KZHUDService::DrawPanels(hudSource, this);
 	}
 	else
 	{
@@ -310,6 +312,7 @@ void KZPlayer::OnSetupMovePost(PlayerCommand *pc)
 void KZPlayer::OnProcessMovement()
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
+	// Observe the entry snapshot before base-class events or mode/style corrections.
 	MovementPlayer::OnProcessMovement();
 
 	KZ::mode::ApplyModeSettings(this);
@@ -918,6 +921,7 @@ void KZPlayer::OnTeleport(const Vector *origin, const QAngle *angles, const Vect
 	this->modeService->OnTeleport(origin, angles, velocity);
 	this->timerService->OnTeleport(origin, angles, velocity);
 	this->recordingService->OnTeleport(origin, angles, velocity);
+	this->hudService->OnProgressTeleport(origin);
 	if (origin)
 	{
 		this->beamService->OnTeleport();

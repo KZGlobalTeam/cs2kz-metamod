@@ -248,6 +248,7 @@ static KHook::Return<void> GameFramePre(ISource2Server *pThis, bool simulating, 
 	KZBeamService::UpdateBeams();
 	KZPaintService::OnGameFrame();
 	KZ::replaysystem::OnGameFrame();
+	KZHUDService::OnGameFrame();
 	KZRacingService::BroadcastRaceInfo();
 	return {KHook::Action::Ignore};
 }
@@ -429,6 +430,7 @@ static KHook::Return<void> StartupServerPost(INetworkServerService *pThis, const
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
 	g_KZPlugin.AddonInit();
+	KZHUDService::ClearProgressRoutes();
 	KZ::course::ClearCourses();
 	KZ::mapapi::Init();
 	KZ::replaysystem::Init();
@@ -456,6 +458,7 @@ static KHook::Return<bool> FireEventPre(IGameEventManager2 *pThis, IGameEvent *e
 				if (player)
 				{
 					player->timerService->OnPlayerDeath();
+					player->hudService->ResetProgress();
 					player->quietService->SendFullUpdate();
 				}
 			}
@@ -486,6 +489,14 @@ static KHook::Return<bool> FireEventPre(IGameEventManager2 *pThis, IGameEvent *e
 				if (player)
 				{
 					player->timerService->OnPlayerSpawn();
+					if (player->timerService->GetTimerRunning())
+					{
+						player->hudService->OnProgressTeleport(&vec3_origin);
+					}
+					else
+					{
+						player->hudService->ResetProgress();
+					}
 				}
 			}
 		}
@@ -589,6 +600,7 @@ static KHook::Return<bool> ActivateServerPost(CNetworkGameServerBase *pThis)
 	KZGlobalService::OnActivateServer();
 	KZLanguageService::OnActivateServer();
 	KZHUDService::RefreshLayoutAvailability();
+	KZHUDService::OnMapReady();
 
 	char md5[33];
 	g_pKZUtils->GetCurrentMapMD5(md5, sizeof(md5));

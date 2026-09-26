@@ -821,6 +821,11 @@ void KZ::course::ClearCourses()
 	KZTimerService::ClearRecordCache();
 }
 
+const KZCourseDescriptor *KZ::course::GetCourseByIndex(u32 index)
+{
+	return index < (u32)g_sortedCourses.Count() ? g_sortedCourses[index] : nullptr;
+}
+
 u32 KZ::course::GetCourseCount()
 {
 	return g_sortedCourses.Count();

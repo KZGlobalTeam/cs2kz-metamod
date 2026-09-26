@@ -2,6 +2,8 @@
 #include "kz/kz.h"
 #include "kz/timer/kz_timer.h"
 #include "entityhandle.h"
+#include "progress/route.h"
+#include <memory>
 
 #define KZ_HUD_TIMER_STOPPED_GRACE_TIME 3.0f
 #define KZ_HUD_ON_GROUND_THRESHOLD      0.07f
@@ -217,6 +219,7 @@ struct MHUDPrefs
 	bool compactPanel {};
 	bool timerDetailed {true};
 	bool timerShowState {true};
+	bool showProgress {true};
 	bool speedPrecise {};
 	bool prespeedPrecise {};
 	MHUDPrespeedShow prespeedShow {MHUDPrespeedShow::Brief};
@@ -244,9 +247,36 @@ private:
 	f64 timerStoppedTime {};
 	f64 currentTimeWhenTimerStopped {};
 
+	// HUD-owned estimate for this player's current run. The immutable route can be shared by viewers.
+	struct ProgressState
+	{
+		std::shared_ptr<const KZ::progress::Route> route;
+		u32 courseGUID {};
+		KZ::progress::Match match;
+		Vector lastPosition = vec3_origin;
+		f64 rawProgress {}, displayedProgress {}, nextUpdate {}, stoppedAt {}, lastMatchedAt {-1};
+		bool initialized {}, running {}, finished {}, atStart {}, teleported {}, reacquire {true}, visible {};
+		u32 reacquireCount {};
+		bool approximate {};
+	} progress;
+
 public:
 	virtual void Reset() override;
 	static void Init();
+	static void OnGameFrame();
+	static void OnMapReady();
+	static void ClearProgressRoutes();
+
+	void ResetProgress();
+	void EnterProgressStart(u32 courseGUID);
+	void StartProgress(u32 courseGUID, bool fromStart = true);
+	void FinishProgress(u32 courseGUID);
+	void StopProgress();
+	void OnPhysicsSimulatePost();
+	void OnProgressTeleport(const Vector *origin);
+	KZ::progress::Anchor SaveProgressAnchor();
+	void RestoreProgressAnchor(const KZ::progress::Anchor &anchor);
+	void PrintProgressDebug();
 
 	static const MHUDColorPrefDef *GetMHUDElementColorPrefs(MHUDElement element, i32 &count);
 
@@ -388,6 +418,9 @@ private:
 	// Shared by both HUDs
 	std::string GetTimerText(const char *language = KZ_DEFAULT_LANGUAGE, bool showState = true);
 	std::string GetCheckpointText(const char *language = KZ_DEFAULT_LANGUAGE);
+	void UpdateProgress(bool force = false);
+	bool GetProgressDisplay(f64 &value) const;
+	std::string GetProgressText(const MHUDPrefs &prefs, const char *language) const;
 
 	static void DrawLegacyPanels(KZPlayer *player, KZPlayer *target);
 	// Legacy panels only.
@@ -432,6 +465,8 @@ private:
 	CHandle<CBaseEntity> ownedLayout {};
 	LayoutElementState layoutElements[(i32)MHUDElement::Count] {};
 	LayoutKeysState layoutKeys {};
+	f64 nextTimerLayoutUpdate {};
+	CHandle<CBaseEntity> timerLayoutSource {};
 
 	CCSCustomHudLayout *EnsureOwnedLayout(bool &created);
 
@@ -455,6 +490,7 @@ public:
 	void OnClientDisconnect()
 	{
 		this->DestroyOwnedLayout();
+		this->ResetProgress();
 	}
 
 	static void Cleanup();

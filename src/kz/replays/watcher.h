@@ -69,6 +69,7 @@ class ReplayWatcher
 	// External archival index: uuid -> archived unix timestamp
 	std::unordered_map<UUID_t, u64> archivedIndex;
 	bool archiveDirty = false;
+	std::atomic<u64> replayRevision {};
 	std::unordered_map<UUID_t, CachedReplayEntry> replayCache;
 	std::unordered_map<UUID_t, CachedReplayEntry> downloadedReplayCache;
 
@@ -90,6 +91,14 @@ class ReplayWatcher
 							  std::unordered_map<u64, std::vector<std::pair<UUID_t, u64>>> &manualReplaysBySteamID);
 
 public:
+	u64 GetRevision() const
+	{
+		return replayRevision.load();
+	}
+
+	// Read-only snapshot under the watcher's lock; no playback state is changed.
+	std::vector<std::pair<UUID_t, ReplayHeader>> GetProgressCandidates(const char *map, const char *md5);
+
 	void Start()
 	{
 		running = true;

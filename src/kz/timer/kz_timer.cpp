@@ -1,3 +1,4 @@
+#include "kz/hud/kz_hud.h"
 #include "kz_timer.h"
 #include "kz/db/kz_db.h"
 #include "kz/global/kz_global.h"
@@ -111,6 +112,7 @@ void KZTimerService::StartZoneStartTouch(const KZCourseDescriptor *course)
 {
 	this->touchedGroundSinceTouchingStartZone = !!(this->player->GetPlayerPawn()->m_fFlags & FL_ONGROUND);
 	this->TimerStop(false);
+	this->player->hudService->EnterProgressStart(course->guid);
 }
 
 void KZTimerService::StartZoneEndTouch(const KZCourseDescriptor *course)
@@ -959,6 +961,7 @@ void KZTimerService::OnChangeMoveType(MoveType_t oldMoveType)
 void KZTimerService::OnTeleportToStart()
 {
 	this->TimerStop();
+	this->player->hudService->ResetProgress();
 }
 
 void KZTimerService::OnClientDisconnect()
@@ -1227,6 +1230,7 @@ const PBData *KZTimerService::GetCompareTarget(PBDataKey key)
 
 void KZTimerService::ClearRecordCache()
 {
+	++recordCacheGeneration;
 	KZTimerService::srCache.clear();
 	KZTimerService::wrCache.clear();
 	for (i32 i = 0; i < MAXPLAYERS + 1; i++)
@@ -1241,8 +1245,13 @@ void KZTimerService::ClearRecordCache()
 
 void KZTimerService::UpdateLocalRecordCache()
 {
-	auto onQuerySuccess = [](std::vector<ISQLQuery *> queries)
+	auto onQuerySuccess = [generation = recordCacheGeneration](std::vector<ISQLQuery *> queries)
 	{
+		if (generation != recordCacheGeneration)
+		{
+			return;
+		}
+		srCache.clear();
 		ISQLResult *result = queries[0]->GetResultSet();
 		if (result && result->GetRowCount() > 0)
 		{
@@ -1258,7 +1267,8 @@ void KZTimerService::UpdateLocalRecordCache()
 				{
 					continue;
 				}
-				KZTimerService::InsertRecordToCache(result->GetFloat(0), course, modeInfo.id, true, false, result->GetString(3));
+				KZTimerService::InsertRecordToCache(result->GetFloat(0), course, modeInfo.id, true, false, result->GetString(3),
+													result->GetString(4));
 			}
 		}
 		result = queries[1]->GetResultSet();
@@ -1276,30 +1286,43 @@ void KZTimerService::UpdateLocalRecordCache()
 				{
 					continue;
 				}
-				KZTimerService::InsertRecordToCache(result->GetFloat(0), course, modeInfo.id, false, false, result->GetString(3));
+				KZTimerService::InsertRecordToCache(result->GetFloat(0), course, modeInfo.id, false, false, result->GetString(3),
+													result->GetString(4));
 			}
 		}
+		KZTimerService::NotifyRecordCacheUpdated();
 	};
 	KZDatabaseService::QueryAllRecords(g_pKZUtils->GetCurrentMapName(), onQuerySuccess, KZDatabaseService::OnGenericTxnFailure);
 }
 
 const PBData *KZTimerService::GetGlobalCachedRecord(const KZCourseDescriptor *course, PluginId modeID)
 {
-	PBDataKey key = ToPBDataKey(modeID, course->guid);
+	return GetCachedRecord(course, modeID, true);
+}
 
-	if (KZTimerService::wrCache.find(key) == KZTimerService::wrCache.end())
+const PBData *KZTimerService::GetCachedRecord(const KZCourseDescriptor *course, PluginId modeID, bool global)
+{
+	if (!course)
 	{
 		return nullptr;
 	}
-
-	return &KZTimerService::wrCache[key];
+	const auto &cache = global ? wrCache : srCache;
+	const auto it = cache.find(ToPBDataKey(modeID, course->guid));
+	return it == cache.end() ? nullptr : &it->second;
 }
 
-void KZTimerService::InsertRecordToCache(f64 time, const KZCourseDescriptor *course, PluginId modeID, bool overall, bool global, CUtlString metadata)
+void KZTimerService::NotifyRecordCacheUpdated()
+{
+	CALL_FORWARD(eventListeners, OnRecordCacheUpdated);
+}
+
+void KZTimerService::InsertRecordToCache(f64 time, const KZCourseDescriptor *course, PluginId modeID, bool overall, bool global, CUtlString metadata,
+										 const char *replayUUID)
 {
 	PBData &pb = global ? KZTimerService::wrCache[ToPBDataKey(modeID, course->guid)] : KZTimerService::srCache[ToPBDataKey(modeID, course->guid)];
 
 	overall ? pb.overall.pbTime = time : pb.pro.pbTime = time;
+	(overall ? pb.overall : pb.pro).replayUUID = replayUUID;
 	KeyValues3 kv(KV3_TYPEEX_TABLE, KV3_SUBTYPE_UNSPECIFIED);
 	CUtlString error = "";
 	if (metadata.IsEmpty())

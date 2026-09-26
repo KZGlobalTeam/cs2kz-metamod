@@ -210,6 +210,7 @@ void KZHUDService::RegisterMenu()
 
 	KZOptNode *general = KZ::menu::AddSub(hud, "Menu - General");
 	generalNode = general;
+	KZ::menu::AddToggle(general, "Progress - Show", "showProgress", true);
 	KZ::menu::AddChoice(general, "Menu - Style", GetStyleChoices, GetCurrentStyle, PickStyle);
 	// Both run through callbacks, so naming the preference is what makes them transferable.
 	KZ::menu::SetItemPref(general, "hudLegacyStyle", KZOptStorage::Bool);

@@ -178,6 +178,7 @@ void KZRecordingService::OnTimerEnd()
 		if (recorder.desiredStopTime < 0.0f)
 		{
 			recorder.End(this->player->timerService->GetTime(), this->player->checkpointService->GetTeleportCount());
+			recorder.replayHeader.mutable_run()->set_timer_valid(this->player->timerService->GetValidTimer());
 			// Generate UUID now (at timer end) so it's available for RecordAnnounce
 			// File will be written later after breather time
 			recorder.uuid = UUID_t(true);

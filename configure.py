@@ -35,4 +35,6 @@ parser.options.add_argument('--enable-optimize', action='store_const', const='1'
                        help='Enable optimization')
 parser.options.add_argument('--build-vendor-deps', action='store_true', dest='build_vendor_deps', default=False,
                        help='Build vendor static libraries (zstd, ixwebsocket) instead of the plugin.')
+parser.options.add_argument('--progress-tests', action='store_true', default=False,
+                       help='Build Progress route/matcher regression tests against the actual HL2SDK.')
 parser.Configure()

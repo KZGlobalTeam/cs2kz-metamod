@@ -63,6 +63,7 @@ void KZHUDService::RefreshPrefs()
 	this->prefs.compactPanel = opts->GetPreferenceBool("compactPanel", false);
 	this->prefs.timerDetailed = opts->GetPreferenceBool("mhudTimerDetailed", true);
 	this->prefs.timerShowState = opts->GetPreferenceBool("mhudTimerShowState", true);
+	this->prefs.showProgress = opts->GetPreferenceBool("showProgress", true);
 	this->prefs.speedPrecise = opts->GetPreferenceBool("mhudSpeedPrecise", false);
 	this->prefs.prespeedPrecise = opts->GetPreferenceBool("mhudPrespeedPrecise", false);
 	const i32 prespeedShow = (i32)opts->GetPreferenceInt("mhudPrespeedShow", (i64)MHUDPrespeedShow::Brief);

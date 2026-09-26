@@ -1,4 +1,5 @@
 #include <unordered_set>
+#include <cmath>
 #include "watcher.h"
 #include "kz/replays/kz_replaysystem.h"
 #include "kz/mode/kz_mode.h"
@@ -934,6 +935,24 @@ void ReplayWatcher::SweepOrphanedChunks(u64 currentTime)
 	g_pFullFileSystem->FindClose(findHandle);
 }
 
+template<typename MapT>
+static bool ReplayHeadersChanged(const MapT &oldHeaders, const MapT &newHeaders)
+{
+	if (oldHeaders.size() != newHeaders.size())
+	{
+		return true;
+	}
+	for (const auto &[id, header] : newHeaders)
+	{
+		auto old = oldHeaders.find(id);
+		if (old == oldHeaders.end() || old->second.SerializeAsString() != header.SerializeAsString())
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
 void ReplayWatcher::ScanReplays()
 {
 	char searchPath[MAX_PATH];
@@ -1085,6 +1104,10 @@ void ReplayWatcher::ScanReplays()
 	{
 		std::lock_guard<std::mutex> lock(this->replayMapsMutex);
 		this->cheaterReplays = std::move(newCheater);
+		if (ReplayHeadersChanged(this->runReplays, newRun))
+		{
+			++this->replayRevision;
+		}
 		this->runReplays = std::move(newRun);
 		this->jumpReplays = std::move(newJump);
 		this->manualReplays = std::move(newManual);
@@ -1192,6 +1215,10 @@ void ReplayWatcher::ScanDownloadedReplays(u64 currentTime)
 
 	{
 		std::lock_guard<std::mutex> lock(this->replayMapsMutex);
+		if (ReplayHeadersChanged(this->downloadedReplays, newDownloaded))
+		{
+			++this->replayRevision;
+		}
 		this->downloadedReplays = std::move(newDownloaded);
 	}
 }
@@ -1224,6 +1251,28 @@ std::vector<UUID_t> ReplayWatcher::FindReplaysByUUIDSubstring(const char *uuidSu
 	checkMap(this->downloadedReplays);
 
 	return matches;
+}
+
+std::vector<std::pair<UUID_t, ReplayHeader>> ReplayWatcher::GetProgressCandidates(const char *map, const char *md5)
+{
+	std::vector<std::pair<UUID_t, ReplayHeader>> result;
+	std::lock_guard<std::mutex> lock(replayMapsMutex);
+	auto collect = [&](const auto &entries)
+	{
+		for (const auto &entry : entries)
+		{
+			const auto &h = entry.second;
+			if (h.has_run() && h.map().name() == map && h.map().md5() == md5 && h.run().num_teleports() == 0
+				&& (!h.run().has_timer_valid() || h.run().timer_valid()) && h.run().styles_size() == 0 && h.run().time() > 0
+				&& std::isfinite(h.run().time()) && h.version() >= 4 && h.version() <= KZ_REPLAY_VERSION)
+			{
+				result.push_back(entry);
+			}
+		}
+	};
+	collect(runReplays);
+	collect(downloadedReplays);
+	return result;
 }
 
 ReplayWatcher g_ReplayWatcher;

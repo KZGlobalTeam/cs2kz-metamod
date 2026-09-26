@@ -1,3 +1,4 @@
+#include "kz/hud/kz_hud.h"
 #include "kz/kz.h"
 #include "kz_checkpoint.h"
 #include "../option/kz_option.h"
@@ -145,6 +146,7 @@ void KZCheckpointService::SetCheckpoint()
 		cp.onLadder = pawn->m_MoveType() == MOVETYPE_LADDER;
 	}
 	cp.groundEnt = pawn->m_hGroundEntity();
+	cp.progress = this->player->hudService->SaveProgressAnchor();
 	this->checkpoints.AddToTail(cp);
 	// newest checkpoints aren't deleted after using prev cp.
 	this->currentCpIndex = this->checkpoints.Count() - 1;
@@ -246,6 +248,7 @@ void KZCheckpointService::DoTeleport(const Checkpoint cp, bool stayOnGround)
 	this->undoTeleportData.teleportInAntiCpTrigger = this->player->triggerService->InAntiCpArea();
 	this->undoTeleportData.teleportInBhopTrigger = this->player->triggerService->InBhopTriggers();
 	this->undoTeleportData.origin = currentOrigin;
+	this->undoTeleportData.progress = this->player->hudService->SaveProgressAnchor();
 	this->player->GetAngles(&this->undoTeleportData.angles);
 	if (this->player->GetMoveServices())
 	{
@@ -310,6 +313,7 @@ void KZCheckpointService::DoTeleport(const Checkpoint cp, bool stayOnGround)
 		}
 	}
 
+	this->player->hudService->RestoreProgressAnchor(cp.progress);
 	this->tpCount++;
 	this->teleportTime = g_pKZUtils->GetServerGlobals()->curtime;
 	this->PlayTeleportSound();
