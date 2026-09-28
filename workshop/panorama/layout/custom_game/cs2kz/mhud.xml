@@ -45,5 +45,33 @@
     <Label id="mhud_cj" class="element hidden" text="{s:cj}" hittest="false" />
     <Label id="mhud_jumpbug" class="element hidden" text="{s:jumpbug}" hittest="false" />
 
+    <Panel id="mhud_js" class="js-stack" hittest="false">
+      <Panel class="js-history" hittest="false">
+        <Panel id="mhud_js_h0" class="js-hist" hittest="false"><Label id="mhud_js_h0_t" class="js-hist-type" text="{s:v}" hittest="false" /><Label id="mhud_js_h0_i" class="js-hist-info" text="{s:v}" hittest="false" /><Label id="mhud_js_h0_d" class="js-hist-dist" text="{s:v}" hittest="false" /></Panel>
+        <Panel id="mhud_js_h1" class="js-hist" hittest="false"><Label id="mhud_js_h1_t" class="js-hist-type" text="{s:v}" hittest="false" /><Label id="mhud_js_h1_i" class="js-hist-info" text="{s:v}" hittest="false" /><Label id="mhud_js_h1_d" class="js-hist-dist" text="{s:v}" hittest="false" /></Panel>
+        <Panel id="mhud_js_h2" class="js-hist" hittest="false"><Label id="mhud_js_h2_t" class="js-hist-type" text="{s:v}" hittest="false" /><Label id="mhud_js_h2_i" class="js-hist-info" text="{s:v}" hittest="false" /><Label id="mhud_js_h2_d" class="js-hist-dist" text="{s:v}" hittest="false" /></Panel>
+        <Panel id="mhud_js_h3" class="js-hist" hittest="false"><Label id="mhud_js_h3_t" class="js-hist-type" text="{s:v}" hittest="false" /><Label id="mhud_js_h3_i" class="js-hist-info" text="{s:v}" hittest="false" /><Label id="mhud_js_h3_d" class="js-hist-dist" text="{s:v}" hittest="false" /></Panel>
+        <Panel id="mhud_js_h4" class="js-hist" hittest="false"><Label id="mhud_js_h4_t" class="js-hist-type" text="{s:v}" hittest="false" /><Label id="mhud_js_h4_i" class="js-hist-info" text="{s:v}" hittest="false" /><Label id="mhud_js_h4_d" class="js-hist-dist" text="{s:v}" hittest="false" /></Panel>
+      </Panel>
+      <Panel id="mhud_js_panel" class="js-panel" hittest="false">
+        <Panel class="js-header" hittest="false">
+          <Label id="mhud_js_type" class="js-type" text="{s:v}" hittest="false" />
+          <Label id="mhud_js_tier" class="js-tier-name" text="{s:v}" hittest="false" />
+        </Panel>
+        <Label id="mhud_js_dist" class="js-dist" text="{s:v}" hittest="false" />
+        <Panel class="js-divider" hittest="false" />
+        <Panel class="js-row" hittest="false"><Label id="mhud_js_l0" class="js-label" text="{s:v}" hittest="false" /><Label id="mhud_js_v0" class="js-value" text="{s:v}" hittest="false" /></Panel>
+        <Panel class="js-row" hittest="false"><Label id="mhud_js_l1" class="js-label" text="{s:v}" hittest="false" /><Label id="mhud_js_v1" class="js-value" text="{s:v}" hittest="false" /></Panel>
+        <Panel class="js-row" hittest="false"><Label id="mhud_js_l2" class="js-label" text="{s:v}" hittest="false" /><Label id="mhud_js_v2" class="js-value" text="{s:v}" hittest="false" /></Panel>
+        <Panel class="js-row" hittest="false"><Label id="mhud_js_l3" class="js-label" text="{s:v}" hittest="false" /><Label id="mhud_js_v3" class="js-value" text="{s:v}" hittest="false" /></Panel>
+        <Panel class="js-row" hittest="false"><Label id="mhud_js_l4" class="js-label" text="{s:v}" hittest="false" /><Label id="mhud_js_v4" class="js-value" text="{s:v}" hittest="false" /></Panel>
+        <Panel class="js-row" hittest="false"><Label id="mhud_js_l5" class="js-label" text="{s:v}" hittest="false" /><Label id="mhud_js_v5" class="js-value" text="{s:v}" hittest="false" /></Panel>
+        <Panel class="js-row" hittest="false"><Label id="mhud_js_l6" class="js-label" text="{s:v}" hittest="false" /><Label id="mhud_js_v6" class="js-value" text="{s:v}" hittest="false" /></Panel>
+        <Panel class="js-row" hittest="false"><Label id="mhud_js_l7" class="js-label" text="{s:v}" hittest="false" /><Label id="mhud_js_v7" class="js-value" text="{s:v}" hittest="false" /></Panel>
+        <Panel class="js-row" hittest="false"><Label id="mhud_js_l8" class="js-label" text="{s:v}" hittest="false" /><Label id="mhud_js_v8" class="js-value" text="{s:v}" hittest="false" /></Panel>
+        <Panel class="js-row" hittest="false"><Label id="mhud_js_l9" class="js-label" text="{s:v}" hittest="false" /><Label id="mhud_js_v9" class="js-value" text="{s:v}" hittest="false" /></Panel>
+        <Panel class="js-row" hittest="false"><Label id="mhud_js_l10" class="js-label" text="{s:v}" hittest="false" /><Label id="mhud_js_v10" class="js-value" text="{s:v}" hittest="false" /></Panel>
+      </Panel>
+    </Panel>
   </Panel>
 </root>

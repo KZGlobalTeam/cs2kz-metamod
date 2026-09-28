@@ -5,6 +5,8 @@
 #include "kz/timer/kz_timer.h"
 #include "kz/checkpoint/kz_checkpoint.h"
 #include "kz/replays/kz_replaysystem.h"
+#include "kz/jumpstats/kz_jumpstats.h"
+#include "kz/mode/kz_mode.h"
 #include "sdk/entity/ccscustomhudlayout.h"
 
 #include "tier0/memdbgon.h"
@@ -297,10 +299,202 @@ void KZHUDService::UpdateIndicatorElements(CCSCustomHudLayout *layout, const Spe
 	}
 }
 
+//indexed with js tiers
+static_global const char *const JS_TIER_CLASSES[DISTANCETIER_COUNT] = {"js-tier-0", "js-tier-1", "js-tier-2", "js-tier-3",
+																	   "js-tier-4", "js-tier-5", "js-tier-6"};
+static_global const char *const JS_TIER_PHRASES[DISTANCETIER_COUNT] = {NULL,
+																	   "Menu - Tier Meh",
+																	   "Menu - Tier Impressive",
+																	   "Menu - Tier Perfect",
+																	   "Menu - Tier Godlike",
+																	   "Menu - Tier Ownage",
+																	   "Menu - Tier Wrecker"};
+//indexed with history pill age.. no class meaning its gon
+static_global const char *const JS_AGE_CLASSES[MHUD_JS_PILL_GONE_RANK] = {"js-age-0", "js-age-1", "js-age-2", "js-age-3"};
+
+//per pill: pill, type, info, distance
+static_global const char *const JS_PILL_PANELS[MHUD_JS_PILL_COUNT][4] = {
+	{"mhud_js_h0", "mhud_js_h0_t", "mhud_js_h0_i", "mhud_js_h0_d"}, {"mhud_js_h1", "mhud_js_h1_t", "mhud_js_h1_i", "mhud_js_h1_d"},
+	{"mhud_js_h2", "mhud_js_h2_t", "mhud_js_h2_i", "mhud_js_h2_d"}, {"mhud_js_h3", "mhud_js_h3_t", "mhud_js_h3_i", "mhud_js_h3_d"},
+	{"mhud_js_h4", "mhud_js_h4_t", "mhud_js_h4_i", "mhud_js_h4_d"}};
+
+#define JS_ROW_COUNT 11
+static_global const char *const JS_ROW_LABELS[JS_ROW_COUNT] = {"mhud_js_l0", "mhud_js_l1", "mhud_js_l2", "mhud_js_l3", "mhud_js_l4", "mhud_js_l5",
+															   "mhud_js_l6", "mhud_js_l7", "mhud_js_l8", "mhud_js_l9", "mhud_js_l10"};
+static_global const char *const JS_ROW_VALUES[JS_ROW_COUNT] = {"mhud_js_v0", "mhud_js_v1", "mhud_js_v2", "mhud_js_v3", "mhud_js_v4", "mhud_js_v5",
+															   "mhud_js_v6", "mhud_js_v7", "mhud_js_v8", "mhud_js_v9", "mhud_js_v10"};
+
+bool KZHUDService::ShowJumpstat(Jump *jump, i32 colorTier)
+{
+	if (!this->IsShowingPanel() || !this->IsUsingLayoutStyle())
+	{
+		return false;
+	}
+	bool created = false;
+	CCSCustomHudLayout *layout = this->EnsureOwnedLayout(created);
+	if (!layout)
+	{
+		return false;
+	}
+	LayoutJumpstatsState &js = this->layoutJumpstats;
+	if (js.hasShown)
+	{
+		this->PushJumpstatHistory(layout);
+	}
+
+	KZLanguageService *lang = this->player->languageService;
+	KZPlayer *jumper = jump->GetJumpPlayer();
+	const JumpType type = jump->GetReportJumpType();
+	const DistanceTier tier = jumper->modeService->GetDistanceTier(type, jump->GetDistance());
+	const std::string typeName = lang->PrepareMessage(jumpTypeStr[type]);
+	const std::string dist = lang->PrepareMessage("Jumpstats HUD - Distance", jump->GetDistance(true, false, 1));
+	layout->SetDialogVariableString("mhud_js_type", "v",
+									jump->IsFailstat() ? lang->PrepareMessage("Jumpstats HUD - Failstat", typeName.c_str()).c_str() : typeName.c_str());
+	layout->SetDialogVariableString("mhud_js_tier", "v", JS_TIER_PHRASES[tier] ? lang->PrepareMessage(JS_TIER_PHRASES[tier]).c_str() : "");
+	layout->SetDialogVariableString("mhud_js_dist", "v", dist.c_str());
+	this->SetLayoutClass(layout, "mhud_js_type", js.typeTierClass, JS_TIER_CLASSES[colorTier]);
+	this->SetLayoutClass(layout, "mhud_js_dist", js.distTierClass, JS_TIER_CLASSES[colorTier]);
+
+	const std::string labels[JS_ROW_COUNT] = {
+		lang->PrepareMessage("Strafes"),
+		lang->PrepareMessage("Sync"),
+		lang->PrepareMessage("Pre") + " / " + lang->PrepareMessage("Max"),
+		lang->PrepareMessage("Height"),
+		lang->PrepareMessage("Air Time"),
+		lang->PrepareMessage("Width"),
+		lang->PrepareMessage("Gain Efficiency (Short)"),
+		lang->PrepareMessage("Air Path"),
+		lang->PrepareMessage("Bad Angles (Short)") + " / " + lang->PrepareMessage("Overlap (Short)") + " / " + lang->PrepareMessage("Dead Air (Short)"),
+		lang->PrepareMessage("Jumpstats HUD - Release"),
+		lang->PrepareMessage("Offset"),
+	};
+	char values[JS_ROW_COUNT][32];
+	V_snprintf(values[0], sizeof(values[0]), "%i", jump->GetStrafeCount());
+	V_snprintf(values[1], sizeof(values[1]), "%.0f%%", jump->GetSync() * 100.0f);
+	V_snprintf(values[2], sizeof(values[2]), "%.1f / %.1f", jump->GetTakeoffSpeed(), jump->GetMaxSpeed());
+	V_snprintf(values[3], sizeof(values[3]), "%.1f", jump->GetMaxHeight());
+	V_snprintf(values[4], sizeof(values[4]), "%.3fs", jumper->landingTimeActual - jumper->takeoffTime);
+	V_snprintf(values[5], sizeof(values[5]), "%.1f°", jump->GetWidth());
+	V_snprintf(values[6], sizeof(values[6]), "%.0f%%", jump->GetGainEfficiency() * 100.0f);
+	V_snprintf(values[7], sizeof(values[7]), "%.2f", jump->GetAirPath());
+	V_snprintf(values[8], sizeof(values[8]), "%.0f%% / %.0f%% / %.0f%%", jump->GetBadAngles() * 100.0f, jump->GetOverlap() * 100.0f,
+			   jump->GetDeadAir() * 100.0f);
+	//Jump::GetReleaseString
+	const f32 release = jump->GetReleaseInTick();
+	if ((type != JumpType_LongJump && type != JumpType_LadderJump && type != JumpType_WeirdJump) || release < -20)
+	{
+		V_strncpy(values[9], "-", sizeof(values[9]));
+	}
+	else if (release > 10 || release == 0)
+	{
+		V_strncpy(values[9], release > 10 ? "✗" : "✓", sizeof(values[9]));
+	}
+	else
+	{
+		V_snprintf(values[9], sizeof(values[9]), "%+.1f", release);
+	}
+	V_snprintf(values[10], sizeof(values[10]), "%+.2f", jump->GetOffset());
+	for (i32 i = 0; i < JS_ROW_COUNT; i++)
+	{
+		layout->SetDialogVariableString(JS_ROW_LABELS[i], "v", labels[i].c_str());
+		layout->SetDialogVariableString(JS_ROW_VALUES[i], "v", values[i]);
+	}
+
+	js.shownType = jumpTypeShortStr[type];
+	if (jump->IsFailstat())
+	{
+		js.shownType += "-F";
+	}
+	js.shownInfo = lang->PrepareMessage("Jumpstats HUD - History Info", jump->GetStrafeCount(), jump->GetSync() * 100.0f, jump->GetTakeoffSpeed());
+	js.shownDist = dist;
+	js.shownTier = colorTier;
+	js.hasShown = true;
+	js.hideTime = g_pKZUtils->GetServerGlobals()->curtime + MHUD_JS_PANEL_TIME;
+	this->SetLayoutClass(layout, "mhud_js_panel", js.panelClass, "js-show");
+	return true;
+}
+
+void KZHUDService::PushJumpstatHistory(CCSCustomHudLayout *layout)
+{
+	LayoutJumpstatsState &js = this->layoutJumpstats;
+	js.hasShown = false;
+	//empty pill or oldest one
+	i32 index = 0;
+	for (i32 i = 0; i < MHUD_JS_PILL_COUNT; i++)
+	{
+		if (!js.pills[i].live)
+		{
+			index = i;
+			break;
+		}
+		if (js.pills[i].rank > js.pills[index].rank)
+		{
+			index = i;
+		}
+	}
+	//everything moves up in the hist pill stack, oldest one gon
+	for (i32 i = 0; i < MHUD_JS_PILL_COUNT; i++)
+	{
+		LayoutJumpstatsState::Pill &pill = js.pills[i];
+		if (pill.live && ++pill.rank >= MHUD_JS_PILL_GONE_RANK)
+		{
+			pill.live = false;
+		}
+	}
+
+	LayoutJumpstatsState::Pill &pill = js.pills[index];
+	pill.born = g_pKZUtils->GetServerGlobals()->curtime;
+	pill.rank = 0;
+	pill.live = true;
+	pill.expired = false;
+	pill.alt = !pill.alt;
+	const char *const *ids = JS_PILL_PANELS[index];
+	layout->SetDialogVariableString(ids[1], "v", js.shownType.c_str());
+	layout->SetDialogVariableString(ids[2], "v", js.shownInfo.c_str());
+	layout->SetDialogVariableString(ids[3], "v", js.shownDist.c_str());
+	this->SetLayoutClass(layout, ids[1], pill.typeTierClass, JS_TIER_CLASSES[js.shownTier]);
+	this->SetLayoutClass(layout, ids[3], pill.distTierClass, JS_TIER_CLASSES[js.shownTier]);
+}
+
+void KZHUDService::UpdateJumpstatsElement(CCSCustomHudLayout *layout, bool show, bool force)
+{
+	LayoutJumpstatsState &js = this->layoutJumpstats;
+	if (force)
+	{
+		js = LayoutJumpstatsState();
+	}
+	this->SetLayoutClass(layout, "mhud_js", js.stackClass, show ? NULL : "hidden");
+
+	const f64 now = g_pKZUtils->GetServerGlobals()->curtime;
+	if (js.hasShown && now >= js.hideTime)
+	{
+		this->PushJumpstatHistory(layout);
+		this->SetLayoutClass(layout, "mhud_js_panel", js.panelClass, "js-hide");
+	}
+	for (i32 i = 0; i < MHUD_JS_PILL_COUNT; i++)
+	{
+		LayoutJumpstatsState::Pill &pill = js.pills[i];
+		if (pill.live && now - pill.born >= MHUD_JS_HISTORY_TIME)
+		{
+			pill.live = false;
+			pill.expired = true;
+		}
+		const char *age = NULL;
+		if (pill.live || pill.expired)
+		{
+			age = pill.rank == 0 && pill.alt ? "js-age-0b" : JS_AGE_CLASSES[pill.rank];
+		}
+		this->SetLayoutClass(layout, JS_PILL_PANELS[i][0], pill.ageClass, age);
+		this->SetLayoutClass(layout, JS_PILL_PANELS[i][0], pill.expireClass, pill.expired ? "js-expire" : NULL);
+	}
+}
+
 bool KZHUDService::UpdateHudLayout(KZPlayer *source)
 {
 	bool created = false;
 	CCSCustomHudLayout *layout = this->EnsureOwnedLayout(created);
+	this->UpdateJumpstatsElement(layout, show, force);
+
 	if (!layout)
 	{
 		return false;

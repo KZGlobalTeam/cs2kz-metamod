@@ -4,6 +4,7 @@
 #include "kz/style/kz_style.h"
 #include "kz/option/kz_option.h"
 #include "kz/language/kz_language.h"
+#include "kz/hud/kz_hud.h"
 
 #include "utils/utils.h"
 #include "utils/simplecmds.h"
@@ -57,11 +58,17 @@ void KZJumpstatsService::PrintJumpToChat(KZPlayer *target, Jump *jump, bool exte
 	{
 		return;
 	}
-	const char *jumpColor = distanceTierColors[color];
 	if (isFailstat || jump->GetOffset() <= -JS_EPSILON || !jump->IsValid() || jsAlways)
 	{
-		jumpColor = distanceTierColors[DistanceTier_Meh];
+		color = DistanceTier_Meh;
 	}
+	//type "HUD" wont show the chat ones, "Both" will show both :aga:
+	const i64 reportTo = target->optionService->GetPreferenceInt("jsReportType", JSReportType_Hud);
+	if (reportTo != JSReportType_Chat && target->hudService->ShowJumpstat(jump, color) && reportTo != JSReportType_Both)
+	{
+		return;
+	}
+	const char *jumpColor = distanceTierColors[color];
 
 	std::string jumpTypeShort = jumpTypeShortStr[reportType];
 	if (isFailstat)

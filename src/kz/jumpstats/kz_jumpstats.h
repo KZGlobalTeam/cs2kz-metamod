@@ -37,6 +37,15 @@ enum DistanceTier : u8
 	DISTANCETIER_COUNT
 };
 
+//where to show js
+enum JSReportType : u8
+{
+	JSReportType_Hud = 0,
+	JSReportType_Chat,
+	JSReportType_Both,
+	JSREPORTTYPE_COUNT
+};
+
 #define IGNORE_JUMP_TIME                (0.2f + 0.001f) // To take floating errors into account
 #define JS_EPSILON                      0.03125f
 #define JS_MAX_LADDERJUMP_OFFSET        2.0f

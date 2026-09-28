@@ -292,6 +292,19 @@ void KZMenuService::Render()
 	// Nudge the whole menu left while one is open for 4:3 aspect ratio.
 	const bool shift = this->popup != Popup::None && this->player->optionService->GetPreferenceBool("menuPopupShift", true);
 	this->SetBoolClass(layout, "menu_root", "shift", this->applied.shift, shift);
+	
+	//remove world-blur from the menu and popups when anything hud related is being adjusted so the player can see
+	const std::vector<KZOptNode *> &tree = KZ::menu::GetTree();
+	const bool noBlur = this->popup != Popup::None && this->selectedCategory >= 0 && this->selectedCategory < (i32)tree.size()
+						&& KZ_STREQ(tree[this->selectedCategory]->phraseKey, "Menu - HUD");
+	if (this->applied.noBlur != noBlur)
+	{
+		this->applied.noBlur = noBlur;
+		for (const char *panelId : {"menu_box", "color_popup", "list_popup", "step_popup"})
+		{
+			layout->SetHasClass(panelId, "no-blur", noBlur ? k_eHudPanelClassStatus_HasClass : k_eHudPanelClassStatus_DoesNotHaveClass);
+		}
+	}
 
 	// The box stays put and centred; a popup is a third panel that appears to its right.
 	this->SetBoolClass(layout, "color_popup", "hidden", this->applied.colorHidden, this->popup != Popup::Color);

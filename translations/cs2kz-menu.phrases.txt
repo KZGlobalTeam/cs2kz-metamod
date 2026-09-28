@@ -1049,6 +1049,41 @@
 		"chi"		"报告我的跳跃"
 		"ua"		"Повідомляти про мої стрибки"
 	}
+	"Menu - JS Report Type"
+	{
+		"en"		"Report type"
+		"pl"		"Typ reportu"
+		"nl"		"Type rapport"
+		"de"		"Berichtstyp"
+	}
+	"Menu - JS Report Type Sub"
+	{
+		"en"		"Where your jumpstats are shown"
+		"pl"		"Gdzie pokazywać statty skow"
+		"nl"		"Waar je sprongstats worden weergegeven"
+		"de"		"Wo deine Sprungstats angezeigt werden"
+	}
+	"Menu - JS Report Type HUD"
+	{
+		"en"		"HUD"
+		"pl"		"HUD"
+		"nl"		"HUD"
+		"de"		"HUD"
+	}
+	"Menu - JS Report Type Chat"
+	{
+		"en"		"Chat"
+		"pl"		"Czat"
+		"nl"		"Chat"
+		"de"		"Chat"
+	}
+	"Menu - JS Report Type Both"
+	{
+		"en"		"Both"
+		"pl"		"Obydwa"
+		"nl"		"Beide"
+		"de"		"Beide"
+	}
 	"Menu - JS Always Sub"
 	{
 		"en"		"Report every jump, ignoring the tier thresholds below"

@@ -50,10 +50,35 @@ static_function void PickTier(KZPlayer *player, i64 tag, i64 id)
 	player->optionService->SetPreferenceInt(TIER_PREFS[tag].prefKey, id);
 }
 
+//JSReportType
+static_global const char *const REPORT_TYPE_LABELS[JSREPORTTYPE_COUNT] = {"Menu - JS Report Type HUD", "Menu - JS Report Type Chat",
+																		  "Menu - JS Report Type Both"};
+
+static_function void GetReportTypeChoices(KZPlayer *player, i64, std::vector<KZChoice> &out)
+{
+	for (i32 i = 0; i < JSREPORTTYPE_COUNT; i++)
+	{
+		out.push_back({KZMenuService::GetPhrase(player, REPORT_TYPE_LABELS[i]), i, NULL});
+	}
+}
+
+static_function i64 GetCurrentReportType(KZPlayer *player, i64)
+{
+	return Clamp(player->optionService->GetPreferenceInt("jsReportType", JSReportType_Hud), (i64)JSReportType_Hud, (i64)JSReportType_Both);
+}
+
+static_function void PickReportType(KZPlayer *player, i64, i64 id)
+{
+	player->optionService->SetPreferenceInt("jsReportType", Clamp(id, (i64)JSReportType_Hud, (i64)JSReportType_Both));
+}
+
 void KZJumpstatsService::RegisterMenu()
 {
 	KZOptNode *cat = KZ::menu::AddCategory("Menu - Jumpstats");
 	KZ::menu::AddToggle(cat, "Menu - JS Reporting", "jsReporting", true);
+	KZ::menu::AddChoice(cat, "Menu - JS Report Type", GetReportTypeChoices, GetCurrentReportType, PickReportType);
+	KZ::menu::SetItemPref(cat, "jsReportType", KZOptStorage::Int, JSReportType_Hud);
+	KZ::menu::SetItemSubtext(cat, "Menu - JS Report Type Sub");
 	KZ::menu::AddToggle(cat, "Menu - JS Always", "jsAlways", false);
 	KZ::menu::SetItemSubtext(cat, "Menu - JS Always Sub");
 	KZ::menu::AddToggle(cat, "Menu - JS Extended Stats", "jsExtendedChatStats", false);
