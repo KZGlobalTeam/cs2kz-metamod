@@ -8,7 +8,7 @@ SUMMARY
 Total languages: 13
 Total phrases: 885
 Phrases with missing translations: 669
-Total missing translation entries: 4596
+Total missing translation entries: 4587
 
 LANGUAGE COVERAGE (Phrases)
 ----------------------------------------------------------------------
@@ -25,7 +25,7 @@ LANGUAGE COVERAGE (Phrases)
   ru (russian)         [██████████████░░░░░░]  74.1% (656/885)
   sv (swedish)         [████████░░░░░░░░░░░░]  44.3% (392/885)
   tr (turkish)         [█████░░░░░░░░░░░░░░░]  29.6% (262/885)
-  ua (ukrainian)       [███████████████████░]  99.0% (876/885)
+  ua (ukrainian)       [████████████████████] 100.0% (885/885)
 
 Global languages (13): chi, de, en, es, fi, it, ko, lv, pl, ru, sv, tr, ua
 
@@ -503,10 +503,10 @@ cs2kz-jumpstats.phrases.txt
 cs2kz-language.phrases.txt
 ----------------------------------------------------------------------
   Line 22: "Language Command Usage"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 27: "Menu Hint"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 28: "Menu Hint"
     Missing (3): fi, it, tr
-  Line 42: "Language Change - Manual Menu Change Required"
+  Line 43: "Language Change - Manual Menu Change Required"
     Missing (3): fi, it, tr
 
 cs2kz-measure.phrases.txt
@@ -547,412 +547,412 @@ cs2kz-menu.phrases.txt
   Line 52: "Menu - Mimic Spec Sub"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
   Line 58: "Menu - Game HUD"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 62: "Menu - Game HUD All"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 66: "Menu - Game HUD All Sub"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 70: "Menu - Game HUD Crosshair"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 74: "Menu - Game HUD Weapons"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 78: "Menu - Game HUD Damage"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 82: "Menu - Game HUD Notices"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 86: "Menu - Game HUD Voice"
-    Missing (12): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr, ua
-  Line 90: "Menu - Compact Sub"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 63: "Menu - Game HUD All"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 68: "Menu - Game HUD All Sub"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 73: "Menu - Game HUD Crosshair"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 78: "Menu - Game HUD Weapons"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 83: "Menu - Game HUD Damage"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 88: "Menu - Game HUD Notices"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 93: "Menu - Game HUD Voice"
+    Missing (11): chi, de, es, fi, it, ko, lv, pl, ru, sv, tr
+  Line 98: "Menu - Compact Sub"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 96: "Menu - Outline"
+  Line 104: "Menu - Outline"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 102: "Menu - Font"
+  Line 110: "Menu - Font"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 108: "Menu - Font Local Note"
+  Line 116: "Menu - Font Local Note"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 114: "Menu - Enabled"
+  Line 122: "Menu - Enabled"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 120: "Menu - Position"
+  Line 128: "Menu - Position"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 126: "Menu - Size"
+  Line 134: "Menu - Size"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 132: "Menu - Reset"
+  Line 140: "Menu - Reset"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 138: "Menu - Timer"
+  Line 146: "Menu - Timer"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 144: "Menu - Prespeed"
+  Line 152: "Menu - Prespeed"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 150: "Menu - Keys"
+  Line 158: "Menu - Keys"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 156: "Menu - Timer Detail"
+  Line 164: "Menu - Timer Detail"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 162: "Menu - Align"
+  Line 170: "Menu - Align"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 168: "Menu - Align Left"
+  Line 176: "Menu - Align Left"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 174: "Menu - Align Center"
+  Line 182: "Menu - Align Center"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 180: "Menu - Align Right"
+  Line 188: "Menu - Align Right"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 186: "Menu - Timer State"
+  Line 194: "Menu - Timer State"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 192: "Menu - Affect Legacy Sub"
+  Line 200: "Menu - Affect Legacy Sub"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 198: "Menu - Decimal"
+  Line 206: "Menu - Decimal"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 204: "Menu - Border"
+  Line 212: "Menu - Border"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 210: "Menu - Border None"
+  Line 218: "Menu - Border None"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 216: "Menu - Border Sub"
+  Line 224: "Menu - Border Sub"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 222: "Menu - Prespeed Show"
+  Line 230: "Menu - Prespeed Show"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 228: "Menu - Prespeed Show Sub"
+  Line 236: "Menu - Prespeed Show Sub"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 234: "Menu - Prespeed Show Brief"
+  Line 242: "Menu - Prespeed Show Brief"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 240: "Menu - Prespeed Show Jump Only"
+  Line 248: "Menu - Prespeed Show Jump Only"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 246: "Menu - Prespeed Show Always"
+  Line 254: "Menu - Prespeed Show Always"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 252: "Menu - Indicators"
+  Line 260: "Menu - Indicators"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 258: "Menu - Ind Perf"
+  Line 266: "Menu - Ind Perf"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 264: "Menu - Ind Perf Position"
+  Line 272: "Menu - Ind Perf Position"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 270: "Menu - Ind Perf Align"
+  Line 278: "Menu - Ind Perf Align"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 276: "Menu - Ind Perf Size"
+  Line 284: "Menu - Ind Perf Size"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 282: "Menu - Ind Perf Font"
+  Line 290: "Menu - Ind Perf Font"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 288: "Menu - Ind Perf Outline"
+  Line 296: "Menu - Ind Perf Outline"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 294: "Menu - Ind Perf Opacity"
+  Line 302: "Menu - Ind Perf Opacity"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 300: "Menu - Ind Perf Color"
+  Line 308: "Menu - Ind Perf Color"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 306: "Menu - Ind Perf Acronym"
+  Line 314: "Menu - Ind Perf Acronym"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 312: "Menu - Ind CJ"
+  Line 320: "Menu - Ind CJ"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 318: "Menu - Ind CJ Position"
+  Line 326: "Menu - Ind CJ Position"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 324: "Menu - Ind CJ Align"
+  Line 332: "Menu - Ind CJ Align"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 330: "Menu - Ind CJ Size"
+  Line 338: "Menu - Ind CJ Size"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 336: "Menu - Ind CJ Font"
+  Line 344: "Menu - Ind CJ Font"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 342: "Menu - Ind CJ Outline"
+  Line 350: "Menu - Ind CJ Outline"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 348: "Menu - Ind CJ Opacity"
+  Line 356: "Menu - Ind CJ Opacity"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 354: "Menu - Ind CJ Color"
+  Line 362: "Menu - Ind CJ Color"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 360: "Menu - Ind CJ Acronym"
+  Line 368: "Menu - Ind CJ Acronym"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 366: "Menu - Ind JB"
+  Line 374: "Menu - Ind JB"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 372: "Menu - Ind JB Position"
+  Line 380: "Menu - Ind JB Position"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 378: "Menu - Ind JB Align"
+  Line 386: "Menu - Ind JB Align"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 384: "Menu - Ind JB Size"
+  Line 392: "Menu - Ind JB Size"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 390: "Menu - Ind JB Font"
+  Line 398: "Menu - Ind JB Font"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 396: "Menu - Ind JB Outline"
+  Line 404: "Menu - Ind JB Outline"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 402: "Menu - Ind JB Opacity"
+  Line 410: "Menu - Ind JB Opacity"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 408: "Menu - Ind JB Color"
+  Line 416: "Menu - Ind JB Color"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 414: "Menu - Ind JB Acronym"
+  Line 422: "Menu - Ind JB Acronym"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 420: "Menu - Keys Overlap Sub"
+  Line 428: "Menu - Keys Overlap Sub"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 426: "Menu - Keys Overlap"
+  Line 434: "Menu - Keys Overlap"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 432: "Menu - Keys Overlap Axis"
+  Line 440: "Menu - Keys Overlap Axis"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 438: "Menu - Keys Overlap Axis Sub"
+  Line 446: "Menu - Keys Overlap Axis Sub"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 444: "Menu - Color Base"
+  Line 452: "Menu - Color Base"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 450: "Menu - Color CJ"
+  Line 458: "Menu - Color CJ"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 456: "Menu - Color Perf"
+  Line 464: "Menu - Color Perf"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 462: "Menu - Color Crouch Perf"
+  Line 470: "Menu - Color Crouch Perf"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 468: "Menu - Color Jumpbug"
+  Line 476: "Menu - Color Jumpbug"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 474: "Menu - Color Pro"
+  Line 482: "Menu - Color Pro"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 480: "Menu - Color TP"
+  Line 488: "Menu - Color TP"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 486: "Menu - Color Paused"
+  Line 494: "Menu - Color Paused"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 492: "Menu - Color Stopped"
+  Line 500: "Menu - Color Stopped"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 498: "Menu - Misc"
+  Line 506: "Menu - Misc"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 504: "Menu - General"
+  Line 512: "Menu - General"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 510: "Menu - Menu"
+  Line 518: "Menu - Menu"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 516: "Menu - Style"
+  Line 524: "Menu - Style"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 522: "Menu - Style Layout"
+  Line 530: "Menu - Style Layout"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 528: "Menu - Style Legacy"
+  Line 536: "Menu - Style Legacy"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 534: "Menu - Checkpoint"
+  Line 542: "Menu - Checkpoint"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 540: "Menu - Reset All"
+  Line 548: "Menu - Reset All"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 546: "Menu - Keys Unpressed"
+  Line 554: "Menu - Keys Unpressed"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 552: "Menu - Keys Unpressed Show"
+  Line 560: "Menu - Keys Unpressed Show"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 558: "Menu - Keys Unpressed Hide"
+  Line 566: "Menu - Keys Unpressed Hide"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 564: "Menu - Keys Unpressed Underscore"
+  Line 572: "Menu - Keys Unpressed Underscore"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 570: "Menu - Keys Letters"
+  Line 578: "Menu - Keys Letters"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 576: "Menu - Keys Square"
+  Line 584: "Menu - Keys Square"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 582: "Menu - Keys Border"
+  Line 590: "Menu - Keys Border"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 588: "Menu - Keys Fill"
+  Line 596: "Menu - Keys Fill"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 594: "Menu - Opacity"
+  Line 602: "Menu - Opacity"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 600: "Menu - Keys Glow Fill Sub"
+  Line 608: "Menu - Keys Glow Fill Sub"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 606: "Menu - Keys Glow"
+  Line 614: "Menu - Keys Glow"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 612: "Menu - Sounds"
+  Line 620: "Menu - Sounds"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 618: "Menu - Popup Shift"
+  Line 626: "Menu - Popup Shift"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 624: "Menu - Popup Shift Sub"
+  Line 632: "Menu - Popup Shift Sub"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 630: "Menu - Color"
+  Line 638: "Menu - Color"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 636: "Menu - Color Overlap"
+  Line 644: "Menu - Color Overlap"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 642: "Menu - Color Pressed"
+  Line 650: "Menu - Color Pressed"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 648: "Menu - Color Overlap Glow"
+  Line 656: "Menu - Color Overlap Glow"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 654: "Menu - Mode"
+  Line 662: "Menu - Mode"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 660: "Menu - Pistol"
+  Line 668: "Menu - Pistol"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 666: "Menu - Beam Offset"
+  Line 674: "Menu - Beam Offset"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 672: "Menu - Beam Offset Sub"
+  Line 680: "Menu - Beam Offset Sub"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 678: "Menu - Styles"
+  Line 686: "Menu - Styles"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 684: "Menu - Lang en"
+  Line 692: "Menu - Lang en"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 690: "Menu - Lang ar"
+  Line 698: "Menu - Lang ar"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 696: "Menu - Lang pt"
+  Line 704: "Menu - Lang pt"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 702: "Menu - Lang bg"
+  Line 710: "Menu - Lang bg"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 708: "Menu - Lang cze"
+  Line 716: "Menu - Lang cze"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 714: "Menu - Lang da"
+  Line 722: "Menu - Lang da"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 720: "Menu - Lang nl"
+  Line 728: "Menu - Lang nl"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 726: "Menu - Lang fi"
+  Line 734: "Menu - Lang fi"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 732: "Menu - Lang fr"
+  Line 740: "Menu - Lang fr"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 738: "Menu - Lang de"
+  Line 746: "Menu - Lang de"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 744: "Menu - Lang el"
+  Line 752: "Menu - Lang el"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 750: "Menu - Lang he"
+  Line 758: "Menu - Lang he"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 756: "Menu - Lang hu"
+  Line 764: "Menu - Lang hu"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 762: "Menu - Lang it"
+  Line 770: "Menu - Lang it"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 768: "Menu - Lang jp"
+  Line 776: "Menu - Lang jp"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 774: "Menu - Lang ko"
+  Line 782: "Menu - Lang ko"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 780: "Menu - Lang lv"
+  Line 788: "Menu - Lang lv"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 786: "Menu - Lang lt"
+  Line 794: "Menu - Lang lt"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 792: "Menu - Lang no"
+  Line 800: "Menu - Lang no"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 798: "Menu - Lang pl"
+  Line 806: "Menu - Lang pl"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 804: "Menu - Lang pt_p"
+  Line 812: "Menu - Lang pt_p"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 810: "Menu - Lang ro"
+  Line 818: "Menu - Lang ro"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 816: "Menu - Lang ru"
+  Line 824: "Menu - Lang ru"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 822: "Menu - Lang chi"
+  Line 830: "Menu - Lang chi"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 828: "Menu - Lang sk"
+  Line 836: "Menu - Lang sk"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 834: "Menu - Lang es"
+  Line 842: "Menu - Lang es"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 840: "Menu - Lang sv"
+  Line 848: "Menu - Lang sv"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 846: "Menu - Lang zho"
+  Line 854: "Menu - Lang zho"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 852: "Menu - Lang th"
+  Line 860: "Menu - Lang th"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 858: "Menu - Lang tr"
+  Line 866: "Menu - Lang tr"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 864: "Menu - Lang ua"
+  Line 872: "Menu - Lang ua"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 870: "Menu - Lang vi"
+  Line 878: "Menu - Lang vi"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 876: "Menu - Language"
+  Line 884: "Menu - Language"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 882: "Menu - Beam"
+  Line 890: "Menu - Beam"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 888: "Menu - Beam None"
+  Line 896: "Menu - Beam None"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 894: "Menu - Beam Ground"
+  Line 902: "Menu - Beam Ground"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 900: "Menu - Beam Feet"
+  Line 908: "Menu - Beam Feet"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 906: "Menu - FOV"
+  Line 914: "Menu - FOV"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 912: "Menu - Record Volume Sub"
+  Line 920: "Menu - Record Volume Sub"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 918: "Menu - JS Volume Sub"
+  Line 926: "Menu - JS Volume Sub"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 924: "Menu - Record Volume"
+  Line 932: "Menu - Record Volume"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 930: "Menu - JS Volume"
+  Line 938: "Menu - JS Volume"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 936: "Menu - Timer Category"
+  Line 944: "Menu - Timer Category"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 942: "Menu - Map Overlay Sub"
+  Line 950: "Menu - Map Overlay Sub"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 948: "Menu - Map Overlay"
+  Line 956: "Menu - Map Overlay"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 954: "Menu - Timer Stop Sound"
+  Line 962: "Menu - Timer Stop Sound"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 960: "Menu - Safeguard Sub"
+  Line 968: "Menu - Safeguard Sub"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 966: "Menu - Safeguard"
+  Line 974: "Menu - Safeguard"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 972: "Menu - Safeguard Off"
+  Line 980: "Menu - Safeguard Off"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 978: "Menu - Safeguard Nub"
+  Line 986: "Menu - Safeguard Nub"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 984: "Menu - Safeguard Pro"
+  Line 992: "Menu - Safeguard Pro"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 990: "Menu - Compare Sub"
+  Line 998: "Menu - Compare Sub"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 996: "Menu - Compare"
+  Line 1004: "Menu - Compare"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 1002: "Menu - Compare None"
+  Line 1010: "Menu - Compare None"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 1008: "Menu - Compare Local PB"
+  Line 1016: "Menu - Compare Local PB"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 1014: "Menu - Compare Global PB"
+  Line 1022: "Menu - Compare Global PB"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 1020: "Menu - Compare Server Record"
+  Line 1028: "Menu - Compare Server Record"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 1026: "Menu - Compare World Record"
+  Line 1034: "Menu - Compare World Record"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 1032: "Menu - Jumpstats"
+  Line 1040: "Menu - Jumpstats"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 1038: "Menu - JS Reporting"
+  Line 1046: "Menu - JS Reporting"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 1044: "Menu - JS Always Sub"
+  Line 1052: "Menu - JS Always Sub"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 1050: "Menu - JS Always"
+  Line 1058: "Menu - JS Always"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 1056: "Menu - JS Extended Stats"
+  Line 1064: "Menu - JS Extended Stats"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 1062: "Menu - JS Failstats"
+  Line 1070: "Menu - JS Failstats"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 1068: "Menu - JS Failstats Console"
+  Line 1076: "Menu - JS Failstats Console"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 1074: "Menu - JS Min Tier"
+  Line 1082: "Menu - JS Min Tier"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 1080: "Menu - JS Min Tier Console"
+  Line 1088: "Menu - JS Min Tier Console"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 1086: "Menu - JS Sound Min Tier"
+  Line 1094: "Menu - JS Sound Min Tier"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 1092: "Menu - JS Broadcast Min Tier"
+  Line 1100: "Menu - JS Broadcast Min Tier"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 1098: "Menu - JS Broadcast Min Tier Console"
+  Line 1106: "Menu - JS Broadcast Min Tier Console"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 1104: "Menu - JS Broadcast Sound Min Tier"
+  Line 1112: "Menu - JS Broadcast Sound Min Tier"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 1110: "Menu - Tier None"
+  Line 1118: "Menu - Tier None"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 1116: "Menu - Tier Meh"
+  Line 1124: "Menu - Tier Meh"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 1122: "Menu - Tier Impressive"
+  Line 1130: "Menu - Tier Impressive"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 1128: "Menu - Tier Perfect"
+  Line 1136: "Menu - Tier Perfect"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 1134: "Menu - Tier Godlike"
+  Line 1142: "Menu - Tier Godlike"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 1140: "Menu - Tier Ownage"
+  Line 1148: "Menu - Tier Ownage"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 1146: "Menu - Tier Wrecker"
+  Line 1154: "Menu - Tier Wrecker"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 1152: "Menu - Checkpoints"
+  Line 1160: "Menu - Checkpoints"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 1158: "Menu - Checkpoint Message"
+  Line 1166: "Menu - Checkpoint Message"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 1164: "Menu - Checkpoint Sound"
+  Line 1172: "Menu - Checkpoint Sound"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 1170: "Menu - Teleport Sound"
+  Line 1178: "Menu - Teleport Sound"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 1176: "Menu - Paint"
+  Line 1184: "Menu - Paint"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 1182: "Menu - Paint Color Sub"
+  Line 1190: "Menu - Paint Color Sub"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 1188: "Menu - Show All Paint"
+  Line 1196: "Menu - Show All Paint"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 1194: "Menu - Hide Other Players"
+  Line 1202: "Menu - Hide Other Players"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 1200: "Menu - Hide Weapon"
+  Line 1208: "Menu - Hide Weapon"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 1206: "Menu - Hide Legs"
+  Line 1214: "Menu - Hide Legs"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 1212: "Menu - Show Tips"
+  Line 1220: "Menu - Show Tips"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 1218: "Menu - Export Prefs"
+  Line 1226: "Menu - Export Prefs"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 1224: "Prefs - Export Header"
+  Line 1232: "Prefs - Export Header"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 1230: "Prefs - Export Launch Option"
+  Line 1238: "Prefs - Export Launch Option"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 1236: "Prefs - Export Stamp Note"
+  Line 1244: "Prefs - Export Stamp Note"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 1242: "Prefs - Export Footer"
+  Line 1250: "Prefs - Export Footer"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 1248: "Prefs - Exported"
+  Line 1256: "Prefs - Exported"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 1255: "Prefs - Imported"
+  Line 1263: "Prefs - Imported"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
-  Line 1262: "Menu - Unavailable"
+  Line 1270: "Menu - Unavailable"
     Missing (10): de, es, fi, it, ko, lv, pl, ru, sv, tr
 
 cs2kz-paint.phrases.txt
