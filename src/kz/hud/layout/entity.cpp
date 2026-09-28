@@ -161,6 +161,7 @@ void KZHUDService::DestroyOwnedLayout()
 		this->layoutElements[i] = LayoutElementState();
 	}
 	this->layoutKeys = LayoutKeysState();
+	this->layoutJumpstats = LayoutJumpstatsState();
 }
 
 void KZHUDService::Cleanup()

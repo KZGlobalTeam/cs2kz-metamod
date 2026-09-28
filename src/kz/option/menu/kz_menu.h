@@ -130,6 +130,7 @@ private:
 		bool sounds {};           // menu_root "snd", gating every hover/click sound in menu.css
 		bool shift {};            // menu_root "shift", nudging the menu left so an open popup clears a 4:3/5:4 screen edge
 		bool fontReflow {};       // menu_root "font-reflow"
+		bool noBlur {};           // menu_box and popups "no-blur", so the player can see whats under it
 		bool colorHidden {true};  // color_popup "hidden"
 		bool listHidden {true};   // list_popup "hidden"
 		bool stepHidden {true};   // step_popup "hidden"

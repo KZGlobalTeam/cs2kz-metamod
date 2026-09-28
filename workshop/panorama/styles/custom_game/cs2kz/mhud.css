@@ -133,3 +133,253 @@
 .keys-underscore .key-button:not(.pressed) .key-glyph-idle {
 	visibility: visible;
 }
+
+/*Jumpstats*/
+.js-stack {
+	width: 200px;
+	horizontal-align: right;
+	vertical-align: center;
+	margin-right: 28px;
+	flow-children: down;
+}
+
+.js-history {
+	width: 100%;
+	height: 110px;
+	margin-bottom: 6px;
+}
+
+/*pills are all bottom anchored in js-history.. the age class alone moves, shrinks and fades them*/
+.js-hist {
+	opacity: 0;
+	transform: translate3d(0px, -104px, 0px) scale3d(0.68, 1, 1);
+
+	width: 230px;
+	height: 20px;
+	horizontal-align: right;
+	vertical-align: bottom;
+	padding: 0px 10px;
+
+	background-color: #000000b8;
+	background-image: url("s2r://panorama/images/backgrounds/bluedots_large_png.vtex");
+	background-size: 360px 360px;
+	background-img-opacity: 0.015;
+	world-blur: gaussian(1, 1, 1);
+	border-radius: 3px;
+
+	transform-origin: 100% 50%;
+	transition-property: transform, opacity;
+	transition-duration: 0.3s;
+	transition-timing-function: ease-out;
+}
+
+/*0 is only ever a fresh hist pill.. it slides in from the side*/
+.js-hist.js-age-0,
+.js-hist.js-age-0b {
+	opacity: 1;
+	transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1);
+	animation-duration: 0.3s;
+	animation-timing-function: ease-out;
+	animation-iteration-count: 1;
+}
+
+.js-hist.js-age-0 {
+	animation-name: js-pill-in-a;
+}
+
+.js-hist.js-age-0b {
+	animation-name: js-pill-in-b;
+}
+
+@keyframes 'js-pill-in-a' {
+	0% {
+		opacity: 0;
+		transform: translate3d(70px, 0px, 0px) scale3d(1, 1, 1);
+	}
+	100% {
+		opacity: 1;
+		transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1);
+	}
+}
+
+@keyframes 'js-pill-in-b' {
+	0% {
+		opacity: 0;
+		transform: translate3d(70px, 0px, 0px) scale3d(1, 1, 1);
+	}
+	100% {
+		opacity: 1;
+		transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1);
+	}
+}
+
+.js-hist.js-age-1 {
+	opacity: 0.85;
+	transform: translate3d(0px, -26px, 0px) scale3d(0.92, 1, 1);
+}
+
+.js-hist.js-age-2 {
+	opacity: 0.6;
+	transform: translate3d(0px, -52px, 0px) scale3d(0.84, 1, 1);
+}
+
+.js-hist.js-age-3 {
+	opacity: 0.35;
+	transform: translate3d(0px, -78px, 0px) scale3d(0.76, 1, 1);
+}
+
+.js-hist.js-expire {
+	opacity: 0;
+}
+
+.js-hist-type {
+	horizontal-align: left;
+	vertical-align: center;
+	font-family: Stratum2, "Arial Unicode MS";
+	font-size: 12px;
+	font-weight: bold;
+}
+
+.js-hist-info {
+	horizontal-align: left;
+	vertical-align: center;
+	margin-left: 30px;
+	font-family: Stratum2, "Arial Unicode MS";
+	font-size: 9px;
+	font-weight: medium;
+	color: #9a9a9a;
+}
+
+.js-hist-dist {
+	horizontal-align: right;
+	vertical-align: center;
+	font-family: "Stratum2 Mono", "Arial Unicode MS";
+	font-size: 14px;
+	font-weight: bold;
+}
+
+.js-panel {
+	width: 100%;
+	flow-children: down;
+	padding: 9px 11px 7px 11px;
+
+	background-color: #000000b8;
+	background-image: url("s2r://panorama/images/backgrounds/bluedots_large_png.vtex");
+	background-size: 360px 360px;
+	background-img-opacity: 0.015;
+	world-blur: gaussian(1, 1, 1);
+	border-radius: 3px;
+
+	opacity: 0;
+}
+
+.js-panel.js-show {
+	opacity: 1;
+	animation-name: js-slide-in;
+	animation-duration: 0.28s;
+	animation-timing-function: ease-out;
+	animation-iteration-count: 1;
+}
+
+.js-panel.js-hide {
+	opacity: 0;
+	animation-name: js-slide-out;
+	animation-duration: 0.22s;
+	animation-timing-function: ease-in;
+	animation-iteration-count: 1;
+}
+
+@keyframes 'js-slide-in' {
+	0% {
+		opacity: 0;
+		transform: translate3d(70px, 0px, 0px);
+	}
+	100% {
+		opacity: 1;
+		transform: translate3d(0px, 0px, 0px);
+	}
+}
+
+@keyframes 'js-slide-out' {
+	0% {
+		opacity: 1;
+		transform: translate3d(0px, 0px, 0px);
+	}
+	100% {
+		opacity: 0;
+		transform: translate3d(70px, 0px, 0px);
+	}
+}
+
+.js-header {
+	width: 100%;
+	height: 16px;
+}
+
+.js-type {
+	horizontal-align: left;
+	vertical-align: center;
+	font-family: Stratum2, "Arial Unicode MS";
+	font-size: 12px;
+	font-weight: bold;
+	text-transform: uppercase;
+}
+
+.js-tier-name {
+	horizontal-align: right;
+	vertical-align: center;
+	font-family: Stratum2, "Arial Unicode MS";
+	font-size: 10px;
+	font-weight: medium;
+	color: #828282;
+	text-transform: uppercase;
+}
+
+.js-dist {
+	horizontal-align: center;
+	margin: 2px 0px 6px 0px;
+	font-family: "Stratum2 Mono", "Arial Unicode MS";
+	font-size: 30px;
+	font-weight: bold;
+	text-shadow: 1px 1px 2px 1.0 #000000cc;
+}
+
+.js-divider {
+	width: 100%;
+	height: 0px;
+	border-bottom: 1px solid #ffffff14;
+	margin-bottom: 6px;
+}
+
+.js-row {
+	width: 100%;
+	height: 15px;
+}
+
+.js-label {
+	horizontal-align: left;
+	vertical-align: center;
+	font-family: Stratum2, "Arial Unicode MS";
+	font-size: 11px;
+	font-weight: medium;
+	color: #828282;
+	text-transform: uppercase;
+}
+
+.js-value {
+	horizontal-align: right;
+	vertical-align: center;
+	font-family: "Stratum2 Mono", "Arial Unicode MS";
+	font-size: 12px;
+	font-weight: bold;
+	color: #ffffffcc;
+}
+
+/*js tier colors*/
+.js-tier-0 { color: #9a9a9a; }
+.js-tier-1 { color: #9a9a9a; }
+.js-tier-2 { color: #5aa9ff; }
+.js-tier-3 { color: #55ff7a; }
+.js-tier-4 { color: #e0424e; }
+.js-tier-5 { color: #ffd24a; }
+.js-tier-6 { color: #d67cff; }

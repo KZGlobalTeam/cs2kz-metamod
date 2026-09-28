@@ -378,6 +378,72 @@
 		"lv"		"AvgGain"
 	}
 
+	// =====[ JUMP TYPES ]=====
+	"Long Jump"
+	{
+		"en"		"Long Jump"
+	}
+	"Bunnyhop"
+	{
+		"en"		"Bunnyhop"
+	}
+	"Multi Bunnyhop"
+	{
+		"en"		"Multi Bunnyhop"
+	}
+	"Weird Jump"
+	{
+		"en"		"Weird Jump"
+	}
+	"Ladder Jump"
+	{
+		"en"		"Ladder Jump"
+	}
+	"Ladderhop"
+	{
+		"en"		"Ladderhop"
+	}
+	"Jumpbug"
+	{
+		"en"		"Jumpbug"
+	}
+	"Fall"
+	{
+		"en"		"Fall"
+	}
+	"Unknown Jump"
+	{
+		"en"		"Unknown Jump"
+	}
+	"Invalid Jump"
+	{
+		"en"		"Invalid Jump"
+	}
+
+	// =====[ HUD ]=====
+	"Jumpstats HUD - Distance"
+	{
+		// 258.1 u
+		"#format"	"distance:.1f"
+		"en"		"{distance} u"
+	}
+	"Jumpstats HUD - Failstat"
+	{
+		// Failed lj
+		"#format"	"jump_type:s"
+		"en"		"Failed {jump_type}"
+	}
+	"Jumpstats HUD - Release"
+	{
+		"en"		"W Release"
+	}
+	"Jumpstats HUD - History Info"
+	{
+		// 5 str | 91% sync | 274 pre
+		"#format"	"strafe_count:i,sync:.0f,pre:.0f"
+		"en"		"{strafe_count} str | {sync}%% sync | {pre} pre"
+	}
+
 	// =====[ INVALIDATION REASONS ]=====
 	"First jump"
 	{

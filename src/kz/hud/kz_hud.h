@@ -27,6 +27,12 @@ struct GameHudPartDef
 extern const GameHudPartDef GAME_HUD_PARTS[GAME_HUD_PART_COUNT];
 class CCSCustomHudLayout;
 class CCheckTransmitInfo;
+class Jump;
+
+#define MHUD_JS_PILL_COUNT     5
+#define MHUD_JS_PILL_GONE_RANK 4
+#define MHUD_JS_PANEL_TIME     6.0f
+#define MHUD_JS_HISTORY_TIME   10.0f
 
 enum class MHUDElement
 {
@@ -429,9 +435,39 @@ private:
 		const char *fontClass {};
 	};
 
+	// js panel and the history pillies
+	struct LayoutJumpstatsState
+	{
+		struct Pill
+		{
+			f64 born {};
+			i32 rank {};
+			bool live {};
+			bool expired {};
+			bool alt {}; // flipped on reuse so the entry pill animation restarts
+			const char *ageClass {};
+			const char *expireClass {};
+			const char *typeTierClass {};
+			const char *distTierClass {};
+		};
+
+		Pill pills[MHUD_JS_PILL_COUNT] {};
+		std::string shownType {};
+		std::string shownInfo {};
+		std::string shownDist {};
+		i32 shownTier {};
+		bool hasShown {};
+		f64 hideTime {};
+		const char *stackClass {};
+		const char *panelClass {};
+		const char *typeTierClass {};
+		const char *distTierClass {};
+	};
+
 	CHandle<CBaseEntity> ownedLayout {};
 	LayoutElementState layoutElements[(i32)MHUDElement::Count] {};
 	LayoutKeysState layoutKeys {};
+	LayoutJumpstatsState layoutJumpstats {};
 
 	CCSCustomHudLayout *EnsureOwnedLayout(bool &created);
 
@@ -446,8 +482,11 @@ private:
 	void UpdateKeysElement(CCSCustomHudLayout *layout, KZPlayer *source, bool force);
 	void UpdateCheckpointElement(CCSCustomHudLayout *layout, KZPlayer *source, bool force);
 	void UpdateIndicatorElements(CCSCustomHudLayout *layout, const SpeedInfo &info, bool force);
+	void UpdateJumpstatsElement(CCSCustomHudLayout *layout, bool show, bool force);
+	void PushJumpstatHistory(CCSCustomHudLayout *layout);
 
 public:
+	bool ShowJumpstat(Jump *jump, i32 colorTier);
 	static CCSCustomHudLayout *GetLayoutEntity(const char *layoutPath, CHandle<CBaseEntity> &cache);
 
 	void DestroyOwnedLayout();
