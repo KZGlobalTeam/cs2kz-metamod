@@ -85,6 +85,24 @@ public:
 		return camera;
 	}
 
+	// A CONTROLLED camera at the eyes freezes the view, while the client keeps sending view angles.
+	// Renamed so GetCustomCamera() never hands it to a map script.
+	static CCSCustomPlayerCamera *CreateLocked(CCSPlayerPawn *pawn, const char *designerName)
+	{
+		CCSCustomPlayerCamera *camera = Create(pawn);
+		if (!camera)
+		{
+			return NULL;
+		}
+		camera->m_pEntity->m_designerName = GameEntitySystem()->AllocPooledString(designerName);
+		Vector eyes = pawn->m_CBodyComponent()->m_pSceneNode()->m_vecAbsOrigin();
+		eyes.z += (pawn->m_fFlags() & FL_DUCKING) ? 46.0f : 64.0f;
+		QAngle angles = pawn->m_angEyeAngles();
+		camera->Teleport(&eyes, &angles, NULL);
+		camera->SetMode(CUSTOM_CAMERA_MODE_CONTROLLED);
+		return camera;
+	}
+
 	// Any mode but DISABLED makes the camera the pawn's view entity; DISABLED only lets go of it while
 	// it is still this camera, so it never clears a view entity someone else set.
 	void SetMode(CustomCameraMode_t mode)

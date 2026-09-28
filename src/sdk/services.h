@@ -63,6 +63,15 @@ public:
 	SCHEMA_FIELD_POINTER(CUtlVector<CHandle<CBasePlayerWeapon>>, m_hMyWeapons)
 };
 
+class CCSPlayer_WeaponServices : public CPlayer_WeaponServices
+{
+	virtual ~CCSPlayer_WeaponServices() = 0;
+
+public:
+	DECLARE_SCHEMA_CLASS_ENTITY(CCSPlayer_WeaponServices)
+	SCHEMA_FIELD(GameTime_t, m_flNextAttack)
+};
+
 class CPlayer_ObserverServices : public CPlayerPawnComponent
 {
 	virtual ~CPlayer_ObserverServices() = 0;
