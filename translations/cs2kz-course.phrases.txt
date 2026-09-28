@@ -279,7 +279,7 @@
 		"en"		"{default}{course}{grey} ({purple}{state}{grey}) - Tier {yellow}{tier_nub}{grey}/{blue}{tier_pro}{grey}{description}"
 		"chi"		"{default}{course}{grey} ({purple}{state}{grey}) - Tier {yellow}{tier_nub}{grey}/{blue}{tier_pro}{grey}{description}"
 		"ru"		"{default}{course}{grey} ({purple}{state}{grey}) - Tier {yellow}{tier_nub}{grey}/{blue}{tier_pro}{grey}{description}"
-		"ua"		"{default}{course}{grey} ({purple}{state}{grey}) - Складність {yellow}{tier_nub}{grey}/{blue}{tier_pro}{grey}{description}"
+		"ua"		"{default}{course}{grey} ({purple}{state}{grey}) - Tier {yellow}{tier_nub}{grey}/{blue}{tier_pro}{grey}{description}"
 		"es"		"{default}{course}{grey} ({purple}{state}{grey}) - Nivel {yellow}{tier_nub}{grey}/{blue}{tier_pro}{grey}{description}"
 		"ko"		"{default}{course}{grey} ({purple}{state}{grey}) - 티어 {yellow}{tier_nub}{grey}/{blue}{tier_pro}{grey}{description}"
 	}

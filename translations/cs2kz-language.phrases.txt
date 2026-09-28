@@ -22,6 +22,7 @@
 	"Language Command Usage"
 	{
 		"en"		"{grey}Usage: {default}kz_language <language>{grey}."
+		"ua"		"{grey}Використання: {default}kz_language <мова>{grey}."
 	}
 
 	"Menu Hint"

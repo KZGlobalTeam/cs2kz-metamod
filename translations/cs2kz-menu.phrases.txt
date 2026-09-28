@@ -58,34 +58,42 @@
 	"Menu - Game HUD"
 	{
 		"en"		"Game HUD"
+		"ua"		"HUD гри"
 	}
 	"Menu - Game HUD All"
 	{
 		"en"		"Hide Everything"
+		"ua"		"Приховати все"
 	}
 	"Menu - Game HUD All Sub"
 	{
 		"en"		"The only way to hide chat and the radar"
+		"ua"		"Єдиний спосіб приховати чат і радар"
 	}
 	"Menu - Game HUD Crosshair"
 	{
 		"en"		"Hide Crosshair"
+		"ua"		"Приховати приціл"
 	}
 	"Menu - Game HUD Weapons"
 	{
 		"en"		"Hide Weapon Selection, Health and Ammo"
+		"ua"		"Приховати вибір зброї, здоров'я і боєприпаси"
 	}
 	"Menu - Game HUD Damage"
 	{
 		"en"		"Hide Damage Direction"
+		"ua"		"Приховати візуальні ефекти шкоди"
 	}
 	"Menu - Game HUD Notices"
 	{
 		"en"		"Hide Kill Feed and Alerts"
+		"ua"		"Приховати стрічку смертей та сповіщення"
 	}
 	"Menu - Game HUD Voice"
 	{
 		"en"		"Hide Voice Chat Indicator"
+		"ua"		"Приховати індикатор голосового чату"
 	}
 	"Menu - Compact Sub"
 	{
@@ -307,7 +315,7 @@
 	{
 		"en"		"Perfect bhop acronym"
 		"chi"		"Perf 缩写"
-		"ua"		"Абревіатура Perfect bhop"
+		"ua"		"Акронім Perfect bhop"
 	}
 	"Menu - Ind CJ"
 	{
@@ -361,7 +369,7 @@
 	{
 		"en"		"Crouch jump acronym"
 		"chi"		"蹲跳缩写"
-		"ua"		"Абревіатура Crouch jump"
+		"ua"		"Акронім Crouch jump"
 	}
 	"Menu - Ind JB"
 	{
@@ -415,7 +423,7 @@
 	{
 		"en"		"Jumpbug acronym"
 		"chi"		"Jumpbug 缩写"
-		"ua"		"Абревіатура Jumpbug"
+		"ua"		"Акронім Jumpbug"
 	}
 	"Menu - Keys Overlap Sub"
 	{
@@ -565,7 +573,7 @@
 	{
 		"en"		"Underscore"
 		"chi"		"下划线"
-		"ua"		"Підкреслювати"
+		"ua"		"Підкреслення"
 	}
 	"Menu - Keys Letters"
 	{
@@ -601,7 +609,7 @@
 	{
 		"en"		"Only applies to a key while it is pressed"
 		"chi"		"仅在按键被按下时生效"
-		"ua"		"Застосовується до клавіші лише, коли вона натиснута"
+		"ua"		"Застосовується до натиснутої клавіші"
 	}
 	"Menu - Keys Glow"
 	{
@@ -649,7 +657,7 @@
 	{
 		"en"		"Overlap glow/pressed color"
 		"chi"		"重叠发光/按下颜色"
-		"ua"		"Колір підсвітки Overlap/натиснутої клавіші"
+		"ua"		"Колір підсвітки/натиснутої клавіші при Overlap"
 	}
 	"Menu - Mode"
 	{
@@ -943,7 +951,7 @@
 	{
 		"en"		"Prints checkpoint/stage/split times to console for third-party map overlay tools to read"
 		"chi"		"将存点/阶段/分段计时输出到控制台, 供第三方地图叠加工具读取"
-		"ua"		"Виводить чекпoinти/етапів/спліти в консоль для інструментів оверлею мапи сторонніх розробників"
+		"ua"		"Виводить чекпoinти/етапи/спліти в консоль для інструментів оверлею мапи сторонніх розробників"
 	}
 	"Menu - Map Overlay"
 	{
@@ -967,7 +975,7 @@
 	{
 		"en"		"Safeguard"
 		"chi"		"安全防护"
-		"ua"		"Захист (Safeguard)"
+		"ua"		"Запобіжник (Safeguard)"
 	}
 	"Menu - Safeguard Off"
 	{
@@ -1177,7 +1185,7 @@
 	{
 		"en"		"Paint"
 		"chi"		"涂色"
-		"ua"		"Фарба"
+		"ua"		"Кольорова мітка"
 	}
 	"Menu - Paint Color Sub"
 	{
@@ -1189,7 +1197,7 @@
 	{
 		"en"		"Show everyone's paint"
 		"chi"		"显示所有人的涂色"
-		"ua"		"Показати фарбу всіх гравців"
+		"ua"		"Показувати кольорові мітки всіх гравців"
 	}
 	"Menu - Hide Other Players"
 	{
