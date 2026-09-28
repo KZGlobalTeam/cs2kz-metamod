@@ -366,6 +366,7 @@ void KZHUDService::UpdateEditElements(CCSCustomHudLayout *layout, bool force)
 							prefs.prespeed[(i32)MHUDSpeedState::Base],
 							prefs.keys,
 							prefs.checkpoint,
+							MHUD_DEF_BASE_COLOR,
 							prefs.indicator[0],
 							prefs.indicator[1],
 							prefs.indicator[2]};
@@ -378,13 +379,18 @@ void KZHUDService::UpdateEditElements(CCSCustomHudLayout *layout, bool force)
 			this->UpdateKeysElement(layout, this->player, force, true);
 			continue;
 		}
+		if (element == MHUDElement::Jumpstats)
+		{
+			this->UpdateJumpstatsElement(layout, prefs.elements[i].enabled, force, true);
+			continue;
+		}
 		const bool show = prefs.elements[i].enabled;
 		const std::string text = show ? this->GetEditSampleText(element) : std::string();
 		this->UpdateLayoutElement(layout, element, show, show ? text.c_str() : NULL, colors[i], force);
 	}
 }
 
-// indexed with js tiers
+// Indexed by DistanceTier. The colors match the chat's tier colors.
 static_global const char *const JS_TIER_CLASSES[DISTANCETIER_COUNT] = {"js-tier-0", "js-tier-1", "js-tier-2", "js-tier-3",
 																	   "js-tier-4", "js-tier-5", "js-tier-6"};
 static_global const char *const JS_TIER_PHRASES[DISTANCETIER_COUNT] = {
@@ -399,15 +405,95 @@ static_global const char *const JS_PILL_PANELS[MHUD_JS_PILL_COUNT][4] = {{"mhud_
 																		 {"mhud_js_h3", "mhud_js_h3_t", "mhud_js_h3_i", "mhud_js_h3_d"},
 																		 {"mhud_js_h4", "mhud_js_h4_t", "mhud_js_h4_i", "mhud_js_h4_d"}};
 
-#define JS_ROW_COUNT 11
-static_global const char *const JS_ROW_LABELS[JS_ROW_COUNT] = {"mhud_js_l0", "mhud_js_l1", "mhud_js_l2", "mhud_js_l3", "mhud_js_l4", "mhud_js_l5",
-															   "mhud_js_l6", "mhud_js_l7", "mhud_js_l8", "mhud_js_l9", "mhud_js_l10"};
-static_global const char *const JS_ROW_VALUES[JS_ROW_COUNT] = {"mhud_js_v0", "mhud_js_v1", "mhud_js_v2", "mhud_js_v3", "mhud_js_v4", "mhud_js_v5",
-															   "mhud_js_v6", "mhud_js_v7", "mhud_js_v8", "mhud_js_v9", "mhud_js_v10"};
+// Indexed by MHUDJsField: the row, its label and its value.
+static_global const char *const JS_ROWS[(i32)MHUDJsField::Count][3] = {
+	{"mhud_js_r0", "mhud_js_l0", "mhud_js_v0"}, {"mhud_js_r1", "mhud_js_l1", "mhud_js_v1"},    {"mhud_js_r2", "mhud_js_l2", "mhud_js_v2"},
+	{"mhud_js_r3", "mhud_js_l3", "mhud_js_v3"}, {"mhud_js_r4", "mhud_js_l4", "mhud_js_v4"},    {"mhud_js_r5", "mhud_js_l5", "mhud_js_v5"},
+	{"mhud_js_r6", "mhud_js_l6", "mhud_js_v6"}, {"mhud_js_r7", "mhud_js_l7", "mhud_js_v7"},    {"mhud_js_r8", "mhud_js_l8", "mhud_js_v8"},
+	{"mhud_js_r9", "mhud_js_l9", "mhud_js_v9"}, {"mhud_js_r10", "mhud_js_l10", "mhud_js_v10"}, {"mhud_js_r11", "mhud_js_l11", "mhud_js_v11"},
+};
+
+// The same colors the chat report uses for these values.
+#define JS_CLASS_RED   "js-c-red"
+#define JS_CLASS_GREEN "js-c-green"
+#define JS_CLASS_BLUE  "js-c-blue"
+#define JS_CLASS_GREY  "js-c-grey"
+
+// Everything the panel shows for one jump. Rows left out, like the block on a jump without one, stay hidden.
+struct KZHUDService::JumpstatText
+{
+	std::string type;
+	std::string tierName;
+	std::string dist;
+	i32 tier {}; // colors the type, the distance and the block
+	std::string values[(i32)MHUDJsField::Count];
+	const char *valueClasses[(i32)MHUDJsField::Count] {}; // NULL keeps the default olive
+	bool present[(i32)MHUDJsField::Count] {};
+};
+
+static_function void GetJumpstatLabels(KZLanguageService *lang, std::string (&labels)[(i32)MHUDJsField::Count])
+{
+	labels[(i32)MHUDJsField::Block] = lang->PrepareMessage("Block");
+	labels[(i32)MHUDJsField::Strafes] = lang->PrepareMessage("Strafes");
+	labels[(i32)MHUDJsField::Sync] = lang->PrepareMessage("Sync");
+	labels[(i32)MHUDJsField::PreMax] = lang->PrepareMessage("Pre") + " / " + lang->PrepareMessage("Max");
+	labels[(i32)MHUDJsField::Height] = lang->PrepareMessage("Height");
+	labels[(i32)MHUDJsField::AirTime] = lang->PrepareMessage("Air Time");
+	labels[(i32)MHUDJsField::Width] = lang->PrepareMessage("Width");
+	labels[(i32)MHUDJsField::GainEfficiency] = lang->PrepareMessage("Gain Efficiency (Short)");
+	labels[(i32)MHUDJsField::AirPath] = lang->PrepareMessage("Air Path");
+	labels[(i32)MHUDJsField::BadAngles] = lang->PrepareMessage("Bad Angles (Short)") + " / " + lang->PrepareMessage("Overlap (Short)") + " / "
+										  + lang->PrepareMessage("Dead Air (Short)");
+	labels[(i32)MHUDJsField::Release] = lang->PrepareMessage("Jumpstats HUD - Release");
+	labels[(i32)MHUDJsField::Offset] = lang->PrepareMessage("Offset");
+}
+
+static_function std::string FormatJumpstatValue(const char *format, ...)
+{
+	char buffer[64];
+	va_list args;
+	va_start(args, format);
+	V_vsnprintf(buffer, sizeof(buffer), format, args);
+	va_end(args);
+	return buffer;
+}
+
+void KZHUDService::ApplyJumpstatText(CCSCustomHudLayout *layout, const JumpstatText &text)
+{
+	LayoutJumpstatsState &js = this->layoutJumpstats;
+	const MHUDPrefs &prefs = this->GetPrefs();
+	layout->SetDialogVariableString("mhud_js_type", "v", text.type.c_str());
+	layout->SetDialogVariableString("mhud_js_tier", "v", text.tierName.c_str());
+	layout->SetDialogVariableString("mhud_js_dist", "v", text.dist.c_str());
+	this->SetLayoutClass(layout, "mhud_js_type", js.typeTierClass, JS_TIER_CLASSES[text.tier]);
+	this->SetLayoutClass(layout, "mhud_js_dist", js.distTierClass, JS_TIER_CLASSES[text.tier]);
+
+	std::string labels[(i32)MHUDJsField::Count];
+	GetJumpstatLabels(this->player->languageService, labels);
+	for (i32 i = 0; i < (i32)MHUDJsField::Count; i++)
+	{
+		const bool hidden = !prefs.jsFields[i] || !text.present[i];
+		if (js.rowHidden[i] != hidden)
+		{
+			js.rowHidden[i] = hidden;
+			layout->SetHasClass(JS_ROWS[i][0], "hidden", hidden ? k_eHudPanelClassStatus_HasClass : k_eHudPanelClassStatus_DoesNotHaveClass);
+		}
+		if (hidden)
+		{
+			continue;
+		}
+		layout->SetDialogVariableString(JS_ROWS[i][1], "v", labels[i].c_str());
+		layout->SetDialogVariableString(JS_ROWS[i][2], "v", text.values[i].c_str());
+		this->SetLayoutClass(layout, JS_ROWS[i][2], js.valueClass[i], text.valueClasses[i]);
+	}
+	this->SetLayoutClass(layout, "mhud_js_panel", js.panelClass, "js-show");
+}
 
 bool KZHUDService::ShowJumpstat(Jump *jump, i32 colorTier)
 {
-	if (!this->IsShowingPanel() || !this->IsUsingLayoutStyle())
+	// Edit mode has the panel showing its sample, so the jump goes to chat instead.
+	if (!this->IsShowingPanel() || !this->IsUsingLayoutStyle() || this->IsEditingHud()
+		|| !this->GetOwnPrefs().elements[(i32)MHUDElement::Jumpstats].enabled)
 	{
 		return false;
 	}
@@ -428,59 +514,59 @@ bool KZHUDService::ShowJumpstat(Jump *jump, i32 colorTier)
 	const JumpType type = jump->GetReportJumpType();
 	const DistanceTier tier = jumper->modeService->GetDistanceTier(type, jump->GetDistance());
 	const std::string typeName = lang->PrepareMessage(jumpTypeStr[type]);
-	const std::string dist = lang->PrepareMessage("Jumpstats HUD - Distance", jump->GetDistance(true, false, 1));
-	layout->SetDialogVariableString(
-		"mhud_js_type", "v", jump->IsFailstat() ? lang->PrepareMessage("Jumpstats HUD - Failstat", typeName.c_str()).c_str() : typeName.c_str());
-	layout->SetDialogVariableString("mhud_js_tier", "v", JS_TIER_PHRASES[tier] ? lang->PrepareMessage(JS_TIER_PHRASES[tier]).c_str() : "");
-	layout->SetDialogVariableString("mhud_js_dist", "v", dist.c_str());
-	this->SetLayoutClass(layout, "mhud_js_type", js.typeTierClass, JS_TIER_CLASSES[colorTier]);
-	this->SetLayoutClass(layout, "mhud_js_dist", js.distTierClass, JS_TIER_CLASSES[colorTier]);
 
-	const std::string labels[JS_ROW_COUNT] = {
-		lang->PrepareMessage("Strafes"),
-		lang->PrepareMessage("Sync"),
-		lang->PrepareMessage("Pre") + " / " + lang->PrepareMessage("Max"),
-		lang->PrepareMessage("Height"),
-		lang->PrepareMessage("Air Time"),
-		lang->PrepareMessage("Width"),
-		lang->PrepareMessage("Gain Efficiency (Short)"),
-		lang->PrepareMessage("Air Path"),
-		lang->PrepareMessage("Bad Angles (Short)") + " / " + lang->PrepareMessage("Overlap (Short)") + " / "
-			+ lang->PrepareMessage("Dead Air (Short)"),
-		lang->PrepareMessage("Jumpstats HUD - Release"),
-		lang->PrepareMessage("Offset"),
-	};
-	char values[JS_ROW_COUNT][32];
-	V_snprintf(values[0], sizeof(values[0]), "%i", jump->GetStrafeCount());
-	V_snprintf(values[1], sizeof(values[1]), "%.0f%%", jump->GetSync() * 100.0f);
-	V_snprintf(values[2], sizeof(values[2]), "%.1f / %.1f", jump->GetTakeoffSpeed(), jump->GetMaxSpeed());
-	V_snprintf(values[3], sizeof(values[3]), "%.1f", jump->GetMaxHeight());
-	V_snprintf(values[4], sizeof(values[4]), "%.3fs", jumper->landingTimeActual - jumper->takeoffTime);
-	V_snprintf(values[5], sizeof(values[5]), "%.1f°", jump->GetWidth());
-	V_snprintf(values[6], sizeof(values[6]), "%.0f%%", jump->GetGainEfficiency() * 100.0f);
-	V_snprintf(values[7], sizeof(values[7]), "%.2f", jump->GetAirPath());
-	V_snprintf(values[8], sizeof(values[8]), "%.0f%% / %.0f%% / %.0f%%", jump->GetBadAngles() * 100.0f, jump->GetOverlap() * 100.0f,
-			   jump->GetDeadAir() * 100.0f);
-	// Jump::GetReleaseString
+	JumpstatText text;
+	text.type = jump->IsFailstat() ? lang->PrepareMessage("Jumpstats HUD - Failstat", typeName.c_str()) : typeName;
+	text.tierName = JS_TIER_PHRASES[tier] ? lang->PrepareMessage(JS_TIER_PHRASES[tier]) : "";
+	text.dist = lang->PrepareMessage("Jumpstats HUD - Distance", jump->GetDistance(true, false, 1));
+	text.tier = colorTier;
+	std::fill(std::begin(text.present), std::end(text.present), true);
+
+	// The block takes the distance's color, so it is grey too for an invalid jump or with jsalways on.
+	text.present[(i32)MHUDJsField::Block] = jump->GetBlock() > 0.0f;
+	text.values[(i32)MHUDJsField::Block] = FormatJumpstatValue("%.0f", jump->GetBlock());
+	text.valueClasses[(i32)MHUDJsField::Block] = JS_TIER_CLASSES[colorTier];
+	text.values[(i32)MHUDJsField::Strafes] = FormatJumpstatValue("%i", jump->GetStrafeCount());
+	text.values[(i32)MHUDJsField::Sync] = FormatJumpstatValue("%.0f%%", jump->GetSync() * 100.0f);
+	text.values[(i32)MHUDJsField::PreMax] = FormatJumpstatValue("%.1f / %.1f", jump->GetTakeoffSpeed(), jump->GetMaxSpeed());
+	text.values[(i32)MHUDJsField::Height] = FormatJumpstatValue("%.1f", jump->GetMaxHeight());
+	text.values[(i32)MHUDJsField::AirTime] = FormatJumpstatValue("%.3fs", jumper->landingTimeActual - jumper->takeoffTime);
+	text.values[(i32)MHUDJsField::Width] = FormatJumpstatValue("%.1f°", jump->GetWidth());
+	text.values[(i32)MHUDJsField::GainEfficiency] = FormatJumpstatValue("%.0f%%", jump->GetGainEfficiency() * 100.0f);
+	text.values[(i32)MHUDJsField::AirPath] = FormatJumpstatValue("%.2f", jump->GetAirPath());
+	text.values[(i32)MHUDJsField::BadAngles] =
+		FormatJumpstatValue("%.0f%% / %.0f%% / %.0f%%", jump->GetBadAngles() * 100.0f, jump->GetOverlap() * 100.0f, jump->GetDeadAir() * 100.0f);
+	// Same cases and colors as Jump::GetReleaseString, with a grey dash where the chat leaves the release out.
 	const f32 release = jump->GetReleaseInTick();
+	std::string &releaseValue = text.values[(i32)MHUDJsField::Release];
+	const char *&releaseClass = text.valueClasses[(i32)MHUDJsField::Release];
 	if ((type != JumpType_LongJump && type != JumpType_LadderJump && type != JumpType_WeirdJump) || release < -20)
 	{
-		V_strncpy(values[9], "-", sizeof(values[9]));
+		releaseValue = "-";
+		releaseClass = JS_CLASS_GREY;
 	}
-	else if (release > 10 || release == 0)
+	else if (release > 10)
 	{
-		V_strncpy(values[9], release > 10 ? "✗" : "✓", sizeof(values[9]));
+		releaseValue = "✗";
+		releaseClass = JS_CLASS_RED;
+	}
+	else if (release > 0)
+	{
+		releaseValue = FormatJumpstatValue("+%.1f", release);
+		releaseClass = JS_CLASS_RED;
+	}
+	else if (release == 0)
+	{
+		releaseValue = "✓";
+		releaseClass = JS_CLASS_GREEN;
 	}
 	else
 	{
-		V_snprintf(values[9], sizeof(values[9]), "%+.1f", release);
+		releaseValue = FormatJumpstatValue("%.1f", release);
+		releaseClass = JS_CLASS_BLUE;
 	}
-	V_snprintf(values[10], sizeof(values[10]), "%+.2f", jump->GetOffset());
-	for (i32 i = 0; i < JS_ROW_COUNT; i++)
-	{
-		layout->SetDialogVariableString(JS_ROW_LABELS[i], "v", labels[i].c_str());
-		layout->SetDialogVariableString(JS_ROW_VALUES[i], "v", values[i]);
-	}
+	text.values[(i32)MHUDJsField::Offset] = FormatJumpstatValue("%+.2f", jump->GetOffset());
+	this->ApplyJumpstatText(layout, text);
 
 	js.shownType = jumpTypeShortStr[type];
 	if (jump->IsFailstat())
@@ -488,11 +574,10 @@ bool KZHUDService::ShowJumpstat(Jump *jump, i32 colorTier)
 		js.shownType += "-F";
 	}
 	js.shownInfo = lang->PrepareMessage("Jumpstats HUD - History Info", jump->GetStrafeCount(), jump->GetSync() * 100.0f, jump->GetTakeoffSpeed());
-	js.shownDist = dist;
+	js.shownDist = text.dist;
 	js.shownTier = colorTier;
 	js.hasShown = true;
 	js.hideTime = g_pKZUtils->GetServerGlobals()->curtime + MHUD_JS_PANEL_TIME;
-	this->SetLayoutClass(layout, "mhud_js_panel", js.panelClass, "js-show");
 	return true;
 }
 
@@ -538,14 +623,141 @@ void KZHUDService::PushJumpstatHistory(CCSCustomHudLayout *layout)
 	this->SetLayoutClass(layout, ids[3], pill.distTierClass, JS_TIER_CLASSES[js.shownTier]);
 }
 
-void KZHUDService::UpdateJumpstatsElement(CCSCustomHudLayout *layout, bool show, bool force)
+// A widest-case jump for edit mode, with every row the player has on and a full history.
+static_function void GetJumpstatSample(KZLanguageService *lang, KZHUDService::JumpstatText &text)
+{
+	text.type = lang->PrepareMessage(jumpTypeStr[JumpType_MultiBhop]);
+	text.tierName = lang->PrepareMessage(JS_TIER_PHRASES[DistanceTier_Wrecker]);
+	text.dist = lang->PrepareMessage("Jumpstats HUD - Distance", 299.9f);
+	text.tier = DistanceTier_Wrecker;
+	std::fill(std::begin(text.present), std::end(text.present), true);
+	text.values[(i32)MHUDJsField::Block] = "299";
+	text.valueClasses[(i32)MHUDJsField::Block] = JS_TIER_CLASSES[DistanceTier_Wrecker];
+	text.values[(i32)MHUDJsField::Strafes] = "99";
+	text.values[(i32)MHUDJsField::Sync] = "100%";
+	text.values[(i32)MHUDJsField::PreMax] = "299.9 / 399.9";
+	text.values[(i32)MHUDJsField::Height] = "66.6";
+	text.values[(i32)MHUDJsField::AirTime] = "0.781s";
+	text.values[(i32)MHUDJsField::Width] = "999.9°";
+	text.values[(i32)MHUDJsField::GainEfficiency] = "100%";
+	text.values[(i32)MHUDJsField::AirPath] = "0.99";
+	text.values[(i32)MHUDJsField::BadAngles] = "100% / 100% / 100%";
+	text.values[(i32)MHUDJsField::Release] = "+10.0";
+	text.valueClasses[(i32)MHUDJsField::Release] = JS_CLASS_RED;
+	text.values[(i32)MHUDJsField::Offset] = "-99.99";
+}
+
+void KZHUDService::ClearJumpstatPreview(CCSCustomHudLayout *layout)
+{
+	LayoutJumpstatsState &js = this->layoutJumpstats;
+	js.preview = false;
+	js.hasShown = false;
+	this->SetLayoutClass(layout, "mhud_js_panel", js.panelClass, NULL);
+	for (i32 i = 0; i < MHUD_JS_PILL_COUNT; i++)
+	{
+		LayoutJumpstatsState::Pill &pill = js.pills[i];
+		pill.live = false;
+		pill.expired = false;
+		pill.rank = 0;
+		this->SetLayoutClass(layout, JS_PILL_PANELS[i][0], pill.ageClass, NULL);
+		this->SetLayoutClass(layout, JS_PILL_PANELS[i][0], pill.expireClass, NULL);
+	}
+}
+
+void KZHUDService::UpdateJumpstatsElement(CCSCustomHudLayout *layout, bool show, bool force, bool preview)
 {
 	LayoutJumpstatsState &js = this->layoutJumpstats;
 	if (force)
 	{
 		js = LayoutJumpstatsState();
 	}
-	this->SetLayoutClass(layout, "mhud_js", js.stackClass, show ? NULL : "hidden");
+	// The labels carry no color of their own from this, so the base color only fills the call.
+	this->UpdateLayoutElement(layout, MHUDElement::Jumpstats, show, NULL, MHUD_DEF_BASE_COLOR, force);
+
+	const MHUDPrefs &prefs = this->GetPrefs();
+	// js-scale.css scales the whole panel, history included, by the element's size in percent.
+	const i32 scale = Clamp((i32)this->GetLayoutSize(MHUDElement::Jumpstats), MHUD_JS_SIZE_MIN, MHUD_JS_SIZE_MAX);
+	if (js.scale != scale)
+	{
+		const char *panelId = MHUD_ELEMENTS[(i32)MHUDElement::Jumpstats].panelId;
+		char className[32];
+		if (js.scale != INT_MIN)
+		{
+			V_snprintf(className, sizeof(className), "js-scale--%i", js.scale);
+			layout->SetHasClass(panelId, className, k_eHudPanelClassStatus_DoesNotHaveClass);
+		}
+		V_snprintf(className, sizeof(className), "js-scale--%i", scale);
+		layout->SetHasClass(panelId, className, k_eHudPanelClassStatus_HasClass);
+		js.scale = scale;
+	}
+
+	// A label only picks up a new font when it is restyled itself, so the class goes on every label.
+	const char *fontClass = KZHUDService::GetMHUDFontClass(this->player, MHUDElement::Jumpstats);
+	if (js.fontClass != fontClass)
+	{
+		auto setFont = [&](const char *panelId)
+		{
+			if (js.fontClass)
+			{
+				layout->SetHasClass(panelId, js.fontClass, k_eHudPanelClassStatus_DoesNotHaveClass);
+			}
+			layout->SetHasClass(panelId, fontClass, k_eHudPanelClassStatus_HasClass);
+		};
+		for (const char *panelId : {"mhud_js_type", "mhud_js_tier", "mhud_js_dist"})
+		{
+			setFont(panelId);
+		}
+		for (const auto &row : JS_ROWS)
+		{
+			setFont(row[1]);
+			setFont(row[2]);
+		}
+		for (const auto &pill : JS_PILL_PANELS)
+		{
+			setFont(pill[1]);
+			setFont(pill[2]);
+			setFont(pill[3]);
+		}
+		js.fontClass = fontClass;
+	}
+
+	const bool historyHidden = !prefs.jsHistory;
+	if (js.historyHidden != historyHidden)
+	{
+		js.historyHidden = historyHidden;
+		layout->SetHasClass("mhud_js_history", "hidden", historyHidden ? k_eHudPanelClassStatus_HasClass : k_eHudPanelClassStatus_DoesNotHaveClass);
+	}
+
+	if (preview)
+	{
+		if (!js.preview)
+		{
+			js.preview = true;
+			js.hasShown = false;
+			KZLanguageService *lang = this->player->languageService;
+			JumpstatText text;
+			GetJumpstatSample(lang, text);
+			this->ApplyJumpstatText(layout, text);
+			const std::string info = lang->PrepareMessage("Jumpstats HUD - History Info", 99, 100.0f, 299.9f);
+			for (i32 i = 0; i < MHUD_JS_PILL_GONE_RANK; i++)
+			{
+				LayoutJumpstatsState::Pill &pill = js.pills[i];
+				const char *const *ids = JS_PILL_PANELS[i];
+				layout->SetDialogVariableString(ids[1], "v", jumpTypeShortStr[JumpType_MultiBhop]);
+				layout->SetDialogVariableString(ids[2], "v", info.c_str());
+				layout->SetDialogVariableString(ids[3], "v", text.dist.c_str());
+				this->SetLayoutClass(layout, ids[1], pill.typeTierClass, JS_TIER_CLASSES[text.tier]);
+				this->SetLayoutClass(layout, ids[3], pill.distTierClass, JS_TIER_CLASSES[text.tier]);
+				this->SetLayoutClass(layout, ids[0], pill.expireClass, NULL);
+				this->SetLayoutClass(layout, ids[0], pill.ageClass, JS_AGE_CLASSES[i]);
+			}
+		}
+		return;
+	}
+	if (js.preview)
+	{
+		this->ClearJumpstatPreview(layout);
+	}
 
 	const f64 now = g_pKZUtils->GetServerGlobals()->curtime;
 	if (js.hasShown && now >= js.hideTime)
@@ -584,15 +796,18 @@ bool KZHUDService::UpdateHudLayout(KZPlayer *source)
 	this->ValidateHudEdit();
 	const bool editing = this->IsEditingHud();
 	const bool show = editing || (this->IsShowingPanel() && this->IsUsingLayoutStyle());
-	this->UpdateJumpstatsElement(layout, show, force);
 
 	if (!show)
 	{
 		// show=false applies the hidden class and returns, so the text and color here are ignored.
 		for (i32 i = 0; i < (i32)MHUDElement::Count; i++)
 		{
-			this->UpdateLayoutElement(layout, (MHUDElement)i, false, NULL, MHUD_DEF_BASE_COLOR, force);
+			if (i != (i32)MHUDElement::Jumpstats)
+			{
+				this->UpdateLayoutElement(layout, (MHUDElement)i, false, NULL, MHUD_DEF_BASE_COLOR, force);
+			}
 		}
+		this->UpdateJumpstatsElement(layout, false, force);
 	}
 	else if (editing)
 	{
@@ -607,6 +822,8 @@ bool KZHUDService::UpdateHudLayout(KZPlayer *source)
 		this->UpdateKeysElement(layout, source, force);
 		this->UpdateCheckpointElement(layout, source, force);
 		this->UpdateIndicatorElements(layout, info, force);
+		// Whether jumpstats go to the HUD is the viewer's own setting, even while mimicking.
+		this->UpdateJumpstatsElement(layout, this->GetOwnPrefs().elements[(i32)MHUDElement::Jumpstats].enabled, force);
 	}
 	this->UpdateEditLayout(layout, force);
 	return true;

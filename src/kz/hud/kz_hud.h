@@ -34,6 +34,32 @@ class Jump;
 #define MHUD_JS_PANEL_TIME     6.0f
 #define MHUD_JS_HISTORY_TIME   10.0f
 
+// The rows under the distance, in mhud.xml order. Each one can be switched off.
+enum class MHUDJsField
+{
+	Block,
+	Strafes,
+	Sync,
+	PreMax,
+	Height,
+	AirTime,
+	Width,
+	GainEfficiency,
+	AirPath,
+	BadAngles,
+	Release,
+	Offset,
+	Count,
+};
+
+struct MHUDJsFieldDef
+{
+	const char *prefKey;    // bool preference, on by default
+	const char *menuPhrase; // the toggle on the HUD's Jumpstats page
+};
+
+extern const MHUDJsFieldDef MHUD_JS_FIELDS[(i32)MHUDJsField::Count];
+
 enum class MHUDElement
 {
 	Timer,
@@ -41,6 +67,7 @@ enum class MHUDElement
 	Prespeed,
 	Keys,
 	Checkpoint,
+	Jumpstats,
 	// The indicators are contiguous and last, so an element index maps straight onto the indicator tables.
 	Perf,
 	CrouchJump,
@@ -69,6 +96,7 @@ struct MHUDElementDef
 	const char *posPanelId; // full-screen wrapper carrying the fine position
 	const char *hitPanelId; // edit-mode box, holding the move button and one resize button per corner
 	const char *varName;
+	// NULL for the jumpstats panel, which is on whenever jumpstats are reported to the HUD.
 	const char *enabledKey;
 	const char *xKey;
 	const char *yKey;
@@ -225,6 +253,8 @@ struct MHUDPrefs
 	Color checkpoint, checkpointTp;
 	Color indicator[MHUD_INDICATOR_COUNT];
 	bool indicatorAcronym[MHUD_INDICATOR_COUNT] {};
+	bool jsFields[(i32)MHUDJsField::Count] {};
+	bool jsHistory {true};
 
 	bool legacyStyle {};
 	bool compactPanel {};
@@ -384,6 +414,9 @@ public:
 	// Reads each usercmd as it arrives while dragging, and keeps the pawn's view where it was before the drag.
 	void OnProcessUsercmds(PlayerCommand *cmds, i32 numCmds);
 
+	// One jump as the jumpstats panel shows it, defined in mhud.cpp.
+	struct JumpstatText;
+
 private:
 	struct SpeedInfo
 	{
@@ -486,13 +519,18 @@ private:
 		};
 
 		Pill pills[MHUD_JS_PILL_COUNT] {};
+		bool preview {}; // edit mode's sample jump is on screen
+		bool rowHidden[(i32)MHUDJsField::Count] {};
+		const char *valueClass[(i32)MHUDJsField::Count] {};
+		bool historyHidden {};
+		i32 scale {INT_MIN};
+		const char *fontClass {};
 		std::string shownType {};
 		std::string shownInfo {};
 		std::string shownDist {};
 		i32 shownTier {};
 		bool hasShown {};
 		f64 hideTime {};
-		const char *stackClass {};
 		const char *panelClass {};
 		const char *typeTierClass {};
 		const char *distTierClass {};
@@ -600,8 +638,11 @@ private:
 	void UpdateKeysElement(CCSCustomHudLayout *layout, KZPlayer *source, bool force, bool preview = false);
 	void UpdateCheckpointElement(CCSCustomHudLayout *layout, KZPlayer *source, bool force);
 	void UpdateIndicatorElements(CCSCustomHudLayout *layout, const SpeedInfo &info, bool force);
-	void UpdateJumpstatsElement(CCSCustomHudLayout *layout, bool show, bool force);
+	// preview draws a sample jump with every enabled row, for edit mode.
+	void UpdateJumpstatsElement(CCSCustomHudLayout *layout, bool show, bool force, bool preview = false);
 	void PushJumpstatHistory(CCSCustomHudLayout *layout);
+	void ApplyJumpstatText(CCSCustomHudLayout *layout, const JumpstatText &text);
+	void ClearJumpstatPreview(CCSCustomHudLayout *layout);
 
 public:
 	bool ShowJumpstat(Jump *jump, i32 colorTier);

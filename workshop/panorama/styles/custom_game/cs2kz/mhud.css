@@ -7,6 +7,7 @@
 @import url("file://{resources}/styles/custom_game/cs2kz/opacity.css");
 @import url("file://{resources}/styles/custom_game/cs2kz/fine-positions.css");
 @import url("file://{resources}/styles/custom_game/cs2kz/box-size.css");
+@import url("file://{resources}/styles/custom_game/cs2kz/js-scale.css");
 
 .root {
 	width: 100%;
@@ -148,38 +149,36 @@
 	visibility: visible;
 }
 
-/*Jumpstats*/
+/* Jumpstats. The stack is an element like the others, so it is placed by its x/y classes and scaled by js-scale.css.
+   Its labels take the element's font class, so none of them sets a font-family. */
 .js-stack {
-	width: 200px;
-	horizontal-align: right;
-	vertical-align: center;
-	margin-right: 28px;
+	width: 288px;
 	flow-children: down;
 }
 
 .js-history {
 	width: 100%;
-	height: 110px;
-	margin-bottom: 6px;
+	height: 138px;
+	margin-bottom: 8px;
 }
 
 /*pills are all bottom anchored in js-history.. the age class alone moves, shrinks and fades them*/
 .js-hist {
 	opacity: 0;
-	transform: translate3d(0px, -104px, 0px) scale3d(0.68, 1, 1);
+	transform: translate3d(0px, -132px, 0px) scale3d(0.68, 1, 1);
 
-	width: 230px;
-	height: 20px;
+	width: 100%;
+	height: 25px;
 	horizontal-align: right;
 	vertical-align: bottom;
-	padding: 0px 10px;
+	padding: 0px 13px;
 
 	background-color: #000000b8;
 	background-image: url("s2r://panorama/images/backgrounds/bluedots_large_png.vtex");
 	background-size: 360px 360px;
 	background-img-opacity: 0.015;
 	world-blur: gaussian(1, 1, 1);
-	border-radius: 3px;
+	border-radius: 4px;
 
 	transform-origin: 100% 50%;
 	transition-property: transform, opacity;
@@ -208,7 +207,7 @@
 @keyframes 'js-pill-in-a' {
 	0% {
 		opacity: 0;
-		transform: translate3d(70px, 0px, 0px) scale3d(1, 1, 1);
+		transform: translate3d(88px, 0px, 0px) scale3d(1, 1, 1);
 	}
 	100% {
 		opacity: 1;
@@ -219,7 +218,7 @@
 @keyframes 'js-pill-in-b' {
 	0% {
 		opacity: 0;
-		transform: translate3d(70px, 0px, 0px) scale3d(1, 1, 1);
+		transform: translate3d(88px, 0px, 0px) scale3d(1, 1, 1);
 	}
 	100% {
 		opacity: 1;
@@ -229,17 +228,17 @@
 
 .js-hist.js-age-1 {
 	opacity: 0.85;
-	transform: translate3d(0px, -26px, 0px) scale3d(0.92, 1, 1);
+	transform: translate3d(0px, -33px, 0px) scale3d(0.92, 1, 1);
 }
 
 .js-hist.js-age-2 {
 	opacity: 0.6;
-	transform: translate3d(0px, -52px, 0px) scale3d(0.84, 1, 1);
+	transform: translate3d(0px, -66px, 0px) scale3d(0.84, 1, 1);
 }
 
 .js-hist.js-age-3 {
 	opacity: 0.35;
-	transform: translate3d(0px, -78px, 0px) scale3d(0.76, 1, 1);
+	transform: translate3d(0px, -99px, 0px) scale3d(0.76, 1, 1);
 }
 
 .js-hist.js-expire {
@@ -249,17 +248,15 @@
 .js-hist-type {
 	horizontal-align: left;
 	vertical-align: center;
-	font-family: Stratum2, "Arial Unicode MS";
-	font-size: 12px;
+	font-size: 15px;
 	font-weight: bold;
 }
 
 .js-hist-info {
 	horizontal-align: left;
 	vertical-align: center;
-	margin-left: 30px;
-	font-family: Stratum2, "Arial Unicode MS";
-	font-size: 9px;
+	margin-left: 38px;
+	font-size: 11px;
 	font-weight: medium;
 	color: #c5cad0;
 }
@@ -267,22 +264,21 @@
 .js-hist-dist {
 	horizontal-align: right;
 	vertical-align: center;
-	font-family: "Stratum2 Mono", "Arial Unicode MS";
-	font-size: 14px;
+	font-size: 18px;
 	font-weight: bold;
 }
 
 .js-panel {
 	width: 100%;
 	flow-children: down;
-	padding: 9px 11px 7px 11px;
+	padding: 11px 14px 9px 14px;
 
 	background-color: #000000b8;
 	background-image: url("s2r://panorama/images/backgrounds/bluedots_large_png.vtex");
 	background-size: 360px 360px;
 	background-img-opacity: 0.015;
 	world-blur: gaussian(1, 1, 1);
-	border-radius: 3px;
+	border-radius: 4px;
 
 	opacity: 0;
 }
@@ -306,7 +302,7 @@
 @keyframes 'js-slide-in' {
 	0% {
 		opacity: 0;
-		transform: translate3d(70px, 0px, 0px);
+		transform: translate3d(88px, 0px, 0px);
 	}
 	100% {
 		opacity: 1;
@@ -321,20 +317,19 @@
 	}
 	100% {
 		opacity: 0;
-		transform: translate3d(70px, 0px, 0px);
+		transform: translate3d(88px, 0px, 0px);
 	}
 }
 
 .js-header {
 	width: 100%;
-	height: 16px;
+	height: 20px;
 }
 
 .js-type {
 	horizontal-align: left;
 	vertical-align: center;
-	font-family: Stratum2, "Arial Unicode MS";
-	font-size: 12px;
+	font-size: 15px;
 	font-weight: bold;
 	text-transform: uppercase;
 }
@@ -342,8 +337,7 @@
 .js-tier-name {
 	horizontal-align: right;
 	vertical-align: center;
-	font-family: Stratum2, "Arial Unicode MS";
-	font-size: 10px;
+	font-size: 13px;
 	font-weight: medium;
 	color: #828282;
 	text-transform: uppercase;
@@ -351,9 +345,8 @@
 
 .js-dist {
 	horizontal-align: center;
-	margin: 2px 0px 6px 0px;
-	font-family: "Stratum2 Mono", "Arial Unicode MS";
-	font-size: 30px;
+	margin: 3px 0px 8px 0px;
+	font-size: 38px;
 	font-weight: bold;
 	text-shadow: 1px 1px 2px 1.0 #000000cc;
 }
@@ -362,19 +355,18 @@
 	width: 100%;
 	height: 0px;
 	border-bottom: 1px solid #ffffff14;
-	margin-bottom: 6px;
+	margin-bottom: 8px;
 }
 
 .js-row {
 	width: 100%;
-	height: 15px;
+	height: 19px;
 }
 
 .js-label {
 	horizontal-align: left;
 	vertical-align: center;
-	font-family: Stratum2, "Arial Unicode MS";
-	font-size: 11px;
+	font-size: 14px;
 	font-weight: medium;
 	color: #c5cad0;
 	text-transform: uppercase;
@@ -383,8 +375,7 @@
 .js-value {
 	horizontal-align: right;
 	vertical-align: center;
-	font-family: "Stratum2 Mono", "Arial Unicode MS";
-	font-size: 12px;
+	font-size: 15px;
 	font-weight: bold;
 	/* The chat's olive, which it prints every stat value in. */
 	color: #bfff90;
@@ -398,6 +389,12 @@
 .js-tier-4 { color: #ff0000; }
 .js-tier-5 { color: #e4ae39; }
 .js-tier-6 { color: #d32ce6; }
+
+/* Chat colors for single values, such as the W release. */
+.js-c-red { color: #ff4040; }
+.js-c-green { color: #40ff40; }
+.js-c-blue { color: #5e98d9; }
+.js-c-grey { color: #c5cad0; }
 
 /* Each element's box in edit mode, sized by box-size.css. The move button fills it, and the corner buttons sit on top. */
 .edit-hit {

@@ -63,7 +63,7 @@ namespace KZ::menu
 
 	void SetItemEnabledBy(KZOptNode *node, const char *prefKey)
 	{
-		if (node->items.empty())
+		if (node->items.empty() || !prefKey)
 		{
 			return;
 		}

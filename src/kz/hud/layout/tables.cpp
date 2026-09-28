@@ -10,9 +10,26 @@ extern const MHUDElementDef MHUD_ELEMENTS[(i32)MHUDElement::Count] =
 	{"mhud_prespeed",   "mhud_prespeed_pos",   "mhud_prespeed_hit",   "prespeed",   "mhudPrespeedEnabled",   "mhudPrespeedX",   "mhudPrespeedY",   "mhudPrespeedSize",   "mhudPrespeedFont",   "mhudPrespeedOutline",   "mhudPrespeedOpacity",   "mhudPrespeedAlign",   "mhudPrespeedBorder",  MHUD_DEF_PRESPEED_X,   MHUD_DEF_PRESPEED_Y,   MHUD_DEF_PRESPEED_SIZE,   MHUD_SIZE_MIN,    MHUD_SIZE_MAX},
 	{"mhud_keys",       "mhud_keys_pos",       "mhud_keys_hit",       "keys",       "mhudKeysEnabled",       "mhudKeysX",       "mhudKeysY",       "mhudKeysSize",       "mhudKeysFont",       "mhudKeysOutline",       "mhudKeysOpacity",       NULL,                  NULL,                  MHUD_DEF_KEYS_X,       MHUD_DEF_KEYS_Y,       MHUD_DEF_KEYS_SIZE,       MHUD_SIZE_MIN,    MHUD_SIZE_MAX},
 	{"mhud_checkpoint", "mhud_checkpoint_pos", "mhud_checkpoint_hit", "checkpoint", "mhudCheckpointEnabled", "mhudCheckpointX", "mhudCheckpointY", "mhudCheckpointSize", "mhudCheckpointFont", "mhudCheckpointOutline", "mhudCheckpointOpacity", "mhudCheckpointAlign", NULL,                  MHUD_DEF_CHECKPOINT_X, MHUD_DEF_CHECKPOINT_Y, MHUD_DEF_CHECKPOINT_SIZE, MHUD_SIZE_MIN,    MHUD_SIZE_MAX},
+	{"mhud_js",         "mhud_js_pos",         "mhud_js_hit",         NULL,         NULL,                    "mhudJsX",         "mhudJsY",         "mhudJsSize",         "mhudJsFont",         NULL,                    "mhudJsOpacity",         NULL,                  NULL,                  MHUD_DEF_JS_X,         MHUD_DEF_JS_Y,         MHUD_DEF_JS_SIZE,         MHUD_JS_SIZE_MIN, MHUD_JS_SIZE_MAX},
 	{"mhud_perf",       "mhud_perf_pos",       "mhud_perf_hit",       "perf",       "mhudPerfEnabled",       "mhudPerfX",       "mhudPerfY",       "mhudPerfSize",       "mhudPerfFont",       "mhudPerfOutline",       "mhudPerfOpacity",       "mhudPerfAlign",       NULL,                  MHUD_DEF_PERF_X,       MHUD_DEF_PERF_Y,       MHUD_DEF_PERF_SIZE,       MHUD_SIZE_MIN,    MHUD_SIZE_MAX},
 	{"mhud_cj",         "mhud_cj_pos",         "mhud_cj_hit",         "cj",         "mhudCjEnabled",         "mhudCjX",         "mhudCjY",         "mhudCjSize",         "mhudCjFont",         "mhudCjOutline",         "mhudCjOpacity",         "mhudCjAlign",         NULL,                  MHUD_DEF_CJ_X,         MHUD_DEF_CJ_Y,         MHUD_DEF_CJ_SIZE,         MHUD_SIZE_MIN,    MHUD_SIZE_MAX},
 	{"mhud_jumpbug",    "mhud_jumpbug_pos",    "mhud_jumpbug_hit",    "jumpbug",    "mhudJumpbugEnabled",    "mhudJumpbugX",    "mhudJumpbugY",    "mhudJumpbugSize",    "mhudJumpbugFont",    "mhudJumpbugOutline",    "mhudJumpbugOpacity",    "mhudJumpbugAlign",    NULL,                  MHUD_DEF_JUMPBUG_X,    MHUD_DEF_JUMPBUG_Y,    MHUD_DEF_JUMPBUG_SIZE,    MHUD_SIZE_MIN,    MHUD_SIZE_MAX},
+};
+
+extern const MHUDJsFieldDef MHUD_JS_FIELDS[(i32)MHUDJsField::Count] =
+{
+	{"mhudJsShowBlock",      "Menu - JS Field Block"},
+	{"mhudJsShowStrafes",    "Menu - JS Field Strafes"},
+	{"mhudJsShowSync",       "Menu - JS Field Sync"},
+	{"mhudJsShowPreMax",     "Menu - JS Field Pre Max"},
+	{"mhudJsShowHeight",     "Menu - JS Field Height"},
+	{"mhudJsShowAirTime",    "Menu - JS Field Air Time"},
+	{"mhudJsShowWidth",      "Menu - JS Field Width"},
+	{"mhudJsShowGainEff",    "Menu - JS Field Gain Efficiency"},
+	{"mhudJsShowAirPath",    "Menu - JS Field Air Path"},
+	{"mhudJsShowBadAngles",  "Menu - JS Field Bad Angles"},
+	{"mhudJsShowRelease",    "Menu - JS Field Release"},
+	{"mhudJsShowOffset",     "Menu - JS Field Offset"},
 };
 
 // A sample value inside each pair, so the picker shows the symbols themselves and needs no phrases.

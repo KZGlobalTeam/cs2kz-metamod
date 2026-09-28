@@ -1328,4 +1328,60 @@
 	{
 		"en"		"Match your resolution so Move elements drags and snaps evenly on both axes"
 	}
+	"Menu - JS History"
+	{
+		"en"		"Show history"
+	}
+	"Menu - JS History Sub"
+	{
+		"en"		"Your last few jumps, stacked above the panel"
+	}
+	"Menu - JS Field Block"
+	{
+		"en"		"Show block"
+	}
+	"Menu - JS Field Strafes"
+	{
+		"en"		"Show strafes"
+	}
+	"Menu - JS Field Sync"
+	{
+		"en"		"Show sync"
+	}
+	"Menu - JS Field Pre Max"
+	{
+		"en"		"Show pre and max speed"
+	}
+	"Menu - JS Field Height"
+	{
+		"en"		"Show height"
+	}
+	"Menu - JS Field Air Time"
+	{
+		"en"		"Show air time"
+	}
+	"Menu - JS Field Width"
+	{
+		"en"		"Show width"
+	}
+	"Menu - JS Field Gain Efficiency"
+	{
+		"en"		"Show gain efficiency"
+	}
+	"Menu - JS Field Air Path"
+	{
+		"en"		"Show air path"
+	}
+	"Menu - JS Field Bad Angles"
+	{
+		"en"		"Show bad angles, overlap and dead air"
+	}
+	"Menu - JS Field Release"
+	{
+		"en"		"Show W release"
+	}
+	"Menu - JS Field Offset"
+	{
+		"en"		"Show offset"
+	}
 }

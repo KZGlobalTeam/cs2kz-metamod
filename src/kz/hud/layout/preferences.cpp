@@ -3,6 +3,7 @@
 #include "kz/option/kz_option.h"
 #include "kz/option/menu/tables.h"
 #include "kz/spec/kz_spec.h"
+#include "kz/jumpstats/kz_jumpstats.h"
 
 #include "tier0/memdbgon.h"
 
@@ -13,14 +14,26 @@ void KZHUDService::RefreshPrefs()
 	{
 		const MHUDElementDef &def = MHUD_ELEMENTS[e];
 		MHUDPrefs::Element &element = this->prefs.elements[e];
-		// Indicators are opt-in; every other element is on by default.
-		element.enabled = opts->GetPreferenceBool(def.enabledKey, !IsMHUDIndicator((MHUDElement)e));
+		// Indicators are opt-in; every other element is on by default. The jumpstats panel follows where jumpstats are reported.
+		if (def.enabledKey)
+		{
+			element.enabled = opts->GetPreferenceBool(def.enabledKey, !IsMHUDIndicator((MHUDElement)e));
+		}
+		else
+		{
+			element.enabled = opts->GetPreferenceInt("jsReportType", JSReportType_Hud) != JSReportType_Chat;
+		}
 		// Older saves allowed +-100, which puts the anchor off screen.
 		element.x = Clamp((f32)opts->GetPreferenceFloat(def.xKey, def.xDefault), -50.0f, 50.0f);
 		element.y = Clamp((f32)opts->GetPreferenceFloat(def.yKey, def.yDefault), -50.0f, 50.0f);
 		element.size = (f32)opts->GetPreferenceFloat(def.sizeKey, def.sizeDefault);
+		if (e == (i32)MHUDElement::Jumpstats)
+		{
+			// Only the scales js-scale.css defines.
+			element.size = Clamp(element.size, (f32)def.sizeMin, (f32)def.sizeMax);
+		}
 		element.fontClass = panorama::ResolveFontClass(opts->GetPreferenceStr(def.fontKey, MHUD_DEFAULT_FONT), MHUD_DEFAULT_FONT);
-		element.outline = opts->GetPreferenceBool(def.outlineKey, true);
+		element.outline = def.outlineKey ? opts->GetPreferenceBool(def.outlineKey, true) : false;
 		element.opacity = (i32)opts->GetPreferenceInt(def.opacityKey, 100);
 		const i64 align = def.alignKey ? opts->GetPreferenceInt(def.alignKey, (i64)MHUDAlign::Center) : (i64)MHUDAlign::Center;
 		element.align = (MHUDAlign)Clamp(align, (i64)MHUDAlign::Left, (i64)MHUDAlign::Right);
@@ -59,6 +72,12 @@ void KZHUDService::RefreshPrefs()
 		this->prefs.indicator[i] = opts->GetPreferenceColor(colors[0].prefKey, Color(colors[0].r, colors[0].g, colors[0].b, 255));
 		this->prefs.indicatorAcronym[i] = opts->GetPreferenceBool(indicator.acronymKey, false);
 	}
+
+	for (i32 i = 0; i < (i32)MHUDJsField::Count; i++)
+	{
+		this->prefs.jsFields[i] = opts->GetPreferenceBool(MHUD_JS_FIELDS[i].prefKey, true);
+	}
+	this->prefs.jsHistory = opts->GetPreferenceBool("mhudJsShowHistory", true);
 
 	this->prefs.legacyStyle = opts->GetPreferenceBool("hudLegacyStyle", false);
 	this->prefs.compactPanel = opts->GetPreferenceBool("compactPanel", false);

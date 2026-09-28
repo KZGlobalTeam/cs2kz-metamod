@@ -110,7 +110,11 @@ void KZHUDService::UpdateLayoutElement(CCSCustomHudLayout *layout, MHUDElement e
 	this->SetLayoutClass(layout, def.panelId, state.alignClass, ALIGN_CLASSES[(i32)cached.align]);
 	this->SetLayoutPosition(layout, def.panelId, def.posPanelId, state.x, state.fineX, RoundFloatToInt(x * 10.0f) + alignShift, "x");
 	this->SetLayoutPosition(layout, def.panelId, def.posPanelId, state.y, state.fineY, RoundFloatToInt(y * 10.0f), "y");
-	this->SetLayoutValueClass(layout, def.panelId, state.fontSize, (i32)this->GetLayoutSize(element), "font-size", false);
+	// The jumpstats panel scales as a whole instead, in UpdateJumpstatsElement.
+	if (element != MHUDElement::Jumpstats)
+	{
+		this->SetLayoutValueClass(layout, def.panelId, state.fontSize, (i32)this->GetLayoutSize(element), "font-size", false);
+	}
 	const u32 packed = ((u32)color.r() << 24) | ((u32)color.g() << 16) | ((u32)color.b() << 8) | (u32)color.a();
 	if (!state.colorComputed || state.lastColorPacked != packed)
 	{

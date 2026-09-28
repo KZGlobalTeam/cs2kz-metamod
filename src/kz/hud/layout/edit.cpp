@@ -26,9 +26,18 @@ extern ICS2Menus *g_pMenus;
 #define MHUD_EDIT_BOX_EM_HEIGHT    1.3f
 // Layout units of breathing room around every box.
 #define MHUD_EDIT_BOX_PADDING 8.0f
+// The largest box box-size.css defines. The jumpstats panel at 200% is about 970 units tall.
+#define MHUD_EDIT_BOX_MAX_WIDTH  1600
+#define MHUD_EDIT_BOX_MAX_HEIGHT 1000
 // Re-centre pitch well before the +-89 clamp, leaving a full round trip of room for the snap to land.
 #define MHUD_EDIT_RESNAP_PITCH 45.0f
 #define MHUD_EDIT_CAMERA_NAME  "kz_hudedit_camera"
+// The jumpstats panel at 100%, from mhud.css. The panel's fixed part is its padding, header, distance and divider.
+#define MHUD_EDIT_JS_WIDTH          288.0f
+#define MHUD_EDIT_JS_PANEL_HEIGHT   109.0f
+#define MHUD_EDIT_JS_ROW_HEIGHT     19.0f
+#define MHUD_EDIT_JS_HISTORY_HEIGHT 146.0f
+
 // The buttons inside each element's edit box, after its id. Corners are in EditState::corner order.
 #define MHUD_EDIT_MOVE_SUFFIX "_move"
 static_global const char *const EDIT_CORNER_SUFFIXES[] = {"_tl", "_tr", "_bl", "_br"};
@@ -639,6 +648,20 @@ void KZHUDService::GetEditBoxSize(MHUDElement element, f32 &width, f32 &height)
 {
 	const MHUDPrefs &prefs = this->GetOwnPrefs();
 	const f32 size = this->GetLayoutSize(element);
+	if (element == MHUDElement::Jumpstats)
+	{
+		// The sample shows every row the player has on, and the history above the panel unless it is off.
+		i32 rows = 0;
+		for (bool shown : prefs.jsFields)
+		{
+			rows += shown ? 1 : 0;
+		}
+		const f32 scale = Clamp((i32)size, MHUD_JS_SIZE_MIN, MHUD_JS_SIZE_MAX) / 100.0f;
+		const f32 history = prefs.jsHistory ? MHUD_EDIT_JS_HISTORY_HEIGHT : 0.0f;
+		width = MHUD_EDIT_JS_WIDTH * scale + MHUD_EDIT_BOX_PADDING;
+		height = (history + MHUD_EDIT_JS_PANEL_HEIGHT + rows * MHUD_EDIT_JS_ROW_HEIGHT) * scale + MHUD_EDIT_BOX_PADDING;
+		return;
+	}
 	if (element == MHUDElement::Keys)
 	{
 		// Mirrors keys-size.css, where the size-20 boxes (55x35 wide, 40x40 square, 10px gaps) scale with the size.
@@ -763,8 +786,8 @@ void KZHUDService::UpdateEditLayout(CCSCustomHudLayout *layout, bool force)
 		this->SetLayoutValueClass(layout, def.hitPanelId, state.hitY, state.y, "y", true);
 		f32 width, height;
 		this->GetEditBoxSize((MHUDElement)i, width, height);
-		SetBoxClass(layout, def.hitPanelId, state.hitWidth, width, "w", 1600);
-		SetBoxClass(layout, def.hitPanelId, state.hitHeight, height, "h", 400);
+		SetBoxClass(layout, def.hitPanelId, state.hitWidth, width, "w", MHUD_EDIT_BOX_MAX_WIDTH);
+		SetBoxClass(layout, def.hitPanelId, state.hitHeight, height, "h", MHUD_EDIT_BOX_MAX_HEIGHT);
 		const bool dragging = this->edit.mode == EditMode::Dragging && this->edit.element == (MHUDElement)i;
 		if (state.hitDragging != dragging)
 		{

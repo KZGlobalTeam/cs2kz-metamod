@@ -8,7 +8,7 @@
 #include "tier0/memdbgon.h"
 
 static_global constexpr const char *ELEMENT_PHRASE[(i32)MHUDElement::Count] = {
-	"Menu - Timer", "Speed", "Menu - Prespeed", "Menu - Keys", "Menu - Checkpoint",
+	"Menu - Timer", "Speed", "Menu - Prespeed", "Menu - Keys", "Menu - Checkpoint", "Menu - Jumpstats",
 	// The indicators share one flattened page, so these only name them; they are not sub titles.
 	"Menu - Ind Perf", "Menu - Ind CJ", "Menu - Ind JB"};
 
@@ -293,8 +293,12 @@ void KZHUDService::RegisterMenu()
 		KZOptNode *sub = KZ::menu::AddSub(hud, ELEMENT_PHRASE[e]);
 		elementNodes[e] = sub;
 
-		// Everything below the Enabled toggle only affects a visible element, so it greys out with it.
-		KZ::menu::AddToggle(sub, "Menu - Enabled", def.enabledKey, true);
+		// Everything below the Enabled toggle only affects a visible element, so it greys out with it. The jumpstats panel
+		// has no toggle of its own, since the report type under Jumpstats decides whether it shows.
+		if (def.enabledKey)
+		{
+			KZ::menu::AddToggle(sub, "Menu - Enabled", def.enabledKey, true);
+		}
 		KZ::menu::AddPosition(sub, "Menu - Position", def.xKey, def.yKey, def.xDefault, def.yDefault, e);
 		KZ::menu::SetItemInteract(sub, MoveElement);
 		KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
@@ -304,12 +308,19 @@ void KZHUDService::RegisterMenu()
 			KZ::menu::SetItemPref(sub, def.alignKey, KZOptStorage::Int, (i32)MHUDAlign::Center);
 			KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
 		}
-		KZ::menu::AddSize(sub, "Menu - Size", def.sizeKey, def.sizeDefault, MHUD_SIZE_MIN, MHUD_SIZE_MAX, e);
+		KZ::menu::AddSize(sub, "Menu - Size", def.sizeKey, def.sizeDefault, def.sizeMin, def.sizeMax, e);
+		if (e == (i32)MHUDElement::Jumpstats)
+		{
+			KZ::menu::SetItemUnit(sub, "%");
+		}
 		KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
 		KZ::menu::AddFont(sub, "Menu - Font", def.fontKey, MHUD_DEFAULT_FONT, e);
 		KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
-		KZ::menu::AddToggle(sub, "Menu - Outline", def.outlineKey, true);
-		KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
+		if (def.outlineKey)
+		{
+			KZ::menu::AddToggle(sub, "Menu - Outline", def.outlineKey, true);
+			KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
+		}
 		KZ::menu::AddSize(sub, "Menu - Opacity", def.opacityKey, 100, 0, 100, e);
 		KZ::menu::SetItemUnit(sub, "%");
 		KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
@@ -375,6 +386,18 @@ void KZHUDService::RegisterMenu()
 				KZ::menu::AddToggle(sub, "Menu - Keys Fill", "mhudKeysFill", true);
 				KZ::menu::SetItemSubtext(sub, "Menu - Keys Glow Fill Sub");
 				KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
+				break;
+			}
+
+			case MHUDElement::Jumpstats:
+			{
+				KZ::menu::AddToggle(sub, "Menu - JS History", "mhudJsShowHistory", true);
+				KZ::menu::SetItemSubtext(sub, "Menu - JS History Sub");
+				KZ::menu::SetItemDivider(sub);
+				for (const MHUDJsFieldDef &field : MHUD_JS_FIELDS)
+				{
+					KZ::menu::AddToggle(sub, field.menuPhrase, field.prefKey, true);
+				}
 				break;
 			}
 

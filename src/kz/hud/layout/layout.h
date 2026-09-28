@@ -21,6 +21,13 @@
 #define MHUD_DEF_CHECKPOINT_Y    30
 #define MHUD_DEF_CHECKPOINT_SIZE 20
 
+// Right of the crosshair, where movementhub draws it. Its size is a scale in percent rather than a font size.
+#define MHUD_DEF_JS_X    40
+#define MHUD_DEF_JS_Y    0
+#define MHUD_DEF_JS_SIZE 100
+#define MHUD_JS_SIZE_MIN 50
+#define MHUD_JS_SIZE_MAX 200
+
 // The indicators stack to the right of the speed readout, in the order movementhud draws them.
 #define MHUD_DEF_JUMPBUG_X    12
 #define MHUD_DEF_JUMPBUG_Y    5

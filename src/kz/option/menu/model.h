@@ -111,7 +111,7 @@ namespace KZ::menu
 	// Declares the preference an action toggle or a choice persists to, for export and import.
 	void SetItemPref(KZOptNode *node, const char *prefKey, KZOptStorage storage, i32 idef = 0, const char *sdef = NULL);
 	// Greys the item out and ignores clicks on it while the named bool preference is off. Call it
-	// twice to require both.
+	// twice to require both. A NULL key gates nothing.
 	void SetItemEnabledBy(KZOptNode *node, const char *prefKey);
 	// The suffix a Size item shows after its value, "px" unless set.
 	void SetItemUnit(KZOptNode *node, const char *unit);
