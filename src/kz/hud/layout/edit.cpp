@@ -29,6 +29,9 @@ extern ICS2Menus *g_pMenus;
 // Re-centre pitch well before the +-89 clamp, leaving a full round trip of room for the snap to land.
 #define MHUD_EDIT_RESNAP_PITCH 45.0f
 #define MHUD_EDIT_CAMERA_NAME  "kz_hudedit_camera"
+// The buttons inside each element's edit box, after its id. Corners are in EditState::corner order.
+#define MHUD_EDIT_MOVE_SUFFIX "_move"
+static_global const char *const EDIT_CORNER_SUFFIXES[] = {"_tl", "_tr", "_bl", "_br"};
 
 struct EditTextDef
 {
@@ -284,17 +287,32 @@ void KZHUDService::OnCustomHudClicked(CPlayerSlot slot, CCSCustomHudLayout *layo
 	}
 	for (i32 i = 0; i < (i32)MHUDElement::Count; i++)
 	{
-		if (KZ_STREQ(buttonId, MHUD_ELEMENTS[i].hitPanelId) && hud->GetOwnPrefs().elements[i].enabled)
+		const char *hitPanelId = MHUD_ELEMENTS[i].hitPanelId;
+		const size_t length = strlen(hitPanelId);
+		if (strncmp(buttonId, hitPanelId, length) != 0 || !hud->GetOwnPrefs().elements[i].enabled)
+		{
+			continue;
+		}
+		const char *suffix = buttonId + length;
+		if (KZ_STREQ(suffix, MHUD_EDIT_MOVE_SUFFIX))
 		{
 			hud->BeginDrag((MHUDElement)i);
 			return;
+		}
+		for (i32 corner = 0; corner < KZ_ARRAYSIZE(EDIT_CORNER_SUFFIXES); corner++)
+		{
+			if (KZ_STREQ(suffix, EDIT_CORNER_SUFFIXES[corner]))
+			{
+				hud->BeginDrag((MHUDElement)i, corner);
+				return;
+			}
 		}
 	}
 }
 
 // === Dragging =======================================================================
 
-void KZHUDService::BeginDrag(MHUDElement element)
+void KZHUDService::BeginDrag(MHUDElement element, i32 corner)
 {
 	const CPlayerSlot slot = this->player->GetPlayerSlot();
 	CCSPlayerPawn *pawn = this->player->GetPlayerPawn();
@@ -316,6 +334,16 @@ void KZHUDService::BeginDrag(MHUDElement element)
 	this->edit.element = element;
 	this->edit.startX = this->edit.dragX = prefs.x;
 	this->edit.startY = this->edit.dragY = prefs.y;
+	this->edit.corner = corner;
+	this->edit.startSize = this->edit.dragSize = prefs.size;
+	if (corner >= 0)
+	{
+		this->GetEditBoxSize(element, this->edit.startWidth, this->edit.startHeight);
+		f32 box[4];
+		this->GetEditBox(element, prefs.x, prefs.y, box);
+		this->edit.fixedX = (corner & 1) ? box[0] : box[1];
+		this->edit.fixedY = (corner & 2) ? box[2] : box[3];
+	}
 	this->edit.guideShown[0] = this->edit.guideShown[1] = false;
 	this->edit.camera = camera->GetRefEHandle();
 	this->edit.viewAngles = pawn->m_angEyeAngles();
@@ -345,6 +373,10 @@ void KZHUDService::EndDrag(bool confirm)
 		const MHUDElementDef &def = MHUD_ELEMENTS[(i32)this->edit.element];
 		this->player->optionService->SetPreferenceFloat(def.xKey, this->edit.dragX);
 		this->player->optionService->SetPreferenceFloat(def.yKey, this->edit.dragY);
+		if (this->edit.corner >= 0)
+		{
+			this->player->optionService->SetPreferenceFloat(def.sizeKey, this->edit.dragSize);
+		}
 	}
 	RemoveEditCamera(this->edit.camera, this->edit.previousView);
 	// Hand back the view the player had before the drag turned it.
@@ -360,6 +392,7 @@ void KZHUDService::EndDrag(bool confirm)
 		return;
 	}
 	this->edit.mode = EditMode::Picking;
+	this->edit.corner = -1;
 	this->edit.guideShown[0] = this->edit.guideShown[1] = false;
 	if (CCSCustomHudLayout *layout = (CCSCustomHudLayout *)this->ownedLayout.Get())
 	{
@@ -467,6 +500,65 @@ void KZHUDService::TrackEditCommand(CCSPlayerPawn *pawn, PlayerCommand &cmd)
 
 void KZHUDService::UpdateDragPosition(u64 newlyPressed, u64 held)
 {
+	if (this->edit.corner >= 0)
+	{
+		// Turning right lowers yaw, looking down raises pitch.
+		const f32 unitsX = -this->edit.yawSum / this->edit.yawPerCount * MHUD_EDIT_UNITS_PER_COUNT;
+		const f32 unitsY = this->edit.pitchSum / this->edit.pitchPerCount * MHUD_EDIT_UNITS_PER_COUNT;
+		this->UpdateResize(newlyPressed, unitsX, unitsY);
+	}
+	else
+	{
+		this->UpdateMove(newlyPressed, held);
+	}
+	if (newlyPressed & IN_ATTACK)
+	{
+		this->EndDrag(true);
+	}
+	else if (newlyPressed & IN_ATTACK2)
+	{
+		this->EndDrag(false);
+	}
+}
+
+// Dragging a corner scales the element about the opposite corner, which stays where it is.
+void KZHUDService::UpdateResize(u64 newlyPressed, f32 unitsX, f32 unitsY)
+{
+	const MHUDElementDef &def = MHUD_ELEMENTS[(i32)this->edit.element];
+	if (newlyPressed & IN_RELOAD)
+	{
+		this->edit.startSize = this->edit.dragSize = (f32)def.sizeDefault;
+		this->GetEditBoxSize(this->edit.element, this->edit.startWidth, this->edit.startHeight);
+		this->edit.yawSum = this->edit.pitchSum = 0.0f;
+		unitsX = unitsY = 0.0f;
+	}
+	// The grabbed corner's offset from the fixed one, without the padding, which does not scale with the element. How far
+	// the mouse moved the corner along that diagonal sets the new size.
+	const f32 dirX = (this->edit.corner & 1) ? 1.0f : -1.0f;
+	const f32 dirY = (this->edit.corner & 2) ? 1.0f : -1.0f;
+	const f32 cornerX = dirX * (this->edit.startWidth - MHUD_EDIT_BOX_PADDING);
+	const f32 cornerY = dirY * (this->edit.startHeight - MHUD_EDIT_BOX_PADDING);
+	const f32 lengthSqr = cornerX * cornerX + cornerY * cornerY;
+	const f32 scale = lengthSqr > 0.0f ? ((cornerX + unitsX) * cornerX + (cornerY + unitsY) * cornerY) / lengthSqr : 1.0f;
+	this->edit.dragSize = (f32)Clamp(RoundFloatToInt(this->edit.startSize * scale), def.sizeMin, def.sizeMax);
+
+	f32 width, height;
+	this->GetEditBoxSize(this->edit.element, width, height);
+	width /= this->edit.unitsPerPctX;
+	height /= MHUD_EDIT_UNITS_PER_PCT_Y;
+	const f32 left = dirX > 0.0f ? this->edit.fixedX : this->edit.fixedX - width;
+	const f32 top = dirY > 0.0f ? this->edit.fixedY : this->edit.fixedY - height;
+	const MHUDAlign align = this->GetOwnPrefs().elements[(i32)this->edit.element].align;
+	f32 x = align == MHUDAlign::Left ? left : (align == MHUDAlign::Right ? left + width : left + width * 0.5f);
+	f32 y = top + height * 0.5f;
+	this->ClampEditBox(this->edit.element, x, y);
+	this->edit.dragX = RoundFloatToInt(x * 10.0f) / 10.0f;
+	this->edit.dragY = RoundFloatToInt(y * 10.0f) / 10.0f;
+	this->edit.guideShown[0] = this->edit.guideShown[1] = false;
+}
+
+void KZHUDService::UpdateMove(u64 newlyPressed, u64 held)
+{
 	const MHUDElementDef &def = MHUD_ELEMENTS[(i32)this->edit.element];
 	if (newlyPressed & IN_RELOAD)
 	{
@@ -530,27 +622,27 @@ void KZHUDService::UpdateDragPosition(u64 newlyPressed, u64 held)
 	}
 	this->edit.dragX = RoundFloatToInt(x * 10.0f) / 10.0f;
 	this->edit.dragY = RoundFloatToInt(y * 10.0f) / 10.0f;
-
-	if (newlyPressed & IN_ATTACK)
-	{
-		this->EndDrag(true);
-	}
-	else if (newlyPressed & IN_ATTACK2)
-	{
-		this->EndDrag(false);
-	}
 }
 
 // === Geometry =======================================================================
 
+f32 KZHUDService::GetLayoutSize(MHUDElement element)
+{
+	if (this->edit.mode == EditMode::Dragging && this->edit.element == element && this->edit.corner >= 0)
+	{
+		return this->edit.dragSize;
+	}
+	return this->GetPrefs().elements[(i32)element].size;
+}
+
 void KZHUDService::GetEditBoxSize(MHUDElement element, f32 &width, f32 &height)
 {
 	const MHUDPrefs &prefs = this->GetOwnPrefs();
-	const MHUDPrefs::Element &el = prefs.elements[(i32)element];
+	const f32 size = this->GetLayoutSize(element);
 	if (element == MHUDElement::Keys)
 	{
 		// Mirrors keys-size.css, where the size-20 boxes (55x35 wide, 40x40 square, 10px gaps) scale with the size.
-		const f32 scale = Clamp((i32)el.size, MHUD_SIZE_MIN, MHUD_SIZE_MAX) / 20.0f;
+		const f32 scale = Clamp((i32)size, MHUD_SIZE_MIN, MHUD_SIZE_MAX) / 20.0f;
 		const f32 keyWidth = roundf((prefs.keysSquare ? 40.0f : 55.0f) * scale);
 		const f32 keyHeight = roundf((prefs.keysSquare ? 40.0f : 35.0f) * scale);
 		const f32 gap = roundf(10.0f * scale);
@@ -567,7 +659,7 @@ void KZHUDService::GetEditBoxSize(MHUDElement element, f32 &width, f32 &height)
 			ems += *c < 0x80 ? MHUD_EDIT_BOX_EM_PER_CHAR : MHUD_EDIT_BOX_EM_WIDE_CHAR;
 		}
 	}
-	const f32 fontSize = (f32)panorama::SnapToStep((i32)el.size, 0, 500);
+	const f32 fontSize = (f32)panorama::SnapToStep((i32)size, 0, 500);
 	width = ems * fontSize + MHUD_EDIT_BOX_PADDING;
 	height = fontSize * MHUD_EDIT_BOX_EM_HEIGHT + MHUD_EDIT_BOX_PADDING;
 }

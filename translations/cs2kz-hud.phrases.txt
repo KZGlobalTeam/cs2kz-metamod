@@ -328,7 +328,7 @@
 	}
 	"HUD Edit - Pick Hint"
 	{
-		"en"		"Click an element to move it"
+		"en"		"Click an element to move it, or one of its corners to resize it"
 	}
 	"HUD Edit - Place"
 	{

@@ -5,15 +5,33 @@
   <Panel class="root" hittest="false">
     <Panel id="mhud_timer_pos" class="pos" hittest="false">
       <Label id="mhud_timer" class="element hidden" text="{s:timer}" hittest="false" />
-      <Button id="mhud_timer_hit" class="element edit-hit hidden" />
+      <Panel id="mhud_timer_hit" class="element edit-box hidden" hittest="false">
+        <Button id="mhud_timer_hit_move" class="edit-hit" />
+        <Button id="mhud_timer_hit_tl" class="edit-corner edit-corner-tl" />
+        <Button id="mhud_timer_hit_tr" class="edit-corner edit-corner-tr" />
+        <Button id="mhud_timer_hit_bl" class="edit-corner edit-corner-bl" />
+        <Button id="mhud_timer_hit_br" class="edit-corner edit-corner-br" />
+      </Panel>
     </Panel>
     <Panel id="mhud_speed_pos" class="pos" hittest="false">
       <Label id="mhud_speed" class="element speed hidden" text="{s:speed}" hittest="false" />
-      <Button id="mhud_speed_hit" class="element edit-hit hidden" />
+      <Panel id="mhud_speed_hit" class="element edit-box hidden" hittest="false">
+        <Button id="mhud_speed_hit_move" class="edit-hit" />
+        <Button id="mhud_speed_hit_tl" class="edit-corner edit-corner-tl" />
+        <Button id="mhud_speed_hit_tr" class="edit-corner edit-corner-tr" />
+        <Button id="mhud_speed_hit_bl" class="edit-corner edit-corner-bl" />
+        <Button id="mhud_speed_hit_br" class="edit-corner edit-corner-br" />
+      </Panel>
     </Panel>
     <Panel id="mhud_prespeed_pos" class="pos" hittest="false">
       <Label id="mhud_prespeed" class="element prespeed hidden" text="{s:prespeed}" hittest="false" />
-      <Button id="mhud_prespeed_hit" class="element edit-hit hidden" />
+      <Panel id="mhud_prespeed_hit" class="element edit-box hidden" hittest="false">
+        <Button id="mhud_prespeed_hit_move" class="edit-hit" />
+        <Button id="mhud_prespeed_hit_tl" class="edit-corner edit-corner-tl" />
+        <Button id="mhud_prespeed_hit_tr" class="edit-corner edit-corner-tr" />
+        <Button id="mhud_prespeed_hit_bl" class="edit-corner edit-corner-bl" />
+        <Button id="mhud_prespeed_hit_br" class="edit-corner edit-corner-br" />
+      </Panel>
     </Panel>
     <Panel id="mhud_keys_pos" class="pos" hittest="false">
       <Panel id="mhud_keys" class="element keys hidden" hittest="false">
@@ -50,23 +68,53 @@
           </Panel>
         </Panel>
       </Panel>
-      <Button id="mhud_keys_hit" class="element edit-hit hidden" />
+      <Panel id="mhud_keys_hit" class="element edit-box hidden" hittest="false">
+        <Button id="mhud_keys_hit_move" class="edit-hit" />
+        <Button id="mhud_keys_hit_tl" class="edit-corner edit-corner-tl" />
+        <Button id="mhud_keys_hit_tr" class="edit-corner edit-corner-tr" />
+        <Button id="mhud_keys_hit_bl" class="edit-corner edit-corner-bl" />
+        <Button id="mhud_keys_hit_br" class="edit-corner edit-corner-br" />
+      </Panel>
     </Panel>
     <Panel id="mhud_checkpoint_pos" class="pos" hittest="false">
       <Label id="mhud_checkpoint" class="element checkpoint hidden" text="{s:checkpoint}" hittest="false" />
-      <Button id="mhud_checkpoint_hit" class="element edit-hit hidden" />
+      <Panel id="mhud_checkpoint_hit" class="element edit-box hidden" hittest="false">
+        <Button id="mhud_checkpoint_hit_move" class="edit-hit" />
+        <Button id="mhud_checkpoint_hit_tl" class="edit-corner edit-corner-tl" />
+        <Button id="mhud_checkpoint_hit_tr" class="edit-corner edit-corner-tr" />
+        <Button id="mhud_checkpoint_hit_bl" class="edit-corner edit-corner-bl" />
+        <Button id="mhud_checkpoint_hit_br" class="edit-corner edit-corner-br" />
+      </Panel>
     </Panel>
     <Panel id="mhud_perf_pos" class="pos" hittest="false">
       <Label id="mhud_perf" class="element hidden" text="{s:perf}" hittest="false" />
-      <Button id="mhud_perf_hit" class="element edit-hit hidden" />
+      <Panel id="mhud_perf_hit" class="element edit-box hidden" hittest="false">
+        <Button id="mhud_perf_hit_move" class="edit-hit" />
+        <Button id="mhud_perf_hit_tl" class="edit-corner edit-corner-tl" />
+        <Button id="mhud_perf_hit_tr" class="edit-corner edit-corner-tr" />
+        <Button id="mhud_perf_hit_bl" class="edit-corner edit-corner-bl" />
+        <Button id="mhud_perf_hit_br" class="edit-corner edit-corner-br" />
+      </Panel>
     </Panel>
     <Panel id="mhud_cj_pos" class="pos" hittest="false">
       <Label id="mhud_cj" class="element hidden" text="{s:cj}" hittest="false" />
-      <Button id="mhud_cj_hit" class="element edit-hit hidden" />
+      <Panel id="mhud_cj_hit" class="element edit-box hidden" hittest="false">
+        <Button id="mhud_cj_hit_move" class="edit-hit" />
+        <Button id="mhud_cj_hit_tl" class="edit-corner edit-corner-tl" />
+        <Button id="mhud_cj_hit_tr" class="edit-corner edit-corner-tr" />
+        <Button id="mhud_cj_hit_bl" class="edit-corner edit-corner-bl" />
+        <Button id="mhud_cj_hit_br" class="edit-corner edit-corner-br" />
+      </Panel>
     </Panel>
     <Panel id="mhud_jumpbug_pos" class="pos" hittest="false">
       <Label id="mhud_jumpbug" class="element hidden" text="{s:jumpbug}" hittest="false" />
-      <Button id="mhud_jumpbug_hit" class="element edit-hit hidden" />
+      <Panel id="mhud_jumpbug_hit" class="element edit-box hidden" hittest="false">
+        <Button id="mhud_jumpbug_hit_move" class="edit-hit" />
+        <Button id="mhud_jumpbug_hit_tl" class="edit-corner edit-corner-tl" />
+        <Button id="mhud_jumpbug_hit_tr" class="edit-corner edit-corner-tr" />
+        <Button id="mhud_jumpbug_hit_bl" class="edit-corner edit-corner-bl" />
+        <Button id="mhud_jumpbug_hit_br" class="edit-corner edit-corner-br" />
+      </Panel>
     </Panel>
 
     <Panel id="mhud_js" class="js-stack" hittest="false">

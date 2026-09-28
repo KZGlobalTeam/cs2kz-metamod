@@ -398,8 +398,10 @@
 .js-tier-5 { color: #ffd24a; }
 .js-tier-6 { color: #d67cff; }
 
-/* Each element's box in edit mode, sized by box-size.css. */
+/* Each element's box in edit mode, sized by box-size.css. The move button fills it, and the corner buttons sit on top. */
 .edit-hit {
+	width: 100%;
+	height: 100%;
 	border: 1px solid #ffffff70;
 	background-color: #ffffff08;
 }
@@ -409,9 +411,44 @@
 	background-color: #ffffff20;
 }
 
-.edit-hit.dragging {
+.edit-box.dragging .edit-hit {
 	border-color: #3beda0ff;
 	background-color: #3beda028;
+}
+
+.edit-corner {
+	width: 10px;
+	height: 10px;
+	border: 1px solid #000000c0;
+	background-color: #ffffffc0;
+}
+
+.edit-corner:hover {
+	background-color: #3beda0ff;
+}
+
+.edit-box.dragging .edit-corner {
+	visibility: collapse;
+}
+
+.edit-corner-tl {
+	horizontal-align: left;
+	vertical-align: top;
+}
+
+.edit-corner-tr {
+	horizontal-align: right;
+	vertical-align: top;
+}
+
+.edit-corner-bl {
+	horizontal-align: left;
+	vertical-align: bottom;
+}
+
+.edit-corner-br {
+	horizontal-align: right;
+	vertical-align: bottom;
 }
 
 .guide {

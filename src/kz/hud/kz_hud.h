@@ -67,7 +67,7 @@ struct MHUDElementDef
 {
 	const char *panelId;    // See the panel ids in mhud.xml
 	const char *posPanelId; // full-screen wrapper carrying the fine position
-	const char *hitPanelId; // edit-mode click target
+	const char *hitPanelId; // edit-mode box, holding the move button and one resize button per corner
 	const char *varName;
 	const char *enabledKey;
 	const char *xKey;
@@ -81,6 +81,8 @@ struct MHUDElementDef
 	i32 xDefault;
 	i32 yDefault;
 	i32 sizeDefault;
+	i32 sizeMin;
+	i32 sizeMax;
 };
 
 struct MHUDColorPrefDef
@@ -540,9 +542,14 @@ private:
 	{
 		EditMode mode {EditMode::Off};
 		MHUDElement element {MHUDElement::Timer};
-		f32 nextAttack {};        // CCSPlayer_WeaponServices::m_flNextAttack before edit mode held it
-		bool returnToMenu {};     // set when started from a position stepper, so the menu reopens when the drag ends
-		f32 unitsPerPctX {19.2f}; // layout width / 100, from the aspect ratio picked in the menu
+		// The corner being dragged to resize the element, from top left to bottom right, or -1 when moving it.
+		i32 corner {-1};
+		f32 startSize {}, dragSize {};
+		f32 startWidth {}, startHeight {}; // the box at startSize, in layout units
+		f32 fixedX {}, fixedY {};          // the opposite corner, which stays put while resizing
+		f32 nextAttack {};                 // CCSPlayer_WeaponServices::m_flNextAttack before edit mode held it
+		bool returnToMenu {};              // set when started from a position stepper, so the menu reopens when the drag ends
+		f32 unitsPerPctX {19.2f};          // layout width / 100, from the aspect ratio picked in the menu
 		// Anchor positions in percent, as stored in the preferences.
 		f32 startX {}, startY {};
 		f32 dragX {}, dragY {};
@@ -564,12 +571,16 @@ private:
 
 	EditState edit {};
 
-	void BeginDrag(MHUDElement element);
+	void BeginDrag(MHUDElement element, i32 corner = -1);
 	void EndDrag(bool confirm);
 	void SnapEditView(const QAngle &angles);
 	void BuildEditTargets();
 	void TrackEditCommand(CCSPlayerPawn *pawn, PlayerCommand &cmd);
 	void UpdateDragPosition(u64 newlyPressed, u64 held);
+	void UpdateMove(u64 newlyPressed, u64 held);
+	void UpdateResize(u64 newlyPressed, f32 unitsX, f32 unitsY);
+	// The size the element is drawn at, which is the one being dragged while resizing it.
+	f32 GetLayoutSize(MHUDElement element);
 	// Fills box with the element's left, right, top and bottom edges, in percent from the screen centre.
 	void GetEditBox(MHUDElement element, f32 x, f32 y, f32 box[4]);
 	void GetEditBoxSize(MHUDElement element, f32 &width, f32 &height);

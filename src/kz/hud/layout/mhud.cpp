@@ -214,7 +214,7 @@ void KZHUDService::UpdateKeysElement(CCSCustomHudLayout *layout, KZPlayer *sourc
 	}
 
 	// keys-size.css scales the boxes and their gaps with the glyph; one class on the keys panel.
-	const i32 boxSize = Clamp((i32)prefs.elements[(i32)MHUDElement::Keys].size, MHUD_SIZE_MIN, MHUD_SIZE_MAX);
+	const i32 boxSize = Clamp((i32)this->GetLayoutSize(MHUDElement::Keys), MHUD_SIZE_MIN, MHUD_SIZE_MAX);
 	if (this->layoutKeys.boxSize != boxSize)
 	{
 		char className[32];
@@ -228,7 +228,7 @@ void KZHUDService::UpdateKeysElement(CCSCustomHudLayout *layout, KZPlayer *sourc
 		this->layoutKeys.boxSize = boxSize;
 	}
 
-	const i32 size = panorama::SnapToStep((i32)prefs.elements[(i32)MHUDElement::Keys].size, 0, 500);
+	const i32 size = panorama::SnapToStep((i32)this->GetLayoutSize(MHUDElement::Keys), 0, 500);
 	if (this->layoutKeys.fontSize != size)
 	{
 		char className[64];
