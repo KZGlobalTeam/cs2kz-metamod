@@ -133,6 +133,7 @@
 	flow-children: down;
 	width: 240px;
 	height: 100%;
+	overflow: squish scroll;
 	padding-right: 12px;
 	margin-right: 14px;
 	border-right: 1px solid #ffffff1a;
