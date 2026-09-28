@@ -5,7 +5,7 @@ Menu directory: /home/runner/work/cs2kz-metamod/cs2kz-metamod/menu
 
 Checking 35 translation files in '/home/runner/work/cs2kz-metamod/cs2kz-metamod/translations'...
 
-Languages found across all files: ['chi', 'de', 'en', 'es', 'fi', 'it', 'ko', 'lv', 'pl', 'ru', 'sv', 'tr', 'ua']
+Languages found across all files: ['chi', 'de', 'en', 'es', 'fi', 'it', 'ko', 'lv', 'nl', 'pl', 'ru', 'sv', 'tr', 'ua']
 
 Checking 11 menu files in '/home/runner/work/cs2kz-metamod/cs2kz-metamod/menu'...
 
