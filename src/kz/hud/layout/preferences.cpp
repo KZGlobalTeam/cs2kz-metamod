@@ -15,8 +15,9 @@ void KZHUDService::RefreshPrefs()
 		MHUDPrefs::Element &element = this->prefs.elements[e];
 		// Indicators are opt-in; every other element is on by default.
 		element.enabled = opts->GetPreferenceBool(def.enabledKey, !IsMHUDIndicator((MHUDElement)e));
-		element.x = (f32)opts->GetPreferenceFloat(def.xKey, def.xDefault);
-		element.y = (f32)opts->GetPreferenceFloat(def.yKey, def.yDefault);
+		// Older saves allowed +-100, which puts the anchor off screen.
+		element.x = Clamp((f32)opts->GetPreferenceFloat(def.xKey, def.xDefault), -50.0f, 50.0f);
+		element.y = Clamp((f32)opts->GetPreferenceFloat(def.yKey, def.yDefault), -50.0f, 50.0f);
 		element.size = (f32)opts->GetPreferenceFloat(def.sizeKey, def.sizeDefault);
 		element.fontClass = panorama::ResolveFontClass(opts->GetPreferenceStr(def.fontKey, MHUD_DEFAULT_FONT), MHUD_DEFAULT_FONT);
 		element.outline = opts->GetPreferenceBool(def.outlineKey, true);

@@ -172,8 +172,9 @@ namespace KZ::menu
 		item.storage = KZOptStorage::Float;
 		item.prefKey = xKey;
 		item.yKey = yKey;
-		item.lo = -100;
-		item.hi = 100;
+		// Offsets are from the screen centre, so past +-50 the anchor is off screen.
+		item.lo = -50;
+		item.hi = 50;
 		item.idef = xDef;
 		item.iydef = yDef;
 		item.tag = tag;
