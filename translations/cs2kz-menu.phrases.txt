@@ -1055,6 +1055,7 @@
 		"pl"		"Typ reportu"
 		"nl"		"Type rapport"
 		"de"		"Berichtstyp"
+		"ua"		"Тип звіту"
 	}
 	"Menu - JS Report Type Sub"
 	{
@@ -1062,6 +1063,7 @@
 		"pl"		"Gdzie pokazywać statty skow"
 		"nl"		"Waar je sprongstats worden weergegeven"
 		"de"		"Wo deine Sprungstats angezeigt werden"
+		"ua"		"Де відображатиметься статистика стрибків"
 	}
 	"Menu - JS Report Type HUD"
 	{
@@ -1069,6 +1071,7 @@
 		"pl"		"HUD"
 		"nl"		"HUD"
 		"de"		"HUD"
+		"ua"		"HUD"
 	}
 	"Menu - JS Report Type Chat"
 	{
@@ -1076,6 +1079,7 @@
 		"pl"		"Czat"
 		"nl"		"Chat"
 		"de"		"Chat"
+		"ua"		"Чат"
 	}
 	"Menu - JS Report Type Both"
 	{
@@ -1083,6 +1087,7 @@
 		"pl"		"Obydwa"
 		"nl"		"Beide"
 		"de"		"Beide"
+		"ua"		"Обидва"
 	}
 	"Menu - JS Always Sub"
 	{
