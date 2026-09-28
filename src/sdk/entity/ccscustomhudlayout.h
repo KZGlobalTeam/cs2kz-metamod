@@ -357,7 +357,10 @@ private:
 			return state->UnsetDialogVariableString((uint16)panelIdIndex, (uint16)variableIndex);
 		}
 
-		return state->SetDialogVariableString((uint16)panelIdIndex, (uint16)variableIndex, value);
+		// Escape the value with a Unicode character so that the game doesn't accidentally localize it.
+		CUtlString escaped("\xE2\x81\xA0");
+		escaped += value;
+		return state->SetDialogVariableString((uint16)panelIdIndex, (uint16)variableIndex, escaped.Get());
 	}
 
 public:
