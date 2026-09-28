@@ -81,6 +81,7 @@ void KZHUDService::RefreshPrefs()
 						 : (opts->GetPreferenceBool("mhudKeysHideUnpressed", false) ? (i32)MHUDKeysIdle::Hide : (i32)MHUDKeysIdle::Show);
 	this->prefs.keysIdle = (MHUDKeysIdle)Clamp(idle, (i32)MHUDKeysIdle::Show, (i32)MHUDKeysIdle::Underscore);
 	this->prefs.mimicSpec = opts->GetPreferenceBool("mhudMimicSpec", false);
+	this->prefs.screenWidth = (i32)Clamp(opts->GetPreferenceInt("mhudScreenWidth", MHUD_DEF_SCREEN_WIDTH), (i64)1000, (i64)4000);
 	this->prefs.hiddenGameHud = 0;
 	for (const GameHudPartDef &part : GAME_HUD_PARTS)
 	{

@@ -326,4 +326,32 @@
 		"chi"		"----- 字体选择器中标记为 * 的字体 -----\n游戏只会加载文件名与 fonts.conf 中条目匹配的已安装字体文件.\n1. 为所有用户安装该字体.\n2. 打开 csgo\panorama\fonts\fonts.conf, 在其他行旁边添加一行: <fontpattern>你的字体文件名</fontpattern>\n3. 完全重启游戏."
 		"ua"		"----- Шрифти, позначені * у виборі шрифтів -----\nГра завантажує лише встановлені файли шрифтів, ім'я яких збігається з записом у fonts.conf.\n1. Встановіть шрифт для всіх користувачів.\n2. Відкрийте csgo\panorama\fonts\fonts.conf і додайте рядок поруч з іншими: <fontpattern>yourfontfilename</fontpattern>\n3. Повністю перезапустіть гру."
 	}
+	"HUD Edit - Pick Hint"
+	{
+		"en"		"Click an element to move it"
+	}
+	"HUD Edit - Place"
+	{
+		"en"		"Place"
+	}
+	"HUD Edit - Cancel"
+	{
+		"en"		"Cancel"
+	}
+	"HUD Edit - Default"
+	{
+		"en"		"Default position"
+	}
+	"HUD Edit - Free Move"
+	{
+		"en"		"Hold: no snapping"
+	}
+	"HUD Edit - Done"
+	{
+		"en"		"Done"
+	}
+	"HUD Edit - Unavailable"
+	{
+		"en"		"{grey}Moving HUD elements needs the layout HUD style and a living player."
+	}
 }

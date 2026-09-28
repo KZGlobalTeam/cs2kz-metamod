@@ -1308,8 +1308,24 @@
 		"chi"		"{grey}选项菜单当前不可用."
 		"ua"		"{grey}Меню опцій наразі недоступне."
 	}
+	"Menu - Move Elements"
+	{
+		"en"		"Move elements"
+	}
+	"Menu - Move Elements Sub"
+	{
+		"en"		"Drag HUD elements into place with the mouse"
+	}
 	"Menu - Move With Mouse"
 	{
 		"en"		"Move with mouse"
+	}
+	"Menu - Screen Aspect"
+	{
+		"en"		"Screen aspect ratio"
+	}
+	"Menu - Screen Aspect Sub"
+	{
+		"en"		"Match your resolution so Move elements drags and snaps evenly on both axes"
 	}
 }

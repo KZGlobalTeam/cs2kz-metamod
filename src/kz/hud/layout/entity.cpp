@@ -104,9 +104,12 @@ void KZHUDService::UpdateLayoutElement(CCSCustomHudLayout *layout, MHUDElement e
 	const MHUDPrefs::Element &cached = this->GetPrefs().elements[(i32)element];
 	// Edge alignment measures x from the screen edge; shift it so the stored x stays the anchor.
 	const i32 alignShift = cached.align == MHUDAlign::Left ? 500 : (cached.align == MHUDAlign::Right ? -500 : 0);
+	const bool dragged = this->edit.mode == EditMode::Dragging && this->edit.element == element;
+	const f32 x = dragged ? this->edit.dragX : cached.x;
+	const f32 y = dragged ? this->edit.dragY : cached.y;
 	this->SetLayoutClass(layout, def.panelId, state.alignClass, ALIGN_CLASSES[(i32)cached.align]);
-	this->SetLayoutPosition(layout, def.panelId, def.posPanelId, state.x, state.fineX, RoundFloatToInt(cached.x * 10.0f) + alignShift, "x");
-	this->SetLayoutPosition(layout, def.panelId, def.posPanelId, state.y, state.fineY, RoundFloatToInt(cached.y * 10.0f), "y");
+	this->SetLayoutPosition(layout, def.panelId, def.posPanelId, state.x, state.fineX, RoundFloatToInt(x * 10.0f) + alignShift, "x");
+	this->SetLayoutPosition(layout, def.panelId, def.posPanelId, state.y, state.fineY, RoundFloatToInt(y * 10.0f), "y");
 	this->SetLayoutValueClass(layout, def.panelId, state.fontSize, (i32)cached.size, "font-size", false);
 	const u32 packed = ((u32)color.r() << 24) | ((u32)color.g() << 16) | ((u32)color.b() << 8) | (u32)color.a();
 	if (!state.colorComputed || state.lastColorPacked != packed)
@@ -171,6 +174,7 @@ CCSCustomHudLayout *KZHUDService::EnsureOwnedLayout(bool &created)
 
 void KZHUDService::DestroyOwnedLayout()
 {
+	this->AbortHudEdit();
 	// Null on server exit.
 	if (CBaseEntity *ent = GameEntitySystem() ? this->ownedLayout.Get() : nullptr)
 	{
@@ -184,6 +188,7 @@ void KZHUDService::DestroyOwnedLayout()
 	}
 	this->layoutKeys = LayoutKeysState();
 	this->layoutJumpstats = LayoutJumpstatsState();
+	this->layoutEdit = LayoutEditState();
 }
 
 void KZHUDService::Cleanup()

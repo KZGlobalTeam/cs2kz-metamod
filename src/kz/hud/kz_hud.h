@@ -67,6 +67,7 @@ struct MHUDElementDef
 {
 	const char *panelId;    // See the panel ids in mhud.xml
 	const char *posPanelId; // full-screen wrapper carrying the fine position
+	const char *hitPanelId; // edit-mode click target
 	const char *varName;
 	const char *enabledKey;
 	const char *xKey;
@@ -95,6 +96,9 @@ struct MHUDColorPrefDef
 };
 
 extern const MHUDElementDef MHUD_ELEMENTS[(i32)MHUDElement::Count];
+
+// The layout is 1080 units tall, so its width is 1080 * aspect ratio. Only edit mode needs it.
+#define MHUD_DEF_SCREEN_WIDTH 1920
 
 #define MHUD_SIZE_MIN 8
 #define MHUD_SIZE_MAX 100
@@ -235,8 +239,9 @@ struct MHUDPrefs
 	bool keysGlowEnabled {true};
 	bool keysFillEnabled {true};
 	MHUDKeysIdle keysIdle {MHUDKeysIdle::Show};
-	bool mimicSpec {};    // read from the viewer's own set only, never from the player being mimicked
-	u32 hiddenGameHud {}; // m_iHideHUD bits, also only ever read from the viewer's own set
+	bool mimicSpec {};                       // read from the viewer's own set only, never from the player being mimicked
+	i32 screenWidth {MHUD_DEF_SCREEN_WIDTH}; // layout units across the screen, from the chosen aspect ratio
+	u32 hiddenGameHud {};                    // m_iHideHUD bits, also only ever read from the viewer's own set
 };
 
 class KZHUDService : public KZBaseService
@@ -361,6 +366,22 @@ public:
 	bool IsMHUDTimerDetailed();
 	bool IsMHUDOutlineEnabled(MHUDElement element);
 
+	// Edit mode lets the player pick an element with the cursor, then drag it with the mouse while the view is locked.
+	// With an element, skips picking and starts dragging it straight away.
+	void StartHudEdit(MHUDElement element = MHUDElement::Count);
+	void StopHudEdit();
+	// Leaves edit mode without saving the element being dragged.
+	void AbortHudEdit();
+
+	bool IsEditingHud() const
+	{
+		return this->edit.mode != EditMode::Off;
+	}
+
+	static void OnCustomHudClicked(CPlayerSlot slot, CCSCustomHudLayout *layout, const char *buttonId);
+	// Reads each usercmd as it arrives while dragging, and keeps the pawn's view where it was before the drag.
+	void OnProcessUsercmds(PlayerCommand *cmds, i32 numCmds);
+
 private:
 	struct SpeedInfo
 	{
@@ -412,6 +433,14 @@ private:
 		i32 fineX {INT_MIN};
 		i32 fineY {INT_MIN};
 		bool hidden {true};
+		// The edit-mode click target, which shares the element's wrapper and so its fine position.
+		bool hitShown {};
+		bool hitDragging {};
+		i32 hitX {INT_MIN};
+		i32 hitY {INT_MIN};
+		i32 hitWidth {INT_MIN};
+		i32 hitHeight {INT_MIN};
+		const char *hitAlignClass {};
 		bool outline {false};
 		i32 opacity {INT_MIN};
 		const char *alignClass {};
@@ -467,10 +496,22 @@ private:
 		const char *distTierClass {};
 	};
 
+	struct LayoutEditState
+	{
+		bool active {};
+		bool guideShown[2] {};
+		i32 guideCoarse[2] {INT_MIN, INT_MIN};
+		i32 guideFine[2] {INT_MIN, INT_MIN};
+		bool dragging {};
+		bool keysSet {};
+		std::string texts[6] {}; // one per EDIT_TEXTS entry in edit.cpp
+	};
+
 	CHandle<CBaseEntity> ownedLayout {};
 	LayoutElementState layoutElements[(i32)MHUDElement::Count] {};
 	LayoutKeysState layoutKeys {};
 	LayoutJumpstatsState layoutJumpstats {};
+	LayoutEditState layoutEdit {};
 
 	CCSCustomHudLayout *EnsureOwnedLayout(bool &created);
 
@@ -481,11 +522,71 @@ private:
 	void SetLayoutPosition(CCSCustomHudLayout *layout, const char *panelId, const char *posPanelId, i32 &coarseCache, i32 &fineCache, i32 tenths,
 						   const char *axis);
 
+	enum class EditMode
+	{
+		Off,
+		Picking,
+		Dragging,
+	};
+
+	// Snap lines on one axis, in percent from the screen centre.
+	struct EditTargets
+	{
+		f32 lines[32] {};
+		i32 count {};
+	};
+
+	struct EditState
+	{
+		EditMode mode {EditMode::Off};
+		MHUDElement element {MHUDElement::Timer};
+		f32 nextAttack {};        // CCSPlayer_WeaponServices::m_flNextAttack before edit mode held it
+		bool returnToMenu {};     // set when started from a position stepper, so the menu reopens when the drag ends
+		f32 unitsPerPctX {19.2f}; // layout width / 100, from the aspect ratio picked in the menu
+		// Anchor positions in percent, as stored in the preferences.
+		f32 startX {}, startY {};
+		f32 dragX {}, dragY {};
+		bool guideShown[2] {};
+		f32 guide[2] {};
+		EditTargets targets[2] {};
+		CHandle<CBaseEntity> camera {};
+		CHandle<CBaseEntity> previousView {}; // the view entity before the drag, handed back when it ends
+		QAngle viewAngles {};                 // before the drag, restored after it
+		QAngle lastAngles {};
+		bool haveAngles {};
+		i32 lastCmdNum {INT_MIN};
+		f32 yawSum {}, pitchSum {}; // degrees the mouse turned since the drag started
+		f32 yawPerCount {}, pitchPerCount {};
+		u32 snapIndex {};
+		QAngle snapAngles {};
+		bool snapPending {};
+	};
+
+	EditState edit {};
+
+	void BeginDrag(MHUDElement element);
+	void EndDrag(bool confirm);
+	void SnapEditView(const QAngle &angles);
+	void BuildEditTargets();
+	void TrackEditCommand(CCSPlayerPawn *pawn, PlayerCommand &cmd);
+	void UpdateDragPosition(u64 newlyPressed, u64 held);
+	// Fills box with the element's left, right, top and bottom edges, in percent from the screen centre.
+	void GetEditBox(MHUDElement element, f32 x, f32 y, f32 box[4]);
+	void GetEditBoxSize(MHUDElement element, f32 &width, f32 &height);
+	// Moves an anchor so the element's whole box stays on screen.
+	void ClampEditBox(MHUDElement element, f32 &x, f32 &y);
+	std::string GetEditSampleText(MHUDElement element);
+	// Leaves edit mode once the player can no longer take part in it.
+	void ValidateHudEdit();
+	void UpdateEditElements(CCSCustomHudLayout *layout, bool force);
+	// The click targets, guides and hint bar; also hides them again after edit mode.
+	void UpdateEditLayout(CCSCustomHudLayout *layout, bool force);
+
 	// One per element, all called from UpdateHudLayout.
 	void UpdateTimerElement(CCSCustomHudLayout *layout, KZPlayer *source, bool force);
 	void UpdateSpeedElement(CCSCustomHudLayout *layout, const SpeedInfo &info, bool force);
 	void UpdatePrespeedElement(CCSCustomHudLayout *layout, const SpeedInfo &info, bool force);
-	void UpdateKeysElement(CCSCustomHudLayout *layout, KZPlayer *source, bool force);
+	void UpdateKeysElement(CCSCustomHudLayout *layout, KZPlayer *source, bool force, bool preview = false);
 	void UpdateCheckpointElement(CCSCustomHudLayout *layout, KZPlayer *source, bool force);
 	void UpdateIndicatorElements(CCSCustomHudLayout *layout, const SpeedInfo &info, bool force);
 	void UpdateJumpstatsElement(CCSCustomHudLayout *layout, bool show, bool force);

@@ -6,6 +6,7 @@
 @import url("file://{resources}/styles/custom_game/cs2kz/keys-size.css");
 @import url("file://{resources}/styles/custom_game/cs2kz/opacity.css");
 @import url("file://{resources}/styles/custom_game/cs2kz/fine-positions.css");
+@import url("file://{resources}/styles/custom_game/cs2kz/box-size.css");
 
 .root {
 	width: 100%;
@@ -396,3 +397,92 @@
 .js-tier-4 { color: #e0424e; }
 .js-tier-5 { color: #ffd24a; }
 .js-tier-6 { color: #d67cff; }
+
+/* Each element's box in edit mode, sized by box-size.css. */
+.edit-hit {
+	border: 1px solid #ffffff70;
+	background-color: #ffffff08;
+}
+
+.edit-hit:hover {
+	border-color: #ffffffe0;
+	background-color: #ffffff20;
+}
+
+.edit-hit.dragging {
+	border-color: #3beda0ff;
+	background-color: #3beda028;
+}
+
+.guide {
+	background-color: #ff4fd8e0;
+}
+
+.guide-x {
+	width: 1px;
+	height: 100%;
+	horizontal-align: center;
+}
+
+.guide-y {
+	width: 100%;
+	height: 1px;
+	vertical-align: middle;
+}
+
+.edit-bar {
+	horizontal-align: center;
+	vertical-align: top;
+	/* Clear of the team player counts at the top of the game HUD. */
+	margin-top: 120px;
+	flow-children: right;
+	padding: 8px 12px 8px 16px;
+
+	/* The jumpstats panel's background, which is the menu's blue dots over a see-through black. */
+	background-color: #000000b8;
+	background-image: url("s2r://panorama/images/backgrounds/bluedots_large_png.vtex");
+	background-size: 360px 360px;
+	background-img-opacity: 0.015;
+	world-blur: gaussian(1, 1, 1);
+	border-radius: 4px;
+}
+
+.edit-hint {
+	vertical-align: center;
+	margin-right: 16px;
+	font-size: 20px;
+	color: #ffffffe0;
+}
+
+.edit-keys {
+	flow-children: right;
+	vertical-align: center;
+}
+
+/* The key the player has bound, from the game's bind_* dialog variables. */
+.edit-key {
+	vertical-align: center;
+	margin-right: 6px;
+	padding: 1px 6px;
+	border: 1px solid #ffffff90;
+	border-radius: 3px;
+	font-size: 16px;
+	color: #ffffffff;
+	text-transform: uppercase;
+}
+
+.edit-done {
+	vertical-align: center;
+	padding: 4px 16px;
+	border-radius: 4px;
+	background-color: #3beda0c0;
+}
+
+.edit-done:hover {
+	background-color: #3beda0ff;
+}
+
+.edit-done-label {
+	font-size: 20px;
+	color: #000000ff;
+}

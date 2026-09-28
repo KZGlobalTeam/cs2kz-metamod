@@ -413,6 +413,7 @@ static KHook::Return<void> ClientSvcUserMessagePre(ISource2GameClients *pThis, C
 	if (CCSCustomHudLayout *layout = CCSCustomHudLayout::FromClickHandle(msg.custom_hud_layout()))
 	{
 		KZMenuService::OnCustomHudClicked(slot, layout, msg.button_id().c_str());
+		KZHUDService::OnCustomHudClicked(slot, layout, msg.button_id().c_str());
 	}
 
 	return {KHook::Action::Ignore};
@@ -457,6 +458,7 @@ static KHook::Return<bool> FireEventPre(IGameEventManager2 *pThis, IGameEvent *e
 				{
 					player->timerService->OnPlayerDeath();
 					player->quietService->SendFullUpdate();
+					player->hudService->AbortHudEdit();
 				}
 			}
 		}

@@ -1833,4 +1833,8 @@
 		"ru"		"Настроить HUD. Применение: kz_mhud <speed|prespeed|timer|keys> [свойство] [значение...]"
 		"ko"		"HUD를 설정합니다. 사용법: kz_mhud <speed|prespeed|timer|keys> [속성] [값...]"
 	}
+	"Command Description - kz_hudedit"
+	{
+		"en"		"Move HUD elements with the mouse."
+	}
 }

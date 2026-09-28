@@ -11,23 +11,28 @@
 
 #include "tier0/memdbgon.h"
 
+// Drop the fraction, keeping any (STOPPED)/(PAUSED) suffix.
+static_function void StripTimerFraction(std::string &text)
+{
+	const size_t dot = text.find('.');
+	if (dot != std::string::npos)
+	{
+		size_t end = dot + 1;
+		while (end < text.size() && V_isdigit(text[end]))
+		{
+			end++;
+		}
+		text.erase(dot, end - dot);
+	}
+}
+
 void KZHUDService::UpdateTimerElement(CCSCustomHudLayout *layout, KZPlayer *source, bool force)
 {
 	const MHUDPrefs &prefs = this->GetPrefs();
 	std::string text = source->hudService->GetTimerText(this->player->languageService->GetLanguage(), prefs.timerShowState);
 	if (!this->IsMHUDTimerDetailed())
 	{
-		// Drop the fraction, keeping any (STOPPED)/(PAUSED) suffix.
-		const size_t dot = text.find('.');
-		if (dot != std::string::npos)
-		{
-			size_t end = dot + 1;
-			while (end < text.size() && V_isdigit(text[end]))
-			{
-				end++;
-			}
-			text.erase(dot, end - dot);
-		}
+		StripTimerFraction(text);
 	}
 
 	const bool replay = KZ::replaysystem::IsReplayBot(source);
@@ -103,16 +108,17 @@ enum KeyAxis
 static_global const i32 KEY_AXES[] = {KEY_AXIS_NONE,       KEY_AXIS_FORWARD_BACK, KEY_AXIS_NONE,
 									  KEY_AXIS_LEFT_RIGHT, KEY_AXIS_FORWARD_BACK, KEY_AXIS_LEFT_RIGHT};
 
-void KZHUDService::UpdateKeysElement(CCSCustomHudLayout *layout, KZPlayer *source, bool force)
+void KZHUDService::UpdateKeysElement(CCSCustomHudLayout *layout, KZPlayer *source, bool force, bool preview)
 {
 	CPlayer_MovementServices *ms = source->hudService->GetHudMoveServices();
 	CInButtonState *buttons = ms ? &ms->m_nButtons() : nullptr;
-	auto pressed = [buttons](InputBitMask_t button) { return buttons && buttons->IsButtonPressed(button, false); };
+	auto pressed = [buttons, preview](InputBitMask_t button) { return preview || (buttons && buttons->IsButtonPressed(button, false)); };
 	const bool left = pressed(IN_MOVELEFT), forward = pressed(IN_FORWARD), back = pressed(IN_BACK), right = pressed(IN_MOVERIGHT);
-	const bool keys[] = {pressed(IN_DUCK), forward, source->hudService->JumpedThisTick(), left, back, right};
+	const bool keys[] = {pressed(IN_DUCK), forward, preview || source->hudService->JumpedThisTick(), left, back, right};
 
 	const MHUDPrefs &prefs = this->GetPrefs();
-	const bool overlap = ((forward && back) || (left && right)) && prefs.keysOverlapEnabled;
+	// Edit mode shows every key held, without the overlap tint that would imply.
+	const bool overlap = !preview && ((forward && back) || (left && right)) && prefs.keysOverlapEnabled;
 	bool overlapped[KZ_ARRAYSIZE(KEY_PANELS)] {};
 	for (i32 i = 0; overlap && i < KZ_ARRAYSIZE(KEY_PANELS); i++)
 	{
@@ -296,6 +302,85 @@ void KZHUDService::UpdateIndicatorElements(CCSCustomHudLayout *layout, const Spe
 		const char *phrase = prefs.indicatorAcronym[i] ? indicator.shortPhrase : indicator.fullPhrase;
 		const std::string text = this->player->languageService->PrepareMessage(phrase);
 		this->UpdateLayoutElement(layout, indicator.element, true, text.c_str(), prefs.indicator[i], force);
+	}
+}
+
+// The widest value each element can realistically show, drawn in the player's own formatting.
+std::string KZHUDService::GetEditSampleText(MHUDElement element)
+{
+	const MHUDPrefs &prefs = this->GetOwnPrefs();
+	const char *language = this->player->languageService->GetLanguage();
+	switch (element)
+	{
+		case MHUDElement::Timer:
+		{
+			// Whole seconds, because FormatTime rounds through a float and 359999.999 would come out as 100:00:00.000.
+			char time[32];
+			utils::FormatTime(359999.0, time, sizeof(time));
+			std::string state;
+			if (prefs.timerShowState)
+			{
+				const std::string stopped = KZLanguageService::PrepareMessageWithLang(language, "HUD - Stopped Text");
+				const std::string paused = KZLanguageService::PrepareMessageWithLang(language, "HUD - Paused Text");
+				state = stopped.size() >= paused.size() ? stopped : paused;
+			}
+			std::string text = KZLanguageService::PrepareMessageWithLang(language, "HUD - Timer Text", time, state.c_str(), "");
+			if (!prefs.timerDetailed)
+			{
+				StripTimerFraction(text);
+			}
+			return text;
+		}
+		case MHUDElement::Speed:
+		case MHUDElement::Prespeed:
+		{
+			// sv_maxvelocity clamps each axis, so horizontal speed tops out near 3500 * sqrt(2).
+			char text[24];
+			const bool precise = element == MHUDElement::Speed ? prefs.speedPrecise : prefs.prespeedPrecise;
+			FormatBordered(text, sizeof(text), prefs.elements[(i32)element], precise, 4950.0f);
+			return text;
+		}
+		case MHUDElement::Checkpoint:
+		{
+			return KZLanguageService::PrepareMessageWithLang(language, "HUD - Checkpoint Text", 99999, 99999, 99999);
+		}
+		case MHUDElement::Perf:
+		case MHUDElement::CrouchJump:
+		case MHUDElement::Jumpbug:
+		{
+			const i32 index = MHUDIndicatorIndex(element);
+			const MHUDIndicatorDef &indicator = MHUD_INDICATOR_DEFS[index];
+			return this->player->languageService->PrepareMessage(prefs.indicatorAcronym[index] ? indicator.shortPhrase : indicator.fullPhrase);
+		}
+		default:
+			return std::string();
+	}
+}
+
+void KZHUDService::UpdateEditElements(CCSCustomHudLayout *layout, bool force)
+{
+	const MHUDPrefs &prefs = this->GetOwnPrefs();
+	// Indexed by MHUDElement.
+	const Color colors[] = {prefs.timerPro,
+							prefs.speed[(i32)MHUDSpeedState::Base],
+							prefs.prespeed[(i32)MHUDSpeedState::Base],
+							prefs.keys,
+							prefs.checkpoint,
+							prefs.indicator[0],
+							prefs.indicator[1],
+							prefs.indicator[2]};
+	static_assert(KZ_ARRAYSIZE(colors) == (i32)MHUDElement::Count, "one color per element");
+	for (i32 i = 0; i < (i32)MHUDElement::Count; i++)
+	{
+		const MHUDElement element = (MHUDElement)i;
+		if (element == MHUDElement::Keys)
+		{
+			this->UpdateKeysElement(layout, this->player, force, true);
+			continue;
+		}
+		const bool show = prefs.elements[i].enabled;
+		const std::string text = show ? this->GetEditSampleText(element) : std::string();
+		this->UpdateLayoutElement(layout, element, show, show ? text.c_str() : NULL, colors[i], force);
 	}
 }
 
@@ -496,7 +581,9 @@ bool KZHUDService::UpdateHudLayout(KZPlayer *source)
 		return false;
 	}
 	const bool force = created;
-	const bool show = this->IsShowingPanel() && this->IsUsingLayoutStyle();
+	this->ValidateHudEdit();
+	const bool editing = this->IsEditingHud();
+	const bool show = editing || (this->IsShowingPanel() && this->IsUsingLayoutStyle());
 	this->UpdateJumpstatsElement(layout, show, force);
 
 	if (!show)
@@ -506,15 +593,21 @@ bool KZHUDService::UpdateHudLayout(KZPlayer *source)
 		{
 			this->UpdateLayoutElement(layout, (MHUDElement)i, false, NULL, MHUD_DEF_BASE_COLOR, force);
 		}
-		return true;
 	}
-
-	const SpeedInfo info = source->hudService->GetSpeedInfo(this->GetPrefs());
-	this->UpdateTimerElement(layout, source, force);
-	this->UpdateSpeedElement(layout, info, force);
-	this->UpdatePrespeedElement(layout, info, force);
-	this->UpdateKeysElement(layout, source, force);
-	this->UpdateCheckpointElement(layout, source, force);
-	this->UpdateIndicatorElements(layout, info, force);
+	else if (editing)
+	{
+		this->UpdateEditElements(layout, force);
+	}
+	else
+	{
+		const SpeedInfo info = source->hudService->GetSpeedInfo(this->GetPrefs());
+		this->UpdateTimerElement(layout, source, force);
+		this->UpdateSpeedElement(layout, info, force);
+		this->UpdatePrespeedElement(layout, info, force);
+		this->UpdateKeysElement(layout, source, force);
+		this->UpdateCheckpointElement(layout, source, force);
+		this->UpdateIndicatorElements(layout, info, force);
+	}
+	this->UpdateEditLayout(layout, force);
 	return true;
 }

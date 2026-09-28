@@ -51,6 +51,47 @@ static_function void TogglePanelState(KZPlayer *player, i64)
 	player->hudService->TogglePanel();
 }
 
+struct ScreenAspectDef
+{
+	const char *label;
+	i32 width; // layout units, 1080 * aspect
+};
+
+static_global const ScreenAspectDef SCREEN_ASPECTS[] = {
+	{"5:4", 1350}, {"4:3", 1440}, {"3:2", 1620}, {"16:10", 1728}, {"16:9", 1920}, {"21:9", 2560}, {"32:9", 3840},
+};
+
+static_function void GetScreenAspectChoices(KZPlayer *player, i64, std::vector<KZChoice> &out)
+{
+	for (const ScreenAspectDef &aspect : SCREEN_ASPECTS)
+	{
+		out.push_back({aspect.label, aspect.width, NULL});
+	}
+}
+
+static_function i64 GetCurrentScreenAspect(KZPlayer *player, i64)
+{
+	return player->hudService->GetOwnPrefs().screenWidth;
+}
+
+static_function void PickScreenAspect(KZPlayer *player, i64, i64 id)
+{
+	player->optionService->SetPreferenceInt("mhudScreenWidth", id);
+}
+
+static_function void MoveElements(KZPlayer *player, i64)
+{
+	player->menuService->Close();
+	player->hudService->StartHudEdit();
+}
+
+// tag is the element index, as on every other row of an element's page.
+static_function void MoveElement(KZPlayer *player, i64 tag)
+{
+	player->menuService->Suspend();
+	player->hudService->StartHudEdit((MHUDElement)tag);
+}
+
 static_function void ResetAll(KZPlayer *player, i64)
 {
 	KZ::menu::ResetNode(player, generalNode);
@@ -171,6 +212,7 @@ static_function void RegisterIndicators(KZOptNode *hud)
 
 		KZ::menu::AddToggle(sub, row[(i32)MHUDIndicatorRow::Enabled], def.enabledKey, false);
 		KZ::menu::AddPosition(sub, row[(i32)MHUDIndicatorRow::Position], def.xKey, def.yKey, def.xDefault, def.yDefault, e);
+		KZ::menu::SetItemInteract(sub, MoveElement);
 		KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
 		KZ::menu::AddChoice(sub, row[(i32)MHUDIndicatorRow::Align], GetAlignChoices, GetCurrentAlign, PickAlign, e);
 		KZ::menu::SetItemPref(sub, def.alignKey, KZOptStorage::Int, (i32)MHUDAlign::Center);
@@ -221,6 +263,11 @@ void KZHUDService::RegisterMenu()
 	KZ::menu::SetItemSubtext(general, "Menu - Compact Sub");
 	KZ::menu::AddToggle(general, "Menu - Mimic Spec", "mhudMimicSpec", false);
 	KZ::menu::SetItemSubtext(general, "Menu - Mimic Spec Sub");
+	KZ::menu::AddButton(general, "Menu - Move Elements", MoveElements);
+	KZ::menu::SetItemSubtext(general, "Menu - Move Elements Sub");
+	KZ::menu::AddChoice(general, "Menu - Screen Aspect", GetScreenAspectChoices, GetCurrentScreenAspect, PickScreenAspect);
+	KZ::menu::SetItemPref(general, "mhudScreenWidth", KZOptStorage::Int, MHUD_DEF_SCREEN_WIDTH);
+	KZ::menu::SetItemSubtext(general, "Menu - Screen Aspect Sub");
 	KZ::menu::SetItemDivider(general);
 	KZ::menu::AddButton(general, "Menu - Reset All", ResetAll);
 
@@ -249,6 +296,7 @@ void KZHUDService::RegisterMenu()
 		// Everything below the Enabled toggle only affects a visible element, so it greys out with it.
 		KZ::menu::AddToggle(sub, "Menu - Enabled", def.enabledKey, true);
 		KZ::menu::AddPosition(sub, "Menu - Position", def.xKey, def.yKey, def.xDefault, def.yDefault, e);
+		KZ::menu::SetItemInteract(sub, MoveElement);
 		KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
 		if (def.alignKey)
 		{

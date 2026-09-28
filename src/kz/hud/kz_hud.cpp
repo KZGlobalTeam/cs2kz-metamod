@@ -73,6 +73,7 @@ void KZHUDService::OnProcessMovementPost()
 
 void KZHUDService::Reset()
 {
+	this->AbortHudEdit();
 	this->showPanel = this->player->optionService->GetPreferenceBool("showPanel", true);
 	this->timerStoppedTime = {};
 	this->currentTimeWhenTimerStopped = {};
@@ -287,6 +288,20 @@ bool KZHUDService::IsCompactPanel()
 void KZHUDService::ToggleCompactPanel()
 {
 	this->player->optionService->SetPreferenceBool("compactPanel", !this->IsCompactPanel());
+}
+
+SCMD(kz_hudedit, SCFL_HUD)
+{
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
+	if (player->hudService->IsEditingHud())
+	{
+		player->hudService->StopHudEdit();
+	}
+	else
+	{
+		player->hudService->StartHudEdit();
+	}
+	return true;
 }
 
 SCMD(kz_panel, SCFL_HUD)
