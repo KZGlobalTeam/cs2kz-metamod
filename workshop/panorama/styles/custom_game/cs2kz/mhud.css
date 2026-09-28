@@ -261,7 +261,7 @@
 	font-family: Stratum2, "Arial Unicode MS";
 	font-size: 9px;
 	font-weight: medium;
-	color: #9a9a9a;
+	color: #c5cad0;
 }
 
 .js-hist-dist {
@@ -376,7 +376,7 @@
 	font-family: Stratum2, "Arial Unicode MS";
 	font-size: 11px;
 	font-weight: medium;
-	color: #828282;
+	color: #c5cad0;
 	text-transform: uppercase;
 }
 
@@ -386,17 +386,18 @@
 	font-family: "Stratum2 Mono", "Arial Unicode MS";
 	font-size: 12px;
 	font-weight: bold;
-	color: #ffffffcc;
+	/* The chat's olive, which it prints every stat value in. */
+	color: #bfff90;
 }
 
-/*js tier colors*/
-.js-tier-0 { color: #9a9a9a; }
-.js-tier-1 { color: #9a9a9a; }
-.js-tier-2 { color: #5aa9ff; }
-.js-tier-3 { color: #55ff7a; }
-.js-tier-4 { color: #e0424e; }
-.js-tier-5 { color: #ffd24a; }
-.js-tier-6 { color: #d67cff; }
+/* The chat colors of distanceTierColors: grey, grey, blue, green, darkred, gold, orchid. */
+.js-tier-0 { color: #c5cad0; }
+.js-tier-1 { color: #c5cad0; }
+.js-tier-2 { color: #5e98d9; }
+.js-tier-3 { color: #40ff40; }
+.js-tier-4 { color: #ff0000; }
+.js-tier-5 { color: #e4ae39; }
+.js-tier-6 { color: #d32ce6; }
 
 /* Each element's box in edit mode, sized by box-size.css. The move button fills it, and the corner buttons sit on top. */
 .edit-hit {
