@@ -29,6 +29,9 @@ public:
 
 	void Toggle();
 	void Close();
+	// Close, remembering the page and the open popup so Resume can put the player back there.
+	void Suspend();
+	void Resume();
 
 	bool IsOpen() const
 	{
@@ -89,6 +92,7 @@ private:
 	void PopupPick(i32 slot);
 	// axis: 0 = x, 1 = y, 2 = z.
 	void Step(i32 axis, f32 delta);
+	void InteractPopupItem();
 
 	const KZOptItem *PopupItem();
 
@@ -103,6 +107,16 @@ private:
 	i32 selectedSub {-1};
 	Popup popup {Popup::None};
 	i32 popupItemIndex {-1};
+
+	struct ResumeState
+	{
+		bool valid {};
+		i32 category {};
+		i32 sub {-1};
+		Popup popup {Popup::None};
+		i32 popupItemIndex {-1};
+	} resume {};
+
 	bool popupFont {}; // List popup: font faces vs a Choice provider
 	i32 popupPage {};
 
@@ -124,20 +138,21 @@ private:
 	// fields hold the class string last applied on that panel, NULL for none.
 	struct Applied
 	{
-		const char *menuFont {};  // menu font class, set on menu_root and inherited
-		const char *menuColor {}; // menu color (pal-fg) class, likewise
-		bool rootHidden {true};   // menu_root "hidden"
-		bool sounds {};           // menu_root "snd", gating every hover/click sound in menu.css
-		bool shift {};            // menu_root "shift", nudging the menu left so an open popup clears a 4:3/5:4 screen edge
-		bool fontReflow {};       // menu_root "font-reflow"
-		bool noBlur {};           // menu_box and popups "no-blur", so the player can see whats under it
-		bool colorHidden {true};  // color_popup "hidden"
-		bool listHidden {true};   // list_popup "hidden"
-		bool stepHidden {true};   // step_popup "hidden"
-		bool vstepHidden {true};  // the stepper's vertical rows "hidden" (Position and Vector)
-		bool zstepHidden {true};  // the stepper's z row "hidden" (Vector only)
-		bool stepFine {};         // step_popup "fine", which shows the tenths buttons and moves the readout above (positions only)
-		bool noteHidden {true};   // the list popup's "* is a system font" footnote "hidden"
+		const char *menuFont {};    // menu font class, set on menu_root and inherited
+		const char *menuColor {};   // menu color (pal-fg) class, likewise
+		bool rootHidden {true};     // menu_root "hidden"
+		bool sounds {};             // menu_root "snd", gating every hover/click sound in menu.css
+		bool shift {};              // menu_root "shift", nudging the menu left so an open popup clears a 4:3/5:4 screen edge
+		bool fontReflow {};         // menu_root "font-reflow"
+		bool noBlur {};             // menu_box and popups "no-blur", so the player can see whats under it
+		bool colorHidden {true};    // color_popup "hidden"
+		bool listHidden {true};     // list_popup "hidden"
+		bool stepHidden {true};     // step_popup "hidden"
+		bool vstepHidden {true};    // the stepper's vertical rows "hidden" (Position and Vector)
+		bool zstepHidden {true};    // the stepper's z row "hidden" (Vector only)
+		bool stepFine {};           // step_popup "fine", which shows the tenths buttons and moves the readout above (positions only)
+		bool stepDragHidden {true}; // m_step_drag "hidden" (items with an onInteract)
+		bool noteHidden {true};     // the list popup's "* is a system font" footnote "hidden"
 		// Left column, one slot each:
 		bool catHidden[KZ_MENU_CATS] {};   // slot "hidden" (unused)
 		bool catSel[KZ_MENU_CATS] {};      // "selected" (active node)

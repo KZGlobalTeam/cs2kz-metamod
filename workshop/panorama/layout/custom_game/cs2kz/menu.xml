@@ -690,6 +690,9 @@
           <Button id="m_v_p1" class="step-btn"><Label class="step-btn-label" text="+1" /></Button>
           <Button id="m_v_p5" class="step-btn"><Label class="step-btn-label" text="+5" /></Button>
         </Panel>
+        <Button id="m_step_drag" class="popup-btn step-drag hidden">
+          <Label id="m_step_drag_label" class="popup-btn-label" text="{s:stepdrag}" />
+        </Button>
       </Panel>
     </Panel>
   </Panel>

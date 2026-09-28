@@ -616,6 +616,11 @@ void KZMenuService::RenderStepPopup(CCSCustomHudLayout *layout)
 	this->SetVar(layout, "step_readout", "step", readout);
 	this->SetVar(layout, "step_readout_top", "steptop", readout);
 	this->SetBoolClass(layout, "step_popup", "fine", this->applied.stepFine, it->type == KZOptItemType::Position);
+	this->SetBoolClass(layout, "m_step_drag", "hidden", this->applied.stepDragHidden, !it->onInteract);
+	if (it->onInteract)
+	{
+		this->SetVar(layout, "m_step_drag_label", "stepdrag", KZMenuService::GetPhrase(this->player, "Menu - Move With Mouse").c_str());
+	}
 	this->SetVar(layout, "step_label", "steplabel", KZMenuService::GetPhrase(this->player, it->phraseKey).c_str());
 }
 
@@ -891,6 +896,15 @@ void KZMenuService::Step(i32 axis, f32 delta)
 	this->Render();
 }
 
+void KZMenuService::InteractPopupItem()
+{
+	const KZOptItem *it = this->PopupItem();
+	if (it && it->onInteract)
+	{
+		it->onInteract(this->player, it->tag);
+	}
+}
+
 // === Click routing ===================================================================
 
 void KZMenuService::OnCustomHudClicked(CPlayerSlot slot, CCSCustomHudLayout *layout, const char *buttonId)
@@ -937,6 +951,10 @@ void KZMenuService::OnCustomHudClicked(CPlayerSlot slot, CCSCustomHudLayout *lay
 	else if (V_strcmp(buttonId, "m_h_p01") == 0)
 	{
 		menu->Step(0, 0.1f);
+	}
+	else if (V_strcmp(buttonId, "m_step_drag") == 0)
+	{
+		menu->InteractPopupItem();
 	}
 	else if (V_strcmp(buttonId, "m_v_n5") == 0)
 	{
@@ -1072,6 +1090,43 @@ void KZMenuService::Toggle()
 	this->selectedSub = KZ::menu::GetTree()[0]->subs.empty() ? -1 : 0;
 	layout->SetInputCaptureEnabled(slot, true);
 	this->Render();
+}
+
+void KZMenuService::Suspend()
+{
+	if (!this->open)
+	{
+		return;
+	}
+	this->resume = {true, this->selectedCategory, this->selectedSub, this->popup, this->popupItemIndex};
+	this->Close();
+}
+
+void KZMenuService::Resume()
+{
+	const ResumeState state = this->resume;
+	this->resume = ResumeState();
+	if (!state.valid || this->open)
+	{
+		return;
+	}
+	this->Toggle();
+	const auto &tree = KZ::menu::GetTree();
+	if (!this->open || state.category < 0 || state.category >= (i32)tree.size())
+	{
+		return;
+	}
+	// The tree only changes at load, but check the page still exists anyway.
+	this->selectedCategory = state.category;
+	this->selectedSub = state.sub < (i32)tree[state.category]->subs.size() ? state.sub : (tree[state.category]->subs.empty() ? -1 : 0);
+	if (state.popup != Popup::None)
+	{
+		this->OpenPopup(state.popup, state.popupItemIndex);
+	}
+	else
+	{
+		this->Render();
+	}
 }
 
 void KZMenuService::Reset()

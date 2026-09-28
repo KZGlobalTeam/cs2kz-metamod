@@ -45,6 +45,14 @@ namespace KZ::menu
 		}
 	}
 
+	void SetItemInteract(KZOptNode *node, void (*onInteract)(KZPlayer *, i64))
+	{
+		if (!node->items.empty())
+		{
+			node->items.back().onInteract = onInteract;
+		}
+	}
+
 	void SetItemUnit(KZOptNode *node, const char *unit)
 	{
 		if (!node->items.empty())

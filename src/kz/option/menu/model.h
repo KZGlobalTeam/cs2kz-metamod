@@ -70,6 +70,7 @@ struct KZOptItem
 	void (*onPick)(KZPlayer *, i64 tag, i64 id) {};
 
 	void (*onActivate)(KZPlayer *, i64 tag) {}; // Button
+	void (*onInteract)(KZPlayer *, i64 tag) {}; // shows the "Move with mouse" button in a position item's stepper
 	// Called when a popup for this item opens (begin) and closes (begin=false).
 	void (*onEdit)(KZPlayer *, i64 tag, bool begin) {};
 };
@@ -118,6 +119,8 @@ namespace KZ::menu
 	void SetItemScale(KZOptNode *node, i32 scale);
 	// Keep gradients out of a color item's picker.
 	void SetItemSolidOnly(KZOptNode *node);
+	// Shows a button in a Position item's stepper that hands the value over to mouse editing.
+	void SetItemInteract(KZOptNode *node, void (*onInteract)(KZPlayer *, i64));
 
 	// Writes every value item in this node back to its registered default. Items with no preference
 	// behind them are skipped.

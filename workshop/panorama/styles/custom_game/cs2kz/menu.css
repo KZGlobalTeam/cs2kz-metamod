@@ -549,6 +549,15 @@ VerticalScrollBar:hover .ScrollThumb {
 	visibility: collapse;
 }
 
+.step-drag {
+	horizontal-align: center;
+	margin-top: 10px;
+}
+
+.step-drag.hidden {
+	visibility: collapse;
+}
+
 .popup .close-btn {
 	margin-bottom: 8px;
 }

@@ -1308,4 +1308,8 @@
 		"chi"		"{grey}选项菜单当前不可用."
 		"ua"		"{grey}Меню опцій наразі недоступне."
 	}
+	"Menu - Move With Mouse"
+	{
+		"en"		"Move with mouse"
+	}
 }
