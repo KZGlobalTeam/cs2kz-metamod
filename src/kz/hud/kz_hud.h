@@ -65,7 +65,8 @@ inline bool IsMHUDIndicator(MHUDElement element)
 
 struct MHUDElementDef
 {
-	const char *panelId; // See the panel ids in mhud.xml
+	const char *panelId;    // See the panel ids in mhud.xml
+	const char *posPanelId; // full-screen wrapper carrying the fine position
 	const char *varName;
 	const char *enabledKey;
 	const char *xKey;
@@ -408,6 +409,8 @@ private:
 		i32 fontSize {-1};
 		i32 x {INT_MIN};
 		i32 y {INT_MIN};
+		i32 fineX {INT_MIN};
+		i32 fineY {INT_MIN};
 		bool hidden {true};
 		bool outline {false};
 		i32 opacity {INT_MIN};
@@ -474,6 +477,9 @@ private:
 	void UpdateLayoutElement(CCSCustomHudLayout *layout, MHUDElement element, bool show, const char *text, const Color &color, bool force);
 	void SetLayoutClass(CCSCustomHudLayout *layout, const char *panelId, const char *&cache, const char *className);
 	void SetLayoutValueClass(CCSCustomHudLayout *layout, const char *panelId, i32 &cache, i32 value, const char *prefix, bool percent);
+	// Splits tenths of a percent into the element's whole-percent class and its wrapper's fx--N/fy--N class.
+	void SetLayoutPosition(CCSCustomHudLayout *layout, const char *panelId, const char *posPanelId, i32 &coarseCache, i32 &fineCache, i32 tenths,
+						   const char *axis);
 
 	// One per element, all called from UpdateHudLayout.
 	void UpdateTimerElement(CCSCustomHudLayout *layout, KZPlayer *source, bool force);

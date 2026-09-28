@@ -105,6 +105,12 @@ static_function void SetSizeValue(KZOptionService *opts, const KZOptItem &item, 
 	}
 }
 
+// A dragged position keeps a tenth of a percent; whole values print without the decimal.
+static_function void FormatPosition(char *out, i32 outLen, f64 x, f64 y)
+{
+	V_snprintf(out, outLen, "%g%%, %g%%", RoundFloatToInt((f32)x * 10.0f) / 10.0f, RoundFloatToInt((f32)y * 10.0f) / 10.0f);
+}
+
 std::string KZMenuService::GetPhrase(KZPlayer *player, const char *key)
 {
 	return player->languageService->PrepareMessage(key);
@@ -403,8 +409,7 @@ void KZMenuService::RenderItems(CCSCustomHudLayout *layout)
 				case KZOptItemType::Position:
 				{
 					char buf[32];
-					V_snprintf(buf, sizeof(buf), "%i%%, %i%%", (i32)opts->GetPreferenceFloat(it.prefKey, it.idef),
-							   (i32)opts->GetPreferenceFloat(it.yKey, it.iydef));
+					FormatPosition(buf, sizeof(buf), opts->GetPreferenceFloat(it.prefKey, it.idef), opts->GetPreferenceFloat(it.yKey, it.iydef));
 					value = buf;
 					break;
 				}
@@ -602,14 +607,15 @@ void KZMenuService::RenderStepPopup(CCSCustomHudLayout *layout)
 	}
 	else if (vstep)
 	{
-		V_snprintf(readout, sizeof(readout), "%i%%, %i%%", (i32)opts->GetPreferenceFloat(it->prefKey, it->idef),
-				   (i32)opts->GetPreferenceFloat(it->yKey, it->iydef));
+		FormatPosition(readout, sizeof(readout), opts->GetPreferenceFloat(it->prefKey, it->idef), opts->GetPreferenceFloat(it->yKey, it->iydef));
 	}
 	else
 	{
 		V_snprintf(readout, sizeof(readout), "%i%s", GetSizeValue(opts, *it), it->unit ? it->unit : "");
 	}
 	this->SetVar(layout, "step_readout", "step", readout);
+	this->SetVar(layout, "step_readout_top", "steptop", readout);
+	this->SetBoolClass(layout, "step_popup", "fine", this->applied.stepFine, it->type == KZOptItemType::Position);
 	this->SetVar(layout, "step_label", "steplabel", KZMenuService::GetPhrase(this->player, it->phraseKey).c_str());
 }
 
@@ -855,7 +861,7 @@ void KZMenuService::PopupPick(i32 slot)
 	}
 }
 
-void KZMenuService::Step(i32 axis, i32 delta)
+void KZMenuService::Step(i32 axis, f32 delta)
 {
 	const KZOptItem *it = this->PopupItem();
 	if (!it)
@@ -867,19 +873,20 @@ void KZMenuService::Step(i32 axis, i32 delta)
 	{
 		const char *key = axis == 1 ? it->yKey : it->prefKey;
 		const i32 def = axis == 1 ? it->iydef : it->idef;
-		const i32 value = (i32)opts->GetPreferenceFloat(key, def) + delta;
-		opts->SetPreferenceFloat(key, panorama::SnapToStep(value, -100, 100));
+		// Dragging stores tenths of a percent, so step without truncating them.
+		const f32 value = Clamp((f32)opts->GetPreferenceFloat(key, def) + delta, (f32)it->lo, (f32)it->hi);
+		opts->SetPreferenceFloat(key, RoundFloatToInt(value * 10.0f) / 10.0f);
 	}
 	else if (it->type == KZOptItemType::Vector)
 	{
 		Vector value = opts->GetPreferenceVector(it->prefKey, Vector((f32)it->idef, (f32)it->iydef, (f32)it->izdef));
 		f32 &component = axis == 2 ? value.z : (axis == 1 ? value.y : value.x);
-		component = (f32)panorama::SnapToStep((i32)component + delta, it->lo, it->hi);
+		component = (f32)panorama::SnapToStep((i32)component + (i32)delta, it->lo, it->hi);
 		opts->SetPreferenceVector(it->prefKey, value);
 	}
 	else if (it->type == KZOptItemType::Size)
 	{
-		SetSizeValue(opts, *it, panorama::SnapToStep(GetSizeValue(opts, *it) + delta, it->lo, it->hi));
+		SetSizeValue(opts, *it, panorama::SnapToStep(GetSizeValue(opts, *it) + (i32)delta, it->lo, it->hi));
 	}
 	this->Render();
 }
@@ -914,6 +921,22 @@ void KZMenuService::OnCustomHudClicked(CPlayerSlot slot, CCSCustomHudLayout *lay
 	else if (V_strcmp(buttonId, "cp_next") == 0 || V_strcmp(buttonId, "lp_next") == 0)
 	{
 		menu->PopupPageStep(1);
+	}
+	else if (V_strcmp(buttonId, "m_v_n01") == 0)
+	{
+		menu->Step(1, -0.1f);
+	}
+	else if (V_strcmp(buttonId, "m_v_p01") == 0)
+	{
+		menu->Step(1, 0.1f);
+	}
+	else if (V_strcmp(buttonId, "m_h_n01") == 0)
+	{
+		menu->Step(0, -0.1f);
+	}
+	else if (V_strcmp(buttonId, "m_h_p01") == 0)
+	{
+		menu->Step(0, 0.1f);
 	}
 	else if (V_strcmp(buttonId, "m_v_n5") == 0)
 	{

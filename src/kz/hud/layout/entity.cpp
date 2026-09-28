@@ -51,6 +51,28 @@ void KZHUDService::SetLayoutValueClass(CCSCustomHudLayout *layout, const char *p
 	cache = value;
 }
 
+void KZHUDService::SetLayoutPosition(CCSCustomHudLayout *layout, const char *panelId, const char *posPanelId, i32 &coarseCache, i32 &fineCache,
+									 i32 tenths, const char *axis)
+{
+	tenths = Clamp(tenths, -1000, 1000);
+	const i32 coarse = tenths >= 0 ? tenths / 10 : -((-tenths + 9) / 10);
+	const i32 fine = tenths - coarse * 10;
+	this->SetLayoutValueClass(layout, panelId, coarseCache, coarse, axis, true);
+	if (fineCache == fine)
+	{
+		return;
+	}
+	char className[16];
+	if (fineCache != INT_MIN)
+	{
+		V_snprintf(className, sizeof(className), "f%s--%i", axis, fineCache);
+		layout->SetHasClass(posPanelId, className, k_eHudPanelClassStatus_DoesNotHaveClass);
+	}
+	V_snprintf(className, sizeof(className), "f%s--%i", axis, fine);
+	layout->SetHasClass(posPanelId, className, k_eHudPanelClassStatus_HasClass);
+	fineCache = fine;
+}
+
 void KZHUDService::UpdateLayoutElement(CCSCustomHudLayout *layout, MHUDElement element, bool show, const char *text, const Color &color, bool force)
 {
 	const MHUDElementDef &def = MHUD_ELEMENTS[(i32)element];
@@ -81,10 +103,10 @@ void KZHUDService::UpdateLayoutElement(CCSCustomHudLayout *layout, MHUDElement e
 
 	const MHUDPrefs::Element &cached = this->GetPrefs().elements[(i32)element];
 	// Edge alignment measures x from the screen edge; shift it so the stored x stays the anchor.
-	const i32 alignShift = cached.align == MHUDAlign::Left ? 50 : (cached.align == MHUDAlign::Right ? -50 : 0);
+	const i32 alignShift = cached.align == MHUDAlign::Left ? 500 : (cached.align == MHUDAlign::Right ? -500 : 0);
 	this->SetLayoutClass(layout, def.panelId, state.alignClass, ALIGN_CLASSES[(i32)cached.align]);
-	this->SetLayoutValueClass(layout, def.panelId, state.x, (i32)cached.x + alignShift, "x", true);
-	this->SetLayoutValueClass(layout, def.panelId, state.y, (i32)cached.y, "y", true);
+	this->SetLayoutPosition(layout, def.panelId, def.posPanelId, state.x, state.fineX, RoundFloatToInt(cached.x * 10.0f) + alignShift, "x");
+	this->SetLayoutPosition(layout, def.panelId, def.posPanelId, state.y, state.fineY, RoundFloatToInt(cached.y * 10.0f), "y");
 	this->SetLayoutValueClass(layout, def.panelId, state.fontSize, (i32)cached.size, "font-size", false);
 	const u32 packed = ((u32)color.r() << 24) | ((u32)color.g() << 16) | ((u32)color.b() << 8) | (u32)color.a();
 	if (!state.colorComputed || state.lastColorPacked != packed)

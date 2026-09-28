@@ -662,14 +662,19 @@
           <Label id="step_label" class="popup-title" text="{s:steplabel}" />
           <Button id="step_close" class="close-btn" />
         </Panel>
+        <Label id="step_readout_top" class="step-readout step-readout-top" text="{s:steptop}" />
         <Panel id="m_step_up" class="step-row v-step hidden">
           <Button id="m_v_n5" class="step-btn"><Label class="step-btn-label" text="-5" /></Button>
           <Button id="m_v_n1" class="step-btn"><Label class="step-btn-label" text="-1" /></Button>
+          <Button id="m_v_n01" class="step-btn step-fine"><Label class="step-btn-label" text="-0.1" /></Button>
         </Panel>
         <Panel class="step-row">
           <Button id="m_h_n5" class="step-btn"><Label class="step-btn-label" text="-5" /></Button>
           <Button id="m_h_n1" class="step-btn"><Label class="step-btn-label" text="-1" /></Button>
+          <Button id="m_h_n01" class="step-btn step-fine"><Label class="step-btn-label" text="-0.1" /></Button>
           <Label id="step_readout" class="step-readout" text="{s:step}" />
+          <Panel class="step-gap" />
+          <Button id="m_h_p01" class="step-btn step-fine"><Label class="step-btn-label" text="+0.1" /></Button>
           <Button id="m_h_p1" class="step-btn"><Label class="step-btn-label" text="+1" /></Button>
           <Button id="m_h_p5" class="step-btn"><Label class="step-btn-label" text="+5" /></Button>
         </Panel>
@@ -681,6 +686,7 @@
           <Button id="m_z_p5" class="step-btn"><Label class="step-btn-label" text="+5" /></Button>
         </Panel>
         <Panel id="m_step_down" class="step-row v-step hidden">
+          <Button id="m_v_p01" class="step-btn step-fine"><Label class="step-btn-label" text="+0.1" /></Button>
           <Button id="m_v_p1" class="step-btn"><Label class="step-btn-label" text="+1" /></Button>
           <Button id="m_v_p5" class="step-btn"><Label class="step-btn-label" text="+5" /></Button>
         </Panel>

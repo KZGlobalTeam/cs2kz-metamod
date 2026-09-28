@@ -527,6 +527,28 @@ VerticalScrollBar:hover .ScrollThumb {
 	font-size: 19px;
 }
 
+/* Positions step in tenths too, so the row trades its centre readout for the fine buttons and a gap;
+   the readout moves above the cross. Sizes and vectors keep the centre readout. */
+.step-readout.step-readout-top {
+	width: 100%;
+	margin-bottom: 4px;
+}
+
+.font-reflow .step-readout.step-readout-top {
+	width: 99%;
+}
+
+.step-gap {
+	width: 12px;
+}
+
+.step-popup:not(.fine) .step-fine,
+.step-popup:not(.fine) .step-gap,
+.step-popup:not(.fine) .step-readout-top,
+.step-popup.fine #step_readout {
+	visibility: collapse;
+}
+
 .popup .close-btn {
 	margin-bottom: 8px;
 }

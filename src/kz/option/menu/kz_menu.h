@@ -88,7 +88,7 @@ private:
 	void PopupPageStep(i32 delta);
 	void PopupPick(i32 slot);
 	// axis: 0 = x, 1 = y, 2 = z.
-	void Step(i32 axis, i32 delta);
+	void Step(i32 axis, f32 delta);
 
 	const KZOptItem *PopupItem();
 
@@ -136,6 +136,7 @@ private:
 		bool stepHidden {true};   // step_popup "hidden"
 		bool vstepHidden {true};  // the stepper's vertical rows "hidden" (Position and Vector)
 		bool zstepHidden {true};  // the stepper's z row "hidden" (Vector only)
+		bool stepFine {};         // step_popup "fine", which shows the tenths buttons and moves the readout above (positions only)
 		bool noteHidden {true};   // the list popup's "* is a system font" footnote "hidden"
 		// Left column, one slot each:
 		bool catHidden[KZ_MENU_CATS] {};   // slot "hidden" (unused)

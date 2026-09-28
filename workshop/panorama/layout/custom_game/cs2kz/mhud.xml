@@ -3,47 +3,63 @@
     <include src="file://{resources}/styles/custom_game/cs2kz/mhud.css" />
   </styles>
   <Panel class="root" hittest="false">
-    <Label id="mhud_timer" class="element hidden" text="{s:timer}" hittest="false" />
-    <Label id="mhud_speed" class="element speed hidden" text="{s:speed}" hittest="false" />
-    <Label id="mhud_prespeed" class="element prespeed hidden" text="{s:prespeed}" hittest="false" />
-    <Panel id="mhud_keys" class="element keys hidden" hittest="false">
-      <Panel class="key-row key-row-1" hittest="false">
-        <Panel id="mhud_key_c" class="key-button" hittest="false">
-          <Label id="mhud_kg_c_main" class="key-glyph key-glyph-main" text="C" hittest="false"></Label>
-          <Label id="mhud_kg_c_idle" class="key-glyph key-glyph-idle" text="—" hittest="false"></Label>
+    <Panel id="mhud_timer_pos" class="pos" hittest="false">
+      <Label id="mhud_timer" class="element hidden" text="{s:timer}" hittest="false" />
+    </Panel>
+    <Panel id="mhud_speed_pos" class="pos" hittest="false">
+      <Label id="mhud_speed" class="element speed hidden" text="{s:speed}" hittest="false" />
+    </Panel>
+    <Panel id="mhud_prespeed_pos" class="pos" hittest="false">
+      <Label id="mhud_prespeed" class="element prespeed hidden" text="{s:prespeed}" hittest="false" />
+    </Panel>
+    <Panel id="mhud_keys_pos" class="pos" hittest="false">
+      <Panel id="mhud_keys" class="element keys hidden" hittest="false">
+        <Panel class="key-row key-row-1" hittest="false">
+          <Panel id="mhud_key_c" class="key-button" hittest="false">
+            <Label id="mhud_kg_c_main" class="key-glyph key-glyph-main" text="C" hittest="false"></Label>
+            <Label id="mhud_kg_c_idle" class="key-glyph key-glyph-idle" text="—" hittest="false"></Label>
+          </Panel>
+          <Panel id="mhud_key_w" class="key-button key-button-middle" hittest="false">
+            <Label id="mhud_kg_w_main" class="key-glyph key-glyph-main key-glyph-arrow" text="↑" hittest="false"></Label>
+            <Label id="mhud_kg_w_letter" class="key-glyph key-glyph-main key-glyph-letter" text="W" hittest="false"></Label>
+            <Label id="mhud_kg_w_idle" class="key-glyph key-glyph-idle" text="—" hittest="false"></Label>
+          </Panel>
+          <Panel id="mhud_key_j" class="key-button key-button-jump" hittest="false">
+            <Label id="mhud_kg_j_main" class="key-glyph key-glyph-main" text="J" hittest="false"></Label>
+            <Label id="mhud_kg_j_idle" class="key-glyph key-glyph-idle" text="—" hittest="false"></Label>
+          </Panel>
         </Panel>
-        <Panel id="mhud_key_w" class="key-button key-button-middle" hittest="false">
-          <Label id="mhud_kg_w_main" class="key-glyph key-glyph-main key-glyph-arrow" text="↑" hittest="false"></Label>
-          <Label id="mhud_kg_w_letter" class="key-glyph key-glyph-main key-glyph-letter" text="W" hittest="false"></Label>
-          <Label id="mhud_kg_w_idle" class="key-glyph key-glyph-idle" text="—" hittest="false"></Label>
-        </Panel>
-        <Panel id="mhud_key_j" class="key-button key-button-jump" hittest="false">
-          <Label id="mhud_kg_j_main" class="key-glyph key-glyph-main" text="J" hittest="false"></Label>
-          <Label id="mhud_kg_j_idle" class="key-glyph key-glyph-idle" text="—" hittest="false"></Label>
-        </Panel>
-      </Panel>
-      <Panel class="key-row" hittest="false">
-        <Panel id="mhud_key_a" class="key-button" hittest="false">
-          <Label id="mhud_kg_a_main" class="key-glyph key-glyph-main key-glyph-arrow" text="←" hittest="false"></Label>
-          <Label id="mhud_kg_a_letter" class="key-glyph key-glyph-main key-glyph-letter" text="A" hittest="false"></Label>
-          <Label id="mhud_kg_a_idle" class="key-glyph key-glyph-idle" text="—" hittest="false"></Label>
-        </Panel>
-        <Panel id="mhud_key_s" class="key-button key-button-middle" hittest="false">
-          <Label id="mhud_kg_s_main" class="key-glyph key-glyph-main key-glyph-arrow" text="↓" hittest="false"></Label>
-          <Label id="mhud_kg_s_letter" class="key-glyph key-glyph-main key-glyph-letter" text="S" hittest="false"></Label>
-          <Label id="mhud_kg_s_idle" class="key-glyph key-glyph-idle" text="—" hittest="false"></Label>
-        </Panel>
-        <Panel id="mhud_key_d" class="key-button" hittest="false">
-          <Label id="mhud_kg_d_main" class="key-glyph key-glyph-main key-glyph-arrow" text="→" hittest="false"></Label>
-          <Label id="mhud_kg_d_letter" class="key-glyph key-glyph-main key-glyph-letter" text="D" hittest="false"></Label>
-          <Label id="mhud_kg_d_idle" class="key-glyph key-glyph-idle" text="—" hittest="false"></Label>
+        <Panel class="key-row" hittest="false">
+          <Panel id="mhud_key_a" class="key-button" hittest="false">
+            <Label id="mhud_kg_a_main" class="key-glyph key-glyph-main key-glyph-arrow" text="←" hittest="false"></Label>
+            <Label id="mhud_kg_a_letter" class="key-glyph key-glyph-main key-glyph-letter" text="A" hittest="false"></Label>
+            <Label id="mhud_kg_a_idle" class="key-glyph key-glyph-idle" text="—" hittest="false"></Label>
+          </Panel>
+          <Panel id="mhud_key_s" class="key-button key-button-middle" hittest="false">
+            <Label id="mhud_kg_s_main" class="key-glyph key-glyph-main key-glyph-arrow" text="↓" hittest="false"></Label>
+            <Label id="mhud_kg_s_letter" class="key-glyph key-glyph-main key-glyph-letter" text="S" hittest="false"></Label>
+            <Label id="mhud_kg_s_idle" class="key-glyph key-glyph-idle" text="—" hittest="false"></Label>
+          </Panel>
+          <Panel id="mhud_key_d" class="key-button" hittest="false">
+            <Label id="mhud_kg_d_main" class="key-glyph key-glyph-main key-glyph-arrow" text="→" hittest="false"></Label>
+            <Label id="mhud_kg_d_letter" class="key-glyph key-glyph-main key-glyph-letter" text="D" hittest="false"></Label>
+            <Label id="mhud_kg_d_idle" class="key-glyph key-glyph-idle" text="—" hittest="false"></Label>
+          </Panel>
         </Panel>
       </Panel>
     </Panel>
-    <Label id="mhud_checkpoint" class="element checkpoint hidden" text="{s:checkpoint}" hittest="false" />
-    <Label id="mhud_perf" class="element hidden" text="{s:perf}" hittest="false" />
-    <Label id="mhud_cj" class="element hidden" text="{s:cj}" hittest="false" />
-    <Label id="mhud_jumpbug" class="element hidden" text="{s:jumpbug}" hittest="false" />
+    <Panel id="mhud_checkpoint_pos" class="pos" hittest="false">
+      <Label id="mhud_checkpoint" class="element checkpoint hidden" text="{s:checkpoint}" hittest="false" />
+    </Panel>
+    <Panel id="mhud_perf_pos" class="pos" hittest="false">
+      <Label id="mhud_perf" class="element hidden" text="{s:perf}" hittest="false" />
+    </Panel>
+    <Panel id="mhud_cj_pos" class="pos" hittest="false">
+      <Label id="mhud_cj" class="element hidden" text="{s:cj}" hittest="false" />
+    </Panel>
+    <Panel id="mhud_jumpbug_pos" class="pos" hittest="false">
+      <Label id="mhud_jumpbug" class="element hidden" text="{s:jumpbug}" hittest="false" />
+    </Panel>
 
     <Panel id="mhud_js" class="js-stack" hittest="false">
       <Panel class="js-history" hittest="false">
@@ -73,5 +89,6 @@
         <Panel class="js-row" hittest="false"><Label id="mhud_js_l10" class="js-label" text="{s:v}" hittest="false" /><Label id="mhud_js_v10" class="js-value" text="{s:v}" hittest="false" /></Panel>
       </Panel>
     </Panel>
+
   </Panel>
 </root>

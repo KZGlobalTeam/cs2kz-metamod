@@ -5,6 +5,7 @@
 @import url("file://{resources}/styles/custom_game/cs2kz/keys.css");
 @import url("file://{resources}/styles/custom_game/cs2kz/keys-size.css");
 @import url("file://{resources}/styles/custom_game/cs2kz/opacity.css");
+@import url("file://{resources}/styles/custom_game/cs2kz/fine-positions.css");
 
 .root {
 	width: 100%;
@@ -16,6 +17,12 @@
 .HUD_SCOREBOARD_VISIBLE .root,
 .HUD_ENDOFMATCH_VISIBLE .root {
 	visibility: collapse;
+}
+
+/* Full-screen, so its fine x/y offset adds to the element's percent offset. */
+.pos {
+	width: 100%;
+	height: 100%;
 }
 
 .element {
