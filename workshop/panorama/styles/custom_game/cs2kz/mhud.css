@@ -12,6 +12,12 @@
 	z-index: 1;
 }
 
+/* The game sets these on an ancestor panel; the MHUD would otherwise draw over both screens. */
+.HUD_SCOREBOARD_VISIBLE .root,
+.HUD_ENDOFMATCH_VISIBLE .root {
+	visibility: collapse;
+}
+
 .element {
 	horizontal-align: center;
 	vertical-align: middle;
