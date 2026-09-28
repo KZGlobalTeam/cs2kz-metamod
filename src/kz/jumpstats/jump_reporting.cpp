@@ -62,7 +62,7 @@ void KZJumpstatsService::PrintJumpToChat(KZPlayer *target, Jump *jump, bool exte
 	{
 		color = DistanceTier_Meh;
 	}
-	//type "HUD" wont show the chat ones, "Both" will show both :aga:
+	// type "HUD" wont show the chat ones, "Both" will show both :aga:
 	const i64 reportTo = target->optionService->GetPreferenceInt("jsReportType", JSReportType_Hud);
 	if (reportTo != JSReportType_Chat && target->hudService->ShowJumpstat(jump, color) && reportTo != JSReportType_Both)
 	{

@@ -37,7 +37,7 @@ enum DistanceTier : u8
 	DISTANCETIER_COUNT
 };
 
-//where to show js
+// where to show js
 enum JSReportType : u8
 {
 	JSReportType_Hud = 0,

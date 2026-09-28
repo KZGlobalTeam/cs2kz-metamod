@@ -50,7 +50,7 @@ static_function void PickTier(KZPlayer *player, i64 tag, i64 id)
 	player->optionService->SetPreferenceInt(TIER_PREFS[tag].prefKey, id);
 }
 
-//JSReportType
+// JSReportType
 static_global const char *const REPORT_TYPE_LABELS[JSREPORTTYPE_COUNT] = {"Menu - JS Report Type HUD", "Menu - JS Report Type Chat",
 																		  "Menu - JS Report Type Both"};
 

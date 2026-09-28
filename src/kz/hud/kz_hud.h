@@ -435,7 +435,7 @@ private:
 		const char *fontClass {};
 	};
 
-	//js panel and the history pillies
+	// js panel and the history pillies
 	struct LayoutJumpstatsState
 	{
 		struct Pill
@@ -444,7 +444,7 @@ private:
 			i32 rank {};
 			bool live {};
 			bool expired {};
-			bool alt {}; //flipped on reuse so the entry pill animation restarts
+			bool alt {}; // flipped on reuse so the entry pill animation restarts
 			const char *ageClass {};
 			const char *expireClass {};
 			const char *typeTierClass {};
