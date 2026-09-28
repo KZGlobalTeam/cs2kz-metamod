@@ -25,8 +25,8 @@ void KZGlobalService::ReplayManager::RetryUpload(std::shared_ptr<PendingUpload> 
 {
 	if (upload->attempts >= maxUploadAttempts)
 	{
-		KZ_LOG_WARN(LogChannel::Global, "Failed to upload replay %s (%s); giving up after %u attempts.\n",
-					upload->recordID.ToString().c_str(), reason, upload->attempts);
+		KZ_LOG_WARN(LogChannel::Global, "Failed to upload replay %s (%s); giving up after %u attempts.\n", upload->recordID.ToString().c_str(),
+					reason, upload->attempts);
 		return;
 	}
 
