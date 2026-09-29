@@ -329,165 +329,199 @@
 	"HUD Edit - Pick Hint"
 	{
 		"en"		"Click an element to move it, or one of its corners to resize it"
+		"ua"		"Натисніть на елемент, щоб перемістити його, або на один із його кутів, щоб змінити його розмір"
 	}
 	"HUD Edit - Place"
 	{
 		"en"		"Place"
+		"ua"		"Розмістити"
 	}
 	"HUD Edit - Cancel"
 	{
 		"en"		"Cancel"
+		"ua"		"Скасувати"
 	}
 	"HUD Edit - Default"
 	{
 		"en"		"Default position"
+		"ua"		"Початкове положення"
 	}
 	"HUD Edit - Free Move"
 	{
 		"en"		"Hold: no snapping"
+		"ua"		"Утримуйте щоб вільно переміщати"
 	}
 	"HUD Edit - Done"
 	{
 		"en"		"Done"
+		"ua"		"Готово"
 	}
 	"HUD Edit - Unavailable"
 	{
 		"en"		"{grey}Moving HUD elements needs the layout HUD style and a living player."
+		"ua"		"{grey}Для переміщення елементів HUD потрібно увімкнути стиль Компонування (mhud стиль) та мати живого гравця на сервері."
 	}
 	"HUD - Release Text"
 	{
 		// +0.5 W
 		"#format"	"value:s"
 		"en"		"{value} W"
+		"ua"		"{value} W"
 	}
 	"HUD - Course Global"
 	{
 		"en"		"Global"
+		"ua"		"Глобальний"
 	}
 	"HUD - Course Non Global"
 	{
 		"en"		"Non-global"
+		"ua"		"Неглобальний"
 	}
 	"HUD - Course Line"
 	{
 		// Main · CKZ
 		"#format"	"course:s,mode:s"
 		"en"		"{course} · {mode}"
+		"ua"		"{course} · {mode}"
 	}
 	"HUD - Course Tier"
 	{
 		//  · T3
 		"#format"	"tier:i"
 		"en"		" · T{tier}"
+		"ua"		" · T{tier}"
 	}
 	"HUD - Course Tiers"
 	{
 		//  · T3 / Pro T5
 		"#format"	"tp:i,pro:i"
 		"en"		" · T{tp} / Pro T{pro}"
+		"ua"		" · T{tp} / Pro T{pro}"
 	}
 	"HUD - Course Pill Split"
 	{
 		"#format"	"number:i"
 		"en"		"Split {number}"
+		"ua"		"Спліт {number}"
 	}
 	"HUD - Course Pill Checkpoint"
 	{
 		"#format"	"number:i"
 		"en"		"CP {number}"
+		"ua"		"CP {number}"
 	}
 	"HUD - Course Pill Stage"
 	{
 		"#format"	"number:i"
 		"en"		"Stage {number}"
+		"ua"		"Етап {number}"
 	}
 	"HUD - Course Pill Info"
 	{
 		// 1:23.456 vs PB
 		"#format"	"time:s,target:s"
 		"en"		"{time} vs {target}"
+		"ua"		"{time} проти {target}"
 	}
 	"HUD - Compare Server PB"
 	{
-		"en"		"SPB"
+		"en"		"Server PB"
 	}
 	"HUD - Compare Global PB"
 	{
-		"en"		"GPB"
+		"en"		"PB"
 	}
 	"HUD - Compare SR"
 	{
 		"en"		"SR"
+		"ua"		"SR"
 	}
 	"HUD - Compare WR"
 	{
 		"en"		"WR"
+		"ua"		"WR"
 	}
 	"HUD - Compare Pro"
 	{
 		// PB Pro
 		"#format"	"target:s"
 		"en"		"{target} Pro"
+		"ua"		"{target} Pro"
 	}
 	"HUD - Course Stages"
 	{
 		"en"		"Stages"
+		"ua"		"Етапи"
 	}
 	"HUD - Course Checkpoints"
 	{
 		"en"		"Checkpoints"
+		"ua"		"Чекпоінти"
 	}
 	"HUD - Course Splits"
 	{
 		"en"		"Splits"
+		"ua"		"Спліти"
 	}
 	"HUD - Course Progress"
 	{
 		// 2 / 5
 		"#format"	"reached:i,total:i"
 		"en"		"{reached} / {total}"
+		"ua"		"{reached} / {total}"
 	}
 	"HUD - Course All"
 	{
 		"en"		"All"
+		"ua"		"Всі"
 	}
 	"HUD - Course Pro"
 	{
 		"en"		"Pro"
+		"ua"		"Pro"
 	}
 	"HUD - Course Badge TP"
 	{
 		"en"		"TP"
+		"ua"		"TP"
 	}
 	"HUD - Course Badge Pro"
 	{
 		"en"		"PRO"
+		"ua"		"PRO"
 	}
 	"HUD - Course By"
 	{
 		"#format"	"name:s"
 		"en"		"by {name}"
+		"ua"		"від {name}"
 	}
 	"HUD - Course Gap"
 	{
 		// (+1.234)
 		"#format"	"gap:s"
 		"en"		"({gap})"
+		"ua"		"({gap})"
 	}
 	"HUD - Course No Records"
 	{
 		"en"		"No records yet"
+		"ua"		"Немає даних"
 	}
 	"HUD - Course Ranked"
 	{
 		"en"		"Ranked"
+		"ua"		"Рейтинговий"
 	}
 	"HUD - Course Pending"
 	{
 		"en"		"Pending"
+		"ua"		"Очікує"
 	}
 	"HUD - Course Unranked"
 	{
 		"en"		"Unranked"
+		"ua"		"Нерейтинговий"
 	}
 }

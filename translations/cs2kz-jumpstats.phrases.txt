@@ -438,7 +438,7 @@
 	"Miss"
 	{
 		"en"		"Miss"
-		"ua"		"Miss"
+		"ua"		"Брак"
 	}
 	"Release (Short)"
 	{
@@ -464,7 +464,7 @@
 	"Jumpstats HUD - Release"
 	{
 		"en"		"W Release"
-		"ua"		"W Відпускання"
+		"ua"		"Відпускання W"
 	}
 	"Jumpstats HUD - History Info"
 	{

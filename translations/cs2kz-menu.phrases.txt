@@ -123,7 +123,7 @@
 	{
 		"en"		"Enabled"
 		"chi"		"已启用"
-		"ua"		"Увімкнено"
+		"ua"		"Статус"
 	}
 	"Menu - Position"
 	{
@@ -195,7 +195,7 @@
 	{
 		"en"		"Show paused and stopped"
 		"chi"		"显示暂停和停止状态"
-		"ua"		"Показувати паузу та зупинку таймера"
+		"ua"		"Показувати текстово стан паузи та зупинки таймера"
 	}
 	"Menu - Affect Legacy Sub"
 	{
@@ -1103,7 +1103,7 @@
 		"pl"		"Obydwa"
 		"nl"		"Beide"
 		"de"		"Beide"
-		"ua"		"Обидва"
+		"ua"		"Чат і HUD"
 	}
 	"Menu - JS Always Sub"
 	{
@@ -1336,26 +1336,32 @@
 	"Menu - Move Elements"
 	{
 		"en"		"Move elements"
+		"ua"		"Перемістити елементи"
 	}
 	"Menu - Move Elements Sub"
 	{
 		"en"		"Drag HUD elements into place with the mouse"
+		"ua"		"Перетягніть елементи HUD мишкою"
 	}
 	"Menu - Move With Mouse"
 	{
 		"en"		"Move with mouse"
+		"ua"		"Перемістити мишкою"
 	}
 	"Menu - Screen Aspect"
 	{
 		"en"		"Screen aspect ratio"
+		"ua"		"Співвідношення сторін екрану"
 	}
 	"Menu - Screen Aspect Sub"
 	{
 		"en"		"Match your resolution so Move elements drags and snaps evenly on both axes"
+		"ua"		"Налаштуйте роздільну здатність так, щоб елементи «Переміщення» рівномірно перетягувалися та прив'язувалися по обох осях"
 	}
 	"Menu - JS History"
 	{
 		"en"		"Show history"
+		"ua"		"Показати історію"
 	}
 	"Menu - JS History Sub"
 	{
@@ -1380,70 +1386,87 @@
 	"Menu - JS Field Block"
 	{
 		"en"		"Block"
+		"ua"		"Блок"
 	}
 	"Menu - JS Field Strafes"
 	{
 		"en"		"Strafes"
+		"ua"		"Стрейфи"
 	}
 	"Menu - JS Field Sync"
 	{
 		"en"		"Sync"
+		"ua"		"Синхронізація"
 	}
 	"Menu - JS Field Pre Max"
 	{
 		"en"		"Pre and max speed"
+		"ua"		"Пре-швидкість та максимальна швидкість"
 	}
 	"Menu - JS Field Height"
 	{
 		"en"		"Height"
+		"ua"		"Висота"
 	}
 	"Menu - JS Field Air Time"
 	{
 		"en"		"Air time"
+		"ua"		"Час у повітрі (Air time)"
 	}
 	"Menu - JS Field Width"
 	{
 		"en"		"Width"
+		"ua"		"Ширина"
 	}
 	"Menu - JS Field Gain Efficiency"
 	{
 		"en"		"Gain efficiency"
+		"ua"		"Ефективність приросту"
 	}
 	"Menu - JS Field Air Path"
 	{
 		"en"		"Air path"
+		"ua"		"Шлях у повітрі (Air path)"
 	}
 	"Menu - JS Field Bad Angles"
 	{
 		"en"		"Bad angles, overlap and dead air"
+		"ua"		"Bad angles, Перекриття (Overlap) та dead air"
 	}
 	"Menu - JS Field Release"
 	{
 		"en"		"W release"
+		"ua"		"Відпускання W"
 	}
 	"Menu - JS Field Offset"
 	{
 		"en"		"Offset"
+		"ua"		"Зсув"
 	}
 	"Menu - JS Field Edge"
 	{
 		"en"		"Edge"
+		"ua"		"Край"
 	}
 	"Menu - JS Field Deviation"
 	{
 		"en"		"Deviation"
+		"ua"		"Відхилення (Deviation)"
 	}
 	"Menu - JS Field Miss"
 	{
 		"en"		"Miss"
+		"ua"		"Брак (Miss)"
 	}
 	"Menu - JS Fields"
 	{
 		"en"		"Fields"
+		"ua"		"Елементи статистики"
 	}
 	"Menu - JS Field Order"
 	{
 		"en"		"Order"
+		"ua"		"Послідовність"
 	}
 	"Menu - JS Field Order Sub"
 	{
@@ -1452,65 +1475,81 @@
 	"Menu - JS Field Extended Sub"
 	{
 		"en"		"In chat, only on the extended stats line"
+		"ua"		"Відображається в чаті лише при увімкненій розширеній статистиці"
 	}
 	"Menu - JS Extended Stats Sub"
 	{
 		"en"		"Adds a second chat line with the fields that are marked for it"
+		"ua"		"Додає другий рядок чату з полями, які позначені для цього"
 	}
 	"Menu - Course Info"
 	{
 		"en"		"Course Info"
+		"ua"		"Інформація про курс"
 	}
 	"Menu - W Release"
 	{
 		"en"		"W Release"
+		"ua"		"Відпускання W"
 	}
 	"Menu - Course Show Map"
 	{
 		"en"		"Map and course"
+		"ua"		"Мапа та курс"
 	}
 	"Menu - Course Show Pro"
 	{
 		"en"		"Pro record"
+		"ua"		"Pro рекорд"
 	}
 	"Menu - Course Show Pro Sub"
 	{
 		"en"		"A second row for the record without teleports"
+		"ua"		"Другий рядок для рекорду без телепортів"
 	}
 	"Menu - Course Show Splits"
 	{
 		"en"		"Zone times"
+		"ua"		"Час зон"
 	}
 	"Menu - Course Show Splits Sub"
 	{
 		"en"		"A pill for every split, checkpoint and stage, against your !comparelevel time"
+		"ua"		"Індикатор для кожного спліту, контрольної точки та етапу, у порівнянні з вашим часом !comparelevel"
 	}
 	"Menu - Color Early"
 	{
 		"en"		"Early"
+		"ua"		"Зарано"
 	}
 	"Menu - Color Perfect"
 	{
 		"en"		"Perfect"
+		"ua"		"Досконало"
 	}
 	"Menu - Color Late"
 	{
 		"en"		"Late"
+		"ua"		"Запізно"
 	}
 	"Menu - Course Show Progress"
 	{
 		"en"		"Zone progress"
+		"ua"		"Прогрес зон"
 	}
 	"Menu - Course Show Progress Sub"
 	{
 		"en"		"Stages, checkpoints and splits reached, on courses that have them"
+		"ua"		"Етапи, контрольні точки та спліти, досягнуті на курсах, які мають такі"
 	}
 	"Menu - Course Show Records"
 	{
 		"en"		"Records"
+		"ua"		"Рекорди"
 	}
 	"Menu - Course Show Records Sub"
 	{
 		"en"		"The world record and your gap to it, or the server record on a non-global map"
+		"ua"		"Світовий рекорд і ваше відставання від нього, або рекорд сервера на неглобальній карті"
 	}
 }
