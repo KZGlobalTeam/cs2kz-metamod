@@ -1258,7 +1258,8 @@ void KZTimerService::UpdateLocalRecordCache()
 				{
 					continue;
 				}
-				KZTimerService::InsertRecordToCache(result->GetFloat(0), course, modeInfo.id, true, false, result->GetString(3));
+				KZTimerService::InsertRecordToCache(result->GetFloat(0), course, modeInfo.id, true, false, result->GetString(3),
+													result->GetString(4));
 			}
 		}
 		result = queries[1]->GetResultSet();
@@ -1276,7 +1277,8 @@ void KZTimerService::UpdateLocalRecordCache()
 				{
 					continue;
 				}
-				KZTimerService::InsertRecordToCache(result->GetFloat(0), course, modeInfo.id, false, false, result->GetString(3));
+				KZTimerService::InsertRecordToCache(result->GetFloat(0), course, modeInfo.id, false, false, result->GetString(3),
+													result->GetString(4));
 			}
 		}
 	};
@@ -1295,11 +1297,13 @@ const PBData *KZTimerService::GetGlobalCachedRecord(const KZCourseDescriptor *co
 	return &KZTimerService::wrCache[key];
 }
 
-void KZTimerService::InsertRecordToCache(f64 time, const KZCourseDescriptor *course, PluginId modeID, bool overall, bool global, CUtlString metadata)
+void KZTimerService::InsertRecordToCache(f64 time, const KZCourseDescriptor *course, PluginId modeID, bool overall, bool global, CUtlString metadata,
+										 const char *holder)
 {
 	PBData &pb = global ? KZTimerService::wrCache[ToPBDataKey(modeID, course->guid)] : KZTimerService::srCache[ToPBDataKey(modeID, course->guid)];
 
 	overall ? pb.overall.pbTime = time : pb.pro.pbTime = time;
+	(overall ? pb.overall.holder : pb.pro.holder) = holder ? holder : "";
 	KeyValues3 kv(KV3_TYPEEX_TABLE, KV3_SUBTYPE_UNSPECIFIED);
 	CUtlString error = "";
 	if (metadata.IsEmpty())

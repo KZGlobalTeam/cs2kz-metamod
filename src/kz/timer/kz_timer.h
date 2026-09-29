@@ -43,6 +43,7 @@ struct PBData
 	void Reset()
 	{
 		overall.pbTime = {};
+		overall.holder.clear();
 		overall.pbSplitZoneTimes.SetCount(KZ_MAX_SPLIT_ZONES);
 		overall.pbSplitZoneTimes.FillWithValue(-1.0);
 		overall.pbCpZoneTimes.SetCount(KZ_MAX_CHECKPOINT_ZONES);
@@ -50,6 +51,7 @@ struct PBData
 		overall.pbStageZoneTimes.SetCount(KZ_MAX_STAGE_ZONES);
 		overall.pbStageZoneTimes.FillWithValue(-1.0);
 		pro.pbTime = {};
+		pro.holder.clear();
 		pro.pbSplitZoneTimes.SetCount(KZ_MAX_SPLIT_ZONES);
 		pro.pbSplitZoneTimes.FillWithValue(-1.0);
 		pro.pbCpZoneTimes.SetCount(KZ_MAX_CHECKPOINT_ZONES);
@@ -62,6 +64,7 @@ struct PBData
 	{
 		f64 pbTime {};
 		f64 points {};
+		std::string holder {}; // the record holder's name; empty for a personal best
 		CUtlVectorFixed<f64, KZ_MAX_SPLIT_ZONES> pbSplitZoneTimes;
 		CUtlVectorFixed<f64, KZ_MAX_CHECKPOINT_ZONES> pbCpZoneTimes;
 		CUtlVectorFixed<f64, KZ_MAX_STAGE_ZONES> pbStageZoneTimes;
@@ -200,7 +203,7 @@ public:
 	static void ClearRecordCache();
 	static void UpdateLocalRecordCache();
 	static void InsertRecordToCache(f64 time, const KZCourseDescriptor *courseName, PluginId modeID, bool hasTeleports, bool global,
-									CUtlString metadata = "");
+									CUtlString metadata = "", const char *holder = "");
 	static const PBData *GetGlobalCachedRecord(const KZCourseDescriptor *course, PluginId modeID);
 
 	void ClearPBCache();
