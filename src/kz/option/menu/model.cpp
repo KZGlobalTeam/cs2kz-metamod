@@ -236,7 +236,7 @@ namespace KZ::menu
 	}
 
 	void AddChoice(KZOptNode *node, const char *phraseKey, void (*getChoices)(KZPlayer *, i64, std::vector<KZChoice> &),
-				   i64 (*getCurrent)(KZPlayer *, i64), void (*onPick)(KZPlayer *, i64, i64), i64 tag)
+				   i64 (*getCurrent)(KZPlayer *, i64), void (*onPick)(KZPlayer *, i64, i64), i64 tag, void (*onEdit)(KZPlayer *, i64, bool))
 	{
 		KZOptItem item;
 		item.phraseKey = phraseKey;
@@ -245,6 +245,7 @@ namespace KZ::menu
 		item.getCurrent = getCurrent;
 		item.onPick = onPick;
 		item.tag = tag;
+		item.onEdit = onEdit;
 		node->items.push_back(item);
 	}
 

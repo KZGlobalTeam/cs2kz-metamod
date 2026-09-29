@@ -104,7 +104,8 @@ namespace KZ::menu
 				   void (*onEdit)(KZPlayer *, i64, bool) = nullptr);
 	void AddButton(KZOptNode *node, const char *phraseKey, void (*onActivate)(KZPlayer *, i64), i64 tag = 0);
 	void AddChoice(KZOptNode *node, const char *phraseKey, void (*getChoices)(KZPlayer *, i64, std::vector<KZChoice> &),
-				   i64 (*getCurrent)(KZPlayer *, i64), void (*onPick)(KZPlayer *, i64, i64), i64 tag = 0);
+				   i64 (*getCurrent)(KZPlayer *, i64), void (*onPick)(KZPlayer *, i64, i64), i64 tag = 0,
+				   void (*onEdit)(KZPlayer *, i64, bool) = nullptr);
 
 	void SetItemSubtext(KZOptNode *node, const char *phraseKey);
 	void SetItemDivider(KZOptNode *node);
