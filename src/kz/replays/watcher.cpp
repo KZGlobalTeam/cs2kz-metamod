@@ -681,11 +681,21 @@ void ReplayWatcher::SaveArchiveIndex()
 		kv.SetMemberUInt64(uuid.ToString().c_str(), timestamp);
 	}
 
+	// Writes through the "GAME" path ID land in its first directory, which is csgo/addons/metamod on servers running Metamod.
 	CUtlString error;
-	if (!SaveKV3ToFile(g_KV3Encoding_Text, g_KV3Format_Generic, &kv, &error, ARCHIVE_INDEX_PATH, "GAME", KV3_SAVE_TEXT_NONE))
+	CUtlBuffer buf(0, 0, CUtlBuffer::TEXT_BUFFER);
+	if (!SaveKV3(g_KV3Encoding_Text, g_KV3Format_Generic, &kv, &error, &buf, KV3_SAVE_TEXT_NONE))
 	{
-		// Log error if needed, but continue
-		KZ_LOG_WARN(LogChannel::Replays, "Failed to save archive index: %s\n", error.Get());
+		KZ_LOG_WARN(LogChannel::Replays, "Failed to serialize archive index: %s\n", error.Get());
+	}
+	else
+	{
+		const char *base = static_cast<const char *>(buf.Base());
+		std::vector<char> data(base, base + buf.TellPut());
+		if (!utils::WriteBufferToFile(ARCHIVE_INDEX_PATH, data))
+		{
+			KZ_LOG_WARN(LogChannel::Replays, "Failed to save archive index to %s\n", ARCHIVE_INDEX_PATH);
+		}
 	}
 
 	this->archiveDirty = false;
@@ -872,7 +882,7 @@ void ReplayWatcher::CleanupManualReplays(std::unordered_map<UUID_t, ReplayHeader
 			{
 				char fullPath[MAX_PATH];
 				V_snprintf(fullPath, sizeof(fullPath), "%s/%s.replay", KZ_REPLAY_PATH, vec[i].first.ToString().c_str());
-				g_pFullFileSystem->RemoveFile(fullPath, "GAME");
+				utils::RemoveFile(fullPath);
 				map.erase(vec[i].first);
 			}
 		}
@@ -929,7 +939,7 @@ void ReplayWatcher::SweepOrphanedChunks(u64 currentTime)
 		}
 
 		KZ_LOG_INFO(LogChannel::Replays, "Removing orphaned replay chunk %s\n", fullPath);
-		g_pFullFileSystem->RemoveFile(fullPath, "GAME");
+		utils::RemoveFile(fullPath);
 	}
 	g_pFullFileSystem->FindClose(findHandle);
 }
@@ -983,7 +993,7 @@ void ReplayWatcher::ScanReplays()
 					u64 age = currentUnixTime - idxIt->second;
 					if (age >= retentionSeconds)
 					{
-						g_pFullFileSystem->RemoveFile(fullPath, "GAME");
+						utils::RemoveFile(fullPath);
 						this->archivedIndex.erase(idxIt);
 						this->archiveDirty = true;
 						this->replayCache.erase(uuid);
@@ -1128,7 +1138,7 @@ void ReplayWatcher::ScanDownloadedReplays(u64 currentTime)
 				// Evict files whose download time (file mtime) is older than the retention period.
 				if (retentionDays > 0 && fileTime > 0 && (u64)currentTime >= (u64)fileTime + retentionSeconds)
 				{
-					g_pFullFileSystem->RemoveFile(fullPath, "GAME");
+					utils::RemoveFile(fullPath);
 					this->downloadedReplayCache.erase(uuid);
 					pFileName = g_pFullFileSystem->FindNext(findHandle);
 					continue;
