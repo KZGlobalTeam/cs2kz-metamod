@@ -415,6 +415,10 @@ void KZHUDService::RegisterMenu()
 
 			case MHUDElement::Course:
 			{
+				KZ::menu::AddToggle(sub, "Progress - Show", "showProgress", true);
+				KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
+				KZ::menu::AddToggle(sub, "Progress - Show Label", "showProgressLabel", true);
+				KZ::menu::SetItemEnabledBy(sub, "showProgress");
 				KZ::menu::AddToggle(sub, "Menu - Course Show Map", "mhudCourseShowMap", true);
 				KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
 				KZ::menu::AddToggle(sub, "Menu - Course Show Progress", "mhudCourseShowProgress", true);

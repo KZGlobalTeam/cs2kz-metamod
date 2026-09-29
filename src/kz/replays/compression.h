@@ -1,6 +1,7 @@
 #pragma once
 
 #include "kz_replay.h"
+#include <functional>
 
 namespace KZ::replaysystem::compression
 {
@@ -21,9 +22,12 @@ namespace KZ::replaysystem::compression
 	// Write compressed tick data with delta encoding
 	i32 WriteTickDataCompressed(std::vector<char> &outBuffer, const std::vector<TickData> &tickData, const std::vector<SubtickData> &subtickData);
 
+	// A visitor consumes ticks without retaining full TickData/SubtickData arrays.
+	using TickVisitor = std::function<bool(const TickData &)>;
+
 	// Read compressed tick data with delta decoding
 	bool ReadTickDataCompressed(const char *&cursor, const char *end, std::vector<TickData> &outTickData, std::vector<SubtickData> &outSubtickData,
-								u32 replayVersion);
+								u32 replayVersion, const TickVisitor *visitor = nullptr);
 
 	// Read compressed weapon changes
 	bool ReadWeaponsCompressed(const char *&cursor, const char *end, std::vector<std::pair<i32, EconInfo>> &outWeaponTable);

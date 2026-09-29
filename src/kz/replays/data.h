@@ -79,6 +79,24 @@ namespace KZ::replaysystem::data
 		std::mutex callbackMutex;
 	};
 
+	// Compact read-only data for route analysis, without playback/subtick allocations.
+	struct MovementSample
+	{
+		u32 serverTick;
+		Vector pre, post;
+		i32 checkpointIndex, checkpointCount, teleportCount;
+		bool noclip;
+	};
+
+	struct ReplayMovement
+	{
+		ReplayHeader header;
+		std::vector<MovementSample> samples;
+		std::vector<RpEvent> events;
+	};
+
+	bool ReadReplayMovement(const char *path, ReplayMovement &result, const std::atomic<bool> &cancel);
+
 	// Data management functions
 	void LoadReplayAsync(std::string path, LoadSuccessCallback onSuccess, LoadFailureCallback onFailure);
 	void LoadReplayMemoryAsync(std::vector<char> data, UUID_t uuid, LoadSuccessCallback onSuccess, LoadFailureCallback onFailure);

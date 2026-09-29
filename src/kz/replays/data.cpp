@@ -146,6 +146,37 @@ namespace KZ::replaysystem::data
 		}
 	}
 
+	static_function bool ReadHeader(const char *&cursor, const char *end, ReplayHeader &header)
+	{
+		// Try to read header size (u32). If this fails, the data is invalid or corrupted.
+		if (cursor + (ptrdiff_t)sizeof(u32) > end)
+		{
+			return false;
+		}
+		u32 headerSize = 0;
+		memcpy(&headerSize, cursor, sizeof(headerSize));
+		cursor += sizeof(headerSize);
+
+		if (headerSize == 0 || headerSize > 5 * 1024 * 1024) // sanity limit 5MB
+		{
+			return false;
+		}
+		if (cursor + (ptrdiff_t)headerSize > end)
+		{
+			return false;
+		}
+
+		std::string serialized(cursor, cursor + headerSize);
+		cursor += headerSize;
+
+		if (!header.ParseFromString(serialized))
+		{
+			return false;
+		}
+
+		return header.version() >= 1 && header.version() <= KZ_REPLAY_VERSION;
+	}
+
 	// Parses replay data from an in-memory byte array.
 	static_function ReplayPlayback LoadReplayFromMemory(const char *data, size_t size, UUID_t uuid, std::atomic<f32> &progress,
 														std::atomic<bool> &shouldCancel)
@@ -163,38 +194,12 @@ namespace KZ::replaysystem::data
 		}
 		KZ_LOG_DEBUG(LogChannel::Replays, "Loading replay protobuf header...\n");
 
-		// Try to read header size (u32). If this fails, the data is invalid or corrupted.
-		if (cursor + (ptrdiff_t)sizeof(u32) > end)
-		{
-			return result;
-		}
-		u32 headerSize = 0;
-		memcpy(&headerSize, cursor, sizeof(headerSize));
-		cursor += sizeof(headerSize);
-
-		if (headerSize == 0 || headerSize > 5 * 1024 * 1024) // sanity limit 5MB
-		{
-			return result;
-		}
-		if (cursor + (ptrdiff_t)headerSize > end)
-		{
-			return result;
-		}
-
-		std::string serialized(cursor, cursor + headerSize);
-		cursor += headerSize;
-
-		if (!result.header.ParseFromString(serialized))
+		if (!ReadHeader(cursor, end, result.header))
 		{
 			return result;
 		}
 
 		UpdateProgress(cursor, data, size, progress);
-
-		if (result.header.version() < 1 || result.header.version() > KZ_REPLAY_VERSION)
-		{
-			return result;
-		}
 
 		// Load tick data
 		if (shouldCancel)
@@ -324,6 +329,55 @@ namespace KZ::replaysystem::data
 		result.valid = true;
 		progress = 1.0f;
 		return result;
+	}
+
+	bool ReadReplayMovement(const char *path, ReplayMovement &result, const std::atomic<bool> &cancel)
+	{
+		CUtlBuffer buffer;
+		if (cancel || !g_pFullFileSystem->ReadFile(path, nullptr, buffer))
+		{
+			return false;
+		}
+		const char *cursor = (const char *)buffer.Base();
+		const char *end = cursor + buffer.TellPut();
+		if (!ReadHeader(cursor, end, result.header))
+		{
+			return false;
+		}
+		compression::TickVisitor visitor = [&](const TickData &tick)
+		{
+			if (cancel)
+			{
+				return false;
+			}
+			result.samples.push_back({tick.serverTick, tick.pre.origin, tick.post.origin, tick.checkpoint.index, tick.checkpoint.checkpointCount,
+									  tick.checkpoint.teleportCount, tick.pre.moveType == MOVETYPE_NOCLIP || tick.post.moveType == MOVETYPE_NOCLIP});
+			return true;
+		};
+		std::vector<TickData> ticks;
+		std::vector<SubtickData> subticks;
+		if (!compression::ReadTickDataCompressed(cursor, end, ticks, subticks, result.header.version(), &visitor))
+		{
+			return false;
+		}
+		// Weapons and jumpstats are length-prefixed sections. Bounds-check and skip
+		// their bytes; route analysis never allocates or decodes their contents.
+		for (i32 i = 0; i < 2; i++)
+		{
+			compression::CompressedSectionHeader section;
+			if ((size_t)(end - cursor) < sizeof(section))
+			{
+				return false;
+			}
+			memcpy(&section, cursor, sizeof(section));
+			cursor += sizeof(section);
+			if (section.compressedSize > (size_t)(end - cursor))
+			{
+				return false;
+			}
+			cursor += section.compressedSize;
+		}
+		return !cancel && compression::ReadEventsCompressed(cursor, end, result.events);
 	}
 
 	// File-based entry point: reads the entire file into memory then parses.
