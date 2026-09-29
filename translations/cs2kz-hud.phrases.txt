@@ -427,10 +427,12 @@
 	"HUD - Compare Server PB"
 	{
 		"en"		"Server PB"
+		"ua"		"Серверний PB"
 	}
 	"HUD - Compare Global PB"
 	{
 		"en"		"PB"
+		"ua"		"PB"
 	}
 	"HUD - Compare SR"
 	{
