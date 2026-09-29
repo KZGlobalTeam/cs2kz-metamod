@@ -382,42 +382,52 @@
 	"Long Jump"
 	{
 		"en"		"Long Jump"
+		"ua"		"Long Jump"
 	}
 	"Bunnyhop"
 	{
 		"en"		"Bunnyhop"
+		"ua"		"Bunnyhop"
 	}
 	"Multi Bunnyhop"
 	{
 		"en"		"Multi Bunnyhop"
+		"ua"		"Multi Bunnyhop"
 	}
 	"Weird Jump"
 	{
 		"en"		"Weird Jump"
+		"ua"		"Weird Jump"
 	}
 	"Ladder Jump"
 	{
 		"en"		"Ladder Jump"
+		"ua"		"Ladder Jump"
 	}
 	"Ladderhop"
 	{
 		"en"		"Ladderhop"
+		"ua"		"Ladderhop"
 	}
 	"Jumpbug"
 	{
 		"en"		"Jumpbug"
+		"ua"		"Jumpbug"
 	}
 	"Fall"
 	{
 		"en"		"Fall"
+		"ua"		"Падіння"
 	}
 	"Unknown Jump"
 	{
 		"en"		"Unknown Jump"
+		"ua"		"Невідомий стрибок"
 	}
 	"Invalid Jump"
 	{
 		"en"		"Invalid Jump"
+		"ua"		"Недопустимий стрибок"
 	}
 
 	"Deviation (Short)"
@@ -439,22 +449,26 @@
 		// 258.1 u
 		"#format"	"distance:.1f"
 		"en"		"{distance} u"
+		"ua"		"{distance} u"
 	}
 	"Jumpstats HUD - Failstat"
 	{
 		// Failed lj
 		"#format"	"jump_type:s"
 		"en"		"Failed {jump_type}"
+		"ua"		"Невдалий {jump_type}"
 	}
 	"Jumpstats HUD - Release"
 	{
 		"en"		"W Release"
+		"ua"		"W Відпускання"
 	}
 	"Jumpstats HUD - History Info"
 	{
 		// 5 str | 91% sync | 274 pre
 		"#format"	"strafe_count:i,sync:.0f,pre:.0f"
 		"en"		"{strafe_count} str | {sync}%% sync | {pre} pre"
+		"ua"		"{strafe_count} str | {sync}%% sync | {pre} pre"
 	}
 
 	// =====[ INVALIDATION REASONS ]=====
