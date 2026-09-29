@@ -1452,6 +1452,14 @@
 	{
 		"en"		"A pill for every split, checkpoint and stage, against your !comparelevel time"
 	}
+	"Menu - Course Show Progress"
+	{
+		"en"		"Zone progress"
+	}
+	"Menu - Course Show Progress Sub"
+	{
+		"en"		"Stages, checkpoints and splits reached, on courses that have them"
+	}
 	"Menu - Course Show Records"
 	{
 		"en"		"Records"

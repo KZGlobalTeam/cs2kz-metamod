@@ -41,6 +41,7 @@ extern ICS2Menus *g_pMenus;
 #define MHUD_EDIT_COURSE_WIDTH          320.0f
 #define MHUD_EDIT_COURSE_PADDING        20.0f
 #define MHUD_EDIT_COURSE_HEAD_HEIGHT    53.0f
+#define MHUD_EDIT_COURSE_PROGRESS_GAP   6.0f
 #define MHUD_EDIT_COURSE_ROW_HEIGHT     19.0f
 #define MHUD_EDIT_COURSE_HISTORY_HEIGHT 146.0f
 
@@ -670,10 +671,16 @@ void KZHUDService::GetEditBoxSize(MHUDElement element, f32 &width, f32 &height)
 	}
 	if (element == MHUDElement::Course)
 	{
-		const i32 rows = prefs.courseRecords ? (prefs.coursePro ? 2 : 1) : 0;
+		i32 rows = prefs.courseRecords ? (prefs.coursePro ? 2 : 1) : 0;
 		const f32 scale = Clamp((i32)size, MHUD_JS_SIZE_MIN, MHUD_JS_SIZE_MAX) / 100.0f;
 		const f32 history = prefs.courseSplits ? MHUD_EDIT_COURSE_HISTORY_HEIGHT : 0.0f;
-		const f32 head = prefs.courseMap ? MHUD_EDIT_COURSE_HEAD_HEIGHT : 0.0f;
+		// The sample shows every progress row, though a course only shows the kinds of zone it has.
+		f32 head = prefs.courseMap ? MHUD_EDIT_COURSE_HEAD_HEIGHT : 0.0f;
+		if (prefs.courseProgress)
+		{
+			rows += MHUD_COURSE_PROGRESS_COUNT;
+			head += MHUD_EDIT_COURSE_PROGRESS_GAP;
+		}
 		width = MHUD_EDIT_COURSE_WIDTH * scale + MHUD_EDIT_BOX_PADDING;
 		height = (history + MHUD_EDIT_COURSE_PADDING + head + rows * MHUD_EDIT_COURSE_ROW_HEIGHT) * scale + MHUD_EDIT_BOX_PADDING;
 		return;

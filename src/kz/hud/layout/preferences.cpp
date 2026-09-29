@@ -77,6 +77,7 @@ void KZHUDService::RefreshPrefs()
 	KZJumpstatsService::GetFieldLayout(this->player, this->prefs.jsFields);
 	this->prefs.jsHistory = opts->GetPreferenceBool("mhudJsShowHistory", true);
 	this->prefs.courseMap = opts->GetPreferenceBool("mhudCourseShowMap", true);
+	this->prefs.courseProgress = opts->GetPreferenceBool("mhudCourseShowProgress", true);
 	this->prefs.courseRecords = opts->GetPreferenceBool("mhudCourseShowRecords", true);
 	this->prefs.coursePro = opts->GetPreferenceBool("mhudCourseShowPro", true);
 	this->prefs.courseSplits = opts->GetPreferenceBool("mhudCourseShowSplits", true);

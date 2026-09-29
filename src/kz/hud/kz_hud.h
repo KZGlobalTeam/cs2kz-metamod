@@ -37,6 +37,8 @@ class Jump;
 
 // The course panel's record rows, overall then pro.
 #define MHUD_COURSE_ROW_COUNT 2
+// Stages, checkpoints and splits reached, each out of the course's total.
+#define MHUD_COURSE_PROGRESS_COUNT 3
 
 enum class MHUDElement
 {
@@ -241,6 +243,7 @@ struct MHUDPrefs
 	JSFieldLayout jsFields {}; // shared with the chat report
 	bool jsHistory {true};
 	bool courseMap {true};
+	bool courseProgress {true};
 	bool courseRecords {true};
 	bool coursePro {true};
 	bool courseSplits {true};
@@ -543,10 +546,13 @@ private:
 		const char *fontClass {};
 		i32 headHidden {-1};
 		i32 rowHidden[MHUD_COURSE_ROW_COUNT] {-1, -1};
+		i32 progressHidden {-1};
+		i32 progressRowHidden[MHUD_COURSE_PROGRESS_COUNT] {-1, -1, -1};
+		i32 progressTotals[MHUD_COURSE_PROGRESS_COUNT] {}; // a course without zones of a kind hides that row
 		i32 historyHidden {-1};
 		f64 nextRefresh {};
 		// The last text sent to each label, in the order course.cpp lists them.
-		std::string texts[4 + MHUD_COURSE_ROW_COUNT * 5] {};
+		std::string texts[4 + MHUD_COURSE_ROW_COUNT * 5 + MHUD_COURSE_PROGRESS_COUNT * 2] {};
 		const char *badgeClasses[MHUD_COURSE_ROW_COUNT] {};
 		const char *nameClasses[MHUD_COURSE_ROW_COUNT] {};
 		const char *statusClass {};

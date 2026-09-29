@@ -270,6 +270,27 @@ public:
 		return currentTime;
 	}
 
+	// Zones reached in the running run, for the course panel.
+	i32 GetReachedStages()
+	{
+		return timerRunning ? currentStage : 0;
+	}
+
+	i32 GetReachedCheckpoints()
+	{
+		return timerRunning ? reachedCheckpoints : 0;
+	}
+
+	i32 GetReachedSplits()
+	{
+		i32 count = 0;
+		FOR_EACH_VEC(splitZoneTimes, i)
+		{
+			count += timerRunning && splitZoneTimes[i] >= 0 ? 1 : 0;
+		}
+		return count;
+	}
+
 	static void FormatDiffTime(f64 time, char *output, u32 length, bool precise = true)
 	{
 		char temp[32];

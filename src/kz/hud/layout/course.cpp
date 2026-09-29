@@ -27,6 +27,13 @@ static_global const char *const COURSE_ROWS[MHUD_COURSE_ROW_COUNT][6] = {
 
 static_global const char *const COURSE_ROW_PHRASES[MHUD_COURSE_ROW_COUNT] = {"HUD - Course All", "HUD - Course Pro"};
 
+// Each progress row's panels, for stages, checkpoints and splits.
+static_global const char *const COURSE_PROGRESS_ROWS[MHUD_COURSE_PROGRESS_COUNT][3] = {
+	{"mhud_ci_p0", "mhud_ci_pl0", "mhud_ci_pv0"}, {"mhud_ci_p1", "mhud_ci_pl1", "mhud_ci_pv1"}, {"mhud_ci_p2", "mhud_ci_pl2", "mhud_ci_pv2"}};
+
+static_global const char *const COURSE_PROGRESS_PHRASES[MHUD_COURSE_PROGRESS_COUNT] = {"HUD - Course Stages", "HUD - Course Checkpoints",
+																					   "HUD - Course Splits"};
+
 // Each pill's panels.
 static_global const char *const COURSE_PILL_PANELS[MHUD_JS_PILL_COUNT][4] = {{"mhud_ci_h0", "mhud_ci_h0_t", "mhud_ci_h0_i", "mhud_ci_h0_d"},
 																			 {"mhud_ci_h1", "mhud_ci_h1_t", "mhud_ci_h1_i", "mhud_ci_h1_d"},
@@ -49,11 +56,12 @@ static_global const char *const COURSE_COMPARE_PHRASES[KZTimerService::COMPARETY
 #define COURSE_CLASS_BEHIND "js-c-red"
 
 // Slots in LayoutCourseState::texts.
-#define COURSE_TEXT_MAP    0
-#define COURSE_TEXT_STATUS 1
-#define COURSE_TEXT_COURSE 2
-#define COURSE_TEXT_ROWS   3
-#define COURSE_TEXT_STATE  (COURSE_TEXT_ROWS + MHUD_COURSE_ROW_COUNT * 5)
+#define COURSE_TEXT_MAP      0
+#define COURSE_TEXT_STATUS   1
+#define COURSE_TEXT_COURSE   2
+#define COURSE_TEXT_ROWS     3
+#define COURSE_TEXT_PROGRESS (COURSE_TEXT_ROWS + MHUD_COURSE_ROW_COUNT * 5)
+#define COURSE_TEXT_STATE    (COURSE_TEXT_PROGRESS + MHUD_COURSE_PROGRESS_COUNT * 2)
 
 // The course's ranked state in the player's mode, as the API reports it.
 struct CourseStateDef
@@ -83,6 +91,8 @@ struct CourseInfoText
 	std::string names[MHUD_COURSE_ROW_COUNT];
 	const char *nameClasses[MHUD_COURSE_ROW_COUNT] {};
 	std::string gaps[MHUD_COURSE_ROW_COUNT];
+	i32 reached[MHUD_COURSE_PROGRESS_COUNT] {};
+	i32 totals[MHUD_COURSE_PROGRESS_COUNT] {};
 };
 
 // Fills one record row the way the overlay draws it.
@@ -162,6 +172,15 @@ static_function void GetCourseInfo(KZPlayer *viewer, KZPlayer *source, CourseInf
 		return;
 	}
 
+	// The run only counts zones on its own course, so another course shows none reached yet.
+	const bool running = source->timerService->GetCourse() == course;
+	out.totals[0] = course->stageCount;
+	out.totals[1] = course->checkpointCount;
+	out.totals[2] = course->splitCount;
+	out.reached[0] = running ? source->timerService->GetReachedStages() : 0;
+	out.reached[1] = running ? source->timerService->GetReachedCheckpoints() : 0;
+	out.reached[2] = running ? source->timerService->GetReachedSplits() : 0;
+
 	out.course = lang->PrepareMessage("HUD - Course Line", course->name, modeInfo.shortModeName.Get());
 	if (nubTier > 0)
 	{
@@ -193,6 +212,11 @@ static_function void GetCourseSample(KZLanguageService *lang, CourseInfoText &ou
 	for (i32 i = 0; i < MHUD_COURSE_ROW_COUNT; i++)
 	{
 		FormatRecordRow(lang, out, i, 3599.999, i == COURSE_ROW_ALL, "WWWWWWWWWWWWWWWW", 7199.998);
+	}
+	for (i32 i = 0; i < MHUD_COURSE_PROGRESS_COUNT; i++)
+	{
+		out.reached[i] = 99;
+		out.totals[i] = 99;
 	}
 }
 
@@ -297,6 +321,11 @@ void KZHUDService::UpdateCourseElement(CCSCustomHudLayout *layout, KZPlayer *sou
 				setFont(row[i]);
 			}
 		}
+		for (const auto &row : COURSE_PROGRESS_ROWS)
+		{
+			setFont(row[1]);
+			setFont(row[2]);
+		}
 		for (const auto &pill : COURSE_PILL_PANELS)
 		{
 			setFont(pill[1]);
@@ -318,6 +347,14 @@ void KZHUDService::UpdateCourseElement(CCSCustomHudLayout *layout, KZPlayer *sou
 	setHidden("mhud_ci_history", ci.historyHidden, !prefs.courseSplits);
 	setHidden(COURSE_ROWS[COURSE_ROW_ALL][0], ci.rowHidden[COURSE_ROW_ALL], !prefs.courseRecords);
 	setHidden(COURSE_ROWS[COURSE_ROW_PRO][0], ci.rowHidden[COURSE_ROW_PRO], !prefs.courseRecords || !prefs.coursePro);
+	// Only the kinds of zone the course has get a row, and a course with none loses the block and its gap.
+	bool anyProgress = false;
+	for (i32 i = 0; i < MHUD_COURSE_PROGRESS_COUNT; i++)
+	{
+		setHidden(COURSE_PROGRESS_ROWS[i][0], ci.progressRowHidden[i], ci.progressTotals[i] <= 0);
+		anyProgress |= ci.progressTotals[i] > 0;
+	}
+	setHidden("mhud_ci_progress", ci.progressHidden, !prefs.courseProgress || !anyProgress);
 
 	auto setText = [&](i32 slot, const char *panelId, const std::string &text)
 	{
@@ -346,6 +383,13 @@ void KZHUDService::UpdateCourseElement(CCSCustomHudLayout *layout, KZPlayer *sou
 			setText(slot + 4, COURSE_ROWS[i][5], info.gaps[i]);
 			this->SetLayoutClass(layout, COURSE_ROWS[i][3], ci.badgeClasses[i], info.badgeClasses[i]);
 			this->SetLayoutClass(layout, COURSE_ROWS[i][4], ci.nameClasses[i], info.nameClasses[i]);
+		}
+		for (i32 i = 0; i < MHUD_COURSE_PROGRESS_COUNT; i++)
+		{
+			ci.progressTotals[i] = info.totals[i];
+			setText(COURSE_TEXT_PROGRESS + i * 2, COURSE_PROGRESS_ROWS[i][1], lang->PrepareMessage(COURSE_PROGRESS_PHRASES[i]));
+			setText(COURSE_TEXT_PROGRESS + i * 2 + 1, COURSE_PROGRESS_ROWS[i][2],
+					lang->PrepareMessage("HUD - Course Progress", info.reached[i], info.totals[i]));
 		}
 	};
 

@@ -461,6 +461,12 @@
 	font-size: 13px;
 }
 
+.ci-progress {
+	width: 100%;
+	flow-children: down;
+	margin-top: 6px;
+}
+
 .ci-head {
 	width: 100%;
 	flow-children: down;
@@ -521,6 +527,11 @@
 
 .ci-label-pro {
 	color: #2563eb;
+}
+
+.ci-progress-label {
+	width: 120px;
+	color: #c5cad0;
 }
 
 .ci-time {
