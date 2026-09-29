@@ -9,28 +9,28 @@ Automated translation linter reports for cs2kz-metamod.
 | **Linter Errors** | 0 |
 | **Linter Warnings** | 23 |
 | **Total Languages** | 14 |
-| **Total Phrases** | 904 |
-| **Phrases Missing Translations** | 904 |
-| **Total Missing Entries** | 5704 |
+| **Total Phrases** | 983 |
+| **Phrases Missing Translations** | 983 |
+| **Total Missing Entries** | 6761 |
 | **Menu Files** | 11 |
 
 ## Language Coverage (Phrases)
 
 ```
-  chi (schinese)       [███████████████████░]  96.9% (876/904)
-  de (german)          [███████████░░░░░░░░░]  57.3% (518/904)
-  en (english)         [████████████████████] 100.0% (904/904)
-  es (spanish)         [██████████░░░░░░░░░░]  54.2% (490/904)
-  fi (finnish)         [█████░░░░░░░░░░░░░░░]  25.8% (233/904)
-  it (italian)         [████░░░░░░░░░░░░░░░░]  24.9% (225/904)
-  ko (korean)          [██████████████░░░░░░]  72.8% (658/904)
-  lv (latvian)         [███████░░░░░░░░░░░░░]  36.3% (328/904)
-  nl (dutch)           [░░░░░░░░░░░░░░░░░░░░]   0.6% (5/904)
-  pl (polish)          [███████████░░░░░░░░░]  57.5% (520/904)
-  ru (russian)         [██████████████░░░░░░]  72.6% (656/904)
-  sv (swedish)         [████████░░░░░░░░░░░░]  43.4% (392/904)
-  tr (turkish)         [█████░░░░░░░░░░░░░░░]  29.0% (262/904)
-  ua (ukrainian)       [███████████████████░]  97.9% (885/904)
+  chi (schinese)       [█████████████████░░░]  88.5% (870/983)
+  de (german)          [██████████░░░░░░░░░░]  52.7% (518/983)
+  en (english)         [████████████████████] 100.0% (983/983)
+  es (spanish)         [█████████░░░░░░░░░░░]  49.2% (484/983)
+  fi (finnish)         [████░░░░░░░░░░░░░░░░]  23.7% (233/983)
+  it (italian)         [████░░░░░░░░░░░░░░░░]  22.9% (225/983)
+  ko (korean)          [█████████████░░░░░░░]  66.3% (652/983)
+  lv (latvian)         [██████░░░░░░░░░░░░░░]  33.4% (328/983)
+  nl (dutch)           [░░░░░░░░░░░░░░░░░░░░]   0.5% (5/983)
+  pl (polish)          [██████████░░░░░░░░░░]  52.9% (520/983)
+  ru (russian)         [█████████████░░░░░░░]  66.1% (650/983)
+  sv (swedish)         [███████░░░░░░░░░░░░░]  39.9% (392/983)
+  tr (turkish)         [█████░░░░░░░░░░░░░░░]  26.7% (262/983)
+  ua (ukrainian)       [█████████████████░░░]  89.4% (879/983)
 ```
 
 ## Menu Translation Status
@@ -80,9 +80,9 @@ Automated translation linter reports for cs2kz-metamod.
 
 ## Last Updated
 
-- **Commit:** [`758bb7b`](https://github.com/KZGlobalTeam/cs2kz-metamod/commit/758bb7b3ceea12d4b599079d3e91a6c91385fde9)
-- **Time:** 2026-09-28 21:58:47 UTC
-- **Message:** Added Jumpstats sidepanel from MH… (#646)
+- **Commit:** [`32c1189`](https://github.com/KZGlobalTeam/cs2kz-metamod/commit/32c1189fa39731d0483992f484746be38dc9ba06)
+- **Time:** 2026-09-29 06:31:47 UTC
+- **Message:** Add a W release HUD element
 
 ---
 

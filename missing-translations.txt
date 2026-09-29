@@ -6,27 +6,27 @@ Generated for: /home/runner/work/cs2kz-metamod/cs2kz-metamod
 SUMMARY
 ----------------------------------------------------------------------
 Total languages: 14
-Total phrases: 904
-Phrases with missing translations: 904
-Total missing translation entries: 5704
+Total phrases: 983
+Phrases with missing translations: 983
+Total missing translation entries: 6761
 
 LANGUAGE COVERAGE (Phrases)
 ----------------------------------------------------------------------
 
-  chi (schinese)       [███████████████████░]  96.9% (876/904)
-  de (german)          [███████████░░░░░░░░░]  57.3% (518/904)
-  en (english)         [████████████████████] 100.0% (904/904)
-  es (spanish)         [██████████░░░░░░░░░░]  54.2% (490/904)
-  fi (finnish)         [█████░░░░░░░░░░░░░░░]  25.8% (233/904)
-  it (italian)         [████░░░░░░░░░░░░░░░░]  24.9% (225/904)
-  ko (korean)          [██████████████░░░░░░]  72.8% (658/904)
-  lv (latvian)         [███████░░░░░░░░░░░░░]  36.3% (328/904)
-  nl (dutch)           [░░░░░░░░░░░░░░░░░░░░]   0.6% (5/904)
-  pl (polish)          [███████████░░░░░░░░░]  57.5% (520/904)
-  ru (russian)         [██████████████░░░░░░]  72.6% (656/904)
-  sv (swedish)         [████████░░░░░░░░░░░░]  43.4% (392/904)
-  tr (turkish)         [█████░░░░░░░░░░░░░░░]  29.0% (262/904)
-  ua (ukrainian)       [███████████████████░]  97.9% (885/904)
+  chi (schinese)       [█████████████████░░░]  88.5% (870/983)
+  de (german)          [██████████░░░░░░░░░░]  52.7% (518/983)
+  en (english)         [████████████████████] 100.0% (983/983)
+  es (spanish)         [█████████░░░░░░░░░░░]  49.2% (484/983)
+  fi (finnish)         [████░░░░░░░░░░░░░░░░]  23.7% (233/983)
+  it (italian)         [████░░░░░░░░░░░░░░░░]  22.9% (225/983)
+  ko (korean)          [█████████████░░░░░░░]  66.3% (652/983)
+  lv (latvian)         [██████░░░░░░░░░░░░░░]  33.4% (328/983)
+  nl (dutch)           [░░░░░░░░░░░░░░░░░░░░]   0.5% (5/983)
+  pl (polish)          [██████████░░░░░░░░░░]  52.9% (520/983)
+  ru (russian)         [█████████████░░░░░░░]  66.1% (650/983)
+  sv (swedish)         [███████░░░░░░░░░░░░░]  39.9% (392/983)
+  tr (turkish)         [█████░░░░░░░░░░░░░░░]  26.7% (262/983)
+  ua (ukrainian)       [█████████████████░░░]  89.4% (879/983)
 
 Global languages (14): chi, de, en, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
 
@@ -437,6 +437,8 @@ cs2kz-commands.phrases.txt
     Missing (8): de, fi, it, lv, nl, pl, sv, tr
   Line 1828: "Command Description - kz_mhud"
     Missing (9): de, es, fi, it, lv, nl, pl, sv, tr
+  Line 1836: "Command Description - kz_hudedit"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
 
 cs2kz-common.phrases.txt
 ----------------------------------------------------------------------
@@ -584,6 +586,78 @@ cs2kz-hud.phrases.txt
     Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
   Line 318: "Fonts - Help (Console)"
     Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
+  Line 329: "HUD Edit - Pick Hint"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 333: "HUD Edit - Place"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 337: "HUD Edit - Cancel"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 341: "HUD Edit - Default"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 345: "HUD Edit - Free Move"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 349: "HUD Edit - Done"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 353: "HUD Edit - Unavailable"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 357: "HUD - Release Text"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 363: "HUD - Course Global"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 367: "HUD - Course Non Global"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 371: "HUD - Course Line"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 377: "HUD - Course Tier"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 383: "HUD - Course Tiers"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 389: "HUD - Course Pill Split"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 394: "HUD - Course Pill Checkpoint"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 399: "HUD - Course Pill Stage"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 404: "HUD - Course Pill Info"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 410: "HUD - Compare Server PB"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 414: "HUD - Compare Global PB"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 418: "HUD - Compare SR"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 422: "HUD - Compare WR"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 426: "HUD - Compare Pro"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 432: "HUD - Course Stages"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 436: "HUD - Course Checkpoints"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 440: "HUD - Course Splits"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 444: "HUD - Course Progress"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 450: "HUD - Course All"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 454: "HUD - Course Pro"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 458: "HUD - Course Badge TP"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 462: "HUD - Course Badge Pro"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 466: "HUD - Course By"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 471: "HUD - Course Gap"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 477: "HUD - Course No Records"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 481: "HUD - Course Ranked"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 485: "HUD - Course Pending"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 489: "HUD - Course Unranked"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
 
 cs2kz-jumpstats.phrases.txt
 ----------------------------------------------------------------------
@@ -651,135 +725,133 @@ cs2kz-jumpstats.phrases.txt
     Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
   Line 418: "Invalid Jump"
     Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
-  Line 424: "Jumpstats HUD - Distance"
+  Line 423: "Deviation (Short)"
     Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
-  Line 430: "Jumpstats HUD - Failstat"
+  Line 427: "Miss"
     Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
-  Line 436: "Jumpstats HUD - Release"
+  Line 431: "Release (Short)"
     Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
-  Line 440: "Jumpstats HUD - History Info"
+  Line 437: "Jumpstats HUD - Distance"
     Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
-  Line 448: "First jump"
+  Line 443: "Jumpstats HUD - Failstat"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 449: "Jumpstats HUD - Release"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 453: "Jumpstats HUD - History Info"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 461: "First jump"
     Missing (1): nl
-  Line 464: "Invalid movetype change"
+  Line 477: "Invalid movetype change"
     Missing (1): nl
-  Line 480: "Invalid movetype"
+  Line 493: "Invalid movetype"
     Missing (1): nl
-  Line 496: "Just noclipped"
+  Line 509: "Just noclipped"
     Missing (1): nl
-  Line 512: "Invalid collisions"
+  Line 525: "Invalid collisions"
     Missing (1): nl
-  Line 528: "Base velocity detected"
+  Line 541: "Base velocity detected"
     Missing (1): nl
-  Line 545: "Player gravity scale changed"
+  Line 558: "Player gravity scale changed"
     Missing (4): fi, it, nl, tr
-  Line 558: "Invalid gains"
+  Line 571: "Invalid gains"
     Missing (1): nl
-  Line 574: "Externally modified"
+  Line 587: "Externally modified"
     Missing (1): nl
-  Line 590: "Edgebugged"
+  Line 603: "Edgebugged"
     Missing (1): nl
-  Line 606: "Teleported"
+  Line 619: "Teleported"
     Missing (1): nl
-  Line 622: "Disabled By Map"
+  Line 635: "Disabled By Map"
     Missing (4): fi, it, nl, tr
-  Line 637: "Jumpstats Option - Master Switch - Enable"
+  Line 650: "Jumpstats Option - Master Switch - Enable"
     Missing (1): nl
-  Line 653: "Jumpstats Option - Master Switch - Disable"
+  Line 666: "Jumpstats Option - Master Switch - Disable"
     Missing (1): nl
-  Line 669: "Jumpstats Option - Jumpstats Always - Enable"
+  Line 682: "Jumpstats Option - Jumpstats Always - Enable"
     Missing (1): nl
-  Line 685: "Jumpstats Option - Jumpstats Always - Disable"
+  Line 698: "Jumpstats Option - Jumpstats Always - Disable"
     Missing (1): nl
-  Line 701: "Jumpstats Option - Tier Hint"
+  Line 714: "Jumpstats Option - Tier Hint"
     Missing (5): fi, it, lv, nl, tr
-  Line 713: "Jumpstats Option - Jumpstats Minimum Broadcast Tier - Hint"
+  Line 726: "Jumpstats Option - Jumpstats Minimum Broadcast Tier - Hint"
     Missing (1): nl
-  Line 729: "Jumpstats Option - Jumpstats Minimum Broadcast Tier - Disabled"
+  Line 742: "Jumpstats Option - Jumpstats Minimum Broadcast Tier - Disabled"
     Missing (1): nl
-  Line 745: "Jumpstats Option - Jumpstats Minimum Broadcast Tier - Response"
+  Line 758: "Jumpstats Option - Jumpstats Minimum Broadcast Tier - Response"
     Missing (1): nl
-  Line 762: "Jumpstats Option - Jumpstats Minimum Console Broadcast Tier - Disabled"
+  Line 775: "Jumpstats Option - Jumpstats Minimum Console Broadcast Tier - Disabled"
     Missing (6): fi, it, lv, nl, sv, tr
-  Line 773: "Jumpstats Option - Jumpstats Minimum Console Broadcast Tier - Response"
+  Line 786: "Jumpstats Option - Jumpstats Minimum Console Broadcast Tier - Response"
     Missing (6): fi, it, lv, nl, sv, tr
-  Line 785: "Jumpstats Option - Jumpstats Minimum Sound Tier - Hint"
+  Line 798: "Jumpstats Option - Jumpstats Minimum Sound Tier - Hint"
     Missing (1): nl
-  Line 801: "Jumpstats Option - Jumpstats Minimum Sound Tier - Disabled"
+  Line 814: "Jumpstats Option - Jumpstats Minimum Sound Tier - Disabled"
     Missing (1): nl
-  Line 817: "Jumpstats Option - Jumpstats Minimum Sound Tier - Response"
+  Line 830: "Jumpstats Option - Jumpstats Minimum Sound Tier - Response"
     Missing (1): nl
-  Line 835: "Broadcast Jumpstat Chat Report"
+  Line 848: "Broadcast Jumpstat Chat Report"
     Missing (1): nl
-  Line 854: "Jumpstats Report - Invalidation Reason"
+  Line 867: "Jumpstats Report - Invalidation Reason"
     Missing (1): nl
-  Line 873: "Jumpstats Report - Chat Summary (Simple)"
-    Missing (8): de, fi, it, lv, nl, pl, sv, tr
-  Line 884: "Jumpstats Report - Chat Summary"
-    Missing (8): de, fi, it, lv, nl, pl, sv, tr
-  Line 896: "Jumpstats Report - Console Summary"
+  Line 886: "Jumpstats Report - Chat Header"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 892: "Jumpstats Report - Chat Segment"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 898: "Jumpstats Report - Console Summary"
     Missing (1): nl
-  Line 914: "Jumpstats Report - Console Failstat Summary"
+  Line 916: "Jumpstats Report - Console Failstat Summary"
     Missing (8): de, fi, it, lv, nl, pl, sv, tr
-  Line 925: "Jumpstat Report - Console Details 1"
+  Line 927: "Jumpstat Report - Console Details 1"
     Missing (8): de, fi, it, lv, nl, pl, sv, tr
-  Line 937: "Jumpstat Report - Console Segment - Edge"
+  Line 939: "Jumpstat Report - Console Segment - Edge"
     Missing (8): de, fi, it, lv, nl, pl, sv, tr
-  Line 947: "Jumpstat Report - Console Segment - Block"
+  Line 949: "Jumpstat Report - Console Segment - Block"
     Missing (8): de, fi, it, lv, nl, pl, sv, tr
-  Line 957: "Jumpstat Report - Console Segment - Miss"
+  Line 959: "Jumpstat Report - Console Segment - Miss"
     Missing (8): de, fi, it, lv, nl, pl, sv, tr
-  Line 967: "Jumpstat Report - Console Segment - Landing Edge"
+  Line 969: "Jumpstat Report - Console Segment - Landing Edge"
     Missing (9): de, es, fi, it, lv, nl, pl, sv, tr
-  Line 976: "Jumpstats Report - Chat Segment - Edge"
+  Line 978: "Jumpstat Report - Console Details 2"
     Missing (8): de, fi, it, lv, nl, pl, sv, tr
-  Line 986: "Jumpstats Report - Chat Segment - Deviation"
-    Missing (8): de, fi, it, lv, nl, pl, sv, tr
-  Line 996: "Jumpstats Report - Chat Segment - Offset"
-    Missing (8): de, fi, it, lv, nl, pl, sv, tr
-  Line 1006: "Jumpstats Report - Chat Segment - Miss"
-    Missing (8): de, fi, it, lv, nl, pl, sv, tr
-  Line 1016: "Jumpstat Report - Console Details 2"
-    Missing (8): de, fi, it, lv, nl, pl, sv, tr
-  Line 1027: "Jumpstat Report - Console Graph - Strafe Keys"
+  Line 989: "Jumpstat Report - Console Graph - Strafe Keys"
     Missing (9): de, es, fi, it, lv, nl, pl, sv, tr
-  Line 1035: "Jumpstat Report - Console Graph - Mouse Movement"
+  Line 997: "Jumpstat Report - Console Graph - Mouse Movement"
     Missing (9): de, es, fi, it, lv, nl, pl, sv, tr
-  Line 1043: "Jumpstat Report - Console Graph - Left"
+  Line 1005: "Jumpstat Report - Console Graph - Left"
     Missing (9): de, es, fi, it, lv, nl, pl, sv, tr
-  Line 1052: "Jumpstat Report - Console Graph - Right"
+  Line 1014: "Jumpstat Report - Console Graph - Right"
     Missing (9): de, es, fi, it, lv, nl, pl, sv, tr
-  Line 1061: "Jumpstats Option - Jumpstats Minimum Tier - Disabled"
+  Line 1023: "Jumpstats Option - Jumpstats Minimum Tier - Disabled"
     Missing (5): fi, it, lv, nl, tr
-  Line 1073: "Jumpstats Option - Jumpstats Minimum Tier - Response"
+  Line 1035: "Jumpstats Option - Jumpstats Minimum Tier - Response"
     Missing (5): fi, it, lv, nl, tr
-  Line 1086: "Jumpstats Option - Jumpstats Minimum Console Tier - Disabled"
+  Line 1048: "Jumpstats Option - Jumpstats Minimum Console Tier - Disabled"
     Missing (5): fi, it, lv, nl, tr
-  Line 1098: "Jumpstats Option - Jumpstats Minimum Console Tier - Response"
+  Line 1060: "Jumpstats Option - Jumpstats Minimum Console Tier - Response"
     Missing (5): fi, it, lv, nl, tr
-  Line 1111: "Jumpstats Option - Jumpstats Minimum Sound Broadcast Tier - Disabled"
+  Line 1073: "Jumpstats Option - Jumpstats Minimum Sound Broadcast Tier - Disabled"
     Missing (5): fi, it, lv, nl, tr
-  Line 1123: "Jumpstats Option - Jumpstats Minimum Sound Broadcast Tier - Response"
+  Line 1085: "Jumpstats Option - Jumpstats Minimum Sound Broadcast Tier - Response"
     Missing (5): fi, it, lv, nl, tr
-  Line 1136: "Jumpstats Option - Jumpstats Volume - Current"
+  Line 1098: "Jumpstats Option - Jumpstats Volume - Current"
     Missing (6): fi, it, lv, nl, sv, tr
-  Line 1148: "Jumpstats Option - Jumpstats Volume - Response"
+  Line 1110: "Jumpstats Option - Jumpstats Volume - Response"
     Missing (5): fi, it, lv, nl, tr
-  Line 1161: "Jumpstats Option - Extended Chat Stats - Enable"
+  Line 1123: "Jumpstats Option - Extended Chat Stats - Enable"
     Missing (5): fi, it, lv, nl, tr
-  Line 1173: "Jumpstats Option - Extended Chat Stats - Disable"
+  Line 1135: "Jumpstats Option - Extended Chat Stats - Disable"
     Missing (5): fi, it, lv, nl, tr
-  Line 1185: "Jumpstats Option - Jumpstats Reporting - Enable"
+  Line 1147: "Jumpstats Option - Jumpstats Reporting - Enable"
     Missing (8): de, fi, it, lv, nl, pl, sv, tr
-  Line 1194: "Jumpstats Option - Jumpstats Reporting - Disable"
+  Line 1156: "Jumpstats Option - Jumpstats Reporting - Disable"
     Missing (8): de, fi, it, lv, nl, pl, sv, tr
-  Line 1203: "Jumpstats Option - Failstats Chat Reporting - Enable"
+  Line 1165: "Jumpstats Option - Failstats Chat Reporting - Enable"
     Missing (8): de, fi, it, lv, nl, pl, sv, tr
-  Line 1212: "Jumpstats Option - Failstats Chat Reporting - Disable"
+  Line 1174: "Jumpstats Option - Failstats Chat Reporting - Disable"
     Missing (8): de, fi, it, lv, nl, pl, sv, tr
-  Line 1221: "Jumpstats Option - Failstats Console Reporting - Enable"
+  Line 1183: "Jumpstats Option - Failstats Console Reporting - Enable"
     Missing (8): de, fi, it, lv, nl, pl, sv, tr
-  Line 1230: "Jumpstats Option - Failstats Console Reporting - Disable"
+  Line 1192: "Jumpstats Option - Failstats Console Reporting - Disable"
     Missing (8): de, fi, it, lv, nl, pl, sv, tr
 
 cs2kz-language.phrases.txt
@@ -1248,6 +1320,92 @@ cs2kz-menu.phrases.txt
     Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
   Line 1305: "Menu - Unavailable"
     Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
+  Line 1311: "Menu - Move Elements"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 1315: "Menu - Move Elements Sub"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 1319: "Menu - Move With Mouse"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 1323: "Menu - Screen Aspect"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 1327: "Menu - Screen Aspect Sub"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 1331: "Menu - JS History"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 1335: "Menu - JS History Sub"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 1339: "Menu - JS Field Block"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 1343: "Menu - JS Field Strafes"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 1347: "Menu - JS Field Sync"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 1351: "Menu - JS Field Pre Max"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 1355: "Menu - JS Field Height"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 1359: "Menu - JS Field Air Time"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 1363: "Menu - JS Field Width"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 1367: "Menu - JS Field Gain Efficiency"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 1371: "Menu - JS Field Air Path"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 1375: "Menu - JS Field Bad Angles"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 1379: "Menu - JS Field Release"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 1383: "Menu - JS Field Offset"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 1387: "Menu - JS Field Edge"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 1391: "Menu - JS Field Deviation"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 1395: "Menu - JS Field Miss"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 1399: "Menu - JS Fields"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 1403: "Menu - JS Field Order"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 1407: "Menu - JS Field Order Sub"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 1411: "Menu - JS Field Order Row"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 1417: "Menu - JS Field Order Row Off"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 1423: "Menu - JS Field Extended Sub"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 1427: "Menu - JS Extended Stats Sub"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 1431: "Menu - Course Info"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 1435: "Menu - W Release"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 1439: "Menu - Course Show Map"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 1443: "Menu - Course Show Pro"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 1447: "Menu - Course Show Pro Sub"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 1451: "Menu - Course Show Splits"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 1455: "Menu - Course Show Splits Sub"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 1459: "Menu - Color Early"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 1463: "Menu - Color Perfect"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 1467: "Menu - Color Late"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 1471: "Menu - Course Show Progress"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 1475: "Menu - Course Show Progress Sub"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 1479: "Menu - Course Show Records"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 1483: "Menu - Course Show Records Sub"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
 
 cs2kz-modes.phrases.txt
 ----------------------------------------------------------------------
