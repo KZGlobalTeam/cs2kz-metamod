@@ -1840,5 +1840,6 @@
 	"Command Description - kz_hudedit"
 	{
 		"en"		"Move HUD elements with the mouse."
+		"ua"		"Переміщати елементи HUD за допомогою миші."
 	}
 }
