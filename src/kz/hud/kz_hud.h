@@ -49,6 +49,7 @@ enum class MHUDElement
 	Checkpoint,
 	Jumpstats,
 	Course,
+	Release,
 	// The indicators are contiguous and last, so an element index maps straight onto the indicator tables.
 	Perf,
 	CrouchJump,
@@ -69,6 +70,12 @@ inline bool IsMHUDIndicator(MHUDElement element)
 {
 	const i32 index = MHUDIndicatorIndex(element);
 	return index >= 0 && index < MHUD_INDICATOR_COUNT;
+}
+
+// The indicators and the W release are opt-in; every other element is on by default.
+inline bool IsMHUDElementOnByDefault(MHUDElement element)
+{
+	return !IsMHUDIndicator(element) && element != MHUDElement::Release;
 }
 
 struct MHUDElementDef
@@ -126,6 +133,10 @@ static_global const Color MHUD_DEF_TIMER_STOPPED_COLOR(0xFF, 0xA0, 0xA0, 0xFF);
 static_global const Color MHUD_DEF_KEYS_OVERLAP_COLOR(0xFF, 0x40, 0x40, 0xFF);
 static_global const Color MHUD_DEF_KEYS_PRESSED_COLOR(0x3B, 0xED, 0xA0, 0xFF);
 static_global const Color MHUD_DEF_KEYS_OVERLAP_GLOW_COLOR(0xFF, 0x40, 0x40, 0xFF);
+// The chat's colors for an early, perfect and late W release.
+static_global const Color MHUD_DEF_RELEASE_EARLY_COLOR(0x5E, 0x98, 0xD9, 0xFF);
+static_global const Color MHUD_DEF_RELEASE_PERFECT_COLOR(0x40, 0xFF, 0x40, 0xFF);
+static_global const Color MHUD_DEF_RELEASE_LATE_COLOR(0xFF, 0x40, 0x40, 0xFF);
 
 enum class MHUDSpeedState
 {
@@ -242,6 +253,7 @@ struct MHUDPrefs
 	bool indicatorAcronym[MHUD_INDICATOR_COUNT] {};
 	JSFieldLayout jsFields {}; // shared with the chat report
 	bool jsHistory {true};
+	Color releaseEarly, releasePerfect, releaseLate;
 	bool courseMap {true};
 	bool courseProgress {true};
 	bool courseRecords {true};
@@ -575,6 +587,9 @@ private:
 	LayoutKeysState layoutKeys {};
 	LayoutJumpstatsState layoutJumpstats {};
 	LayoutCourseState layoutCourse {};
+	// The W release element's last value, so its text is only rebuilt when that changes.
+	f32 releaseTicks {NAN};
+	std::string releaseText {};
 	LayoutEditState layoutEdit {};
 
 	CCSCustomHudLayout *EnsureOwnedLayout(bool &created);
@@ -662,6 +677,7 @@ private:
 	void UpdateKeysElement(CCSCustomHudLayout *layout, KZPlayer *source, bool force, bool preview = false);
 	void UpdateCheckpointElement(CCSCustomHudLayout *layout, KZPlayer *source, bool force);
 	void UpdateIndicatorElements(CCSCustomHudLayout *layout, const SpeedInfo &info, bool force);
+	void UpdateReleaseElement(CCSCustomHudLayout *layout, KZPlayer *source, const SpeedInfo &info, bool force);
 	// preview fills every row and the history with sample values, for edit mode.
 	void UpdateCourseElement(CCSCustomHudLayout *layout, KZPlayer *source, bool show, bool force, bool preview = false);
 	void ClearCoursePreview(CCSCustomHudLayout *layout);

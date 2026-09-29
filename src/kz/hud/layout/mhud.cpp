@@ -305,6 +305,45 @@ void KZHUDService::UpdateIndicatorElements(CCSCustomHudLayout *layout, const Spe
 	}
 }
 
+// The W release of the source's latest jump, once it is known, for as long as the indicators would show.
+void KZHUDService::UpdateReleaseElement(CCSCustomHudLayout *layout, KZPlayer *source, const SpeedInfo &info, bool force)
+{
+	const MHUDPrefs &prefs = this->GetPrefs();
+	CUtlVector<Jump> &jumps = source->jumpstatsService->jumps;
+	Jump *jump = jumps.Count() > 0 ? &jumps.Tail() : NULL;
+	// Same jumps as the chat. The takeoff's type is used, because the reported one reads a preference.
+	const JumpType type = jump ? jump->originalJumpType : JumpType_Invalid;
+	const bool known = jump && (!jump->trackingRelease || jump->AlreadyEnded());
+	const f32 ticks = known ? jump->GetReleaseInTick() : 0.0f;
+	const bool show = this->IsMHUDElementEnabled(MHUDElement::Release) && info.recentTakeoff && known && ticks >= -20
+					  && (type == JumpType_LongJump || type == JumpType_LadderJump || type == JumpType_WeirdJump);
+	if (!show)
+	{
+		this->UpdateLayoutElement(layout, MHUDElement::Release, false, NULL, prefs.releasePerfect, force);
+		return;
+	}
+	if (this->releaseTicks != ticks || this->releaseText.empty())
+	{
+		char value[16];
+		if (ticks > 10)
+		{
+			V_snprintf(value, sizeof(value), "✗");
+		}
+		else if (ticks == 0)
+		{
+			V_snprintf(value, sizeof(value), "✓");
+		}
+		else
+		{
+			V_snprintf(value, sizeof(value), "%+.1f", ticks);
+		}
+		this->releaseTicks = ticks;
+		this->releaseText = this->player->languageService->PrepareMessage("HUD - Release Text", value);
+	}
+	const Color &color = ticks > 0 ? prefs.releaseLate : (ticks == 0 ? prefs.releasePerfect : prefs.releaseEarly);
+	this->UpdateLayoutElement(layout, MHUDElement::Release, true, this->releaseText.c_str(), color, force);
+}
+
 // The widest value each element can realistically show, drawn in the player's own formatting.
 std::string KZHUDService::GetEditSampleText(MHUDElement element)
 {
@@ -344,6 +383,10 @@ std::string KZHUDService::GetEditSampleText(MHUDElement element)
 		{
 			return KZLanguageService::PrepareMessageWithLang(language, "HUD - Checkpoint Text", 99999, 99999, 99999);
 		}
+		case MHUDElement::Release:
+		{
+			return KZLanguageService::PrepareMessageWithLang(language, "HUD - Release Text", "+10.0");
+		}
 		case MHUDElement::Perf:
 		case MHUDElement::CrouchJump:
 		case MHUDElement::Jumpbug:
@@ -368,6 +411,7 @@ void KZHUDService::UpdateEditElements(CCSCustomHudLayout *layout, bool force)
 							prefs.checkpoint,
 							MHUD_DEF_BASE_COLOR,
 							MHUD_DEF_BASE_COLOR,
+							prefs.releaseLate,
 							prefs.indicator[0],
 							prefs.indicator[1],
 							prefs.indicator[2]};
@@ -824,6 +868,7 @@ bool KZHUDService::UpdateHudLayout(KZPlayer *source)
 		this->UpdateKeysElement(layout, source, force);
 		this->UpdateCheckpointElement(layout, source, force);
 		this->UpdateIndicatorElements(layout, info, force);
+		this->UpdateReleaseElement(layout, source, info, force);
 		this->UpdateCourseElement(layout, source, this->IsMHUDElementEnabled(MHUDElement::Course), force);
 		// Whether jumpstats go to the HUD is the viewer's own setting, even while mimicking.
 		this->UpdateJumpstatsElement(layout, this->GetOwnPrefs().elements[(i32)MHUDElement::Jumpstats].enabled, force);

@@ -14,10 +14,10 @@ void KZHUDService::RefreshPrefs()
 	{
 		const MHUDElementDef &def = MHUD_ELEMENTS[e];
 		MHUDPrefs::Element &element = this->prefs.elements[e];
-		// Indicators are opt-in; every other element is on by default. The jumpstats panel follows where jumpstats are reported.
+		// The jumpstats panel follows where jumpstats are reported.
 		if (def.enabledKey)
 		{
-			element.enabled = opts->GetPreferenceBool(def.enabledKey, !IsMHUDIndicator((MHUDElement)e));
+			element.enabled = opts->GetPreferenceBool(def.enabledKey, IsMHUDElementOnByDefault((MHUDElement)e));
 		}
 		else
 		{
@@ -76,6 +76,9 @@ void KZHUDService::RefreshPrefs()
 
 	KZJumpstatsService::GetFieldLayout(this->player, this->prefs.jsFields);
 	this->prefs.jsHistory = opts->GetPreferenceBool("mhudJsShowHistory", true);
+	this->prefs.releaseEarly = opts->GetPreferenceColor("mhudReleaseEarlyColor", MHUD_DEF_RELEASE_EARLY_COLOR);
+	this->prefs.releasePerfect = opts->GetPreferenceColor("mhudReleasePerfectColor", MHUD_DEF_RELEASE_PERFECT_COLOR);
+	this->prefs.releaseLate = opts->GetPreferenceColor("mhudReleaseLateColor", MHUD_DEF_RELEASE_LATE_COLOR);
 	this->prefs.courseMap = opts->GetPreferenceBool("mhudCourseShowMap", true);
 	this->prefs.courseProgress = opts->GetPreferenceBool("mhudCourseShowProgress", true);
 	this->prefs.courseRecords = opts->GetPreferenceBool("mhudCourseShowRecords", true);

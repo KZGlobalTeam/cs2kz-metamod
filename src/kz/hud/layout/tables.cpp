@@ -12,6 +12,7 @@ extern const MHUDElementDef MHUD_ELEMENTS[(i32)MHUDElement::Count] =
 	{"mhud_checkpoint", "mhud_checkpoint_pos", "mhud_checkpoint_hit", "checkpoint", "mhudCheckpointEnabled", "mhudCheckpointX", "mhudCheckpointY", "mhudCheckpointSize", "mhudCheckpointFont", "mhudCheckpointOutline", "mhudCheckpointOpacity", "mhudCheckpointAlign", NULL,                  MHUD_DEF_CHECKPOINT_X, MHUD_DEF_CHECKPOINT_Y, MHUD_DEF_CHECKPOINT_SIZE, MHUD_SIZE_MIN,    MHUD_SIZE_MAX},
 	{"mhud_js",         "mhud_js_pos",         "mhud_js_hit",         NULL,         NULL,                    "mhudJsX",         "mhudJsY",         "mhudJsSize",         "mhudJsFont",         NULL,                    "mhudJsOpacity",         NULL,                  NULL,                  MHUD_DEF_JS_X,         MHUD_DEF_JS_Y,         MHUD_DEF_JS_SIZE,         MHUD_JS_SIZE_MIN, MHUD_JS_SIZE_MAX},
 	{"mhud_course",     "mhud_course_pos",     "mhud_course_hit",     NULL,         "mhudCourseEnabled",     "mhudCourseX",     "mhudCourseY",     "mhudCourseSize",     "mhudCourseFont",     NULL,                    "mhudCourseOpacity",     "mhudCourseAlign",     NULL,                  MHUD_DEF_COURSE_X,     MHUD_DEF_COURSE_Y,     MHUD_DEF_COURSE_SIZE,     MHUD_JS_SIZE_MIN, MHUD_JS_SIZE_MAX},
+	{"mhud_release",    "mhud_release_pos",    "mhud_release_hit",    "release",    "mhudReleaseEnabled",    "mhudReleaseX",    "mhudReleaseY",    "mhudReleaseSize",    "mhudReleaseFont",    "mhudReleaseOutline",    "mhudReleaseOpacity",    "mhudReleaseAlign",    NULL,                  MHUD_DEF_RELEASE_X,    MHUD_DEF_RELEASE_Y,    MHUD_DEF_RELEASE_SIZE,    MHUD_SIZE_MIN,    MHUD_SIZE_MAX},
 	{"mhud_perf",       "mhud_perf_pos",       "mhud_perf_hit",       "perf",       "mhudPerfEnabled",       "mhudPerfX",       "mhudPerfY",       "mhudPerfSize",       "mhudPerfFont",       "mhudPerfOutline",       "mhudPerfOpacity",       "mhudPerfAlign",       NULL,                  MHUD_DEF_PERF_X,       MHUD_DEF_PERF_Y,       MHUD_DEF_PERF_SIZE,       MHUD_SIZE_MIN,    MHUD_SIZE_MAX},
 	{"mhud_cj",         "mhud_cj_pos",         "mhud_cj_hit",         "cj",         "mhudCjEnabled",         "mhudCjX",         "mhudCjY",         "mhudCjSize",         "mhudCjFont",         "mhudCjOutline",         "mhudCjOpacity",         "mhudCjAlign",         NULL,                  MHUD_DEF_CJ_X,         MHUD_DEF_CJ_Y,         MHUD_DEF_CJ_SIZE,         MHUD_SIZE_MIN,    MHUD_SIZE_MAX},
 	{"mhud_jumpbug",    "mhud_jumpbug_pos",    "mhud_jumpbug_hit",    "jumpbug",    "mhudJumpbugEnabled",    "mhudJumpbugX",    "mhudJumpbugY",    "mhudJumpbugSize",    "mhudJumpbugFont",    "mhudJumpbugOutline",    "mhudJumpbugOpacity",    "mhudJumpbugAlign",    NULL,                  MHUD_DEF_JUMPBUG_X,    MHUD_DEF_JUMPBUG_Y,    MHUD_DEF_JUMPBUG_SIZE,    MHUD_SIZE_MIN,    MHUD_SIZE_MAX},
@@ -96,6 +97,13 @@ static_global constexpr MHUDColorPrefDef CHECKPOINT_COLOR_PREFS[] =
 	{"Menu - Color TP",       "mhudCheckpointTpColor", 0xFF, 0xFF, 0xFF},
 };
 
+static_global constexpr MHUDColorPrefDef RELEASE_COLOR_PREFS[] =
+{
+	{"Menu - Color Early",    "mhudReleaseEarlyColor",   0x5E, 0x98, 0xD9},
+	{"Menu - Color Perfect",  "mhudReleasePerfectColor", 0x40, 0xFF, 0x40},
+	{"Menu - Color Late",     "mhudReleaseLateColor",    0xFF, 0x40, 0x40},
+};
+
 // One color each; the flattened Indicators page relabels the row with the indicator's own phrase.
 static_global constexpr MHUDColorPrefDef PERF_COLOR_PREFS[] =
 {
@@ -132,6 +140,9 @@ const MHUDColorPrefDef *KZHUDService::GetMHUDElementColorPrefs(MHUDElement eleme
 		case MHUDElement::Checkpoint:
 			count = KZ_ARRAYSIZE(CHECKPOINT_COLOR_PREFS);
 			return CHECKPOINT_COLOR_PREFS;
+		case MHUDElement::Release:
+			count = KZ_ARRAYSIZE(RELEASE_COLOR_PREFS);
+			return RELEASE_COLOR_PREFS;
 		case MHUDElement::Perf:
 			count = KZ_ARRAYSIZE(PERF_COLOR_PREFS);
 			return PERF_COLOR_PREFS;

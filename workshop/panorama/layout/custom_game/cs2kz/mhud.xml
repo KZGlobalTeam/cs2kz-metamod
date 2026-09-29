@@ -86,6 +86,16 @@
         <Button id="mhud_checkpoint_hit_br" class="edit-corner edit-corner-br" />
       </Panel>
     </Panel>
+    <Panel id="mhud_release_pos" class="pos" hittest="false">
+      <Label id="mhud_release" class="element hidden" text="{s:release}" hittest="false" />
+      <Panel id="mhud_release_hit" class="element edit-box hidden" hittest="false">
+        <Button id="mhud_release_hit_move" class="edit-hit" />
+        <Button id="mhud_release_hit_tl" class="edit-corner edit-corner-tl" />
+        <Button id="mhud_release_hit_tr" class="edit-corner edit-corner-tr" />
+        <Button id="mhud_release_hit_bl" class="edit-corner edit-corner-bl" />
+        <Button id="mhud_release_hit_br" class="edit-corner edit-corner-br" />
+      </Panel>
+    </Panel>
     <Panel id="mhud_perf_pos" class="pos" hittest="false">
       <Label id="mhud_perf" class="element hidden" text="{s:perf}" hittest="false" />
       <Panel id="mhud_perf_hit" class="element edit-box hidden" hittest="false">

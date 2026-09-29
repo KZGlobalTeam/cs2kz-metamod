@@ -193,6 +193,7 @@ void KZHUDService::DestroyOwnedLayout()
 	this->layoutKeys = LayoutKeysState();
 	this->layoutJumpstats = LayoutJumpstatsState();
 	this->layoutCourse = LayoutCourseState();
+	this->releaseText.clear();
 	this->layoutEdit = LayoutEditState();
 }
 

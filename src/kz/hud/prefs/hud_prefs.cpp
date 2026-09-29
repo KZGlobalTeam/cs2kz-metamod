@@ -8,7 +8,7 @@
 #include "tier0/memdbgon.h"
 
 static_global constexpr const char *ELEMENT_PHRASE[(i32)MHUDElement::Count] = {
-	"Menu - Timer", "Speed", "Menu - Prespeed", "Menu - Keys", "Menu - Checkpoint", "Menu - Jumpstats", "Menu - Course Info",
+	"Menu - Timer", "Speed", "Menu - Prespeed", "Menu - Keys", "Menu - Checkpoint", "Menu - Jumpstats", "Menu - Course Info", "Menu - W Release",
 	// The indicators share one flattened page, so these only name them; they are not sub titles.
 	"Menu - Ind Perf", "Menu - Ind CJ", "Menu - Ind JB"};
 
@@ -297,7 +297,7 @@ void KZHUDService::RegisterMenu()
 		// has no toggle of its own, since the report type under Jumpstats decides whether it shows.
 		if (def.enabledKey)
 		{
-			KZ::menu::AddToggle(sub, "Menu - Enabled", def.enabledKey, true);
+			KZ::menu::AddToggle(sub, "Menu - Enabled", def.enabledKey, IsMHUDElementOnByDefault((MHUDElement)e));
 		}
 		KZ::menu::AddPosition(sub, "Menu - Position", def.xKey, def.yKey, def.xDefault, def.yDefault, e);
 		KZ::menu::SetItemInteract(sub, MoveElement);

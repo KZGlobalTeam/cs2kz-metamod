@@ -354,6 +354,12 @@
 	{
 		"en"		"{grey}Moving HUD elements needs the layout HUD style and a living player."
 	}
+	"HUD - Release Text"
+	{
+		// +0.5 W
+		"#format"	"value:s"
+		"en"		"{value} W"
+	}
 	"HUD - Course Global"
 	{
 		"en"		"Global"

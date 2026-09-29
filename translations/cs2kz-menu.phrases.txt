@@ -1432,6 +1432,10 @@
 	{
 		"en"		"Course Info"
 	}
+	"Menu - W Release"
+	{
+		"en"		"W Release"
+	}
 	"Menu - Course Show Map"
 	{
 		"en"		"Map and course"
@@ -1451,6 +1455,18 @@
 	"Menu - Course Show Splits Sub"
 	{
 		"en"		"A pill for every split, checkpoint and stage, against your !comparelevel time"
+	}
+	"Menu - Color Early"
+	{
+		"en"		"Early"
+	}
+	"Menu - Color Perfect"
+	{
+		"en"		"Perfect"
+	}
+	"Menu - Color Late"
+	{
+		"en"		"Late"
 	}
 	"Menu - Course Show Progress"
 	{

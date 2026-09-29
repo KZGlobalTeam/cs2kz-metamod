@@ -33,6 +33,11 @@
 #define MHUD_DEF_COURSE_Y    -26
 #define MHUD_DEF_COURSE_SIZE 125
 
+// Right of the prespeed, at its size.
+#define MHUD_DEF_RELEASE_X    5
+#define MHUD_DEF_RELEASE_Y    12
+#define MHUD_DEF_RELEASE_SIZE 22
+
 // The indicators stack to the right of the speed readout, in the order movementhud draws them.
 #define MHUD_DEF_JUMPBUG_X    12
 #define MHUD_DEF_JUMPBUG_Y    5
