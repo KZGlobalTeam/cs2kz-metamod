@@ -406,6 +406,9 @@ void KZHUDService::RegisterMenu()
 				KZ::menu::AddToggle(sub, "Menu - Course Show Pro", "mhudCourseShowPro", true);
 				KZ::menu::SetItemSubtext(sub, "Menu - Course Show Pro Sub");
 				KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
+				KZ::menu::AddToggle(sub, "Menu - Course Show Splits", "mhudCourseShowSplits", true);
+				KZ::menu::SetItemSubtext(sub, "Menu - Course Show Splits Sub");
+				KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
 				break;
 			}
 

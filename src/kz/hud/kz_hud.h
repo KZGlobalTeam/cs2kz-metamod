@@ -243,6 +243,7 @@ struct MHUDPrefs
 	bool courseMap {true};
 	bool courseRecords {true};
 	bool coursePro {true};
+	bool courseSplits {true};
 
 	bool legacyStyle {};
 	bool compactPanel {};
@@ -536,11 +537,13 @@ private:
 
 	struct LayoutCourseState
 	{
+		LayoutPill pills[MHUD_JS_PILL_COUNT] {};
 		bool preview {};
 		i32 scale {INT_MIN};
 		const char *fontClass {};
 		i32 headHidden {-1};
 		i32 rowHidden[MHUD_COURSE_ROW_COUNT] {-1, -1};
+		i32 historyHidden {-1};
 		f64 nextRefresh {};
 		// The last text sent to each label, in the order course.cpp lists them.
 		std::string texts[4 + MHUD_COURSE_ROW_COUNT * 5] {};
@@ -653,7 +656,7 @@ private:
 	void UpdateKeysElement(CCSCustomHudLayout *layout, KZPlayer *source, bool force, bool preview = false);
 	void UpdateCheckpointElement(CCSCustomHudLayout *layout, KZPlayer *source, bool force);
 	void UpdateIndicatorElements(CCSCustomHudLayout *layout, const SpeedInfo &info, bool force);
-	// preview fills every row with sample values, for edit mode.
+	// preview fills every row and the history with sample values, for edit mode.
 	void UpdateCourseElement(CCSCustomHudLayout *layout, KZPlayer *source, bool show, bool force, bool preview = false);
 	void ClearCoursePreview(CCSCustomHudLayout *layout);
 	// preview draws a sample jump with every enabled row, for edit mode.
@@ -664,6 +667,8 @@ private:
 
 public:
 	bool ShowJumpstat(Jump *jump, i32 colorTier);
+	// A split, checkpoint or stage the source reached, for the course panel's history.
+	void OnZoneReached(const KZTimerService::ZoneReport &report);
 	static CCSCustomHudLayout *GetLayoutEntity(const char *layoutPath, CHandle<CBaseEntity> &cache);
 
 	void DestroyOwnedLayout();

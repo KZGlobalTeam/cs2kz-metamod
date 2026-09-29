@@ -380,6 +380,49 @@
 		"#format"	"tp:i,pro:i"
 		"en"		" · T{tp} / Pro T{pro}"
 	}
+	"HUD - Course Pill Split"
+	{
+		"#format"	"number:i"
+		"en"		"Split {number}"
+	}
+	"HUD - Course Pill Checkpoint"
+	{
+		"#format"	"number:i"
+		"en"		"CP {number}"
+	}
+	"HUD - Course Pill Stage"
+	{
+		"#format"	"number:i"
+		"en"		"Stage {number}"
+	}
+	"HUD - Course Pill Info"
+	{
+		// 1:23.456 vs PB
+		"#format"	"time:s,target:s"
+		"en"		"{time} vs {target}"
+	}
+	"HUD - Compare Server PB"
+	{
+		"en"		"Server PB"
+	}
+	"HUD - Compare Global PB"
+	{
+		"en"		"PB"
+	}
+	"HUD - Compare SR"
+	{
+		"en"		"SR"
+	}
+	"HUD - Compare WR"
+	{
+		"en"		"WR"
+	}
+	"HUD - Compare Pro"
+	{
+		// PB Pro
+		"#format"	"target:s"
+		"en"		"{target} Pro"
+	}
 	"HUD - Course All"
 	{
 		"en"		"All"

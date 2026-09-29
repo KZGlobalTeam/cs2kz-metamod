@@ -391,6 +391,76 @@
 	opacity: 1;
 }
 
+/* The course pills hang below the panel and keep their width, so the times stay readable. */
+.ci-history {
+	width: 100%;
+	height: 138px;
+	margin-top: 8px;
+}
+
+.ci-hist {
+	opacity: 0;
+	transform: translate3d(0px, 132px, 0px);
+
+	width: 100%;
+	height: 25px;
+	vertical-align: top;
+	padding: 0px 13px;
+
+	background-color: #000000b8;
+	background-image: url("s2r://panorama/images/backgrounds/bluedots_large_png.vtex");
+	background-size: 360px 360px;
+	background-img-opacity: 0.015;
+	world-blur: gaussian(1, 1, 1);
+	border-radius: 4px;
+
+	transition-property: transform, opacity;
+	transition-duration: 0.3s;
+	transition-timing-function: ease-out;
+}
+
+.ci-hist.js-age-0,
+.ci-hist.js-age-0b {
+	opacity: 1;
+	transform: translate3d(0px, 0px, 0px);
+	animation-duration: 0.3s;
+	animation-timing-function: ease-out;
+	animation-iteration-count: 1;
+}
+
+.ci-hist.js-age-0 {
+	animation-name: js-pill-in-a;
+}
+
+.ci-hist.js-age-0b {
+	animation-name: js-pill-in-b;
+}
+
+.ci-hist.js-age-1 {
+	opacity: 0.85;
+	transform: translate3d(0px, 33px, 0px);
+}
+
+.ci-hist.js-age-2 {
+	opacity: 0.6;
+	transform: translate3d(0px, 66px, 0px);
+}
+
+.ci-hist.js-age-3 {
+	opacity: 0.35;
+	transform: translate3d(0px, 99px, 0px);
+}
+
+.ci-hist.js-expire {
+	opacity: 0;
+}
+
+/* A zone name such as STAGE 12 is wider than a jump type. */
+.ci-stack .js-hist-info {
+	margin-left: 76px;
+	font-size: 13px;
+}
+
 .ci-head {
 	width: 100%;
 	flow-children: down;

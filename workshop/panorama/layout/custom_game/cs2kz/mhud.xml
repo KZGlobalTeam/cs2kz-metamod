@@ -188,6 +188,13 @@
             <Label id="mhud_ci_g1" class="ci-gap" text="{s:v}" hittest="false" />
           </Panel>
         </Panel>
+        <Panel id="mhud_ci_history" class="ci-history" hittest="false">
+          <Panel id="mhud_ci_h0" class="ci-hist" hittest="false"><Label id="mhud_ci_h0_t" class="js-hist-type" text="{s:v}" hittest="false" /><Label id="mhud_ci_h0_i" class="js-hist-info" text="{s:v}" hittest="false" /><Label id="mhud_ci_h0_d" class="js-hist-dist" text="{s:v}" hittest="false" /></Panel>
+          <Panel id="mhud_ci_h1" class="ci-hist" hittest="false"><Label id="mhud_ci_h1_t" class="js-hist-type" text="{s:v}" hittest="false" /><Label id="mhud_ci_h1_i" class="js-hist-info" text="{s:v}" hittest="false" /><Label id="mhud_ci_h1_d" class="js-hist-dist" text="{s:v}" hittest="false" /></Panel>
+          <Panel id="mhud_ci_h2" class="ci-hist" hittest="false"><Label id="mhud_ci_h2_t" class="js-hist-type" text="{s:v}" hittest="false" /><Label id="mhud_ci_h2_i" class="js-hist-info" text="{s:v}" hittest="false" /><Label id="mhud_ci_h2_d" class="js-hist-dist" text="{s:v}" hittest="false" /></Panel>
+          <Panel id="mhud_ci_h3" class="ci-hist" hittest="false"><Label id="mhud_ci_h3_t" class="js-hist-type" text="{s:v}" hittest="false" /><Label id="mhud_ci_h3_i" class="js-hist-info" text="{s:v}" hittest="false" /><Label id="mhud_ci_h3_d" class="js-hist-dist" text="{s:v}" hittest="false" /></Panel>
+          <Panel id="mhud_ci_h4" class="ci-hist" hittest="false"><Label id="mhud_ci_h4_t" class="js-hist-type" text="{s:v}" hittest="false" /><Label id="mhud_ci_h4_i" class="js-hist-info" text="{s:v}" hittest="false" /><Label id="mhud_ci_h4_d" class="js-hist-dist" text="{s:v}" hittest="false" /></Panel>
+        </Panel>
       </Panel>
       <Panel id="mhud_course_hit" class="element edit-box hidden" hittest="false">
         <Button id="mhud_course_hit_move" class="edit-hit" />

@@ -182,6 +182,25 @@ public:
 		COMPARETYPE_COUNT
 	};
 
+	enum class ZoneKind : u8
+	{
+		Split,
+		Checkpoint,
+		Stage,
+	};
+
+	// A zone reached during a run, for the HUD's course panel.
+	struct ZoneReport
+	{
+		ZoneKind kind {};
+		i32 number {}; // from 1, as the chat numbers it
+		f64 time {};
+		bool hasDiff {};
+		f64 diff {}; // against the compare target, negative when ahead of it
+		bool pro {}; // compared with the target's pro time
+		CompareType compareType {};
+	};
+
 private:
 	// The maximum level that we should compare our current time with.
 	// For example, if the value is set to COMPARE_GPB, the player will not attempt to compare their splits with SR/WR,
@@ -195,6 +214,8 @@ private:
 	void UpdateCurrentCompareType(PBDataKey key);
 	const PBData *GetCompareTargetForType(CompareType type, PBDataKey key);
 	const PBData *GetCompareTarget(PBDataKey key);
+	// Hands a reached zone to the HUD of the player and everyone spectating them. A target of 0 or less has no time.
+	void ReportZone(ZoneKind kind, i32 number, f64 time, f64 overallTarget, f64 proTarget);
 
 	bool shouldAnnounceMissedTime = true;
 	bool shouldAnnounceMissedProTime = true;

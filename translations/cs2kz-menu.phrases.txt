@@ -1444,6 +1444,14 @@
 	{
 		"en"		"A second row for the record without teleports"
 	}
+	"Menu - Course Show Splits"
+	{
+		"en"		"Zone times"
+	}
+	"Menu - Course Show Splits Sub"
+	{
+		"en"		"A pill for every split, checkpoint and stage, against your !comparelevel time"
+	}
 	"Menu - Course Show Records"
 	{
 		"en"		"Records"

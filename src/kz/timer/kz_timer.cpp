@@ -10,6 +10,7 @@
 #include "kz/trigger/kz_trigger.h"
 #include "kz/spec/kz_spec.h"
 #include "kz/recording/kz_recording.h"
+#include "kz/hud/kz_hud.h"
 #include "submission.h"
 
 #include "utils/utils.h"
@@ -1551,6 +1552,8 @@ void KZTimerService::ShowSplitText(u32 currentSplit)
 		}
 	}
 
+	this->ReportZone(ZoneKind::Split, currentSplit, this->splitZoneTimes[currentSplit - 1], pb ? pb->overall.pbSplitZoneTimes[currentSplit - 1] : 0.0,
+					 pb && pb->pro.pbTime > 0 ? pb->pro.pbSplitZoneTimes[currentSplit - 1] : 0.0);
 	this->player->languageService->PrintChat(true, false, "Course Split Reached", currentSplit, time.Get(), pbDiff.c_str(), pbDiffPro.c_str());
 }
 
@@ -1603,6 +1606,9 @@ void KZTimerService::ShowCheckpointText(u32 currentCheckpoint)
 		}
 	}
 
+	this->ReportZone(ZoneKind::Checkpoint, currentCheckpoint, this->cpZoneTimes[currentCheckpoint - 1],
+					 pb ? pb->overall.pbCpZoneTimes[currentCheckpoint - 1] : 0.0,
+					 pb && pb->pro.pbTime > 0 ? pb->pro.pbCpZoneTimes[currentCheckpoint - 1] : 0.0);
 	this->player->languageService->PrintChat(true, false, "Course Checkpoint Reached", currentCheckpoint, time.Get(), pbDiff.c_str(),
 											 pbDiffPro.c_str());
 }
@@ -1656,8 +1662,30 @@ void KZTimerService::ShowStageText()
 		}
 	}
 
+	this->ReportZone(ZoneKind::Stage, this->currentStage + 1, this->stageZoneTimes[this->currentStage],
+					 pb ? pb->overall.pbStageZoneTimes[this->currentStage] : 0.0,
+					 pb && pb->pro.pbTime > 0 ? pb->pro.pbStageZoneTimes[this->currentStage] : 0.0);
 	this->player->languageService->PrintChat(true, false, "Course Stage Reached", this->currentStage + 1, time.Get(), pbDiff.c_str(),
 											 pbDiffPro.c_str());
+}
+
+void KZTimerService::ReportZone(ZoneKind kind, i32 number, f64 time, f64 overallTarget, f64 proTarget)
+{
+	ZoneReport report;
+	report.kind = kind;
+	report.number = number;
+	report.time = time;
+	report.compareType = this->currentCompareType;
+	// A run without teleports is compared with the pro time, which is the one it can still beat.
+	report.pro = this->player->checkpointService->GetTeleportCount() == 0 && proTarget > 0;
+	const f64 target = report.pro ? proTarget : overallTarget;
+	report.hasDiff = target > 0;
+	report.diff = time - target;
+	this->player->hudService->OnZoneReached(report);
+	for (KZPlayer *spec = this->player->specService->GetNextSpectator(NULL); spec != NULL; spec = this->player->specService->GetNextSpectator(spec))
+	{
+		spec->hudService->OnZoneReached(report);
+	}
 }
 
 const PBData *KZTimerService::GetCachedRecord(PBDataKey key, bool global)

@@ -27,6 +27,27 @@ static_global const char *const COURSE_ROWS[MHUD_COURSE_ROW_COUNT][6] = {
 
 static_global const char *const COURSE_ROW_PHRASES[MHUD_COURSE_ROW_COUNT] = {"HUD - Course All", "HUD - Course Pro"};
 
+// Each pill's panels.
+static_global const char *const COURSE_PILL_PANELS[MHUD_JS_PILL_COUNT][4] = {{"mhud_ci_h0", "mhud_ci_h0_t", "mhud_ci_h0_i", "mhud_ci_h0_d"},
+																			 {"mhud_ci_h1", "mhud_ci_h1_t", "mhud_ci_h1_i", "mhud_ci_h1_d"},
+																			 {"mhud_ci_h2", "mhud_ci_h2_t", "mhud_ci_h2_i", "mhud_ci_h2_d"},
+																			 {"mhud_ci_h3", "mhud_ci_h3_t", "mhud_ci_h3_i", "mhud_ci_h3_d"},
+																			 {"mhud_ci_h4", "mhud_ci_h4_t", "mhud_ci_h4_i", "mhud_ci_h4_d"}};
+
+// One pill per age for the preview, as in mhud.cpp.
+static_global const char *const COURSE_AGE_CLASSES[MHUD_JS_PILL_GONE_RANK] = {"js-age-0", "js-age-1", "js-age-2", "js-age-3"};
+
+// Indexed by KZTimerService::ZoneKind.
+static_global const char *const COURSE_ZONE_PHRASES[] = {"HUD - Course Pill Split", "HUD - Course Pill Checkpoint", "HUD - Course Pill Stage"};
+
+// Indexed by KZTimerService::CompareType.
+static_global const char *const COURSE_COMPARE_PHRASES[KZTimerService::COMPARETYPE_COUNT] = {
+	NULL, "HUD - Compare Server PB", "HUD - Compare Global PB", "HUD - Compare SR", "HUD - Compare WR"};
+
+// The chat's colors for a time ahead of or behind another.
+#define COURSE_CLASS_AHEAD  "js-c-green"
+#define COURSE_CLASS_BEHIND "js-c-red"
+
 // Slots in LayoutCourseState::texts.
 #define COURSE_TEXT_MAP    0
 #define COURSE_TEXT_STATUS 1
@@ -175,11 +196,51 @@ static_function void GetCourseSample(KZLanguageService *lang, CourseInfoText &ou
 	}
 }
 
+void KZHUDService::OnZoneReached(const KZTimerService::ZoneReport &report)
+{
+	const MHUDPrefs &prefs = this->GetPrefs();
+	if (this->player->IsFakeClient() || !this->IsShowingPanel() || !this->IsUsingLayoutStyle() || this->IsEditingHud()
+		|| !prefs.elements[(i32)MHUDElement::Course].enabled || !prefs.courseSplits)
+	{
+		return;
+	}
+	bool created = false;
+	CCSCustomHudLayout *layout = this->EnsureOwnedLayout(created);
+	if (!layout)
+	{
+		return;
+	}
+	KZLanguageService *lang = this->player->languageService;
+	LayoutCourseState &ci = this->layoutCourse;
+	const i32 index = KZHUDService::AdvancePills(ci.pills);
+	LayoutPill &pill = ci.pills[index];
+	const char *const *ids = COURSE_PILL_PANELS[index];
+
+	const std::string zone = lang->PrepareMessage(COURSE_ZONE_PHRASES[(i32)report.kind], report.number);
+	std::string info = utils::FormatTime(report.time).Get();
+	std::string gap;
+	if (report.hasDiff && COURSE_COMPARE_PHRASES[report.compareType])
+	{
+		std::string target = lang->PrepareMessage(COURSE_COMPARE_PHRASES[report.compareType]);
+		if (report.pro)
+		{
+			target = lang->PrepareMessage("HUD - Compare Pro", target.c_str());
+		}
+		info = lang->PrepareMessage("HUD - Course Pill Info", info.c_str(), target.c_str());
+		gap = KZTimerService::FormatDiffTime(report.diff).Get();
+	}
+	layout->SetDialogVariableString(ids[1], "v", zone.c_str());
+	layout->SetDialogVariableString(ids[2], "v", info.c_str());
+	layout->SetDialogVariableString(ids[3], "v", gap.c_str());
+	this->SetLayoutClass(layout, ids[3], pill.distTierClass, report.diff < 0 ? COURSE_CLASS_AHEAD : COURSE_CLASS_BEHIND);
+}
+
 void KZHUDService::ClearCoursePreview(CCSCustomHudLayout *layout)
 {
 	LayoutCourseState &ci = this->layoutCourse;
 	ci.preview = false;
 	ci.nextRefresh = 0;
+	this->ClearPills(layout, ci.pills, COURSE_PILL_PANELS);
 }
 
 void KZHUDService::UpdateCourseElement(CCSCustomHudLayout *layout, KZPlayer *source, bool show, bool force, bool preview)
@@ -197,7 +258,7 @@ void KZHUDService::UpdateCourseElement(CCSCustomHudLayout *layout, KZPlayer *sou
 	}
 	const MHUDPrefs &prefs = preview ? this->GetOwnPrefs() : this->GetPrefs();
 
-	// js-scale.css scales the whole panel by the element's size in percent.
+	// js-scale.css scales the whole panel, history included, by the element's size in percent.
 	const i32 scale = Clamp((i32)this->GetLayoutSize(MHUDElement::Course), MHUD_JS_SIZE_MIN, MHUD_JS_SIZE_MAX);
 	if (ci.scale != scale)
 	{
@@ -236,6 +297,12 @@ void KZHUDService::UpdateCourseElement(CCSCustomHudLayout *layout, KZPlayer *sou
 				setFont(row[i]);
 			}
 		}
+		for (const auto &pill : COURSE_PILL_PANELS)
+		{
+			setFont(pill[1]);
+			setFont(pill[2]);
+			setFont(pill[3]);
+		}
 		ci.fontClass = fontClass;
 	}
 
@@ -248,6 +315,7 @@ void KZHUDService::UpdateCourseElement(CCSCustomHudLayout *layout, KZPlayer *sou
 		}
 	};
 	setHidden("mhud_ci_head", ci.headHidden, !prefs.courseMap);
+	setHidden("mhud_ci_history", ci.historyHidden, !prefs.courseSplits);
 	setHidden(COURSE_ROWS[COURSE_ROW_ALL][0], ci.rowHidden[COURSE_ROW_ALL], !prefs.courseRecords);
 	setHidden(COURSE_ROWS[COURSE_ROW_PRO][0], ci.rowHidden[COURSE_ROW_PRO], !prefs.courseRecords || !prefs.coursePro);
 
@@ -289,6 +357,20 @@ void KZHUDService::UpdateCourseElement(CCSCustomHudLayout *layout, KZPlayer *sou
 			CourseInfoText info;
 			GetCourseSample(lang, info);
 			apply(info);
+			const std::string zone = lang->PrepareMessage(COURSE_ZONE_PHRASES[(i32)KZTimerService::ZoneKind::Checkpoint], 99);
+			const std::string target = lang->PrepareMessage("HUD - Compare Pro", lang->PrepareMessage("HUD - Compare Global PB").c_str());
+			const std::string pillInfo = lang->PrepareMessage("HUD - Course Pill Info", "59:59.999", target.c_str());
+			for (i32 i = 0; i < MHUD_JS_PILL_GONE_RANK; i++)
+			{
+				LayoutPill &pill = ci.pills[i];
+				const char *const *ids = COURSE_PILL_PANELS[i];
+				layout->SetDialogVariableString(ids[1], "v", zone.c_str());
+				layout->SetDialogVariableString(ids[2], "v", pillInfo.c_str());
+				layout->SetDialogVariableString(ids[3], "v", "-59:59.999");
+				this->SetLayoutClass(layout, ids[3], pill.distTierClass, COURSE_CLASS_AHEAD);
+				this->SetLayoutClass(layout, ids[0], pill.expireClass, NULL);
+				this->SetLayoutClass(layout, ids[0], pill.ageClass, COURSE_AGE_CLASSES[i]);
+			}
 		}
 		return;
 	}
@@ -305,4 +387,5 @@ void KZHUDService::UpdateCourseElement(CCSCustomHudLayout *layout, KZPlayer *sou
 		GetCourseInfo(this->player, source, info);
 		apply(info);
 	}
+	this->UpdatePills(layout, ci.pills, COURSE_PILL_PANELS);
 }

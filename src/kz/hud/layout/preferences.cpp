@@ -79,6 +79,7 @@ void KZHUDService::RefreshPrefs()
 	this->prefs.courseMap = opts->GetPreferenceBool("mhudCourseShowMap", true);
 	this->prefs.courseRecords = opts->GetPreferenceBool("mhudCourseShowRecords", true);
 	this->prefs.coursePro = opts->GetPreferenceBool("mhudCourseShowPro", true);
+	this->prefs.courseSplits = opts->GetPreferenceBool("mhudCourseShowSplits", true);
 
 	this->prefs.legacyStyle = opts->GetPreferenceBool("hudLegacyStyle", false);
 	this->prefs.compactPanel = opts->GetPreferenceBool("compactPanel", false);
