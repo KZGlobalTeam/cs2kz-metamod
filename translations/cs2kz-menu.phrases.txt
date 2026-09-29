@@ -1470,26 +1470,7 @@
 	}
 	"Menu - JS Field Order Sub"
 	{
-<<<<<<< HEAD
 		"en"		"Only the fields that are on are listed. The chat and the HUD panel share the order"
-=======
-		"en"		"Pick a field, then the spot to move it to. The chat and the HUD panel share the order"
-		"ua"		"Виберіть поле, а потім місце, куди перемістити. Чат і панель HUD використовують один і той самий порядок"
-	}
-	"Menu - JS Field Order Row"
-	{
-		// 3. Sync
-		"#format"	"position:i,field:s"
-		"en"		"{position}. {field}"
-		"ua"		"{position}. {field}"
-	}
-	"Menu - JS Field Order Row Off"
-	{
-		// 3. Sync (off)
-		"#format"	"position:i,field:s"
-		"en"		"{position}. {field} (off)"
-		"ua"		"{position}. {field} (off)"
->>>>>>> a67100b5 (upd. cs2kz-hud.phrases.txt)
 	}
 	"Menu - JS Field Extended Sub"
 	{
