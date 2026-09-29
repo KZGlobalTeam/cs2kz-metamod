@@ -1,6 +1,7 @@
 #pragma once
 #include "kz/kz.h"
 #include "kz/timer/kz_timer.h"
+#include "kz/jumpstats/kz_jumpstats.h"
 #include "entityhandle.h"
 
 #define KZ_HUD_TIMER_STOPPED_GRACE_TIME 3.0f
@@ -33,32 +34,6 @@ class Jump;
 #define MHUD_JS_PILL_GONE_RANK 4
 #define MHUD_JS_PANEL_TIME     6.0f
 #define MHUD_JS_HISTORY_TIME   10.0f
-
-// The rows under the distance, in mhud.xml order. Each one can be switched off.
-enum class MHUDJsField
-{
-	Block,
-	Strafes,
-	Sync,
-	PreMax,
-	Height,
-	AirTime,
-	Width,
-	GainEfficiency,
-	AirPath,
-	BadAngles,
-	Release,
-	Offset,
-	Count,
-};
-
-struct MHUDJsFieldDef
-{
-	const char *prefKey;    // bool preference, on by default
-	const char *menuPhrase; // the toggle on the HUD's Jumpstats page
-};
-
-extern const MHUDJsFieldDef MHUD_JS_FIELDS[(i32)MHUDJsField::Count];
 
 enum class MHUDElement
 {
@@ -253,7 +228,7 @@ struct MHUDPrefs
 	Color checkpoint, checkpointTp;
 	Color indicator[MHUD_INDICATOR_COUNT];
 	bool indicatorAcronym[MHUD_INDICATOR_COUNT] {};
-	bool jsFields[(i32)MHUDJsField::Count] {};
+	JSFieldLayout jsFields {}; // shared with the chat report
 	bool jsHistory {true};
 
 	bool legacyStyle {};
@@ -520,8 +495,9 @@ private:
 
 		Pill pills[MHUD_JS_PILL_COUNT] {};
 		bool preview {}; // edit mode's sample jump is on screen
-		bool rowHidden[(i32)MHUDJsField::Count] {};
-		const char *valueClass[(i32)MHUDJsField::Count] {};
+		// Row slots, filled in the player's order with the fields the jump has.
+		bool rowHidden[(i32)JSField::Count] {};
+		const char *valueClass[(i32)JSField::Count] {};
 		bool historyHidden {};
 		i32 scale {INT_MIN};
 		const char *fontClass {};

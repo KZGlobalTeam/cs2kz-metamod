@@ -26,6 +26,179 @@ static_global const char *columnKeys[] = {"#.",
 										  "Gain Efficiency (Short)",
 										  "Angle Ratio"};
 
+// clang-format off
+extern const JSFieldDef JS_FIELDS[(i32)JSField::Count] =
+{
+	{"jsShowBlock",     "Menu - JS Field Block",           NULL,                      {"Block"},                                                         true},
+	{"jsShowStrafes",   "Menu - JS Field Strafes",         NULL,                      {"Strafes"},                                                       false},
+	{"jsShowSync",      "Menu - JS Field Sync",            NULL,                      {"Sync"},                                                          false},
+	{"jsShowPreMax",    "Menu - JS Field Pre Max",         NULL,                      {"Pre", "Max"},                                                    false},
+	{"jsShowEdge",      "Menu - JS Field Edge",            NULL,                      {"Edge"},                                                          false},
+	{"jsShowHeight",    "Menu - JS Field Height",          NULL,                      {"Height"},                                                        true},
+	{"jsShowAirTime",   "Menu - JS Field Air Time",        NULL,                      {"Air Time"},                                                      true},
+	{"jsShowWidth",     "Menu - JS Field Width",           NULL,                      {"Width"},                                                         true},
+	{"jsShowGainEff",   "Menu - JS Field Gain Efficiency", NULL,                      {"Gain Efficiency (Short)"},                                       true},
+	{"jsShowAirPath",   "Menu - JS Field Air Path",        NULL,                      {"Air Path"},                                                      true},
+	{"jsShowBadAngles", "Menu - JS Field Bad Angles",      NULL,                      {"Bad Angles (Short)", "Overlap (Short)", "Dead Air (Short)"},     true},
+	{"jsShowDeviation", "Menu - JS Field Deviation",       "Deviation",               {"Deviation (Short)"},                                             true},
+	{"jsShowMiss",      "Menu - JS Field Miss",            NULL,                      {"Miss"},                                                          true},
+	{"jsShowRelease",   "Menu - JS Field Release",         "Jumpstats HUD - Release", {"Release (Short)"},                                               false},
+	{"jsShowOffset",    "Menu - JS Field Offset",          NULL,                      {"Offset"},                                                        true},
+};
+// clang-format on
+
+void KZJumpstatsService::GetFieldLayout(KZPlayer *player, JSFieldLayout &out)
+{
+	auto *opts = player->optionService;
+	for (i32 f = 0; f < (i32)JSField::Count; f++)
+	{
+		out.order[f] = (JSField)f;
+		out.shown[f] = opts->GetPreferenceBool(JS_FIELDS[f].prefKey, true);
+	}
+}
+
+static_function void AddFieldValue(JSFieldText &out, const char *format, ...)
+{
+	char buffer[64];
+	va_list args;
+	va_start(args, format);
+	V_vsnprintf(buffer, sizeof(buffer), format, args);
+	va_end(args);
+	out.values[out.count++] = buffer;
+}
+
+void Jump::FormatField(JSField field, bool chat, bool greyTier, JSFieldText &out)
+{
+	out = JSFieldText();
+	out.present = true;
+	switch (field)
+	{
+		case JSField::Block:
+		{
+			// Colored by the block's own tier, the way the distance is by the distance's.
+			out.present = this->GetBlock() > 0.0f;
+			out.color = JSFieldColor::Tier;
+			out.tier = greyTier ? DistanceTier_Meh : this->GetJumpPlayer()->modeService->GetDistanceTier(this->GetReportJumpType(), this->GetBlock());
+			AddFieldValue(out, "%.0f", this->GetBlock());
+			break;
+		}
+		case JSField::Strafes:
+		{
+			AddFieldValue(out, "%i", this->GetStrafeCount());
+			break;
+		}
+		case JSField::Sync:
+		{
+			AddFieldValue(out, "%.0f%%", this->GetSync() * 100.0f);
+			break;
+		}
+		case JSField::PreMax:
+		{
+			AddFieldValue(out, chat ? "%.0f" : "%.1f", this->GetTakeoffSpeed());
+			AddFieldValue(out, chat ? "%.0f" : "%.1f", this->GetMaxSpeed());
+			break;
+		}
+		case JSField::Edge:
+		{
+			out.present = this->GetEdge(false) >= 0.0f;
+			AddFieldValue(out, "%.2f", this->GetEdge(false));
+			break;
+		}
+		case JSField::Height:
+		{
+			AddFieldValue(out, chat ? "%.2f" : "%.1f", this->GetMaxHeight());
+			break;
+		}
+		case JSField::AirTime:
+		{
+			KZPlayer *jumper = this->GetJumpPlayer();
+			AddFieldValue(out, "%.3fs", jumper->landingTimeActual - jumper->takeoffTime);
+			break;
+		}
+		case JSField::Width:
+		{
+			AddFieldValue(out, "%.1f°", this->GetWidth());
+			break;
+		}
+		case JSField::GainEfficiency:
+		{
+			AddFieldValue(out, "%.0f%%", this->GetGainEfficiency() * 100.0f);
+			break;
+		}
+		case JSField::AirPath:
+		{
+			AddFieldValue(out, "%.2f", this->GetAirPath());
+			break;
+		}
+		case JSField::BadAngles:
+		{
+			AddFieldValue(out, "%.0f%%", this->GetBadAngles() * 100.0f);
+			AddFieldValue(out, "%.0f%%", this->GetOverlap() * 100.0f);
+			AddFieldValue(out, "%.0f%%", this->GetDeadAir() * 100.0f);
+			break;
+		}
+		case JSField::Deviation:
+		{
+			out.present = this->GetBlock() > 0.0f;
+			AddFieldValue(out, "%.1f", this->GetDeviation());
+			break;
+		}
+		case JSField::Miss:
+		{
+			out.present = this->GetMiss() > 0.0f;
+			AddFieldValue(out, "%.2f", this->GetMiss());
+			break;
+		}
+		case JSField::Release:
+		{
+			// Same cases and colors as GetReleaseString. Where it does not apply, the chat leaves it out and the HUD greys it.
+			const JumpType type = this->GetReportJumpType();
+			const f32 release = this->GetReleaseInTick();
+			if ((type != JumpType_LongJump && type != JumpType_LadderJump && type != JumpType_WeirdJump) || release < -20)
+			{
+				out.present = !chat;
+				out.color = JSFieldColor::Grey;
+				AddFieldValue(out, "-");
+			}
+			else if (release > 10)
+			{
+				out.color = JSFieldColor::Red;
+				AddFieldValue(out, "✗");
+			}
+			else if (release > 0)
+			{
+				out.color = JSFieldColor::Red;
+				AddFieldValue(out, "+%.1f", release);
+			}
+			else if (release == 0)
+			{
+				out.color = JSFieldColor::Green;
+				AddFieldValue(out, "✓");
+			}
+			else
+			{
+				out.color = JSFieldColor::Blue;
+				AddFieldValue(out, "%.1f", release);
+			}
+			break;
+		}
+		case JSField::Offset:
+		{
+			AddFieldValue(out, "%+.2f", this->GetOffset());
+			break;
+		}
+		default:
+			out.present = false;
+			break;
+	}
+}
+
+// Indexed by JSFieldColor. Tier takes the tier's own color instead.
+static_global const char *const JS_CHAT_COLORS[] = {"{olive}", "{grey}", "{red}", "{green}", "{blue}", "{grey}"};
+
+// Leaves room for the chat prefix and for the color codes to expand, inside the 512 bytes a chat message gets.
+#define JS_CHAT_LINE_MAX 380
+
 std::string Jump::GetInvalidationReasonString(const char *reason, const char *language)
 {
 	if (!reason || reason[0] == '\0')
@@ -76,72 +249,62 @@ void KZJumpstatsService::PrintJumpToChat(KZPlayer *target, Jump *jump, bool exte
 		jumpTypeShort += "-F";
 	}
 
-	f32 flooredDist = floor(jump->GetDistance() * 10) / 10;
-
-	std::string releaseString = "";
-	if (reportType == JumpType_LongJump || reportType == JumpType_LadderJump || reportType == JumpType_WeirdJump)
+	// Basic fields go on the first line and extended ones on a second, in the player's order.
+	std::vector<std::string> lines[2];
+	lines[0].push_back(KZLanguageService::PrepareMessageWithLang(language, "Jumpstats Report - Chat Header", jumpColor, jumpTypeShort.c_str(),
+																 jump->GetDistance(true, false, 1)));
+	const JSFieldLayout &fields = target->hudService->GetOwnPrefs().jsFields;
+	for (JSField field : fields.order)
 	{
-		releaseString = jump->GetReleaseString(true);
+		const JSFieldDef &def = JS_FIELDS[(i32)field];
+		if (!fields.shown[(i32)field] || (def.extended && !extended))
+		{
+			continue;
+		}
+		JSFieldText text;
+		jump->FormatField(field, true, color <= DistanceTier_Meh, text);
+		if (!text.present)
+		{
+			continue;
+		}
+		const char *valueColor = JS_CHAT_COLORS[(i32)text.color];
+		if (text.color == JSFieldColor::Tier)
+		{
+			valueColor = distanceTierColors[text.tier];
+		}
+		for (i32 i = 0; i < text.count; i++)
+		{
+			const char *labelKey = def.labels[i];
+			if (field == JSField::Strafes && jump->GetStrafeCount() <= 1)
+			{
+				labelKey = "Strafe";
+			}
+			const std::string label = KZLanguageService::PrepareMessageWithLang(language, labelKey);
+			const std::string segment = KZLanguageService::PrepareMessageWithLang(language, "Jumpstats Report - Chat Segment", valueColor,
+																				  text.values[i].c_str(), label.c_str());
+			// Chat messages have a fixed size, so a line that would outgrow one carries on in another.
+			std::vector<std::string> &group = lines[def.extended ? 1 : 0];
+			if (group.empty() || group.back().size() + segment.size() > JS_CHAT_LINE_MAX)
+			{
+				group.push_back(segment);
+			}
+			else
+			{
+				group.back() += " {grey}| " + segment;
+			}
+		}
 	}
 
-	// TODO: Standardize the way we prepare these stats.
-	std::string edgeStats = "";
-	if (jump->GetEdge(false) >= 0.0f)
+	// Only the first line gets the chat prefix, as the others carry on from it.
+	bool first = true;
+	for (const std::vector<std::string> &group : lines)
 	{
-		edgeStats = KZLanguageService::PrepareMessageWithLang(language, "Jumpstats Report - Chat Segment - Edge", jump->GetEdge(false));
+		for (const std::string &line : group)
+		{
+			target->PrintChat(first, false, "%s", line.c_str());
+			first = false;
+		}
 	}
-
-	std::string deviationStats = "";
-	if (jump->GetBlock() > 0.0f)
-	{
-		deviationStats = KZLanguageService::PrepareMessageWithLang(language, "Jumpstats Report - Chat Segment - Deviation", jump->GetDeviation());
-	}
-
-	std::string missStats = "";
-	if (jump->GetMiss() > 0.0f)
-	{
-		missStats = KZLanguageService::PrepareMessageWithLang(language, "Jumpstats Report - Chat Segment - Miss", jump->GetMiss());
-	}
-
-	if (!extended)
-	{
-		// clang-format off
-		target->languageService->PrintChat(true, false, "Jumpstats Report - Chat Summary (Simple)",
-			jumpColor,
-			jumpTypeShort.c_str(),
-			jump->GetDistance(true, false, 1),
-			jump->GetStrafeCount(),
-			KZLanguageService::PrepareMessageWithLang(language, jump->GetStrafeCount() > 1 ? "Strafes" : "Strafe").c_str(),
-			jump->GetSync() * 100.0f,
-			jump->GetJumpPlayer()->takeoffVelocity.Length2D(),
-			jump->GetMaxSpeed(),
-			edgeStats.c_str(),
-			releaseString.c_str()
-		);
-		// clang-format on
-		return;
-	}
-	// clang-format off
-	target->languageService->PrintChat(true, false, "Jumpstats Report - Chat Summary",
-		jumpColor,
-		jumpTypeShort.c_str(),
-		jump->GetDistance(true, false, 1),
-		jump->GetStrafeCount(),
-		KZLanguageService::PrepareMessageWithLang(language, jump->GetStrafeCount() > 1 ? "Strafes" : "Strafe").c_str(),
-		jump->GetSync() * 100.0f,
-		jump->GetJumpPlayer()->takeoffVelocity.Length2D(),
-		jump->GetMaxSpeed(),
-		jump->GetBadAngles() * 100,
-		jump->GetOverlap() * 100,
-		jump->GetDeadAir() * 100,
-		jump->GetWidth(),
-		jump->GetMaxHeight(),
-		edgeStats.c_str(),
-		releaseString.c_str(),
-		deviationStats.c_str(),
-		missStats.c_str()
-	);
-	// clang-format on
 }
 
 void KZJumpstatsService::PrintJumpToConsole(KZPlayer *target, Jump *jump, bool broadcast)

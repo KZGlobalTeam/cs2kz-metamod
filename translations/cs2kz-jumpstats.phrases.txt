@@ -420,6 +420,19 @@
 		"en"		"Invalid Jump"
 	}
 
+	"Deviation (Short)"
+	{
+		"en"		"Dev"
+	}
+	"Miss"
+	{
+		"en"		"Miss"
+	}
+	"Release (Short)"
+	{
+		"en"		"W"
+	}
+
 	// =====[ HUD ]=====
 	"Jumpstats HUD - Distance"
 	{
@@ -870,28 +883,17 @@
 		"de"		"({reason})"
 	}
 
-	"Jumpstats Report - Chat Summary (Simple)"
+	"Jumpstats Report - Chat Header"
 	{
-		// LJ: 258.1 | 6 Strafes | 79% Sync | 276 Pre | 347 Max | 4.09 Edge | +1 W
-		"#format"	"jump_color:s,jump_type_short:s,distance:.1f,strafe_count:i,strafe_text:s,sync:.0f,pre:.0f,max:.0f,edge_stats:s,release:s"
-		"en"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}Sync | {olive}{pre} {grey}Pre | {olive}{max} {grey}Max{edge_stats}{release}"
-		"chi"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}同步 | {olive}{pre} {grey}地速 | {olive}{max} {grey}空速{edge_stats}{release}"
-		"ua"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}Синхр | {olive}{pre} {grey}Pre | {olive}{max} {grey}Макс{edge_stats}{release}"
-		"ru"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}Синх | {olive}{pre} {grey}Pre | {olive}{max} {grey}Макс{edge_stats}{release}"
-		"es"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}Sincro | {olive}{pre} {grey}Pre | {olive}{max} {grey}Max{edge_stats}{release}"
-		"ko"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}싱크 | {olive}{pre} {grey}프리 | {olive}{max} {grey}최대{edge_stats}{release}"
+		// LJ: 258.1
+		"#format"	"jump_color:s,jump_type_short:s,distance:.1f"
+		"en"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance}"
 	}
-	"Jumpstats Report - Chat Summary"
+	"Jumpstats Report - Chat Segment"
 	{
-		// KZ | LJ-F: 263.2 | 6 Strafes | 84% Sync | 276 Pre | 335 Max | 57.25 Edge | +0.5 W
-		// BA 6% | OL 2% | DA 15% | 9.7 Dev | 25.5 Width | 55.83 Height | 34.35 Miss
-		"#format"	"jump_color:s,jump_type_short:s,distance:.1f,strafe_count:i,strafe_text:s,sync:.0f,pre:.0f,max:.0f,bad_angles:.0f,overlap:.0f,dead_air:.0f,width:.1f,height:.2f,edge_stats:s,release:s,deviation_stats:s,miss_stats:s"
-		"en"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}Sync | {olive}{pre} {grey}Pre | {olive}{max} {grey}Max{edge_stats}{release}\n{grey}BA {olive}{bad_angles}%%%% {grey}| OL {olive}{overlap}%%%% {grey}| DA {olive}{dead_air}%%%%{deviation_stats} {grey}| {olive}{width} {grey}Width | {olive}{height} {grey}Height{miss_stats}"
-		"chi"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}同步 | {olive}{pre} {grey}地速 | {olive}{max} {grey}空速{edge_stats}{release}\n{grey}无效 {olive}{bad_angles}%%%% {grey}| 冲突 {olive}{overlap}%%%% {grey}| 无操作 {olive}{dead_air}%%%%{deviation_stats} {grey}| {olive}{width} {grey}幅度 | {olive}{height} {grey}高度{miss_stats}"
-		"ua"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}Синхр | {olive}{pre} {grey}Pre | {olive}{max} {grey}Макс{edge_stats}{release}\n{grey}BA {olive}{bad_angles}%%%% {grey}| OL {olive}{overlap}%%%% {grey}| DA {olive}{dead_air}%%%%{deviation_stats} {grey}| {olive}{width} {grey}Ширина | {olive}{height} {grey}Висота{miss_stats}"
-		"ru"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}Синх | {olive}{pre} {grey}Pre | {olive}{max} {grey}Макс{edge_stats}{release}\n{grey}BA {olive}{bad_angles}%%%% {grey}| OL {olive}{overlap}%%%% {grey}| DA {olive}{dead_air}%%%%{deviation_stats} {grey}| {olive}{width} {grey}Ширина | {olive}{height} {grey}Высота{miss_stats}"
-		"es"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}Sincro | {olive}{pre} {grey}Pre | {olive}{max} {grey}Max{edge_stats}{release}\n{grey}BA {olive}{bad_angles}%%%% {grey}| OL {olive}{overlap}%%%% {grey}| DA {olive}{dead_air}%%%%{deviation_stats} {grey}| {olive}{width} {grey}Amplitud | {olive}{height} {grey}Altura{miss_stats}"
-		"ko"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance} {grey}| {olive}{strafe_count} {grey}{strafe_text} | {olive}{sync}%%%% {grey}싱크 | {olive}{pre} {grey}프리 | {olive}{max} {grey}최대{edge_stats}{release}\n{grey}BA {olive}{bad_angles}%%%% {grey}| OL {olive}{overlap}%%%% {grey}| DA {olive}{dead_air}%%%%{deviation_stats} {grey}| {olive}{width} {grey}너비 | {olive}{height} {grey}높이{miss_stats}"
+		// 79% Sync
+		"#format"	"color:s,value:s,label:s"
+		"en"		"{color}{value} {grey}{label}"
 	}
 	"Jumpstats Report - Console Summary"
 	{
@@ -972,46 +974,6 @@
 		"ru"		" | {value} Остаток"
 		"ua"		" | {value} Край"
 		"ko"		" | {value} 착지 엣지"
-	}
-	"Jumpstats Report - Chat Segment - Edge"
-	{
-		"#format"	"value:.2f"
-		"en"		" | {olive}{value} {grey}Edge"
-		"chi"		" | {olive}{value} {grey}边缘"
-		"ua"		" | {olive}{value} {grey}Край"
-		"ru"		" | {olive}{value} {grey}Край"
-		"es"		" | {olive}{value} {grey}Límite"
-		"ko"		" | {olive}{value} {grey}엣지"
-	}
-	"Jumpstats Report - Chat Segment - Deviation"
-	{
-		"#format"	"value:.1f"
-		"en"		" | {olive}{value} {grey}Dev"
-		"chi"		" | {olive}{value} {grey}偏移"
-		"ua"		" | {olive}{value} {grey}Відх"
-		"ru"		" | {olive}{value} {grey}Откл"
-		"es"		" | {olive}{value} {grey}Desv"
-		"ko"		" | {olive}{value} {grey}편차"
-	}
-	"Jumpstats Report - Chat Segment - Offset"
-	{
-		"#format"	"value:.1f"
-		"en"		" | {olive}{value} {grey}Offset"
-		"chi"		" | {olive}{value} {grey}位移"
-		"ua"		" | {olive}{value} {grey}Зміщення"
-		"ru"		" | {olive}{value} {grey}Смещ"
-		"es"		" | {olive}{value} {grey}Compensación"
-		"ko"		" | {olive}{value} {grey}오프셋"
-	}
-	"Jumpstats Report - Chat Segment - Miss"
-	{
-		"#format"	"value:.2f"
-		"en"		" | {olive}{value} {grey}Miss"
-		"chi"		" | {olive}{value} {grey}错漏"
-		"ua"		" | {olive}{value} {grey}Брак"
-		"ru"		" | {olive}{value} {grey}Нехв"
-		"es"		" | {olive}{value} {grey}Fallo"
-		"ko"		" | {olive}{value} {grey}부족"
 	}
 	"Jumpstat Report - Console Details 2"
 	{

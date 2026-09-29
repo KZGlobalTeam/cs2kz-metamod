@@ -1338,50 +1338,74 @@
 	}
 	"Menu - JS Field Block"
 	{
-		"en"		"Show block"
+		"en"		"Block"
 	}
 	"Menu - JS Field Strafes"
 	{
-		"en"		"Show strafes"
+		"en"		"Strafes"
 	}
 	"Menu - JS Field Sync"
 	{
-		"en"		"Show sync"
+		"en"		"Sync"
 	}
 	"Menu - JS Field Pre Max"
 	{
-		"en"		"Show pre and max speed"
+		"en"		"Pre and max speed"
 	}
 	"Menu - JS Field Height"
 	{
-		"en"		"Show height"
+		"en"		"Height"
 	}
 	"Menu - JS Field Air Time"
 	{
-		"en"		"Show air time"
+		"en"		"Air time"
 	}
 	"Menu - JS Field Width"
 	{
-		"en"		"Show width"
+		"en"		"Width"
 	}
 	"Menu - JS Field Gain Efficiency"
 	{
-		"en"		"Show gain efficiency"
+		"en"		"Gain efficiency"
 	}
 	"Menu - JS Field Air Path"
 	{
-		"en"		"Show air path"
+		"en"		"Air path"
 	}
 	"Menu - JS Field Bad Angles"
 	{
-		"en"		"Show bad angles, overlap and dead air"
+		"en"		"Bad angles, overlap and dead air"
 	}
 	"Menu - JS Field Release"
 	{
-		"en"		"Show W release"
+		"en"		"W release"
 	}
 	"Menu - JS Field Offset"
 	{
-		"en"		"Show offset"
+		"en"		"Offset"
+	}
+	"Menu - JS Field Edge"
+	{
+		"en"		"Edge"
+	}
+	"Menu - JS Field Deviation"
+	{
+		"en"		"Deviation"
+	}
+	"Menu - JS Field Miss"
+	{
+		"en"		"Miss"
+	}
+	"Menu - JS Fields"
+	{
+		"en"		"Fields"
+	}
+	"Menu - JS Field Extended Sub"
+	{
+		"en"		"In chat, only on the extended stats line"
+	}
+	"Menu - JS Extended Stats Sub"
+	{
+		"en"		"Adds a second chat line with the fields that are marked for it"
 	}
 }

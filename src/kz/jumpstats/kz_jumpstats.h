@@ -46,6 +46,68 @@ enum JSReportType : u8
 	JSREPORTTYPE_COUNT
 };
 
+// The stats listed under a jump's distance, in their default order, shared by the chat report and the HUD panel.
+enum class JSField : u8
+{
+	Block,
+	Strafes,
+	Sync,
+	PreMax,
+	Edge,
+	Height,
+	AirTime,
+	Width,
+	GainEfficiency,
+	AirPath,
+	BadAngles,
+	Deviation,
+	Miss,
+	Release,
+	Offset,
+	Count,
+};
+
+#define JS_FIELD_MAX_VALUES 3
+
+struct JSFieldDef
+{
+	const char *prefKey;    // bool preference, on by default
+	const char *menuPhrase; // its toggle in the options menu
+	const char *hudLabel;   // NULL: the labels below, joined
+	// One per value, as the chat prints them. Pre and max, say, are one field with two values.
+	const char *labels[JS_FIELD_MAX_VALUES];
+	bool extended; // printed on the chat's second line, which only shows with extended chat stats on
+};
+
+extern const JSFieldDef JS_FIELDS[(i32)JSField::Count];
+
+// The fields in their order, and which of them are on.
+struct JSFieldLayout
+{
+	JSField order[(i32)JSField::Count] {};
+	bool shown[(i32)JSField::Count] {};
+};
+
+enum class JSFieldColor : u8
+{
+	Olive, // what the chat prints every stat value in
+	Grey,
+	Red,
+	Green,
+	Blue,
+	Tier, // the distance tier's color
+};
+
+// One field of one jump, formatted for the chat or the HUD.
+struct JSFieldText
+{
+	bool present {}; // false for a stat the jump does not have, such as the block of a jump without one
+	JSFieldColor color {};
+	DistanceTier tier {};
+	std::string values[JS_FIELD_MAX_VALUES];
+	i32 count {};
+};
+
 #define IGNORE_JUMP_TIME                (0.2f + 0.001f) // To take floating errors into account
 #define JS_EPSILON                      0.03125f
 #define JS_MAX_LADDERJUMP_OFFSET        2.0f
@@ -481,6 +543,9 @@ public:
 		return releaseString;
 	}
 
+	// greyTier greys the block out like the distance, for a jump that is invalid or reported through jsalways.
+	void FormatField(JSField field, bool chat, bool greyTier, JSFieldText &out);
+
 	std::string GetInvalidationReasonString(const char *reason, const char *language = NULL);
 	bool BuildConsoleStrafeMouseGraph(std::string &strafeLeft, std::string &strafeRight, std::string &mouseLeft, std::string &mouseRight) const;
 
@@ -570,6 +635,9 @@ public:
 	static void PlayJumpstatSound(KZPlayer *target, Jump *jump, bool broadcast = false);
 	static void PrintJumpToChat(KZPlayer *target, Jump *jump, bool extended = false);
 	static void PrintJumpToConsole(KZPlayer *target, Jump *jump, bool broadcast = false);
+
+	// Reads the field preferences. The HUD keeps the result in its cached preferences, which the chat report reads too.
+	static void GetFieldLayout(KZPlayer *player, JSFieldLayout &out);
 
 	// Jump reporting preferences
 	void SetBroadcastMinTier(const char *tierString);

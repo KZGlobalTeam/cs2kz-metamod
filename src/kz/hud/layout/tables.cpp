@@ -16,22 +16,6 @@ extern const MHUDElementDef MHUD_ELEMENTS[(i32)MHUDElement::Count] =
 	{"mhud_jumpbug",    "mhud_jumpbug_pos",    "mhud_jumpbug_hit",    "jumpbug",    "mhudJumpbugEnabled",    "mhudJumpbugX",    "mhudJumpbugY",    "mhudJumpbugSize",    "mhudJumpbugFont",    "mhudJumpbugOutline",    "mhudJumpbugOpacity",    "mhudJumpbugAlign",    NULL,                  MHUD_DEF_JUMPBUG_X,    MHUD_DEF_JUMPBUG_Y,    MHUD_DEF_JUMPBUG_SIZE,    MHUD_SIZE_MIN,    MHUD_SIZE_MAX},
 };
 
-extern const MHUDJsFieldDef MHUD_JS_FIELDS[(i32)MHUDJsField::Count] =
-{
-	{"mhudJsShowBlock",      "Menu - JS Field Block"},
-	{"mhudJsShowStrafes",    "Menu - JS Field Strafes"},
-	{"mhudJsShowSync",       "Menu - JS Field Sync"},
-	{"mhudJsShowPreMax",     "Menu - JS Field Pre Max"},
-	{"mhudJsShowHeight",     "Menu - JS Field Height"},
-	{"mhudJsShowAirTime",    "Menu - JS Field Air Time"},
-	{"mhudJsShowWidth",      "Menu - JS Field Width"},
-	{"mhudJsShowGainEff",    "Menu - JS Field Gain Efficiency"},
-	{"mhudJsShowAirPath",    "Menu - JS Field Air Path"},
-	{"mhudJsShowBadAngles",  "Menu - JS Field Bad Angles"},
-	{"mhudJsShowRelease",    "Menu - JS Field Release"},
-	{"mhudJsShowOffset",     "Menu - JS Field Offset"},
-};
-
 // A sample value inside each pair, so the picker shows the symbols themselves and needs no phrases.
 extern const MHUDBorderDef MHUD_BORDERS[(i32)MHUDBorder::Count] =
 {

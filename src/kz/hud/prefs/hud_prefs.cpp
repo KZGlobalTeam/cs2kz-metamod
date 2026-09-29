@@ -393,11 +393,6 @@ void KZHUDService::RegisterMenu()
 			{
 				KZ::menu::AddToggle(sub, "Menu - JS History", "mhudJsShowHistory", true);
 				KZ::menu::SetItemSubtext(sub, "Menu - JS History Sub");
-				KZ::menu::SetItemDivider(sub);
-				for (const MHUDJsFieldDef &field : MHUD_JS_FIELDS)
-				{
-					KZ::menu::AddToggle(sub, field.menuPhrase, field.prefKey, true);
-				}
 				break;
 			}
 

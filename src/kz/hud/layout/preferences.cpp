@@ -73,10 +73,7 @@ void KZHUDService::RefreshPrefs()
 		this->prefs.indicatorAcronym[i] = opts->GetPreferenceBool(indicator.acronymKey, false);
 	}
 
-	for (i32 i = 0; i < (i32)MHUDJsField::Count; i++)
-	{
-		this->prefs.jsFields[i] = opts->GetPreferenceBool(MHUD_JS_FIELDS[i].prefKey, true);
-	}
+	KZJumpstatsService::GetFieldLayout(this->player, this->prefs.jsFields);
 	this->prefs.jsHistory = opts->GetPreferenceBool("mhudJsShowHistory", true);
 
 	this->prefs.legacyStyle = opts->GetPreferenceBool("hudLegacyStyle", false);
