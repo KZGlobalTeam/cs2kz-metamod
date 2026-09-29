@@ -25,6 +25,18 @@ SCMD(kz_fonts, SCFL_HUD)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->languageService->PrintChat(true, false, "Fonts - Help (Chat)");
-	player->languageService->PrintConsole(false, false, "Fonts - Help (Console)");
+	// The client cuts a long console message short, so each line goes out on its own.
+	const std::string help = player->languageService->PrepareMessage("Fonts - Help (Console)");
+	size_t start = 0;
+	while (start <= help.size())
+	{
+		size_t end = help.find('\n', start);
+		if (end == std::string::npos)
+		{
+			end = help.size();
+		}
+		player->PrintConsole(false, false, "%s", help.substr(start, end - start).c_str());
+		start = end + 1;
+	}
 	return true;
 }
