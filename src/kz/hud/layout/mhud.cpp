@@ -550,40 +550,80 @@ bool KZHUDService::ShowJumpstat(Jump *jump, i32 colorTier)
 	return true;
 }
 
-void KZHUDService::PushJumpstatHistory(CCSCustomHudLayout *layout)
+i32 KZHUDService::AdvancePills(LayoutPill (&pills)[MHUD_JS_PILL_COUNT])
 {
-	LayoutJumpstatsState &js = this->layoutJumpstats;
-	js.hasShown = false;
 	// empty pill or oldest one
 	i32 index = 0;
 	for (i32 i = 0; i < MHUD_JS_PILL_COUNT; i++)
 	{
-		if (!js.pills[i].live)
+		if (!pills[i].live)
 		{
 			index = i;
 			break;
 		}
-		if (js.pills[i].rank > js.pills[index].rank)
+		if (pills[i].rank > pills[index].rank)
 		{
 			index = i;
 		}
 	}
 	// everything moves up in the hist pill stack, oldest one gon
-	for (i32 i = 0; i < MHUD_JS_PILL_COUNT; i++)
+	for (LayoutPill &pill : pills)
 	{
-		LayoutJumpstatsState::Pill &pill = js.pills[i];
 		if (pill.live && ++pill.rank >= MHUD_JS_PILL_GONE_RANK)
 		{
 			pill.live = false;
 		}
 	}
 
-	LayoutJumpstatsState::Pill &pill = js.pills[index];
+	LayoutPill &pill = pills[index];
 	pill.born = g_pKZUtils->GetServerGlobals()->curtime;
 	pill.rank = 0;
 	pill.live = true;
 	pill.expired = false;
 	pill.alt = !pill.alt;
+	return index;
+}
+
+void KZHUDService::UpdatePills(CCSCustomHudLayout *layout, LayoutPill (&pills)[MHUD_JS_PILL_COUNT], const char *const (*ids)[4])
+{
+	const f64 now = g_pKZUtils->GetServerGlobals()->curtime;
+	for (i32 i = 0; i < MHUD_JS_PILL_COUNT; i++)
+	{
+		LayoutPill &pill = pills[i];
+		if (pill.live && now - pill.born >= MHUD_JS_HISTORY_TIME)
+		{
+			pill.live = false;
+			pill.expired = true;
+		}
+		const char *age = NULL;
+		if (pill.live || pill.expired)
+		{
+			age = pill.rank == 0 && pill.alt ? "js-age-0b" : JS_AGE_CLASSES[pill.rank];
+		}
+		this->SetLayoutClass(layout, ids[i][0], pill.ageClass, age);
+		this->SetLayoutClass(layout, ids[i][0], pill.expireClass, pill.expired ? "js-expire" : NULL);
+	}
+}
+
+void KZHUDService::ClearPills(CCSCustomHudLayout *layout, LayoutPill (&pills)[MHUD_JS_PILL_COUNT], const char *const (*ids)[4])
+{
+	for (i32 i = 0; i < MHUD_JS_PILL_COUNT; i++)
+	{
+		LayoutPill &pill = pills[i];
+		pill.live = false;
+		pill.expired = false;
+		pill.rank = 0;
+		this->SetLayoutClass(layout, ids[i][0], pill.ageClass, NULL);
+		this->SetLayoutClass(layout, ids[i][0], pill.expireClass, NULL);
+	}
+}
+
+void KZHUDService::PushJumpstatHistory(CCSCustomHudLayout *layout)
+{
+	LayoutJumpstatsState &js = this->layoutJumpstats;
+	js.hasShown = false;
+	const i32 index = KZHUDService::AdvancePills(js.pills);
+	LayoutPill &pill = js.pills[index];
 	const char *const *ids = JS_PILL_PANELS[index];
 	layout->SetDialogVariableString(ids[1], "v", js.shownType.c_str());
 	layout->SetDialogVariableString(ids[2], "v", js.shownInfo.c_str());
@@ -631,15 +671,7 @@ void KZHUDService::ClearJumpstatPreview(CCSCustomHudLayout *layout)
 	js.preview = false;
 	js.hasShown = false;
 	this->SetLayoutClass(layout, "mhud_js_panel", js.panelClass, NULL);
-	for (i32 i = 0; i < MHUD_JS_PILL_COUNT; i++)
-	{
-		LayoutJumpstatsState::Pill &pill = js.pills[i];
-		pill.live = false;
-		pill.expired = false;
-		pill.rank = 0;
-		this->SetLayoutClass(layout, JS_PILL_PANELS[i][0], pill.ageClass, NULL);
-		this->SetLayoutClass(layout, JS_PILL_PANELS[i][0], pill.expireClass, NULL);
-	}
+	this->ClearPills(layout, js.pills, JS_PILL_PANELS);
 }
 
 void KZHUDService::UpdateJumpstatsElement(CCSCustomHudLayout *layout, bool show, bool force, bool preview)
@@ -743,22 +775,7 @@ void KZHUDService::UpdateJumpstatsElement(CCSCustomHudLayout *layout, bool show,
 		this->PushJumpstatHistory(layout);
 		this->SetLayoutClass(layout, "mhud_js_panel", js.panelClass, "js-hide");
 	}
-	for (i32 i = 0; i < MHUD_JS_PILL_COUNT; i++)
-	{
-		LayoutJumpstatsState::Pill &pill = js.pills[i];
-		if (pill.live && now - pill.born >= MHUD_JS_HISTORY_TIME)
-		{
-			pill.live = false;
-			pill.expired = true;
-		}
-		const char *age = NULL;
-		if (pill.live || pill.expired)
-		{
-			age = pill.rank == 0 && pill.alt ? "js-age-0b" : JS_AGE_CLASSES[pill.rank];
-		}
-		this->SetLayoutClass(layout, JS_PILL_PANELS[i][0], pill.ageClass, age);
-		this->SetLayoutClass(layout, JS_PILL_PANELS[i][0], pill.expireClass, pill.expired ? "js-expire" : NULL);
-	}
+	this->UpdatePills(layout, js.pills, JS_PILL_PANELS);
 }
 
 bool KZHUDService::UpdateHudLayout(KZPlayer *source)

@@ -477,21 +477,30 @@ private:
 		const char *fontClass {};
 	};
 
+	// The history pills stacked above a panel.
+	struct LayoutPill
+	{
+		f64 born {};
+		i32 rank {};
+		bool live {};
+		bool expired {};
+		bool alt {}; // flipped on reuse so the entry pill animation restarts
+		const char *ageClass {};
+		const char *expireClass {};
+		const char *typeTierClass {};
+		const char *distTierClass {};
+	};
+
+	// Ages the pills by one and returns the slot for a new one, which is empty or the oldest.
+	static i32 AdvancePills(LayoutPill (&pills)[MHUD_JS_PILL_COUNT]);
+	// Moves each pill to its age class, and expires the ones older than MHUD_JS_HISTORY_TIME.
+	void UpdatePills(CCSCustomHudLayout *layout, LayoutPill (&pills)[MHUD_JS_PILL_COUNT], const char *const (*ids)[4]);
+	void ClearPills(CCSCustomHudLayout *layout, LayoutPill (&pills)[MHUD_JS_PILL_COUNT], const char *const (*ids)[4]);
+
 	// js panel and the history pillies
 	struct LayoutJumpstatsState
 	{
-		struct Pill
-		{
-			f64 born {};
-			i32 rank {};
-			bool live {};
-			bool expired {};
-			bool alt {}; // flipped on reuse so the entry pill animation restarts
-			const char *ageClass {};
-			const char *expireClass {};
-			const char *typeTierClass {};
-			const char *distTierClass {};
-		};
+		using Pill = LayoutPill;
 
 		Pill pills[MHUD_JS_PILL_COUNT] {};
 		bool preview {}; // edit mode's sample jump is on screen
