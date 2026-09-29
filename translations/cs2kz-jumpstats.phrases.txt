@@ -433,14 +433,17 @@
 	"Deviation (Short)"
 	{
 		"en"		"Dev"
+		"ua"		"Dev"
 	}
 	"Miss"
 	{
 		"en"		"Miss"
+		"ua"		"Miss"
 	}
 	"Release (Short)"
 	{
 		"en"		"W"
+		"ua"		"W"
 	}
 
 	// =====[ HUD ]=====
@@ -902,12 +905,14 @@
 		// LJ: 258.1
 		"#format"	"jump_color:s,jump_type_short:s,distance:.1f"
 		"en"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance}"
+		"ua"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance}"
 	}
 	"Jumpstats Report - Chat Segment"
 	{
 		// 79% Sync
 		"#format"	"color:s,value:s,label:s"
 		"en"		"{color}{value} {grey}{label}"
+		"ua"		"{color}{value} {grey}{label}"
 	}
 	"Jumpstats Report - Console Summary"
 	{
