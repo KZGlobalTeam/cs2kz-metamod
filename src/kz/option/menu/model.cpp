@@ -236,7 +236,7 @@ namespace KZ::menu
 	}
 
 	void AddChoice(KZOptNode *node, const char *phraseKey, void (*getChoices)(KZPlayer *, i64, std::vector<KZChoice> &),
-				   i64 (*getCurrent)(KZPlayer *, i64), void (*onPick)(KZPlayer *, i64, i64), i64 tag, void (*onEdit)(KZPlayer *, i64, bool))
+				   i64 (*getCurrent)(KZPlayer *, i64), void (*onPick)(KZPlayer *, i64, i64), i64 tag)
 	{
 		KZOptItem item;
 		item.phraseKey = phraseKey;
@@ -245,7 +245,18 @@ namespace KZ::menu
 		item.getCurrent = getCurrent;
 		item.onPick = onPick;
 		item.tag = tag;
-		item.onEdit = onEdit;
+		node->items.push_back(item);
+	}
+
+	void AddOrder(KZOptNode *node, const char *phraseKey, void (*getChoices)(KZPlayer *, i64, std::vector<KZChoice> &),
+				  void (*onMove)(KZPlayer *, i64, i64, i32), i64 tag)
+	{
+		KZOptItem item;
+		item.phraseKey = phraseKey;
+		item.type = KZOptItemType::Order;
+		item.getChoices = getChoices;
+		item.onMove = onMove;
+		item.tag = tag;
 		node->items.push_back(item);
 	}
 
@@ -290,8 +301,9 @@ namespace KZ::menu
 						opts->SetPreferenceFloat(item.prefKey, (f64)item.idef / MAX(1, item.scale));
 					}
 					break;
-				// A choice keeps its default wherever SetItemPref put it, and has no other one.
+				// A choice or an order keeps its default wherever SetItemPref put it, and has no other one.
 				case KZOptItemType::Choice:
+				case KZOptItemType::Order:
 					if (item.storage == KZOptStorage::Bool)
 					{
 						opts->SetPreferenceBool(item.prefKey, item.idef != 0);

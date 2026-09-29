@@ -58,6 +58,9 @@ SLOT_ID(LiPanel, "li%i")
 SLOT_ID(LiLbl, "li_lbl%i")
 SLOT_ID(LiVar, "ll%i")
 SLOT_ID(SwPanel, "sw%i")
+SLOT_ID(OrPanel, "or%i")
+SLOT_ID(OrLbl, "or_lbl%i")
+SLOT_ID(OrVar, "ol%i")
 #undef SLOT_ID
 
 static_function const char *GetTypeClass(KZOptItemType type)
@@ -78,6 +81,8 @@ static_function const char *GetTypeClass(KZOptItemType type)
 			return "type-button";
 		case KZOptItemType::Choice:
 			return "type-choice";
+		case KZOptItemType::Order:
+			return "type-order";
 	}
 	return "type-button";
 }
@@ -267,7 +272,8 @@ const KZOptItem *KZMenuService::PopupItem()
 	const bool ok =
 		(this->popup == Popup::Color && it.type == KZOptItemType::Color)
 		|| (this->popup == Popup::List && (it.type == KZOptItemType::Font || it.type == KZOptItemType::Choice))
-		|| (this->popup == Popup::Step && (it.type == KZOptItemType::Position || it.type == KZOptItemType::Size || it.type == KZOptItemType::Vector));
+		|| (this->popup == Popup::Step && (it.type == KZOptItemType::Position || it.type == KZOptItemType::Size || it.type == KZOptItemType::Vector))
+		|| (this->popup == Popup::Order && it.type == KZOptItemType::Order);
 	return ok ? &it : NULL;
 }
 
@@ -306,7 +312,7 @@ void KZMenuService::Render()
 	if (this->applied.noBlur != noBlur)
 	{
 		this->applied.noBlur = noBlur;
-		for (const char *panelId : {"menu_box", "color_popup", "list_popup", "step_popup"})
+		for (const char *panelId : {"menu_box", "color_popup", "list_popup", "step_popup", "order_popup"})
 		{
 			layout->SetHasClass(panelId, "no-blur", noBlur ? k_eHudPanelClassStatus_HasClass : k_eHudPanelClassStatus_DoesNotHaveClass);
 		}
@@ -316,6 +322,7 @@ void KZMenuService::Render()
 	this->SetBoolClass(layout, "color_popup", "hidden", this->applied.colorHidden, this->popup != Popup::Color);
 	this->SetBoolClass(layout, "list_popup", "hidden", this->applied.listHidden, this->popup != Popup::List);
 	this->SetBoolClass(layout, "step_popup", "hidden", this->applied.stepHidden, this->popup != Popup::Step);
+	this->SetBoolClass(layout, "order_popup", "hidden", this->applied.orderHidden, this->popup != Popup::Order);
 
 	this->RenderChrome(layout);
 	this->RenderLeft(layout);
@@ -332,6 +339,10 @@ void KZMenuService::Render()
 	else if (this->popup == Popup::Step)
 	{
 		this->RenderStepPopup(layout);
+	}
+	else if (this->popup == Popup::Order)
+	{
+		this->RenderOrderPopup(layout);
 	}
 }
 
@@ -429,6 +440,7 @@ void KZMenuService::RenderItems(CCSCustomHudLayout *layout)
 					break;
 				}
 				case KZOptItemType::Button:
+				case KZOptItemType::Order:
 					break;
 				case KZOptItemType::Choice:
 				{
@@ -624,6 +636,28 @@ void KZMenuService::RenderStepPopup(CCSCustomHudLayout *layout)
 	this->SetVar(layout, "step_label", "steplabel", KZMenuService::GetPhrase(this->player, it->phraseKey).c_str());
 }
 
+void KZMenuService::RenderOrderPopup(CCSCustomHudLayout *layout)
+{
+	const KZOptItem *it = this->PopupItem();
+	if (!it)
+	{
+		return;
+	}
+	const i32 count = MIN((i32)this->listChoices.size(), KZ_MENU_ORDER);
+	for (i32 i = 0; i < KZ_MENU_ORDER; i++)
+	{
+		const bool used = i < count;
+		if (used)
+		{
+			this->SetVar(layout, OrLbl(i), OrVar(i), this->listChoices[i].label.c_str());
+			this->SetBoolClass(layout, OrPanel(i), "first", this->applied.orFirst[i], i == 0);
+			this->SetBoolClass(layout, OrPanel(i), "last", this->applied.orLast[i], i == count - 1);
+		}
+		this->SetBoolClass(layout, OrPanel(i), "hidden", this->applied.orHidden[i], !used);
+	}
+	this->SetVar(layout, "op_title", "optitle", KZMenuService::GetPhrase(this->player, it->phraseKey).c_str());
+}
+
 // === Interaction =====================================================================
 
 void KZMenuService::SelectLeft(i32 slot)
@@ -710,6 +744,9 @@ void KZMenuService::ActivateItem(i32 slot)
 		case KZOptItemType::Vector:
 			this->OpenPopup(Popup::Step, slot);
 			break;
+		case KZOptItemType::Order:
+			this->OpenPopup(Popup::Order, slot);
+			break;
 		case KZOptItemType::Button:
 			if (it.onActivate)
 			{
@@ -774,6 +811,14 @@ void KZMenuService::OpenPopup(Popup kind, i32 itemIdx)
 			}
 		}
 		else if (it.getChoices)
+		{
+			it.getChoices(this->player, it.tag, this->listChoices);
+		}
+	}
+	else if (kind == Popup::Order)
+	{
+		this->listChoices.clear();
+		if (it.getChoices)
 		{
 			it.getChoices(this->player, it.tag, this->listChoices);
 		}
@@ -905,6 +950,22 @@ void KZMenuService::InteractPopupItem()
 	}
 }
 
+void KZMenuService::MoveOrderRow(i32 slot, i32 delta)
+{
+	const KZOptItem *it = this->PopupItem();
+	if (!it || !it->onMove || slot < 0 || slot >= MIN((i32)this->listChoices.size(), KZ_MENU_ORDER))
+	{
+		return;
+	}
+	it->onMove(this->player, it->tag, this->listChoices[slot].id, delta);
+	this->listChoices.clear();
+	if (it->getChoices)
+	{
+		it->getChoices(this->player, it->tag, this->listChoices);
+	}
+	this->Render();
+}
+
 // === Click routing ===================================================================
 
 void KZMenuService::OnCustomHudClicked(CPlayerSlot slot, CCSCustomHudLayout *layout, const char *buttonId)
@@ -924,7 +985,8 @@ void KZMenuService::OnCustomHudClicked(CPlayerSlot slot, CCSCustomHudLayout *lay
 	{
 		menu->Close();
 	}
-	else if (V_strcmp(buttonId, "color_close") == 0 || V_strcmp(buttonId, "list_close") == 0 || V_strcmp(buttonId, "step_close") == 0)
+	else if (V_strcmp(buttonId, "color_close") == 0 || V_strcmp(buttonId, "list_close") == 0 || V_strcmp(buttonId, "step_close") == 0
+			 || V_strcmp(buttonId, "order_close") == 0)
 	{
 		menu->ClosePopup();
 	}
@@ -1019,6 +1081,14 @@ void KZMenuService::OnCustomHudClicked(CPlayerSlot slot, CCSCustomHudLayout *lay
 	else if (V_strncmp(buttonId, "li", 2) == 0 && V_isdigit(buttonId[2]))
 	{
 		menu->PopupPick(atoi(buttonId + 2));
+	}
+	else if (V_strncmp(buttonId, "or_up", 5) == 0 && V_isdigit(buttonId[5]))
+	{
+		menu->MoveOrderRow(atoi(buttonId + 5), -1);
+	}
+	else if (V_strncmp(buttonId, "or_dn", 5) == 0 && V_isdigit(buttonId[5]))
+	{
+		menu->MoveOrderRow(atoi(buttonId + 5), 1);
 	}
 }
 

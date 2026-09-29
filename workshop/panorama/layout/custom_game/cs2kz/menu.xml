@@ -694,6 +694,95 @@
           <Label id="m_step_drag_label" class="popup-btn-label" text="{s:stepdrag}" />
         </Button>
       </Panel>
+
+      <Panel id="order_popup" class="popup order-popup hidden">
+        <Panel class="window-header">
+          <Label id="op_title" class="popup-title" text="{s:optitle}" />
+          <Button id="order_close" class="close-btn" />
+        </Panel>
+        <Panel class="order-rows">
+          <Panel id="or0" class="or hidden">
+            <Label id="or_lbl0" class="or-label" text="{s:ol0}" />
+            <Button id="or_up0" class="or-btn or-up"><Label class="or-btn-label" text="↑" /></Button>
+            <Button id="or_dn0" class="or-btn or-down"><Label class="or-btn-label" text="↓" /></Button>
+          </Panel>
+          <Panel id="or1" class="or hidden">
+            <Label id="or_lbl1" class="or-label" text="{s:ol1}" />
+            <Button id="or_up1" class="or-btn or-up"><Label class="or-btn-label" text="↑" /></Button>
+            <Button id="or_dn1" class="or-btn or-down"><Label class="or-btn-label" text="↓" /></Button>
+          </Panel>
+          <Panel id="or2" class="or hidden">
+            <Label id="or_lbl2" class="or-label" text="{s:ol2}" />
+            <Button id="or_up2" class="or-btn or-up"><Label class="or-btn-label" text="↑" /></Button>
+            <Button id="or_dn2" class="or-btn or-down"><Label class="or-btn-label" text="↓" /></Button>
+          </Panel>
+          <Panel id="or3" class="or hidden">
+            <Label id="or_lbl3" class="or-label" text="{s:ol3}" />
+            <Button id="or_up3" class="or-btn or-up"><Label class="or-btn-label" text="↑" /></Button>
+            <Button id="or_dn3" class="or-btn or-down"><Label class="or-btn-label" text="↓" /></Button>
+          </Panel>
+          <Panel id="or4" class="or hidden">
+            <Label id="or_lbl4" class="or-label" text="{s:ol4}" />
+            <Button id="or_up4" class="or-btn or-up"><Label class="or-btn-label" text="↑" /></Button>
+            <Button id="or_dn4" class="or-btn or-down"><Label class="or-btn-label" text="↓" /></Button>
+          </Panel>
+          <Panel id="or5" class="or hidden">
+            <Label id="or_lbl5" class="or-label" text="{s:ol5}" />
+            <Button id="or_up5" class="or-btn or-up"><Label class="or-btn-label" text="↑" /></Button>
+            <Button id="or_dn5" class="or-btn or-down"><Label class="or-btn-label" text="↓" /></Button>
+          </Panel>
+          <Panel id="or6" class="or hidden">
+            <Label id="or_lbl6" class="or-label" text="{s:ol6}" />
+            <Button id="or_up6" class="or-btn or-up"><Label class="or-btn-label" text="↑" /></Button>
+            <Button id="or_dn6" class="or-btn or-down"><Label class="or-btn-label" text="↓" /></Button>
+          </Panel>
+          <Panel id="or7" class="or hidden">
+            <Label id="or_lbl7" class="or-label" text="{s:ol7}" />
+            <Button id="or_up7" class="or-btn or-up"><Label class="or-btn-label" text="↑" /></Button>
+            <Button id="or_dn7" class="or-btn or-down"><Label class="or-btn-label" text="↓" /></Button>
+          </Panel>
+          <Panel id="or8" class="or hidden">
+            <Label id="or_lbl8" class="or-label" text="{s:ol8}" />
+            <Button id="or_up8" class="or-btn or-up"><Label class="or-btn-label" text="↑" /></Button>
+            <Button id="or_dn8" class="or-btn or-down"><Label class="or-btn-label" text="↓" /></Button>
+          </Panel>
+          <Panel id="or9" class="or hidden">
+            <Label id="or_lbl9" class="or-label" text="{s:ol9}" />
+            <Button id="or_up9" class="or-btn or-up"><Label class="or-btn-label" text="↑" /></Button>
+            <Button id="or_dn9" class="or-btn or-down"><Label class="or-btn-label" text="↓" /></Button>
+          </Panel>
+          <Panel id="or10" class="or hidden">
+            <Label id="or_lbl10" class="or-label" text="{s:ol10}" />
+            <Button id="or_up10" class="or-btn or-up"><Label class="or-btn-label" text="↑" /></Button>
+            <Button id="or_dn10" class="or-btn or-down"><Label class="or-btn-label" text="↓" /></Button>
+          </Panel>
+          <Panel id="or11" class="or hidden">
+            <Label id="or_lbl11" class="or-label" text="{s:ol11}" />
+            <Button id="or_up11" class="or-btn or-up"><Label class="or-btn-label" text="↑" /></Button>
+            <Button id="or_dn11" class="or-btn or-down"><Label class="or-btn-label" text="↓" /></Button>
+          </Panel>
+          <Panel id="or12" class="or hidden">
+            <Label id="or_lbl12" class="or-label" text="{s:ol12}" />
+            <Button id="or_up12" class="or-btn or-up"><Label class="or-btn-label" text="↑" /></Button>
+            <Button id="or_dn12" class="or-btn or-down"><Label class="or-btn-label" text="↓" /></Button>
+          </Panel>
+          <Panel id="or13" class="or hidden">
+            <Label id="or_lbl13" class="or-label" text="{s:ol13}" />
+            <Button id="or_up13" class="or-btn or-up"><Label class="or-btn-label" text="↑" /></Button>
+            <Button id="or_dn13" class="or-btn or-down"><Label class="or-btn-label" text="↓" /></Button>
+          </Panel>
+          <Panel id="or14" class="or hidden">
+            <Label id="or_lbl14" class="or-label" text="{s:ol14}" />
+            <Button id="or_up14" class="or-btn or-up"><Label class="or-btn-label" text="↑" /></Button>
+            <Button id="or_dn14" class="or-btn or-down"><Label class="or-btn-label" text="↓" /></Button>
+          </Panel>
+          <Panel id="or15" class="or hidden">
+            <Label id="or_lbl15" class="or-label" text="{s:ol15}" />
+            <Button id="or_up15" class="or-btn or-up"><Label class="or-btn-label" text="↑" /></Button>
+            <Button id="or_dn15" class="or-btn or-down"><Label class="or-btn-label" text="↓" /></Button>
+          </Panel>
+        </Panel>
+      </Panel>
     </Panel>
   </Panel>
 </root>

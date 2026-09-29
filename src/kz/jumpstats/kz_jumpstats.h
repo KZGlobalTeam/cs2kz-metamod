@@ -643,9 +643,6 @@ public:
 	static void GetFieldLayout(KZPlayer *player, JSFieldLayout &out);
 	static void SetFieldOrder(KZPlayer *player, const JSField (&order)[(i32)JSField::Count]);
 
-	// The field picked up in the menu's order list, waiting for the spot to move it to.
-	i32 fieldOrderPick {-1};
-
 	// Jump reporting preferences
 	void SetBroadcastMinTier(const char *tierString);
 	void SetBroadcastMinTierConsole(const char *tierString);

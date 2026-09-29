@@ -558,6 +558,67 @@ VerticalScrollBar:hover .ScrollThumb {
 	visibility: collapse;
 }
 
+// --- order popup -------------------------------------------------------------------
+
+/* One row per shown entry, with buttons that move it past its neighbour. The ends grey out the way they cannot go. */
+.order-rows {
+	flow-children: down;
+	width: 100%;
+}
+
+.or {
+	width: 100%;
+	flow-children: right;
+	padding: 3px 4px 3px 10px;
+	border-radius: 3px;
+	background-color: #00000000;
+}
+
+.or:hover {
+	background-color: #ffffff0d;
+}
+
+.or.hidden {
+	visibility: collapse;
+}
+
+.or-label {
+	width: fill-parent-flow(1);
+	vertical-align: middle;
+	font-size: 18px;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+
+.or-btn {
+	width: 30px;
+	padding: 3px 0px;
+	margin-left: 4px;
+	border-radius: 3px;
+	background-color: #ffffff1a;
+	transition-property: background-color;
+	transition-duration: 0.05s;
+}
+
+.or-btn:hover {
+	background-color: #ffffff40;
+}
+
+.or.first .or-up,
+.or.last .or-down {
+	opacity: 0.25;
+}
+
+.or.first .or-up:hover,
+.or.last .or-down:hover {
+	background-color: #ffffff1a;
+}
+
+.or-btn-label {
+	horizontal-align: center;
+	color: #ffffffff;
+}
+
 .popup .close-btn {
 	margin-bottom: 8px;
 }
@@ -621,5 +682,15 @@ VerticalScrollBar:hover .ScrollThumb {
 }
 
 .snd .step-btn:active {
+	sound: "UIPanorama.generic_button_press";
+}
+
+.snd .or:not(.first) .or-up:hover,
+.snd .or:not(.last) .or-down:hover {
+	sound: "UIPanorama.generic_button_rollover";
+}
+
+.snd .or:not(.first) .or-up:active,
+.snd .or:not(.last) .or-down:active {
 	sound: "UIPanorama.generic_button_press";
 }

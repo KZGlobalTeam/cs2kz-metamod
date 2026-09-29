@@ -1419,19 +1419,7 @@
 	}
 	"Menu - JS Field Order Sub"
 	{
-		"en"		"Pick a field, then the spot to move it to. The chat and the HUD panel share the order"
-	}
-	"Menu - JS Field Order Row"
-	{
-		// 3. Sync
-		"#format"	"position:i,field:s"
-		"en"		"{position}. {field}"
-	}
-	"Menu - JS Field Order Row Off"
-	{
-		// 3. Sync (off)
-		"#format"	"position:i,field:s"
-		"en"		"{position}. {field} (off)"
+		"en"		"Only the fields that are on are listed. The chat and the HUD panel share the order"
 	}
 	"Menu - JS Field Extended Sub"
 	{

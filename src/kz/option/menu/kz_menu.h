@@ -14,6 +14,7 @@ class CCheckTransmitInfo;
 #define KZ_MENU_ITEMS  32 // the Indicators page is the longest, at 28
 #define KZ_MENU_LIST   32 // must cover the largest font family (Stratum2, 29 faces)
 #define KZ_MENU_SWATCH 40 // 10 columns x 4 rows per color page
+#define KZ_MENU_ORDER  16 // must cover every jumpstats field
 
 // Renders the KZ::menu model tree into menu.xml on the player's own masked layout entity, and
 // routes clicks back to it.
@@ -52,6 +53,7 @@ private:
 		Color,
 		List,
 		Step,
+		Order,
 	};
 
 	struct LeftEntry
@@ -82,6 +84,7 @@ private:
 	void RenderColorPopup(CCSCustomHudLayout *layout);
 	void RenderListPopup(CCSCustomHudLayout *layout);
 	void RenderStepPopup(CCSCustomHudLayout *layout);
+	void RenderOrderPopup(CCSCustomHudLayout *layout);
 
 	void SelectLeft(i32 slot);
 	bool IsItemEnabled(const KZOptItem &item);
@@ -93,6 +96,8 @@ private:
 	// axis: 0 = x, 1 = y, 2 = z.
 	void Step(i32 axis, f32 delta);
 	void InteractPopupItem();
+	// delta: -1 moves the row up, 1 moves it down.
+	void MoveOrderRow(i32 slot, i32 delta);
 
 	const KZOptItem *PopupItem();
 
@@ -127,7 +132,7 @@ private:
 	i32 leftCount {};
 	const KZOptItem *itemSlots[KZ_MENU_ITEMS] {};
 	i32 itemCount {};
-	std::vector<KZChoice> listChoices; // the open list popup's full option list
+	std::vector<KZChoice> listChoices; // the open list or order popup's full option list
 	// Font picker only: index into listChoices where each family starts. One page per family.
 	std::vector<i32> fontPageStart;
 
@@ -148,6 +153,7 @@ private:
 		bool colorHidden {true};    // color_popup "hidden"
 		bool listHidden {true};     // list_popup "hidden"
 		bool stepHidden {true};     // step_popup "hidden"
+		bool orderHidden {true};    // order_popup "hidden"
 		bool vstepHidden {true};    // the stepper's vertical rows "hidden" (Position and Vector)
 		bool zstepHidden {true};    // the stepper's z row "hidden" (Vector only)
 		bool stepFine {};           // step_popup "fine", which shows the tenths buttons and moves the readout above (positions only)
@@ -175,6 +181,10 @@ private:
 		const char *swBg[KZ_MENU_SWATCH] {}; // swatch's pal-bg / gbg class
 		bool swSel[KZ_MENU_SWATCH] {};       // "selected" (the item's current color)
 		bool swHidden[KZ_MENU_SWATCH] {};    // swatch "hidden" (trailing empty slots on the last page)
+		// Order popup rows, one slot each:
+		bool orHidden[KZ_MENU_ORDER] {}; // row "hidden"
+		bool orFirst[KZ_MENU_ORDER] {};  // "first", which disables its up button
+		bool orLast[KZ_MENU_ORDER] {};   // "last", which disables its down button
 
 		Applied()
 		{
@@ -189,6 +199,10 @@ private:
 			for (i32 i = 0; i < KZ_MENU_LIST; i++)
 			{
 				liHidden[i] = true;
+			}
+			for (i32 i = 0; i < KZ_MENU_ORDER; i++)
+			{
+				orHidden[i] = true;
 			}
 		}
 	} applied;

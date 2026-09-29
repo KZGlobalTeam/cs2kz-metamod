@@ -17,6 +17,7 @@ enum class KZOptItemType
 	Vector,   // one vector pref, opens the 3-axis stepper popup
 	Button,   // no value, click runs onActivate
 	Choice,   // arbitrary runtime option list, opens the list popup
+	Order,    // arbitrary runtime list, opens the order popup where each row moves up or down
 };
 
 // Which typed accessor a preference is stored through, for the generic export/import path.
@@ -64,10 +65,12 @@ struct KZOptItem
 	i32 scale {};                    // Size: the preference stores value / scale (0 or 1 = as-is)
 	i64 tag {};                      // opaque, handed to the callbacks below
 
-	// Choice: rebuilt from getChoices each time the popup opens, so runtime-only choices work.
+	// Choice and Order: rebuilt from getChoices each time the popup opens, so runtime-only choices work.
 	void (*getChoices)(KZPlayer *, i64 tag, std::vector<KZChoice> &) {};
 	i64 (*getCurrent)(KZPlayer *, i64 tag) {};
 	void (*onPick)(KZPlayer *, i64 tag, i64 id) {};
+	// Order: delta is -1 to move the row up and 1 to move it down.
+	void (*onMove)(KZPlayer *, i64 tag, i64 id, i32 delta) {};
 
 	void (*onActivate)(KZPlayer *, i64 tag) {}; // Button
 	void (*onInteract)(KZPlayer *, i64 tag) {}; // shows the "Move with mouse" button in a position item's stepper
@@ -104,8 +107,9 @@ namespace KZ::menu
 				   void (*onEdit)(KZPlayer *, i64, bool) = nullptr);
 	void AddButton(KZOptNode *node, const char *phraseKey, void (*onActivate)(KZPlayer *, i64), i64 tag = 0);
 	void AddChoice(KZOptNode *node, const char *phraseKey, void (*getChoices)(KZPlayer *, i64, std::vector<KZChoice> &),
-				   i64 (*getCurrent)(KZPlayer *, i64), void (*onPick)(KZPlayer *, i64, i64), i64 tag = 0,
-				   void (*onEdit)(KZPlayer *, i64, bool) = nullptr);
+				   i64 (*getCurrent)(KZPlayer *, i64), void (*onPick)(KZPlayer *, i64, i64), i64 tag = 0);
+	void AddOrder(KZOptNode *node, const char *phraseKey, void (*getChoices)(KZPlayer *, i64, std::vector<KZChoice> &),
+				  void (*onMove)(KZPlayer *, i64, i64, i32), i64 tag = 0);
 
 	void SetItemSubtext(KZOptNode *node, const char *phraseKey);
 	void SetItemDivider(KZOptNode *node);
