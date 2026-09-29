@@ -605,6 +605,14 @@
 		"chi"		"不透明度"
 		"ua"		"Непрозорість"
 	}
+	"Menu - Text Opacity"
+	{
+		"en"		"Text opacity"
+	}
+	"Menu - Background Opacity"
+	{
+		"en"		"Background opacity"
+	}
 	"Menu - Keys Glow Fill Sub"
 	{
 		"en"		"Only applies to a key while it is pressed"

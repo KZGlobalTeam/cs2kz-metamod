@@ -127,18 +127,16 @@ void KZHUDService::UpdateLayoutElement(CCSCustomHudLayout *layout, MHUDElement e
 	this->SetLayoutClass(layout, def.panelId, state.colorClass, state.colorClassComputed);
 	this->SetLayoutClass(layout, def.panelId, state.fontClass, KZHUDService::GetMHUDFontClass(this->player, element));
 
+	// A panel's opacity fades only its text, and its background has its own.
 	const i32 opacity = Clamp(cached.opacity, 0, 100);
-	if (state.opacity != opacity)
+	if (GetMHUDBackgroundOpacityKey(element))
 	{
-		char className[32];
-		if (state.opacity != INT_MIN)
-		{
-			V_snprintf(className, sizeof(className), "opacity--%ipct", state.opacity);
-			layout->SetHasClass(def.panelId, className, k_eHudPanelClassStatus_DoesNotHaveClass);
-		}
-		V_snprintf(className, sizeof(className), "opacity--%ipct", opacity);
-		layout->SetHasClass(def.panelId, className, k_eHudPanelClassStatus_HasClass);
-		state.opacity = opacity;
+		this->SetLayoutValueClass(layout, def.panelId, state.opacity, opacity, "js-fg", true);
+		this->SetLayoutValueClass(layout, def.panelId, state.bgOpacity, Clamp(cached.bgOpacity, 0, 100), "js-bg", true);
+	}
+	else
+	{
+		this->SetLayoutValueClass(layout, def.panelId, state.opacity, opacity, "opacity", true);
 	}
 
 	// text-shadow only draws on text, so the keys Panel gets none; UpdateKeysElement outlines its glyphs.

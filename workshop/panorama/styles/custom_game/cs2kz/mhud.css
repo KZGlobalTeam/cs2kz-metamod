@@ -8,6 +8,7 @@
 @import url("file://{resources}/styles/custom_game/cs2kz/fine-positions.css");
 @import url("file://{resources}/styles/custom_game/cs2kz/box-size.css");
 @import url("file://{resources}/styles/custom_game/cs2kz/js-scale.css");
+@import url("file://{resources}/styles/custom_game/cs2kz/panel-opacity.css");
 
 .root {
 	width: 100%;
@@ -179,10 +180,8 @@
 	padding: 0px 13px;
 
 	background-color: #000000b8;
-	background-image: url("s2r://panorama/images/backgrounds/bluedots_large_png.vtex");
 	background-size: 360px 360px;
 	background-img-opacity: 0.015;
-	world-blur: gaussian(1, 1, 1);
 	border-radius: 4px;
 
 	transform-origin: 100% 50%;
@@ -279,13 +278,19 @@
 	padding: 11px 14px 9px 14px;
 
 	background-color: #000000b8;
-	background-image: url("s2r://panorama/images/backgrounds/bluedots_large_png.vtex");
 	background-size: 360px 360px;
 	background-img-opacity: 0.015;
-	world-blur: gaussian(1, 1, 1);
 	border-radius: 4px;
 
 	opacity: 0;
+}
+
+/* panel-opacity.css sets the background's alpha. A see-through background drops its dots and blur as well. */
+.element:not(.js-bg--0pct) .js-panel,
+.element:not(.js-bg--0pct) .js-hist,
+.element:not(.js-bg--0pct) .ci-hist {
+	background-image: url("s2r://panorama/images/backgrounds/bluedots_large_png.vtex");
+	world-blur: gaussian(1, 1, 1);
 }
 
 .js-panel.js-show {
@@ -413,10 +418,8 @@
 	padding: 0px 13px;
 
 	background-color: #000000b8;
-	background-image: url("s2r://panorama/images/backgrounds/bluedots_large_png.vtex");
 	background-size: 360px 360px;
 	background-img-opacity: 0.015;
-	world-blur: gaussian(1, 1, 1);
 	border-radius: 4px;
 
 	transition-property: transform, opacity;

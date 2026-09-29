@@ -1,0 +1,1113 @@
+/* Generated: the jumpstats and course panels' text and background opacity, every whole percent
+   (mhudJsOpacity, mhudJsBgOpacity, mhudCourseOpacity, mhudCourseBgOpacity). */
+
+.js-fg--0pct Label,
+.js-fg--0pct .js-divider {
+	opacity: 0;
+}
+
+.js-fg--1pct Label,
+.js-fg--1pct .js-divider {
+	opacity: 0.01;
+}
+
+.js-fg--2pct Label,
+.js-fg--2pct .js-divider {
+	opacity: 0.02;
+}
+
+.js-fg--3pct Label,
+.js-fg--3pct .js-divider {
+	opacity: 0.03;
+}
+
+.js-fg--4pct Label,
+.js-fg--4pct .js-divider {
+	opacity: 0.04;
+}
+
+.js-fg--5pct Label,
+.js-fg--5pct .js-divider {
+	opacity: 0.05;
+}
+
+.js-fg--6pct Label,
+.js-fg--6pct .js-divider {
+	opacity: 0.06;
+}
+
+.js-fg--7pct Label,
+.js-fg--7pct .js-divider {
+	opacity: 0.07;
+}
+
+.js-fg--8pct Label,
+.js-fg--8pct .js-divider {
+	opacity: 0.08;
+}
+
+.js-fg--9pct Label,
+.js-fg--9pct .js-divider {
+	opacity: 0.09;
+}
+
+.js-fg--10pct Label,
+.js-fg--10pct .js-divider {
+	opacity: 0.1;
+}
+
+.js-fg--11pct Label,
+.js-fg--11pct .js-divider {
+	opacity: 0.11;
+}
+
+.js-fg--12pct Label,
+.js-fg--12pct .js-divider {
+	opacity: 0.12;
+}
+
+.js-fg--13pct Label,
+.js-fg--13pct .js-divider {
+	opacity: 0.13;
+}
+
+.js-fg--14pct Label,
+.js-fg--14pct .js-divider {
+	opacity: 0.14;
+}
+
+.js-fg--15pct Label,
+.js-fg--15pct .js-divider {
+	opacity: 0.15;
+}
+
+.js-fg--16pct Label,
+.js-fg--16pct .js-divider {
+	opacity: 0.16;
+}
+
+.js-fg--17pct Label,
+.js-fg--17pct .js-divider {
+	opacity: 0.17;
+}
+
+.js-fg--18pct Label,
+.js-fg--18pct .js-divider {
+	opacity: 0.18;
+}
+
+.js-fg--19pct Label,
+.js-fg--19pct .js-divider {
+	opacity: 0.19;
+}
+
+.js-fg--20pct Label,
+.js-fg--20pct .js-divider {
+	opacity: 0.2;
+}
+
+.js-fg--21pct Label,
+.js-fg--21pct .js-divider {
+	opacity: 0.21;
+}
+
+.js-fg--22pct Label,
+.js-fg--22pct .js-divider {
+	opacity: 0.22;
+}
+
+.js-fg--23pct Label,
+.js-fg--23pct .js-divider {
+	opacity: 0.23;
+}
+
+.js-fg--24pct Label,
+.js-fg--24pct .js-divider {
+	opacity: 0.24;
+}
+
+.js-fg--25pct Label,
+.js-fg--25pct .js-divider {
+	opacity: 0.25;
+}
+
+.js-fg--26pct Label,
+.js-fg--26pct .js-divider {
+	opacity: 0.26;
+}
+
+.js-fg--27pct Label,
+.js-fg--27pct .js-divider {
+	opacity: 0.27;
+}
+
+.js-fg--28pct Label,
+.js-fg--28pct .js-divider {
+	opacity: 0.28;
+}
+
+.js-fg--29pct Label,
+.js-fg--29pct .js-divider {
+	opacity: 0.29;
+}
+
+.js-fg--30pct Label,
+.js-fg--30pct .js-divider {
+	opacity: 0.3;
+}
+
+.js-fg--31pct Label,
+.js-fg--31pct .js-divider {
+	opacity: 0.31;
+}
+
+.js-fg--32pct Label,
+.js-fg--32pct .js-divider {
+	opacity: 0.32;
+}
+
+.js-fg--33pct Label,
+.js-fg--33pct .js-divider {
+	opacity: 0.33;
+}
+
+.js-fg--34pct Label,
+.js-fg--34pct .js-divider {
+	opacity: 0.34;
+}
+
+.js-fg--35pct Label,
+.js-fg--35pct .js-divider {
+	opacity: 0.35;
+}
+
+.js-fg--36pct Label,
+.js-fg--36pct .js-divider {
+	opacity: 0.36;
+}
+
+.js-fg--37pct Label,
+.js-fg--37pct .js-divider {
+	opacity: 0.37;
+}
+
+.js-fg--38pct Label,
+.js-fg--38pct .js-divider {
+	opacity: 0.38;
+}
+
+.js-fg--39pct Label,
+.js-fg--39pct .js-divider {
+	opacity: 0.39;
+}
+
+.js-fg--40pct Label,
+.js-fg--40pct .js-divider {
+	opacity: 0.4;
+}
+
+.js-fg--41pct Label,
+.js-fg--41pct .js-divider {
+	opacity: 0.41;
+}
+
+.js-fg--42pct Label,
+.js-fg--42pct .js-divider {
+	opacity: 0.42;
+}
+
+.js-fg--43pct Label,
+.js-fg--43pct .js-divider {
+	opacity: 0.43;
+}
+
+.js-fg--44pct Label,
+.js-fg--44pct .js-divider {
+	opacity: 0.44;
+}
+
+.js-fg--45pct Label,
+.js-fg--45pct .js-divider {
+	opacity: 0.45;
+}
+
+.js-fg--46pct Label,
+.js-fg--46pct .js-divider {
+	opacity: 0.46;
+}
+
+.js-fg--47pct Label,
+.js-fg--47pct .js-divider {
+	opacity: 0.47;
+}
+
+.js-fg--48pct Label,
+.js-fg--48pct .js-divider {
+	opacity: 0.48;
+}
+
+.js-fg--49pct Label,
+.js-fg--49pct .js-divider {
+	opacity: 0.49;
+}
+
+.js-fg--50pct Label,
+.js-fg--50pct .js-divider {
+	opacity: 0.5;
+}
+
+.js-fg--51pct Label,
+.js-fg--51pct .js-divider {
+	opacity: 0.51;
+}
+
+.js-fg--52pct Label,
+.js-fg--52pct .js-divider {
+	opacity: 0.52;
+}
+
+.js-fg--53pct Label,
+.js-fg--53pct .js-divider {
+	opacity: 0.53;
+}
+
+.js-fg--54pct Label,
+.js-fg--54pct .js-divider {
+	opacity: 0.54;
+}
+
+.js-fg--55pct Label,
+.js-fg--55pct .js-divider {
+	opacity: 0.55;
+}
+
+.js-fg--56pct Label,
+.js-fg--56pct .js-divider {
+	opacity: 0.56;
+}
+
+.js-fg--57pct Label,
+.js-fg--57pct .js-divider {
+	opacity: 0.57;
+}
+
+.js-fg--58pct Label,
+.js-fg--58pct .js-divider {
+	opacity: 0.58;
+}
+
+.js-fg--59pct Label,
+.js-fg--59pct .js-divider {
+	opacity: 0.59;
+}
+
+.js-fg--60pct Label,
+.js-fg--60pct .js-divider {
+	opacity: 0.6;
+}
+
+.js-fg--61pct Label,
+.js-fg--61pct .js-divider {
+	opacity: 0.61;
+}
+
+.js-fg--62pct Label,
+.js-fg--62pct .js-divider {
+	opacity: 0.62;
+}
+
+.js-fg--63pct Label,
+.js-fg--63pct .js-divider {
+	opacity: 0.63;
+}
+
+.js-fg--64pct Label,
+.js-fg--64pct .js-divider {
+	opacity: 0.64;
+}
+
+.js-fg--65pct Label,
+.js-fg--65pct .js-divider {
+	opacity: 0.65;
+}
+
+.js-fg--66pct Label,
+.js-fg--66pct .js-divider {
+	opacity: 0.66;
+}
+
+.js-fg--67pct Label,
+.js-fg--67pct .js-divider {
+	opacity: 0.67;
+}
+
+.js-fg--68pct Label,
+.js-fg--68pct .js-divider {
+	opacity: 0.68;
+}
+
+.js-fg--69pct Label,
+.js-fg--69pct .js-divider {
+	opacity: 0.69;
+}
+
+.js-fg--70pct Label,
+.js-fg--70pct .js-divider {
+	opacity: 0.7;
+}
+
+.js-fg--71pct Label,
+.js-fg--71pct .js-divider {
+	opacity: 0.71;
+}
+
+.js-fg--72pct Label,
+.js-fg--72pct .js-divider {
+	opacity: 0.72;
+}
+
+.js-fg--73pct Label,
+.js-fg--73pct .js-divider {
+	opacity: 0.73;
+}
+
+.js-fg--74pct Label,
+.js-fg--74pct .js-divider {
+	opacity: 0.74;
+}
+
+.js-fg--75pct Label,
+.js-fg--75pct .js-divider {
+	opacity: 0.75;
+}
+
+.js-fg--76pct Label,
+.js-fg--76pct .js-divider {
+	opacity: 0.76;
+}
+
+.js-fg--77pct Label,
+.js-fg--77pct .js-divider {
+	opacity: 0.77;
+}
+
+.js-fg--78pct Label,
+.js-fg--78pct .js-divider {
+	opacity: 0.78;
+}
+
+.js-fg--79pct Label,
+.js-fg--79pct .js-divider {
+	opacity: 0.79;
+}
+
+.js-fg--80pct Label,
+.js-fg--80pct .js-divider {
+	opacity: 0.8;
+}
+
+.js-fg--81pct Label,
+.js-fg--81pct .js-divider {
+	opacity: 0.81;
+}
+
+.js-fg--82pct Label,
+.js-fg--82pct .js-divider {
+	opacity: 0.82;
+}
+
+.js-fg--83pct Label,
+.js-fg--83pct .js-divider {
+	opacity: 0.83;
+}
+
+.js-fg--84pct Label,
+.js-fg--84pct .js-divider {
+	opacity: 0.84;
+}
+
+.js-fg--85pct Label,
+.js-fg--85pct .js-divider {
+	opacity: 0.85;
+}
+
+.js-fg--86pct Label,
+.js-fg--86pct .js-divider {
+	opacity: 0.86;
+}
+
+.js-fg--87pct Label,
+.js-fg--87pct .js-divider {
+	opacity: 0.87;
+}
+
+.js-fg--88pct Label,
+.js-fg--88pct .js-divider {
+	opacity: 0.88;
+}
+
+.js-fg--89pct Label,
+.js-fg--89pct .js-divider {
+	opacity: 0.89;
+}
+
+.js-fg--90pct Label,
+.js-fg--90pct .js-divider {
+	opacity: 0.9;
+}
+
+.js-fg--91pct Label,
+.js-fg--91pct .js-divider {
+	opacity: 0.91;
+}
+
+.js-fg--92pct Label,
+.js-fg--92pct .js-divider {
+	opacity: 0.92;
+}
+
+.js-fg--93pct Label,
+.js-fg--93pct .js-divider {
+	opacity: 0.93;
+}
+
+.js-fg--94pct Label,
+.js-fg--94pct .js-divider {
+	opacity: 0.94;
+}
+
+.js-fg--95pct Label,
+.js-fg--95pct .js-divider {
+	opacity: 0.95;
+}
+
+.js-fg--96pct Label,
+.js-fg--96pct .js-divider {
+	opacity: 0.96;
+}
+
+.js-fg--97pct Label,
+.js-fg--97pct .js-divider {
+	opacity: 0.97;
+}
+
+.js-fg--98pct Label,
+.js-fg--98pct .js-divider {
+	opacity: 0.98;
+}
+
+.js-fg--99pct Label,
+.js-fg--99pct .js-divider {
+	opacity: 0.99;
+}
+
+.js-fg--100pct Label,
+.js-fg--100pct .js-divider {
+	opacity: 1;
+}
+
+.js-bg--0pct .js-panel,
+.js-bg--0pct .js-hist,
+.js-bg--0pct .ci-hist {
+	background-color: #00000000;
+}
+
+.js-bg--1pct .js-panel,
+.js-bg--1pct .js-hist,
+.js-bg--1pct .ci-hist {
+	background-color: #00000003;
+}
+
+.js-bg--2pct .js-panel,
+.js-bg--2pct .js-hist,
+.js-bg--2pct .ci-hist {
+	background-color: #00000005;
+}
+
+.js-bg--3pct .js-panel,
+.js-bg--3pct .js-hist,
+.js-bg--3pct .ci-hist {
+	background-color: #00000008;
+}
+
+.js-bg--4pct .js-panel,
+.js-bg--4pct .js-hist,
+.js-bg--4pct .ci-hist {
+	background-color: #0000000a;
+}
+
+.js-bg--5pct .js-panel,
+.js-bg--5pct .js-hist,
+.js-bg--5pct .ci-hist {
+	background-color: #0000000d;
+}
+
+.js-bg--6pct .js-panel,
+.js-bg--6pct .js-hist,
+.js-bg--6pct .ci-hist {
+	background-color: #0000000f;
+}
+
+.js-bg--7pct .js-panel,
+.js-bg--7pct .js-hist,
+.js-bg--7pct .ci-hist {
+	background-color: #00000012;
+}
+
+.js-bg--8pct .js-panel,
+.js-bg--8pct .js-hist,
+.js-bg--8pct .ci-hist {
+	background-color: #00000014;
+}
+
+.js-bg--9pct .js-panel,
+.js-bg--9pct .js-hist,
+.js-bg--9pct .ci-hist {
+	background-color: #00000017;
+}
+
+.js-bg--10pct .js-panel,
+.js-bg--10pct .js-hist,
+.js-bg--10pct .ci-hist {
+	background-color: #0000001a;
+}
+
+.js-bg--11pct .js-panel,
+.js-bg--11pct .js-hist,
+.js-bg--11pct .ci-hist {
+	background-color: #0000001c;
+}
+
+.js-bg--12pct .js-panel,
+.js-bg--12pct .js-hist,
+.js-bg--12pct .ci-hist {
+	background-color: #0000001f;
+}
+
+.js-bg--13pct .js-panel,
+.js-bg--13pct .js-hist,
+.js-bg--13pct .ci-hist {
+	background-color: #00000021;
+}
+
+.js-bg--14pct .js-panel,
+.js-bg--14pct .js-hist,
+.js-bg--14pct .ci-hist {
+	background-color: #00000024;
+}
+
+.js-bg--15pct .js-panel,
+.js-bg--15pct .js-hist,
+.js-bg--15pct .ci-hist {
+	background-color: #00000026;
+}
+
+.js-bg--16pct .js-panel,
+.js-bg--16pct .js-hist,
+.js-bg--16pct .ci-hist {
+	background-color: #00000029;
+}
+
+.js-bg--17pct .js-panel,
+.js-bg--17pct .js-hist,
+.js-bg--17pct .ci-hist {
+	background-color: #0000002b;
+}
+
+.js-bg--18pct .js-panel,
+.js-bg--18pct .js-hist,
+.js-bg--18pct .ci-hist {
+	background-color: #0000002e;
+}
+
+.js-bg--19pct .js-panel,
+.js-bg--19pct .js-hist,
+.js-bg--19pct .ci-hist {
+	background-color: #00000030;
+}
+
+.js-bg--20pct .js-panel,
+.js-bg--20pct .js-hist,
+.js-bg--20pct .ci-hist {
+	background-color: #00000033;
+}
+
+.js-bg--21pct .js-panel,
+.js-bg--21pct .js-hist,
+.js-bg--21pct .ci-hist {
+	background-color: #00000036;
+}
+
+.js-bg--22pct .js-panel,
+.js-bg--22pct .js-hist,
+.js-bg--22pct .ci-hist {
+	background-color: #00000038;
+}
+
+.js-bg--23pct .js-panel,
+.js-bg--23pct .js-hist,
+.js-bg--23pct .ci-hist {
+	background-color: #0000003b;
+}
+
+.js-bg--24pct .js-panel,
+.js-bg--24pct .js-hist,
+.js-bg--24pct .ci-hist {
+	background-color: #0000003d;
+}
+
+.js-bg--25pct .js-panel,
+.js-bg--25pct .js-hist,
+.js-bg--25pct .ci-hist {
+	background-color: #00000040;
+}
+
+.js-bg--26pct .js-panel,
+.js-bg--26pct .js-hist,
+.js-bg--26pct .ci-hist {
+	background-color: #00000042;
+}
+
+.js-bg--27pct .js-panel,
+.js-bg--27pct .js-hist,
+.js-bg--27pct .ci-hist {
+	background-color: #00000045;
+}
+
+.js-bg--28pct .js-panel,
+.js-bg--28pct .js-hist,
+.js-bg--28pct .ci-hist {
+	background-color: #00000047;
+}
+
+.js-bg--29pct .js-panel,
+.js-bg--29pct .js-hist,
+.js-bg--29pct .ci-hist {
+	background-color: #0000004a;
+}
+
+.js-bg--30pct .js-panel,
+.js-bg--30pct .js-hist,
+.js-bg--30pct .ci-hist {
+	background-color: #0000004c;
+}
+
+.js-bg--31pct .js-panel,
+.js-bg--31pct .js-hist,
+.js-bg--31pct .ci-hist {
+	background-color: #0000004f;
+}
+
+.js-bg--32pct .js-panel,
+.js-bg--32pct .js-hist,
+.js-bg--32pct .ci-hist {
+	background-color: #00000052;
+}
+
+.js-bg--33pct .js-panel,
+.js-bg--33pct .js-hist,
+.js-bg--33pct .ci-hist {
+	background-color: #00000054;
+}
+
+.js-bg--34pct .js-panel,
+.js-bg--34pct .js-hist,
+.js-bg--34pct .ci-hist {
+	background-color: #00000057;
+}
+
+.js-bg--35pct .js-panel,
+.js-bg--35pct .js-hist,
+.js-bg--35pct .ci-hist {
+	background-color: #00000059;
+}
+
+.js-bg--36pct .js-panel,
+.js-bg--36pct .js-hist,
+.js-bg--36pct .ci-hist {
+	background-color: #0000005c;
+}
+
+.js-bg--37pct .js-panel,
+.js-bg--37pct .js-hist,
+.js-bg--37pct .ci-hist {
+	background-color: #0000005e;
+}
+
+.js-bg--38pct .js-panel,
+.js-bg--38pct .js-hist,
+.js-bg--38pct .ci-hist {
+	background-color: #00000061;
+}
+
+.js-bg--39pct .js-panel,
+.js-bg--39pct .js-hist,
+.js-bg--39pct .ci-hist {
+	background-color: #00000063;
+}
+
+.js-bg--40pct .js-panel,
+.js-bg--40pct .js-hist,
+.js-bg--40pct .ci-hist {
+	background-color: #00000066;
+}
+
+.js-bg--41pct .js-panel,
+.js-bg--41pct .js-hist,
+.js-bg--41pct .ci-hist {
+	background-color: #00000069;
+}
+
+.js-bg--42pct .js-panel,
+.js-bg--42pct .js-hist,
+.js-bg--42pct .ci-hist {
+	background-color: #0000006b;
+}
+
+.js-bg--43pct .js-panel,
+.js-bg--43pct .js-hist,
+.js-bg--43pct .ci-hist {
+	background-color: #0000006e;
+}
+
+.js-bg--44pct .js-panel,
+.js-bg--44pct .js-hist,
+.js-bg--44pct .ci-hist {
+	background-color: #00000070;
+}
+
+.js-bg--45pct .js-panel,
+.js-bg--45pct .js-hist,
+.js-bg--45pct .ci-hist {
+	background-color: #00000073;
+}
+
+.js-bg--46pct .js-panel,
+.js-bg--46pct .js-hist,
+.js-bg--46pct .ci-hist {
+	background-color: #00000075;
+}
+
+.js-bg--47pct .js-panel,
+.js-bg--47pct .js-hist,
+.js-bg--47pct .ci-hist {
+	background-color: #00000078;
+}
+
+.js-bg--48pct .js-panel,
+.js-bg--48pct .js-hist,
+.js-bg--48pct .ci-hist {
+	background-color: #0000007a;
+}
+
+.js-bg--49pct .js-panel,
+.js-bg--49pct .js-hist,
+.js-bg--49pct .ci-hist {
+	background-color: #0000007d;
+}
+
+.js-bg--50pct .js-panel,
+.js-bg--50pct .js-hist,
+.js-bg--50pct .ci-hist {
+	background-color: #00000080;
+}
+
+.js-bg--51pct .js-panel,
+.js-bg--51pct .js-hist,
+.js-bg--51pct .ci-hist {
+	background-color: #00000082;
+}
+
+.js-bg--52pct .js-panel,
+.js-bg--52pct .js-hist,
+.js-bg--52pct .ci-hist {
+	background-color: #00000085;
+}
+
+.js-bg--53pct .js-panel,
+.js-bg--53pct .js-hist,
+.js-bg--53pct .ci-hist {
+	background-color: #00000087;
+}
+
+.js-bg--54pct .js-panel,
+.js-bg--54pct .js-hist,
+.js-bg--54pct .ci-hist {
+	background-color: #0000008a;
+}
+
+.js-bg--55pct .js-panel,
+.js-bg--55pct .js-hist,
+.js-bg--55pct .ci-hist {
+	background-color: #0000008c;
+}
+
+.js-bg--56pct .js-panel,
+.js-bg--56pct .js-hist,
+.js-bg--56pct .ci-hist {
+	background-color: #0000008f;
+}
+
+.js-bg--57pct .js-panel,
+.js-bg--57pct .js-hist,
+.js-bg--57pct .ci-hist {
+	background-color: #00000091;
+}
+
+.js-bg--58pct .js-panel,
+.js-bg--58pct .js-hist,
+.js-bg--58pct .ci-hist {
+	background-color: #00000094;
+}
+
+.js-bg--59pct .js-panel,
+.js-bg--59pct .js-hist,
+.js-bg--59pct .ci-hist {
+	background-color: #00000096;
+}
+
+.js-bg--60pct .js-panel,
+.js-bg--60pct .js-hist,
+.js-bg--60pct .ci-hist {
+	background-color: #00000099;
+}
+
+.js-bg--61pct .js-panel,
+.js-bg--61pct .js-hist,
+.js-bg--61pct .ci-hist {
+	background-color: #0000009c;
+}
+
+.js-bg--62pct .js-panel,
+.js-bg--62pct .js-hist,
+.js-bg--62pct .ci-hist {
+	background-color: #0000009e;
+}
+
+.js-bg--63pct .js-panel,
+.js-bg--63pct .js-hist,
+.js-bg--63pct .ci-hist {
+	background-color: #000000a1;
+}
+
+.js-bg--64pct .js-panel,
+.js-bg--64pct .js-hist,
+.js-bg--64pct .ci-hist {
+	background-color: #000000a3;
+}
+
+.js-bg--65pct .js-panel,
+.js-bg--65pct .js-hist,
+.js-bg--65pct .ci-hist {
+	background-color: #000000a6;
+}
+
+.js-bg--66pct .js-panel,
+.js-bg--66pct .js-hist,
+.js-bg--66pct .ci-hist {
+	background-color: #000000a8;
+}
+
+.js-bg--67pct .js-panel,
+.js-bg--67pct .js-hist,
+.js-bg--67pct .ci-hist {
+	background-color: #000000ab;
+}
+
+.js-bg--68pct .js-panel,
+.js-bg--68pct .js-hist,
+.js-bg--68pct .ci-hist {
+	background-color: #000000ad;
+}
+
+.js-bg--69pct .js-panel,
+.js-bg--69pct .js-hist,
+.js-bg--69pct .ci-hist {
+	background-color: #000000b0;
+}
+
+.js-bg--70pct .js-panel,
+.js-bg--70pct .js-hist,
+.js-bg--70pct .ci-hist {
+	background-color: #000000b2;
+}
+
+.js-bg--71pct .js-panel,
+.js-bg--71pct .js-hist,
+.js-bg--71pct .ci-hist {
+	background-color: #000000b5;
+}
+
+.js-bg--72pct .js-panel,
+.js-bg--72pct .js-hist,
+.js-bg--72pct .ci-hist {
+	background-color: #000000b8;
+}
+
+.js-bg--73pct .js-panel,
+.js-bg--73pct .js-hist,
+.js-bg--73pct .ci-hist {
+	background-color: #000000ba;
+}
+
+.js-bg--74pct .js-panel,
+.js-bg--74pct .js-hist,
+.js-bg--74pct .ci-hist {
+	background-color: #000000bd;
+}
+
+.js-bg--75pct .js-panel,
+.js-bg--75pct .js-hist,
+.js-bg--75pct .ci-hist {
+	background-color: #000000bf;
+}
+
+.js-bg--76pct .js-panel,
+.js-bg--76pct .js-hist,
+.js-bg--76pct .ci-hist {
+	background-color: #000000c2;
+}
+
+.js-bg--77pct .js-panel,
+.js-bg--77pct .js-hist,
+.js-bg--77pct .ci-hist {
+	background-color: #000000c4;
+}
+
+.js-bg--78pct .js-panel,
+.js-bg--78pct .js-hist,
+.js-bg--78pct .ci-hist {
+	background-color: #000000c7;
+}
+
+.js-bg--79pct .js-panel,
+.js-bg--79pct .js-hist,
+.js-bg--79pct .ci-hist {
+	background-color: #000000c9;
+}
+
+.js-bg--80pct .js-panel,
+.js-bg--80pct .js-hist,
+.js-bg--80pct .ci-hist {
+	background-color: #000000cc;
+}
+
+.js-bg--81pct .js-panel,
+.js-bg--81pct .js-hist,
+.js-bg--81pct .ci-hist {
+	background-color: #000000cf;
+}
+
+.js-bg--82pct .js-panel,
+.js-bg--82pct .js-hist,
+.js-bg--82pct .ci-hist {
+	background-color: #000000d1;
+}
+
+.js-bg--83pct .js-panel,
+.js-bg--83pct .js-hist,
+.js-bg--83pct .ci-hist {
+	background-color: #000000d4;
+}
+
+.js-bg--84pct .js-panel,
+.js-bg--84pct .js-hist,
+.js-bg--84pct .ci-hist {
+	background-color: #000000d6;
+}
+
+.js-bg--85pct .js-panel,
+.js-bg--85pct .js-hist,
+.js-bg--85pct .ci-hist {
+	background-color: #000000d9;
+}
+
+.js-bg--86pct .js-panel,
+.js-bg--86pct .js-hist,
+.js-bg--86pct .ci-hist {
+	background-color: #000000db;
+}
+
+.js-bg--87pct .js-panel,
+.js-bg--87pct .js-hist,
+.js-bg--87pct .ci-hist {
+	background-color: #000000de;
+}
+
+.js-bg--88pct .js-panel,
+.js-bg--88pct .js-hist,
+.js-bg--88pct .ci-hist {
+	background-color: #000000e0;
+}
+
+.js-bg--89pct .js-panel,
+.js-bg--89pct .js-hist,
+.js-bg--89pct .ci-hist {
+	background-color: #000000e3;
+}
+
+.js-bg--90pct .js-panel,
+.js-bg--90pct .js-hist,
+.js-bg--90pct .ci-hist {
+	background-color: #000000e6;
+}
+
+.js-bg--91pct .js-panel,
+.js-bg--91pct .js-hist,
+.js-bg--91pct .ci-hist {
+	background-color: #000000e8;
+}
+
+.js-bg--92pct .js-panel,
+.js-bg--92pct .js-hist,
+.js-bg--92pct .ci-hist {
+	background-color: #000000eb;
+}
+
+.js-bg--93pct .js-panel,
+.js-bg--93pct .js-hist,
+.js-bg--93pct .ci-hist {
+	background-color: #000000ed;
+}
+
+.js-bg--94pct .js-panel,
+.js-bg--94pct .js-hist,
+.js-bg--94pct .ci-hist {
+	background-color: #000000f0;
+}
+
+.js-bg--95pct .js-panel,
+.js-bg--95pct .js-hist,
+.js-bg--95pct .ci-hist {
+	background-color: #000000f2;
+}
+
+.js-bg--96pct .js-panel,
+.js-bg--96pct .js-hist,
+.js-bg--96pct .ci-hist {
+	background-color: #000000f5;
+}
+
+.js-bg--97pct .js-panel,
+.js-bg--97pct .js-hist,
+.js-bg--97pct .ci-hist {
+	background-color: #000000f7;
+}
+
+.js-bg--98pct .js-panel,
+.js-bg--98pct .js-hist,
+.js-bg--98pct .ci-hist {
+	background-color: #000000fa;
+}
+
+.js-bg--99pct .js-panel,
+.js-bg--99pct .js-hist,
+.js-bg--99pct .ci-hist {
+	background-color: #000000fc;
+}
+
+.js-bg--100pct .js-panel,
+.js-bg--100pct .js-hist,
+.js-bg--100pct .ci-hist {
+	background-color: #000000ff;
+}

@@ -35,6 +35,8 @@ void KZHUDService::RefreshPrefs()
 		element.fontClass = panorama::ResolveFontClass(opts->GetPreferenceStr(def.fontKey, MHUD_DEFAULT_FONT), MHUD_DEFAULT_FONT);
 		element.outline = def.outlineKey ? opts->GetPreferenceBool(def.outlineKey, true) : false;
 		element.opacity = (i32)opts->GetPreferenceInt(def.opacityKey, 100);
+		const char *bgOpacityKey = GetMHUDBackgroundOpacityKey((MHUDElement)e);
+		element.bgOpacity = bgOpacityKey ? (i32)opts->GetPreferenceInt(bgOpacityKey, MHUD_DEF_BG_OPACITY) : MHUD_DEF_BG_OPACITY;
 		const i64 alignDefault = (i64)GetMHUDDefaultAlign((MHUDElement)e);
 		const i64 align = def.alignKey ? opts->GetPreferenceInt(def.alignKey, alignDefault) : alignDefault;
 		element.align = (MHUDAlign)Clamp(align, (i64)MHUDAlign::Left, (i64)MHUDAlign::Right);

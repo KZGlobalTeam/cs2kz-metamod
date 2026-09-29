@@ -167,6 +167,23 @@ inline bool IsMHUDElementTopAnchored(MHUDElement element)
 	return element == MHUDElement::Course;
 }
 
+// The jumpstats and course panels draw a background, which fades apart from their text. NULL for every other element.
+inline const char *GetMHUDBackgroundOpacityKey(MHUDElement element)
+{
+	switch (element)
+	{
+		case MHUDElement::Jumpstats:
+			return "mhudJsBgOpacity";
+		case MHUDElement::Course:
+			return "mhudCourseBgOpacity";
+		default:
+			return NULL;
+	}
+}
+
+// The panels' background alpha, b8 in hex.
+#define MHUD_DEF_BG_OPACITY 72
+
 // Symbols wrapped around a numeric element's value.
 enum class MHUDBorder
 {
@@ -244,6 +261,7 @@ struct MHUDPrefs
 		const char *fontClass {};
 		bool outline {true};
 		i32 opacity {100};
+		i32 bgOpacity {MHUD_DEF_BG_OPACITY};
 		MHUDAlign align {MHUDAlign::Center};
 		MHUDBorder border {MHUDBorder::None};
 	};
@@ -488,6 +506,7 @@ private:
 		const char *hitAlignClass {};
 		bool outline {false};
 		i32 opacity {INT_MIN};
+		i32 bgOpacity {INT_MIN};
 		const char *alignClass {};
 		// Cached so the nearest-palette search only runs when the color changes, not every tick.
 		const char *colorClassComputed {};

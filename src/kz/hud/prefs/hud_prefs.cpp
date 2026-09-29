@@ -321,9 +321,16 @@ void KZHUDService::RegisterMenu()
 			KZ::menu::AddToggle(sub, "Menu - Outline", def.outlineKey, true);
 			KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
 		}
-		KZ::menu::AddSize(sub, "Menu - Opacity", def.opacityKey, 100, 0, 100, e);
+		const char *bgOpacityKey = GetMHUDBackgroundOpacityKey((MHUDElement)e);
+		KZ::menu::AddSize(sub, bgOpacityKey ? "Menu - Text Opacity" : "Menu - Opacity", def.opacityKey, 100, 0, 100, e);
 		KZ::menu::SetItemUnit(sub, "%");
 		KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
+		if (bgOpacityKey)
+		{
+			KZ::menu::AddSize(sub, "Menu - Background Opacity", bgOpacityKey, MHUD_DEF_BG_OPACITY, 0, 100, e);
+			KZ::menu::SetItemUnit(sub, "%");
+			KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
+		}
 
 		switch ((MHUDElement)e)
 		{
