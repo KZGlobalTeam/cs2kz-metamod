@@ -248,15 +248,22 @@ void KZJumpstatsService::PrintJumpToChat(KZPlayer *target, Jump *jump, bool exte
 	const char *language = target->languageService->GetLanguage();
 	JumpType reportType = jump->GetReportJumpType();
 	DistanceTier color = jump->GetJumpPlayer()->modeService->GetDistanceTier(reportType, jump->GetDistance());
-	DistanceTier minTier = static_cast<DistanceTier>(
-		target->optionService->GetPreferenceInt("jsMinTier", KZOptionService::GetOptionInt("defaultJSMinTier", DistanceTier_Impressive)));
 	bool jsAlways = target->optionService->GetPreferenceBool("jsAlways", false);
 	bool isFailstat = jump->IsFailstat();
 	if (isFailstat && !target->optionService->GetPreferenceBool("jsFailstats", true))
 	{
 		return;
 	}
-	if (!jsAlways && (minTier == DistanceTier_None || color < minTier))
+	// The HUD panel and the chat each have their own minimum tier.
+	auto meetsMinTier = [&](const char *prefKey, const char *defaultKey)
+	{
+		const DistanceTier minTier = static_cast<DistanceTier>(
+			target->optionService->GetPreferenceInt(prefKey, KZOptionService::GetOptionInt(defaultKey, DistanceTier_Impressive)));
+		return jsAlways || (minTier != DistanceTier_None && color >= minTier);
+	};
+	const bool chatTier = meetsMinTier("jsMinTier", "defaultJSMinTier");
+	const bool hudTier = meetsMinTier("jsMinTierHud", "defaultJSMinTierHud");
+	if (!chatTier && !hudTier)
 	{
 		return;
 	}
@@ -266,7 +273,13 @@ void KZJumpstatsService::PrintJumpToChat(KZPlayer *target, Jump *jump, bool exte
 	}
 	// type "HUD" wont show the chat ones, "Both" will show both :aga:
 	const i64 reportTo = target->optionService->GetPreferenceInt("jsReportType", JSReportType_Hud);
-	if (reportTo != JSReportType_Chat && target->hudService->ShowJumpstat(jump, color) && reportTo != JSReportType_Both)
+	bool toChat = reportTo != JSReportType_Hud;
+	// A jump the HUD panel cannot show goes to chat instead.
+	if (reportTo != JSReportType_Chat && hudTier && !target->hudService->ShowJumpstat(jump, color))
+	{
+		toChat = true;
+	}
+	if (!toChat || !chatTier)
 	{
 		return;
 	}

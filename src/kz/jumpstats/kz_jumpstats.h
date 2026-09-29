@@ -648,6 +648,7 @@ public:
 	void SetBroadcastMinTierConsole(const char *tierString);
 	void SetBroadcastSoundMinTier(const char *tierString);
 	void SetMinTier(const char *tierString);
+	void SetMinTierHud(const char *tierString);
 	void SetMinTierConsole(const char *tierString);
 	void SetSoundMinTier(const char *tierString);
 	void ToggleExtendedChatStats();

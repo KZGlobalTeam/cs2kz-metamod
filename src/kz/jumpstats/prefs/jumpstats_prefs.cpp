@@ -25,6 +25,7 @@ struct TierPref
 // clang-format off
 static_global const TierPref TIER_PREFS[] = {
 	{"jsMinTier",                "defaultJSMinTier",                DistanceTier_Impressive, "Menu - JS Min Tier"},
+	{"jsMinTierHud",             "defaultJSMinTierHud",             DistanceTier_Impressive, "Menu - JS Min Tier HUD"},
 	{"jsMinTierConsole",         "defaultJSMinTierConsole",         DistanceTier_Impressive, "Menu - JS Min Tier Console"},
 	{"jsSoundMinTier",           "defaultJSSoundMinTier",           DistanceTier_Impressive, "Menu - JS Sound Min Tier"},
 	{"jsBroadcastMinTier",       "defaultJSBroadcastMinTier",       DistanceTier_Ownage,     "Menu - JS Broadcast Min Tier"},

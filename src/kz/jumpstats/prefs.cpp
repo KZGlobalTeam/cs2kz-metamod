@@ -161,6 +161,31 @@ void KZJumpstatsService::SetMinTier(const char *tierString)
 	}
 }
 
+void KZJumpstatsService::SetMinTierHud(const char *tierString)
+{
+	DistanceTier tier;
+	bool success = GetDistTierFromString(tierString, tier);
+	if (!success)
+	{
+		return;
+	}
+
+	if (tier == this->player->optionService->GetPreferenceInt("jsMinTierHud", DistanceTier_Impressive))
+	{
+		return;
+	}
+
+	this->player->optionService->SetPreferenceInt("jsMinTierHud", tier);
+	if (tier == 0)
+	{
+		this->player->languageService->PrintChat(true, false, "Jumpstats Option - Jumpstats Minimum HUD Tier - Disabled");
+	}
+	else
+	{
+		this->player->languageService->PrintChat(true, false, "Jumpstats Option - Jumpstats Minimum HUD Tier - Response", tierString);
+	}
+}
+
 void KZJumpstatsService::SetMinTierConsole(const char *tierString)
 {
 	DistanceTier tier;
@@ -287,6 +312,13 @@ SCMD(kz_jstier, SCFL_JUMPSTATS | SCFL_PREFERENCE)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	player->jumpstatsService->SetMinTier(args->Arg(1));
+	return true;
+}
+
+SCMD(kz_jstierhud, SCFL_JUMPSTATS | SCFL_PREFERENCE)
+{
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
+	player->jumpstatsService->SetMinTierHud(args->Arg(1));
 	return true;
 }
 

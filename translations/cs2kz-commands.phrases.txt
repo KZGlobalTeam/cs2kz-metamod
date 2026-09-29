@@ -659,6 +659,10 @@
     	"es"		"Establece tu nivel(tier) mínimo de reporte."
 		"ko"		"점프 통계 최소 보고 티어를 설정합니다."
 	}
+    "Command Description - kz_jstierhud"
+    {
+        "en"		"Set your minimum jumpstats HUD reporting tier."
+	}
     "Command Description - kz_jstierconsole"
     {
         "en"		"Set your minimum jumpstats console reporting tier."

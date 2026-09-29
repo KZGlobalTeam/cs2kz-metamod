@@ -18,8 +18,11 @@
 	// Minimum jumpstat tier for sound effect.
 	"defaultJSSoundMinTier"				"4"
 
-	// Minimum jumpstat tier for showing jumpstats.
+	// Minimum jumpstat tier for showing jumpstats in chat.
 	"defaultJSMinTier"					"2"
+
+	// Minimum jumpstat tier for showing jumpstats on the HUD panel.
+	"defaultJSMinTierHud"				"2"
 
 	// Minimum jumpstat tier for showing jumpstats in console.
 	"defaultJSMinTierConsole"			"1"

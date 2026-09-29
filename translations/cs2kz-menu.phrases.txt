@@ -1133,6 +1133,10 @@
 		"chi"		"聊天框跳跃数据最低等级"
 		"ua"		"Мінімальний поріг стрибку для відображення в чаті"
 	}
+	"Menu - JS Min Tier HUD"
+	{
+		"en"		"Minimum HUD tier"
+	}
 	"Menu - JS Min Tier Console"
 	{
 		"en"		"Minimum console tier"

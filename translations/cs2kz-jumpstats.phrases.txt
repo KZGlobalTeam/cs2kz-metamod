@@ -1059,6 +1059,15 @@
 		"es"		"{grey}El umbral para mostrar el reporte de estadísticas de salto en chat ahora es {default}{tier}."
 		"ko"		"{grey}점프스탯 채팅 보고 임계값이 이제 {default}{tier}로 설정되었습니다."
 	}
+	"Jumpstats Option - Jumpstats Minimum HUD Tier - Disabled"
+	{
+		"en"		"{grey}Jumpstats HUD reporting disabled."
+	}
+	"Jumpstats Option - Jumpstats Minimum HUD Tier - Response"
+	{
+		"#format"	"tier:s"
+		"en"		"{grey}Jumpstats HUD reporting threshold is now {default}{tier}."
+	}
 	"Jumpstats Option - Jumpstats Minimum Console Tier - Disabled"
 	{
 		"en"		"{grey}Jumpstats console reporting disabled."
