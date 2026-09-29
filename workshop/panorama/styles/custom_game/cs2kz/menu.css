@@ -77,6 +77,10 @@
 	width: 59px;
 }
 
+.font-reflow .item-value {
+	max-width: 319px;
+}
+
 .window-header {
 	width: 100%;
 	flow-children: right;
@@ -263,9 +267,11 @@ VerticalScrollBar:hover .ScrollThumb {
 	vertical-align: middle;
 }
 
+/* The label and its subtext stay on one line, so a long value cuts them short instead of making the row taller. */
 .item-label {
 	width: 100%;
 	font-size: 18px;
+	white-space: nowrap;
 	text-overflow: ellipsis;
 }
 
@@ -274,6 +280,7 @@ VerticalScrollBar:hover .ScrollThumb {
 	font-size: 13px;
 	opacity: 0.55;
 	margin-top: 1px;
+	white-space: nowrap;
 	text-overflow: ellipsis;
 	visibility: collapse;
 }
@@ -297,8 +304,10 @@ VerticalScrollBar:hover .ScrollThumb {
 	max-width: 100%;
 }
 
+/* Capped so the label keeps room beside a long value, such as a list of styles. */
 .item-value {
 	vertical-align: middle;
+	max-width: 320px;
 	font-size: 16px;
 	white-space: nowrap;
 	text-overflow: ellipsis;
