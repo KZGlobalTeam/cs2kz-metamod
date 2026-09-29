@@ -8,7 +8,7 @@
 #include "tier0/memdbgon.h"
 
 static_global constexpr const char *ELEMENT_PHRASE[(i32)MHUDElement::Count] = {
-	"Menu - Timer", "Speed", "Menu - Prespeed", "Menu - Keys", "Menu - Checkpoint", "Menu - Jumpstats",
+	"Menu - Timer", "Speed", "Menu - Prespeed", "Menu - Keys", "Menu - Checkpoint", "Menu - Jumpstats", "Menu - Course Info",
 	// The indicators share one flattened page, so these only name them; they are not sub titles.
 	"Menu - Ind Perf", "Menu - Ind CJ", "Menu - Ind JB"};
 
@@ -305,11 +305,11 @@ void KZHUDService::RegisterMenu()
 		if (def.alignKey)
 		{
 			KZ::menu::AddChoice(sub, "Menu - Align", GetAlignChoices, GetCurrentAlign, PickAlign, e);
-			KZ::menu::SetItemPref(sub, def.alignKey, KZOptStorage::Int, (i32)MHUDAlign::Center);
+			KZ::menu::SetItemPref(sub, def.alignKey, KZOptStorage::Int, (i32)GetMHUDDefaultAlign((MHUDElement)e));
 			KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
 		}
 		KZ::menu::AddSize(sub, "Menu - Size", def.sizeKey, def.sizeDefault, def.sizeMin, def.sizeMax, e);
-		if (e == (i32)MHUDElement::Jumpstats)
+		if (e == (i32)MHUDElement::Jumpstats || e == (i32)MHUDElement::Course)
 		{
 			KZ::menu::SetItemUnit(sub, "%");
 		}
@@ -393,6 +393,19 @@ void KZHUDService::RegisterMenu()
 			{
 				KZ::menu::AddToggle(sub, "Menu - JS History", "mhudJsShowHistory", true);
 				KZ::menu::SetItemSubtext(sub, "Menu - JS History Sub");
+				break;
+			}
+
+			case MHUDElement::Course:
+			{
+				KZ::menu::AddToggle(sub, "Menu - Course Show Map", "mhudCourseShowMap", true);
+				KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
+				KZ::menu::AddToggle(sub, "Menu - Course Show Records", "mhudCourseShowRecords", true);
+				KZ::menu::SetItemSubtext(sub, "Menu - Course Show Records Sub");
+				KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
+				KZ::menu::AddToggle(sub, "Menu - Course Show Pro", "mhudCourseShowPro", true);
+				KZ::menu::SetItemSubtext(sub, "Menu - Course Show Pro Sub");
+				KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
 				break;
 			}
 

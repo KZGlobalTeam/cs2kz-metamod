@@ -27,7 +27,7 @@ void KZHUDService::RefreshPrefs()
 		element.x = Clamp((f32)opts->GetPreferenceFloat(def.xKey, def.xDefault), -50.0f, 50.0f);
 		element.y = Clamp((f32)opts->GetPreferenceFloat(def.yKey, def.yDefault), -50.0f, 50.0f);
 		element.size = (f32)opts->GetPreferenceFloat(def.sizeKey, def.sizeDefault);
-		if (e == (i32)MHUDElement::Jumpstats)
+		if (e == (i32)MHUDElement::Jumpstats || e == (i32)MHUDElement::Course)
 		{
 			// Only the scales js-scale.css defines.
 			element.size = Clamp(element.size, (f32)def.sizeMin, (f32)def.sizeMax);
@@ -35,7 +35,8 @@ void KZHUDService::RefreshPrefs()
 		element.fontClass = panorama::ResolveFontClass(opts->GetPreferenceStr(def.fontKey, MHUD_DEFAULT_FONT), MHUD_DEFAULT_FONT);
 		element.outline = def.outlineKey ? opts->GetPreferenceBool(def.outlineKey, true) : false;
 		element.opacity = (i32)opts->GetPreferenceInt(def.opacityKey, 100);
-		const i64 align = def.alignKey ? opts->GetPreferenceInt(def.alignKey, (i64)MHUDAlign::Center) : (i64)MHUDAlign::Center;
+		const i64 alignDefault = (i64)GetMHUDDefaultAlign((MHUDElement)e);
+		const i64 align = def.alignKey ? opts->GetPreferenceInt(def.alignKey, alignDefault) : alignDefault;
 		element.align = (MHUDAlign)Clamp(align, (i64)MHUDAlign::Left, (i64)MHUDAlign::Right);
 		const i64 border = def.borderKey ? opts->GetPreferenceInt(def.borderKey, (i64)MHUDBorder::None) : (i64)MHUDBorder::None;
 		element.border = (MHUDBorder)Clamp(border, (i64)MHUDBorder::None, (i64)MHUDBorder::Count - 1);
@@ -75,6 +76,9 @@ void KZHUDService::RefreshPrefs()
 
 	KZJumpstatsService::GetFieldLayout(this->player, this->prefs.jsFields);
 	this->prefs.jsHistory = opts->GetPreferenceBool("mhudJsShowHistory", true);
+	this->prefs.courseMap = opts->GetPreferenceBool("mhudCourseShowMap", true);
+	this->prefs.courseRecords = opts->GetPreferenceBool("mhudCourseShowRecords", true);
+	this->prefs.coursePro = opts->GetPreferenceBool("mhudCourseShowPro", true);
 
 	this->prefs.legacyStyle = opts->GetPreferenceBool("hudLegacyStyle", false);
 	this->prefs.compactPanel = opts->GetPreferenceBool("compactPanel", false);

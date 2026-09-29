@@ -37,6 +37,11 @@ extern ICS2Menus *g_pMenus;
 #define MHUD_EDIT_JS_PANEL_HEIGHT   109.0f
 #define MHUD_EDIT_JS_ROW_HEIGHT     19.0f
 #define MHUD_EDIT_JS_HISTORY_HEIGHT 146.0f
+// The course panel at 100%, from mhud.css.
+#define MHUD_EDIT_COURSE_WIDTH       320.0f
+#define MHUD_EDIT_COURSE_PADDING     20.0f
+#define MHUD_EDIT_COURSE_HEAD_HEIGHT 53.0f
+#define MHUD_EDIT_COURSE_ROW_HEIGHT  19.0f
 
 // The buttons inside each element's edit box, after its id. Corners are in EditState::corner order.
 #define MHUD_EDIT_MOVE_SUFFIX "_move"
@@ -660,6 +665,15 @@ void KZHUDService::GetEditBoxSize(MHUDElement element, f32 &width, f32 &height)
 		const f32 history = prefs.jsHistory ? MHUD_EDIT_JS_HISTORY_HEIGHT : 0.0f;
 		width = MHUD_EDIT_JS_WIDTH * scale + MHUD_EDIT_BOX_PADDING;
 		height = (history + MHUD_EDIT_JS_PANEL_HEIGHT + rows * MHUD_EDIT_JS_ROW_HEIGHT) * scale + MHUD_EDIT_BOX_PADDING;
+		return;
+	}
+	if (element == MHUDElement::Course)
+	{
+		const i32 rows = prefs.courseRecords ? (prefs.coursePro ? 2 : 1) : 0;
+		const f32 scale = Clamp((i32)size, MHUD_JS_SIZE_MIN, MHUD_JS_SIZE_MAX) / 100.0f;
+		const f32 head = prefs.courseMap ? MHUD_EDIT_COURSE_HEAD_HEIGHT : 0.0f;
+		width = MHUD_EDIT_COURSE_WIDTH * scale + MHUD_EDIT_BOX_PADDING;
+		height = (MHUD_EDIT_COURSE_PADDING + head + rows * MHUD_EDIT_COURSE_ROW_HEIGHT) * scale + MHUD_EDIT_BOX_PADDING;
 		return;
 	}
 	if (element == MHUDElement::Keys)

@@ -159,6 +159,45 @@
       </Panel>
     </Panel>
 
+    <Panel id="mhud_course_pos" class="pos" hittest="false">
+      <Panel id="mhud_course" class="element ci-stack hidden" hittest="false">
+        <Panel id="mhud_ci_panel" class="js-panel ci-panel" hittest="false">
+          <Panel id="mhud_ci_head" class="ci-head" hittest="false">
+            <Panel class="js-header" hittest="false">
+              <Label id="mhud_ci_map" class="js-type ci-map" text="{s:v}" hittest="false" />
+              <Label id="mhud_ci_status" class="js-tier-name" text="{s:v}" hittest="false" />
+            </Panel>
+            <Panel class="ci-course-row" hittest="false">
+              <Label id="mhud_ci_course" class="ci-course" text="{s:v}" hittest="false" />
+              <Label id="mhud_ci_state" class="js-tier-name" text="{s:v}" hittest="false" />
+            </Panel>
+            <Panel class="js-divider" hittest="false" />
+          </Panel>
+          <Panel id="mhud_ci_r0" class="js-row ci-row" hittest="false">
+            <Label id="mhud_ci_l0" class="js-label ci-label ci-label-all" text="{s:v}" hittest="false" />
+            <Label id="mhud_ci_t0" class="ci-time" text="{s:v}" hittest="false" />
+            <Label id="mhud_ci_b0" class="ci-badge" text="{s:v}" hittest="false" />
+            <Label id="mhud_ci_n0" class="ci-name" text="{s:v}" hittest="false" />
+            <Label id="mhud_ci_g0" class="ci-gap" text="{s:v}" hittest="false" />
+          </Panel>
+          <Panel id="mhud_ci_r1" class="js-row ci-row" hittest="false">
+            <Label id="mhud_ci_l1" class="js-label ci-label ci-label-pro" text="{s:v}" hittest="false" />
+            <Label id="mhud_ci_t1" class="ci-time" text="{s:v}" hittest="false" />
+            <Label id="mhud_ci_b1" class="ci-badge" text="{s:v}" hittest="false" />
+            <Label id="mhud_ci_n1" class="ci-name" text="{s:v}" hittest="false" />
+            <Label id="mhud_ci_g1" class="ci-gap" text="{s:v}" hittest="false" />
+          </Panel>
+        </Panel>
+      </Panel>
+      <Panel id="mhud_course_hit" class="element edit-box hidden" hittest="false">
+        <Button id="mhud_course_hit_move" class="edit-hit" />
+        <Button id="mhud_course_hit_tl" class="edit-corner edit-corner-tl" />
+        <Button id="mhud_course_hit_tr" class="edit-corner edit-corner-tr" />
+        <Button id="mhud_course_hit_bl" class="edit-corner edit-corner-bl" />
+        <Button id="mhud_course_hit_br" class="edit-corner edit-corner-br" />
+      </Panel>
+    </Panel>
+
     <Panel id="mhud_guide_x_pos" class="pos" hittest="false">
       <Panel id="mhud_guide_x" class="guide guide-x hidden" hittest="false" />
     </Panel>

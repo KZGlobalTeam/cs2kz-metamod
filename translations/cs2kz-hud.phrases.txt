@@ -354,4 +354,73 @@
 	{
 		"en"		"{grey}Moving HUD elements needs the layout HUD style and a living player."
 	}
+	"HUD - Course Global"
+	{
+		"en"		"Global"
+	}
+	"HUD - Course Non Global"
+	{
+		"en"		"Non-global"
+	}
+	"HUD - Course Line"
+	{
+		// Main · CKZ
+		"#format"	"course:s,mode:s"
+		"en"		"{course} · {mode}"
+	}
+	"HUD - Course Tier"
+	{
+		//  · T3
+		"#format"	"tier:i"
+		"en"		" · T{tier}"
+	}
+	"HUD - Course Tiers"
+	{
+		//  · T3 / Pro T5
+		"#format"	"tp:i,pro:i"
+		"en"		" · T{tp} / Pro T{pro}"
+	}
+	"HUD - Course All"
+	{
+		"en"		"All"
+	}
+	"HUD - Course Pro"
+	{
+		"en"		"Pro"
+	}
+	"HUD - Course Badge TP"
+	{
+		"en"		"TP"
+	}
+	"HUD - Course Badge Pro"
+	{
+		"en"		"PRO"
+	}
+	"HUD - Course By"
+	{
+		"#format"	"name:s"
+		"en"		"by {name}"
+	}
+	"HUD - Course Gap"
+	{
+		// (+1.234)
+		"#format"	"gap:s"
+		"en"		"({gap})"
+	}
+	"HUD - Course No Records"
+	{
+		"en"		"No records yet"
+	}
+	"HUD - Course Ranked"
+	{
+		"en"		"Ranked"
+	}
+	"HUD - Course Pending"
+	{
+		"en"		"Pending"
+	}
+	"HUD - Course Unranked"
+	{
+		"en"		"Unranked"
+	}
 }

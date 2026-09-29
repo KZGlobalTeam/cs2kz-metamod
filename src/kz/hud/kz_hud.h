@@ -35,6 +35,9 @@ class Jump;
 #define MHUD_JS_PANEL_TIME     6.0f
 #define MHUD_JS_HISTORY_TIME   10.0f
 
+// The course panel's record rows, overall then pro.
+#define MHUD_COURSE_ROW_COUNT 2
+
 enum class MHUDElement
 {
 	Timer,
@@ -43,6 +46,7 @@ enum class MHUDElement
 	Keys,
 	Checkpoint,
 	Jumpstats,
+	Course,
 	// The indicators are contiguous and last, so an element index maps straight onto the indicator tables.
 	Perf,
 	CrouchJump,
@@ -138,6 +142,12 @@ enum class MHUDAlign
 	Right,
 };
 
+// The course panel hangs off the left edge of the screen, so it stays on it whatever the aspect ratio.
+inline MHUDAlign GetMHUDDefaultAlign(MHUDElement element)
+{
+	return element == MHUDElement::Course ? MHUDAlign::Left : MHUDAlign::Center;
+}
+
 // Symbols wrapped around a numeric element's value.
 enum class MHUDBorder
 {
@@ -230,6 +240,9 @@ struct MHUDPrefs
 	bool indicatorAcronym[MHUD_INDICATOR_COUNT] {};
 	JSFieldLayout jsFields {}; // shared with the chat report
 	bool jsHistory {true};
+	bool courseMap {true};
+	bool courseRecords {true};
+	bool coursePro {true};
 
 	bool legacyStyle {};
 	bool compactPanel {};
@@ -477,7 +490,7 @@ private:
 		const char *fontClass {};
 	};
 
-	// The history pills stacked above a panel.
+	// The history pills of the jumpstats and course panels.
 	struct LayoutPill
 	{
 		f64 born {};
@@ -521,6 +534,22 @@ private:
 		const char *distTierClass {};
 	};
 
+	struct LayoutCourseState
+	{
+		bool preview {};
+		i32 scale {INT_MIN};
+		const char *fontClass {};
+		i32 headHidden {-1};
+		i32 rowHidden[MHUD_COURSE_ROW_COUNT] {-1, -1};
+		f64 nextRefresh {};
+		// The last text sent to each label, in the order course.cpp lists them.
+		std::string texts[4 + MHUD_COURSE_ROW_COUNT * 5] {};
+		const char *badgeClasses[MHUD_COURSE_ROW_COUNT] {};
+		const char *nameClasses[MHUD_COURSE_ROW_COUNT] {};
+		const char *statusClass {};
+		const char *stateClass {};
+	};
+
 	struct LayoutEditState
 	{
 		bool active {};
@@ -536,6 +565,7 @@ private:
 	LayoutElementState layoutElements[(i32)MHUDElement::Count] {};
 	LayoutKeysState layoutKeys {};
 	LayoutJumpstatsState layoutJumpstats {};
+	LayoutCourseState layoutCourse {};
 	LayoutEditState layoutEdit {};
 
 	CCSCustomHudLayout *EnsureOwnedLayout(bool &created);
@@ -623,6 +653,9 @@ private:
 	void UpdateKeysElement(CCSCustomHudLayout *layout, KZPlayer *source, bool force, bool preview = false);
 	void UpdateCheckpointElement(CCSCustomHudLayout *layout, KZPlayer *source, bool force);
 	void UpdateIndicatorElements(CCSCustomHudLayout *layout, const SpeedInfo &info, bool force);
+	// preview fills every row with sample values, for edit mode.
+	void UpdateCourseElement(CCSCustomHudLayout *layout, KZPlayer *source, bool show, bool force, bool preview = false);
+	void ClearCoursePreview(CCSCustomHudLayout *layout);
 	// preview draws a sample jump with every enabled row, for edit mode.
 	void UpdateJumpstatsElement(CCSCustomHudLayout *layout, bool show, bool force, bool preview = false);
 	void PushJumpstatHistory(CCSCustomHudLayout *layout);

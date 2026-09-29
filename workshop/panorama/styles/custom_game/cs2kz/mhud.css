@@ -381,6 +381,127 @@
 	color: #bfff90;
 }
 
+/* The course panel borrows the jumpstats panel's look, but stays up. */
+.ci-stack {
+	width: 320px;
+	flow-children: down;
+}
+
+.ci-panel {
+	opacity: 1;
+}
+
+.ci-head {
+	width: 100%;
+	flow-children: down;
+}
+
+.ci-map {
+	text-transform: none;
+	color: #ffffff;
+}
+
+.ci-global {
+	color: #40ff40;
+}
+
+.ci-nonglobal {
+	color: #e4ae39;
+}
+
+/* The course, mode and tiers on the left, and the course's ranked state in that mode on the right. */
+.ci-course-row {
+	width: 100%;
+	height: 18px;
+	margin-bottom: 6px;
+}
+
+.ci-course {
+	horizontal-align: left;
+	vertical-align: center;
+	font-size: 13px;
+	font-weight: medium;
+	color: #c5cad0;
+}
+
+.ci-ranked {
+	color: #40ff40;
+}
+
+.ci-pending {
+	color: #e4ae39;
+}
+
+.ci-unranked {
+	color: #ff4040;
+}
+
+.ci-row {
+	flow-children: right;
+}
+
+/* A record row, drawn like the overlay's. */
+.ci-label {
+	width: 44px;
+}
+
+.ci-label-all {
+	color: #ca8a04;
+}
+
+.ci-label-pro {
+	color: #2563eb;
+}
+
+.ci-time {
+	vertical-align: center;
+	font-size: 15px;
+	font-weight: bold;
+	color: #f3f4f6;
+}
+
+.ci-badge {
+	vertical-align: center;
+	margin-left: 4px;
+	padding: 0px 4px;
+	border-radius: 2px;
+	font-size: 11px;
+	font-weight: bold;
+	color: #f3f4f6;
+}
+
+.ci-badge-tp {
+	background-color: #ca8a04;
+}
+
+.ci-badge-pro {
+	background-color: #2563eb;
+}
+
+.ci-name {
+	width: fill-parent-flow(1.0);
+	margin-left: 6px;
+	vertical-align: center;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	font-size: 13px;
+	font-weight: medium;
+	color: #06b6d4;
+}
+
+/* The viewer holds this record. */
+.ci-name.ci-own {
+	color: #22c55e;
+}
+
+.ci-gap {
+	margin-left: 6px;
+	vertical-align: center;
+	font-size: 13px;
+	font-weight: medium;
+	color: #c9301e;
+}
+
 /* The chat colors of distanceTierColors: grey, grey, blue, green, darkred, gold, orchid. */
 .js-tier-0 { color: #c5cad0; }
 .js-tier-1 { color: #c5cad0; }

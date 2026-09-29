@@ -110,8 +110,8 @@ void KZHUDService::UpdateLayoutElement(CCSCustomHudLayout *layout, MHUDElement e
 	this->SetLayoutClass(layout, def.panelId, state.alignClass, ALIGN_CLASSES[(i32)cached.align]);
 	this->SetLayoutPosition(layout, def.panelId, def.posPanelId, state.x, state.fineX, RoundFloatToInt(x * 10.0f) + alignShift, "x");
 	this->SetLayoutPosition(layout, def.panelId, def.posPanelId, state.y, state.fineY, RoundFloatToInt(y * 10.0f), "y");
-	// The jumpstats panel scales as a whole instead, in UpdateJumpstatsElement.
-	if (element != MHUDElement::Jumpstats)
+	// The jumpstats and course panels scale as a whole instead, from their own update.
+	if (element != MHUDElement::Jumpstats && element != MHUDElement::Course)
 	{
 		this->SetLayoutValueClass(layout, def.panelId, state.fontSize, (i32)this->GetLayoutSize(element), "font-size", false);
 	}
@@ -192,6 +192,7 @@ void KZHUDService::DestroyOwnedLayout()
 	}
 	this->layoutKeys = LayoutKeysState();
 	this->layoutJumpstats = LayoutJumpstatsState();
+	this->layoutCourse = LayoutCourseState();
 	this->layoutEdit = LayoutEditState();
 }
 

@@ -219,6 +219,9 @@ public:
 	void ShowCheckpointText(u32 currentCheckpoint);
 	void ShowStageText();
 
+	static const PBData *GetCachedRecord(PBDataKey key, bool global);
+	const PBData *GetCachedPB(PBDataKey key, bool global);
+
 	CUtlString GetCurrentRunMetadata();
 
 private:

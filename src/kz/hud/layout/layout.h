@@ -28,6 +28,11 @@
 #define MHUD_JS_SIZE_MIN 50
 #define MHUD_JS_SIZE_MAX 200
 
+// Top left, with its left edge 2% in from the screen's. Its size is a scale in percent, like the jumpstats panel's.
+#define MHUD_DEF_COURSE_X    -48
+#define MHUD_DEF_COURSE_Y    -26
+#define MHUD_DEF_COURSE_SIZE 125
+
 // The indicators stack to the right of the speed readout, in the order movementhud draws them.
 #define MHUD_DEF_JUMPBUG_X    12
 #define MHUD_DEF_JUMPBUG_Y    5

@@ -367,6 +367,7 @@ void KZHUDService::UpdateEditElements(CCSCustomHudLayout *layout, bool force)
 							prefs.keys,
 							prefs.checkpoint,
 							MHUD_DEF_BASE_COLOR,
+							MHUD_DEF_BASE_COLOR,
 							prefs.indicator[0],
 							prefs.indicator[1],
 							prefs.indicator[2]};
@@ -382,6 +383,11 @@ void KZHUDService::UpdateEditElements(CCSCustomHudLayout *layout, bool force)
 		if (element == MHUDElement::Jumpstats)
 		{
 			this->UpdateJumpstatsElement(layout, prefs.elements[i].enabled, force, true);
+			continue;
+		}
+		if (element == MHUDElement::Course)
+		{
+			this->UpdateCourseElement(layout, this->player, prefs.elements[i].enabled, force, true);
 			continue;
 		}
 		const bool show = prefs.elements[i].enabled;
@@ -797,12 +803,13 @@ bool KZHUDService::UpdateHudLayout(KZPlayer *source)
 		// show=false applies the hidden class and returns, so the text and color here are ignored.
 		for (i32 i = 0; i < (i32)MHUDElement::Count; i++)
 		{
-			if (i != (i32)MHUDElement::Jumpstats)
+			if (i != (i32)MHUDElement::Jumpstats && i != (i32)MHUDElement::Course)
 			{
 				this->UpdateLayoutElement(layout, (MHUDElement)i, false, NULL, MHUD_DEF_BASE_COLOR, force);
 			}
 		}
 		this->UpdateJumpstatsElement(layout, false, force);
+		this->UpdateCourseElement(layout, source, false, force);
 	}
 	else if (editing)
 	{
@@ -817,6 +824,7 @@ bool KZHUDService::UpdateHudLayout(KZPlayer *source)
 		this->UpdateKeysElement(layout, source, force);
 		this->UpdateCheckpointElement(layout, source, force);
 		this->UpdateIndicatorElements(layout, info, force);
+		this->UpdateCourseElement(layout, source, this->IsMHUDElementEnabled(MHUDElement::Course), force);
 		// Whether jumpstats go to the HUD is the viewer's own setting, even while mimicking.
 		this->UpdateJumpstatsElement(layout, this->GetOwnPrefs().elements[(i32)MHUDElement::Jumpstats].enabled, force);
 	}

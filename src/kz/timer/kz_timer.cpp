@@ -1660,6 +1660,20 @@ void KZTimerService::ShowStageText()
 											 pbDiffPro.c_str());
 }
 
+const PBData *KZTimerService::GetCachedRecord(PBDataKey key, bool global)
+{
+	std::unordered_map<PBDataKey, PBData> &cache = global ? KZTimerService::wrCache : KZTimerService::srCache;
+	auto it = cache.find(key);
+	return it == cache.end() ? nullptr : &it->second;
+}
+
+const PBData *KZTimerService::GetCachedPB(PBDataKey key, bool global)
+{
+	std::unordered_map<PBDataKey, PBData> &cache = global ? this->globalPBCache : this->localPBCache;
+	auto it = cache.find(key);
+	return it == cache.end() ? nullptr : &it->second;
+}
+
 CUtlString KZTimerService::GetCurrentRunMetadata()
 {
 	KeyValues3 kv(KV3_TYPEEX_TABLE, KV3_SUBTYPE_UNSPECIFIED);

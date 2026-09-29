@@ -1428,4 +1428,28 @@
 	{
 		"en"		"Adds a second chat line with the fields that are marked for it"
 	}
+	"Menu - Course Info"
+	{
+		"en"		"Course Info"
+	}
+	"Menu - Course Show Map"
+	{
+		"en"		"Map and course"
+	}
+	"Menu - Course Show Pro"
+	{
+		"en"		"Pro record"
+	}
+	"Menu - Course Show Pro Sub"
+	{
+		"en"		"A second row for the record without teleports"
+	}
+	"Menu - Course Show Records"
+	{
+		"en"		"Records"
+	}
+	"Menu - Course Show Records Sub"
+	{
+		"en"		"The world record and your gap to it, or the server record on a non-global map"
+	}
 }
