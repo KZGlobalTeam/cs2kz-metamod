@@ -71,6 +71,7 @@ enum class JSField : u8
 
 struct JSFieldDef
 {
+	const char *slug;       // its name in the jsFieldOrder preference
 	const char *prefKey;    // bool preference, on by default
 	const char *menuPhrase; // its toggle in the options menu
 	const char *hudLabel;   // NULL: the labels below, joined
@@ -81,7 +82,9 @@ struct JSFieldDef
 
 extern const JSFieldDef JS_FIELDS[(i32)JSField::Count];
 
-// The fields in their order, and which of them are on.
+#define JS_DEFAULT_FIELD_ORDER "block,strafes,sync,premax,edge,height,airtime,width,gaineff,airpath,badangles,deviation,miss,release,offset"
+
+// The fields in the player's order, and which of them are on.
 struct JSFieldLayout
 {
 	JSField order[(i32)JSField::Count] {};
@@ -638,6 +641,10 @@ public:
 
 	// Reads the field preferences. The HUD keeps the result in its cached preferences, which the chat report reads too.
 	static void GetFieldLayout(KZPlayer *player, JSFieldLayout &out);
+	static void SetFieldOrder(KZPlayer *player, const JSField (&order)[(i32)JSField::Count]);
+
+	// The field picked up in the menu's order list, waiting for the spot to move it to.
+	i32 fieldOrderPick {-1};
 
 	// Jump reporting preferences
 	void SetBroadcastMinTier(const char *tierString);

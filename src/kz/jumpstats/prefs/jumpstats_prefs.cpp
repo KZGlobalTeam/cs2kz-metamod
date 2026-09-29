@@ -3,6 +3,8 @@
 #include "kz/option/kz_option.h"
 #include "kz/option/menu/model.h"
 #include "kz/option/menu/kz_menu.h"
+#include "kz/hud/kz_hud.h"
+#include "kz/language/kz_language.h"
 
 #include "tier0/memdbgon.h"
 
@@ -72,6 +74,56 @@ static_function void PickReportType(KZPlayer *player, i64, i64 id)
 	player->optionService->SetPreferenceInt("jsReportType", Clamp(id, (i64)JSReportType_Hud, (i64)JSReportType_Both));
 }
 
+// Picking a field in the order list lifts it, and picking another row drops it there. Row ids are positions.
+static_function void GetFieldOrderChoices(KZPlayer *player, i64, std::vector<KZChoice> &out)
+{
+	const JSFieldLayout &fields = player->hudService->GetOwnPrefs().jsFields;
+	for (i32 i = 0; i < (i32)JSField::Count; i++)
+	{
+		const JSField field = fields.order[i];
+		const std::string name = KZMenuService::GetPhrase(player, JS_FIELDS[(i32)field].menuPhrase);
+		const char *phrase = fields.shown[(i32)field] ? "Menu - JS Field Order Row" : "Menu - JS Field Order Row Off";
+		KZChoice choice {player->languageService->PrepareMessage(phrase, i + 1, name.c_str()), i, NULL};
+		choice.selected = i == player->jumpstatsService->fieldOrderPick;
+		out.push_back(choice);
+	}
+}
+
+static_function void PickFieldOrder(KZPlayer *player, i64, i64 id)
+{
+	i32 &pick = player->jumpstatsService->fieldOrderPick;
+	if (id < 0 || id >= (i64)JSField::Count)
+	{
+		return;
+	}
+	if (pick < 0)
+	{
+		pick = (i32)id;
+		return;
+	}
+	JSField order[(i32)JSField::Count];
+	const JSFieldLayout &fields = player->hudService->GetOwnPrefs().jsFields;
+	std::copy(std::begin(fields.order), std::end(fields.order), std::begin(order));
+	const JSField moved = order[pick];
+	if (pick < id)
+	{
+		std::copy(order + pick + 1, order + id + 1, order + pick);
+	}
+	else if (pick > id)
+	{
+		std::copy_backward(order + id, order + pick, order + pick + 1);
+	}
+	order[id] = moved;
+	pick = -1;
+	KZJumpstatsService::SetFieldOrder(player, order);
+}
+
+// A lifted field is dropped whenever the list opens or closes.
+static_function void OnFieldOrderEdit(KZPlayer *player, i64, bool)
+{
+	player->jumpstatsService->fieldOrderPick = -1;
+}
+
 static_global KZOptNode *fieldsNode {};
 
 static_function void ResetFields(KZPlayer *player, i64)
@@ -108,6 +160,10 @@ void KZJumpstatsService::RegisterMenu()
 
 	// Shared by the chat report and the HUD panel.
 	fieldsNode = KZ::menu::AddSub(cat, "Menu - JS Fields");
+	KZ::menu::AddChoice(fieldsNode, "Menu - JS Field Order", GetFieldOrderChoices, NULL, PickFieldOrder, 0, OnFieldOrderEdit);
+	KZ::menu::SetItemPref(fieldsNode, "jsFieldOrder", KZOptStorage::Str, 0, JS_DEFAULT_FIELD_ORDER);
+	KZ::menu::SetItemSubtext(fieldsNode, "Menu - JS Field Order Sub");
+	KZ::menu::SetItemDivider(fieldsNode);
 	for (const JSFieldDef &field : JS_FIELDS)
 	{
 		KZ::menu::AddToggle(fieldsNode, field.menuPhrase, field.prefKey, true);

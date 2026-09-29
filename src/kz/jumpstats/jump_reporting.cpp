@@ -29,32 +29,61 @@ static_global const char *columnKeys[] = {"#.",
 // clang-format off
 extern const JSFieldDef JS_FIELDS[(i32)JSField::Count] =
 {
-	{"jsShowBlock",     "Menu - JS Field Block",           NULL,                      {"Block"},                                                         true},
-	{"jsShowStrafes",   "Menu - JS Field Strafes",         NULL,                      {"Strafes"},                                                       false},
-	{"jsShowSync",      "Menu - JS Field Sync",            NULL,                      {"Sync"},                                                          false},
-	{"jsShowPreMax",    "Menu - JS Field Pre Max",         NULL,                      {"Pre", "Max"},                                                    false},
-	{"jsShowEdge",      "Menu - JS Field Edge",            NULL,                      {"Edge"},                                                          false},
-	{"jsShowHeight",    "Menu - JS Field Height",          NULL,                      {"Height"},                                                        true},
-	{"jsShowAirTime",   "Menu - JS Field Air Time",        NULL,                      {"Air Time"},                                                      true},
-	{"jsShowWidth",     "Menu - JS Field Width",           NULL,                      {"Width"},                                                         true},
-	{"jsShowGainEff",   "Menu - JS Field Gain Efficiency", NULL,                      {"Gain Efficiency (Short)"},                                       true},
-	{"jsShowAirPath",   "Menu - JS Field Air Path",        NULL,                      {"Air Path"},                                                      true},
-	{"jsShowBadAngles", "Menu - JS Field Bad Angles",      NULL,                      {"Bad Angles (Short)", "Overlap (Short)", "Dead Air (Short)"},     true},
-	{"jsShowDeviation", "Menu - JS Field Deviation",       "Deviation",               {"Deviation (Short)"},                                             true},
-	{"jsShowMiss",      "Menu - JS Field Miss",            NULL,                      {"Miss"},                                                          true},
-	{"jsShowRelease",   "Menu - JS Field Release",         "Jumpstats HUD - Release", {"Release (Short)"},                                               false},
-	{"jsShowOffset",    "Menu - JS Field Offset",          NULL,                      {"Offset"},                                                        true},
+	{"block",     "jsShowBlock",     "Menu - JS Field Block",           NULL,                      {"Block"},                                                         true},
+	{"strafes",   "jsShowStrafes",   "Menu - JS Field Strafes",         NULL,                      {"Strafes"},                                                       false},
+	{"sync",      "jsShowSync",      "Menu - JS Field Sync",            NULL,                      {"Sync"},                                                          false},
+	{"premax",    "jsShowPreMax",    "Menu - JS Field Pre Max",         NULL,                      {"Pre", "Max"},                                                    false},
+	{"edge",      "jsShowEdge",      "Menu - JS Field Edge",            NULL,                      {"Edge"},                                                          false},
+	{"height",    "jsShowHeight",    "Menu - JS Field Height",          NULL,                      {"Height"},                                                        true},
+	{"airtime",   "jsShowAirTime",   "Menu - JS Field Air Time",        NULL,                      {"Air Time"},                                                      true},
+	{"width",     "jsShowWidth",     "Menu - JS Field Width",           NULL,                      {"Width"},                                                         true},
+	{"gaineff",   "jsShowGainEff",   "Menu - JS Field Gain Efficiency", NULL,                      {"Gain Efficiency (Short)"},                                       true},
+	{"airpath",   "jsShowAirPath",   "Menu - JS Field Air Path",        NULL,                      {"Air Path"},                                                      true},
+	{"badangles", "jsShowBadAngles", "Menu - JS Field Bad Angles",      NULL,                      {"Bad Angles (Short)", "Overlap (Short)", "Dead Air (Short)"},     true},
+	{"deviation", "jsShowDeviation", "Menu - JS Field Deviation",       "Deviation",               {"Deviation (Short)"},                                             true},
+	{"miss",      "jsShowMiss",      "Menu - JS Field Miss",            NULL,                      {"Miss"},                                                          true},
+	{"release",   "jsShowRelease",   "Menu - JS Field Release",         "Jumpstats HUD - Release", {"Release (Short)"},                                               false},
+	{"offset",    "jsShowOffset",    "Menu - JS Field Offset",          NULL,                      {"Offset"},                                                        true},
 };
 // clang-format on
 
 void KZJumpstatsService::GetFieldLayout(KZPlayer *player, JSFieldLayout &out)
 {
 	auto *opts = player->optionService;
+	bool placed[(i32)JSField::Count] {};
+	i32 count = 0;
+	// Unknown names are skipped, and fields missing from the list go at the end.
+	CSplitString slugs(opts->GetPreferenceStr("jsFieldOrder", JS_DEFAULT_FIELD_ORDER), ",");
+	FOR_EACH_VEC(slugs, i)
+	{
+		for (i32 f = 0; f < (i32)JSField::Count; f++)
+		{
+			if (!placed[f] && KZ_STREQ(slugs[i], JS_FIELDS[f].slug))
+			{
+				placed[f] = true;
+				out.order[count++] = (JSField)f;
+				break;
+			}
+		}
+	}
 	for (i32 f = 0; f < (i32)JSField::Count; f++)
 	{
-		out.order[f] = (JSField)f;
+		if (!placed[f])
+		{
+			out.order[count++] = (JSField)f;
+		}
 		out.shown[f] = opts->GetPreferenceBool(JS_FIELDS[f].prefKey, true);
 	}
+}
+
+void KZJumpstatsService::SetFieldOrder(KZPlayer *player, const JSField (&order)[(i32)JSField::Count])
+{
+	std::string value;
+	for (JSField field : order)
+	{
+		value += value.empty() ? JS_FIELDS[(i32)field].slug : std::string(",") + JS_FIELDS[(i32)field].slug;
+	}
+	player->optionService->SetPreferenceStr("jsFieldOrder", value.c_str());
 }
 
 static_function void AddFieldValue(JSFieldText &out, const char *format, ...)
