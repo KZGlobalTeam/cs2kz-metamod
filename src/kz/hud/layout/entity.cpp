@@ -104,12 +104,14 @@ void KZHUDService::UpdateLayoutElement(CCSCustomHudLayout *layout, MHUDElement e
 	const MHUDPrefs::Element &cached = this->GetPrefs().elements[(i32)element];
 	// Edge alignment measures x from the screen edge; shift it so the stored x stays the anchor.
 	const i32 alignShift = cached.align == MHUDAlign::Left ? 500 : (cached.align == MHUDAlign::Right ? -500 : 0);
+	// Top anchoring measures y from the top of the screen in the same way.
+	const i32 anchorShift = IsMHUDElementTopAnchored(element) ? 500 : 0;
 	const bool dragged = this->edit.mode == EditMode::Dragging && this->edit.element == element;
 	const f32 x = dragged ? this->edit.dragX : cached.x;
 	const f32 y = dragged ? this->edit.dragY : cached.y;
 	this->SetLayoutClass(layout, def.panelId, state.alignClass, ALIGN_CLASSES[(i32)cached.align]);
 	this->SetLayoutPosition(layout, def.panelId, def.posPanelId, state.x, state.fineX, RoundFloatToInt(x * 10.0f) + alignShift, "x");
-	this->SetLayoutPosition(layout, def.panelId, def.posPanelId, state.y, state.fineY, RoundFloatToInt(y * 10.0f), "y");
+	this->SetLayoutPosition(layout, def.panelId, def.posPanelId, state.y, state.fineY, RoundFloatToInt(y * 10.0f) + anchorShift, "y");
 	// The jumpstats and course panels scale as a whole instead, from their own update.
 	if (element != MHUDElement::Jumpstats && element != MHUDElement::Course)
 	{

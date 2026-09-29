@@ -170,7 +170,7 @@
     </Panel>
 
     <Panel id="mhud_course_pos" class="pos" hittest="false">
-      <Panel id="mhud_course" class="element ci-stack hidden" hittest="false">
+      <Panel id="mhud_course" class="element anchor-top ci-stack hidden" hittest="false">
         <Panel id="mhud_ci_panel" class="js-panel ci-panel" hittest="false">
           <Panel id="mhud_ci_head" class="ci-head" hittest="false">
             <Panel class="js-header" hittest="false">
@@ -211,7 +211,7 @@
           <Panel id="mhud_ci_h4" class="ci-hist" hittest="false"><Label id="mhud_ci_h4_t" class="js-hist-type" text="{s:v}" hittest="false" /><Label id="mhud_ci_h4_i" class="js-hist-info" text="{s:v}" hittest="false" /><Label id="mhud_ci_h4_d" class="js-hist-dist" text="{s:v}" hittest="false" /></Panel>
         </Panel>
       </Panel>
-      <Panel id="mhud_course_hit" class="element edit-box hidden" hittest="false">
+      <Panel id="mhud_course_hit" class="element anchor-top edit-box hidden" hittest="false">
         <Button id="mhud_course_hit_move" class="edit-hit" />
         <Button id="mhud_course_hit_tl" class="edit-corner edit-corner-tl" />
         <Button id="mhud_course_hit_tr" class="edit-corner edit-corner-tr" />

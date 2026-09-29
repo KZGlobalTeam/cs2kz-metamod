@@ -566,7 +566,7 @@ void KZHUDService::UpdateResize(u64 newlyPressed, f32 unitsX, f32 unitsY)
 	const f32 top = dirY > 0.0f ? this->edit.fixedY : this->edit.fixedY - height;
 	const MHUDAlign align = this->GetOwnPrefs().elements[(i32)this->edit.element].align;
 	f32 x = align == MHUDAlign::Left ? left : (align == MHUDAlign::Right ? left + width : left + width * 0.5f);
-	f32 y = top + height * 0.5f;
+	f32 y = IsMHUDElementTopAnchored(this->edit.element) ? top : top + height * 0.5f;
 	this->ClampEditBox(this->edit.element, x, y);
 	this->edit.dragX = RoundFloatToInt(x * 10.0f) / 10.0f;
 	this->edit.dragY = RoundFloatToInt(y * 10.0f) / 10.0f;
@@ -719,8 +719,8 @@ void KZHUDService::GetEditBox(MHUDElement element, f32 x, f32 y, f32 box[4])
 	const MHUDAlign align = element == MHUDElement::Keys ? MHUDAlign::Center : this->GetOwnPrefs().elements[(i32)element].align;
 	box[0] = align == MHUDAlign::Left ? x : (align == MHUDAlign::Right ? x - width : x - width * 0.5f);
 	box[1] = box[0] + width;
-	box[2] = y - height * 0.5f;
-	box[3] = y + height * 0.5f;
+	box[2] = IsMHUDElementTopAnchored(element) ? y : y - height * 0.5f;
+	box[3] = box[2] + height;
 }
 
 void KZHUDService::ClampEditBox(MHUDElement element, f32 &x, f32 &y)

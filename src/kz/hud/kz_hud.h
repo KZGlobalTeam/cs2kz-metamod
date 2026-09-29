@@ -161,6 +161,12 @@ inline MHUDAlign GetMHUDDefaultAlign(MHUDElement element)
 	return element == MHUDElement::Course ? MHUDAlign::Left : MHUDAlign::Center;
 }
 
+// The course panel's height depends on the course, so its y is its top edge rather than its centre.
+inline bool IsMHUDElementTopAnchored(MHUDElement element)
+{
+	return element == MHUDElement::Course;
+}
+
 // Symbols wrapped around a numeric element's value.
 enum class MHUDBorder
 {

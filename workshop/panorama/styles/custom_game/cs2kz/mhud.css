@@ -41,6 +41,11 @@
 	horizontal-align: right;
 }
 
+/* An element whose height changes grows down from its y, instead of about it. */
+.element.anchor-top {
+	vertical-align: top;
+}
+
 .hidden {
 	visibility: collapse;
 }

@@ -28,9 +28,10 @@
 #define MHUD_JS_SIZE_MIN 50
 #define MHUD_JS_SIZE_MAX 200
 
-// Top left, with its left edge 2% in from the screen's. Its size is a scale in percent, like the jumpstats panel's.
+// Top left, with its left edge 2% in from the screen's and its top 5% down. Its size is a scale in percent, like the
+// jumpstats panel's.
 #define MHUD_DEF_COURSE_X    -48
-#define MHUD_DEF_COURSE_Y    -26
+#define MHUD_DEF_COURSE_Y    -45
 #define MHUD_DEF_COURSE_SIZE 125
 
 // Right of the prespeed, at its size.
