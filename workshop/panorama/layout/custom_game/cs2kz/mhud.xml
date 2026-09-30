@@ -199,7 +199,6 @@
             <Label id="mhud_ci_g1" class="ci-gap" text="{s:v}" hittest="false" />
           </Panel>
           <Panel id="mhud_ci_progress" class="ci-progress" hittest="false">
-            <Panel id="mhud_ci_route" class="js-row ci-row hidden" hittest="false"><Label id="mhud_ci_route_label" class="js-label ci-label ci-progress-label" text="{s:v}" hittest="false" /><Label id="mhud_ci_route_value" class="ci-time" text="{s:v}" hittest="false" /></Panel>
             <Panel id="mhud_ci_p0" class="js-row ci-row" hittest="false"><Label id="mhud_ci_pl0" class="js-label ci-label ci-progress-label" text="{s:v}" hittest="false" /><Label id="mhud_ci_pv0" class="ci-time" text="{s:v}" hittest="false" /></Panel>
             <Panel id="mhud_ci_p1" class="js-row ci-row" hittest="false"><Label id="mhud_ci_pl1" class="js-label ci-label ci-progress-label" text="{s:v}" hittest="false" /><Label id="mhud_ci_pv1" class="ci-time" text="{s:v}" hittest="false" /></Panel>
             <Panel id="mhud_ci_p2" class="js-row ci-row" hittest="false"><Label id="mhud_ci_pl2" class="js-label ci-label ci-progress-label" text="{s:v}" hittest="false" /><Label id="mhud_ci_pv2" class="ci-time" text="{s:v}" hittest="false" /></Panel>
