@@ -426,13 +426,13 @@
 	}
 	"HUD - Compare Server PB"
 	{
-		"en"		"Server PB"
-		"ua"		"Серверний PB"
+		"en"		"SPB"
+		"ua"		"SPB"
 	}
 	"HUD - Compare Global PB"
 	{
-		"en"		"PB"
-		"ua"		"PB"
+		"en"		"GPB"
+		"ua"		"GPB"
 	}
 	"HUD - Compare SR"
 	{
