@@ -929,9 +929,6 @@ void KZPlayer::OnTeleport(const Vector *origin, const QAngle *angles, const Vect
 	if (origin)
 	{
 		this->progressService->OnTeleport();
-	}
-	if (origin)
-	{
 		this->beamService->OnTeleport();
 	}
 	this->triggerService->OnTeleport();

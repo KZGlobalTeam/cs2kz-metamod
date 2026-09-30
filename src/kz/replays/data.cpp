@@ -344,6 +344,7 @@ namespace KZ::replaysystem::data
 		{
 			return false;
 		}
+		// Keep only route fields; the decoder discards each full tick after this call.
 		compression::TickVisitor visitor = [&](const TickData &tick)
 		{
 			if (cancel)

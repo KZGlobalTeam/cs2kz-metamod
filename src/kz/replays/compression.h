@@ -22,7 +22,8 @@ namespace KZ::replaysystem::compression
 	// Write compressed tick data with delta encoding
 	i32 WriteTickDataCompressed(std::vector<char> &outBuffer, const std::vector<TickData> &tickData, const std::vector<SubtickData> &subtickData);
 
-	// A visitor consumes ticks without retaining full TickData/SubtickData arrays.
+	// The route reader receives decoded ticks without retaining full tick/subtick arrays.
+	// Returning false aborts decoding, for example when a map change cancels loading.
 	using TickVisitor = std::function<bool(const TickData &)>;
 
 	// Read compressed tick data with delta decoding
