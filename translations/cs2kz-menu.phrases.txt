@@ -1351,7 +1351,15 @@
 	}
 	"Menu - JS History Sub"
 	{
-		"en"		"Your last few jumps, stacked above the panel"
+		"en"		"Your last few jumps, stacked next to the panel"
+	}
+	"Menu - JS History Below"
+	{
+		"en"		"History below the panel"
+	}
+	"Menu - JS History Below Sub"
+	{
+		"en"		"Stack the history under the panel instead of above it"
 	}
 	"Menu - JS Field Block"
 	{

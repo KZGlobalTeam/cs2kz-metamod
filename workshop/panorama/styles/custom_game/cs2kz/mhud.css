@@ -249,6 +249,38 @@
 	opacity: 0;
 }
 
+/* mhudJsHistoryBelow puts the history under the panel, so the pills hang from its top and age downwards. */
+.js-stack.js-below {
+	flow-children: up;
+}
+
+.js-below .js-history {
+	margin-top: 8px;
+	margin-bottom: 0px;
+}
+
+.js-below .js-hist {
+	vertical-align: top;
+	transform: translate3d(0px, 132px, 0px) scale3d(0.68, 1, 1);
+}
+
+.js-below .js-hist.js-age-0,
+.js-below .js-hist.js-age-0b {
+	transform: translate3d(0px, 0px, 0px) scale3d(1, 1, 1);
+}
+
+.js-below .js-hist.js-age-1 {
+	transform: translate3d(0px, 33px, 0px) scale3d(0.92, 1, 1);
+}
+
+.js-below .js-hist.js-age-2 {
+	transform: translate3d(0px, 66px, 0px) scale3d(0.84, 1, 1);
+}
+
+.js-below .js-hist.js-age-3 {
+	transform: translate3d(0px, 99px, 0px) scale3d(0.76, 1, 1);
+}
+
 .js-hist-type {
 	horizontal-align: left;
 	vertical-align: center;

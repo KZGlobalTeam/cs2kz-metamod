@@ -277,6 +277,7 @@ struct MHUDPrefs
 	bool indicatorAcronym[MHUD_INDICATOR_COUNT] {};
 	JSFieldLayout jsFields {}; // shared with the chat report
 	bool jsHistory {true};
+	bool jsHistoryBelow {};
 	Color releaseEarly, releasePerfect, releaseLate;
 	bool courseMap {true};
 	bool courseProgress {true};
@@ -562,6 +563,7 @@ private:
 		bool rowHidden[(i32)JSField::Count] {};
 		const char *valueClass[(i32)JSField::Count] {};
 		bool historyHidden {};
+		bool historyBelow {};
 		i32 scale {INT_MIN};
 		const char *fontClass {};
 		std::string shownType {};

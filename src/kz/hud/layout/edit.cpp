@@ -657,7 +657,7 @@ void KZHUDService::GetEditBoxSize(MHUDElement element, f32 &width, f32 &height)
 	const f32 size = this->GetLayoutSize(element);
 	if (element == MHUDElement::Jumpstats)
 	{
-		// The sample shows every row the player has on, and the history above the panel unless it is off.
+		// The sample shows every row the player has on, and the history unless it is off.
 		i32 rows = 0;
 		for (bool shown : prefs.jsFields.shown)
 		{

@@ -787,6 +787,12 @@ void KZHUDService::UpdateJumpstatsElement(CCSCustomHudLayout *layout, bool show,
 		js.historyHidden = historyHidden;
 		layout->SetHasClass("mhud_js_history", "hidden", historyHidden ? k_eHudPanelClassStatus_HasClass : k_eHudPanelClassStatus_DoesNotHaveClass);
 	}
+	if (js.historyBelow != prefs.jsHistoryBelow)
+	{
+		js.historyBelow = prefs.jsHistoryBelow;
+		layout->SetHasClass(MHUD_ELEMENTS[(i32)MHUDElement::Jumpstats].panelId, "js-below",
+							prefs.jsHistoryBelow ? k_eHudPanelClassStatus_HasClass : k_eHudPanelClassStatus_DoesNotHaveClass);
+	}
 
 	if (preview)
 	{

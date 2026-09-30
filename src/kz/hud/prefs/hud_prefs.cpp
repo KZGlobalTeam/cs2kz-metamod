@@ -400,6 +400,9 @@ void KZHUDService::RegisterMenu()
 			{
 				KZ::menu::AddToggle(sub, "Menu - JS History", "mhudJsShowHistory", true);
 				KZ::menu::SetItemSubtext(sub, "Menu - JS History Sub");
+				KZ::menu::AddToggle(sub, "Menu - JS History Below", "mhudJsHistoryBelow", false);
+				KZ::menu::SetItemSubtext(sub, "Menu - JS History Below Sub");
+				KZ::menu::SetItemEnabledBy(sub, "mhudJsShowHistory");
 				break;
 			}
 
