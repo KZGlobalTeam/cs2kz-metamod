@@ -271,6 +271,21 @@ void KZGlobalService::OnMapInfo(const std::optional<KZ::api::Map> &mapInfo, std:
 		KZGlobalService::currentMap.info = mapOk ? std::move(mapInfo) : std::nullopt;
 		KZGlobalService::currentMap.confirmed = true;
 	}
+
+	if (!mapOk)
+	{
+		return;
+	}
+
+	// The map change cleared every record cache, and players who stayed connected get no new join ack to refill theirs.
+	KZGlobalService::UpdateRecordCache();
+	for (Player *player : g_pKZPlayerManager->players)
+	{
+		if (player && player->IsConnected() && player->IsAuthenticated())
+		{
+			g_pKZPlayerManager->ToKZPlayer(player)->globalService->UpdatePlayerRecordCache();
+		}
+	}
 }
 
 void KZGlobalService::PrintAnnouncements()
@@ -535,18 +550,25 @@ void KZGlobalService::OnPlayerJoinAck(const KZ::api::messages::PlayerJoinAck &ac
 	player->hasPrime |= ack.hasPrime; // Players cannot lose Prime status.
 	player->optionService->InitializeGlobalPrefs(ack.preferences.ToString());
 
+	player->globalService->UpdatePlayerRecordCache();
+}
+
+void KZGlobalService::UpdatePlayerRecordCache()
+{
 	u16 currentMapID = KZGlobalService::WithCurrentMap([](const std::optional<KZ::api::Map> &map) { return map ? map->id : 0; });
 
-	if (currentMapID != 0)
+	if (currentMapID == 0)
 	{
-		std::string_view event("want-player-records");
-		KZ::api::messages::WantPlayerRecords message;
-		message.mapID = currentMapID;
-		message.playerID = steamID;
-
-		KZGlobalService::MessageCallback<KZ::api::messages::PlayerRecords> callback(OnPlayerRecordsReceived, steamID);
-		KZGlobalService::WS::SendMessage(message, std::move(callback));
+		return;
 	}
+
+	u64 steamID = this->player->GetSteamId64();
+	KZ::api::messages::WantPlayerRecords message;
+	message.mapID = currentMapID;
+	message.playerID = steamID;
+
+	KZGlobalService::MessageCallback<KZ::api::messages::PlayerRecords> callback(OnPlayerRecordsReceived, steamID);
+	KZGlobalService::WS::SendMessage(message, std::move(callback));
 }
 
 void KZGlobalService::OnPlayerAuthorized()
@@ -974,6 +996,10 @@ void KZGlobalService::WS::CompleteHandshake(KZ::api::messages::handshake::HelloA
 	if (mapMismatch)
 	{
 		KZGlobalService::SendMapChange();
+	}
+	else
+	{
+		KZGlobalService::UpdateRecordCache();
 	}
 
 	for (Player *player : g_pKZPlayerManager->players)

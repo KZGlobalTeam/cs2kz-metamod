@@ -628,6 +628,8 @@ public:
 	}
 
 	static void UpdateRecordCache();
+	// Fetches this player's global records on the current map into their PB cache.
+	void UpdatePlayerRecordCache();
 
 	struct RecordData
 	{
