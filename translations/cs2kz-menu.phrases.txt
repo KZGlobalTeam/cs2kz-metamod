@@ -1361,6 +1361,14 @@
 	{
 		"en"		"Stack the history under the panel instead of above it"
 	}
+	"Menu - JS Duration"
+	{
+		"en"		"Panel duration"
+	}
+	"Menu - JS Duration Sub"
+	{
+		"en"		"How long the panel stays up after a jump"
+	}
 	"Menu - JS Field Block"
 	{
 		"en"		"Block"

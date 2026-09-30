@@ -32,7 +32,9 @@ class Jump;
 
 #define MHUD_JS_PILL_COUNT     5
 #define MHUD_JS_PILL_GONE_RANK 4
-#define MHUD_JS_PANEL_TIME     6.0f
+#define MHUD_JS_PANEL_TIME     6
+#define MHUD_JS_PANEL_TIME_MIN 1
+#define MHUD_JS_PANEL_TIME_MAX 30
 #define MHUD_JS_HISTORY_TIME   10.0f
 
 // The course panel's record rows, overall then pro.
@@ -278,6 +280,7 @@ struct MHUDPrefs
 	JSFieldLayout jsFields {}; // shared with the chat report
 	bool jsHistory {true};
 	bool jsHistoryBelow {};
+	i32 jsDuration {MHUD_JS_PANEL_TIME}; // seconds the panel stays up after a jump
 	Color releaseEarly, releasePerfect, releaseLate;
 	bool courseMap {true};
 	bool courseProgress {true};

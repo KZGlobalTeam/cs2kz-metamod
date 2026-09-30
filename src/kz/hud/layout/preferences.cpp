@@ -79,6 +79,7 @@ void KZHUDService::RefreshPrefs()
 	KZJumpstatsService::GetFieldLayout(this->player, this->prefs.jsFields);
 	this->prefs.jsHistory = opts->GetPreferenceBool("mhudJsShowHistory", true);
 	this->prefs.jsHistoryBelow = opts->GetPreferenceBool("mhudJsHistoryBelow", false);
+	this->prefs.jsDuration = Clamp((i32)opts->GetPreferenceInt("mhudJsDuration", MHUD_JS_PANEL_TIME), MHUD_JS_PANEL_TIME_MIN, MHUD_JS_PANEL_TIME_MAX);
 	this->prefs.releaseEarly = opts->GetPreferenceColor("mhudReleaseEarlyColor", MHUD_DEF_RELEASE_EARLY_COLOR);
 	this->prefs.releasePerfect = opts->GetPreferenceColor("mhudReleasePerfectColor", MHUD_DEF_RELEASE_PERFECT_COLOR);
 	this->prefs.releaseLate = opts->GetPreferenceColor("mhudReleaseLateColor", MHUD_DEF_RELEASE_LATE_COLOR);

@@ -403,6 +403,10 @@ void KZHUDService::RegisterMenu()
 				KZ::menu::AddToggle(sub, "Menu - JS History Below", "mhudJsHistoryBelow", false);
 				KZ::menu::SetItemSubtext(sub, "Menu - JS History Below Sub");
 				KZ::menu::SetItemEnabledBy(sub, "mhudJsShowHistory");
+				KZ::menu::AddSize(sub, "Menu - JS Duration", "mhudJsDuration", MHUD_JS_PANEL_TIME, MHUD_JS_PANEL_TIME_MIN, MHUD_JS_PANEL_TIME_MAX);
+				KZ::menu::SetItemPref(sub, "mhudJsDuration", KZOptStorage::Int);
+				KZ::menu::SetItemUnit(sub, "s");
+				KZ::menu::SetItemSubtext(sub, "Menu - JS Duration Sub");
 				break;
 			}
 

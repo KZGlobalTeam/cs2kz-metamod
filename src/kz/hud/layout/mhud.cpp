@@ -596,7 +596,7 @@ bool KZHUDService::ShowJumpstat(Jump *jump, i32 colorTier)
 	js.shownDist = text.dist;
 	js.shownTier = colorTier;
 	js.hasShown = true;
-	js.hideTime = g_pKZUtils->GetServerGlobals()->curtime + MHUD_JS_PANEL_TIME;
+	js.hideTime = g_pKZUtils->GetServerGlobals()->curtime + this->GetPrefs().jsDuration;
 	return true;
 }
 
