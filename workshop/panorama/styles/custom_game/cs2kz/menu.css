@@ -569,6 +569,12 @@ VerticalScrollBar:hover .ScrollThumb {
 
 // --- order popup -------------------------------------------------------------------
 
+/* Wide enough for "Bad angles, overlap and dead air" beside the buttons. */
+.order-popup {
+	width: 380px;
+	x: 634px;
+}
+
 /* One row per shown entry, with buttons that move it past its neighbour. The ends grey out the way they cannot go. */
 .order-rows {
 	flow-children: down;

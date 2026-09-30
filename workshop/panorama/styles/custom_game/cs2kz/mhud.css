@@ -466,6 +466,7 @@
 	height: 25px;
 	vertical-align: top;
 	padding: 0px 13px;
+	flow-children: right;
 
 	background-color: #000000b8;
 	background-size: 360px 360px;
@@ -513,10 +514,22 @@
 	opacity: 0;
 }
 
-/* A zone name such as STAGE 12 is wider than a jump type. */
-.ci-stack .js-hist-info {
-	margin-left: 76px;
+/* A zone name such as STAGE 12 is wider than a jump type. The info takes whatever the gap leaves and shrinks
+   to fit it, since a slow split or a long compare target runs into the gap otherwise. */
+.ci-hist .js-hist-type {
+	width: 76px;
+}
+
+.ci-hist .js-hist-info {
+	width: fill-parent-flow(1);
+	margin-left: 0px;
 	font-size: 13px;
+	white-space: nowrap;
+	text-overflow: shrink;
+}
+
+.ci-hist .js-hist-dist {
+	margin-left: 6px;
 }
 
 .ci-progress {

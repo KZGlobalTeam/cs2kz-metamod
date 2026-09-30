@@ -409,11 +409,11 @@
 	}
 	"HUD - Compare Server PB"
 	{
-		"en"		"Server PB"
+		"en"		"SPB"
 	}
 	"HUD - Compare Global PB"
 	{
-		"en"		"PB"
+		"en"		"GPB"
 	}
 	"HUD - Compare SR"
 	{

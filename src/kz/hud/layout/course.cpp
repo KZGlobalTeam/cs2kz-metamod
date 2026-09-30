@@ -402,7 +402,7 @@ void KZHUDService::UpdateCourseElement(CCSCustomHudLayout *layout, KZPlayer *sou
 			GetCourseSample(lang, info);
 			apply(info);
 			const std::string zone = lang->PrepareMessage(COURSE_ZONE_PHRASES[(i32)KZTimerService::ZoneKind::Checkpoint], 99);
-			const std::string target = lang->PrepareMessage("HUD - Compare Pro", lang->PrepareMessage("HUD - Compare Global PB").c_str());
+			const std::string target = lang->PrepareMessage("HUD - Compare Pro", lang->PrepareMessage("HUD - Compare Server PB").c_str());
 			const std::string pillInfo = lang->PrepareMessage("HUD - Course Pill Info", "59:59.999", target.c_str());
 			for (i32 i = 0; i < MHUD_JS_PILL_GONE_RANK; i++)
 			{
