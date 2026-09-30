@@ -9,11 +9,22 @@
 
 #include "tier0/memdbgon.h"
 
+struct ReferenceFile
+{
+	std::string uuid, path;
+	u32 size;
+	long modified;
+
+	bool operator==(const ReferenceFile &other) const
+	{
+		return uuid == other.uuid && path == other.path && size == other.size && modified == other.modified;
+	}
+};
+
 struct ProgressReference
 {
 	KZ::progress::Route route;
-	std::string uuid;
-	std::unordered_map<std::string, f64> rejected;
+	std::vector<ReferenceFile> files;
 	u64 generation {};
 	f64 nextCheck {};
 };
@@ -58,16 +69,29 @@ void KZProgressService::OnGameFrame()
 	loader.join();
 	loadReady = false;
 	auto &reference = references[loadingKey];
-	if (loadedReference.route.length > 0)
+	// Publish only a stable snapshot. A download or recording that changes during
+	// decoding will be picked up on the next check instead of caching a partial file.
+	bool changed = false;
+	for (const auto &file : loadedReference.files)
 	{
-		reference.route = std::move(loadedReference.route);
-		reference.uuid = loadedReference.uuid;
-		reference.generation = nextGeneration++;
+		if (!g_pFullFileSystem->FileExists(file.path.c_str()) || g_pFullFileSystem->Size(file.path.c_str()) != file.size
+			|| g_pFullFileSystem->GetFileTime(file.path.c_str()) != file.modified)
+		{
+			changed = true;
+			break;
+		}
+	}
+	if (changed)
+	{
+		reference.nextCheck = 0;
 	}
 	else
 	{
-		// A file may still be downloading or being written when first observed.
-		reference.rejected[loadedReference.uuid] = g_pKZUtils->GetServerGlobals()->curtime + 30;
+		// Invalid, unchanged files stay evaluated, too. Retry only when the cached
+		// record UUID, file path, size or modification time changes, never on a timer.
+		reference.files = std::move(loadedReference.files);
+		reference.route = std::move(loadedReference.route);
+		reference.generation = reference.route.length > 0 ? nextGeneration++ : 0;
 	}
 	loadedReference = {};
 }
@@ -99,7 +123,7 @@ static_function ProgressReference &GetReference(const KZCourseDescriptor *course
 {
 	PBDataKey key = ToPBDataKey(modeID, course->guid);
 	auto &reference = references[key];
-	f64 now = g_pKZUtils->GetServerGlobals()->curtime;
+	f64 now = Plat_FloatTime();
 	if (loader.joinable() || now < reference.nextCheck)
 	{
 		return reference;
@@ -107,21 +131,26 @@ static_function ProgressReference &GetReference(const KZCourseDescriptor *course
 	reference.nextCheck = now + 1;
 	const PBData *world = KZTimerService::GetCachedRecord(key, true);
 	const PBData *server = KZTimerService::GetCachedRecord(key, false);
-	// Prefer a local pro WR, then overall WR, pro SR and overall SR. Overall
-	// references allow hard courses with no completed no-TP record. No extra SQL,
-	// directory scans, downloads or playback requests are made for progress.
+	// Compare every available record by its simplified route length. A pro WR
+	// can contain more failed attempts than an overall record on a hard course.
+	// These UUIDs come from the existing cache; progress does not query or download.
 	const char *uuids[] = {world ? world->pro.replayUUID.Get() : "", world ? world->overall.replayUUID.Get() : "",
 						   server ? server->pro.replayUUID.Get() : "", server ? server->overall.replayUUID.Get() : ""};
+	std::vector<ReferenceFile> files;
 	for (const char *uuid : uuids)
 	{
-		auto rejected = reference.rejected.find(uuid);
-		if (!*uuid || (rejected != reference.rejected.end() && now < rejected->second))
+		if (!*uuid)
 		{
 			continue;
 		}
-		if (reference.uuid == uuid)
+		bool duplicate = false;
+		for (const auto &file : files)
 		{
-			return reference;
+			duplicate |= file.uuid == uuid;
+		}
+		if (duplicate)
+		{
+			continue;
 		}
 		char path[512];
 		V_snprintf(path, sizeof(path), KZ_REPLAY_PATH "/%s.replay", uuid);
@@ -133,36 +162,56 @@ static_function ProgressReference &GetReference(const KZCourseDescriptor *course
 				continue;
 			}
 		}
-		char md5[33] {};
-		if (!g_pKZUtils->GetCurrentMapMD5(md5, sizeof(md5)))
-		{
-			return reference;
-		}
-		loadingKey = key;
-		// Snapshot all engine-owned strings on the main thread. The existing replay
-		// reader produces a private value; it never installs it as the playing replay.
-		loader = std::thread(
-			[path = std::string(path), uuid = std::string(uuid), map = std::string(g_pKZUtils->GetCurrentMapName().Get()), md5 = std::string(md5),
-			 courseName = std::string(course->name), courseID = course->id, modeName = std::string(modeName)]()
-			{
-				loadedReference.uuid = uuid;
-				KZ::replaysystem::data::ReplayMovement replay;
-				bool valid = KZ::replaysystem::data::ReadReplayMovement(path.c_str(), replay, cancelLoad);
-				if (valid && !cancelLoad && replay.header.type() == cs2kz::replay::RP_RUN && replay.header.has_run()
-					&& replay.header.map().name() == map && replay.header.map().md5() == md5 && replay.header.run().course_name() == courseName
-					&& replay.header.run().mode().name() == modeName && replay.header.run().styles_size() == 0)
-				{
-					if (!loadedReference.route.Build(replay, courseID, cancelLoad))
-					{
-						loadedReference.route = {};
-					}
-				}
-				// Atomic publication makes the worker's value visible before the main
-				// thread joins and moves it into the cache. The worker never accesses players.
-				loadReady = true;
-			});
-		break;
+		files.push_back({uuid, path, g_pFullFileSystem->Size(path), g_pFullFileSystem->GetFileTime(path)});
 	}
+	if (files == reference.files)
+	{
+		return reference;
+	}
+	if (files.empty())
+	{
+		reference.files.clear();
+		reference.route = {};
+		reference.generation = 0;
+		return reference;
+	}
+	char md5[33] {};
+	if (!g_pKZUtils->GetCurrentMapMD5(md5, sizeof(md5)))
+	{
+		return reference;
+	}
+	loadingKey = key;
+	// Snapshot engine-owned data on the main thread. Only one candidate's compact
+	// movement data and the shortest route are retained while loading off-thread.
+	loader = std::thread(
+		[files = std::move(files), map = std::string(g_pKZUtils->GetCurrentMapName().Get()), md5 = std::string(md5),
+		 courseName = std::string(course->name), courseID = course->id, modeName = std::string(modeName)]()
+		{
+			loadedReference.files = files;
+			for (const auto &file : files)
+			{
+				if (cancelLoad)
+				{
+					break;
+				}
+				KZ::replaysystem::data::ReplayMovement replay;
+				bool valid = KZ::replaysystem::data::ReadReplayMovement(file.path.c_str(), replay, cancelLoad);
+				if (!valid || cancelLoad || replay.header.type() != cs2kz::replay::RP_RUN || !replay.header.has_run()
+					|| replay.header.map().name() != map || replay.header.map().md5() != md5 || replay.header.run().course_name() != courseName
+					|| replay.header.run().mode().name() != modeName || replay.header.run().styles_size() != 0)
+				{
+					continue;
+				}
+				KZ::progress::Route route;
+				if (route.Build(replay, courseID, cancelLoad) && (loadedReference.route.length == 0 || route.length < loadedReference.route.length))
+				{
+					loadedReference.route = std::move(route);
+				}
+			}
+			// Atomic publication precedes joining and moving the result on the main
+			// thread. The worker never accesses players or changes the record cache.
+			loadReady = true;
+		});
 	return reference;
 }
 
@@ -199,12 +248,15 @@ void KZProgressService::OnPhysicsSimulatePost()
 		this->OnTeleport();
 		return;
 	}
-	f64 now = g_pKZUtils->GetServerGlobals()->curtime;
+	f64 now = Plat_FloatTime();
 	if (now < this->nextUpdate)
 	{
 		return;
 	}
-	this->nextUpdate = now + 0.1;
+	// Give each slot a fixed phase so projections are spread across server frames.
+	constexpr f64 interval = 0.1;
+	f64 phase = this->player->GetPlayerSlot().Get() * interval / MAXPLAYERS;
+	this->nextUpdate = (floor((now - phase) / interval) + 1) * interval + phase;
 	this->visible = false;
 	// The timer remembers the selected course even when stopped. Its running,
 	// paused and valid flags do not gate positional progress. Before selecting a

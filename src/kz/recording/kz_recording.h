@@ -305,6 +305,9 @@ public:
 	void OnCPZ(i32 cpz);
 	void OnStage(i32 stage);
 	void OnTeleport(const Vector *origin, const QAngle *angles, const Vector *velocity);
+	void OnCheckpointSave(i32 index, const Vector &origin);
+	void OnCheckpointTeleport(i32 index, const Vector &origin, const Vector &destination, bool undo);
+	void OnCheckpointReset();
 
 	void OnJumpFinish(Jump *jump);
 
@@ -333,6 +336,7 @@ public:
 	void EnsureCircularRecorderInitialized();
 
 private:
+	RpEvent CreateEvent(RpEventType type) const;
 	// Insert a replay event into the circular buffer and all active recorders.
 	void InsertEvent(const RpEvent &event);
 
@@ -340,6 +344,10 @@ private:
 	void InsertTeleportEvent(const Vector *origin, const QAngle *angles, const Vector *velocity);
 	void InsertModeChangeEvent(const char *name, const char *md5);
 	void InsertStyleChangeEvent(const char *name, const char *md5, bool firstStyle);
+	void InsertCheckpointEvent(RpEvent::RpEventData::CheckpointEvent::CheckpointEventType type, i32 index, const Vector &origin,
+							   const Vector &destination);
+	bool physicsSimulationActive {};
+	bool hasRecordedTick {};
 
 public:
 	// Write a replay file with completion callbacks

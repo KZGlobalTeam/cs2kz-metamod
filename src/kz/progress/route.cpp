@@ -10,10 +10,206 @@ namespace KZ::progress
 		return {(i32)floorf(position.x / 128), (i32)floorf(position.y / 128), (i32)floorf(position.z / 128)};
 	}
 
+	struct PathPoint
+	{
+		Vector origin;
+		bool disconnect;
+		u32 milestone;
+	};
+
+	// Remove a failed excursion only after the new path follows the earlier path
+	// for 64 units. A lone crossing or a reverse walk is not enough to erase a branch.
+	static_function bool EraseWalkbacks(std::vector<PathPoint> &path, const std::atomic<bool> &cancel)
+	{
+		if (path.size() < 2)
+		{
+			return true;
+		}
+		std::vector<f64> originalDistance(path.size());
+		std::vector<size_t> blockEnd(path.size());
+		for (size_t i = 1; i < path.size(); i++)
+		{
+			if (cancel)
+			{
+				return false;
+			}
+			originalDistance[i] = originalDistance[i - 1];
+			if (!path[i].disconnect && path[i].milestone == path[i - 1].milestone)
+			{
+				originalDistance[i] += (path[i].origin - path[i - 1].origin).Length();
+			}
+		}
+		blockEnd.back() = path.size() - 1;
+		for (size_t i = path.size() - 1; i-- > 0;)
+		{
+			blockEnd[i] = !path[i + 1].disconnect && path[i + 1].milestone == path[i].milestone ? blockEnd[i + 1] : i;
+		}
+		auto sample = [](const std::vector<PathPoint> &points, const std::vector<f64> &distances, size_t first, size_t last, f64 along,
+						 Vector &position, Vector &direction)
+		{
+			if (first >= last || along < distances[first] || along > distances[last])
+			{
+				return false;
+			}
+			auto next = std::upper_bound(distances.begin() + first, distances.begin() + last + 1, along);
+			size_t j = next == distances.begin() + last + 1 ? last : (size_t)(next - distances.begin());
+			while (j > first && distances[j] == distances[j - 1])
+			{
+				j--;
+			}
+			if (j <= first)
+			{
+				return false;
+			}
+			Vector delta = points[j].origin - points[j - 1].origin;
+			f32 length = delta.Length();
+			if (length <= 0.001f)
+			{
+				return false;
+			}
+			direction = delta / length;
+			position = points[j - 1].origin + direction * (f32)(along - distances[j - 1]);
+			return true;
+		};
+		auto cellFor = [](const Vector &position)
+		{ return Cell {(i32)floorf(position.x / 64), (i32)floorf(position.y / 64), (i32)floorf(position.z / 64)}; };
+		std::vector<PathPoint> result;
+		std::vector<f64> distance;
+		std::vector<Cell> indexedCell;
+		std::vector<bool> indexed;
+		std::unordered_map<Cell, std::vector<size_t>, CellHash> grid;
+		size_t blockStart = 0;
+		auto append = [&](const PathPoint &point)
+		{
+			bool connected = !result.empty() && !point.disconnect && point.milestone == result.back().milestone;
+			if (connected && point.origin == result.back().origin)
+			{
+				return;
+			}
+			f32 length = connected ? (point.origin - result.back().origin).Length() : 0;
+			Cell cell {};
+			bool index = connected && length > 0.001f && length <= 64;
+			if (!connected)
+			{
+				grid.clear();
+				blockStart = result.size();
+			}
+			if (index)
+			{
+				cell = cellFor((point.origin + result.back().origin) * 0.5f);
+				grid[cell].push_back(result.size());
+			}
+			distance.push_back((distance.empty() ? 0 : distance.back()) + length);
+			result.push_back(point);
+			indexedCell.push_back(cell);
+			indexed.push_back(index);
+		};
+		auto pop = [&]()
+		{
+			if (indexed.back())
+			{
+				auto bucket = grid.find(indexedCell.back());
+				bucket->second.pop_back();
+				if (bucket->second.empty())
+				{
+					grid.erase(bucket);
+				}
+			}
+			result.pop_back();
+			distance.pop_back();
+			indexedCell.pop_back();
+			indexed.pop_back();
+		};
+		for (size_t i = 0; i < path.size(); i++)
+		{
+			if (cancel)
+			{
+				return false;
+			}
+			const auto &point = path[i];
+			if (result.empty() || point.disconnect || point.milestone != result.back().milestone
+				|| originalDistance[blockEnd[i]] - originalDistance[i] < 64)
+			{
+				append(point);
+				continue;
+			}
+			Cell center = cellFor(point.origin);
+			size_t best = SIZE_MAX;
+			f64 bestDistance = DBL_MAX;
+			Vector bestPosition;
+			u32 candidates = 0;
+			bool dense = false;
+			for (i32 x = center.x - 1; x <= center.x + 1 && !dense; x++)
+			{
+				for (i32 y = center.y - 1; y <= center.y + 1 && !dense; y++)
+				{
+					for (i32 z = center.z - 1; z <= center.z + 1 && !dense; z++)
+					{
+						auto bucket = grid.find({x, y, z});
+						if (bucket == grid.end())
+						{
+							continue;
+						}
+						for (size_t j : bucket->second)
+						{
+							// Bound work on dense jitter without rejecting or truncating the route.
+							if (++candidates > 256)
+							{
+								dense = true;
+								break;
+							}
+							Vector delta = result[j].origin - result[j - 1].origin;
+							f32 fraction = Clamp((point.origin - result[j - 1].origin).Dot(delta) / delta.LengthSqr(), 0.0f, 1.0f);
+							Vector projected = result[j - 1].origin + delta * fraction;
+							f64 along = distance[j - 1] + delta.Length() * fraction;
+							if (distance.back() - along < 256 || along >= bestDistance || (point.origin - projected).LengthSqr() > 64)
+							{
+								continue;
+							}
+							bool follows = true;
+							for (i32 step = 0; step <= 8; step++)
+							{
+								Vector oldPosition, oldDirection, newPosition, newDirection;
+								if (!sample(result, distance, blockStart, result.size() - 1, along + step * 8, oldPosition, oldDirection)
+									|| !sample(path, originalDistance, i, blockEnd[i], originalDistance[i] + step * 8, newPosition, newDirection)
+									|| (oldPosition - newPosition).LengthSqr() > 64 || oldDirection.Dot(newDirection) < 0.9f)
+								{
+									follows = false;
+									break;
+								}
+							}
+							if (follows)
+							{
+								best = j;
+								bestDistance = along;
+								bestPosition = projected;
+							}
+						}
+					}
+				}
+			}
+			if (!dense && best != SIZE_MAX)
+			{
+				while (result.size() > best)
+				{
+					pop();
+				}
+				append({bestPosition, false, point.milestone});
+			}
+			append(point);
+		}
+		path = std::move(result);
+		return true;
+	}
+
 	bool Route::Build(const replaysystem::data::ReplayMovement &replay, i32 courseID, const std::atomic<bool> &cancel)
 	{
+		segments.clear();
+		cells.clear();
+		length = 0;
 		using TimerEvent = RpEvent::RpEventData::TimerEvent;
-		u32 start = 0, end = 0, pendingStart = 0;
+		u32 start = 0, end = 0;
+		size_t startEvent = SIZE_MAX, endEvent = SIZE_MAX, pendingStart = SIZE_MAX;
 		// Run files include a pre-run buffer and a post-run breather. Use the completed
 		// interval for this course, rather than treating the whole recording as a run.
 		for (u32 i = 0; i < replay.events.size(); i++)
@@ -25,30 +221,34 @@ namespace KZ::progress
 			}
 			if (event.data.timer.type == TimerEvent::TIMER_START)
 			{
-				pendingStart = event.data.timer.index == courseID ? event.serverTick : 0;
+				pendingStart = event.data.timer.index == courseID ? i : SIZE_MAX;
 			}
 			else if (event.data.timer.type == TimerEvent::TIMER_STOP)
 			{
-				pendingStart = 0;
+				pendingStart = SIZE_MAX;
 			}
 			else if (event.data.timer.type == TimerEvent::TIMER_END)
 			{
-				if (pendingStart && event.data.timer.index == courseID && fabsf(event.data.timer.time - replay.header.run().time()) < 0.001f)
+				if (pendingStart != SIZE_MAX && event.data.timer.index == courseID
+					&& fabsf(event.data.timer.time - replay.header.run().time()) < 0.001f)
 				{
-					start = pendingStart;
+					startEvent = pendingStart;
+					endEvent = i;
+					start = replay.events[startEvent].serverTick;
 					end = event.serverTick;
 				}
-				pendingStart = 0;
+				pendingStart = SIZE_MAX;
 			}
 		}
-		if (!start || end <= start)
+		if (startEvent == SIZE_MAX || endEvent == SIZE_MAX || end < start)
 		{
 			return false;
 		}
 
-		// Checkpoint indices identify a particular saved CP, not a visit to a nearby
-		// coordinate. Keep a parent chain so CP/undo/next-CP can restore an earlier
-		// branch without copying or searching the entire trajectory on every return.
+		// CP operations are explicit ordered events, not inferred from a tick's final
+		// counters. Every saved CP and undo target keeps an immutable path snapshot.
+		// Restoring an old CP removes retries; next-CP and repeated undo can restore
+		// a different snapshot even if several operations happened in the same tick.
 		const size_t none = SIZE_MAX;
 
 		struct Point
@@ -56,43 +256,141 @@ namespace KZ::progress
 			Vector origin;
 			size_t parent;
 			bool disconnect;
-		};
-
-		struct Anchor
-		{
-			size_t pre, post;
+			u32 milestone;
 		};
 
 		std::vector<Point> nodes;
-		std::unordered_map<i32, Anchor> checkpoints;
-		Anchor undo {none, none};
-		size_t tail = none;
+		std::unordered_map<i32, size_t> checkpoints;
+		size_t tail = none, undo = none;
+		u32 milestone = 0;
+		bool checkpointTeleport = false, active = false;
 		auto append = [&](const Vector &origin, bool disconnect)
 		{
-			if (tail != none && !disconnect && nodes[tail].origin == origin)
+			if (tail != none && !disconnect && nodes[tail].origin == origin && nodes[tail].milestone == milestone)
 			{
 				return tail;
 			}
-			nodes.push_back({origin, tail, disconnect});
+			nodes.push_back({origin, tail, disconnect, milestone});
 			return tail = nodes.size() - 1;
 		};
-		auto resolve = [&](Anchor anchor, const Vector &origin)
+		using CheckpointEvent = RpEvent::RpEventData::CheckpointEvent;
+		auto applyEvent = [&](const RpEvent &event, size_t index)
 		{
-			// The replay has no CP-position/undo event. Accept an exact recorded
-			// endpoint only. Never guess a CP identity from a radius search.
-			if (anchor.pre != none && nodes[anchor.pre].origin == origin)
+			if (index == startEvent || index == endEvent)
 			{
-				return anchor.pre;
+				const auto &timer = event.data.timer;
+				Vector origin(timer.origin[0], timer.origin[1], timer.origin[2]);
+				if (!origin.IsValid())
+				{
+					return false;
+				}
+				active = index == startEvent;
+				append(origin, false);
+				return true;
 			}
-			if (anchor.post != none && nodes[anchor.post].origin == origin)
+			if (!active)
 			{
-				return anchor.post;
+				return true;
 			}
-			return none;
+			if (event.type == RPEVENT_TIMER_EVENT)
+			{
+				if (event.data.timer.type == TimerEvent::TIMER_SPLIT || event.data.timer.type == TimerEvent::TIMER_CPZ
+					|| event.data.timer.type == TimerEvent::TIMER_STAGE)
+				{
+					// Geometric retry removal must never bypass an ordered course zone.
+					milestone++;
+				}
+				return true;
+			}
+			if (event.type == RPEVENT_CHECKPOINT)
+			{
+				const auto &cp = event.data.checkpoint;
+				if (cp.type == CheckpointEvent::CHECKPOINT_RESET)
+				{
+					checkpoints.clear();
+					undo = none;
+					return true;
+				}
+				Vector source(cp.origin[0], cp.origin[1], cp.origin[2]);
+				Vector destination(cp.destination[0], cp.destination[1], cp.destination[2]);
+				if (!source.IsValid() || !destination.IsValid())
+				{
+					return false;
+				}
+				size_t before = append(source, false);
+				if (cp.type == CheckpointEvent::CHECKPOINT_SAVE)
+				{
+					checkpoints[cp.index] = before;
+					return true;
+				}
+				size_t target = none;
+				if (cp.type == CheckpointEvent::CHECKPOINT_UNDO)
+				{
+					target = undo;
+				}
+				else
+				{
+					auto saved = checkpoints.find(cp.index);
+					if (saved != checkpoints.end())
+					{
+						target = saved->second;
+					}
+				}
+				undo = before;
+				if (target != none)
+				{
+					tail = target;
+				}
+				append(destination, target == none);
+				// The adjacent generic event records the same operation, including
+				// an angles-only teleport when the CP origin already matches.
+				checkpointTeleport = true;
+				return true;
+			}
+			if (event.type == RPEVENT_TELEPORT)
+			{
+				if (checkpointTeleport)
+				{
+					checkpointTeleport = false;
+					return true;
+				}
+				if (event.data.teleport.hasOrigin)
+				{
+					Vector source(event.data.teleport.previousOrigin[0], event.data.teleport.previousOrigin[1],
+								  event.data.teleport.previousOrigin[2]);
+					Vector destination(event.data.teleport.origin[0], event.data.teleport.origin[1], event.data.teleport.origin[2]);
+					if (!source.IsValid() || !destination.IsValid())
+					{
+						return false;
+					}
+					append(source, false);
+					append(destination, true);
+				}
+			}
+			return true;
 		};
 		size_t eventIndex = 0;
-		i32 checkpointCount = 0, teleports = 0;
-		bool sampled = false;
+		while (eventIndex < replay.events.size() && replay.events[eventIndex].serverTick < start)
+		{
+			eventIndex++;
+		}
+		auto applyThrough = [&](u32 tick, RpEventPhase phase)
+		{
+			while (eventIndex < replay.events.size())
+			{
+				const auto &event = replay.events[eventIndex];
+				if (event.serverTick > tick || (event.serverTick == tick && event.phase > phase))
+				{
+					break;
+				}
+				size_t index = eventIndex++;
+				if (!applyEvent(event, index))
+				{
+					return false;
+				}
+			}
+			return true;
+		};
 		for (const auto &tick : replay.samples)
 		{
 			if (cancel)
@@ -101,82 +399,55 @@ namespace KZ::progress
 			}
 			if (tick.serverTick < start)
 			{
-				checkpointCount = tick.checkpointCount;
-				teleports = tick.teleportCount;
 				continue;
 			}
 			if (tick.serverTick > end)
 			{
 				break;
 			}
-			if (!tick.pre.IsValid() || !tick.post.IsValid() || tick.noclip)
+			if (!applyThrough(tick.serverTick, RPEVENT_BEFORE_PHYSICS))
 			{
 				return false;
 			}
-			i32 originEvents = 0;
-			Vector destination = tick.post;
-			while (eventIndex < replay.events.size() && replay.events[eventIndex].serverTick <= tick.serverTick)
+			if (active)
 			{
-				const auto &event = replay.events[eventIndex++];
-				if (event.serverTick >= start && event.type == RPEVENT_TELEPORT && event.data.teleport.hasOrigin)
+				if (!tick.pre.IsValid() || tick.preNoclip)
 				{
-					originEvents++;
-					destination = Vector(event.data.teleport.origin[0], event.data.teleport.origin[1], event.data.teleport.origin[2]);
+					return false;
 				}
+				append(tick.pre, false);
 			}
-			if (!destination.IsValid())
+			if (!applyThrough(tick.serverTick, RPEVENT_DURING_PHYSICS))
 			{
 				return false;
 			}
-			if (tick.checkpointCount < checkpointCount || tick.teleportCount < teleports)
+			if (active)
 			{
-				checkpoints.clear();
-				undo = {none, none};
+				if (!tick.post.IsValid() || tick.postNoclip)
+				{
+					return false;
+				}
+				append(tick.post, false);
 			}
-			size_t before = tail;
-			size_t pre = originEvents ? tail : append(tick.pre, false);
-			if (originEvents)
+			if (!applyThrough(tick.serverTick, RPEVENT_AFTER_PHYSICS))
 			{
-				size_t target = none;
-				if (sampled && tick.teleportCount == teleports + 1 && originEvents == 1)
-				{
-					auto cp = checkpoints.find(tick.checkpointIndex);
-					size_t checkpoint = cp == checkpoints.end() ? none : resolve(cp->second, destination);
-					size_t undone = resolve(undo, destination);
-					// Two different visits at the same coordinate cannot identify which
-					// operation happened. Preserve both paths instead of deleting one.
-					if (checkpoint == none || undone == none || checkpoint == undone)
-					{
-						target = checkpoint != none ? checkpoint : undone;
-					}
-					undo = {before, pre};
-				}
-				else
-				{
-					undo = {none, none};
-				}
-				if (target != none)
-				{
-					tail = target;
-				}
-				append(destination, target == none);
+				return false;
 			}
-			size_t post = append(tick.post, false);
-			if (sampled && !originEvents && tick.teleportCount == teleports && tick.checkpointCount == checkpointCount + 1
-				&& tick.checkpointIndex == tick.checkpointCount)
-			{
-				checkpoints[tick.checkpointIndex] = {pre, post};
-			}
-			checkpointCount = tick.checkpointCount;
-			teleports = tick.teleportCount;
-			sampled = true;
 		}
-		std::vector<Point> points;
+		if (active || tail == none)
+		{
+			return false;
+		}
+		std::vector<PathPoint> points;
 		for (size_t i = tail; i != none; i = nodes[i].parent)
 		{
-			points.push_back(nodes[i]);
+			points.push_back({nodes[i].origin, nodes[i].disconnect, nodes[i].milestone});
 		}
 		std::reverse(points.begin(), points.end());
+		if (!EraseWalkbacks(points, cancel))
+		{
+			return false;
+		}
 
 		for (size_t i = 1; i < points.size(); i++)
 		{
@@ -190,6 +461,10 @@ namespace KZ::progress
 			}
 			Vector delta = points[i].origin - points[i - 1].origin;
 			f32 distance = delta.Length();
+			if (!std::isfinite(distance))
+			{
+				return false;
+			}
 			if (distance <= 0.001f)
 			{
 				continue;

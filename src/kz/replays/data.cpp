@@ -174,7 +174,7 @@ namespace KZ::replaysystem::data
 			return false;
 		}
 
-		return header.version() >= 1 && header.version() <= KZ_REPLAY_VERSION;
+		return header.version() == KZ_REPLAY_VERSION;
 	}
 
 	// Parses replay data from an in-memory byte array.
@@ -351,8 +351,8 @@ namespace KZ::replaysystem::data
 			{
 				return false;
 			}
-			result.samples.push_back({tick.serverTick, tick.pre.origin, tick.post.origin, tick.checkpoint.index, tick.checkpoint.checkpointCount,
-									  tick.checkpoint.teleportCount, tick.pre.moveType == MOVETYPE_NOCLIP || tick.post.moveType == MOVETYPE_NOCLIP});
+			result.samples.push_back(
+				{tick.serverTick, tick.pre.origin, tick.post.origin, tick.pre.moveType == MOVETYPE_NOCLIP, tick.post.moveType == MOVETYPE_NOCLIP});
 			return true;
 		};
 		std::vector<TickData> ticks;

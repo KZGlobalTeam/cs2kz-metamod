@@ -291,6 +291,36 @@ void KZRecordingService::OnJumpFinish(Jump *jump)
 	}
 }
 
+void KZRecordingService::OnCheckpointSave(i32 index, const Vector &origin)
+{
+	if (!this->player->IsFakeClient() && !KZ::replaysystem::IsReplayBot(this->player))
+	{
+		this->InsertCheckpointEvent(RpEvent::RpEventData::CheckpointEvent::CHECKPOINT_SAVE, index, origin, origin);
+	}
+}
+
+void KZRecordingService::OnCheckpointTeleport(i32 index, const Vector &origin, const Vector &destination, bool undo)
+{
+	if (!this->player->IsFakeClient() && !KZ::replaysystem::IsReplayBot(this->player))
+	{
+		this->InsertCheckpointEvent(undo ? RpEvent::RpEventData::CheckpointEvent::CHECKPOINT_UNDO
+										 : RpEvent::RpEventData::CheckpointEvent::CHECKPOINT_TELEPORT,
+									index, origin, destination);
+	}
+}
+
+void KZRecordingService::OnCheckpointReset()
+{
+	if (!this->circularRecording && this->runRecorders.empty() && this->jumpRecorders.empty())
+	{
+		return;
+	}
+	if (!this->player->IsFakeClient() && !KZ::replaysystem::IsReplayBot(this->player))
+	{
+		this->InsertCheckpointEvent(RpEvent::RpEventData::CheckpointEvent::CHECKPOINT_RESET, 0, vec3_origin, vec3_origin);
+	}
+}
+
 void KZRecordingService::OnClientDisconnect()
 {
 	for (auto &recorder : this->runRecorders)
@@ -337,6 +367,7 @@ void KZRecordingService::OnClientDisconnect()
 
 void KZRecordingService::OnPhysicsSimulate()
 {
+	this->physicsSimulationActive = false;
 	if (KZ::replaysystem::IsReplayBot(this->player))
 	{
 		return;
@@ -366,6 +397,7 @@ void KZRecordingService::OnSetupMove(PlayerCommand *pc)
 
 void KZRecordingService::OnPhysicsSimulatePost()
 {
+	this->physicsSimulationActive = false;
 	if (this->player->IsFakeClient() || KZ::replaysystem::IsReplayBot(this->player))
 	{
 		return;

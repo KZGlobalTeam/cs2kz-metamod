@@ -62,7 +62,8 @@ static_global const char *const COURSE_COMPARE_PHRASES[KZTimerService::COMPARETY
 #define COURSE_TEXT_COURSE   2
 #define COURSE_TEXT_ROWS     3
 #define COURSE_TEXT_PROGRESS (COURSE_TEXT_ROWS + MHUD_COURSE_ROW_COUNT * 5)
-#define COURSE_TEXT_STATE    (COURSE_TEXT_PROGRESS + MHUD_COURSE_PROGRESS_COUNT * 2)
+#define COURSE_TEXT_ROUTE    (COURSE_TEXT_PROGRESS + MHUD_COURSE_PROGRESS_COUNT * 2)
+#define COURSE_TEXT_STATE    (COURSE_TEXT_ROUTE + 2)
 
 // The course's ranked state in the player's mode, as the API reports it.
 struct CourseStateDef
@@ -311,7 +312,7 @@ void KZHUDService::UpdateCourseElement(CCSCustomHudLayout *layout, KZPlayer *sou
 			}
 			layout->SetHasClass(panelId, fontClass, k_eHudPanelClassStatus_HasClass);
 		};
-		for (const char *panelId : {"mhud_ci_map", "mhud_ci_status", "mhud_ci_course", "mhud_ci_state"})
+		for (const char *panelId : {"mhud_ci_map", "mhud_ci_status", "mhud_ci_course", "mhud_ci_state", "mhud_ci_route_label", "mhud_ci_route_value"})
 		{
 			setFont(panelId);
 		}
@@ -383,11 +384,6 @@ void KZHUDService::UpdateCourseElement(CCSCustomHudLayout *layout, KZPlayer *sou
 		for (i32 i = 0; i < MHUD_COURSE_PROGRESS_COUNT; i++)
 		{
 			ci.progressTotals[i] = info.totals[i];
-			ci.progressReached[i] = info.reached[i];
-			if (i == 0)
-			{
-				continue; // The first row also displays positional progress, updated below at the HUD's normal rate.
-			}
 			setText(COURSE_TEXT_PROGRESS + i * 2, COURSE_PROGRESS_ROWS[i][1], lang->PrepareMessage(COURSE_PROGRESS_PHRASES[i]));
 			setText(COURSE_TEXT_PROGRESS + i * 2 + 1, COURSE_PROGRESS_ROWS[i][2],
 					lang->PrepareMessage("HUD - Course Progress", info.reached[i], info.totals[i]));
@@ -395,41 +391,23 @@ void KZHUDService::UpdateCourseElement(CCSCustomHudLayout *layout, KZPlayer *sou
 	};
 	auto updateProgressRows = [&]()
 	{
-		bool anyVisible = false;
+		bool anyVisible = routeVisible;
 		for (i32 i = 0; i < MHUD_COURSE_PROGRESS_COUNT; i++)
 		{
-			const bool visible = (prefs.courseProgress && ci.progressTotals[i] > 0) || (i == 0 && routeVisible);
+			const bool visible = prefs.courseProgress && ci.progressTotals[i] > 0;
 			setHidden(COURSE_PROGRESS_ROWS[i][0], ci.progressRowHidden[i], !visible);
 			anyVisible |= visible;
 		}
 		setHidden("mhud_ci_progress", ci.progressHidden, !anyVisible);
-
-		// The published Workshop HUD already has three Course progress rows. Use its
-		// first row for the route too, so updating the server alone is sufficient.
-		const bool stagesVisible = prefs.courseProgress && ci.progressTotals[0] > 0;
-		std::string label = stagesVisible ? lang->PrepareMessage(COURSE_PROGRESS_PHRASES[0]) : "";
-		std::string value = stagesVisible ? lang->PrepareMessage("HUD - Course Progress", ci.progressReached[0], ci.progressTotals[0]) : "";
+		setHidden("mhud_ci_route", ci.routeHidden, !routeVisible);
+		setHidden("mhud_ci_route_label", ci.routeLabelHidden, !prefs.showProgressLabel);
 		if (routeVisible)
 		{
 			char percentageText[32];
 			V_snprintf(percentageText, sizeof(percentageText), "%s%.2f%%", approximate ? "~" : "", percentage);
-			if (stagesVisible)
-			{
-				value += " | ";
-				if (prefs.showProgressLabel)
-				{
-					value += lang->PrepareMessage("HUD - Progress Label");
-					value += " ";
-				}
-			}
-			else if (prefs.showProgressLabel)
-			{
-				label = lang->PrepareMessage("HUD - Progress Label");
-			}
-			value += percentageText;
+			setText(COURSE_TEXT_ROUTE, "mhud_ci_route_label", lang->PrepareMessage("HUD - Progress Label"));
+			setText(COURSE_TEXT_ROUTE + 1, "mhud_ci_route_value", percentageText);
 		}
-		setText(COURSE_TEXT_PROGRESS, COURSE_PROGRESS_ROWS[0][1], label);
-		setText(COURSE_TEXT_PROGRESS + 1, COURSE_PROGRESS_ROWS[0][2], value);
 	};
 
 	if (preview)

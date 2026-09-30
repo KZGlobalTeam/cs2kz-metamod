@@ -729,7 +729,7 @@ bool KZ::replaysystem::compression::ReadWeaponsCompressed(const char *&cursor, c
 
 bool KZ::replaysystem::compression::ReadEventsCompressed(const char *&cursor, const char *end, std::vector<RpEvent> &outEvents)
 {
-	if (cursor + (ptrdiff_t)sizeof(CompressedSectionHeader) > end)
+	if ((size_t)(end - cursor) < sizeof(CompressedSectionHeader))
 	{
 		return false;
 	}
@@ -738,15 +738,39 @@ bool KZ::replaysystem::compression::ReadEventsCompressed(const char *&cursor, co
 	memcpy(&header, cursor, sizeof(header));
 	cursor += sizeof(header);
 
-	if (cursor + (ptrdiff_t)header.compressedSize > end)
+	u64 eventSize = sizeof(RpEvent);
+	if ((u64)header.elementCount * eventSize != header.uncompressedSize || header.compressedSize > (size_t)(end - cursor))
 	{
 		return false;
 	}
-	// Resize output vector
 	outEvents.resize(header.elementCount);
-	bool success = Decompress(cursor, header.compressedSize, outEvents.data(), header.uncompressedSize);
+	if (!Decompress(cursor, header.compressedSize, outEvents.data(), header.uncompressedSize))
+	{
+		return false;
+	}
+	for (u32 i = 0; i < header.elementCount; i++)
+	{
+		const RpEvent &event = outEvents[i];
+		if (event.type < RPEVENT_TIMER_EVENT || event.type > RPEVENT_CHECKPOINT || event.phase < RPEVENT_BEFORE_PHYSICS
+			|| event.phase > RPEVENT_AFTER_PHYSICS || (i > 0 && event.serverTick < outEvents[i - 1].serverTick))
+		{
+			return false;
+		}
+		if (event.type == RPEVENT_TIMER_EVENT
+			&& (event.data.timer.type < RpEvent::RpEventData::TimerEvent::TIMER_START
+				|| event.data.timer.type > RpEvent::RpEventData::TimerEvent::TIMER_STAGE))
+		{
+			return false;
+		}
+		if (event.type == RPEVENT_CHECKPOINT
+			&& (event.data.checkpoint.type < RpEvent::RpEventData::CheckpointEvent::CHECKPOINT_SAVE
+				|| event.data.checkpoint.type > RpEvent::RpEventData::CheckpointEvent::CHECKPOINT_RESET || event.data.checkpoint.index < 0))
+		{
+			return false;
+		}
+	}
 	cursor += header.compressedSize;
-	return success;
+	return true;
 }
 
 i32 KZ::replaysystem::compression::WriteEventsCompressed(std::vector<char> &outBuffer, const std::vector<RpEvent> &events)

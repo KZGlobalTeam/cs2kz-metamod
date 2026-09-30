@@ -84,8 +84,7 @@ namespace KZ::replaysystem::data
 	{
 		u32 serverTick;
 		Vector pre, post;
-		i32 checkpointIndex, checkpointCount, teleportCount;
-		bool noclip;
+		bool preNoclip, postNoclip;
 	};
 
 	struct ReplayMovement
