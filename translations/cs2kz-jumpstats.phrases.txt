@@ -1067,11 +1067,13 @@
 	"Jumpstats Option - Jumpstats Minimum HUD Tier - Disabled"
 	{
 		"en"		"{grey}Jumpstats HUD reporting disabled."
+		"ua"		"{grey}Відображення статистики стрибків у HUD вимкнено."
 	}
 	"Jumpstats Option - Jumpstats Minimum HUD Tier - Response"
 	{
 		"#format"	"tier:s"
 		"en"		"{grey}Jumpstats HUD reporting threshold is now {default}{tier}."
+		"ua"		"{grey}Поріг відображення статистики стрибків у HUD встановлено на {default}{tier}."
 	}
 	"Jumpstats Option - Jumpstats Minimum Console Tier - Disabled"
 	{

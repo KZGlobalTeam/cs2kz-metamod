@@ -584,10 +584,12 @@
 	"Menu - Keys Jump Count"
 	{
 		"en"		"Count jump inputs"
+		"ua"		"Підраховувати кількість інпутів стрибка"
 	}
 	"Menu - Keys Jump Count Sub"
 	{
 		"en"		"J shows how many jump presses came in, for jumping with the scroll wheel"
+		"ua"		"J показує, скільки натискань стрибка було зроблено, для стрибків за допомогою колеса прокрутки"
 	}
 	"Menu - Keys Square"
 	{
@@ -616,10 +618,12 @@
 	"Menu - Text Opacity"
 	{
 		"en"		"Text opacity"
+		"ua"		"Непрозорість тексту"
 	}
 	"Menu - Background Opacity"
 	{
 		"en"		"Background opacity"
+		"ua"		"Непрозорість фону"
 	}
 	"Menu - Keys Glow Fill Sub"
 	{
@@ -1144,6 +1148,7 @@
 	"Menu - JS Min Tier HUD"
 	{
 		"en"		"Minimum HUD tier"
+		"ua"		"Мінімальний поріг стрибку для відображення в HUD"
 	}
 	"Menu - JS Min Tier Console"
 	{
@@ -1366,22 +1371,27 @@
 	"Menu - JS History Sub"
 	{
 		"en"		"Your last few jumps, stacked next to the panel"
+		"ua"		"Ваші останні кілька стрибків, будуть розташовані над панеллю"
 	}
 	"Menu - JS History Below"
 	{
 		"en"		"History below the panel"
+		"ua"		"Історія під панеллю"
 	}
 	"Menu - JS History Below Sub"
 	{
 		"en"		"Stack the history under the panel instead of above it"
+		"ua"		"Розташувати історію під панеллю замість над нею"
 	}
 	"Menu - JS Duration"
 	{
 		"en"		"Panel duration"
+		"ua"		"Тривалість відображення панелі"
 	}
 	"Menu - JS Duration Sub"
 	{
 		"en"		"How long the panel stays up after a jump"
+		"ua"		"Як довго панель залишається на екрані після стрибка"
 	}
 	"Menu - JS Field Block"
 	{
@@ -1471,6 +1481,7 @@
 	"Menu - JS Field Order Sub"
 	{
 		"en"		"Only the fields that are on are listed. The chat and the HUD panel share the order"
+		"ua"		"У списку відображаються лише ті поля, які увімкнені. Порядок відображення в чаті та на панелі HUD є однаковим"
 	}
 	"Menu - JS Field Extended Sub"
 	{

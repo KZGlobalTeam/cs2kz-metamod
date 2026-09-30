@@ -662,6 +662,7 @@
     "Command Description - kz_jstierhud"
     {
         "en"		"Set your minimum jumpstats HUD reporting tier."
+		"ua"		"Встановити мінімальний рівень для відображення статистики стрибків в HUD."
 	}
     "Command Description - kz_jstierconsole"
     {
