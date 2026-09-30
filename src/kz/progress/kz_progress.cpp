@@ -148,8 +148,8 @@ static_function ProgressReference &GetReference(const KZCourseDescriptor *course
 				loadedReference.uuid = uuid;
 				KZ::replaysystem::data::ReplayMovement replay;
 				bool valid = KZ::replaysystem::data::ReadReplayMovement(path.c_str(), replay, cancelLoad);
-				if (valid && !cancelLoad && replay.header.type() == RP_RUN && replay.header.has_run() && replay.header.map().name() == map
-					&& replay.header.map().md5() == md5 && replay.header.run().course_name() == courseName
+				if (valid && !cancelLoad && replay.header.type() == cs2kz::replay::RP_RUN && replay.header.has_run()
+					&& replay.header.map().name() == map && replay.header.map().md5() == md5 && replay.header.run().course_name() == courseName
 					&& replay.header.run().mode().name() == modeName && replay.header.run().styles_size() == 0)
 				{
 					if (!loadedReference.route.Build(replay, courseID, cancelLoad))
