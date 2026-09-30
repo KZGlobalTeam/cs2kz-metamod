@@ -9,6 +9,8 @@ using namespace KZ::replaysystem::compression;
 // Helper functions
 // ========================================
 
+// The route reader supplies a visitor to retain only positions and checkpoint data as ticks are decoded.
+// Normal replay playback leaves it null and keeps the full tick and subtick arrays.
 static_function bool DecodeTickDataBuffer(const char *decompressedData, size_t uncompressedSize, u32 elementCount, u32 replayVersion,
 										  std::vector<TickData> &outTickData, const TickVisitor *visitor);
 
