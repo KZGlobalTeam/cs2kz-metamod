@@ -48,6 +48,7 @@
           <Panel id="mhud_key_j" class="key-button key-button-jump" hittest="false">
             <Label id="mhud_kg_j_main" class="key-glyph key-glyph-main" text="J" hittest="false"></Label>
             <Label id="mhud_kg_j_idle" class="key-glyph key-glyph-idle" text="—" hittest="false"></Label>
+            <Label id="mhud_kg_j_count" class="key-glyph key-glyph-count" text="{s:v}" hittest="false"></Label>
           </Panel>
         </Panel>
         <Panel class="key-row" hittest="false">

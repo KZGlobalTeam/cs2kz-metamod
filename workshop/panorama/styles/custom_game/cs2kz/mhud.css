@@ -155,6 +155,24 @@
 	visibility: visible;
 }
 
+/* With mhudKeysJumpCount on, J shows how many jump presses came in while they keep coming, whatever the idle style. */
+.key-glyph-count {
+	visibility: collapse;
+}
+
+.keys .key-button.key-button-jump.key-counting .key-glyph-main,
+.keys .key-button.key-button-jump.key-counting .key-glyph-idle {
+	visibility: collapse;
+}
+
+.keys .key-button.key-button-jump.key-counting .key-glyph-count {
+	visibility: visible;
+}
+
+.hide-idle .key-button.key-counting {
+	opacity: 1;
+}
+
 /* Jumpstats. The stack is an element like the others, so it is placed by its x/y classes and scaled by js-scale.css.
    Its labels take the element's font class, so none of them sets a font-family. */
 .js-stack {

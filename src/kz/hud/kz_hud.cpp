@@ -12,6 +12,7 @@
 #include "kz/language/kz_language.h"
 #include "kz/replays/kz_replaysystem.h"
 #include "sdk/entity/ccscustomhudlayout.h"
+#include "sdk/usercmd.h"
 
 #include <vendor/MultiAddonManager/public/imultiaddonmanager.h>
 extern IMultiAddonManager *g_pMultiAddonManager;
@@ -78,8 +79,43 @@ void KZHUDService::Reset()
 	this->timerStoppedTime = {};
 	this->currentTimeWhenTimerStopped = {};
 	this->jumpedThisTick = false;
+	this->jumpInputCount = 0;
+	this->jumpInputExpireTime = 0;
 	this->fromDuckbug = false;
 	this->crouchJumping = false;
+}
+
+void KZHUDService::OnSetupMove(PlayerCommand *cmd)
+{
+	i32 presses = 0;
+	if (cmd->base().subtick_moves_size() == 0)
+	{
+		presses = cmd->buttonstates.IsButtonNewlyPressed(IN_JUMP) ? 1 : 0;
+	}
+	for (i32 i = 0; i < cmd->base().subtick_moves_size(); i++)
+	{
+		const CSubtickMoveStep &step = cmd->base().subtick_moves(i);
+		if (step.button() == IN_JUMP && step.pressed())
+		{
+			presses++;
+		}
+	}
+	if (presses == 0)
+	{
+		return;
+	}
+	const f64 now = g_pKZUtils->GetServerGlobals()->curtime;
+	if (now >= this->jumpInputExpireTime)
+	{
+		this->jumpInputCount = 0;
+	}
+	this->jumpInputCount += presses;
+	this->jumpInputExpireTime = now + MHUD_KEYS_JUMP_COUNT_HOLD;
+}
+
+i32 KZHUDService::GetJumpInputCount() const
+{
+	return g_pKZUtils->GetServerGlobals()->curtime < this->jumpInputExpireTime ? this->jumpInputCount : 0;
 }
 
 KZHUDService::SpeedInfo KZHUDService::GetSpeedInfo(const MHUDPrefs &prefs)

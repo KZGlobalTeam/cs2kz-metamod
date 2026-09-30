@@ -92,10 +92,10 @@ static_global const char *KEY_PANELS[] = {"mhud_key_c", "mhud_key_w", "mhud_key_
 
 // The glyph labels inside those buttons. A child only restyles when it is touched itself, so the
 // font class goes on these rather than on the buttons.
-static_global const char *KEY_GLYPHS[] = {"mhud_kg_c_main",   "mhud_kg_c_idle", "mhud_kg_w_main",   "mhud_kg_w_letter",
-										  "mhud_kg_w_idle",   "mhud_kg_j_main", "mhud_kg_j_idle",   "mhud_kg_a_main",
-										  "mhud_kg_a_letter", "mhud_kg_a_idle", "mhud_kg_s_main",   "mhud_kg_s_letter",
-										  "mhud_kg_s_idle",   "mhud_kg_d_main", "mhud_kg_d_letter", "mhud_kg_d_idle"};
+static_global const char *KEY_GLYPHS[] = {"mhud_kg_c_main", "mhud_kg_c_idle",   "mhud_kg_w_main", "mhud_kg_w_letter", "mhud_kg_w_idle",
+										  "mhud_kg_j_main", "mhud_kg_j_idle",   "mhud_kg_a_main", "mhud_kg_a_letter", "mhud_kg_a_idle",
+										  "mhud_kg_s_main", "mhud_kg_s_letter", "mhud_kg_s_idle", "mhud_kg_d_main",   "mhud_kg_d_letter",
+										  "mhud_kg_d_idle", "mhud_kg_j_count"};
 
 // The movement axis each panel sits on, so an overlap can be shown on just the keys causing it.
 enum KeyAxis
@@ -211,6 +211,28 @@ void KZHUDService::UpdateKeysElement(CCSCustomHudLayout *layout, KZPlayer *sourc
 		}
 		this->layoutKeys.pressed[i] = keys[i];
 		layout->SetHasClass(KEY_PANELS[i], "pressed", keys[i] ? k_eHudPanelClassStatus_HasClass : k_eHudPanelClassStatus_DoesNotHaveClass);
+	}
+
+	// A count replaces the J while the presses keep coming, the way NohBoard shows scroll notches.
+	i32 jumpCount = 0;
+	if (prefs.keysJumpCount)
+	{
+		jumpCount = preview ? 12 : source->hudService->GetJumpInputCount();
+	}
+	if (this->layoutKeys.jumpCount != jumpCount)
+	{
+		if (jumpCount > 0)
+		{
+			char text[16];
+			V_snprintf(text, sizeof(text), "%i", jumpCount);
+			layout->SetDialogVariableString("mhud_kg_j_count", "v", text);
+		}
+		if (this->layoutKeys.jumpCount < 0 || (this->layoutKeys.jumpCount > 0) != (jumpCount > 0))
+		{
+			layout->SetHasClass("mhud_key_j", "key-counting",
+								jumpCount > 0 ? k_eHudPanelClassStatus_HasClass : k_eHudPanelClassStatus_DoesNotHaveClass);
+		}
+		this->layoutKeys.jumpCount = jumpCount;
 	}
 
 	// keys-size.css scales the boxes and their gaps with the glyph; one class on the keys panel.

@@ -383,6 +383,9 @@ void KZHUDService::RegisterMenu()
 				KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
 				KZ::menu::AddToggle(sub, "Menu - Keys Letters", "mhudKeysLetters", false);
 				KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
+				KZ::menu::AddToggle(sub, "Menu - Keys Jump Count", "mhudKeysJumpCount", false);
+				KZ::menu::SetItemSubtext(sub, "Menu - Keys Jump Count Sub");
+				KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
 				KZ::menu::AddToggle(sub, "Menu - Keys Square", "mhudKeysSquare", false);
 				KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
 				KZ::menu::AddToggle(sub, "Menu - Keys Border", "mhudKeysBorder", true);

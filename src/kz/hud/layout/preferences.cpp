@@ -100,6 +100,7 @@ void KZHUDService::RefreshPrefs()
 	this->prefs.keysOverlapEnabled = opts->GetPreferenceBool("mhudKeysOverlap", true);
 	this->prefs.keysOverlapAxis = opts->GetPreferenceBool("mhudKeysOverlapAxis", false);
 	this->prefs.keysLetters = opts->GetPreferenceBool("mhudKeysLetters", false);
+	this->prefs.keysJumpCount = opts->GetPreferenceBool("mhudKeysJumpCount", false);
 	this->prefs.keysSquare = opts->GetPreferenceBool("mhudKeysSquare", false);
 	this->prefs.keysBorder = opts->GetPreferenceBool("mhudKeysBorder", true);
 	this->prefs.keysGlowEnabled = opts->GetPreferenceBool("mhudKeysGlow", true);

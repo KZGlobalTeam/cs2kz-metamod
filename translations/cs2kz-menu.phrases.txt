@@ -581,6 +581,14 @@
 		"chi"		"使用 WASD 字母"
 		"ua"		"Використовувати літери WASD"
 	}
+	"Menu - Keys Jump Count"
+	{
+		"en"		"Count jump inputs"
+	}
+	"Menu - Keys Jump Count Sub"
+	{
+		"en"		"J shows how many jump presses came in, for jumping with the scroll wheel"
+	}
 	"Menu - Keys Square"
 	{
 		"en"		"Square keys"

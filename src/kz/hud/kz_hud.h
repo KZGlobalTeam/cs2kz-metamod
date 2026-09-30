@@ -29,6 +29,7 @@ extern const GameHudPartDef GAME_HUD_PARTS[GAME_HUD_PART_COUNT];
 class CCSCustomHudLayout;
 class CCheckTransmitInfo;
 class Jump;
+class PlayerCommand;
 
 #define MHUD_JS_PILL_COUNT     5
 #define MHUD_JS_PILL_GONE_RANK 4
@@ -36,6 +37,9 @@ class Jump;
 #define MHUD_JS_PANEL_TIME_MIN 1
 #define MHUD_JS_PANEL_TIME_MAX 30
 #define MHUD_JS_HISTORY_TIME   10.0f
+
+// How long the keys element keeps counting jump presses after the last one, in seconds, like NohBoard's scroll hold.
+#define MHUD_KEYS_JUMP_COUNT_HOLD 0.25
 
 // The course panel's record rows, overall then pro.
 #define MHUD_COURSE_ROW_COUNT 2
@@ -298,6 +302,7 @@ struct MHUDPrefs
 	bool keysOverlapEnabled {true};
 	bool keysOverlapAxis {}; // tint only the two keys causing the overlap, not the whole element
 	bool keysLetters {};
+	bool keysJumpCount {}; // J shows how many jump presses came in, for scroll jumpers
 	bool keysSquare {};
 	bool keysBorder {true};
 	bool keysGlowEnabled {true};
@@ -314,6 +319,8 @@ class KZHUDService : public KZBaseService
 
 private:
 	bool jumpedThisTick {};
+	i32 jumpInputCount {};
+	f64 jumpInputExpireTime {};
 	bool fromDuckbug {};
 	bool crouchJumping {};
 	bool showPanel {};
@@ -411,6 +418,12 @@ public:
 	{
 		return this->jumpedThisTick;
 	}
+
+	// Counts every +jump press in the command, subtick ones included, so each scroll notch adds one.
+	void OnSetupMove(PlayerCommand *cmd);
+
+	// The jump presses since the count last lapsed, or 0 once MHUD_KEYS_JUMP_COUNT_HOLD has passed without one.
+	i32 GetJumpInputCount() const;
 
 	bool IsCompactPanel();
 
@@ -530,6 +543,7 @@ private:
 		i32 noGlow {-1};
 		i32 noFill {-1};
 		i32 outline {-1};
+		i32 jumpCount {-1};
 		i32 fontSize {INT_MIN};
 		i32 boxSize {INT_MIN};
 		const char *fontClass {};
