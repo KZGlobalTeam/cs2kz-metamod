@@ -11,7 +11,7 @@ Automated translation linter reports for cs2kz-metamod.
 | **Total Languages** | 14 |
 | **Total Phrases** | 993 |
 | **Phrases Missing Translations** | 993 |
-| **Total Missing Entries** | 6872 |
+| **Total Missing Entries** | 6777 |
 | **Menu Files** | 11 |
 
 ## Language Coverage (Phrases)
@@ -30,7 +30,7 @@ Automated translation linter reports for cs2kz-metamod.
   ru (russian)         [█████████████░░░░░░░]  65.5% (650/993)
   sv (swedish)         [███████░░░░░░░░░░░░░]  39.5% (392/993)
   tr (turkish)         [█████░░░░░░░░░░░░░░░]  26.4% (262/993)
-  ua (ukrainian)       [██████████████████░░]  90.4% (898/993)
+  ua (ukrainian)       [████████████████████] 100.0% (993/993)
 ```
 
 ## Menu Translation Status
@@ -80,9 +80,9 @@ Automated translation linter reports for cs2kz-metamod.
 
 ## Last Updated
 
-- **Commit:** [`d66e9b2`](https://github.com/KZGlobalTeam/cs2kz-metamod/commit/d66e9b288677e0071ff3c2e4d1f940d8b6f4b546)
-- **Time:** 2026-09-30 05:06:57 UTC
-- **Message:** Fix course overlay pills and order popup overlapping
+- **Commit:** [`ed63ee8`](https://github.com/KZGlobalTeam/cs2kz-metamod/commit/ed63ee85a2f278dfb03f096dc78981b9a7ca1c28)
+- **Time:** 2026-10-01 03:01:25 UTC
+- **Message:** Ukrainian translations (#649)
 
 ---
 
