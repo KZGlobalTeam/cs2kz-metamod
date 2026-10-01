@@ -433,14 +433,17 @@
 	"Deviation (Short)"
 	{
 		"en"		"Dev"
+		"ua"		"Dev"
 	}
 	"Miss"
 	{
 		"en"		"Miss"
+		"ua"		"Брак"
 	}
 	"Release (Short)"
 	{
 		"en"		"W"
+		"ua"		"W"
 	}
 
 	// =====[ HUD ]=====
@@ -461,7 +464,7 @@
 	"Jumpstats HUD - Release"
 	{
 		"en"		"W Release"
-		"ua"		"W Відпускання"
+		"ua"		"Відпускання W"
 	}
 	"Jumpstats HUD - History Info"
 	{
@@ -902,12 +905,14 @@
 		// LJ: 258.1
 		"#format"	"jump_color:s,jump_type_short:s,distance:.1f"
 		"en"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance}"
+		"ua"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance}"
 	}
 	"Jumpstats Report - Chat Segment"
 	{
 		// 79% Sync
 		"#format"	"color:s,value:s,label:s"
 		"en"		"{color}{value} {grey}{label}"
+		"ua"		"{color}{value} {grey}{label}"
 	}
 	"Jumpstats Report - Console Summary"
 	{
@@ -1062,11 +1067,13 @@
 	"Jumpstats Option - Jumpstats Minimum HUD Tier - Disabled"
 	{
 		"en"		"{grey}Jumpstats HUD reporting disabled."
+		"ua"		"{grey}Відображення статистики стрибків у HUD вимкнено."
 	}
 	"Jumpstats Option - Jumpstats Minimum HUD Tier - Response"
 	{
 		"#format"	"tier:s"
 		"en"		"{grey}Jumpstats HUD reporting threshold is now {default}{tier}."
+		"ua"		"{grey}Поріг відображення статистики стрибків у HUD встановлено на {default}{tier}."
 	}
 	"Jumpstats Option - Jumpstats Minimum Console Tier - Disabled"
 	{
