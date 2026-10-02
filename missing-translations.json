@@ -1,9 +1,9 @@
 {
   "summary": {
     "total_languages": 14,
-    "total_phrases": 993,
-    "phrases_with_missing": 993,
-    "total_missing_entries": 6777,
+    "total_phrases": 995,
+    "phrases_with_missing": 995,
+    "total_missing_entries": 6803,
     "all_languages": [
       "chi",
       "de",
@@ -58,9 +58,9 @@
   "languages": {
     "chi": {
       "name": "schinese",
-      "coverage_percent": 87.61,
+      "coverage_percent": 87.44,
       "translated": 870,
-      "missing": 123,
+      "missing": 125,
       "missing_phrases": [
         {
           "file": "cs2kz-commands.phrases.txt",
@@ -562,242 +562,254 @@
         },
         {
           "file": "cs2kz-menu.phrases.txt",
-          "phrase": "Menu - JS History",
+          "phrase": "Menu - JS Compact",
           "line": 1366,
+          "english_text": "Compact"
+        },
+        {
+          "file": "cs2kz-menu.phrases.txt",
+          "phrase": "Menu - JS Compact Sub",
+          "line": 1370,
+          "english_text": "Only the pills, with no panel. The history is always on"
+        },
+        {
+          "file": "cs2kz-menu.phrases.txt",
+          "phrase": "Menu - JS History",
+          "line": 1374,
           "english_text": "Show history"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS History Sub",
-          "line": 1371,
+          "line": 1379,
           "english_text": "Your last few jumps, stacked next to the panel"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS History Below",
-          "line": 1376,
+          "line": 1384,
           "english_text": "History below the panel"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS History Below Sub",
-          "line": 1381,
+          "line": 1389,
           "english_text": "Stack the history under the panel instead of above it"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Duration",
-          "line": 1386,
+          "line": 1394,
           "english_text": "Panel duration"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Duration Sub",
-          "line": 1391,
+          "line": 1399,
           "english_text": "How long the panel stays up after a jump"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Block",
-          "line": 1396,
+          "line": 1404,
           "english_text": "Block"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Strafes",
-          "line": 1401,
+          "line": 1409,
           "english_text": "Strafes"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Sync",
-          "line": 1406,
+          "line": 1414,
           "english_text": "Sync"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Pre Max",
-          "line": 1411,
+          "line": 1419,
           "english_text": "Pre and max speed"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Height",
-          "line": 1416,
+          "line": 1424,
           "english_text": "Height"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Air Time",
-          "line": 1421,
+          "line": 1429,
           "english_text": "Air time"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Width",
-          "line": 1426,
+          "line": 1434,
           "english_text": "Width"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Gain Efficiency",
-          "line": 1431,
+          "line": 1439,
           "english_text": "Gain efficiency"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Air Path",
-          "line": 1436,
+          "line": 1444,
           "english_text": "Air path"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Bad Angles",
-          "line": 1441,
+          "line": 1449,
           "english_text": "Bad angles, overlap and dead air"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Release",
-          "line": 1446,
+          "line": 1454,
           "english_text": "W release"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Offset",
-          "line": 1451,
+          "line": 1459,
           "english_text": "Offset"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Edge",
-          "line": 1456,
+          "line": 1464,
           "english_text": "Edge"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Deviation",
-          "line": 1461,
+          "line": 1469,
           "english_text": "Deviation"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Miss",
-          "line": 1466,
+          "line": 1474,
           "english_text": "Miss"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Fields",
-          "line": 1471,
+          "line": 1479,
           "english_text": "Fields"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Order",
-          "line": 1476,
+          "line": 1484,
           "english_text": "Order"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Order Sub",
-          "line": 1481,
+          "line": 1489,
           "english_text": "Only the fields that are on are listed. The chat and the HUD panel share the order"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Extended Sub",
-          "line": 1486,
+          "line": 1494,
           "english_text": "In chat, only on the extended stats line"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Extended Stats Sub",
-          "line": 1491,
+          "line": 1499,
           "english_text": "Adds a second chat line with the fields that are marked for it"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Info",
-          "line": 1496,
+          "line": 1504,
           "english_text": "Course Info"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - W Release",
-          "line": 1501,
+          "line": 1509,
           "english_text": "W Release"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Map",
-          "line": 1506,
+          "line": 1514,
           "english_text": "Map and course"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Pro",
-          "line": 1511,
+          "line": 1519,
           "english_text": "Pro record"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Pro Sub",
-          "line": 1516,
+          "line": 1524,
           "english_text": "A second row for the record without teleports"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Splits",
-          "line": 1521,
+          "line": 1529,
           "english_text": "Zone times"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Splits Sub",
-          "line": 1526,
+          "line": 1534,
           "english_text": "A pill for every split, checkpoint and stage, against your !comparelevel time"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Color Early",
-          "line": 1531,
+          "line": 1539,
           "english_text": "Early"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Color Perfect",
-          "line": 1536,
+          "line": 1544,
           "english_text": "Perfect"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Color Late",
-          "line": 1541,
+          "line": 1549,
           "english_text": "Late"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Progress",
-          "line": 1546,
+          "line": 1554,
           "english_text": "Zone progress"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Progress Sub",
-          "line": 1551,
+          "line": 1559,
           "english_text": "Stages, checkpoints and splits reached, on courses that have them"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Records",
-          "line": 1556,
+          "line": 1564,
           "english_text": "Records"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Records Sub",
-          "line": 1561,
+          "line": 1569,
           "english_text": "The world record and your gap to it, or the server record on a non-global map"
         }
       ],
@@ -814,9 +826,9 @@
     },
     "de": {
       "name": "german",
-      "coverage_percent": 52.17,
+      "coverage_percent": 52.06,
       "translated": 518,
-      "missing": 475,
+      "missing": 477,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -3004,242 +3016,254 @@
         },
         {
           "file": "cs2kz-menu.phrases.txt",
-          "phrase": "Menu - JS History",
+          "phrase": "Menu - JS Compact",
           "line": 1366,
+          "english_text": "Compact"
+        },
+        {
+          "file": "cs2kz-menu.phrases.txt",
+          "phrase": "Menu - JS Compact Sub",
+          "line": 1370,
+          "english_text": "Only the pills, with no panel. The history is always on"
+        },
+        {
+          "file": "cs2kz-menu.phrases.txt",
+          "phrase": "Menu - JS History",
+          "line": 1374,
           "english_text": "Show history"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS History Sub",
-          "line": 1371,
+          "line": 1379,
           "english_text": "Your last few jumps, stacked next to the panel"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS History Below",
-          "line": 1376,
+          "line": 1384,
           "english_text": "History below the panel"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS History Below Sub",
-          "line": 1381,
+          "line": 1389,
           "english_text": "Stack the history under the panel instead of above it"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Duration",
-          "line": 1386,
+          "line": 1394,
           "english_text": "Panel duration"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Duration Sub",
-          "line": 1391,
+          "line": 1399,
           "english_text": "How long the panel stays up after a jump"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Block",
-          "line": 1396,
+          "line": 1404,
           "english_text": "Block"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Strafes",
-          "line": 1401,
+          "line": 1409,
           "english_text": "Strafes"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Sync",
-          "line": 1406,
+          "line": 1414,
           "english_text": "Sync"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Pre Max",
-          "line": 1411,
+          "line": 1419,
           "english_text": "Pre and max speed"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Height",
-          "line": 1416,
+          "line": 1424,
           "english_text": "Height"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Air Time",
-          "line": 1421,
+          "line": 1429,
           "english_text": "Air time"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Width",
-          "line": 1426,
+          "line": 1434,
           "english_text": "Width"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Gain Efficiency",
-          "line": 1431,
+          "line": 1439,
           "english_text": "Gain efficiency"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Air Path",
-          "line": 1436,
+          "line": 1444,
           "english_text": "Air path"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Bad Angles",
-          "line": 1441,
+          "line": 1449,
           "english_text": "Bad angles, overlap and dead air"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Release",
-          "line": 1446,
+          "line": 1454,
           "english_text": "W release"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Offset",
-          "line": 1451,
+          "line": 1459,
           "english_text": "Offset"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Edge",
-          "line": 1456,
+          "line": 1464,
           "english_text": "Edge"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Deviation",
-          "line": 1461,
+          "line": 1469,
           "english_text": "Deviation"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Miss",
-          "line": 1466,
+          "line": 1474,
           "english_text": "Miss"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Fields",
-          "line": 1471,
+          "line": 1479,
           "english_text": "Fields"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Order",
-          "line": 1476,
+          "line": 1484,
           "english_text": "Order"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Order Sub",
-          "line": 1481,
+          "line": 1489,
           "english_text": "Only the fields that are on are listed. The chat and the HUD panel share the order"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Extended Sub",
-          "line": 1486,
+          "line": 1494,
           "english_text": "In chat, only on the extended stats line"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Extended Stats Sub",
-          "line": 1491,
+          "line": 1499,
           "english_text": "Adds a second chat line with the fields that are marked for it"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Info",
-          "line": 1496,
+          "line": 1504,
           "english_text": "Course Info"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - W Release",
-          "line": 1501,
+          "line": 1509,
           "english_text": "W Release"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Map",
-          "line": 1506,
+          "line": 1514,
           "english_text": "Map and course"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Pro",
-          "line": 1511,
+          "line": 1519,
           "english_text": "Pro record"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Pro Sub",
-          "line": 1516,
+          "line": 1524,
           "english_text": "A second row for the record without teleports"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Splits",
-          "line": 1521,
+          "line": 1529,
           "english_text": "Zone times"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Splits Sub",
-          "line": 1526,
+          "line": 1534,
           "english_text": "A pill for every split, checkpoint and stage, against your !comparelevel time"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Color Early",
-          "line": 1531,
+          "line": 1539,
           "english_text": "Early"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Color Perfect",
-          "line": 1536,
+          "line": 1544,
           "english_text": "Perfect"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Color Late",
-          "line": 1541,
+          "line": 1549,
           "english_text": "Late"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Progress",
-          "line": 1546,
+          "line": 1554,
           "english_text": "Zone progress"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Progress Sub",
-          "line": 1551,
+          "line": 1559,
           "english_text": "Stages, checkpoints and splits reached, on courses that have them"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Records",
-          "line": 1556,
+          "line": 1564,
           "english_text": "Records"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Records Sub",
-          "line": 1561,
+          "line": 1569,
           "english_text": "The world record and your gap to it, or the server record on a non-global map"
         },
         {
@@ -3678,7 +3702,7 @@
     "en": {
       "name": "english",
       "coverage_percent": 100.0,
-      "translated": 993,
+      "translated": 995,
       "missing": 0,
       "missing_phrases": [],
       "menu": {
@@ -3689,9 +3713,9 @@
     },
     "es": {
       "name": "spanish",
-      "coverage_percent": 48.74,
+      "coverage_percent": 48.64,
       "translated": 484,
-      "missing": 509,
+      "missing": 511,
       "missing_phrases": [
         {
           "file": "cs2kz-commands.phrases.txt",
@@ -5549,242 +5573,254 @@
         },
         {
           "file": "cs2kz-menu.phrases.txt",
-          "phrase": "Menu - JS History",
+          "phrase": "Menu - JS Compact",
           "line": 1366,
+          "english_text": "Compact"
+        },
+        {
+          "file": "cs2kz-menu.phrases.txt",
+          "phrase": "Menu - JS Compact Sub",
+          "line": 1370,
+          "english_text": "Only the pills, with no panel. The history is always on"
+        },
+        {
+          "file": "cs2kz-menu.phrases.txt",
+          "phrase": "Menu - JS History",
+          "line": 1374,
           "english_text": "Show history"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS History Sub",
-          "line": 1371,
+          "line": 1379,
           "english_text": "Your last few jumps, stacked next to the panel"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS History Below",
-          "line": 1376,
+          "line": 1384,
           "english_text": "History below the panel"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS History Below Sub",
-          "line": 1381,
+          "line": 1389,
           "english_text": "Stack the history under the panel instead of above it"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Duration",
-          "line": 1386,
+          "line": 1394,
           "english_text": "Panel duration"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Duration Sub",
-          "line": 1391,
+          "line": 1399,
           "english_text": "How long the panel stays up after a jump"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Block",
-          "line": 1396,
+          "line": 1404,
           "english_text": "Block"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Strafes",
-          "line": 1401,
+          "line": 1409,
           "english_text": "Strafes"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Sync",
-          "line": 1406,
+          "line": 1414,
           "english_text": "Sync"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Pre Max",
-          "line": 1411,
+          "line": 1419,
           "english_text": "Pre and max speed"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Height",
-          "line": 1416,
+          "line": 1424,
           "english_text": "Height"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Air Time",
-          "line": 1421,
+          "line": 1429,
           "english_text": "Air time"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Width",
-          "line": 1426,
+          "line": 1434,
           "english_text": "Width"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Gain Efficiency",
-          "line": 1431,
+          "line": 1439,
           "english_text": "Gain efficiency"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Air Path",
-          "line": 1436,
+          "line": 1444,
           "english_text": "Air path"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Bad Angles",
-          "line": 1441,
+          "line": 1449,
           "english_text": "Bad angles, overlap and dead air"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Release",
-          "line": 1446,
+          "line": 1454,
           "english_text": "W release"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Offset",
-          "line": 1451,
+          "line": 1459,
           "english_text": "Offset"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Edge",
-          "line": 1456,
+          "line": 1464,
           "english_text": "Edge"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Deviation",
-          "line": 1461,
+          "line": 1469,
           "english_text": "Deviation"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Miss",
-          "line": 1466,
+          "line": 1474,
           "english_text": "Miss"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Fields",
-          "line": 1471,
+          "line": 1479,
           "english_text": "Fields"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Order",
-          "line": 1476,
+          "line": 1484,
           "english_text": "Order"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Order Sub",
-          "line": 1481,
+          "line": 1489,
           "english_text": "Only the fields that are on are listed. The chat and the HUD panel share the order"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Extended Sub",
-          "line": 1486,
+          "line": 1494,
           "english_text": "In chat, only on the extended stats line"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Extended Stats Sub",
-          "line": 1491,
+          "line": 1499,
           "english_text": "Adds a second chat line with the fields that are marked for it"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Info",
-          "line": 1496,
+          "line": 1504,
           "english_text": "Course Info"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - W Release",
-          "line": 1501,
+          "line": 1509,
           "english_text": "W Release"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Map",
-          "line": 1506,
+          "line": 1514,
           "english_text": "Map and course"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Pro",
-          "line": 1511,
+          "line": 1519,
           "english_text": "Pro record"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Pro Sub",
-          "line": 1516,
+          "line": 1524,
           "english_text": "A second row for the record without teleports"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Splits",
-          "line": 1521,
+          "line": 1529,
           "english_text": "Zone times"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Splits Sub",
-          "line": 1526,
+          "line": 1534,
           "english_text": "A pill for every split, checkpoint and stage, against your !comparelevel time"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Color Early",
-          "line": 1531,
+          "line": 1539,
           "english_text": "Early"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Color Perfect",
-          "line": 1536,
+          "line": 1544,
           "english_text": "Perfect"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Color Late",
-          "line": 1541,
+          "line": 1549,
           "english_text": "Late"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Progress",
-          "line": 1546,
+          "line": 1554,
           "english_text": "Zone progress"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Progress Sub",
-          "line": 1551,
+          "line": 1559,
           "english_text": "Stages, checkpoints and splits reached, on courses that have them"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Records",
-          "line": 1556,
+          "line": 1564,
           "english_text": "Records"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Records Sub",
-          "line": 1561,
+          "line": 1569,
           "english_text": "The world record and your gap to it, or the server record on a non-global map"
         },
         {
@@ -6756,9 +6792,9 @@
     },
     "fi": {
       "name": "finnish",
-      "coverage_percent": 23.46,
+      "coverage_percent": 23.42,
       "translated": 233,
-      "missing": 760,
+      "missing": 762,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -9636,242 +9672,254 @@
         },
         {
           "file": "cs2kz-menu.phrases.txt",
-          "phrase": "Menu - JS History",
+          "phrase": "Menu - JS Compact",
           "line": 1366,
+          "english_text": "Compact"
+        },
+        {
+          "file": "cs2kz-menu.phrases.txt",
+          "phrase": "Menu - JS Compact Sub",
+          "line": 1370,
+          "english_text": "Only the pills, with no panel. The history is always on"
+        },
+        {
+          "file": "cs2kz-menu.phrases.txt",
+          "phrase": "Menu - JS History",
+          "line": 1374,
           "english_text": "Show history"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS History Sub",
-          "line": 1371,
+          "line": 1379,
           "english_text": "Your last few jumps, stacked next to the panel"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS History Below",
-          "line": 1376,
+          "line": 1384,
           "english_text": "History below the panel"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS History Below Sub",
-          "line": 1381,
+          "line": 1389,
           "english_text": "Stack the history under the panel instead of above it"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Duration",
-          "line": 1386,
+          "line": 1394,
           "english_text": "Panel duration"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Duration Sub",
-          "line": 1391,
+          "line": 1399,
           "english_text": "How long the panel stays up after a jump"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Block",
-          "line": 1396,
+          "line": 1404,
           "english_text": "Block"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Strafes",
-          "line": 1401,
+          "line": 1409,
           "english_text": "Strafes"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Sync",
-          "line": 1406,
+          "line": 1414,
           "english_text": "Sync"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Pre Max",
-          "line": 1411,
+          "line": 1419,
           "english_text": "Pre and max speed"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Height",
-          "line": 1416,
+          "line": 1424,
           "english_text": "Height"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Air Time",
-          "line": 1421,
+          "line": 1429,
           "english_text": "Air time"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Width",
-          "line": 1426,
+          "line": 1434,
           "english_text": "Width"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Gain Efficiency",
-          "line": 1431,
+          "line": 1439,
           "english_text": "Gain efficiency"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Air Path",
-          "line": 1436,
+          "line": 1444,
           "english_text": "Air path"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Bad Angles",
-          "line": 1441,
+          "line": 1449,
           "english_text": "Bad angles, overlap and dead air"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Release",
-          "line": 1446,
+          "line": 1454,
           "english_text": "W release"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Offset",
-          "line": 1451,
+          "line": 1459,
           "english_text": "Offset"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Edge",
-          "line": 1456,
+          "line": 1464,
           "english_text": "Edge"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Deviation",
-          "line": 1461,
+          "line": 1469,
           "english_text": "Deviation"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Miss",
-          "line": 1466,
+          "line": 1474,
           "english_text": "Miss"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Fields",
-          "line": 1471,
+          "line": 1479,
           "english_text": "Fields"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Order",
-          "line": 1476,
+          "line": 1484,
           "english_text": "Order"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Order Sub",
-          "line": 1481,
+          "line": 1489,
           "english_text": "Only the fields that are on are listed. The chat and the HUD panel share the order"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Extended Sub",
-          "line": 1486,
+          "line": 1494,
           "english_text": "In chat, only on the extended stats line"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Extended Stats Sub",
-          "line": 1491,
+          "line": 1499,
           "english_text": "Adds a second chat line with the fields that are marked for it"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Info",
-          "line": 1496,
+          "line": 1504,
           "english_text": "Course Info"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - W Release",
-          "line": 1501,
+          "line": 1509,
           "english_text": "W Release"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Map",
-          "line": 1506,
+          "line": 1514,
           "english_text": "Map and course"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Pro",
-          "line": 1511,
+          "line": 1519,
           "english_text": "Pro record"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Pro Sub",
-          "line": 1516,
+          "line": 1524,
           "english_text": "A second row for the record without teleports"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Splits",
-          "line": 1521,
+          "line": 1529,
           "english_text": "Zone times"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Splits Sub",
-          "line": 1526,
+          "line": 1534,
           "english_text": "A pill for every split, checkpoint and stage, against your !comparelevel time"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Color Early",
-          "line": 1531,
+          "line": 1539,
           "english_text": "Early"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Color Perfect",
-          "line": 1536,
+          "line": 1544,
           "english_text": "Perfect"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Color Late",
-          "line": 1541,
+          "line": 1549,
           "english_text": "Late"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Progress",
-          "line": 1546,
+          "line": 1554,
           "english_text": "Zone progress"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Progress Sub",
-          "line": 1551,
+          "line": 1559,
           "english_text": "Stages, checkpoints and splits reached, on courses that have them"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Records",
-          "line": 1556,
+          "line": 1564,
           "english_text": "Records"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Records Sub",
-          "line": 1561,
+          "line": 1569,
           "english_text": "The world record and your gap to it, or the server record on a non-global map"
         },
         {
@@ -11334,9 +11382,9 @@
     },
     "it": {
       "name": "italian",
-      "coverage_percent": 22.66,
+      "coverage_percent": 22.61,
       "translated": 225,
-      "missing": 768,
+      "missing": 770,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -14232,242 +14280,254 @@
         },
         {
           "file": "cs2kz-menu.phrases.txt",
-          "phrase": "Menu - JS History",
+          "phrase": "Menu - JS Compact",
           "line": 1366,
+          "english_text": "Compact"
+        },
+        {
+          "file": "cs2kz-menu.phrases.txt",
+          "phrase": "Menu - JS Compact Sub",
+          "line": 1370,
+          "english_text": "Only the pills, with no panel. The history is always on"
+        },
+        {
+          "file": "cs2kz-menu.phrases.txt",
+          "phrase": "Menu - JS History",
+          "line": 1374,
           "english_text": "Show history"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS History Sub",
-          "line": 1371,
+          "line": 1379,
           "english_text": "Your last few jumps, stacked next to the panel"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS History Below",
-          "line": 1376,
+          "line": 1384,
           "english_text": "History below the panel"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS History Below Sub",
-          "line": 1381,
+          "line": 1389,
           "english_text": "Stack the history under the panel instead of above it"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Duration",
-          "line": 1386,
+          "line": 1394,
           "english_text": "Panel duration"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Duration Sub",
-          "line": 1391,
+          "line": 1399,
           "english_text": "How long the panel stays up after a jump"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Block",
-          "line": 1396,
+          "line": 1404,
           "english_text": "Block"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Strafes",
-          "line": 1401,
+          "line": 1409,
           "english_text": "Strafes"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Sync",
-          "line": 1406,
+          "line": 1414,
           "english_text": "Sync"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Pre Max",
-          "line": 1411,
+          "line": 1419,
           "english_text": "Pre and max speed"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Height",
-          "line": 1416,
+          "line": 1424,
           "english_text": "Height"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Air Time",
-          "line": 1421,
+          "line": 1429,
           "english_text": "Air time"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Width",
-          "line": 1426,
+          "line": 1434,
           "english_text": "Width"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Gain Efficiency",
-          "line": 1431,
+          "line": 1439,
           "english_text": "Gain efficiency"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Air Path",
-          "line": 1436,
+          "line": 1444,
           "english_text": "Air path"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Bad Angles",
-          "line": 1441,
+          "line": 1449,
           "english_text": "Bad angles, overlap and dead air"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Release",
-          "line": 1446,
+          "line": 1454,
           "english_text": "W release"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Offset",
-          "line": 1451,
+          "line": 1459,
           "english_text": "Offset"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Edge",
-          "line": 1456,
+          "line": 1464,
           "english_text": "Edge"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Deviation",
-          "line": 1461,
+          "line": 1469,
           "english_text": "Deviation"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Miss",
-          "line": 1466,
+          "line": 1474,
           "english_text": "Miss"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Fields",
-          "line": 1471,
+          "line": 1479,
           "english_text": "Fields"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Order",
-          "line": 1476,
+          "line": 1484,
           "english_text": "Order"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Order Sub",
-          "line": 1481,
+          "line": 1489,
           "english_text": "Only the fields that are on are listed. The chat and the HUD panel share the order"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Extended Sub",
-          "line": 1486,
+          "line": 1494,
           "english_text": "In chat, only on the extended stats line"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Extended Stats Sub",
-          "line": 1491,
+          "line": 1499,
           "english_text": "Adds a second chat line with the fields that are marked for it"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Info",
-          "line": 1496,
+          "line": 1504,
           "english_text": "Course Info"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - W Release",
-          "line": 1501,
+          "line": 1509,
           "english_text": "W Release"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Map",
-          "line": 1506,
+          "line": 1514,
           "english_text": "Map and course"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Pro",
-          "line": 1511,
+          "line": 1519,
           "english_text": "Pro record"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Pro Sub",
-          "line": 1516,
+          "line": 1524,
           "english_text": "A second row for the record without teleports"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Splits",
-          "line": 1521,
+          "line": 1529,
           "english_text": "Zone times"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Splits Sub",
-          "line": 1526,
+          "line": 1534,
           "english_text": "A pill for every split, checkpoint and stage, against your !comparelevel time"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Color Early",
-          "line": 1531,
+          "line": 1539,
           "english_text": "Early"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Color Perfect",
-          "line": 1536,
+          "line": 1544,
           "english_text": "Perfect"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Color Late",
-          "line": 1541,
+          "line": 1549,
           "english_text": "Late"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Progress",
-          "line": 1546,
+          "line": 1554,
           "english_text": "Zone progress"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Progress Sub",
-          "line": 1551,
+          "line": 1559,
           "english_text": "Stages, checkpoints and splits reached, on courses that have them"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Records",
-          "line": 1556,
+          "line": 1564,
           "english_text": "Records"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Records Sub",
-          "line": 1561,
+          "line": 1569,
           "english_text": "The world record and your gap to it, or the server record on a non-global map"
         },
         {
@@ -15960,9 +16020,9 @@
     },
     "ko": {
       "name": "korean",
-      "coverage_percent": 65.66,
+      "coverage_percent": 65.53,
       "translated": 652,
-      "missing": 341,
+      "missing": 343,
       "missing_phrases": [
         {
           "file": "cs2kz-commands.phrases.txt",
@@ -17754,242 +17814,254 @@
         },
         {
           "file": "cs2kz-menu.phrases.txt",
-          "phrase": "Menu - JS History",
+          "phrase": "Menu - JS Compact",
           "line": 1366,
+          "english_text": "Compact"
+        },
+        {
+          "file": "cs2kz-menu.phrases.txt",
+          "phrase": "Menu - JS Compact Sub",
+          "line": 1370,
+          "english_text": "Only the pills, with no panel. The history is always on"
+        },
+        {
+          "file": "cs2kz-menu.phrases.txt",
+          "phrase": "Menu - JS History",
+          "line": 1374,
           "english_text": "Show history"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS History Sub",
-          "line": 1371,
+          "line": 1379,
           "english_text": "Your last few jumps, stacked next to the panel"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS History Below",
-          "line": 1376,
+          "line": 1384,
           "english_text": "History below the panel"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS History Below Sub",
-          "line": 1381,
+          "line": 1389,
           "english_text": "Stack the history under the panel instead of above it"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Duration",
-          "line": 1386,
+          "line": 1394,
           "english_text": "Panel duration"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Duration Sub",
-          "line": 1391,
+          "line": 1399,
           "english_text": "How long the panel stays up after a jump"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Block",
-          "line": 1396,
+          "line": 1404,
           "english_text": "Block"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Strafes",
-          "line": 1401,
+          "line": 1409,
           "english_text": "Strafes"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Sync",
-          "line": 1406,
+          "line": 1414,
           "english_text": "Sync"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Pre Max",
-          "line": 1411,
+          "line": 1419,
           "english_text": "Pre and max speed"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Height",
-          "line": 1416,
+          "line": 1424,
           "english_text": "Height"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Air Time",
-          "line": 1421,
+          "line": 1429,
           "english_text": "Air time"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Width",
-          "line": 1426,
+          "line": 1434,
           "english_text": "Width"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Gain Efficiency",
-          "line": 1431,
+          "line": 1439,
           "english_text": "Gain efficiency"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Air Path",
-          "line": 1436,
+          "line": 1444,
           "english_text": "Air path"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Bad Angles",
-          "line": 1441,
+          "line": 1449,
           "english_text": "Bad angles, overlap and dead air"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Release",
-          "line": 1446,
+          "line": 1454,
           "english_text": "W release"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Offset",
-          "line": 1451,
+          "line": 1459,
           "english_text": "Offset"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Edge",
-          "line": 1456,
+          "line": 1464,
           "english_text": "Edge"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Deviation",
-          "line": 1461,
+          "line": 1469,
           "english_text": "Deviation"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Miss",
-          "line": 1466,
+          "line": 1474,
           "english_text": "Miss"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Fields",
-          "line": 1471,
+          "line": 1479,
           "english_text": "Fields"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Order",
-          "line": 1476,
+          "line": 1484,
           "english_text": "Order"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Order Sub",
-          "line": 1481,
+          "line": 1489,
           "english_text": "Only the fields that are on are listed. The chat and the HUD panel share the order"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Extended Sub",
-          "line": 1486,
+          "line": 1494,
           "english_text": "In chat, only on the extended stats line"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Extended Stats Sub",
-          "line": 1491,
+          "line": 1499,
           "english_text": "Adds a second chat line with the fields that are marked for it"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Info",
-          "line": 1496,
+          "line": 1504,
           "english_text": "Course Info"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - W Release",
-          "line": 1501,
+          "line": 1509,
           "english_text": "W Release"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Map",
-          "line": 1506,
+          "line": 1514,
           "english_text": "Map and course"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Pro",
-          "line": 1511,
+          "line": 1519,
           "english_text": "Pro record"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Pro Sub",
-          "line": 1516,
+          "line": 1524,
           "english_text": "A second row for the record without teleports"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Splits",
-          "line": 1521,
+          "line": 1529,
           "english_text": "Zone times"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Splits Sub",
-          "line": 1526,
+          "line": 1534,
           "english_text": "A pill for every split, checkpoint and stage, against your !comparelevel time"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Color Early",
-          "line": 1531,
+          "line": 1539,
           "english_text": "Early"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Color Perfect",
-          "line": 1536,
+          "line": 1544,
           "english_text": "Perfect"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Color Late",
-          "line": 1541,
+          "line": 1549,
           "english_text": "Late"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Progress",
-          "line": 1546,
+          "line": 1554,
           "english_text": "Zone progress"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Progress Sub",
-          "line": 1551,
+          "line": 1559,
           "english_text": "Stages, checkpoints and splits reached, on courses that have them"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Records",
-          "line": 1556,
+          "line": 1564,
           "english_text": "Records"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Records Sub",
-          "line": 1561,
+          "line": 1569,
           "english_text": "The world record and your gap to it, or the server record on a non-global map"
         },
         {
@@ -18019,9 +18091,9 @@
     },
     "lv": {
       "name": "latvian",
-      "coverage_percent": 33.03,
+      "coverage_percent": 32.96,
       "translated": 328,
-      "missing": 665,
+      "missing": 667,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -20623,242 +20695,254 @@
         },
         {
           "file": "cs2kz-menu.phrases.txt",
-          "phrase": "Menu - JS History",
+          "phrase": "Menu - JS Compact",
           "line": 1366,
+          "english_text": "Compact"
+        },
+        {
+          "file": "cs2kz-menu.phrases.txt",
+          "phrase": "Menu - JS Compact Sub",
+          "line": 1370,
+          "english_text": "Only the pills, with no panel. The history is always on"
+        },
+        {
+          "file": "cs2kz-menu.phrases.txt",
+          "phrase": "Menu - JS History",
+          "line": 1374,
           "english_text": "Show history"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS History Sub",
-          "line": 1371,
+          "line": 1379,
           "english_text": "Your last few jumps, stacked next to the panel"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS History Below",
-          "line": 1376,
+          "line": 1384,
           "english_text": "History below the panel"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS History Below Sub",
-          "line": 1381,
+          "line": 1389,
           "english_text": "Stack the history under the panel instead of above it"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Duration",
-          "line": 1386,
+          "line": 1394,
           "english_text": "Panel duration"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Duration Sub",
-          "line": 1391,
+          "line": 1399,
           "english_text": "How long the panel stays up after a jump"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Block",
-          "line": 1396,
+          "line": 1404,
           "english_text": "Block"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Strafes",
-          "line": 1401,
+          "line": 1409,
           "english_text": "Strafes"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Sync",
-          "line": 1406,
+          "line": 1414,
           "english_text": "Sync"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Pre Max",
-          "line": 1411,
+          "line": 1419,
           "english_text": "Pre and max speed"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Height",
-          "line": 1416,
+          "line": 1424,
           "english_text": "Height"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Air Time",
-          "line": 1421,
+          "line": 1429,
           "english_text": "Air time"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Width",
-          "line": 1426,
+          "line": 1434,
           "english_text": "Width"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Gain Efficiency",
-          "line": 1431,
+          "line": 1439,
           "english_text": "Gain efficiency"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Air Path",
-          "line": 1436,
+          "line": 1444,
           "english_text": "Air path"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Bad Angles",
-          "line": 1441,
+          "line": 1449,
           "english_text": "Bad angles, overlap and dead air"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Release",
-          "line": 1446,
+          "line": 1454,
           "english_text": "W release"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Offset",
-          "line": 1451,
+          "line": 1459,
           "english_text": "Offset"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Edge",
-          "line": 1456,
+          "line": 1464,
           "english_text": "Edge"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Deviation",
-          "line": 1461,
+          "line": 1469,
           "english_text": "Deviation"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Miss",
-          "line": 1466,
+          "line": 1474,
           "english_text": "Miss"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Fields",
-          "line": 1471,
+          "line": 1479,
           "english_text": "Fields"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Order",
-          "line": 1476,
+          "line": 1484,
           "english_text": "Order"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Order Sub",
-          "line": 1481,
+          "line": 1489,
           "english_text": "Only the fields that are on are listed. The chat and the HUD panel share the order"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Extended Sub",
-          "line": 1486,
+          "line": 1494,
           "english_text": "In chat, only on the extended stats line"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Extended Stats Sub",
-          "line": 1491,
+          "line": 1499,
           "english_text": "Adds a second chat line with the fields that are marked for it"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Info",
-          "line": 1496,
+          "line": 1504,
           "english_text": "Course Info"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - W Release",
-          "line": 1501,
+          "line": 1509,
           "english_text": "W Release"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Map",
-          "line": 1506,
+          "line": 1514,
           "english_text": "Map and course"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Pro",
-          "line": 1511,
+          "line": 1519,
           "english_text": "Pro record"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Pro Sub",
-          "line": 1516,
+          "line": 1524,
           "english_text": "A second row for the record without teleports"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Splits",
-          "line": 1521,
+          "line": 1529,
           "english_text": "Zone times"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Splits Sub",
-          "line": 1526,
+          "line": 1534,
           "english_text": "A pill for every split, checkpoint and stage, against your !comparelevel time"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Color Early",
-          "line": 1531,
+          "line": 1539,
           "english_text": "Early"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Color Perfect",
-          "line": 1536,
+          "line": 1544,
           "english_text": "Perfect"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Color Late",
-          "line": 1541,
+          "line": 1549,
           "english_text": "Late"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Progress",
-          "line": 1546,
+          "line": 1554,
           "english_text": "Zone progress"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Progress Sub",
-          "line": 1551,
+          "line": 1559,
           "english_text": "Stages, checkpoints and splits reached, on courses that have them"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Records",
-          "line": 1556,
+          "line": 1564,
           "english_text": "Records"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Records Sub",
-          "line": 1561,
+          "line": 1569,
           "english_text": "The world record and your gap to it, or the server record on a non-global map"
         },
         {
@@ -22024,7 +22108,7 @@
       "name": "dutch",
       "coverage_percent": 0.5,
       "translated": 5,
-      "missing": 988,
+      "missing": 990,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -25700,242 +25784,254 @@
         },
         {
           "file": "cs2kz-menu.phrases.txt",
-          "phrase": "Menu - JS History",
+          "phrase": "Menu - JS Compact",
           "line": 1366,
+          "english_text": "Compact"
+        },
+        {
+          "file": "cs2kz-menu.phrases.txt",
+          "phrase": "Menu - JS Compact Sub",
+          "line": 1370,
+          "english_text": "Only the pills, with no panel. The history is always on"
+        },
+        {
+          "file": "cs2kz-menu.phrases.txt",
+          "phrase": "Menu - JS History",
+          "line": 1374,
           "english_text": "Show history"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS History Sub",
-          "line": 1371,
+          "line": 1379,
           "english_text": "Your last few jumps, stacked next to the panel"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS History Below",
-          "line": 1376,
+          "line": 1384,
           "english_text": "History below the panel"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS History Below Sub",
-          "line": 1381,
+          "line": 1389,
           "english_text": "Stack the history under the panel instead of above it"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Duration",
-          "line": 1386,
+          "line": 1394,
           "english_text": "Panel duration"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Duration Sub",
-          "line": 1391,
+          "line": 1399,
           "english_text": "How long the panel stays up after a jump"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Block",
-          "line": 1396,
+          "line": 1404,
           "english_text": "Block"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Strafes",
-          "line": 1401,
+          "line": 1409,
           "english_text": "Strafes"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Sync",
-          "line": 1406,
+          "line": 1414,
           "english_text": "Sync"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Pre Max",
-          "line": 1411,
+          "line": 1419,
           "english_text": "Pre and max speed"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Height",
-          "line": 1416,
+          "line": 1424,
           "english_text": "Height"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Air Time",
-          "line": 1421,
+          "line": 1429,
           "english_text": "Air time"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Width",
-          "line": 1426,
+          "line": 1434,
           "english_text": "Width"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Gain Efficiency",
-          "line": 1431,
+          "line": 1439,
           "english_text": "Gain efficiency"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Air Path",
-          "line": 1436,
+          "line": 1444,
           "english_text": "Air path"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Bad Angles",
-          "line": 1441,
+          "line": 1449,
           "english_text": "Bad angles, overlap and dead air"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Release",
-          "line": 1446,
+          "line": 1454,
           "english_text": "W release"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Offset",
-          "line": 1451,
+          "line": 1459,
           "english_text": "Offset"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Edge",
-          "line": 1456,
+          "line": 1464,
           "english_text": "Edge"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Deviation",
-          "line": 1461,
+          "line": 1469,
           "english_text": "Deviation"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Miss",
-          "line": 1466,
+          "line": 1474,
           "english_text": "Miss"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Fields",
-          "line": 1471,
+          "line": 1479,
           "english_text": "Fields"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Order",
-          "line": 1476,
+          "line": 1484,
           "english_text": "Order"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Order Sub",
-          "line": 1481,
+          "line": 1489,
           "english_text": "Only the fields that are on are listed. The chat and the HUD panel share the order"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Extended Sub",
-          "line": 1486,
+          "line": 1494,
           "english_text": "In chat, only on the extended stats line"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Extended Stats Sub",
-          "line": 1491,
+          "line": 1499,
           "english_text": "Adds a second chat line with the fields that are marked for it"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Info",
-          "line": 1496,
+          "line": 1504,
           "english_text": "Course Info"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - W Release",
-          "line": 1501,
+          "line": 1509,
           "english_text": "W Release"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Map",
-          "line": 1506,
+          "line": 1514,
           "english_text": "Map and course"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Pro",
-          "line": 1511,
+          "line": 1519,
           "english_text": "Pro record"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Pro Sub",
-          "line": 1516,
+          "line": 1524,
           "english_text": "A second row for the record without teleports"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Splits",
-          "line": 1521,
+          "line": 1529,
           "english_text": "Zone times"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Splits Sub",
-          "line": 1526,
+          "line": 1534,
           "english_text": "A pill for every split, checkpoint and stage, against your !comparelevel time"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Color Early",
-          "line": 1531,
+          "line": 1539,
           "english_text": "Early"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Color Perfect",
-          "line": 1536,
+          "line": 1544,
           "english_text": "Perfect"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Color Late",
-          "line": 1541,
+          "line": 1549,
           "english_text": "Late"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Progress",
-          "line": 1546,
+          "line": 1554,
           "english_text": "Zone progress"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Progress Sub",
-          "line": 1551,
+          "line": 1559,
           "english_text": "Stages, checkpoints and splits reached, on courses that have them"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Records",
-          "line": 1556,
+          "line": 1564,
           "english_text": "Records"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Records Sub",
-          "line": 1561,
+          "line": 1569,
           "english_text": "The world record and your gap to it, or the server record on a non-global map"
         },
         {
@@ -27963,9 +28059,9 @@
     },
     "pl": {
       "name": "polish",
-      "coverage_percent": 52.37,
+      "coverage_percent": 52.26,
       "translated": 520,
-      "missing": 473,
+      "missing": 475,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -30141,242 +30237,254 @@
         },
         {
           "file": "cs2kz-menu.phrases.txt",
-          "phrase": "Menu - JS History",
+          "phrase": "Menu - JS Compact",
           "line": 1366,
+          "english_text": "Compact"
+        },
+        {
+          "file": "cs2kz-menu.phrases.txt",
+          "phrase": "Menu - JS Compact Sub",
+          "line": 1370,
+          "english_text": "Only the pills, with no panel. The history is always on"
+        },
+        {
+          "file": "cs2kz-menu.phrases.txt",
+          "phrase": "Menu - JS History",
+          "line": 1374,
           "english_text": "Show history"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS History Sub",
-          "line": 1371,
+          "line": 1379,
           "english_text": "Your last few jumps, stacked next to the panel"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS History Below",
-          "line": 1376,
+          "line": 1384,
           "english_text": "History below the panel"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS History Below Sub",
-          "line": 1381,
+          "line": 1389,
           "english_text": "Stack the history under the panel instead of above it"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Duration",
-          "line": 1386,
+          "line": 1394,
           "english_text": "Panel duration"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Duration Sub",
-          "line": 1391,
+          "line": 1399,
           "english_text": "How long the panel stays up after a jump"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Block",
-          "line": 1396,
+          "line": 1404,
           "english_text": "Block"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Strafes",
-          "line": 1401,
+          "line": 1409,
           "english_text": "Strafes"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Sync",
-          "line": 1406,
+          "line": 1414,
           "english_text": "Sync"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Pre Max",
-          "line": 1411,
+          "line": 1419,
           "english_text": "Pre and max speed"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Height",
-          "line": 1416,
+          "line": 1424,
           "english_text": "Height"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Air Time",
-          "line": 1421,
+          "line": 1429,
           "english_text": "Air time"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Width",
-          "line": 1426,
+          "line": 1434,
           "english_text": "Width"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Gain Efficiency",
-          "line": 1431,
+          "line": 1439,
           "english_text": "Gain efficiency"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Air Path",
-          "line": 1436,
+          "line": 1444,
           "english_text": "Air path"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Bad Angles",
-          "line": 1441,
+          "line": 1449,
           "english_text": "Bad angles, overlap and dead air"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Release",
-          "line": 1446,
+          "line": 1454,
           "english_text": "W release"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Offset",
-          "line": 1451,
+          "line": 1459,
           "english_text": "Offset"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Edge",
-          "line": 1456,
+          "line": 1464,
           "english_text": "Edge"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Deviation",
-          "line": 1461,
+          "line": 1469,
           "english_text": "Deviation"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Miss",
-          "line": 1466,
+          "line": 1474,
           "english_text": "Miss"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Fields",
-          "line": 1471,
+          "line": 1479,
           "english_text": "Fields"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Order",
-          "line": 1476,
+          "line": 1484,
           "english_text": "Order"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Order Sub",
-          "line": 1481,
+          "line": 1489,
           "english_text": "Only the fields that are on are listed. The chat and the HUD panel share the order"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Extended Sub",
-          "line": 1486,
+          "line": 1494,
           "english_text": "In chat, only on the extended stats line"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Extended Stats Sub",
-          "line": 1491,
+          "line": 1499,
           "english_text": "Adds a second chat line with the fields that are marked for it"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Info",
-          "line": 1496,
+          "line": 1504,
           "english_text": "Course Info"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - W Release",
-          "line": 1501,
+          "line": 1509,
           "english_text": "W Release"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Map",
-          "line": 1506,
+          "line": 1514,
           "english_text": "Map and course"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Pro",
-          "line": 1511,
+          "line": 1519,
           "english_text": "Pro record"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Pro Sub",
-          "line": 1516,
+          "line": 1524,
           "english_text": "A second row for the record without teleports"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Splits",
-          "line": 1521,
+          "line": 1529,
           "english_text": "Zone times"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Splits Sub",
-          "line": 1526,
+          "line": 1534,
           "english_text": "A pill for every split, checkpoint and stage, against your !comparelevel time"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Color Early",
-          "line": 1531,
+          "line": 1539,
           "english_text": "Early"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Color Perfect",
-          "line": 1536,
+          "line": 1544,
           "english_text": "Perfect"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Color Late",
-          "line": 1541,
+          "line": 1549,
           "english_text": "Late"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Progress",
-          "line": 1546,
+          "line": 1554,
           "english_text": "Zone progress"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Progress Sub",
-          "line": 1551,
+          "line": 1559,
           "english_text": "Stages, checkpoints and splits reached, on courses that have them"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Records",
-          "line": 1556,
+          "line": 1564,
           "english_text": "Records"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Records Sub",
-          "line": 1561,
+          "line": 1569,
           "english_text": "The world record and your gap to it, or the server record on a non-global map"
         },
         {
@@ -30814,9 +30922,9 @@
     },
     "ru": {
       "name": "russian",
-      "coverage_percent": 65.46,
+      "coverage_percent": 65.33,
       "translated": 650,
-      "missing": 343,
+      "missing": 345,
       "missing_phrases": [
         {
           "file": "cs2kz-commands.phrases.txt",
@@ -32608,242 +32716,254 @@
         },
         {
           "file": "cs2kz-menu.phrases.txt",
-          "phrase": "Menu - JS History",
+          "phrase": "Menu - JS Compact",
           "line": 1366,
+          "english_text": "Compact"
+        },
+        {
+          "file": "cs2kz-menu.phrases.txt",
+          "phrase": "Menu - JS Compact Sub",
+          "line": 1370,
+          "english_text": "Only the pills, with no panel. The history is always on"
+        },
+        {
+          "file": "cs2kz-menu.phrases.txt",
+          "phrase": "Menu - JS History",
+          "line": 1374,
           "english_text": "Show history"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS History Sub",
-          "line": 1371,
+          "line": 1379,
           "english_text": "Your last few jumps, stacked next to the panel"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS History Below",
-          "line": 1376,
+          "line": 1384,
           "english_text": "History below the panel"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS History Below Sub",
-          "line": 1381,
+          "line": 1389,
           "english_text": "Stack the history under the panel instead of above it"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Duration",
-          "line": 1386,
+          "line": 1394,
           "english_text": "Panel duration"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Duration Sub",
-          "line": 1391,
+          "line": 1399,
           "english_text": "How long the panel stays up after a jump"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Block",
-          "line": 1396,
+          "line": 1404,
           "english_text": "Block"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Strafes",
-          "line": 1401,
+          "line": 1409,
           "english_text": "Strafes"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Sync",
-          "line": 1406,
+          "line": 1414,
           "english_text": "Sync"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Pre Max",
-          "line": 1411,
+          "line": 1419,
           "english_text": "Pre and max speed"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Height",
-          "line": 1416,
+          "line": 1424,
           "english_text": "Height"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Air Time",
-          "line": 1421,
+          "line": 1429,
           "english_text": "Air time"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Width",
-          "line": 1426,
+          "line": 1434,
           "english_text": "Width"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Gain Efficiency",
-          "line": 1431,
+          "line": 1439,
           "english_text": "Gain efficiency"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Air Path",
-          "line": 1436,
+          "line": 1444,
           "english_text": "Air path"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Bad Angles",
-          "line": 1441,
+          "line": 1449,
           "english_text": "Bad angles, overlap and dead air"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Release",
-          "line": 1446,
+          "line": 1454,
           "english_text": "W release"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Offset",
-          "line": 1451,
+          "line": 1459,
           "english_text": "Offset"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Edge",
-          "line": 1456,
+          "line": 1464,
           "english_text": "Edge"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Deviation",
-          "line": 1461,
+          "line": 1469,
           "english_text": "Deviation"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Miss",
-          "line": 1466,
+          "line": 1474,
           "english_text": "Miss"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Fields",
-          "line": 1471,
+          "line": 1479,
           "english_text": "Fields"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Order",
-          "line": 1476,
+          "line": 1484,
           "english_text": "Order"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Order Sub",
-          "line": 1481,
+          "line": 1489,
           "english_text": "Only the fields that are on are listed. The chat and the HUD panel share the order"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Extended Sub",
-          "line": 1486,
+          "line": 1494,
           "english_text": "In chat, only on the extended stats line"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Extended Stats Sub",
-          "line": 1491,
+          "line": 1499,
           "english_text": "Adds a second chat line with the fields that are marked for it"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Info",
-          "line": 1496,
+          "line": 1504,
           "english_text": "Course Info"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - W Release",
-          "line": 1501,
+          "line": 1509,
           "english_text": "W Release"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Map",
-          "line": 1506,
+          "line": 1514,
           "english_text": "Map and course"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Pro",
-          "line": 1511,
+          "line": 1519,
           "english_text": "Pro record"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Pro Sub",
-          "line": 1516,
+          "line": 1524,
           "english_text": "A second row for the record without teleports"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Splits",
-          "line": 1521,
+          "line": 1529,
           "english_text": "Zone times"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Splits Sub",
-          "line": 1526,
+          "line": 1534,
           "english_text": "A pill for every split, checkpoint and stage, against your !comparelevel time"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Color Early",
-          "line": 1531,
+          "line": 1539,
           "english_text": "Early"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Color Perfect",
-          "line": 1536,
+          "line": 1544,
           "english_text": "Perfect"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Color Late",
-          "line": 1541,
+          "line": 1549,
           "english_text": "Late"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Progress",
-          "line": 1546,
+          "line": 1554,
           "english_text": "Zone progress"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Progress Sub",
-          "line": 1551,
+          "line": 1559,
           "english_text": "Stages, checkpoints and splits reached, on courses that have them"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Records",
-          "line": 1556,
+          "line": 1564,
           "english_text": "Records"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Records Sub",
-          "line": 1561,
+          "line": 1569,
           "english_text": "The world record and your gap to it, or the server record on a non-global map"
         },
         {
@@ -32885,9 +33005,9 @@
     },
     "sv": {
       "name": "swedish",
-      "coverage_percent": 39.48,
+      "coverage_percent": 39.4,
       "translated": 392,
-      "missing": 601,
+      "missing": 603,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -35219,242 +35339,254 @@
         },
         {
           "file": "cs2kz-menu.phrases.txt",
-          "phrase": "Menu - JS History",
+          "phrase": "Menu - JS Compact",
           "line": 1366,
+          "english_text": "Compact"
+        },
+        {
+          "file": "cs2kz-menu.phrases.txt",
+          "phrase": "Menu - JS Compact Sub",
+          "line": 1370,
+          "english_text": "Only the pills, with no panel. The history is always on"
+        },
+        {
+          "file": "cs2kz-menu.phrases.txt",
+          "phrase": "Menu - JS History",
+          "line": 1374,
           "english_text": "Show history"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS History Sub",
-          "line": 1371,
+          "line": 1379,
           "english_text": "Your last few jumps, stacked next to the panel"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS History Below",
-          "line": 1376,
+          "line": 1384,
           "english_text": "History below the panel"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS History Below Sub",
-          "line": 1381,
+          "line": 1389,
           "english_text": "Stack the history under the panel instead of above it"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Duration",
-          "line": 1386,
+          "line": 1394,
           "english_text": "Panel duration"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Duration Sub",
-          "line": 1391,
+          "line": 1399,
           "english_text": "How long the panel stays up after a jump"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Block",
-          "line": 1396,
+          "line": 1404,
           "english_text": "Block"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Strafes",
-          "line": 1401,
+          "line": 1409,
           "english_text": "Strafes"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Sync",
-          "line": 1406,
+          "line": 1414,
           "english_text": "Sync"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Pre Max",
-          "line": 1411,
+          "line": 1419,
           "english_text": "Pre and max speed"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Height",
-          "line": 1416,
+          "line": 1424,
           "english_text": "Height"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Air Time",
-          "line": 1421,
+          "line": 1429,
           "english_text": "Air time"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Width",
-          "line": 1426,
+          "line": 1434,
           "english_text": "Width"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Gain Efficiency",
-          "line": 1431,
+          "line": 1439,
           "english_text": "Gain efficiency"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Air Path",
-          "line": 1436,
+          "line": 1444,
           "english_text": "Air path"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Bad Angles",
-          "line": 1441,
+          "line": 1449,
           "english_text": "Bad angles, overlap and dead air"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Release",
-          "line": 1446,
+          "line": 1454,
           "english_text": "W release"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Offset",
-          "line": 1451,
+          "line": 1459,
           "english_text": "Offset"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Edge",
-          "line": 1456,
+          "line": 1464,
           "english_text": "Edge"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Deviation",
-          "line": 1461,
+          "line": 1469,
           "english_text": "Deviation"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Miss",
-          "line": 1466,
+          "line": 1474,
           "english_text": "Miss"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Fields",
-          "line": 1471,
+          "line": 1479,
           "english_text": "Fields"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Order",
-          "line": 1476,
+          "line": 1484,
           "english_text": "Order"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Order Sub",
-          "line": 1481,
+          "line": 1489,
           "english_text": "Only the fields that are on are listed. The chat and the HUD panel share the order"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Extended Sub",
-          "line": 1486,
+          "line": 1494,
           "english_text": "In chat, only on the extended stats line"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Extended Stats Sub",
-          "line": 1491,
+          "line": 1499,
           "english_text": "Adds a second chat line with the fields that are marked for it"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Info",
-          "line": 1496,
+          "line": 1504,
           "english_text": "Course Info"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - W Release",
-          "line": 1501,
+          "line": 1509,
           "english_text": "W Release"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Map",
-          "line": 1506,
+          "line": 1514,
           "english_text": "Map and course"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Pro",
-          "line": 1511,
+          "line": 1519,
           "english_text": "Pro record"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Pro Sub",
-          "line": 1516,
+          "line": 1524,
           "english_text": "A second row for the record without teleports"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Splits",
-          "line": 1521,
+          "line": 1529,
           "english_text": "Zone times"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Splits Sub",
-          "line": 1526,
+          "line": 1534,
           "english_text": "A pill for every split, checkpoint and stage, against your !comparelevel time"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Color Early",
-          "line": 1531,
+          "line": 1539,
           "english_text": "Early"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Color Perfect",
-          "line": 1536,
+          "line": 1544,
           "english_text": "Perfect"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Color Late",
-          "line": 1541,
+          "line": 1549,
           "english_text": "Late"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Progress",
-          "line": 1546,
+          "line": 1554,
           "english_text": "Zone progress"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Progress Sub",
-          "line": 1551,
+          "line": 1559,
           "english_text": "Stages, checkpoints and splits reached, on courses that have them"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Records",
-          "line": 1556,
+          "line": 1564,
           "english_text": "Records"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Records Sub",
-          "line": 1561,
+          "line": 1569,
           "english_text": "The world record and your gap to it, or the server record on a non-global map"
         },
         {
@@ -36504,9 +36636,9 @@
     },
     "tr": {
       "name": "turkish",
-      "coverage_percent": 26.38,
+      "coverage_percent": 26.33,
       "translated": 262,
-      "missing": 731,
+      "missing": 733,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -39342,242 +39474,254 @@
         },
         {
           "file": "cs2kz-menu.phrases.txt",
-          "phrase": "Menu - JS History",
+          "phrase": "Menu - JS Compact",
           "line": 1366,
+          "english_text": "Compact"
+        },
+        {
+          "file": "cs2kz-menu.phrases.txt",
+          "phrase": "Menu - JS Compact Sub",
+          "line": 1370,
+          "english_text": "Only the pills, with no panel. The history is always on"
+        },
+        {
+          "file": "cs2kz-menu.phrases.txt",
+          "phrase": "Menu - JS History",
+          "line": 1374,
           "english_text": "Show history"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS History Sub",
-          "line": 1371,
+          "line": 1379,
           "english_text": "Your last few jumps, stacked next to the panel"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS History Below",
-          "line": 1376,
+          "line": 1384,
           "english_text": "History below the panel"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS History Below Sub",
-          "line": 1381,
+          "line": 1389,
           "english_text": "Stack the history under the panel instead of above it"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Duration",
-          "line": 1386,
+          "line": 1394,
           "english_text": "Panel duration"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Duration Sub",
-          "line": 1391,
+          "line": 1399,
           "english_text": "How long the panel stays up after a jump"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Block",
-          "line": 1396,
+          "line": 1404,
           "english_text": "Block"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Strafes",
-          "line": 1401,
+          "line": 1409,
           "english_text": "Strafes"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Sync",
-          "line": 1406,
+          "line": 1414,
           "english_text": "Sync"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Pre Max",
-          "line": 1411,
+          "line": 1419,
           "english_text": "Pre and max speed"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Height",
-          "line": 1416,
+          "line": 1424,
           "english_text": "Height"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Air Time",
-          "line": 1421,
+          "line": 1429,
           "english_text": "Air time"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Width",
-          "line": 1426,
+          "line": 1434,
           "english_text": "Width"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Gain Efficiency",
-          "line": 1431,
+          "line": 1439,
           "english_text": "Gain efficiency"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Air Path",
-          "line": 1436,
+          "line": 1444,
           "english_text": "Air path"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Bad Angles",
-          "line": 1441,
+          "line": 1449,
           "english_text": "Bad angles, overlap and dead air"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Release",
-          "line": 1446,
+          "line": 1454,
           "english_text": "W release"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Offset",
-          "line": 1451,
+          "line": 1459,
           "english_text": "Offset"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Edge",
-          "line": 1456,
+          "line": 1464,
           "english_text": "Edge"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Deviation",
-          "line": 1461,
+          "line": 1469,
           "english_text": "Deviation"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Miss",
-          "line": 1466,
+          "line": 1474,
           "english_text": "Miss"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Fields",
-          "line": 1471,
+          "line": 1479,
           "english_text": "Fields"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Order",
-          "line": 1476,
+          "line": 1484,
           "english_text": "Order"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Order Sub",
-          "line": 1481,
+          "line": 1489,
           "english_text": "Only the fields that are on are listed. The chat and the HUD panel share the order"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Field Extended Sub",
-          "line": 1486,
+          "line": 1494,
           "english_text": "In chat, only on the extended stats line"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - JS Extended Stats Sub",
-          "line": 1491,
+          "line": 1499,
           "english_text": "Adds a second chat line with the fields that are marked for it"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Info",
-          "line": 1496,
+          "line": 1504,
           "english_text": "Course Info"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - W Release",
-          "line": 1501,
+          "line": 1509,
           "english_text": "W Release"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Map",
-          "line": 1506,
+          "line": 1514,
           "english_text": "Map and course"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Pro",
-          "line": 1511,
+          "line": 1519,
           "english_text": "Pro record"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Pro Sub",
-          "line": 1516,
+          "line": 1524,
           "english_text": "A second row for the record without teleports"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Splits",
-          "line": 1521,
+          "line": 1529,
           "english_text": "Zone times"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Splits Sub",
-          "line": 1526,
+          "line": 1534,
           "english_text": "A pill for every split, checkpoint and stage, against your !comparelevel time"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Color Early",
-          "line": 1531,
+          "line": 1539,
           "english_text": "Early"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Color Perfect",
-          "line": 1536,
+          "line": 1544,
           "english_text": "Perfect"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Color Late",
-          "line": 1541,
+          "line": 1549,
           "english_text": "Late"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Progress",
-          "line": 1546,
+          "line": 1554,
           "english_text": "Zone progress"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Progress Sub",
-          "line": 1551,
+          "line": 1559,
           "english_text": "Stages, checkpoints and splits reached, on courses that have them"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Records",
-          "line": 1556,
+          "line": 1564,
           "english_text": "Records"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Records Sub",
-          "line": 1561,
+          "line": 1569,
           "english_text": "The world record and your gap to it, or the server record on a non-global map"
         },
         {
@@ -40908,10 +41052,23 @@
     },
     "ua": {
       "name": "ukrainian",
-      "coverage_percent": 100.0,
+      "coverage_percent": 99.8,
       "translated": 993,
-      "missing": 0,
-      "missing_phrases": [],
+      "missing": 2,
+      "missing_phrases": [
+        {
+          "file": "cs2kz-menu.phrases.txt",
+          "phrase": "Menu - JS Compact",
+          "line": 1366,
+          "english_text": "Compact"
+        },
+        {
+          "file": "cs2kz-menu.phrases.txt",
+          "phrase": "Menu - JS Compact Sub",
+          "line": 1370,
+          "english_text": "Only the pills, with no panel. The history is always on"
+        }
+      ],
       "menu": {
         "file_exists": true,
         "missing_groups": [],
@@ -49933,7 +50090,7 @@
       ]
     },
     "cs2kz-menu.phrases.txt": {
-      "phrases_with_missing": 268,
+      "phrases_with_missing": 270,
       "phrases": [
         {
           "name": "Menu - Title Options",
@@ -55180,8 +55337,54 @@
           ]
         },
         {
-          "name": "Menu - JS History",
+          "name": "Menu - JS Compact",
           "line": 1366,
+          "english_text": "Compact",
+          "existing_languages": [
+            "en"
+          ],
+          "missing_languages": [
+            "chi",
+            "de",
+            "es",
+            "fi",
+            "it",
+            "ko",
+            "lv",
+            "nl",
+            "pl",
+            "ru",
+            "sv",
+            "tr",
+            "ua"
+          ]
+        },
+        {
+          "name": "Menu - JS Compact Sub",
+          "line": 1370,
+          "english_text": "Only the pills, with no panel. The history is always on",
+          "existing_languages": [
+            "en"
+          ],
+          "missing_languages": [
+            "chi",
+            "de",
+            "es",
+            "fi",
+            "it",
+            "ko",
+            "lv",
+            "nl",
+            "pl",
+            "ru",
+            "sv",
+            "tr",
+            "ua"
+          ]
+        },
+        {
+          "name": "Menu - JS History",
+          "line": 1374,
           "english_text": "Show history",
           "existing_languages": [
             "en",
@@ -55204,7 +55407,7 @@
         },
         {
           "name": "Menu - JS History Sub",
-          "line": 1371,
+          "line": 1379,
           "english_text": "Your last few jumps, stacked next to the panel",
           "existing_languages": [
             "en",
@@ -55227,7 +55430,7 @@
         },
         {
           "name": "Menu - JS History Below",
-          "line": 1376,
+          "line": 1384,
           "english_text": "History below the panel",
           "existing_languages": [
             "en",
@@ -55250,7 +55453,7 @@
         },
         {
           "name": "Menu - JS History Below Sub",
-          "line": 1381,
+          "line": 1389,
           "english_text": "Stack the history under the panel instead of above it",
           "existing_languages": [
             "en",
@@ -55273,7 +55476,7 @@
         },
         {
           "name": "Menu - JS Duration",
-          "line": 1386,
+          "line": 1394,
           "english_text": "Panel duration",
           "existing_languages": [
             "en",
@@ -55296,7 +55499,7 @@
         },
         {
           "name": "Menu - JS Duration Sub",
-          "line": 1391,
+          "line": 1399,
           "english_text": "How long the panel stays up after a jump",
           "existing_languages": [
             "en",
@@ -55319,7 +55522,7 @@
         },
         {
           "name": "Menu - JS Field Block",
-          "line": 1396,
+          "line": 1404,
           "english_text": "Block",
           "existing_languages": [
             "en",
@@ -55342,7 +55545,7 @@
         },
         {
           "name": "Menu - JS Field Strafes",
-          "line": 1401,
+          "line": 1409,
           "english_text": "Strafes",
           "existing_languages": [
             "en",
@@ -55365,7 +55568,7 @@
         },
         {
           "name": "Menu - JS Field Sync",
-          "line": 1406,
+          "line": 1414,
           "english_text": "Sync",
           "existing_languages": [
             "en",
@@ -55388,7 +55591,7 @@
         },
         {
           "name": "Menu - JS Field Pre Max",
-          "line": 1411,
+          "line": 1419,
           "english_text": "Pre and max speed",
           "existing_languages": [
             "en",
@@ -55411,7 +55614,7 @@
         },
         {
           "name": "Menu - JS Field Height",
-          "line": 1416,
+          "line": 1424,
           "english_text": "Height",
           "existing_languages": [
             "en",
@@ -55434,7 +55637,7 @@
         },
         {
           "name": "Menu - JS Field Air Time",
-          "line": 1421,
+          "line": 1429,
           "english_text": "Air time",
           "existing_languages": [
             "en",
@@ -55457,7 +55660,7 @@
         },
         {
           "name": "Menu - JS Field Width",
-          "line": 1426,
+          "line": 1434,
           "english_text": "Width",
           "existing_languages": [
             "en",
@@ -55480,7 +55683,7 @@
         },
         {
           "name": "Menu - JS Field Gain Efficiency",
-          "line": 1431,
+          "line": 1439,
           "english_text": "Gain efficiency",
           "existing_languages": [
             "en",
@@ -55503,7 +55706,7 @@
         },
         {
           "name": "Menu - JS Field Air Path",
-          "line": 1436,
+          "line": 1444,
           "english_text": "Air path",
           "existing_languages": [
             "en",
@@ -55526,7 +55729,7 @@
         },
         {
           "name": "Menu - JS Field Bad Angles",
-          "line": 1441,
+          "line": 1449,
           "english_text": "Bad angles, overlap and dead air",
           "existing_languages": [
             "en",
@@ -55549,7 +55752,7 @@
         },
         {
           "name": "Menu - JS Field Release",
-          "line": 1446,
+          "line": 1454,
           "english_text": "W release",
           "existing_languages": [
             "en",
@@ -55572,7 +55775,7 @@
         },
         {
           "name": "Menu - JS Field Offset",
-          "line": 1451,
+          "line": 1459,
           "english_text": "Offset",
           "existing_languages": [
             "en",
@@ -55595,7 +55798,7 @@
         },
         {
           "name": "Menu - JS Field Edge",
-          "line": 1456,
+          "line": 1464,
           "english_text": "Edge",
           "existing_languages": [
             "en",
@@ -55618,7 +55821,7 @@
         },
         {
           "name": "Menu - JS Field Deviation",
-          "line": 1461,
+          "line": 1469,
           "english_text": "Deviation",
           "existing_languages": [
             "en",
@@ -55641,7 +55844,7 @@
         },
         {
           "name": "Menu - JS Field Miss",
-          "line": 1466,
+          "line": 1474,
           "english_text": "Miss",
           "existing_languages": [
             "en",
@@ -55664,7 +55867,7 @@
         },
         {
           "name": "Menu - JS Fields",
-          "line": 1471,
+          "line": 1479,
           "english_text": "Fields",
           "existing_languages": [
             "en",
@@ -55687,7 +55890,7 @@
         },
         {
           "name": "Menu - JS Field Order",
-          "line": 1476,
+          "line": 1484,
           "english_text": "Order",
           "existing_languages": [
             "en",
@@ -55710,7 +55913,7 @@
         },
         {
           "name": "Menu - JS Field Order Sub",
-          "line": 1481,
+          "line": 1489,
           "english_text": "Only the fields that are on are listed. The chat and the HUD panel share the order",
           "existing_languages": [
             "en",
@@ -55733,7 +55936,7 @@
         },
         {
           "name": "Menu - JS Field Extended Sub",
-          "line": 1486,
+          "line": 1494,
           "english_text": "In chat, only on the extended stats line",
           "existing_languages": [
             "en",
@@ -55756,7 +55959,7 @@
         },
         {
           "name": "Menu - JS Extended Stats Sub",
-          "line": 1491,
+          "line": 1499,
           "english_text": "Adds a second chat line with the fields that are marked for it",
           "existing_languages": [
             "en",
@@ -55779,7 +55982,7 @@
         },
         {
           "name": "Menu - Course Info",
-          "line": 1496,
+          "line": 1504,
           "english_text": "Course Info",
           "existing_languages": [
             "en",
@@ -55802,7 +56005,7 @@
         },
         {
           "name": "Menu - W Release",
-          "line": 1501,
+          "line": 1509,
           "english_text": "W Release",
           "existing_languages": [
             "en",
@@ -55825,7 +56028,7 @@
         },
         {
           "name": "Menu - Course Show Map",
-          "line": 1506,
+          "line": 1514,
           "english_text": "Map and course",
           "existing_languages": [
             "en",
@@ -55848,7 +56051,7 @@
         },
         {
           "name": "Menu - Course Show Pro",
-          "line": 1511,
+          "line": 1519,
           "english_text": "Pro record",
           "existing_languages": [
             "en",
@@ -55871,7 +56074,7 @@
         },
         {
           "name": "Menu - Course Show Pro Sub",
-          "line": 1516,
+          "line": 1524,
           "english_text": "A second row for the record without teleports",
           "existing_languages": [
             "en",
@@ -55894,7 +56097,7 @@
         },
         {
           "name": "Menu - Course Show Splits",
-          "line": 1521,
+          "line": 1529,
           "english_text": "Zone times",
           "existing_languages": [
             "en",
@@ -55917,7 +56120,7 @@
         },
         {
           "name": "Menu - Course Show Splits Sub",
-          "line": 1526,
+          "line": 1534,
           "english_text": "A pill for every split, checkpoint and stage, against your !comparelevel time",
           "existing_languages": [
             "en",
@@ -55940,7 +56143,7 @@
         },
         {
           "name": "Menu - Color Early",
-          "line": 1531,
+          "line": 1539,
           "english_text": "Early",
           "existing_languages": [
             "en",
@@ -55963,7 +56166,7 @@
         },
         {
           "name": "Menu - Color Perfect",
-          "line": 1536,
+          "line": 1544,
           "english_text": "Perfect",
           "existing_languages": [
             "en",
@@ -55986,7 +56189,7 @@
         },
         {
           "name": "Menu - Color Late",
-          "line": 1541,
+          "line": 1549,
           "english_text": "Late",
           "existing_languages": [
             "en",
@@ -56009,7 +56212,7 @@
         },
         {
           "name": "Menu - Course Show Progress",
-          "line": 1546,
+          "line": 1554,
           "english_text": "Zone progress",
           "existing_languages": [
             "en",
@@ -56032,7 +56235,7 @@
         },
         {
           "name": "Menu - Course Show Progress Sub",
-          "line": 1551,
+          "line": 1559,
           "english_text": "Stages, checkpoints and splits reached, on courses that have them",
           "existing_languages": [
             "en",
@@ -56055,7 +56258,7 @@
         },
         {
           "name": "Menu - Course Show Records",
-          "line": 1556,
+          "line": 1564,
           "english_text": "Records",
           "existing_languages": [
             "en",
@@ -56078,7 +56281,7 @@
         },
         {
           "name": "Menu - Course Show Records Sub",
-          "line": 1561,
+          "line": 1569,
           "english_text": "The world record and your gap to it, or the server record on a non-global map",
           "existing_languages": [
             "en",

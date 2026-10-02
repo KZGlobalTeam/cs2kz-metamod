@@ -6,27 +6,27 @@ Generated for: /home/runner/work/cs2kz-metamod/cs2kz-metamod
 SUMMARY
 ----------------------------------------------------------------------
 Total languages: 14
-Total phrases: 993
-Phrases with missing translations: 993
-Total missing translation entries: 6777
+Total phrases: 995
+Phrases with missing translations: 995
+Total missing translation entries: 6803
 
 LANGUAGE COVERAGE (Phrases)
 ----------------------------------------------------------------------
 
-  chi (schinese)       [█████████████████░░░]  87.6% (870/993)
-  de (german)          [██████████░░░░░░░░░░]  52.2% (518/993)
-  en (english)         [████████████████████] 100.0% (993/993)
-  es (spanish)         [█████████░░░░░░░░░░░]  48.7% (484/993)
-  fi (finnish)         [████░░░░░░░░░░░░░░░░]  23.5% (233/993)
-  it (italian)         [████░░░░░░░░░░░░░░░░]  22.7% (225/993)
-  ko (korean)          [█████████████░░░░░░░]  65.7% (652/993)
-  lv (latvian)         [██████░░░░░░░░░░░░░░]  33.0% (328/993)
-  nl (dutch)           [░░░░░░░░░░░░░░░░░░░░]   0.5% (5/993)
-  pl (polish)          [██████████░░░░░░░░░░]  52.4% (520/993)
-  ru (russian)         [█████████████░░░░░░░]  65.5% (650/993)
-  sv (swedish)         [███████░░░░░░░░░░░░░]  39.5% (392/993)
-  tr (turkish)         [█████░░░░░░░░░░░░░░░]  26.4% (262/993)
-  ua (ukrainian)       [████████████████████] 100.0% (993/993)
+  chi (schinese)       [█████████████████░░░]  87.4% (870/995)
+  de (german)          [██████████░░░░░░░░░░]  52.1% (518/995)
+  en (english)         [████████████████████] 100.0% (995/995)
+  es (spanish)         [█████████░░░░░░░░░░░]  48.6% (484/995)
+  fi (finnish)         [████░░░░░░░░░░░░░░░░]  23.4% (233/995)
+  it (italian)         [████░░░░░░░░░░░░░░░░]  22.6% (225/995)
+  ko (korean)          [█████████████░░░░░░░]  65.5% (652/995)
+  lv (latvian)         [██████░░░░░░░░░░░░░░]  33.0% (328/995)
+  nl (dutch)           [░░░░░░░░░░░░░░░░░░░░]   0.5% (5/995)
+  pl (polish)          [██████████░░░░░░░░░░]  52.3% (520/995)
+  ru (russian)         [█████████████░░░░░░░]  65.3% (650/995)
+  sv (swedish)         [███████░░░░░░░░░░░░░]  39.4% (392/995)
+  tr (turkish)         [█████░░░░░░░░░░░░░░░]  26.3% (262/995)
+  ua (ukrainian)       [███████████████████░]  99.8% (993/995)
 
 Global languages (14): chi, de, en, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
 
@@ -1346,85 +1346,89 @@ cs2kz-menu.phrases.txt
     Missing (12): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
   Line 1361: "Menu - Screen Aspect Sub"
     Missing (12): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
-  Line 1366: "Menu - JS History"
+  Line 1366: "Menu - JS Compact"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 1370: "Menu - JS Compact Sub"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 1374: "Menu - JS History"
     Missing (12): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
-  Line 1371: "Menu - JS History Sub"
+  Line 1379: "Menu - JS History Sub"
     Missing (12): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
-  Line 1376: "Menu - JS History Below"
+  Line 1384: "Menu - JS History Below"
     Missing (12): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
-  Line 1381: "Menu - JS History Below Sub"
+  Line 1389: "Menu - JS History Below Sub"
     Missing (12): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
-  Line 1386: "Menu - JS Duration"
+  Line 1394: "Menu - JS Duration"
     Missing (12): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
-  Line 1391: "Menu - JS Duration Sub"
+  Line 1399: "Menu - JS Duration Sub"
     Missing (12): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
-  Line 1396: "Menu - JS Field Block"
+  Line 1404: "Menu - JS Field Block"
     Missing (12): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
-  Line 1401: "Menu - JS Field Strafes"
+  Line 1409: "Menu - JS Field Strafes"
     Missing (12): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
-  Line 1406: "Menu - JS Field Sync"
+  Line 1414: "Menu - JS Field Sync"
     Missing (12): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
-  Line 1411: "Menu - JS Field Pre Max"
+  Line 1419: "Menu - JS Field Pre Max"
     Missing (12): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
-  Line 1416: "Menu - JS Field Height"
+  Line 1424: "Menu - JS Field Height"
     Missing (12): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
-  Line 1421: "Menu - JS Field Air Time"
+  Line 1429: "Menu - JS Field Air Time"
     Missing (12): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
-  Line 1426: "Menu - JS Field Width"
+  Line 1434: "Menu - JS Field Width"
     Missing (12): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
-  Line 1431: "Menu - JS Field Gain Efficiency"
+  Line 1439: "Menu - JS Field Gain Efficiency"
     Missing (12): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
-  Line 1436: "Menu - JS Field Air Path"
+  Line 1444: "Menu - JS Field Air Path"
     Missing (12): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
-  Line 1441: "Menu - JS Field Bad Angles"
+  Line 1449: "Menu - JS Field Bad Angles"
     Missing (12): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
-  Line 1446: "Menu - JS Field Release"
+  Line 1454: "Menu - JS Field Release"
     Missing (12): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
-  Line 1451: "Menu - JS Field Offset"
+  Line 1459: "Menu - JS Field Offset"
     Missing (12): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
-  Line 1456: "Menu - JS Field Edge"
+  Line 1464: "Menu - JS Field Edge"
     Missing (12): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
-  Line 1461: "Menu - JS Field Deviation"
+  Line 1469: "Menu - JS Field Deviation"
     Missing (12): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
-  Line 1466: "Menu - JS Field Miss"
+  Line 1474: "Menu - JS Field Miss"
     Missing (12): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
-  Line 1471: "Menu - JS Fields"
+  Line 1479: "Menu - JS Fields"
     Missing (12): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
-  Line 1476: "Menu - JS Field Order"
+  Line 1484: "Menu - JS Field Order"
     Missing (12): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
-  Line 1481: "Menu - JS Field Order Sub"
+  Line 1489: "Menu - JS Field Order Sub"
     Missing (12): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
-  Line 1486: "Menu - JS Field Extended Sub"
+  Line 1494: "Menu - JS Field Extended Sub"
     Missing (12): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
-  Line 1491: "Menu - JS Extended Stats Sub"
+  Line 1499: "Menu - JS Extended Stats Sub"
     Missing (12): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
-  Line 1496: "Menu - Course Info"
+  Line 1504: "Menu - Course Info"
     Missing (12): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
-  Line 1501: "Menu - W Release"
+  Line 1509: "Menu - W Release"
     Missing (12): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
-  Line 1506: "Menu - Course Show Map"
+  Line 1514: "Menu - Course Show Map"
     Missing (12): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
-  Line 1511: "Menu - Course Show Pro"
+  Line 1519: "Menu - Course Show Pro"
     Missing (12): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
-  Line 1516: "Menu - Course Show Pro Sub"
+  Line 1524: "Menu - Course Show Pro Sub"
     Missing (12): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
-  Line 1521: "Menu - Course Show Splits"
+  Line 1529: "Menu - Course Show Splits"
     Missing (12): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
-  Line 1526: "Menu - Course Show Splits Sub"
+  Line 1534: "Menu - Course Show Splits Sub"
     Missing (12): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
-  Line 1531: "Menu - Color Early"
+  Line 1539: "Menu - Color Early"
     Missing (12): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
-  Line 1536: "Menu - Color Perfect"
+  Line 1544: "Menu - Color Perfect"
     Missing (12): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
-  Line 1541: "Menu - Color Late"
+  Line 1549: "Menu - Color Late"
     Missing (12): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
-  Line 1546: "Menu - Course Show Progress"
+  Line 1554: "Menu - Course Show Progress"
     Missing (12): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
-  Line 1551: "Menu - Course Show Progress Sub"
+  Line 1559: "Menu - Course Show Progress Sub"
     Missing (12): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
-  Line 1556: "Menu - Course Show Records"
+  Line 1564: "Menu - Course Show Records"
     Missing (12): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
-  Line 1561: "Menu - Course Show Records Sub"
+  Line 1569: "Menu - Course Show Records Sub"
     Missing (12): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
 
 cs2kz-modes.phrases.txt
