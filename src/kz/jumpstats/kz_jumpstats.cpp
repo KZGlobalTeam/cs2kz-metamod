@@ -748,6 +748,18 @@ f32 Jump::GetDeviation()
 	return distanceX;
 }
 
+f32 Jump::GetSignedDeviation()
+{
+	f32 deltaX = adjustedLandingOrigin.x - adjustedTakeoffOrigin.x;
+	f32 deltaY = adjustedLandingOrigin.y - adjustedTakeoffOrigin.y;
+	// The jump runs along the longer axis. Facing along it, left is +Y when heading +X, -X when heading +Y, and so on.
+	if (fabs(deltaX) > fabs(deltaY))
+	{
+		return deltaX >= 0.0f ? deltaY : -deltaY;
+	}
+	return deltaY >= 0.0f ? -deltaX : deltaX;
+}
+
 JumpType KZJumpstatsService::DetermineJumpType()
 {
 	if (this->jumps.Count() <= 1 || this->player->JustTeleported() || this->player->triggerService->ShouldDisableJumpstats())

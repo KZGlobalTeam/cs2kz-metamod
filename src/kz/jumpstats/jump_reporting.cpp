@@ -169,7 +169,10 @@ void Jump::FormatField(JSField field, bool chat, bool greyTier, JSFieldText &out
 		case JSField::Deviation:
 		{
 			out.present = this->GetBlock() > 0.0f;
-			AddFieldValue(out, "%.1f", this->GetDeviation());
+			// Which side of the jump direction the landing is on. Nothing is added at zero.
+			const f32 deviation = this->GetSignedDeviation();
+			const f32 rounded = roundf(fabsf(deviation) * 10.0f) / 10.0f;
+			AddFieldValue(out, "%.1f%s", rounded, rounded == 0.0f ? "" : deviation > 0.0f ? " L" : " R");
 			break;
 		}
 		case JSField::Miss:

@@ -1363,6 +1363,14 @@
 		"en"		"Match your resolution so Move elements drags and snaps evenly on both axes"
 		"ua"		"Налаштуйте роздільну здатність так, щоб елементи «Переміщення» рівномірно перетягувалися та прив'язувалися по обох осях"
 	}
+	"Menu - JS Compact"
+	{
+		"en"		"Compact"
+	}
+	"Menu - JS Compact Sub"
+	{
+		"en"		"Only the pills, with no panel. The history is always on"
+	}
 	"Menu - JS History"
 	{
 		"en"		"Show history"

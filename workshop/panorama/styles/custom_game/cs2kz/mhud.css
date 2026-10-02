@@ -299,6 +299,15 @@
 	transform: translate3d(0px, 99px, 0px) scale3d(0.76, 1, 1);
 }
 
+.js-compact .js-panel {
+	visibility: collapse;
+}
+
+.js-compact .js-history {
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+
 .js-hist-type {
 	horizontal-align: left;
 	vertical-align: center;
@@ -408,7 +417,7 @@
 	margin: 3px 0px 8px 0px;
 	font-size: 38px;
 	font-weight: bold;
-	text-shadow: 1px 1px 2px 1.0 #000000cc;
+	text-shadow: 1px 1px 2px 1 #000000cc;
 }
 
 .js-divider {
@@ -631,7 +640,7 @@
 }
 
 .ci-name {
-	width: fill-parent-flow(1.0);
+	width: fill-parent-flow(1);
 	margin-left: 6px;
 	vertical-align: center;
 	text-overflow: ellipsis;
@@ -655,19 +664,41 @@
 }
 
 /* The chat colors of distanceTierColors: grey, grey, blue, green, darkred, gold, orchid. */
-.js-tier-0 { color: #c5cad0; }
-.js-tier-1 { color: #c5cad0; }
-.js-tier-2 { color: #5e98d9; }
-.js-tier-3 { color: #40ff40; }
-.js-tier-4 { color: #ff0000; }
-.js-tier-5 { color: #e4ae39; }
-.js-tier-6 { color: #d32ce6; }
+.js-tier-0 {
+	color: #c5cad0;
+}
+.js-tier-1 {
+	color: #c5cad0;
+}
+.js-tier-2 {
+	color: #5e98d9;
+}
+.js-tier-3 {
+	color: #40ff40;
+}
+.js-tier-4 {
+	color: #ff0000;
+}
+.js-tier-5 {
+	color: #e4ae39;
+}
+.js-tier-6 {
+	color: #d32ce6;
+}
 
 /* Chat colors for single values, such as the W release. */
-.js-c-red { color: #ff4040; }
-.js-c-green { color: #40ff40; }
-.js-c-blue { color: #5e98d9; }
-.js-c-grey { color: #c5cad0; }
+.js-c-red {
+	color: #ff4040;
+}
+.js-c-green {
+	color: #40ff40;
+}
+.js-c-blue {
+	color: #5e98d9;
+}
+.js-c-grey {
+	color: #c5cad0;
+}
 
 /* Each element's box in edit mode, sized by box-size.css. The move button fills it, and the corner buttons sit on top. */
 .edit-hit {

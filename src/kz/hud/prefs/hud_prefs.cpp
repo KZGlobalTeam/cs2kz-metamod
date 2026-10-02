@@ -401,6 +401,8 @@ void KZHUDService::RegisterMenu()
 
 			case MHUDElement::Jumpstats:
 			{
+				KZ::menu::AddToggle(sub, "Menu - JS Compact", "mhudJsCompact", false);
+				KZ::menu::SetItemSubtext(sub, "Menu - JS Compact Sub");
 				KZ::menu::AddToggle(sub, "Menu - JS History", "mhudJsShowHistory", true);
 				KZ::menu::SetItemSubtext(sub, "Menu - JS History Sub");
 				KZ::menu::AddToggle(sub, "Menu - JS History Below", "mhudJsHistoryBelow", false);

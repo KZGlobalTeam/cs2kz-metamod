@@ -284,6 +284,7 @@ struct MHUDPrefs
 	JSFieldLayout jsFields {}; // shared with the chat report
 	bool jsHistory {true};
 	bool jsHistoryBelow {};
+	bool jsCompact {}; // jumps go straight to the history pills, with no panel
 	i32 jsDuration {MHUD_JS_PANEL_TIME}; // seconds the panel stays up after a jump
 	Color releaseEarly, releasePerfect, releaseLate;
 	bool courseMap {true};
@@ -581,6 +582,7 @@ private:
 		const char *valueClass[(i32)JSField::Count] {};
 		bool historyHidden {};
 		bool historyBelow {};
+		bool compact {};
 		i32 scale {INT_MIN};
 		const char *fontClass {};
 		std::string shownType {};

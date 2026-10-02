@@ -512,6 +512,9 @@ public:
 
 	f32 GetDeviation();
 
+	// Same distance as GetDeviation, positive when the landing is to the left of the jump direction and negative to the right.
+	f32 GetSignedDeviation();
+
 	f32 GetReleaseInTick()
 	{
 		return this->release * ENGINE_FIXED_TICK_RATE;

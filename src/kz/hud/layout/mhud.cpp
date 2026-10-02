@@ -581,6 +581,21 @@ bool KZHUDService::ShowJumpstat(Jump *jump, i32 colorTier)
 	const DistanceTier tier = jumper->modeService->GetDistanceTier(type, jump->GetDistance());
 	const std::string typeName = lang->PrepareMessage(jumpTypeStr[type]);
 
+	if (this->GetPrefs().jsCompact)
+	{
+		// No panel, the jump goes straight in as the newest pill.
+		js.shownType = jumpTypeShortStr[type];
+		if (jump->IsFailstat())
+		{
+			js.shownType += "-F";
+		}
+		js.shownInfo = lang->PrepareMessage("Jumpstats HUD - History Info", jump->GetStrafeCount(), jump->GetSync() * 100.0f, jump->GetTakeoffSpeed());
+		js.shownDist = lang->PrepareMessage("Jumpstats HUD - Distance", jump->GetDistance(true, false, 1));
+		js.shownTier = colorTier;
+		this->PushJumpstatHistory(layout);
+		return true;
+	}
+
 	JumpstatText text;
 	text.type = jump->IsFailstat() ? lang->PrepareMessage("Jumpstats HUD - Failstat", typeName.c_str()) : typeName;
 	text.tierName = JS_TIER_PHRASES[tier] ? lang->PrepareMessage(JS_TIER_PHRASES[tier]) : "";
@@ -706,7 +721,7 @@ void KZHUDService::PushJumpstatHistory(CCSCustomHudLayout *layout)
 
 // The widest value of each field, indexed by JSField.
 static_global const char *const JS_SAMPLE_VALUES[] = {"299",    "99",   "100%", "299.9 / 399.9",      "99.99", "66.6",  "0.781s",
-													  "999.9°", "100%", "0.99", "100% / 100% / 100%", "99.9",  "99.99", "+10.0",
+													  "999.9°", "100%", "0.99", "100% / 100% / 100%", "99.9 L", "99.99", "+10.0",
 													  "-99.99"};
 static_assert(KZ_ARRAYSIZE(JS_SAMPLE_VALUES) == (i32)JSField::Count, "one sample per field");
 
@@ -803,11 +818,18 @@ void KZHUDService::UpdateJumpstatsElement(CCSCustomHudLayout *layout, bool show,
 		js.fontClass = fontClass;
 	}
 
-	const bool historyHidden = !prefs.jsHistory;
+	// Compact mode is the pills alone, so the history is always on there.
+	const bool historyHidden = !prefs.jsHistory && !prefs.jsCompact;
 	if (js.historyHidden != historyHidden)
 	{
 		js.historyHidden = historyHidden;
 		layout->SetHasClass("mhud_js_history", "hidden", historyHidden ? k_eHudPanelClassStatus_HasClass : k_eHudPanelClassStatus_DoesNotHaveClass);
+	}
+	if (js.compact != prefs.jsCompact)
+	{
+		js.compact = prefs.jsCompact;
+		layout->SetHasClass(MHUD_ELEMENTS[(i32)MHUDElement::Jumpstats].panelId, "js-compact",
+							prefs.jsCompact ? k_eHudPanelClassStatus_HasClass : k_eHudPanelClassStatus_DoesNotHaveClass);
 	}
 	if (js.historyBelow != prefs.jsHistoryBelow)
 	{
@@ -848,7 +870,8 @@ void KZHUDService::UpdateJumpstatsElement(CCSCustomHudLayout *layout, bool show,
 	}
 
 	const f64 now = g_pKZUtils->GetServerGlobals()->curtime;
-	if (js.hasShown && now >= js.hideTime)
+	// Turning compact on while the panel is up files that jump into the history right away.
+	if (js.hasShown && (now >= js.hideTime || prefs.jsCompact))
 	{
 		this->PushJumpstatHistory(layout);
 		this->SetLayoutClass(layout, "mhud_js_panel", js.panelClass, "js-hide");

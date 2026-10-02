@@ -37,6 +37,8 @@ extern ICS2Menus *g_pMenus;
 #define MHUD_EDIT_JS_PANEL_HEIGHT   109.0f
 #define MHUD_EDIT_JS_ROW_HEIGHT     19.0f
 #define MHUD_EDIT_JS_HISTORY_HEIGHT 146.0f
+// Compact mode has only the pills, with no gap under them for the panel.
+#define MHUD_EDIT_JS_COMPACT_HEIGHT 138.0f
 // The course panel at 100%, from mhud.css.
 #define MHUD_EDIT_COURSE_WIDTH          320.0f
 #define MHUD_EDIT_COURSE_PADDING        20.0f
@@ -664,8 +666,13 @@ void KZHUDService::GetEditBoxSize(MHUDElement element, f32 &width, f32 &height)
 			rows += shown ? 1 : 0;
 		}
 		const f32 scale = Clamp((i32)size, MHUD_JS_SIZE_MIN, MHUD_JS_SIZE_MAX) / 100.0f;
-		const f32 history = prefs.jsHistory ? MHUD_EDIT_JS_HISTORY_HEIGHT : 0.0f;
 		width = MHUD_EDIT_JS_WIDTH * scale + MHUD_EDIT_BOX_PADDING;
+		if (prefs.jsCompact)
+		{
+			height = MHUD_EDIT_JS_COMPACT_HEIGHT * scale + MHUD_EDIT_BOX_PADDING;
+			return;
+		}
+		const f32 history = prefs.jsHistory ? MHUD_EDIT_JS_HISTORY_HEIGHT : 0.0f;
 		height = (history + MHUD_EDIT_JS_PANEL_HEIGHT + rows * MHUD_EDIT_JS_ROW_HEIGHT) * scale + MHUD_EDIT_BOX_PADDING;
 		return;
 	}
