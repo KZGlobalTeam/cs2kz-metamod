@@ -681,11 +681,11 @@ void KZHUDService::GetEditBoxSize(MHUDElement element, f32 &width, f32 &height)
 		i32 rows = prefs.courseRecords ? (prefs.coursePro ? 2 : 1) : 0;
 		const f32 scale = Clamp((i32)size, MHUD_JS_SIZE_MIN, MHUD_JS_SIZE_MAX) / 100.0f;
 		const f32 history = prefs.courseSplits ? MHUD_EDIT_COURSE_HISTORY_HEIGHT : 0.0f;
-		// The sample shows every progress row, though a course only shows the kinds of zone it has.
+		// The sample shows every enabled zone-count row and the route progress row.
 		f32 head = prefs.courseMap ? MHUD_EDIT_COURSE_HEAD_HEIGHT : 0.0f;
-		if (prefs.courseProgress)
+		if (prefs.courseProgress || prefs.showProgress)
 		{
-			rows += MHUD_COURSE_PROGRESS_COUNT;
+			rows += (prefs.courseProgress ? MHUD_COURSE_PROGRESS_COUNT : 0) + (prefs.showProgress ? 1 : 0);
 			head += MHUD_EDIT_COURSE_PROGRESS_GAP;
 		}
 		width = MHUD_EDIT_COURSE_WIDTH * scale + MHUD_EDIT_BOX_PADDING;

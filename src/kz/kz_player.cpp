@@ -14,6 +14,7 @@
 #include "noclip/kz_noclip.h"
 #include "option/kz_option.h"
 #include "paint/kz_paint.h"
+#include "progress/kz_progress.h"
 #include "quiet/kz_quiet.h"
 #include "spec/kz_spec.h"
 #include "goto/kz_goto.h"
@@ -53,6 +54,7 @@ void KZPlayer::DestroyServices()
 	delete this->timerService;
 	delete this->optionService;
 	delete this->paintService;
+	delete this->progressService;
 	delete this->noclipService;
 	delete this->tipService;
 	delete this->telemetryService;
@@ -81,6 +83,7 @@ void KZPlayer::DestroyServices()
 	this->timerService = nullptr;
 	this->optionService = nullptr;
 	this->paintService = nullptr;
+	this->progressService = nullptr;
 	this->noclipService = nullptr;
 	this->tipService = nullptr;
 	this->telemetryService = nullptr;
@@ -119,6 +122,7 @@ void KZPlayer::Init()
 	this->timerService = new KZTimerService(this);
 	this->optionService = new KZOptionService(this);
 	this->paintService = new KZPaintService(this);
+	this->progressService = new KZProgressService(this);
 	this->tipService = new KZTipService(this);
 	this->telemetryService = new KZTelemetryService(this);
 	this->triggerService = new KZTriggerService(this);
@@ -161,6 +165,7 @@ void KZPlayer::Reset()
 	this->telemetryService->Reset();
 	this->recordingService->Reset();
 	this->paintService->Reset();
+	this->progressService->Reset();
 	this->ztopwatchService->Reset();
 	this->profileService->Reset();
 	this->pistolService->Reset();
@@ -248,6 +253,7 @@ void KZPlayer::OnPhysicsSimulatePost()
 	}
 	this->timerService->OnPhysicsSimulatePost();
 	KZ::replaysystem::OnPhysicsSimulatePost(this);
+	this->progressService->OnPhysicsSimulatePost();
 	// Called even while dead and not spectating: the MHUD layout has to be told to collapse, it
 	// does not fade out on its own the way the html centre panel did.
 	if (this->specService->GetSpectatedPlayer())
@@ -922,6 +928,7 @@ void KZPlayer::OnTeleport(const Vector *origin, const QAngle *angles, const Vect
 	this->recordingService->OnTeleport(origin, angles, velocity);
 	if (origin)
 	{
+		this->progressService->OnTeleport();
 		this->beamService->OnTeleport();
 	}
 	this->triggerService->OnTeleport();

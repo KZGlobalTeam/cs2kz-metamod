@@ -9,8 +9,10 @@ using namespace KZ::replaysystem::compression;
 // Helper functions
 // ========================================
 
+// The route reader supplies a visitor to retain only positions and checkpoint data as ticks are decoded.
+// Normal replay playback leaves it null and keeps the full tick and subtick arrays.
 static_function bool DecodeTickDataBuffer(const char *decompressedData, size_t uncompressedSize, u32 elementCount, u32 replayVersion,
-										  std::vector<TickData> &outTickData);
+										  std::vector<TickData> &outTickData, const TickVisitor *visitor);
 
 static_function void AppendToBuffer(std::vector<char> &buffer, const void *data, size_t size)
 {
@@ -399,7 +401,7 @@ i32 KZ::replaysystem::compression::WriteTickDataCompressed(std::vector<char> &ou
 }
 
 bool KZ::replaysystem::compression::ReadTickDataCompressed(const char *&cursor, const char *end, std::vector<TickData> &outTickData,
-														   std::vector<SubtickData> &outSubtickData, u32 replayVersion)
+														   std::vector<SubtickData> &outSubtickData, u32 replayVersion, const TickVisitor *visitor)
 {
 	if (cursor + (ptrdiff_t)sizeof(CompressedSectionHeader) > end)
 	{
@@ -429,7 +431,7 @@ bool KZ::replaysystem::compression::ReadTickDataCompressed(const char *&cursor, 
 	}
 
 	// Reconstruct tick data from delta-encoded buffer
-	bool decoded = DecodeTickDataBuffer(decompressedData, header.uncompressedSize, header.elementCount, replayVersion, outTickData);
+	bool decoded = DecodeTickDataBuffer(decompressedData, header.uncompressedSize, header.elementCount, replayVersion, outTickData, visitor);
 
 	delete[] decompressedData;
 	if (!decoded)
@@ -449,6 +451,12 @@ bool KZ::replaysystem::compression::ReadTickDataCompressed(const char *&cursor, 
 	if (cursor + (ptrdiff_t)subtickHeader.compressedSize > end)
 	{
 		return false;
+	}
+
+	if (visitor)
+	{
+		cursor += subtickHeader.compressedSize;
+		return true;
 	}
 
 	// v4+ uses subtickMoves[MAX_SUBTICK_MOVES]; older replays used subtickMoves[64].
@@ -485,10 +493,13 @@ bool KZ::replaysystem::compression::ReadTickDataCompressed(const char *&cursor, 
 }
 
 static_function bool DecodeTickDataBuffer(const char *decompressedData, size_t uncompressedSize, u32 elementCount, u32 replayVersion,
-										  std::vector<TickData> &outTickData)
+										  std::vector<TickData> &outTickData, const TickVisitor *visitor)
 {
 	outTickData.clear();
-	outTickData.resize(elementCount);
+	if (!visitor)
+	{
+		outTickData.resize(elementCount);
+	}
 
 	const u64 weaponFlag = (1ULL << 39);
 	const u64 modernActualFlag = replayVersion >= 3 ? (1ULL << 40) : (replayVersion == 2 ? (1ULL << 39) : 0);
@@ -500,9 +511,11 @@ static_function bool DecodeTickDataBuffer(const char *decompressedData, size_t u
 	const char *readPtr = decompressedData;
 	const char *endPtr = decompressedData + uncompressedSize;
 
+	TickData previous {};
 	for (u32 i = 0; i < elementCount; i++)
 	{
-		TickData &current = outTickData[i];
+		TickData sample {};
+		TickData &current = visitor ? sample : outTickData[i];
 
 		// Read change flags
 		u64 flags = 0;
@@ -516,17 +529,17 @@ static_function bool DecodeTickDataBuffer(const char *decompressedData, size_t u
 		if (i > 0)
 		{
 			// Server tick is expected to increment by 1
-			if (!(flags & CHANGED_SERVER_TICK)) current.serverTick = outTickData[i - 1].serverTick + 1;
-			if (!(flags & CHANGED_GAME_TIME)) current.gameTime = outTickData[i - 1].gameTime;
-			if (!(flags & CHANGED_REAL_TIME)) current.realTime = outTickData[i - 1].realTime;
-			if (!(flags & CHANGED_UNIX_TIME)) current.unixTime = outTickData[i - 1].unixTime;
-			if (!(flags & CHANGED_CMD_NUMBER)) current.cmdNumber = outTickData[i - 1].cmdNumber;
-			if (!(flags & CHANGED_CLIENT_TICK)) current.clientTick = outTickData[i - 1].clientTick;
-			if (!(flags & CHANGED_FORWARD)) current.forward = outTickData[i - 1].forward;
-			if (!(flags & CHANGED_LEFT)) current.left = outTickData[i - 1].left;
-			if (!(flags & CHANGED_UP)) current.up = outTickData[i - 1].up;
-			if (!(flags & CHANGED_LEFT_HANDED)) current.leftHanded = outTickData[i - 1].leftHanded;
-			if (!(flags & weaponFlag)) current.weapon = outTickData[i - 1].weapon;
+			if (!(flags & CHANGED_SERVER_TICK)) current.serverTick = previous.serverTick + 1;
+			if (!(flags & CHANGED_GAME_TIME)) current.gameTime = previous.gameTime;
+			if (!(flags & CHANGED_REAL_TIME)) current.realTime = previous.realTime;
+			if (!(flags & CHANGED_UNIX_TIME)) current.unixTime = previous.unixTime;
+			if (!(flags & CHANGED_CMD_NUMBER)) current.cmdNumber = previous.cmdNumber;
+			if (!(flags & CHANGED_CLIENT_TICK)) current.clientTick = previous.clientTick;
+			if (!(flags & CHANGED_FORWARD)) current.forward = previous.forward;
+			if (!(flags & CHANGED_LEFT)) current.left = previous.left;
+			if (!(flags & CHANGED_UP)) current.up = previous.up;
+			if (!(flags & CHANGED_LEFT_HANDED)) current.leftHanded = previous.leftHanded;
+			if (!(flags & weaponFlag)) current.weapon = previous.weapon;
 		}
 
 		// Read changed fields
@@ -548,7 +561,7 @@ static_function bool DecodeTickDataBuffer(const char *decompressedData, size_t u
 		TickData::MovementData prevPre = {};
 		if (i > 0)
 		{
-			prevPre = outTickData[i - 1].post;
+			prevPre = previous.post;
 		}
 		
 		// Copy from previous or read changed
@@ -589,7 +602,7 @@ static_function bool DecodeTickDataBuffer(const char *decompressedData, size_t u
 		// Reconstruct checkpoint data (compare with previous)
 		if (i > 0)
 		{
-			current.checkpoint = outTickData[i - 1].checkpoint;
+			current.checkpoint = previous.checkpoint;
 		}
 		else
 		{
@@ -605,7 +618,7 @@ static_function bool DecodeTickDataBuffer(const char *decompressedData, size_t u
 		// 2026 ModernJump fields
 		if (i > 0)
 		{
-			current.modernJump = outTickData[i - 1].modernJump;
+			current.modernJump = previous.modernJump;
 		}
 		else
 		{
@@ -632,6 +645,8 @@ static_function bool DecodeTickDataBuffer(const char *decompressedData, size_t u
 				if (!ReadFromBuffer(readPtr, endPtr, &current.modernJump.lastLandedVelocity, sizeof(current.modernJump.lastLandedVelocity))) return false;
 			}
 		}
+		if (visitor && !(*visitor)(current)) return false;
+		previous = current;
 	}
 	// clang-format on
 	return readPtr == endPtr;
@@ -714,7 +729,7 @@ bool KZ::replaysystem::compression::ReadWeaponsCompressed(const char *&cursor, c
 
 bool KZ::replaysystem::compression::ReadEventsCompressed(const char *&cursor, const char *end, std::vector<RpEvent> &outEvents)
 {
-	if (cursor + (ptrdiff_t)sizeof(CompressedSectionHeader) > end)
+	if ((size_t)(end - cursor) < sizeof(CompressedSectionHeader))
 	{
 		return false;
 	}
@@ -723,15 +738,39 @@ bool KZ::replaysystem::compression::ReadEventsCompressed(const char *&cursor, co
 	memcpy(&header, cursor, sizeof(header));
 	cursor += sizeof(header);
 
-	if (cursor + (ptrdiff_t)header.compressedSize > end)
+	u64 eventSize = sizeof(RpEvent);
+	if ((u64)header.elementCount * eventSize != header.uncompressedSize || header.compressedSize > (size_t)(end - cursor))
 	{
 		return false;
 	}
-	// Resize output vector
 	outEvents.resize(header.elementCount);
-	bool success = Decompress(cursor, header.compressedSize, outEvents.data(), header.uncompressedSize);
+	if (!Decompress(cursor, header.compressedSize, outEvents.data(), header.uncompressedSize))
+	{
+		return false;
+	}
+	for (u32 i = 0; i < header.elementCount; i++)
+	{
+		const RpEvent &event = outEvents[i];
+		if (event.type < RPEVENT_TIMER_EVENT || event.type > RPEVENT_CHECKPOINT || event.phase < RPEVENT_BEFORE_PHYSICS
+			|| event.phase > RPEVENT_AFTER_PHYSICS || (i > 0 && event.serverTick < outEvents[i - 1].serverTick))
+		{
+			return false;
+		}
+		if (event.type == RPEVENT_TIMER_EVENT
+			&& (event.data.timer.type < RpEvent::RpEventData::TimerEvent::TIMER_START
+				|| event.data.timer.type > RpEvent::RpEventData::TimerEvent::TIMER_STAGE))
+		{
+			return false;
+		}
+		if (event.type == RPEVENT_CHECKPOINT
+			&& (event.data.checkpoint.type < RpEvent::RpEventData::CheckpointEvent::CHECKPOINT_SAVE
+				|| event.data.checkpoint.type > RpEvent::RpEventData::CheckpointEvent::CHECKPOINT_RESET || event.data.checkpoint.index < 0))
+		{
+			return false;
+		}
+	}
 	cursor += header.compressedSize;
-	return success;
+	return true;
 }
 
 i32 KZ::replaysystem::compression::WriteEventsCompressed(std::vector<char> &outBuffer, const std::vector<RpEvent> &events)
