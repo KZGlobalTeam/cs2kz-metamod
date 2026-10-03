@@ -62,7 +62,7 @@
 	}
 	"Measure - Result"
 	{
-		// X/Y are absolute distances on the world axes; vertical retains its sign. Parentheses contain effective jump distance.
+		// Distance - Horizontal: 111.8 (102.3), X: 100.0, Y: 50.0, Vertical: 0.0
 		"#format"	"horizontal:.1f,effective:.1f,vertical:.1f,x:.1f,y:.1f"
 		"en"		"{default}Distance{grey} - Horizontal: {default}{horizontal}{grey} ({default}{effective}{grey}), X: {default}{x}{grey}, Y: {default}{y}{grey}, Vertical: {default}{vertical}{grey}"
 		"chi"		"{default}距离{grey} - 水平位移: {default}{horizontal}{grey} ({default}{effective}{grey}), X: {default}{x}{grey}, Y: {default}{y}{grey}, 垂直位移: {default}{vertical}{grey}"
