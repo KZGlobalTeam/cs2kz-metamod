@@ -344,12 +344,12 @@
 	opacity: 0;
 }
 
-/* panel-opacity.css sets the background's alpha. A see-through background drops its dots and blur as well. */
+/* panel-opacity.css sets the background's alpha and scales its world-blur with it, since the blur ignores alpha.
+   A see-through background drops its dots as well. */
 .element:not(.js-bg--0pct) .js-panel,
 .element:not(.js-bg--0pct) .js-hist,
 .element:not(.js-bg--0pct) .ci-hist {
 	background-image: url("s2r://panorama/images/backgrounds/bluedots_large_png.vtex");
-	world-blur: gaussian(1, 1, 1);
 }
 
 .js-panel.js-show {

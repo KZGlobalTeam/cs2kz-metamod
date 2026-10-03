@@ -1,4 +1,4 @@
-/* Generated: the jumpstats and course panels' text and background opacity, every whole percent
+/* Generated: the jumpstats and course panels' text and background opacity (the background's blur scales with it), every whole percent
    (mhudJsOpacity, mhudJsBgOpacity, mhudCourseOpacity, mhudCourseBgOpacity). */
 
 .js-fg--0pct Label,
@@ -516,598 +516,698 @@
 .js-bg--1pct .js-hist,
 .js-bg--1pct .ci-hist {
 	background-color: #00000003;
+	world-blur: gaussian(0.01, 0.01, 0.01);
 }
 
 .js-bg--2pct .js-panel,
 .js-bg--2pct .js-hist,
 .js-bg--2pct .ci-hist {
 	background-color: #00000005;
+	world-blur: gaussian(0.02, 0.02, 0.02);
 }
 
 .js-bg--3pct .js-panel,
 .js-bg--3pct .js-hist,
 .js-bg--3pct .ci-hist {
 	background-color: #00000008;
+	world-blur: gaussian(0.03, 0.03, 0.03);
 }
 
 .js-bg--4pct .js-panel,
 .js-bg--4pct .js-hist,
 .js-bg--4pct .ci-hist {
 	background-color: #0000000a;
+	world-blur: gaussian(0.04, 0.04, 0.04);
 }
 
 .js-bg--5pct .js-panel,
 .js-bg--5pct .js-hist,
 .js-bg--5pct .ci-hist {
 	background-color: #0000000d;
+	world-blur: gaussian(0.05, 0.05, 0.05);
 }
 
 .js-bg--6pct .js-panel,
 .js-bg--6pct .js-hist,
 .js-bg--6pct .ci-hist {
 	background-color: #0000000f;
+	world-blur: gaussian(0.06, 0.06, 0.06);
 }
 
 .js-bg--7pct .js-panel,
 .js-bg--7pct .js-hist,
 .js-bg--7pct .ci-hist {
 	background-color: #00000012;
+	world-blur: gaussian(0.07, 0.07, 0.07);
 }
 
 .js-bg--8pct .js-panel,
 .js-bg--8pct .js-hist,
 .js-bg--8pct .ci-hist {
 	background-color: #00000014;
+	world-blur: gaussian(0.08, 0.08, 0.08);
 }
 
 .js-bg--9pct .js-panel,
 .js-bg--9pct .js-hist,
 .js-bg--9pct .ci-hist {
 	background-color: #00000017;
+	world-blur: gaussian(0.09, 0.09, 0.09);
 }
 
 .js-bg--10pct .js-panel,
 .js-bg--10pct .js-hist,
 .js-bg--10pct .ci-hist {
 	background-color: #0000001a;
+	world-blur: gaussian(0.1, 0.1, 0.1);
 }
 
 .js-bg--11pct .js-panel,
 .js-bg--11pct .js-hist,
 .js-bg--11pct .ci-hist {
 	background-color: #0000001c;
+	world-blur: gaussian(0.11, 0.11, 0.11);
 }
 
 .js-bg--12pct .js-panel,
 .js-bg--12pct .js-hist,
 .js-bg--12pct .ci-hist {
 	background-color: #0000001f;
+	world-blur: gaussian(0.12, 0.12, 0.12);
 }
 
 .js-bg--13pct .js-panel,
 .js-bg--13pct .js-hist,
 .js-bg--13pct .ci-hist {
 	background-color: #00000021;
+	world-blur: gaussian(0.13, 0.13, 0.13);
 }
 
 .js-bg--14pct .js-panel,
 .js-bg--14pct .js-hist,
 .js-bg--14pct .ci-hist {
 	background-color: #00000024;
+	world-blur: gaussian(0.14, 0.14, 0.14);
 }
 
 .js-bg--15pct .js-panel,
 .js-bg--15pct .js-hist,
 .js-bg--15pct .ci-hist {
 	background-color: #00000026;
+	world-blur: gaussian(0.15, 0.15, 0.15);
 }
 
 .js-bg--16pct .js-panel,
 .js-bg--16pct .js-hist,
 .js-bg--16pct .ci-hist {
 	background-color: #00000029;
+	world-blur: gaussian(0.16, 0.16, 0.16);
 }
 
 .js-bg--17pct .js-panel,
 .js-bg--17pct .js-hist,
 .js-bg--17pct .ci-hist {
 	background-color: #0000002b;
+	world-blur: gaussian(0.17, 0.17, 0.17);
 }
 
 .js-bg--18pct .js-panel,
 .js-bg--18pct .js-hist,
 .js-bg--18pct .ci-hist {
 	background-color: #0000002e;
+	world-blur: gaussian(0.18, 0.18, 0.18);
 }
 
 .js-bg--19pct .js-panel,
 .js-bg--19pct .js-hist,
 .js-bg--19pct .ci-hist {
 	background-color: #00000030;
+	world-blur: gaussian(0.19, 0.19, 0.19);
 }
 
 .js-bg--20pct .js-panel,
 .js-bg--20pct .js-hist,
 .js-bg--20pct .ci-hist {
 	background-color: #00000033;
+	world-blur: gaussian(0.2, 0.2, 0.2);
 }
 
 .js-bg--21pct .js-panel,
 .js-bg--21pct .js-hist,
 .js-bg--21pct .ci-hist {
 	background-color: #00000036;
+	world-blur: gaussian(0.21, 0.21, 0.21);
 }
 
 .js-bg--22pct .js-panel,
 .js-bg--22pct .js-hist,
 .js-bg--22pct .ci-hist {
 	background-color: #00000038;
+	world-blur: gaussian(0.22, 0.22, 0.22);
 }
 
 .js-bg--23pct .js-panel,
 .js-bg--23pct .js-hist,
 .js-bg--23pct .ci-hist {
 	background-color: #0000003b;
+	world-blur: gaussian(0.23, 0.23, 0.23);
 }
 
 .js-bg--24pct .js-panel,
 .js-bg--24pct .js-hist,
 .js-bg--24pct .ci-hist {
 	background-color: #0000003d;
+	world-blur: gaussian(0.24, 0.24, 0.24);
 }
 
 .js-bg--25pct .js-panel,
 .js-bg--25pct .js-hist,
 .js-bg--25pct .ci-hist {
 	background-color: #00000040;
+	world-blur: gaussian(0.25, 0.25, 0.25);
 }
 
 .js-bg--26pct .js-panel,
 .js-bg--26pct .js-hist,
 .js-bg--26pct .ci-hist {
 	background-color: #00000042;
+	world-blur: gaussian(0.26, 0.26, 0.26);
 }
 
 .js-bg--27pct .js-panel,
 .js-bg--27pct .js-hist,
 .js-bg--27pct .ci-hist {
 	background-color: #00000045;
+	world-blur: gaussian(0.27, 0.27, 0.27);
 }
 
 .js-bg--28pct .js-panel,
 .js-bg--28pct .js-hist,
 .js-bg--28pct .ci-hist {
 	background-color: #00000047;
+	world-blur: gaussian(0.28, 0.28, 0.28);
 }
 
 .js-bg--29pct .js-panel,
 .js-bg--29pct .js-hist,
 .js-bg--29pct .ci-hist {
 	background-color: #0000004a;
+	world-blur: gaussian(0.29, 0.29, 0.29);
 }
 
 .js-bg--30pct .js-panel,
 .js-bg--30pct .js-hist,
 .js-bg--30pct .ci-hist {
 	background-color: #0000004c;
+	world-blur: gaussian(0.3, 0.3, 0.3);
 }
 
 .js-bg--31pct .js-panel,
 .js-bg--31pct .js-hist,
 .js-bg--31pct .ci-hist {
 	background-color: #0000004f;
+	world-blur: gaussian(0.31, 0.31, 0.31);
 }
 
 .js-bg--32pct .js-panel,
 .js-bg--32pct .js-hist,
 .js-bg--32pct .ci-hist {
 	background-color: #00000052;
+	world-blur: gaussian(0.32, 0.32, 0.32);
 }
 
 .js-bg--33pct .js-panel,
 .js-bg--33pct .js-hist,
 .js-bg--33pct .ci-hist {
 	background-color: #00000054;
+	world-blur: gaussian(0.33, 0.33, 0.33);
 }
 
 .js-bg--34pct .js-panel,
 .js-bg--34pct .js-hist,
 .js-bg--34pct .ci-hist {
 	background-color: #00000057;
+	world-blur: gaussian(0.34, 0.34, 0.34);
 }
 
 .js-bg--35pct .js-panel,
 .js-bg--35pct .js-hist,
 .js-bg--35pct .ci-hist {
 	background-color: #00000059;
+	world-blur: gaussian(0.35, 0.35, 0.35);
 }
 
 .js-bg--36pct .js-panel,
 .js-bg--36pct .js-hist,
 .js-bg--36pct .ci-hist {
 	background-color: #0000005c;
+	world-blur: gaussian(0.36, 0.36, 0.36);
 }
 
 .js-bg--37pct .js-panel,
 .js-bg--37pct .js-hist,
 .js-bg--37pct .ci-hist {
 	background-color: #0000005e;
+	world-blur: gaussian(0.37, 0.37, 0.37);
 }
 
 .js-bg--38pct .js-panel,
 .js-bg--38pct .js-hist,
 .js-bg--38pct .ci-hist {
 	background-color: #00000061;
+	world-blur: gaussian(0.38, 0.38, 0.38);
 }
 
 .js-bg--39pct .js-panel,
 .js-bg--39pct .js-hist,
 .js-bg--39pct .ci-hist {
 	background-color: #00000063;
+	world-blur: gaussian(0.39, 0.39, 0.39);
 }
 
 .js-bg--40pct .js-panel,
 .js-bg--40pct .js-hist,
 .js-bg--40pct .ci-hist {
 	background-color: #00000066;
+	world-blur: gaussian(0.4, 0.4, 0.4);
 }
 
 .js-bg--41pct .js-panel,
 .js-bg--41pct .js-hist,
 .js-bg--41pct .ci-hist {
 	background-color: #00000069;
+	world-blur: gaussian(0.41, 0.41, 0.41);
 }
 
 .js-bg--42pct .js-panel,
 .js-bg--42pct .js-hist,
 .js-bg--42pct .ci-hist {
 	background-color: #0000006b;
+	world-blur: gaussian(0.42, 0.42, 0.42);
 }
 
 .js-bg--43pct .js-panel,
 .js-bg--43pct .js-hist,
 .js-bg--43pct .ci-hist {
 	background-color: #0000006e;
+	world-blur: gaussian(0.43, 0.43, 0.43);
 }
 
 .js-bg--44pct .js-panel,
 .js-bg--44pct .js-hist,
 .js-bg--44pct .ci-hist {
 	background-color: #00000070;
+	world-blur: gaussian(0.44, 0.44, 0.44);
 }
 
 .js-bg--45pct .js-panel,
 .js-bg--45pct .js-hist,
 .js-bg--45pct .ci-hist {
 	background-color: #00000073;
+	world-blur: gaussian(0.45, 0.45, 0.45);
 }
 
 .js-bg--46pct .js-panel,
 .js-bg--46pct .js-hist,
 .js-bg--46pct .ci-hist {
 	background-color: #00000075;
+	world-blur: gaussian(0.46, 0.46, 0.46);
 }
 
 .js-bg--47pct .js-panel,
 .js-bg--47pct .js-hist,
 .js-bg--47pct .ci-hist {
 	background-color: #00000078;
+	world-blur: gaussian(0.47, 0.47, 0.47);
 }
 
 .js-bg--48pct .js-panel,
 .js-bg--48pct .js-hist,
 .js-bg--48pct .ci-hist {
 	background-color: #0000007a;
+	world-blur: gaussian(0.48, 0.48, 0.48);
 }
 
 .js-bg--49pct .js-panel,
 .js-bg--49pct .js-hist,
 .js-bg--49pct .ci-hist {
 	background-color: #0000007d;
+	world-blur: gaussian(0.49, 0.49, 0.49);
 }
 
 .js-bg--50pct .js-panel,
 .js-bg--50pct .js-hist,
 .js-bg--50pct .ci-hist {
 	background-color: #00000080;
+	world-blur: gaussian(0.5, 0.5, 0.5);
 }
 
 .js-bg--51pct .js-panel,
 .js-bg--51pct .js-hist,
 .js-bg--51pct .ci-hist {
 	background-color: #00000082;
+	world-blur: gaussian(0.51, 0.51, 0.51);
 }
 
 .js-bg--52pct .js-panel,
 .js-bg--52pct .js-hist,
 .js-bg--52pct .ci-hist {
 	background-color: #00000085;
+	world-blur: gaussian(0.52, 0.52, 0.52);
 }
 
 .js-bg--53pct .js-panel,
 .js-bg--53pct .js-hist,
 .js-bg--53pct .ci-hist {
 	background-color: #00000087;
+	world-blur: gaussian(0.53, 0.53, 0.53);
 }
 
 .js-bg--54pct .js-panel,
 .js-bg--54pct .js-hist,
 .js-bg--54pct .ci-hist {
 	background-color: #0000008a;
+	world-blur: gaussian(0.54, 0.54, 0.54);
 }
 
 .js-bg--55pct .js-panel,
 .js-bg--55pct .js-hist,
 .js-bg--55pct .ci-hist {
 	background-color: #0000008c;
+	world-blur: gaussian(0.55, 0.55, 0.55);
 }
 
 .js-bg--56pct .js-panel,
 .js-bg--56pct .js-hist,
 .js-bg--56pct .ci-hist {
 	background-color: #0000008f;
+	world-blur: gaussian(0.56, 0.56, 0.56);
 }
 
 .js-bg--57pct .js-panel,
 .js-bg--57pct .js-hist,
 .js-bg--57pct .ci-hist {
 	background-color: #00000091;
+	world-blur: gaussian(0.57, 0.57, 0.57);
 }
 
 .js-bg--58pct .js-panel,
 .js-bg--58pct .js-hist,
 .js-bg--58pct .ci-hist {
 	background-color: #00000094;
+	world-blur: gaussian(0.58, 0.58, 0.58);
 }
 
 .js-bg--59pct .js-panel,
 .js-bg--59pct .js-hist,
 .js-bg--59pct .ci-hist {
 	background-color: #00000096;
+	world-blur: gaussian(0.59, 0.59, 0.59);
 }
 
 .js-bg--60pct .js-panel,
 .js-bg--60pct .js-hist,
 .js-bg--60pct .ci-hist {
 	background-color: #00000099;
+	world-blur: gaussian(0.6, 0.6, 0.6);
 }
 
 .js-bg--61pct .js-panel,
 .js-bg--61pct .js-hist,
 .js-bg--61pct .ci-hist {
 	background-color: #0000009c;
+	world-blur: gaussian(0.61, 0.61, 0.61);
 }
 
 .js-bg--62pct .js-panel,
 .js-bg--62pct .js-hist,
 .js-bg--62pct .ci-hist {
 	background-color: #0000009e;
+	world-blur: gaussian(0.62, 0.62, 0.62);
 }
 
 .js-bg--63pct .js-panel,
 .js-bg--63pct .js-hist,
 .js-bg--63pct .ci-hist {
 	background-color: #000000a1;
+	world-blur: gaussian(0.63, 0.63, 0.63);
 }
 
 .js-bg--64pct .js-panel,
 .js-bg--64pct .js-hist,
 .js-bg--64pct .ci-hist {
 	background-color: #000000a3;
+	world-blur: gaussian(0.64, 0.64, 0.64);
 }
 
 .js-bg--65pct .js-panel,
 .js-bg--65pct .js-hist,
 .js-bg--65pct .ci-hist {
 	background-color: #000000a6;
+	world-blur: gaussian(0.65, 0.65, 0.65);
 }
 
 .js-bg--66pct .js-panel,
 .js-bg--66pct .js-hist,
 .js-bg--66pct .ci-hist {
 	background-color: #000000a8;
+	world-blur: gaussian(0.66, 0.66, 0.66);
 }
 
 .js-bg--67pct .js-panel,
 .js-bg--67pct .js-hist,
 .js-bg--67pct .ci-hist {
 	background-color: #000000ab;
+	world-blur: gaussian(0.67, 0.67, 0.67);
 }
 
 .js-bg--68pct .js-panel,
 .js-bg--68pct .js-hist,
 .js-bg--68pct .ci-hist {
 	background-color: #000000ad;
+	world-blur: gaussian(0.68, 0.68, 0.68);
 }
 
 .js-bg--69pct .js-panel,
 .js-bg--69pct .js-hist,
 .js-bg--69pct .ci-hist {
 	background-color: #000000b0;
+	world-blur: gaussian(0.69, 0.69, 0.69);
 }
 
 .js-bg--70pct .js-panel,
 .js-bg--70pct .js-hist,
 .js-bg--70pct .ci-hist {
 	background-color: #000000b2;
+	world-blur: gaussian(0.7, 0.7, 0.7);
 }
 
 .js-bg--71pct .js-panel,
 .js-bg--71pct .js-hist,
 .js-bg--71pct .ci-hist {
 	background-color: #000000b5;
+	world-blur: gaussian(0.71, 0.71, 0.71);
 }
 
 .js-bg--72pct .js-panel,
 .js-bg--72pct .js-hist,
 .js-bg--72pct .ci-hist {
 	background-color: #000000b8;
+	world-blur: gaussian(0.72, 0.72, 0.72);
 }
 
 .js-bg--73pct .js-panel,
 .js-bg--73pct .js-hist,
 .js-bg--73pct .ci-hist {
 	background-color: #000000ba;
+	world-blur: gaussian(0.73, 0.73, 0.73);
 }
 
 .js-bg--74pct .js-panel,
 .js-bg--74pct .js-hist,
 .js-bg--74pct .ci-hist {
 	background-color: #000000bd;
+	world-blur: gaussian(0.74, 0.74, 0.74);
 }
 
 .js-bg--75pct .js-panel,
 .js-bg--75pct .js-hist,
 .js-bg--75pct .ci-hist {
 	background-color: #000000bf;
+	world-blur: gaussian(0.75, 0.75, 0.75);
 }
 
 .js-bg--76pct .js-panel,
 .js-bg--76pct .js-hist,
 .js-bg--76pct .ci-hist {
 	background-color: #000000c2;
+	world-blur: gaussian(0.76, 0.76, 0.76);
 }
 
 .js-bg--77pct .js-panel,
 .js-bg--77pct .js-hist,
 .js-bg--77pct .ci-hist {
 	background-color: #000000c4;
+	world-blur: gaussian(0.77, 0.77, 0.77);
 }
 
 .js-bg--78pct .js-panel,
 .js-bg--78pct .js-hist,
 .js-bg--78pct .ci-hist {
 	background-color: #000000c7;
+	world-blur: gaussian(0.78, 0.78, 0.78);
 }
 
 .js-bg--79pct .js-panel,
 .js-bg--79pct .js-hist,
 .js-bg--79pct .ci-hist {
 	background-color: #000000c9;
+	world-blur: gaussian(0.79, 0.79, 0.79);
 }
 
 .js-bg--80pct .js-panel,
 .js-bg--80pct .js-hist,
 .js-bg--80pct .ci-hist {
 	background-color: #000000cc;
+	world-blur: gaussian(0.8, 0.8, 0.8);
 }
 
 .js-bg--81pct .js-panel,
 .js-bg--81pct .js-hist,
 .js-bg--81pct .ci-hist {
 	background-color: #000000cf;
+	world-blur: gaussian(0.81, 0.81, 0.81);
 }
 
 .js-bg--82pct .js-panel,
 .js-bg--82pct .js-hist,
 .js-bg--82pct .ci-hist {
 	background-color: #000000d1;
+	world-blur: gaussian(0.82, 0.82, 0.82);
 }
 
 .js-bg--83pct .js-panel,
 .js-bg--83pct .js-hist,
 .js-bg--83pct .ci-hist {
 	background-color: #000000d4;
+	world-blur: gaussian(0.83, 0.83, 0.83);
 }
 
 .js-bg--84pct .js-panel,
 .js-bg--84pct .js-hist,
 .js-bg--84pct .ci-hist {
 	background-color: #000000d6;
+	world-blur: gaussian(0.84, 0.84, 0.84);
 }
 
 .js-bg--85pct .js-panel,
 .js-bg--85pct .js-hist,
 .js-bg--85pct .ci-hist {
 	background-color: #000000d9;
+	world-blur: gaussian(0.85, 0.85, 0.85);
 }
 
 .js-bg--86pct .js-panel,
 .js-bg--86pct .js-hist,
 .js-bg--86pct .ci-hist {
 	background-color: #000000db;
+	world-blur: gaussian(0.86, 0.86, 0.86);
 }
 
 .js-bg--87pct .js-panel,
 .js-bg--87pct .js-hist,
 .js-bg--87pct .ci-hist {
 	background-color: #000000de;
+	world-blur: gaussian(0.87, 0.87, 0.87);
 }
 
 .js-bg--88pct .js-panel,
 .js-bg--88pct .js-hist,
 .js-bg--88pct .ci-hist {
 	background-color: #000000e0;
+	world-blur: gaussian(0.88, 0.88, 0.88);
 }
 
 .js-bg--89pct .js-panel,
 .js-bg--89pct .js-hist,
 .js-bg--89pct .ci-hist {
 	background-color: #000000e3;
+	world-blur: gaussian(0.89, 0.89, 0.89);
 }
 
 .js-bg--90pct .js-panel,
 .js-bg--90pct .js-hist,
 .js-bg--90pct .ci-hist {
 	background-color: #000000e6;
+	world-blur: gaussian(0.9, 0.9, 0.9);
 }
 
 .js-bg--91pct .js-panel,
 .js-bg--91pct .js-hist,
 .js-bg--91pct .ci-hist {
 	background-color: #000000e8;
+	world-blur: gaussian(0.91, 0.91, 0.91);
 }
 
 .js-bg--92pct .js-panel,
 .js-bg--92pct .js-hist,
 .js-bg--92pct .ci-hist {
 	background-color: #000000eb;
+	world-blur: gaussian(0.92, 0.92, 0.92);
 }
 
 .js-bg--93pct .js-panel,
 .js-bg--93pct .js-hist,
 .js-bg--93pct .ci-hist {
 	background-color: #000000ed;
+	world-blur: gaussian(0.93, 0.93, 0.93);
 }
 
 .js-bg--94pct .js-panel,
 .js-bg--94pct .js-hist,
 .js-bg--94pct .ci-hist {
 	background-color: #000000f0;
+	world-blur: gaussian(0.94, 0.94, 0.94);
 }
 
 .js-bg--95pct .js-panel,
 .js-bg--95pct .js-hist,
 .js-bg--95pct .ci-hist {
 	background-color: #000000f2;
+	world-blur: gaussian(0.95, 0.95, 0.95);
 }
 
 .js-bg--96pct .js-panel,
 .js-bg--96pct .js-hist,
 .js-bg--96pct .ci-hist {
 	background-color: #000000f5;
+	world-blur: gaussian(0.96, 0.96, 0.96);
 }
 
 .js-bg--97pct .js-panel,
 .js-bg--97pct .js-hist,
 .js-bg--97pct .ci-hist {
 	background-color: #000000f7;
+	world-blur: gaussian(0.97, 0.97, 0.97);
 }
 
 .js-bg--98pct .js-panel,
 .js-bg--98pct .js-hist,
 .js-bg--98pct .ci-hist {
 	background-color: #000000fa;
+	world-blur: gaussian(0.98, 0.98, 0.98);
 }
 
 .js-bg--99pct .js-panel,
 .js-bg--99pct .js-hist,
 .js-bg--99pct .ci-hist {
 	background-color: #000000fc;
+	world-blur: gaussian(0.99, 0.99, 0.99);
 }
 
 .js-bg--100pct .js-panel,
 .js-bg--100pct .js-hist,
 .js-bg--100pct .ci-hist {
 	background-color: #000000ff;
+	world-blur: gaussian(1, 1, 1);
 }
