@@ -67,8 +67,12 @@
 	}
 	"Menu - Game HUD All Sub"
 	{
-		"en"		"The only way to hide chat and the radar"
+		"en"		"The only way to hide chat and the radar. Also applies to anyone spectating you directly"
 		"ua"		"Єдиний спосіб приховати чат і радар"
+	}
+	"Menu - Game HUD Spectators Sub"
+	{
+		"en"		"Also applies to anyone spectating you directly"
 	}
 	"Menu - Game HUD Crosshair"
 	{
@@ -79,11 +83,6 @@
 	{
 		"en"		"Hide Weapon Selection, Health and Ammo"
 		"ua"		"Приховати вибір зброї, здоров'я і боєприпаси"
-	}
-	"Menu - Game HUD Damage"
-	{
-		"en"		"Hide Damage Direction"
-		"ua"		"Приховати візуальні ефекти шкоди"
 	}
 	"Menu - Game HUD Notices"
 	{

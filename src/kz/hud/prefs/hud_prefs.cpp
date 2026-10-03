@@ -275,10 +275,7 @@ void KZHUDService::RegisterMenu()
 	for (const GameHudPartDef &part : GAME_HUD_PARTS)
 	{
 		KZ::menu::AddToggle(gameHudNode, part.phraseKey, part.prefKey, false);
-		if (part.bit == KZ_HIDEHUD_ALL)
-		{
-			KZ::menu::SetItemSubtext(gameHudNode, "Menu - Game HUD All Sub");
-		}
+		KZ::menu::SetItemSubtext(gameHudNode, part.bit == KZ_HIDEHUD_ALL ? "Menu - Game HUD All Sub" : "Menu - Game HUD Spectators Sub");
 	}
 	KZ::menu::SetItemDivider(gameHudNode);
 	KZ::menu::AddButton(gameHudNode, "Menu - Reset", ResetGameHud);

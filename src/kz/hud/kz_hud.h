@@ -11,11 +11,10 @@
 // shareddefs.h, which clashes with the SDK definitions the plugin already has.
 #define KZ_HIDEHUD_WEAPONSELECTION (1 << 0)
 #define KZ_HIDEHUD_ALL             (1 << 2)
-#define KZ_HIDEHUD_HEALTH          (1 << 3)
 #define KZ_HIDEHUD_MISCSTATUS      (1 << 6)
 #define KZ_HIDEHUD_CHAT            (1 << 7)
 #define KZ_HIDEHUD_CROSSHAIR       (1 << 8)
-#define GAME_HUD_PART_COUNT        6
+#define GAME_HUD_PART_COUNT        5
 
 // One toggle per m_iHideHUD bit on the Game HUD page.
 struct GameHudPartDef

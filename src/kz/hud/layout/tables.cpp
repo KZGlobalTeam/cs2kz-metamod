@@ -39,7 +39,6 @@ extern const GameHudPartDef GAME_HUD_PARTS[GAME_HUD_PART_COUNT] =
 	{"Menu - Game HUD All", "hideGameHudAll", KZ_HIDEHUD_ALL},
 	{"Menu - Game HUD Crosshair", "hideGameHudCrosshair", KZ_HIDEHUD_CROSSHAIR},
 	{"Menu - Game HUD Weapons", "hideGameHudWeapons", KZ_HIDEHUD_WEAPONSELECTION},
-	{"Menu - Game HUD Damage", "hideGameHudDamage", KZ_HIDEHUD_HEALTH},
 	{"Menu - Game HUD Notices", "hideGameHudNotices", KZ_HIDEHUD_MISCSTATUS},
 	{"Menu - Game HUD Voice", "hideGameHudVoice", KZ_HIDEHUD_CHAT},
 };

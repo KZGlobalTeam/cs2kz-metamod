@@ -246,10 +246,9 @@ void KZHUDService::DrawPanels(KZPlayer *player, KZPlayer *target)
 
 void KZHUDService::UpdateGameHud()
 {
-	CBasePlayerPawn *pawn = this->player->GetCurrentPawn();
+	CBasePlayerPawn *pawn = this->player->GetPlayerPawn();
 	if (this->gameHudPawn.Get() != pawn)
 	{
-		// Switching between the player and observer pawns would otherwise leave the old one hidden.
 		this->RestoreGameHud();
 		this->gameHudPawn = pawn;
 	}
