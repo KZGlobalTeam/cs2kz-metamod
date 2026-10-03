@@ -82,14 +82,15 @@
 	{
 		"en"		"The only way to hide chat and the radar. Also applies to anyone spectating you directly"
 		"chi"		"这是隐藏聊天栏和雷达的唯一方式，也会影响直接观战你的玩家"
-		"ua"		"Єдиний спосіб приховати чат і радар"
 		"ru"		"Единственный способ скрыть чат и радар. Также скрывает их от наблюдателей"
+		"ua"		"Єдиний спосіб приховати чат і радар. Також застосовується до будь-кого, хто спостерігає за вами безпосередньо"
 	}
 	"Menu - Game HUD Spectators Sub"
 	{
 		"en"		"Also applies to anyone spectating you directly"
 		"chi"		"也会影响直接观战你的玩家"
 		"ru"		"Также скрывает от наблюдателей"
+		"ua"		"Також застосовується до будь-кого, хто спостерігає за вами безпосередньо"
 	}
 	"Menu - Game HUD Crosshair"
 	{
@@ -1617,12 +1618,14 @@
 		"en"		"Compact"
 		"chi"		"紧凑"
 		"ru"		"Компактно"
+		"ua"		"Компактна панель"
 	}
 	"Menu - JS Compact Sub"
 	{
 		"en"		"Only the pills, with no panel. The history is always on"
 		"chi"		"仅显示数据标签，不显示面板；历史记录始终开启"
 		"ru"		"Кратко и строго, без панели. История всегда включена."
+		"ua"		"Лише міні-сповіщення, без панелі. Історія завжди відображається"
 	}
 	"Menu - JS History"
 	{
@@ -1852,8 +1855,8 @@
 	{
 		"en"		"A pill for every split, checkpoint and stage, against your !comparelevel time"
 		"chi"		"显示每个分段、存点和阶段的时间，并与你通过 !comparelevel 设置的记录进行比较"
-		"ua"		"Індикатор для кожного спліту, контрольної точки та етапу, у порівнянні з вашим часом !comparelevel"
 		"ru"		"Индикатор для каждого сплита, чекпоинта и этапа, в сравнении с вашим рекордом !comparelevel"
+		"ua"		"Міні-сповіщення для кожного спліту, контрольної точки та етапу, у порівнянні з вашим часом !comparelevel"
 	}
 	"Menu - Color Early"
 	{
