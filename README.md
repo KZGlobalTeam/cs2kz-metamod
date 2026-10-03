@@ -11,7 +11,7 @@ Automated translation linter reports for cs2kz-metamod.
 | **Total Languages** | 14 |
 | **Total Phrases** | 995 |
 | **Phrases Missing Translations** | 995 |
-| **Total Missing Entries** | 6803 |
+| **Total Missing Entries** | 6804 |
 | **Menu Files** | 11 |
 
 ## Language Coverage (Phrases)
@@ -30,7 +30,7 @@ Automated translation linter reports for cs2kz-metamod.
   ru (russian)         [█████████████░░░░░░░]  65.3% (650/995)
   sv (swedish)         [███████░░░░░░░░░░░░░]  39.4% (392/995)
   tr (turkish)         [█████░░░░░░░░░░░░░░░]  26.3% (262/995)
-  ua (ukrainian)       [███████████████████░]  99.8% (993/995)
+  ua (ukrainian)       [███████████████████░]  99.7% (992/995)
 ```
 
 ## Menu Translation Status
@@ -80,9 +80,9 @@ Automated translation linter reports for cs2kz-metamod.
 
 ## Last Updated
 
-- **Commit:** [`9bc2abc`](https://github.com/KZGlobalTeam/cs2kz-metamod/commit/9bc2abc5ab006db06e0a2df7587a8e13ddeea561)
-- **Time:** 2026-10-02 18:40:32 UTC
-- **Message:** Add left/right deviation info, add compact mode for jumpstat HUD
+- **Commit:** [`82d8c88`](https://github.com/KZGlobalTeam/cs2kz-metamod/commit/82d8c8871d3523a7c1d242a30fd817b9667a73ab)
+- **Time:** 2026-10-03 07:48:29 UTC
+- **Message:** Make blur scale with opacity
 
 ---
 
