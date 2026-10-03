@@ -64,6 +64,11 @@ Note: does not work with gcc!
 
 Copy the contents of `build/package/` to your server's `csgo/` directory.
 
+## Measurements
+
+Use `!measure` on two solid points to report horizontal distance, effective jump distance in parentheses, world-axis X/Y distances, and signed vertical offset.
+X/Y report absolute distances even when the points are reversed. Use `!measureblock` to measure the gap between parallel block faces.
+
 ## Project Architecture
 
 This is a CS2 KZ Metamod C++ plugin with:
