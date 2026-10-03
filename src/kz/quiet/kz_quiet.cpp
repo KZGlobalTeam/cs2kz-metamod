@@ -127,8 +127,14 @@ void KZ::quiet::OnCheckTransmit(CCheckTransmitInfo **pInfo, int infoCount)
 			{
 				continue;
 			}
-			u32 index = g_pKZPlayerManager->ToPlayer(pawn)->index;
-			if (targetPlayer->quietService->ShouldHideIndex(index))
+			KZPlayer *otherPlayer = g_pKZPlayerManager->ToPlayer(pawn);
+			// The controller handle can be stale, treat the pawn as if it had no controller.
+			if (!otherPlayer)
+			{
+				pTransmitInfo->m_pTransmitEdict->Clear(pawn->entindex());
+				continue;
+			}
+			if (targetPlayer->quietService->ShouldHideIndex(otherPlayer->index))
 			{
 				pTransmitInfo->m_pTransmitEdict->Clear(pawn->entindex());
 			}
@@ -282,17 +288,18 @@ void KZ::quiet::OnPostEvent(INetworkMessageInternal *pEvent, const CNetMessage *
 	if (emitterEnt->IsPawn())
 	{
 		CBasePlayerPawn *pawn = static_cast<CBasePlayerPawn *>(emitterEnt);
-		u32 emitterPlayerIndex = g_pKZPlayerManager->ToPlayer(utils::GetController(pawn))->index;
-		FilterQuietClients(clients, emitterPlayerIndex);
+		// Without a player, the index stays 0 and the event is hidden from everyone having !hide enabled.
+		KZPlayer *emitter = g_pKZPlayerManager->ToPlayer(utils::GetController(pawn));
+		FilterQuietClients(clients, emitter ? emitter->index : 0);
 	}
 	else if (V_strstr(emitterEnt->GetClassname(), "weapon_"))
 	{
 		// Find the owner of the weapon if possible.
-		if (emitterEnt->m_hOwnerEntity().IsValid() && emitterEnt->m_hOwnerEntity.Get()->IsPawn())
+		CBaseEntity *owner = emitterEnt->m_hOwnerEntity().Get();
+		if (owner && owner->IsPawn())
 		{
-			CBasePlayerPawn *ownerPawn = static_cast<CBasePlayerPawn *>(emitterEnt->m_hOwnerEntity().Get());
-			u32 emitterPlayerIndex = g_pKZPlayerManager->ToPlayer(ownerPawn)->index;
-			FilterQuietClients(clients, emitterPlayerIndex);
+			KZPlayer *emitter = g_pKZPlayerManager->ToPlayer(static_cast<CBasePlayerPawn *>(owner));
+			FilterQuietClients(clients, emitter ? emitter->index : 0);
 		}
 		// Otherwise just hide from everyone having !hide enabled.
 		else
