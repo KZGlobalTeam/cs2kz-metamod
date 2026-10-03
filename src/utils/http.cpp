@@ -20,9 +20,10 @@ namespace HTTP
 		headers[name] = value;
 	}
 
-	void Request::SetBody(std::string body)
+	void Request::SetBody(std::string body, std::string contentType)
 	{
-		this->body = body;
+		this->body = std::move(body);
+		this->contentType = std::move(contentType);
 	}
 
 	void Request::Send(ResponseCallback onResponse, ErrorCallback onError) const
@@ -67,7 +68,7 @@ namespace HTTP
 
 		if (method >= Method::POST)
 		{
-			if (!g_pHTTP->SetHTTPRequestRawPostBody(handle, "application/json", (u8 *)body.data(), body.size()))
+			if (!g_pHTTP->SetHTTPRequestRawPostBody(handle, contentType.c_str(), (u8 *)body.data(), body.size()))
 			{
 				KZ_LOG_WARN(LogChannel::General, "[HTTP] Failed to set request body.\n");
 				g_pHTTP->ReleaseHTTPRequest(handle);
@@ -117,9 +118,13 @@ namespace HTTP
 					break;
 			}
 			KZ_LOG_DEBUG(LogChannel::General, "[HTTP] Sending HTTP %s request to `%s`\n", methodStr.c_str(), url.c_str());
-			if (!body.empty())
+			if (!body.empty() && contentType == "application/json")
 			{
 				KZ_LOG_DEBUG(LogChannel::General, "[HTTP] Body: %s\n", body.c_str());
+			}
+			else if (!body.empty())
+			{
+				KZ_LOG_DEBUG(LogChannel::General, "[HTTP] Body: %zu bytes of %s\n", body.size(), contentType.c_str());
 			}
 			if (!headers.empty())
 			{
@@ -130,7 +135,7 @@ namespace HTTP
 				}
 			}
 		}
-		new InFlightRequest(handle, steamCallHandle, url, body, onResponse, onError);
+		new InFlightRequest(handle, steamCallHandle, url, onResponse, onError);
 	}
 
 	std::optional<std::string> Response::Header(const char *name) const
