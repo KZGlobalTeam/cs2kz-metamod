@@ -29,6 +29,8 @@ public:
 	virtual void Reset() override;
 
 	void Toggle();
+	// Returns false when the layout cannot be shown; callers can fall back to console help.
+	bool ShowHelp(i32 category = 0);
 	void Close();
 	// Close, remembering the page and the open popup so Resume can put the player back there.
 	void Suspend();
@@ -70,6 +72,7 @@ private:
 	void DestroyOwnedLayout();
 	// Drops cursor capture and releases the cs2menus slot.
 	void DropCapture();
+	bool Open(bool help);
 
 	KZOptNode *ActiveNode();
 	// Flattens categories plus the selected category's subs into leftSlots; returns the count.
@@ -81,6 +84,7 @@ private:
 	void RenderChrome(CCSCustomHudLayout *layout);
 	void RenderLeft(CCSCustomHudLayout *layout);
 	void RenderItems(CCSCustomHudLayout *layout);
+	void RenderHelp(CCSCustomHudLayout *layout);
 	void RenderColorPopup(CCSCustomHudLayout *layout);
 	void RenderListPopup(CCSCustomHudLayout *layout);
 	void RenderStepPopup(CCSCustomHudLayout *layout);
@@ -108,6 +112,9 @@ private:
 	void SetVar(CCSCustomHudLayout *layout, const char *panelId, const char *var, const char *value);
 
 	bool open {};
+	bool help {};
+	i32 helpCategory {};
+	i32 helpPage {};
 	i32 selectedCategory {};
 	i32 selectedSub {-1};
 	Popup popup {Popup::None};
@@ -143,9 +150,11 @@ private:
 	// fields hold the class string last applied on that panel, NULL for none.
 	struct Applied
 	{
-		const char *menuFont {};    // menu font class, set on menu_root and inherited
-		const char *menuColor {};   // menu color (pal-fg) class, likewise
-		bool rootHidden {true};     // menu_root "hidden"
+		const char *menuFont {};  // menu font class, set on menu_root and inherited
+		const char *menuColor {}; // menu color (pal-fg) class, likewise
+		bool rootHidden {true};   // menu_root "hidden"
+		bool help {};             // menu_root "help", a read-only command reference
+		bool helpEmptyHidden {true};
 		bool sounds {};             // menu_root "snd", gating every hover/click sound in menu.css
 		bool shift {};              // menu_root "shift", nudging the menu left so an open popup clears a 4:3/5:4 screen edge
 		bool fontReflow {};         // menu_root "font-reflow"

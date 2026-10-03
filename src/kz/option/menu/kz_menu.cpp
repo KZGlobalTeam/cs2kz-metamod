@@ -300,6 +300,7 @@ void KZMenuService::Render()
 	}
 
 	this->SetBoolClass(layout, "menu_root", "snd", this->applied.sounds, this->player->optionService->GetPreferenceBool("menuSounds", true));
+	this->SetBoolClass(layout, "menu_root", "help", this->applied.help, this->help);
 
 	// Nudge the whole menu left while one is open for 4:3 aspect ratio.
 	const bool shift = this->popup != Popup::None && this->player->optionService->GetPreferenceBool("menuPopupShift", true);
@@ -325,6 +326,11 @@ void KZMenuService::Render()
 	this->SetBoolClass(layout, "order_popup", "hidden", this->applied.orderHidden, this->popup != Popup::Order);
 
 	this->RenderChrome(layout);
+	if (this->help)
+	{
+		this->RenderHelp(layout);
+		return;
+	}
 	this->RenderLeft(layout);
 	this->RenderItems(layout);
 
@@ -360,7 +366,52 @@ void KZMenuService::RenderChrome(CCSCustomHudLayout *layout)
 	this->SetSwapClass(layout, "menu_root", this->applied.menuFont, font);
 	this->SetSwapClass(layout, "menu_root", this->applied.menuColor, color);
 
-	this->SetVar(layout, "menu_title", "title", KZMenuService::GetPhrase(this->player, "Menu - Title Options").c_str());
+	this->SetVar(layout, "menu_title", "title",
+				 KZMenuService::GetPhrase(this->player, this->help ? "Menu - Title Help" : "Menu - Title Options").c_str());
+}
+
+void KZMenuService::RenderHelp(CCSCustomHudLayout *layout)
+{
+	for (i32 i = 0; i < KZ_MENU_CATS; i++)
+	{
+		const bool used = i < scmd::GetCategoryCount();
+		if (used)
+		{
+			char key[64];
+			V_snprintf(key, sizeof(key), "Command List - %s", scmd::GetCategoryName(i));
+			this->SetVar(layout, CatLbl(i), CatVar(i), GetPhrase(this->player, key).c_str());
+			this->SetBoolClass(layout, CatPanel(i), "indent", this->applied.catIndent[i], false);
+			this->SetBoolClass(layout, CatPanel(i), "cat-parent", this->applied.catParent[i], false);
+			this->SetBoolClass(layout, CatPanel(i), "disabled", this->applied.catDisabled[i], false);
+			this->SetBoolClass(layout, CatPanel(i), "selected", this->applied.catSel[i], i == this->helpCategory);
+		}
+		this->SetBoolClass(layout, CatPanel(i), "hidden", this->applied.catHidden[i], !used);
+	}
+
+	const auto commands = scmd::GetCategoryCommands(this->helpCategory, true);
+	const i32 pages = MAX(1, ((i32)commands.size() + KZ_MENU_ITEMS - 1) / KZ_MENU_ITEMS);
+	this->helpPage = Clamp(this->helpPage, 0, pages - 1);
+	const i32 first = this->helpPage * KZ_MENU_ITEMS;
+	for (i32 i = 0; i < KZ_MENU_ITEMS; i++)
+	{
+		const bool used = first + i < (i32)commands.size();
+		this->itemSlots[i] = nullptr;
+		if (used)
+		{
+			const auto &command = commands[first + i];
+			this->SetVar(layout, ItemLbl(i), ItemLblVar(i), command.names.c_str());
+			this->SetVar(layout, ItemSub(i), ItemSubVar(i), GetPhrase(this->player, command.descriptionKey.c_str()).c_str());
+			this->SetBoolClass(layout, ItemPanel(i), "has-sub", this->applied.itemSub[i], true);
+			this->SetBoolClass(layout, ItemPanel(i), "disabled", this->applied.itemDisabled[i], true);
+		}
+		this->SetBoolClass(layout, ItemPanel(i), "hidden", this->applied.itemHidden[i], !used);
+	}
+	char page[32];
+	V_snprintf(page, sizeof(page), "%i / %i", this->helpPage + 1, pages);
+	this->SetVar(layout, "help_page", "helppage", page);
+	this->SetVar(layout, "help_hint", "helphint", GetPhrase(this->player, "Menu - Help Hint").c_str());
+	this->SetVar(layout, "help_empty", "helpempty", commands.empty() ? GetPhrase(this->player, "Menu - Help Empty").c_str() : "");
+	this->SetBoolClass(layout, "help_empty", "hidden", this->applied.helpEmptyHidden, !commands.empty());
 }
 
 void KZMenuService::RenderLeft(CCSCustomHudLayout *layout)
@@ -980,6 +1031,33 @@ void KZMenuService::OnCustomHudClicked(CPlayerSlot slot, CCSCustomHudLayout *lay
 		return;
 	}
 	KZMenuService *menu = player->menuService;
+	// Help rows never activate option items, including stale clicks from the options view.
+	if (menu->help)
+	{
+		if (KZ_STREQ(buttonId, "m_close"))
+		{
+			menu->Close();
+		}
+		else if (KZ_STREQ(buttonId, "help_prev") || KZ_STREQ(buttonId, "help_next"))
+		{
+			menu->helpPage += KZ_STREQ(buttonId, "help_next") ? 1 : -1;
+			menu->Render();
+		}
+		else
+		{
+			for (i32 i = 0; i < MIN(scmd::GetCategoryCount(), KZ_MENU_CATS); i++)
+			{
+				if (KZ_STREQ(buttonId, CatPanel(i)))
+				{
+					menu->helpCategory = i;
+					menu->helpPage = 0;
+					menu->Render();
+					break;
+				}
+			}
+		}
+		return;
+	}
 
 	if (V_strcmp(buttonId, "m_close") == 0)
 	{
@@ -1107,6 +1185,8 @@ void KZMenuService::DropCapture()
 		CCSCustomHudLayout *layout = (CCSCustomHudLayout *)ent;
 		this->SetClass(layout, "menu_root", "hidden", true);
 		this->applied.rootHidden = true;
+		this->SetBoolClass(layout, "menu_root", "help", this->applied.help, false);
+		this->SetBoolClass(layout, "help_empty", "hidden", this->applied.helpEmptyHidden, true);
 		// Undo the popup shift here too, or the next open animates the whole menu back from the left.
 		this->SetClass(layout, "menu_root", "shift", false);
 		this->applied.shift = false;
@@ -1130,24 +1210,47 @@ void KZMenuService::Close()
 
 void KZMenuService::Toggle()
 {
-	const CPlayerSlot slot = this->player->GetPlayerSlot();
-	if (this->open)
+	if (this->open && !this->help)
 	{
 		this->Close();
 		return;
 	}
-
-	CCSCustomHudLayout *layout = this->MenuLayout();
-	if (!layout || !layout->GetPlayerLayoutState(slot))
+	if (!this->Open(false))
 	{
 		this->player->languageService->PrintChat(true, false, "Menu - Unavailable");
 		return;
 	}
-	if (KZ::menu::GetTree().empty())
+	this->selectedCategory = 0;
+	this->selectedSub = KZ::menu::GetTree()[0]->subs.empty() ? -1 : 0;
+	this->Render();
+}
+
+bool KZMenuService::ShowHelp(i32 category)
+{
+	if (this->player->hudService->IsEditingHud() || !this->Open(true))
 	{
-		return;
+		return false;
+	}
+	this->helpCategory = Clamp(category, 0, MIN(scmd::GetCategoryCount(), KZ_MENU_CATS) - 1);
+	this->helpPage = 0;
+	this->Render();
+	return true;
+}
+
+bool KZMenuService::Open(bool help)
+{
+	const CPlayerSlot slot = this->player->GetPlayerSlot();
+	CCSCustomHudLayout *layout = this->MenuLayout();
+	if (!layout || !layout->GetPlayerLayoutState(slot))
+	{
+		return false;
+	}
+	if (!help && KZ::menu::GetTree().empty())
+	{
+		return false;
 	}
 
+	this->Close();
 	if (g_pMenus)
 	{
 		g_pMenus->CancelMenu(slot.Get());
@@ -1155,11 +1258,10 @@ void KZMenuService::Toggle()
 	}
 
 	this->open = true;
+	this->help = help;
 	this->popup = Popup::None;
-	this->selectedCategory = 0;
-	this->selectedSub = KZ::menu::GetTree()[0]->subs.empty() ? -1 : 0;
 	layout->SetInputCaptureEnabled(slot, true);
-	this->Render();
+	return true;
 }
 
 void KZMenuService::Suspend()
@@ -1208,6 +1310,7 @@ void KZMenuService::Reset()
 	}
 	this->applied = Applied();
 	this->writtenVars.clear();
+	this->help = false;
 }
 
 void KZMenuService::OnClientDisconnect()
