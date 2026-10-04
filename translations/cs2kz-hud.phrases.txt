@@ -21,36 +21,42 @@
 		"en"		"PERFECT BHOP"
 		"chi"		"完美连跳"
 		"ua"		"PERFECT BHOP"
+		"ru"		"PERFECT BHOP"
 	}
 	"HUD - Perf Short"
 	{
 		"en"		"PERF"
 		"chi"		"PERF"
 		"ua"		"PERF"
+		"ru"		"PERF"
 	}
 	"HUD - Crouch Jump Full"
 	{
 		"en"		"CROUCH JUMP"
 		"chi"		"蹲跳"
 		"ua"		"CROUCH JUMP"
+		"ru"		"CROUCH JUMP"
 	}
 	"HUD - Crouch Jump Short"
 	{
 		"en"		"CJ"
 		"chi"		"CJ"
 		"ua"		"CJ"
+		"ru"		"CJ"
 	}
 	"HUD - Jumpbug Full"
 	{
 		"en"		"JUMPBUG"
 		"chi"		"JUMPBUG"
 		"ua"		"JUMPBUG"
+		"ru"		"JUMPBUG"
 	}
 	"HUD - Jumpbug Short"
 	{
 		"en"		"JB"
 		"chi"		"JB"
 		"ua"		"JB"
+		"ru"		"JB"
 	}
 	"HUD - Stopped Text"
 	{
@@ -314,6 +320,7 @@
 		"en"		"{grey}Check console for instructions!"
 		"chi"		"{grey}请查看控制台获取说明!"
 		"ua"		"{grey}Перевірте консоль для інструкцій!"
+		"ru"		"{grey}Инструкции выведены в консоль!"
 	}
 	"Fonts - Help (Console)"
 	{
@@ -325,41 +332,49 @@
 		"en"		"----- Fonts marked * in the font picker -----\nThe game only loads installed font files whose name matches an entry in fonts.conf.\n1. Install the font for all users.\n2. Open csgo\\panorama\\fonts\\fonts.conf and add a line next to the others: <fontpattern>yourfontfilename</fontpattern>\n3. Restart the game fully."
 		"chi"		"----- 字体选择器中标记为 * 的字体 -----\n游戏只会加载文件名与 fonts.conf 中条目匹配的已安装字体文件.\n1. 为所有用户安装该字体.\n2. 打开 csgo\\panorama\\fonts\\fonts.conf, 在其他行旁边添加一行: <fontpattern>你的字体文件名</fontpattern>\n3. 完全重启游戏."
 		"ua"		"----- Шрифти, позначені * у виборі шрифтів -----\nГра завантажує лише встановлені файли шрифтів, ім'я яких збігається з записом у fonts.conf.\n1. Встановіть шрифт для всіх користувачів.\n2. Відкрийте csgo\\panorama\\fonts\\fonts.conf і додайте рядок поруч з іншими: <fontpattern>yourfontfilename</fontpattern>\n3. Повністю перезапустіть гру."
+		"ru"		"----- Шрифты, обозначенные * в выборе шрифтов -----\nИгра загружает только шрифты, которые записаны в файле fonts.conf.\n1. Установите шрифт для всех пользователей.\n2. Откройте csgo\\panorama\\fonts\\fonts.conf и добавьте линию к остальным: <fontpattern>названиеФайлаШрифта</fontpattern>\n3. Полностью перезапустите игру."
 	}
 	"HUD Edit - Pick Hint"
 	{
 		"en"		"Click an element to move it, or one of its corners to resize it"
 		"ua"		"Натисніть на елемент, щоб перемістити його, або на один із його кутів, щоб змінити його розмір"
+		"ru"		"Кликните на элемент, чтобы его переместить, или на угол, чтобы изменить его размер"
 	}
 	"HUD Edit - Place"
 	{
 		"en"		"Place"
 		"ua"		"Розмістити"
+		"ru"		"Разместить"
 	}
 	"HUD Edit - Cancel"
 	{
 		"en"		"Cancel"
 		"ua"		"Скасувати"
+		"ru"		"Отменить"
 	}
 	"HUD Edit - Default"
 	{
 		"en"		"Default position"
 		"ua"		"Початкове положення"
+		"ru"		"Сброс положения"
 	}
 	"HUD Edit - Free Move"
 	{
 		"en"		"Hold: no snapping"
 		"ua"		"Утримуйте щоб вільно переміщати"
+		"ru"		"Удержание: свободное перемещение"
 	}
 	"HUD Edit - Done"
 	{
 		"en"		"Done"
 		"ua"		"Готово"
+		"ru"		"Готово"
 	}
 	"HUD Edit - Unavailable"
 	{
 		"en"		"{grey}Moving HUD elements needs the layout HUD style and a living player."
 		"ua"		"{grey}Для переміщення елементів HUD потрібно увімкнути стиль Компонування (mhud стиль) та мати живого гравця на сервері."
+		"ru"		"{grey}Вы должны включить HUD и быть живы, чтобы перемещать элементы HUD."
 	}
 	"HUD - Release Text"
 	{
@@ -367,16 +382,19 @@
 		"#format"	"value:s"
 		"en"		"{value} W"
 		"ua"		"{value} W"
+		"ru"		"{value} W"
 	}
 	"HUD - Course Global"
 	{
 		"en"		"Global"
 		"ua"		"Глобальний"
+		"ru"		"Глобальный"
 	}
 	"HUD - Course Non Global"
 	{
 		"en"		"Non-global"
 		"ua"		"Неглобальний"
+		"ru"		"Неглобальный"
 	}
 	"HUD - Course Line"
 	{
@@ -384,6 +402,7 @@
 		"#format"	"course:s,mode:s"
 		"en"		"{course} · {mode}"
 		"ua"		"{course} · {mode}"
+		"ru"		"{course} · {mode}"
 	}
 	"HUD - Course Tier"
 	{
@@ -391,6 +410,7 @@
 		"#format"	"tier:i"
 		"en"		" · T{tier}"
 		"ua"		" · T{tier}"
+		"ru"		" · T{tier}"
 	}
 	"HUD - Course Tiers"
 	{
@@ -398,24 +418,28 @@
 		"#format"	"tp:i,pro:i"
 		"en"		" · T{tp} / Pro T{pro}"
 		"ua"		" · T{tp} / Pro T{pro}"
+		"ru"		" · T{tp} / Pro T{pro}"
 	}
 	"HUD - Course Pill Split"
 	{
 		"#format"	"number:i"
 		"en"		"Split {number}"
 		"ua"		"Спліт {number}"
+		"ru"		"Сплит {number}"
 	}
 	"HUD - Course Pill Checkpoint"
 	{
 		"#format"	"number:i"
 		"en"		"CP {number}"
 		"ua"		"CP {number}"
+		"ru"		"CP {number}"
 	}
 	"HUD - Course Pill Stage"
 	{
 		"#format"	"number:i"
 		"en"		"Stage {number}"
 		"ua"		"Етап {number}"
+		"ru"		"Этап {number}"
 	}
 	"HUD - Course Pill Info"
 	{
@@ -423,26 +447,31 @@
 		"#format"	"time:s,target:s"
 		"en"		"{time} vs {target}"
 		"ua"		"{time} проти {target}"
+		"ru"		"{time} vs {target}"
 	}
 	"HUD - Compare Server PB"
 	{
 		"en"		"SPB"
 		"ua"		"SPB"
+		"ru"		"SPB"
 	}
 	"HUD - Compare Global PB"
 	{
 		"en"		"GPB"
 		"ua"		"GPB"
+		"ru"		"GPB"
 	}
 	"HUD - Compare SR"
 	{
 		"en"		"SR"
 		"ua"		"SR"
+		"ru"		"SR"
 	}
 	"HUD - Compare WR"
 	{
 		"en"		"WR"
 		"ua"		"WR"
+		"ru"		"WR"
 	}
 	"HUD - Compare Pro"
 	{
@@ -450,21 +479,25 @@
 		"#format"	"target:s"
 		"en"		"{target} Pro"
 		"ua"		"{target} Pro"
+		"ru"		"{target} Pro"
 	}
 	"HUD - Course Stages"
 	{
 		"en"		"Stages"
 		"ua"		"Етапи"
+		"ru"		"Этапы"
 	}
 	"HUD - Course Checkpoints"
 	{
 		"en"		"Checkpoints"
 		"ua"		"Чекпоінти"
+		"ru"		"Чекпоинты"
 	}
 	"HUD - Course Splits"
 	{
 		"en"		"Splits"
 		"ua"		"Спліти"
+		"ru"		"Сплиты"
 	}
 	"HUD - Course Progress"
 	{
@@ -472,32 +505,38 @@
 		"#format"	"reached:i,total:i"
 		"en"		"{reached} / {total}"
 		"ua"		"{reached} / {total}"
+		"ru"		"{reached} / {total}"
 	}
 	"HUD - Course All"
 	{
 		"en"		"All"
 		"ua"		"Всі"
+		"ru"		"Все"
 	}
 	"HUD - Course Pro"
 	{
 		"en"		"Pro"
 		"ua"		"Pro"
+		"ru"		"Pro"
 	}
 	"HUD - Course Badge TP"
 	{
 		"en"		"TP"
 		"ua"		"TP"
+		"ru"		"TP"
 	}
 	"HUD - Course Badge Pro"
 	{
 		"en"		"PRO"
 		"ua"		"PRO"
+		"ru"		"PRO"
 	}
 	"HUD - Course By"
 	{
 		"#format"	"name:s"
 		"en"		"by {name}"
 		"ua"		"від {name}"
+		"ru"		"от {name}"
 	}
 	"HUD - Course Gap"
 	{
@@ -505,25 +544,30 @@
 		"#format"	"gap:s"
 		"en"		"({gap})"
 		"ua"		"({gap})"
+		"ru"		"({gap})"
 	}
 	"HUD - Course No Records"
 	{
 		"en"		"No records yet"
 		"ua"		"Немає даних"
+		"ru"		"Нет рекордов... пока"
 	}
 	"HUD - Course Ranked"
 	{
 		"en"		"Ranked"
 		"ua"		"Рейтинговий"
+		"ru"		"Рейтинговый"
 	}
 	"HUD - Course Pending"
 	{
 		"en"		"Pending"
 		"ua"		"Очікує"
+		"ru"		"На рассмотрении"
 	}
 	"HUD - Course Unranked"
 	{
 		"en"		"Unranked"
 		"ua"		"Нерейтинговий"
+		"ru"		"Без рейтинга"
 	}
 }
