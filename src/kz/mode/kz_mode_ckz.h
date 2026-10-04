@@ -7,11 +7,11 @@
 #define MODE_NAME_SHORT "CKZ"
 #define MODE_NAME       "Classic"
 // Rampbug fix related
-#define MAX_BUMPS                   4
-#define RAMP_PIERCE_DISTANCE        0.0625f
-#define RAMP_BUG_THRESHOLD          0.98f
-#define RAMP_BUG_VELOCITY_THRESHOLD 0.95f
-#define NEW_RAMP_THRESHOLD          0.95f
+#define RAMP_BUG_OFFSET          0.03125f // The game keeps the player this far away from what they collide with.
+#define RAMP_BUG_THRESHOLD       0.999f
+#define RAMP_BUG_SAME_PLANE      0.99f
+#define RAMP_BUG_MIN_DISTANCE    1.0f
+#define GROUND_CHECK_SHRINK_SIZE 0.0625f
 
 #define SPEED_NORMAL 250.0f
 // Prestrafe related
@@ -162,11 +162,15 @@ class KZClassicModeService : public KZModeService
 	f32 originalMaxSpeed {};
 	f32 tweakedMaxSpeed {};
 
-	bool didTPM {};
-	bool overrideTPM {};
-	Vector tpmVelocity = vec3_invalid;
-	Vector tpmOrigin = vec3_invalid;
-	Vector lastValidPlane = vec3_origin;
+	// Rampbug fix
+	bool inTryPlayerMove {};
+	// Last plane that TryPlayerMove hit.
+	Vector lastPlane = vec3_origin;
+	// Number of traces in the current TryPlayerMove that didn't move the player.
+	u32 stuckTraceCount {};
+
+	void FixTryPlayerMoveTrace(const Ray_t &ray, const Vector &start, const Vector &end, CTraceFilter *filter, trace_t *pm);
+	void FixGroundTrace(const Ray_t &ray, const Vector &start, const Vector &end, CTraceFilter *filter, trace_t *pm);
 
 	// Keep track of TryPlayerMove path for triggerfixing.
 	bool airMoving {};
@@ -179,6 +183,7 @@ public:
 	virtual const char *GetModeShortName() override;
 
 	virtual bool EnableWaterFix() override;
+	void OnTracePlayerBBoxPost(const Ray_t &ray, const Vector &start, const Vector &end, CTraceFilter *filter, trace_t *pm);
 
 	virtual DistanceTier GetDistanceTier(JumpType jumpType, f32 distance) override;
 	virtual const CVValue_t *GetModeConVarValues() override;
@@ -190,6 +195,7 @@ public:
 	virtual void OnPlayerMove() override;
 	virtual void OnProcessMovementPost() override;
 	virtual void OnCategorizePosition(bool bStayOnGround) override;
+	virtual void OnCategorizePositionPost(bool bStayOnGround) override;
 	virtual void OnDuckPost() override;
 	virtual void OnAirMove() override;
 	virtual void OnAirMovePost() override;

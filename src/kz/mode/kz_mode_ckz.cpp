@@ -19,6 +19,23 @@ PLUGIN_EXPOSE(KZClassicModePlugin, g_KZClassicModePlugin);
 
 CConVarRef<f32> sv_standable_normal("sv_standable_normal");
 
+// The player that is currently running TryPlayerMove or CategorizePosition.
+static_global KZClassicModeService *tracingModeService {};
+
+// Every hull trace done by the game's movement code goes through this function.
+static KHook::Return<void> TracePlayerBBoxPost(void *traceCache, trace_t *pm, const Vector *start, const Vector *end, const bbox_t *bounds,
+											   CTraceFilter *filter)
+{
+	if (tracingModeService)
+	{
+		tracingModeService->OnTracePlayerBBoxPost(Ray_t(bounds->mins, bounds->maxs), *start, *end, filter, pm);
+	}
+	return {KHook::Action::Ignore};
+}
+
+static KHook::Function<void, void *, trace_t *, const Vector *, const Vector *, const bbox_t *, CTraceFilter *> TracePlayerBBox(
+	nullptr, TracePlayerBBoxPost);
+
 bool KZClassicModePlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool late)
 {
 	PLUGIN_SAVEVARS();
@@ -54,6 +71,14 @@ bool KZClassicModePlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t m
 		V_snprintf(error, maxlen, "Failed to get game config");
 		return false;
 	}
+
+	void *tracePlayerBBoxAddress = g_pGameConfig->ResolveSignature("TracePlayerBBox");
+	if (!tracePlayerBBoxAddress)
+	{
+		V_snprintf(error, maxlen, "Failed to resolve signature: TracePlayerBBox");
+		return false;
+	}
+	TracePlayerBBox.Configure(tracePlayerBBoxAddress);
 
 	if (!g_pModeManager->RegisterMode(g_PLID, MODE_NAME_SHORT, MODE_NAME, g_ModeFactory))
 	{
@@ -112,11 +137,9 @@ void KZClassicModeService::Reset()
 	this->bonusSpeed = {};
 	this->maxPre = {};
 
-	this->didTPM = {};
-	this->overrideTPM = {};
-	this->tpmVelocity = vec3_origin;
-	this->tpmOrigin = vec3_origin;
-	this->lastValidPlane = vec3_origin;
+	this->inTryPlayerMove = {};
+	this->lastPlane = vec3_origin;
+	this->stuckTraceCount = {};
 
 	this->airMoving = {};
 	this->tpmTriggerFixOrigins.RemoveAll();
@@ -124,6 +147,10 @@ void KZClassicModeService::Reset()
 
 void KZClassicModeService::Cleanup()
 {
+	if (tracingModeService == this)
+	{
+		tracingModeService = nullptr;
+	}
 	auto pawn = this->player->GetPlayerPawn();
 	if (pawn)
 	{
@@ -213,9 +240,11 @@ void KZClassicModeService::OnStartTouchGround()
 {
 	this->SlopeFix();
 	bbox_t bounds;
-	this->player->GetBBoxBounds(&bounds);
+	// Shrink the bounds here as well, otherwise we touch triggers that are flush with the ground.
+	bbox_t offset = {{0.03125f, 0.03125f, 0.03125f}, {-0.03125f, -0.03125f, -0.03125f}};
+	this->player->GetBBoxBounds(&bounds, &offset);
 	Vector ground = this->player->landingOrigin;
-	ground.z = this->player->GetGroundPosition() - 0.03125f;
+	ground.z = this->player->GetGroundPosition();
 	this->player->TouchTriggersAlongPath(this->player->landingOrigin, ground, bounds);
 }
 
@@ -299,7 +328,6 @@ void KZClassicModeService::OnSetupMove(PlayerCommand *pc)
 
 void KZClassicModeService::OnProcessMovement()
 {
-	this->didTPM = false;
 	if (this->player->GetPlayerPawn()->m_flVelocityModifier() != 1.0f)
 	{
 		this->player->GetPlayerPawn()->m_flVelocityModifier(1.0f);
@@ -327,10 +355,6 @@ void KZClassicModeService::OnProcessMovementPost()
 	Vector velocity;
 	this->player->GetVelocity(&velocity);
 	this->postProcessMovementZSpeed = velocity.z;
-	if (!this->didTPM)
-	{
-		this->lastValidPlane = vec3_origin;
-	}
 	f32 velMod = this->originalMaxSpeed >= 0 ? (SPEED_NORMAL + this->GetPrestrafeGain()) / this->originalMaxSpeed : 1.0f;
 	if (this->player->GetPlayerPawn()->m_flVelocityModifier() != velMod)
 	{
@@ -626,319 +650,45 @@ void KZClassicModeService::SlopeFix()
 	}
 }
 
-// 1:1 with CS2.
-static_function void ClipVelocity(Vector &in, Vector &normal, Vector &out)
-{
-	f32 backoff = -((in.x * normal.x) + ((normal.z * in.z) + (in.y * normal.y))) * 1;
-	backoff = fmaxf(backoff, 0.0) + 0.03125;
-
-	out = normal * backoff + in;
-}
-
-static_function bool IsValidMovementTrace(trace_t &tr, bbox_t bounds, CTraceFilterPlayerMovementCS *filter)
-{
-	trace_t stuck;
-	// Maybe we don't need this one.
-	// if (tr.m_flFraction < FLT_EPSILON)
-	//{
-	//	return false;
-	//}
-
-	if (tr.m_bStartInSolid)
-	{
-		return false;
-	}
-
-	// We hit something but no valid plane data?
-	if (tr.m_flFraction < 1.0f && fabs(tr.m_vHitNormal.x) < FLT_EPSILON && fabs(tr.m_vHitNormal.y) < FLT_EPSILON
-		&& fabs(tr.m_vHitNormal.z) < FLT_EPSILON)
-	{
-		return false;
-	}
-
-	// Is the plane deformed?
-	if (fabs(tr.m_vHitNormal.x) > 1.0f || fabs(tr.m_vHitNormal.y) > 1.0f || fabs(tr.m_vHitNormal.z) > 1.0f)
-	{
-		return false;
-	}
-
-	// Do an unswept trace and a backward trace just to be sure.
-	INavPhysicsInterface::TraceShape(Ray_t(bounds.mins, bounds.maxs), tr.m_vEndPos, tr.m_vEndPos, filter, &stuck);
-	if (stuck.m_bStartInSolid || stuck.m_flFraction < 1.0f - FLT_EPSILON)
-	{
-		return false;
-	}
-
-	INavPhysicsInterface::TraceShape(Ray_t(bounds.mins, bounds.maxs), tr.m_vEndPos, tr.m_vStartPos, filter, &stuck);
-	// For whatever reason if you can hit something in only one direction and not the other way around.
-	// Only happens since Call to Arms update, so this fraction check is commented out until it is fixed.
-	if (stuck.m_bStartInSolid /*|| stuck.m_flFraction < 1.0f - FLT_EPSILON*/)
-	{
-		return false;
-	}
-
-	return true;
-}
-
 void KZClassicModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t *pFirstTrace, bool *bIsSurfing)
 {
+	tracingModeService = this;
+	this->inTryPlayerMove = true;
+	this->stuckTraceCount = 0;
+	// The rest of the path is added by FixTryPlayerMoveTrace.
+	Vector origin;
+	this->player->GetOrigin(&origin);
 	this->tpmTriggerFixOrigins.RemoveAll();
-	this->overrideTPM = false;
-	this->didTPM = true;
-	CCSPlayerPawn *pawn = this->player->GetPlayerPawn();
+	this->tpmTriggerFixOrigins.AddToTail(origin);
 
-	f32 timeLeft = g_pKZUtils->GetGlobals()->frametime;
-
-	Vector start, velocity, end;
-	this->player->GetOrigin(&start);
-	this->player->GetVelocity(&velocity);
-
-	this->tpmTriggerFixOrigins.AddToTail(start);
-	if (velocity.Length() == 0.0f)
+	// WalkMove does the first trace before calling TryPlayerMove, so we need to fix that one here.
+	// TryPlayerMove only uses it if it ends where its own first trace would end.
+	if (pFirstDest && pFirstTrace && (this->player->GetPlayerPawn()->m_fFlags & FL_ONGROUND))
 	{
-		// No move required.
-		return;
-	}
-	Vector primalVelocity = velocity;
-
-	bool validPlane {};
-
-	f32 allFraction {};
-	trace_t pm;
-	u32 bumpCount {};
-	Vector planes[5];
-	u32 numPlanes {};
-	trace_t pierce;
-
-	bbox_t bounds;
-	this->player->GetBBoxBounds(&bounds);
-
-	CTraceFilterPlayerMovementCS filter(pawn);
-
-	bool potentiallyStuck {};
-
-	for (bumpCount = 0; bumpCount < MAX_BUMPS; bumpCount++)
-	{
-		// Assume we can move all the way from the current origin to the end point.
-		VectorMA(start, timeLeft, velocity, end);
-		// See if we can make it from origin to end point.
-		// If their velocity Z is 0, then we can avoid an extra trace here during WalkMove.
-		if (pFirstDest && end == *pFirstDest)
+		Vector velocity, end;
+		this->player->GetVelocity(&velocity);
+		VectorMA(origin, g_pKZUtils->GetGlobals()->frametime, velocity, end);
+		if (end == *pFirstDest)
 		{
-			pm = *pFirstTrace;
-		}
-		else
-		{
-			INavPhysicsInterface::TraceShape(Ray_t(bounds.mins, bounds.maxs), start, end, &filter, &pm);
-			if (end == start)
-			{
-				continue;
-			}
-			if (IsValidMovementTrace(pm, bounds, &filter) && pm.m_flFraction == 1.0f)
-			{
-				// Player won't hit anything, nothing to do.
-				break;
-			}
-			bool normalChanged = pm.m_vHitNormal.Dot(this->lastValidPlane) < RAMP_BUG_THRESHOLD;
-			bool stuck = potentiallyStuck && pm.m_flFraction == 0.0f;
-			bool lastValidPlaneWasStraightWall = this->lastValidPlane.z < 0.03125f;
-			bool shouldConsiderRampbug = (normalChanged && !lastValidPlaneWasStraightWall) || stuck;
-			if (this->lastValidPlane.Length() > FLT_EPSILON && shouldConsiderRampbug)
-			{
-				// We hit a plane that will significantly change our velocity.
-				// Make sure that this plane is significant enough.
-				Vector direction = g_pKZUtils->NormalizeVector(velocity);
-				Vector offsetDirection;
-				f32 offsets[] = {0.0f, -1.0f, 1.0f};
-				bool success {};
-				for (u32 i = 0; i < 3 && !success; i++)
-				{
-					for (u32 j = 0; j < 3 && !success; j++)
-					{
-						for (u32 k = 0; k < 3 && !success; k++)
-						{
-							if (i == 0 && j == 0 && k == 0)
-							{
-								offsetDirection = this->lastValidPlane;
-							}
-							else
-							{
-								offsetDirection = {offsets[i], offsets[j], offsets[k]};
-								// Check if this random offset is even valid.
-								if (this->lastValidPlane.Dot(offsetDirection) <= 0.0f)
-								{
-									continue;
-								}
-								trace_t test;
-								INavPhysicsInterface::TraceShape(Ray_t(bounds.mins, bounds.maxs), start + offsetDirection * RAMP_PIERCE_DISTANCE,
-																 start, &filter, &test);
-								if (!IsValidMovementTrace(test, bounds, &filter))
-								{
-									continue;
-								}
-							}
-							bool goodTrace {};
-							f32 ratio {};
-							bool hitNewPlane {};
-							for (ratio = 0.25f; ratio <= 1.0f; ratio += 0.25f)
-							{
-								INavPhysicsInterface::TraceShape(Ray_t(bounds.mins, bounds.maxs),
-																 start + offsetDirection * RAMP_PIERCE_DISTANCE * ratio,
-																 end + offsetDirection * RAMP_PIERCE_DISTANCE * ratio, &filter, &pierce);
-								if (!IsValidMovementTrace(pierce, bounds, &filter))
-								{
-									continue;
-								}
-								// Try until we hit a similar plane.
-								// clang-format off
-								validPlane = pierce.m_flFraction < 1.0f && pierce.m_flFraction > 0.1f 
-											 && pierce.m_vHitNormal.Dot(this->lastValidPlane) >= RAMP_BUG_THRESHOLD;
-
-								hitNewPlane = pm.m_vHitNormal.Dot(pierce.m_vHitNormal) < NEW_RAMP_THRESHOLD 
-											  && this->lastValidPlane.Dot(pierce.m_vHitNormal) > NEW_RAMP_THRESHOLD;
-								// clang-format on
-								goodTrace = CloseEnough(pierce.m_flFraction, 1.0f, FLT_EPSILON) || validPlane;
-								if (goodTrace)
-								{
-									break;
-								}
-							}
-							if (goodTrace || hitNewPlane)
-							{
-								// Trace back to the original end point to find its normal.
-								trace_t test;
-								INavPhysicsInterface::TraceShape(Ray_t(bounds.mins, bounds.maxs), pierce.m_vEndPos, end, &filter, &test);
-								pm = pierce;
-								pm.m_vStartPos = start;
-								pm.m_flFraction = Clamp((pierce.m_vEndPos - pierce.m_vStartPos).Length() / (end - start).Length(), 0.0f, 1.0f);
-								pm.m_vEndPos = test.m_vEndPos;
-								if (pierce.m_vHitNormal.Length() > 0.0f)
-								{
-									pm.m_vHitNormal = pierce.m_vHitNormal;
-									this->lastValidPlane = pierce.m_vHitNormal;
-								}
-								else
-								{
-									pm.m_vHitNormal = test.m_vHitNormal;
-									this->lastValidPlane = test.m_vHitNormal;
-								}
-								success = true;
-								this->overrideTPM = true;
-							}
-						}
-					}
-				}
-			}
-			if (pm.m_vHitNormal.Length() > 0.99f)
-			{
-				this->lastValidPlane = pm.m_vHitNormal;
-			}
-			potentiallyStuck = pm.m_flFraction == 0.0f;
-		}
-
-		if (pm.m_flFraction * velocity.Length() > 0.03125f || pm.m_flFraction > 0.03125f)
-		{
-			allFraction += pm.m_flFraction;
-			start = pm.m_vEndPos;
-			numPlanes = 0;
-		}
-
-		this->tpmTriggerFixOrigins.AddToTail(pm.m_vEndPos);
-
-		if (allFraction == 1.0f)
-		{
-			break;
-		}
-		timeLeft -= g_pKZUtils->GetGlobals()->frametime * pm.m_flFraction;
-
-		// 2024-11-07 update also adds a low velocity check... This is only correct as long as you don't collide with other players.
-		if (numPlanes >= 5 || (pm.m_vHitNormal.z >= 0.7f && velocity.Length2D() < 1.0f))
-		{
-			VectorCopy(vec3_origin, velocity);
-			break;
-		}
-
-		planes[numPlanes] = pm.m_vHitNormal;
-		numPlanes++;
-
-		if (numPlanes == 1 && pawn->m_MoveType() == MOVETYPE_WALK && pawn->m_hGroundEntity().Get() == nullptr)
-		{
-			ClipVelocity(velocity, planes[0], velocity);
-		}
-		else
-		{
-			u32 i, j;
-			for (i = 0; i < numPlanes; i++)
-			{
-				ClipVelocity(velocity, planes[i], velocity);
-				for (j = 0; j < numPlanes; j++)
-				{
-					if (j != i)
-					{
-						// Are we now moving against this plane?
-						if (velocity.Dot(planes[j]) < 0)
-						{
-							break; // not ok
-						}
-					}
-				}
-
-				if (j == numPlanes) // Didn't have to clip, so we're ok
-				{
-					break;
-				}
-			}
-			// Did we go all the way through plane set
-			if (i != numPlanes)
-			{ // go along this plane
-				// pmove.velocity is set in clipping call, no need to set again.
-				;
-			}
-			else
-			{ // go along the crease
-				if (numPlanes != 2)
-				{
-					VectorCopy(vec3_origin, velocity);
-					break;
-				}
-				Vector dir;
-				f32 d;
-				CrossProduct(planes[0], planes[1], dir);
-				dir = g_pKZUtils->NormalizeVector(dir);
-				d = dir.Dot(velocity);
-				VectorScale(dir, d, velocity);
-
-				if (velocity.Dot(primalVelocity) <= 0)
-				{
-					velocity = vec3_origin;
-					break;
-				}
-			}
+			bbox_t bounds;
+			this->player->GetBBoxBounds(&bounds);
+			CTraceFilterPlayerMovementCS filter(this->player->GetPlayerPawn());
+			this->FixTryPlayerMoveTrace(Ray_t(bounds.mins, bounds.maxs), origin, end, &filter, pFirstTrace);
 		}
 	}
-	this->tpmOrigin = pm.m_vEndPos;
-	this->tpmVelocity = velocity;
 }
 
 void KZClassicModeService::OnTryPlayerMovePost(Vector *pFirstDest, trace_t *pFirstTrace, bool *bIsSurfing)
 {
-	Vector velocity;
-	this->player->GetVelocity(&velocity);
-	bool velocityHeavilyModified =
-		g_pKZUtils->NormalizeVector(this->tpmVelocity).Dot(g_pKZUtils->NormalizeVector(velocity)) < RAMP_BUG_THRESHOLD
-		|| (this->tpmVelocity.Length() > 50.0f && velocity.Length() / this->tpmVelocity.Length() < RAMP_BUG_VELOCITY_THRESHOLD);
-	if (this->overrideTPM && velocityHeavilyModified && this->tpmOrigin != vec3_invalid && this->tpmVelocity != vec3_invalid)
-	{
-		this->player->SetOrigin(this->tpmOrigin);
-		this->player->SetVelocity(this->tpmVelocity);
-	}
+	tracingModeService = nullptr;
+	this->inTryPlayerMove = false;
 	if (this->airMoving)
 	{
 		if (this->tpmTriggerFixOrigins.Count() > 1)
 		{
 			bbox_t bounds;
 			// We need to shrink the bounds a bit to prevent touching triggers that we shouldn't be touching when doing triggerfix.
-			bbox_t offset = {{0.03125f, 0.03125f, 0.0f}, {-0.03125f, -0.03125f, 0.0f}};
+			bbox_t offset = {{0.03125f, 0.03125f, 0.03125f}, {-0.03125f, -0.03125f, -0.03125f}};
 			this->player->GetBBoxBounds(&bounds, &offset);
 			for (int i = 0; i < this->tpmTriggerFixOrigins.Count() - 1; i++)
 			{
@@ -951,50 +701,142 @@ void KZClassicModeService::OnTryPlayerMovePost(Vector *pFirstDest, trace_t *pFir
 
 void KZClassicModeService::OnCategorizePosition(bool bStayOnGround)
 {
-	// Already on the ground?
-	// If we are already colliding on a standable valid plane, we don't want to do the check.
-	if (bStayOnGround || this->lastValidPlane.Length() < EPSILON || this->lastValidPlane.z > 0.7f)
+	tracingModeService = this;
+}
+
+void KZClassicModeService::OnCategorizePositionPost(bool bStayOnGround)
+{
+	tracingModeService = nullptr;
+}
+
+void KZClassicModeService::OnTracePlayerBBoxPost(const Ray_t &ray, const Vector &start, const Vector &end, CTraceFilter *filter, trace_t *pm)
+{
+	if (this->inTryPlayerMove)
 	{
-		return;
+		this->FixTryPlayerMoveTrace(ray, start, end, filter, pm);
 	}
-	// Only attempt to fix rampbugs while going down significantly enough.
-	if (this->player->currentMoveData->m_vecVelocity.z > -64.0f)
+	else
 	{
-		return;
+		this->FixGroundTrace(ray, start, end, filter, pm);
 	}
-	bbox_t bounds;
-	this->player->GetBBoxBounds(&bounds);
+}
 
-	CTraceFilterPlayerMovementCS filter(this->player->GetPlayerPawn());
+/*
+	Rampbug fix:
+	The game keeps the player 1/32 unit away from whatever they collide with.
+	While sliding on a ramp, the player can end up closer to the ramp than that, or collide with the edge between two triangles of the ramp
+	instead of the ramp itself, which gives a wrong normal. TryPlayerMove then either stops the player or sends them in a random direction.
 
-	trace_t trace;
-
-	Vector origin, groundOrigin;
-	this->player->GetOrigin(&origin);
-	groundOrigin = origin;
-	groundOrigin.z -= 2.0f;
-
-	INavPhysicsInterface::TraceShape(Ray_t(bounds.mins, bounds.maxs), origin, groundOrigin, &filter, &trace);
-
-	if (trace.m_flFraction == 1.0f)
+	To fix this, we redo the trace a bit further away from the ramp. We only use that trace if it actually goes further than the original one.
+	If it just ends up on another plane right away, the player is really running into a corner and the original trace is kept.
+*/
+void KZClassicModeService::FixTryPlayerMoveTrace(const Ray_t &ray, const Vector &start, const Vector &end, CTraceFilter *filter, trace_t *pm)
+{
+	Vector direction = end - start;
+	f32 length = direction.NormalizeInPlace();
+	// We hit a plane that will change our velocity, or we barely moved at all. This is either a real obstacle or a rampbug.
+	bool shouldConsiderRampbug = pm->m_flFraction < 1.0f && !pm->m_bStartInSolid && this->lastPlane.LengthSqr() > 0.0f && length > 0.0f
+								 && (pm->m_vHitNormal.Dot(this->lastPlane) < RAMP_BUG_THRESHOLD || pm->m_flFraction * length < RAMP_BUG_OFFSET);
+	if (shouldConsiderRampbug)
 	{
-		return;
-	}
-	// Is this something that you should be able to actually stand on?
-	if (trace.m_flFraction < 0.95f && trace.m_vHitNormal.z > 0.7f && this->lastValidPlane.Dot(trace.m_vHitNormal) < RAMP_BUG_THRESHOLD)
-	{
-		origin += this->lastValidPlane * 0.0625f;
-		groundOrigin = origin;
-		groundOrigin.z -= 2.0f;
-		INavPhysicsInterface::TraceShape(Ray_t(bounds.mins, bounds.maxs), origin, groundOrigin, &filter, &trace);
-		if (trace.m_bStartInSolid)
+		bool success {};
+		// We already failed to move twice, so TryPlayerMove is about to stop the player. Use any trace that goes further.
+		bool stuck = this->stuckTraceCount >= 2;
+		// This can only be a rampbug if the player is still right next to the last plane they hit.
+		trace_t test;
+		INavPhysicsInterface::TraceShape(ray, pm->m_vEndPos + this->lastPlane * RAMP_BUG_OFFSET,
+										 pm->m_vEndPos - this->lastPlane * (RAMP_BUG_OFFSET * 2.0f), filter, &test);
+		if (test.m_flFraction < 1.0f && !test.m_bStartInSolid && test.m_vHitNormal.Dot(this->lastPlane) >= RAMP_BUG_THRESHOLD)
 		{
-			return;
+			// Redo the trace a bit further away from the plane.
+			Vector offset = this->lastPlane * RAMP_BUG_OFFSET;
+			trace_t offsetTrace;
+			INavPhysicsInterface::TraceShape(ray, start + offset, end + offset, filter, &offsetTrace);
+			// If this trace only goes a bit further and then hits a different plane, the original trace hit something real,
+			// like a corner or two ramps meeting each other. Keep the original so TryPlayerMove can slide along both planes.
+			f32 distance = (offsetTrace.m_vEndPos - pm->m_vEndPos).Dot(direction);
+			bool samePlane = offsetTrace.m_vHitNormal.Dot(this->lastPlane) >= RAMP_BUG_SAME_PLANE;
+			success = !offsetTrace.m_bStartInSolid && distance > RAMP_BUG_OFFSET
+					  && (stuck || offsetTrace.m_flFraction == 1.0f || distance > RAMP_BUG_MIN_DISTANCE || samePlane);
+			if (success)
+			{
+				*pm = offsetTrace;
+			}
 		}
-		if (trace.m_flFraction == 1.0f || this->lastValidPlane.Dot(trace.m_vHitNormal) >= RAMP_BUG_THRESHOLD)
+		if (!success && stuck && pm->m_flFraction * length < RAMP_BUG_OFFSET)
 		{
-			this->player->SetOrigin(origin);
+			// The player is stuck between two planes, moving away from one of them will just push them into the other one.
+			// A trace only gives us one of the two planes, so we find the other one by tracing away from the first.
+			Vector normal = pm->m_vHitNormal;
+			Vector otherNormal = vec3_origin;
+			if (normal.Dot(this->lastPlane) < RAMP_BUG_THRESHOLD)
+			{
+				otherNormal = this->lastPlane;
+			}
+			else
+			{
+				INavPhysicsInterface::TraceShape(ray, start, start + normal * (RAMP_BUG_OFFSET * 2.0f), filter, &test);
+				if (test.m_flFraction < 1.0f && !test.m_bStartInSolid && test.m_vHitNormal.Dot(normal) < RAMP_BUG_THRESHOLD)
+				{
+					otherNormal = test.m_vHitNormal;
+				}
+			}
+			if (otherNormal.LengthSqr() > 0.0f && normal.Dot(otherNormal) > -0.99f)
+			{
+				// Move away from both planes at once.
+				Vector offset = normal + otherNormal;
+				offset.NormalizeInPlace();
+				offset *= MIN(RAMP_BUG_OFFSET / normal.Dot(offset), 1.0f);
+				trace_t offsetTrace;
+				INavPhysicsInterface::TraceShape(ray, start + offset, end + offset, filter, &offsetTrace);
+				if (!offsetTrace.m_bStartInSolid && (offsetTrace.m_vEndPos - pm->m_vEndPos).Dot(direction) > RAMP_BUG_OFFSET)
+				{
+					*pm = offsetTrace;
+				}
+			}
 		}
+	}
+	this->FixGroundTrace(ray, start, end, filter, pm);
+	if (pm->m_flFraction < 1.0f && !pm->m_bStartInSolid)
+	{
+		if (pm->m_vHitNormal.LengthSqr() > 0.98f)
+		{
+			this->lastPlane = pm->m_vHitNormal;
+		}
+		if (pm->m_flFraction * length < RAMP_BUG_OFFSET)
+		{
+			this->stuckTraceCount++;
+		}
+	}
+	// Triggerfix related
+	this->tpmTriggerFixOrigins.AddToTail(pm->m_vEndPos);
+}
+
+// Sometimes the game thinks the player is on standable ground while they are actually on a steep slope right below a wall.
+// A slightly smaller hull doesn't have this problem and will hit the slope instead.
+// It will also hit a slope if the player is standing over a gap between two floors though, so we make sure there's a wall next to the player.
+void KZClassicModeService::FixGroundTrace(const Ray_t &ray, const Vector &start, const Vector &end, CTraceFilter *filter, trace_t *pm)
+{
+	f32 standableZ = KZ::mode::modeCvarRefs[MODECVAR_SV_STANDABLE_NORMAL]->GetFloat();
+	if (pm->m_flFraction == 1.0f || pm->m_bStartInSolid || pm->m_vHitNormal.z < standableZ)
+	{
+		return;
+	}
+	Vector shrink(GROUND_CHECK_SHRINK_SIZE, GROUND_CHECK_SHRINK_SIZE, 0.0f);
+	trace_t smallTrace;
+	INavPhysicsInterface::TraceShape(Ray_t(ray.m_Hull.m_vMins + shrink, ray.m_Hull.m_vMaxs - shrink), start, end, filter, &smallTrace);
+	if (smallTrace.m_flFraction == 1.0f || smallTrace.m_bStartInSolid || smallTrace.m_vHitNormal.z >= standableZ)
+	{
+		return;
+	}
+	// Is there a wall on the side that the slope goes up towards?
+	Vector wallDirection(-smallTrace.m_vHitNormal.x, -smallTrace.m_vHitNormal.y, 0.0f);
+	wallDirection.NormalizeInPlace();
+	trace_t wallTrace;
+	INavPhysicsInterface::TraceShape(ray, pm->m_vEndPos, pm->m_vEndPos + wallDirection * GROUND_CHECK_SHRINK_SIZE, filter, &wallTrace);
+	if (wallTrace.m_flFraction < 0.5f && !wallTrace.m_bStartInSolid)
+	{
+		pm->m_vHitNormal = smallTrace.m_vHitNormal;
 	}
 }
 
