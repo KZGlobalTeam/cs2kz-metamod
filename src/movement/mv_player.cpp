@@ -422,14 +422,14 @@ void MovementPlayer::GetBBoxBounds(bbox_t *bounds, bbox_t *offset)
 {
 	bounds->mins = {-16.0f, -16.0f, 0.0f};
 	bounds->maxs = {16.0f, 16.0f, 72.0f};
+	if (this->GetMoveServices() && this->GetMoveServices()->m_bDucked())
+	{
+		bounds->maxs.z = 54.0f;
+	}
 	if (offset)
 	{
 		bounds->mins += offset->mins;
 		bounds->maxs += offset->maxs;
-	}
-	if (this->GetMoveServices() && this->GetMoveServices()->m_bDucked())
-	{
-		bounds->maxs.z = 54.0f;
 	}
 }
 
