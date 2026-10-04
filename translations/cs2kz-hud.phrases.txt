@@ -562,7 +562,7 @@
 	{
 		"en"		"Pending"
 		"ua"		"Очікує"
-		"ru"		"На рассмотрении"
+		"ru"		"Ожидание"
 	}
 	"HUD - Course Unranked"
 	{
