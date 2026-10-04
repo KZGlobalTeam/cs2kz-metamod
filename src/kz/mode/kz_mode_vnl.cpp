@@ -361,7 +361,7 @@ void KZVanillaModeService::OnTryPlayerMovePost(Vector *pFirstDest, trace_t *pFir
 		{
 			bbox_t bounds;
 			// We need to shrink the bounds a bit to prevent touching triggers that we shouldn't be touching when doing triggerfix.
-			bbox_t offset = {{0.03125f, 0.03125f, 0.0f}, {-0.03125f, -0.03125f, 0.0f}};
+			bbox_t offset = {{0.03125f, 0.03125f, 0.03125f}, {-0.03125f, -0.03125f, -0.03125f}};
 			this->player->GetBBoxBounds(&bounds, &offset);
 			for (int i = 0; i < this->tpmTriggerFixOrigins.Count() - 1; i++)
 			{
@@ -446,8 +446,10 @@ void KZVanillaModeService::OnTeleport(const Vector *newPosition, const QAngle *n
 void KZVanillaModeService::OnStartTouchGround()
 {
 	bbox_t bounds;
-	this->player->GetBBoxBounds(&bounds);
+	// Shrink the bounds here as well, otherwise we touch triggers that are flush with the ground.
+	bbox_t offset = {{0.03125f, 0.03125f, 0.03125f}, {-0.03125f, -0.03125f, -0.03125f}};
+	this->player->GetBBoxBounds(&bounds, &offset);
 	Vector ground = this->player->landingOrigin;
-	ground.z = this->player->GetGroundPosition() - 0.03125f;
+	ground.z = this->player->GetGroundPosition();
 	this->player->TouchTriggersAlongPath(this->player->landingOrigin, ground, bounds);
 }
