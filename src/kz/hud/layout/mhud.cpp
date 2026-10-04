@@ -589,7 +589,8 @@ bool KZHUDService::ShowJumpstat(Jump *jump, i32 colorTier)
 		{
 			js.shownType += "-F";
 		}
-		js.shownInfo = lang->PrepareMessage("Jumpstats HUD - History Info", jump->GetStrafeCount(), jump->GetSync() * 100.0f, jump->GetTakeoffSpeed());
+		js.shownInfo =
+			lang->PrepareMessage("Jumpstats HUD - History Info", jump->GetStrafeCount(), jump->GetSync() * 100.0f, jump->GetTakeoffSpeed());
 		js.shownDist = lang->PrepareMessage("Jumpstats HUD - Distance", jump->GetDistance(true, false, 1));
 		js.shownTier = colorTier;
 		this->PushJumpstatHistory(layout);
@@ -720,7 +721,7 @@ void KZHUDService::PushJumpstatHistory(CCSCustomHudLayout *layout)
 }
 
 // The widest value of each field, indexed by JSField.
-static_global const char *const JS_SAMPLE_VALUES[] = {"299",    "99",   "100%", "299.9 / 399.9",      "99.99", "66.6",  "0.781s",
+static_global const char *const JS_SAMPLE_VALUES[] = {"299",    "99",   "100%", "299.9 / 399.9",      "99.99",  "66.6",  "0.781s",
 													  "999.9°", "100%", "0.99", "100% / 100% / 100%", "99.9 L", "99.99", "+10.0",
 													  "-99.99"};
 static_assert(KZ_ARRAYSIZE(JS_SAMPLE_VALUES) == (i32)JSField::Count, "one sample per field");

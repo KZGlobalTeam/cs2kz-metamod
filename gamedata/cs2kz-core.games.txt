@@ -228,6 +228,13 @@
 				"windows"	"48 8B C4 4C 89 48 ?? 4C 89 40 ?? 48 89 50 ?? 48 89 48 ?? 55 53 56 57 41 54 41 55 41 56 41 57 48 8D A8 ?? ?? ?? ?? 48 81 EC ?? ?? ?? ?? 0F 29 70"
 				"linux"		"48 B8 ?? ?? ?? ?? ?? ?? ?? ?? 55 66 0F EF C0 48 89 E5 41 57 41 56 49 89 F6"
 			}
+			// Called by TryPlayerMove and CategorizePosition, calls TraceShape
+			"TracePlayerBBox"
+			{
+				"library"	"server"
+				"windows"	"48 89 74 24 ?? 55 57 41 54 41 55 41 56 48 8D AC 24 ?? ?? ?? ?? 48 81 EC ?? ?? ?? ?? 4C 8B B5 ?? ?? ?? ?? 49 8B F1"
+				"linux"		"55 4D 89 CA 48 89 E5 41 57 49 89 F7 41 56 49 89 CE 41 55 49 89 D5 41 54 53 4C 89 C3 48 81 EC ?? ?? ?? ?? 80 BF"
+			}
 			// sub_18061AF90(a1, a2, *(*(a1 + 48) + 864i64) & 1); <- this one
 			// sub_18061D5B0(a1, a2, "PlayerMove_PostMove");
 			"CategorizePosition"

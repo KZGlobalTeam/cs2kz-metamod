@@ -1,5 +1,9 @@
 # Contributing
 
+## Contributor License Agreement
+
+Read the [Contributor License Agreement](CLA.md) before contributing. Submitting a pull request means you agree to it.
+
 This guide assumes you have a working local CS2KZ server installed (see https://docs.cs2kz.org/servers/lan).
 
 ## Windows
