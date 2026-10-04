@@ -7,11 +7,11 @@ Automated translation linter reports for cs2kz-metamod.
 | Metric | Value |
 |--------|-------|
 | **Linter Errors** | 0 |
-| **Linter Warnings** | 23 |
+| **Linter Warnings** | 24 |
 | **Total Languages** | 14 |
 | **Total Phrases** | 995 |
 | **Phrases Missing Translations** | 995 |
-| **Total Missing Entries** | 6804 |
+| **Total Missing Entries** | 6460 |
 | **Menu Files** | 11 |
 
 ## Language Coverage (Phrases)
@@ -27,7 +27,7 @@ Automated translation linter reports for cs2kz-metamod.
   lv (latvian)         [██████░░░░░░░░░░░░░░]  33.0% (328/995)
   nl (dutch)           [░░░░░░░░░░░░░░░░░░░░]   0.5% (5/995)
   pl (polish)          [██████████░░░░░░░░░░]  52.3% (520/995)
-  ru (russian)         [█████████████░░░░░░░]  65.3% (650/995)
+  ru (russian)         [███████████████████░]  99.9% (994/995)
   sv (swedish)         [███████░░░░░░░░░░░░░]  39.4% (392/995)
   tr (turkish)         [█████░░░░░░░░░░░░░░░]  26.3% (262/995)
   ua (ukrainian)       [███████████████████░]  99.7% (992/995)
@@ -80,9 +80,9 @@ Automated translation linter reports for cs2kz-metamod.
 
 ## Last Updated
 
-- **Commit:** [`82d8c88`](https://github.com/KZGlobalTeam/cs2kz-metamod/commit/82d8c8871d3523a7c1d242a30fd817b9667a73ab)
-- **Time:** 2026-10-03 07:48:29 UTC
-- **Message:** Make blur scale with opacity
+- **Commit:** [`75d39c0`](https://github.com/KZGlobalTeam/cs2kz-metamod/commit/75d39c0c84a9f56682e67539f27549123ca0ddf7)
+- **Time:** 2026-10-04 06:10:47 UTC
+- **Message:** Russian translations (#654)
 
 ---
 
