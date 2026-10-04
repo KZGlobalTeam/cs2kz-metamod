@@ -383,67 +383,80 @@
 	{
 		"en"		"Long Jump"
 		"ua"		"Long Jump"
+		"ru"		"Long Jump"
 	}
 	"Bunnyhop"
 	{
 		"en"		"Bunnyhop"
 		"ua"		"Bunnyhop"
+		"ru"		"Bunnyhop"
 	}
 	"Multi Bunnyhop"
 	{
 		"en"		"Multi Bunnyhop"
 		"ua"		"Multi Bunnyhop"
+		"ru"		"Multi Bunnyhop"
 	}
 	"Weird Jump"
 	{
 		"en"		"Weird Jump"
 		"ua"		"Weird Jump"
+		"ru"		"Weird Jump"
 	}
 	"Ladder Jump"
 	{
 		"en"		"Ladder Jump"
 		"ua"		"Ladder Jump"
+		"ru"		"Ladder Jump"
 	}
 	"Ladderhop"
 	{
 		"en"		"Ladderhop"
 		"ua"		"Ladderhop"
+		"ru"		"Ladderhop"
 	}
 	"Jumpbug"
 	{
 		"en"		"Jumpbug"
 		"ua"		"Jumpbug"
+		"ru"		"Jumpbug"
 	}
 	"Fall"
 	{
 		"en"		"Fall"
 		"ua"		"Падіння"
+		"ru"		"Падение"
 	}
 	"Unknown Jump"
 	{
 		"en"		"Unknown Jump"
 		"ua"		"Невідомий стрибок"
+		"ru"		"Неизвестный прыжок"
 	}
 	"Invalid Jump"
 	{
 		"en"		"Invalid Jump"
 		"ua"		"Недопустимий стрибок"
+		"ru"		"Недопустимый прыжок"
 	}
 
 	"Deviation (Short)"
 	{
 		"en"		"Dev"
 		"ua"		"Dev"
+		"ru"		"Откл"
 	}
 	"Miss"
 	{
 		"en"		"Miss"
 		"ua"		"Брак"
+		"ru"		"Нехв"
 	}
 	"Release (Short)"
 	{
 		"en"		"W"
 		"ua"		"W"
+		"ru"		"W"
 	}
 
 	// =====[ HUD ]=====
@@ -453,6 +466,7 @@
 		"#format"	"distance:.1f"
 		"en"		"{distance} u"
 		"ua"		"{distance} u"
+		"ru"		"{distance} u"
 	}
 	"Jumpstats HUD - Failstat"
 	{
@@ -460,11 +474,13 @@
 		"#format"	"jump_type:s"
 		"en"		"Failed {jump_type}"
 		"ua"		"Невдалий {jump_type}"
+		"ru"		"Недолёт {jump_type}"
 	}
 	"Jumpstats HUD - Release"
 	{
 		"en"		"W Release"
 		"ua"		"Відпускання W"
+		"ru"		"Отпускание W"
 	}
 	"Jumpstats HUD - History Info"
 	{
@@ -472,6 +488,7 @@
 		"#format"	"strafe_count:i,sync:.0f,pre:.0f"
 		"en"		"{strafe_count} str | {sync}%% sync | {pre} pre"
 		"ua"		"{strafe_count} str | {sync}%% sync | {pre} pre"
+		"ru"		"{strafe_count} str | {sync}%% синх | {pre} pre"
 	}
 
 	// =====[ INVALIDATION REASONS ]=====
@@ -906,6 +923,7 @@
 		"#format"	"jump_color:s,jump_type_short:s,distance:.1f"
 		"en"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance}"
 		"ua"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance}"
+		"ru"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance}"
 	}
 	"Jumpstats Report - Chat Segment"
 	{
@@ -913,6 +931,7 @@
 		"#format"	"color:s,value:s,label:s"
 		"en"		"{color}{value} {grey}{label}"
 		"ua"		"{color}{value} {grey}{label}"
+		"ru"		"{color}{value} {grey}{label}"
 	}
 	"Jumpstats Report - Console Summary"
 	{
@@ -1068,12 +1087,14 @@
 	{
 		"en"		"{grey}Jumpstats HUD reporting disabled."
 		"ua"		"{grey}Відображення статистики стрибків у HUD вимкнено."
+		"ru"		"{grey}Отображение статистики прыжков в HUD выключено."
 	}
 	"Jumpstats Option - Jumpstats Minimum HUD Tier - Response"
 	{
 		"#format"	"tier:s"
 		"en"		"{grey}Jumpstats HUD reporting threshold is now {default}{tier}."
 		"ua"		"{grey}Поріг відображення статистики стрибків у HUD встановлено на {default}{tier}."
+		"ru"		"{grey}Порог отображения статистики в HUD изменен на {default}{tier}."
 	}
 	"Jumpstats Option - Jumpstats Minimum Console Tier - Disabled"
 	{

@@ -531,6 +531,7 @@
 	{
 		"en"		"How to install the fonts marked * in the font picker."
 		"chi"		"如何安装字体选择器中标记为 * 的字体."
+		"ru"		"Как установить шрифты, обозначеннные * в выборе шрифтов."
 		"ua"		"Як встановити шрифти, позначені * у виборі шрифтів."
 	}
 	"Command Description - kz_panel"
@@ -652,7 +653,7 @@
         "en"		"Set your minimum jumpstats reporting tier."
 		"chi"		"设置显示你的跳跃数据的最低等级."
         "pl"		"Ustaw minimalny poziom wyświetlania jumpstatów."
-		"ru"		"Установить минимальный уровень прыжков для отображения."
+		"ru"		"Установить минимальный уровень прыжков для отображения статистики."
         "ua"		"Встановити мінімальний рівень для відображення статистики стрибків."
 		"sv"		"Ange din miniminivå för jumpstatsrapportering."
 		"de"		"Setze dein minimales Jumpstats-Benachrichtigungslevel."
@@ -663,6 +664,7 @@
     {
         "en"		"Set your minimum jumpstats HUD reporting tier."
 		"ua"		"Встановити мінімальний рівень для відображення статистики стрибків в HUD."
+        "ru"		"Установить минимальный уровень отображения статистики прыжков в HUD."
 	}
     "Command Description - kz_jstierconsole"
     {
@@ -1842,5 +1844,6 @@
 	{
 		"en"		"Move HUD elements with the mouse."
 		"ua"		"Переміщати елементи HUD за допомогою миші."
+		"ru"		"Перемещение элементов HUD мышью."
 	}
 }
