@@ -33,8 +33,8 @@ static KHook::Return<void> TracePlayerBBoxPost(void *traceCache, trace_t *pm, co
 	return {KHook::Action::Ignore};
 }
 
-static KHook::Function<void, void *, trace_t *, const Vector *, const Vector *, const bbox_t *, CTraceFilter *> TracePlayerBBox(
-	nullptr, TracePlayerBBoxPost);
+static KHook::Function<void, void *, trace_t *, const Vector *, const Vector *, const bbox_t *, CTraceFilter *> TracePlayerBBox(nullptr,
+																																TracePlayerBBoxPost);
 
 bool KZClassicModePlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool late)
 {
