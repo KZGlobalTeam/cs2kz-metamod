@@ -6,351 +6,411 @@
 		"en"		"Options"
 		"chi"		"选项"
 		"ua"		"Опції"
+		"ru"		"Настройки"
 	}
 	"Menu - HUD"
 	{
 		"en"		"HUD"
 		"chi"		"HUD"
 		"ua"		"HUD"
+		"ru"		"HUD"
 	}
 	"Menu - On"
 	{
 		"en"		"ON"
 		"chi"		"开"
 		"ua"		"УВІМК."
+		"ru"		"ВКЛ"
 	}
 	"Menu - Off"
 	{
 		"en"		"OFF"
 		"chi"		"关"
 		"ua"		"ВИМК."
+		"ru"		"ВЫКЛ"
 	}
 	"Menu - Panel Sub"
 	{
 		"en"		"The legacy centre-screen HUD; also affects the legacy layout HUD style"
 		"chi"		"旧版屏幕中心 HUD; 同时影响旧版布局 HUD 样式"
 		"ua"		"Центральний HUD старого зразка; також впливає на стиль HUD старого компонування"
+		"ru"		"Старый HUD по центру экрана; также влияет на стиль старого HUD"
 	}
 	"Menu - Panel"
 	{
 		"en"		"Panel"
 		"chi"		"面板"
 		"ua"		"Панель"
+		"ru"		"Панель"
 	}
 	"Menu - Compact"
 	{
 		"en"		"Compact"
 		"chi"		"紧凑"
 		"ua"		"Компактна"
+		"ru"		"Компактная"
 	}
 	"Menu - Mimic Spec"
 	{
 		"en"		"Mimic Spectated Player"
 		"chi"		"模仿被观察玩家"
 		"ua"		"Використовувати налаштування гравця під час спостереження"
+		"ru"		"Скопировать у наблюдаемого игрока"
 	}
 	"Menu - Mimic Spec Sub"
 	{
 		"en"		"Use their HUD settings while spectating them"
 		"chi"		"观察该玩家时使用其 HUD 设置"
 		"ua"		"Використовувати їхні налаштування HUD під час спостереження за ними"
+		"ru"		"Показывать HUD наблюдаемого игрока"
 	}
 	"Menu - Game HUD"
 	{
 		"en"		"Game HUD"
 		"ua"		"HUD гри"
+		"ru"		"HUD игры"
 	}
 	"Menu - Game HUD All"
 	{
 		"en"		"Hide Everything"
 		"ua"		"Приховати все"
+		"ru"		"Спрятать всё"
 	}
 	"Menu - Game HUD All Sub"
 	{
 		"en"		"The only way to hide chat and the radar. Also applies to anyone spectating you directly"
 		"ua"		"Єдиний спосіб приховати чат і радар"
+		"ru"		"Единственный способ скрыть чат и радар. Также скрывает их от наблюдателей"
 	}
 	"Menu - Game HUD Spectators Sub"
 	{
 		"en"		"Also applies to anyone spectating you directly"
+		"ru"		"Также скрывает от наблюдателей"
 	}
 	"Menu - Game HUD Crosshair"
 	{
 		"en"		"Hide Crosshair"
 		"ua"		"Приховати приціл"
+		"ru"		"Скрыть прицел"
 	}
 	"Menu - Game HUD Weapons"
 	{
 		"en"		"Hide Weapon Selection, Health and Ammo"
 		"ua"		"Приховати вибір зброї, здоров'я і боєприпаси"
+		"ru"		"Скрыть выбор оружия, здоровье и патроны"
 	}
 	"Menu - Game HUD Notices"
 	{
 		"en"		"Hide Kill Feed and Alerts"
 		"ua"		"Приховати стрічку смертей та сповіщення"
+		"ru"		"Скрыть ленту смертей и оповещения"
 	}
 	"Menu - Game HUD Voice"
 	{
 		"en"		"Hide Voice Chat Indicator"
 		"ua"		"Приховати індикатор голосового чату"
+		"ru"		"Скрыть индикатор голосового чата"
 	}
 	"Menu - Compact Sub"
 	{
 		"en"		"Legacy panel only"
 		"chi"		"仅限旧版面板"
 		"ua"		"Тільки панель Legacy"
+		"ru"		"Только для старой панели"
 	}
 	"Menu - Outline"
 	{
 		"en"		"Outline"
 		"chi"		"轮廓"
 		"ua"		"Контур"
+		"ru"		"Контур"
 	}
 	"Menu - Font"
 	{
 		"en"		"Font"
 		"chi"		"字体"
 		"ua"		"Шрифт"
+		"ru"		"Шрифт"
 	}
 	"Menu - Font Local Note"
 	{
 		"en"		"* depends on your local font installation, type !fonts for more information"
 		"chi"		"* 取决于你本地安装的字体, 输入 !fonts 了解更多信息"
 		"ua"		"* залежить від того, які шрифти встановлено у вашій системі, для отримання додаткової інформації введіть команду !fonts"
+		"ru"		"* зависит от локально установленных шрифтов, напишите !fonts для подробностей"
 	}
 	"Menu - Enabled"
 	{
 		"en"		"Enabled"
 		"chi"		"已启用"
 		"ua"		"Статус"
+		"ru"		"Включено"
 	}
 	"Menu - Position"
 	{
 		"en"		"Position"
 		"chi"		"位置"
 		"ua"		"Позиція"
+		"ru"		"Позиция"
 	}
 	"Menu - Size"
 	{
 		"en"		"Size"
 		"chi"		"大小"
 		"ua"		"Розмір"
+		"ru"		"Размер"
 	}
 	"Menu - Reset"
 	{
 		"en"		"Reset to defaults"
 		"chi"		"重置为默认值"
 		"ua"		"Скинути до типових значень"
+		"ru"		"Сброс настроек"
 	}
 	"Menu - Timer"
 	{
 		"en"		"Timer"
 		"chi"		"计时器"
 		"ua"		"Таймер"
+		"ru"		"Таймер"
 	}
 	"Menu - Prespeed"
 	{
 		"en"		"Prespeed"
 		"chi"		"地速"
 		"ua"		"Пре-швидкість"
+		"ru"		"Prespeed"
 	}
 	"Menu - Keys"
 	{
 		"en"		"Keys"
 		"chi"		"按键"
 		"ua"		"Клавіші"
+		"ru"		"Кнопки"
 	}
 	"Menu - Timer Detail"
 	{
 		"en"		"Show hundredths"
 		"chi"		"显示百分位"
 		"ua"		"Показувати соті секунди"
+		"ru"		"Показывать сотые"
 	}
 	"Menu - Align"
 	{
 		"en"		"Alignment"
 		"chi"		"对齐"
 		"ua"		"Вирівнювання"
+		"ru"		"Выравнивание"
 	}
 	"Menu - Align Left"
 	{
 		"en"		"Left"
 		"chi"		"左"
 		"ua"		"Ліворуч"
+		"ru"		"Слева"
 	}
 	"Menu - Align Center"
 	{
 		"en"		"Center"
 		"chi"		"居中"
 		"ua"		"По центру"
+		"ru"		"По центру"
 	}
 	"Menu - Align Right"
 	{
 		"en"		"Right"
 		"chi"		"右"
 		"ua"		"Праворуч"
+		"ru"		"Справа"
 	}
 	"Menu - Timer State"
 	{
 		"en"		"Show paused and stopped"
 		"chi"		"显示暂停和停止状态"
 		"ua"		"Показувати текстово стан паузи та зупинки таймера"
+		"ru"		"Показывать паузу/остановку таймера"
 	}
 	"Menu - Affect Legacy Sub"
 	{
 		"en"		"Also affects the legacy HUD"
 		"chi"		"同时影响旧版 HUD"
 		"ua"		"Також впливає на Legacy HUD"
+		"ru"		"Также влияет на старый HUD"
 	}
 	"Menu - Decimal"
 	{
 		"en"		"Use decimal places"
 		"chi"		"使用小数位"
 		"ua"		"Використовувати десяткові знаки"
+		"ru"		"Использовать десятичные знаки"
 	}
 	"Menu - Border"
 	{
 		"en"		"Border"
 		"chi"		"边框"
 		"ua"		"Контур"
+		"ru"		"Контур"
 	}
 	"Menu - Border None"
 	{
 		"en"		"None"
 		"chi"		"无"
 		"ua"		"Без контуру"
+		"ru"		"Нет"
 	}
 	"Menu - Border Sub"
 	{
 		"en"		"Wraps the value in a pair of symbols"
 		"chi"		"用一对符号包裹数值"
 		"ua"		"Обрамляє значення символами з обох сторін"
+		"ru"		"Обрамляет значение символами"
 	}
 	"Menu - Prespeed Show"
 	{
 		"en"		"Visibility"
 		"chi"		"显示方式"
 		"ua"		"Видимість"
+		"ru"		"Видимость"
 	}
 	"Menu - Prespeed Show Sub"
 	{
 		"en"		"Jump/Ladder only ignores walk-offs, Always keeps it shown on the ground"
 		"chi"		"仅跳跃/梯子会忽略走下边缘的情况, 始终会在地面上持续显示"
 		"ua"		"Стрибок/Драбина ігнорує лише випадки, коли ви сходите з блоку, і опція Завжди показує пре-швидкість на землі"
+		"ru"		"Только прыжок/лестница игнорирует сход с края, Всегда показывает prespeed на земле"
 	}
 	"Menu - Prespeed Show Brief"
 	{
 		"en"		"Normal"
 		"chi"		"普通"
 		"ua"		"Нормально"
+		"ru"		"Нормально"
 	}
 	"Menu - Prespeed Show Jump Only"
 	{
 		"en"		"Jump/Ladder only"
 		"chi"		"仅跳跃/梯子"
 		"ua"		"Тільки Стрибок/Драбина"
+		"ru"		"Только прыжок/лестница"
 	}
 	"Menu - Prespeed Show Always"
 	{
 		"en"		"Always"
 		"chi"		"始终"
 		"ua"		"Завжди"
+		"ru"		"Всегда"
 	}
 	"Menu - Indicators"
 	{
 		"en"		"Indicators"
 		"chi"		"指示器"
 		"ua"		"Індикатори"
+		"ru"		"Индикаторы"
 	}
 	"Menu - Ind Perf"
 	{
 		"en"		"Perfect bhop"
 		"chi"		"Perf"
 		"ua"		"Perfect bhop"
+		"ru"		"Perfect bhop"
 	}
 	"Menu - Ind Perf Position"
 	{
 		"en"		"Perfect bhop position"
 		"chi"		"Perf 位置"
 		"ua"		"Позиція Perfect bhop"
+		"ru"		"Позиция Perfect bhop"
 	}
 	"Menu - Ind Perf Align"
 	{
 		"en"		"Perfect bhop alignment"
 		"chi"		"Perf 对齐"
 		"ua"		"Вирівнювання Perfect bhop"
+		"ru"		"Выравнивание Perfect bhop"
 	}
 	"Menu - Ind Perf Size"
 	{
 		"en"		"Perfect bhop size"
 		"chi"		"Perf 大小"
 		"ua"		"Розмір Perfect bhop"
+		"ru"		"Размер Perfect bhop"
 	}
 	"Menu - Ind Perf Font"
 	{
 		"en"		"Perfect bhop font"
 		"chi"		"Perf 字体"
 		"ua"		"Шрифт Perfect bhop"
+		"ru"		"Шрифт Perfect bhop"
 	}
 	"Menu - Ind Perf Outline"
 	{
 		"en"		"Perfect bhop outline"
 		"chi"		"Perf 轮廓"
 		"ua"		"Контур Perfect bhop"
+		"ru"		"Контур Perfect bhop"
 	}
 	"Menu - Ind Perf Opacity"
 	{
 		"en"		"Perfect bhop opacity"
 		"chi"		"Perf 不透明度"
 		"ua"		"Непрозорість Perfect bhop"
+		"ru"		"Непрорачность Perfect bhop"
 	}
 	"Menu - Ind Perf Color"
 	{
 		"en"		"Perfect bhop color"
 		"chi"		"Perf 颜色"
 		"ua"		"Колір Perfect bhop"
+		"ru"		"Цвет Perfect bhop"
 	}
 	"Menu - Ind Perf Acronym"
 	{
 		"en"		"Perfect bhop acronym"
 		"chi"		"Perf 缩写"
 		"ua"		"Акронім Perfect bhop"
+		"ru"		"Акроним Perfect bhop"
 	}
 	"Menu - Ind CJ"
 	{
 		"en"		"Crouch jump"
 		"chi"		"蹲跳"
 		"ua"		"Crouch jump"
+		"ru"		"Crouch jump"
 	}
 	"Menu - Ind CJ Position"
 	{
 		"en"		"Crouch jump position"
 		"chi"		"蹲跳位置"
 		"ua"		"Позиція Crouch jump"
+		"ru"		"Позиция Crouch jump"
 	}
 	"Menu - Ind CJ Align"
 	{
 		"en"		"Crouch jump alignment"
 		"chi"		"蹲跳对齐"
 		"ua"		"Вирівнювання Crouch jump"
+		"ru"		"Выравнивание Crouch jump"
 	}
 	"Menu - Ind CJ Size"
 	{
 		"en"		"Crouch jump size"
 		"chi"		"蹲跳大小"
 		"ua"		"Розмір Crouch jump"
+		"ru"		"Размер Crouch jump"
 	}
 	"Menu - Ind CJ Font"
 	{
 		"en"		"Crouch jump font"
 		"chi"		"蹲跳字体"
 		"ua"		"Шрифт Crouch jump"
+		"ru"		"Шрифт Crouch jump"
 	}
 	"Menu - Ind CJ Outline"
 	{
 		"en"		"Crouch jump outline"
 		"chi"		"蹲跳轮廓"
 		"ua"		"Контур Crouch jump"
+		"ru"		"Контур Crouch jump"
 	}
 	"Menu - Ind CJ Opacity"
 	{
@@ -363,710 +423,829 @@
 		"en"		"Crouch jump color"
 		"chi"		"蹲跳颜色"
 		"ua"		"Колір Crouch jump"
+		"ru"		"Цвет Crouch jump"
 	}
 	"Menu - Ind CJ Acronym"
 	{
 		"en"		"Crouch jump acronym"
 		"chi"		"蹲跳缩写"
 		"ua"		"Акронім Crouch jump"
+		"ru"		"Акроним Crouch jump"
 	}
 	"Menu - Ind JB"
 	{
 		"en"		"Jumpbug"
 		"chi"		"Jumpbug"
 		"ua"		"Jumpbug"
+		"ru"		"Jumpbug"
 	}
 	"Menu - Ind JB Position"
 	{
 		"en"		"Jumpbug position"
 		"chi"		"Jumpbug 位置"
 		"ua"		"Позиція Jumpbug"
+		"ru"		"Позиция Jumpbug"
 	}
 	"Menu - Ind JB Align"
 	{
 		"en"		"Jumpbug alignment"
 		"chi"		"Jumpbug 对齐"
 		"ua"		"Вирівнювання Jumpbug"
+		"ru"		"Выравнивание Jumpbug"
 	}
 	"Menu - Ind JB Size"
 	{
 		"en"		"Jumpbug size"
 		"chi"		"Jumpbug 大小"
 		"ua"		"Розмір Jumpbug"
+		"ru"		"Размер Jumpbug"
 	}
 	"Menu - Ind JB Font"
 	{
 		"en"		"Jumpbug font"
 		"chi"		"Jumpbug 字体"
 		"ua"		"Шрифт Jumpbug"
+		"ru"		"Шрифт Jumpbug"
 	}
 	"Menu - Ind JB Outline"
 	{
 		"en"		"Jumpbug outline"
 		"chi"		"Jumpbug 轮廓"
 		"ua"		"Контур Jumpbug"
+		"ru"		"Контур Jumpbug"
 	}
 	"Menu - Ind JB Opacity"
 	{
 		"en"		"Jumpbug opacity"
 		"chi"		"Jumpbug 不透明度"
 		"ua"		"Непрозорість Jumpbug"
+		"ru"		"Непрозрачность Jumpbug"
 	}
 	"Menu - Ind JB Color"
 	{
 		"en"		"Jumpbug color"
 		"chi"		"Jumpbug 颜色"
 		"ua"		"Колір Jumpbug"
+		"ru"		"Цвет Jumpbug"
 	}
 	"Menu - Ind JB Acronym"
 	{
 		"en"		"Jumpbug acronym"
 		"chi"		"Jumpbug 缩写"
 		"ua"		"Акронім Jumpbug"
+		"ru"		"Акроним Jumpbug"
 	}
 	"Menu - Keys Overlap Sub"
 	{
 		"en"		"Warns when opposite movement keys (W+S or A+D) are held at the same time"
 		"chi"		"当相反方向的移动键 (W+S 或 A+D) 被同时按下时发出警告"
 		"ua"		"Попереджає, коли протилежні клавіші руху (W+S або A+D) натиснуті одночасно"
+		"ru"		"Предупреждает, когда противоположные кнопки движения (W+S или A+D) нажаты одновременно"
 	}
 	"Menu - Keys Overlap"
 	{
 		"en"		"Overlap warning"
 		"chi"		"按键重叠警告"
 		"ua"		"Попередження про Overlap"
+		"ru"		"Предупреждение об Overlap"
 	}
 	"Menu - Keys Overlap Axis"
 	{
 		"en"		"Overlap on axis only"
 		"chi"		"仅轴向重叠警告"
-		"ua"		"Overlap лише по осі"		
+		"ua"		"Overlap лише по осі"	
+		"ru"		"Overlap только по оси"	
 	}
 	"Menu - Keys Overlap Axis Sub"
 	{
 		"en"		"Warn on the two overlapping keys instead of the whole overlay"
 		"chi"		"仅警告两个重叠的按键, 而非整个叠加层"
 		"ua"		"Попереджати про Overlap двох клавіш замість всього оверлею"
+		"ru"		"Предупреждает об Overlap только на двух клавишах, вместо всего оверлея"
 	}
 	"Menu - Color Base"
 	{
 		"en"		"Color"
 		"chi"		"颜色"
 		"ua"		"Колір"
+		"ru"		"Цвет"
 	}
 	"Menu - Color CJ"
 	{
 		"en"		"Crouch jump color"
 		"chi"		"蹲跳颜色"
 		"ua"		"Колір Crouch jump"
+		"ru"		"Цвет Crouch jump"
 	}
 	"Menu - Color Perf"
 	{
 		"en"		"Perf color"
 		"chi"		"Perf 颜色"
 		"ua"		"Колір Perf"
+		"ru"		"Цвет Perf"
 	}
 	"Menu - Color Crouch Perf"
 	{
 		"en"		"Crouch perf color"
 		"chi"		"蹲跳 Perf 颜色"
 		"ua"		"Колір Crouch perf"
+		"ru"		"Цвет Crouch perf"
 	}
 	"Menu - Color Jumpbug"
 	{
 		"en"		"Jumpbug color"
 		"chi"		"Jumpbug 颜色"
 		"ua"		"Колір Jumpbug"
+		"ru"		"Цвет Jumpbug"
 	}
 	"Menu - Color Pro"
 	{
 		"en"		"PRO color"
 		"chi"		"PRO 颜色"
 		"ua"		"Колір PRO"
+		"ru"		"Цвет PRO"
 	}
 	"Menu - Color TP"
 	{
 		"en"		"TP color"
 		"chi"		"传送颜色"
 		"ua"		"Колір TP"
+		"ru"		"Цвет TP"
 	}
 	"Menu - Color Paused"
 	{
 		"en"		"Paused color"
 		"chi"		"暂停颜色"
 		"ua"		"Колір паузи"
+		"ru"		"Цвет паузы"
 	}
 	"Menu - Color Stopped"
 	{
 		"en"		"Stopped color"
 		"chi"		"停止颜色"
 		"ua"		"Колір зупинки таймера"
+		"ru"		"Цвет остановки"
 	}
 	"Menu - Misc"
 	{
 		"en"		"General"
 		"chi"		"通用"
 		"ua"		"Загальне"
+		"ru"		"Общие"
 	}
 	"Menu - General"
 	{
 		"en"		"General"
 		"chi"		"通用"
 		"ua"		"Загальне"
+		"ru"		"Общие"
 	}
 	"Menu - Menu"
 	{
 		"en"		"Menu"
 		"chi"		"菜单"
 		"ua"		"Меню"
+		"ru"		"Меню"
 	}
 	"Menu - Style"
 	{
 		"en"		"Style"
 		"chi"		"风格"
 		"ua"		"Стиль"
+		"ru"		"Стиль"
 	}
 	"Menu - Style Layout"
 	{
 		"en"		"Layout"
 		"chi"		"布局"
 		"ua"		"Компонування (mhud стиль)"
+		"ru"		"Макет"
 	}
 	"Menu - Style Legacy"
 	{
 		"en"		"Legacy"
 		"chi"		"旧版"
 		"ua"		"Legacy"
+		"ru"		"Legacy"
 	}
 	"Menu - Checkpoint"
 	{
 		"en"		"Checkpoints"
 		"chi"		"存点"
 		"ua"		"Чекпоінти"
+		"ru"		"Чекпоинты"
 	}
 	"Menu - Reset All"
 	{
 		"en"		"Reset everything to defaults"
 		"chi"		"全部重置为默认值"
 		"ua"		"Скинути все до типових значень"
+		"ru"		"Сбросить все значения"
 	}
 	"Menu - Keys Unpressed"
 	{
 		"en"		"Unpressed keys"
 		"chi"		"未按下的按键"
 		"ua"		"Ненатиснуті клавіші"
+		"ru"		"Ненажатые кнопки"
 	}
 	"Menu - Keys Unpressed Show"
 	{
 		"en"		"Show"
 		"chi"		"显示"
 		"ua"		"Показати"
+		"ru"		"Показать"
 	}
 	"Menu - Keys Unpressed Hide"
 	{
 		"en"		"Hide"
 		"chi"		"隐藏"
 		"ua"		"Приховати"
+		"ru"		"Скрыть"
 	}
 	"Menu - Keys Unpressed Underscore"
 	{
 		"en"		"Underscore"
 		"chi"		"下划线"
 		"ua"		"Підкреслення"
+		"ru"		"Подчёркивание"
 	}
 	"Menu - Keys Letters"
 	{
 		"en"		"Use WASD letters"
 		"chi"		"使用 WASD 字母"
 		"ua"		"Використовувати літери WASD"
+		"ru"		"Используйте кнопки WASD"
 	}
 	"Menu - Keys Jump Count"
 	{
 		"en"		"Count jump inputs"
 		"ua"		"Підраховувати кількість інпутів стрибка"
+		"ru"		"Считать нажатия прыжка"
 	}
 	"Menu - Keys Jump Count Sub"
 	{
 		"en"		"J shows how many jump presses came in, for jumping with the scroll wheel"
 		"ua"		"J показує, скільки натискань стрибка було зроблено, для стрибків за допомогою колеса прокрутки"
+		"ru"		"J показывает, сколько раз нажат прыжок, для прыжков колёсиком мыши"
 	}
 	"Menu - Keys Square"
 	{
 		"en"		"Square keys"
 		"chi"		"方形按键"
 		"ua"		"Квадратні клавіші"
+		"ru"		"Квадратные кнопки"
 	}
 	"Menu - Keys Border"
 	{
 		"en"		"Key borders"
 		"chi"		"按键边框"
 		"ua"		"Контури клавіш"
+		"ru"		"Контуры кнопок"
 	}
 	"Menu - Keys Fill"
 	{
 		"en"		"Key fill"
 		"chi"		"按键填充"
 		"ua"		"Заливка клавіш"
+		"ru"		"Заливка кнопок"
 	}
 	"Menu - Opacity"
 	{
 		"en"		"Opacity"
 		"chi"		"不透明度"
 		"ua"		"Непрозорість"
+		"ru"		"Непрозрачность"
 	}
 	"Menu - Text Opacity"
 	{
 		"en"		"Text opacity"
 		"ua"		"Непрозорість тексту"
+		"ru"		"Непрозрачность текста"
 	}
 	"Menu - Background Opacity"
 	{
 		"en"		"Background opacity"
 		"ua"		"Непрозорість фону"
+		"ru"		"Непрозрачность фона"
 	}
 	"Menu - Keys Glow Fill Sub"
 	{
 		"en"		"Only applies to a key while it is pressed"
 		"chi"		"仅在按键被按下时生效"
 		"ua"		"Застосовується до натиснутої клавіші"
+		"ru"		"Применяется к нажатой кнопке"
 	}
 	"Menu - Keys Glow"
 	{
 		"en"		"Key glow"
 		"chi"		"按键发光"
 		"ua"		"Підсвітка клавіш"
+		"ru"		"Подсветка кнопок"
 	}
 	"Menu - Sounds"
 	{
 		"en"		"Menu sounds"
 		"chi"		"菜单音效"
 		"ua"		"Звуки в меню"
+		"ru"		"Звуки в меню"
 	}
 	"Menu - Popup Shift"
 	{
 		"en"		"Shift menu for popups"
 		"chi"		"弹出窗口时移动菜单"
 		"ua"		"Зсув меню для спливаючих вікон"
+		"ru"		"Смещение меню для всплывающих окон"
 	}
 	"Menu - Popup Shift Sub"
 	{
 		"en"		"Moves the main menu to the left when a popup opens, so it fits on a 4:3 screen"
 		"chi"		"弹出窗口打开时将主菜单左移, 以便在 4:3 屏幕上完整显示"
 		"ua"		"Переміщує головне меню вліво, коли відкривається спливаюче вікно, щоб воно помістилося на екрані 4:3"
+		"ru"		"Перемещает главное меню налево при появлении окна, чтобы оно поместилось на разрешении 4:3"
 	}
 	"Menu - Color"
 	{
 		"en"		"Color"
 		"chi"		"颜色"
 		"ua"		"Колір"
+		"ru"		"Цвет"
 	}
 	"Menu - Color Overlap"
 	{
 		"en"		"Overlap color"
 		"chi"		"重叠颜色"
 		"ua"		"Колір Overlap"
+		"ru"		"Цвет Overlap"
 	}
 	"Menu - Color Pressed"
 	{
 		"en"		"Glow/Pressed color"
 		"chi"		"发光/按下颜色"
 		"ua"		"Колір підсвітки/натиснутої клавіші"
+		"ru"		"Цвет подсветки/нажатия"
 	}
 	"Menu - Color Overlap Glow"
 	{
 		"en"		"Overlap glow/pressed color"
 		"chi"		"重叠发光/按下颜色"
 		"ua"		"Колір підсвітки/натиснутої клавіші при Overlap"
+		"ru"		"Цвет Overlap/нажатия"
 	}
 	"Menu - Mode"
 	{
 		"en"		"Mode"
 		"chi"		"模式"
 		"ua"		"Режим"
+		"ru"		"Режим"
 	}
 	"Menu - Pistol"
 	{
 		"en"		"Pistol"
 		"chi"		"手枪"
 		"ua"		"Пістолет"
+		"ru"		"Пистолет"
 	}
 	"Menu - Beam Offset"
 	{
 		"en"		"Beam offset"
 		"chi"		"光束偏移"
 		"ua"		"Зсув променя"
+		"ru"		"Смещение луча"
 	}
 	"Menu - Beam Offset Sub"
 	{
 		"en"		"Use !beamoffset for a finer value"
 		"chi"		"使用 !beamoffset 进行更精细的调整"
 		"ua"		"Використовуйте !beamoffset для точнішого значення"
+		"ru"		"Напишите !beamoffset для точного значения"
 	}
 	"Menu - Styles"
 	{
 		"en"		"Styles"
 		"chi"		"风格"
 		"ua"		"Стилі"
+		"ru"		"Стили"
 	}
 	"Menu - Lang en"
 	{
 		"en"		"English"
 		"chi"		"English"
 		"ua"		"English"
+		"ru"		"English"
 	}
 	"Menu - Lang ar"
 	{
 		"en"		"العربية"
 		"chi"		"العربية"
 		"ua"		"العربية"
+		"ru"		"العربية"
 	}
 	"Menu - Lang pt"
 	{
 		"en"		"Português (Brasil)"
 		"chi"		"Português (Brasil)"
 		"ua"		"Português (Brasil)"
+		"ru"		"Português (Brasil)"
 	}
 	"Menu - Lang bg"
 	{
 		"en"		"Български"
 		"chi"		"Български"
 		"ua"		"Български"
+		"ru"		"Български"
 	}
 	"Menu - Lang cze"
 	{
 		"en"		"Čeština"
 		"chi"		"Čeština"
 		"ua"		"Čeština"
+		"ru"		"Čeština"
 	}
 	"Menu - Lang da"
 	{
 		"en"		"Dansk"
 		"chi"		"Dansk"
 		"ua"		"Dansk"
+		"ru"		"Dansk"
 	}
 	"Menu - Lang nl"
 	{
 		"en"		"Nederlands"
 		"chi"		"Nederlands"
 		"ua"		"Nederlands"
+		"ru"		"Nederlands"
 	}
 	"Menu - Lang fi"
 	{
 		"en"		"Suomi"
 		"chi"		"Suomi"
 		"ua"		"Suomi"
+		"ru"		"Suomi"
 	}
 	"Menu - Lang fr"
 	{
 		"en"		"Français"
 		"chi"		"Français"
 		"ua"		"Français"
+		"ru"		"Français"
 	}
 	"Menu - Lang de"
 	{
 		"en"		"Deutsch"
 		"chi"		"Deutsch"
 		"ua"		"Deutsch"
+		"ru"		"Deutsch"
 	}
 	"Menu - Lang el"
 	{
 		"en"		"Ελληνικά"
 		"chi"		"Ελληνικά"
 		"ua"		"Ελληνικά"
+		"ru"		"Ελληνικά"
 	}
 	"Menu - Lang he"
 	{
 		"en"		"עברית"
 		"chi"		"עברית"
 		"ua"		"עברית"
+		"ru"		"עברית"
 	}
 	"Menu - Lang hu"
 	{
 		"en"		"Magyar"
 		"chi"		"Magyar"
 		"ua"		"Magyar"
+		"ru"		"Magyar"
 	}
 	"Menu - Lang it"
 	{
 		"en"		"Italiano"
 		"chi"		"Italiano"
 		"ua"		"Italiano"
+		"ru"		"Italiano"
 	}
 	"Menu - Lang jp"
 	{
 		"en"		"日本語"
 		"chi"		"日本語"
 		"ua"		"日本語"
+		"ru"		"日本語"
 	}
 	"Menu - Lang ko"
 	{
 		"en"		"한국어"
 		"chi"		"한국어"
 		"ua"		"한국어"
+		"ru"		"한국어"
 	}
 	"Menu - Lang lv"
 	{
 		"en"		"Latviešu"
 		"chi"		"Latviešu"
 		"ua"		"Latviešu"
+		"ru"		"Latviešu"
 	}
 	"Menu - Lang lt"
 	{
 		"en"		"Lietuvių"
 		"chi"		"Lietuvių"
 		"ua"		"Lietuvių"
+		"ru"		"Lietuvių"
 	}
 	"Menu - Lang no"
 	{
 		"en"		"Norsk"
 		"chi"		"Norsk"
 		"ua"		"Norsk"
+		"ru"		"Norsk"
 	}
 	"Menu - Lang pl"
 	{
 		"en"		"Polski"
 		"chi"		"Polski"
 		"ua"		"Polski"
+		"ru"		"Polski"
 	}
 	"Menu - Lang pt_p"
 	{
 		"en"		"Português"
 		"chi"		"Português"
 		"ua"		"Português"
+		"ru"		"Português"
 	}
 	"Menu - Lang ro"
 	{
 		"en"		"Română"
 		"chi"		"Română"
 		"ua"		"Română"
+		"ru"		"Română"
 	}
 	"Menu - Lang ru"
 	{
 		"en"		"Русский"
 		"chi"		"Русский"
 		"ua"		"Русский"
+		"ru"		"Русский"
 	}
 	"Menu - Lang chi"
 	{
 		"en"		"简体中文"
 		"chi"		"简体中文"
 		"ua"		"简体中文"
+		"ru"		"简体中文"
 	}
 	"Menu - Lang sk"
 	{
 		"en"		"Slovenčina"
 		"chi"		"Slovenčina"
 		"ua"		"Slovenčina"
+		"ru"		"Slovenčina"
 	}
 	"Menu - Lang es"
 	{
 		"en"		"Español"
 		"chi"		"Español"
 		"ua"		"Español"
+		"ru"		"Español"
 	}
 	"Menu - Lang sv"
 	{
 		"en"		"Svenska"
 		"chi"		"Svenska"
 		"ua"		"Svenska"
+		"ru"		"Svenska"
 	}
 	"Menu - Lang zho"
 	{
 		"en"		"繁體中文"
 		"chi"		"繁體中文"
 		"ua"		"繁體中文"
+		"ru"		"繁體中文"
 	}
 	"Menu - Lang th"
 	{
 		"en"		"ไทย"
 		"chi"		"ไทย"
 		"ua"		"ไทย"
+		"ru"		"ไทย"
 	}
 	"Menu - Lang tr"
 	{
 		"en"		"Türkçe"
 		"chi"		"Türkçe"
 		"ua"		"Türkçe"
+		"ru"		"Türkçe"
 	}
 	"Menu - Lang ua"
 	{
 		"en"		"Українська"
 		"chi"		"Українська"
 		"ua"		"Українська"
+		"ru"		"Українська"
 	}
 	"Menu - Lang vi"
 	{
 		"en"		"Tiếng Việt"
 		"chi"		"Tiếng Việt"
 		"ua"		"Tiếng Việt"
+		"ru"		"Tiếng Việt"
 	}
 	"Menu - Language"
 	{
 		"en"		"Language"
 		"chi"		"语言"
 		"ua"		"Мова"
+		"ru"		"Язык"
 	}
 	"Menu - Beam"
 	{
 		"en"		"Player beam"
 		"chi"		"玩家光束"
 		"ua"		"Промінь гравця"
+		"ru"		"Луч игрока"
 	}
 	"Menu - Beam None"
 	{
 		"en"		"Off"
 		"chi"		"关闭"
 		"ua"		"Вимк."
+		"ru"		"Выкл"
 	}
 	"Menu - Beam Ground"
 	{
 		"en"		"Ground"
 		"chi"		"地面"
 		"ua"		"Земля"
+		"ru"		"Земля"
 	}
 	"Menu - Beam Feet"
 	{
 		"en"		"Feet"
 		"chi"		"脚下"
 		"ua"		"Ноги"
+		"ru"		"Ноги"
 	}
 	"Menu - FOV"
 	{
 		"en"		"Field of view"
 		"chi"		"视野"
 		"ua"		"Поле зору (FOV)"
+		"ru"		"Угол обзора (FOV)"
 	}
 	"Menu - Record Volume Sub"
 	{
 		"en"		"Use !recordvolume for a finer value"
 		"chi"		"使用 !recordvolume 进行更精细的调整"
 		"ua"		"Використовуйте !recordvolume для точнішого значення"
+		"ru"		"Напишите !recordvolume для точного значения"
 	}
 	"Menu - JS Volume Sub"
 	{
 		"en"		"Use !jsvolume for a finer value"
 		"chi"		"使用 !jsvolume 进行更精细的调整"
 		"ua"		"Використовуйте !jsvolume для точнішого значення"
+		"ru"		"Напишите !jsvolume для точного значения"
 	}
 	"Menu - Record Volume"
 	{
 		"en"		"Record sound volume"
 		"chi"		"记录音效音量"
 		"ua"		"Гучність звуку рекорду"
+		"ru"		"Громкость звука рекорда"
 	}
 	"Menu - JS Volume"
 	{
 		"en"		"Jumpstats sound volume"
 		"chi"		"起跳提示音音量"
 		"ua"		"Гучність звуку статистики стрибків"
+		"ru"		"Громкость звуков статистики прыжков"
 	}
 	"Menu - Timer Category"
 	{
 		"en"		"Timer"
 		"chi"		"计时器"
 		"ua"		"Таймер"
+		"ru"		"Таймер"
 	}
 	"Menu - Map Overlay Sub"
 	{
 		"en"		"Prints checkpoint/stage/split times to console for third-party map overlay tools to read"
 		"chi"		"将存点/阶段/分段计时输出到控制台, 供第三方地图叠加工具读取"
 		"ua"		"Виводить чекпoinти/етапи/спліти в консоль для інструментів оверлею мапи сторонніх розробників"
+		"ru"		"Выводит время чекпоинтов/этапов/сплитов в консоль для интеграции сторонних оверлеев"
 	}
 	"Menu - Map Overlay"
 	{
 		"en"		"Map overlay integration"
 		"chi"		"地图叠加层集成"
 		"ua"		"Інтеграція оверлею мапи"
+		"ru"		"Интеграция оверлея карты"
 	}
 	"Menu - Timer Stop Sound"
 	{
 		"en"		"Timer stop sound"
 		"chi"		"计时器停止音效"
 		"ua"		"Звук зупинки таймера"
+		"ru"		"Звук остановки таймера"
 	}
 	"Menu - Safeguard Sub"
 	{
 		"en"		"Blocks commands that would reset your timer during a valid run"
 		"chi"		"在有效跑图中阻止会重置计时器的命令"
 		"ua"		"Блокує команди, які можуть скинути ваш таймер під час проходження мапи"
+		"ru"		"Блокирует команды, которые могут сбросить таймер на прохождении"
 	}
 	"Menu - Safeguard"
 	{
 		"en"		"Safeguard"
 		"chi"		"安全防护"
 		"ua"		"Запобіжник (Safeguard)"
+		"ru"		"Защита таймера"
 	}
 	"Menu - Safeguard Off"
 	{
 		"en"		"Off"
 		"chi"		"关闭"
 		"ua"		"Вимкнено"
+		"ru"		"Выкл"
 	}
 	"Menu - Safeguard Nub"
 	{
 		"en"		"On (NUB)"
 		"chi"		"开 (NUB)"
 		"ua"		"Увімкнено (NUB)"
+		"ru"		"Вкл (NUB)"
 	}
 	"Menu - Safeguard Pro"
 	{
 		"en"		"On (PRO)"
 		"chi"		"开 (PRO)"
 		"ua"		"Увімкнено (PRO)"
+		"ru"		"Вкл (PRO)"
 	}
 	"Menu - Compare Sub"
 	{
 		"en"		"Which time your checkpoint/stage diffs are measured against during a run"
 		"chi"		"跑图过程中, 存点/阶段的时间差将与哪个记录进行比较"
 		"ua"		"Який час використовується для порівняння різниці чекпоінтів/етапів під час проходження мапи"
+		"ru"		"Рекорд, с которым сравниваются чекпоинты/сплиты на прохождении"
 	}
 	"Menu - Compare"
 	{
 		"en"		"Split comparison"
 		"chi"		"分段比较"
 		"ua"		"Порівняння сплітів"
+		"ru"		"Сравнение сплитов"
 	}
 	"Menu - Compare None"
 	{
 		"en"		"Off"
 		"chi"		"关闭"
 		"ua"		"Вимкнено"
+		"ru"		"Выкл"
 	}
 	"Menu - Compare Local PB"
 	{
 		"en"		"Local PB"
 		"chi"		"本地个人最佳"
 		"ua"		"Локальний PB"
+		"ru"		"Локальный PB"
 	}
 	"Menu - Compare Global PB"
 	{
 		"en"		"Global PB"
 		"chi"		"全球个人最佳"
 		"ua"		"Глобальний PB"
+		"ru"		"Глобальный PB"
 	}
 	"Menu - Compare Server Record"
 	{
 		"en"		"Server record"
 		"chi"		"服务器纪录"
 		"ua"		"Рекорд сервера"
+		"ru"		"Рекорд сервера"
 	}
 	"Menu - Compare World Record"
 	{
 		"en"		"World record"
 		"chi"		"世界纪录"
 		"ua"		"Світовий рекорд"
+		"ru"		"Мировой рекорд"
 	}
 	"Menu - Jumpstats"
 	{
 		"en"		"Jumpstats"
 		"chi"		"起跳数据"
 		"ua"		"Статистика стрибків"
+		"ru"		"Статистика прыжков"
 	}
 	"Menu - JS Reporting"
 	{
 		"en"		"Report my jumps"
 		"chi"		"报告我的跳跃"
 		"ua"		"Повідомляти про мої стрибки"
+		"ru"		"Показывать мои прыжки"
 	}
 	"Menu - JS Report Type"
 	{
@@ -1075,6 +1254,7 @@
 		"nl"		"Type rapport"
 		"de"		"Berichtstyp"
 		"ua"		"Тип звіту"
+		"ru"		"Тип отчета"
 	}
 	"Menu - JS Report Type Sub"
 	{
@@ -1083,6 +1263,7 @@
 		"nl"		"Waar je sprongstats worden weergegeven"
 		"de"		"Wo deine Sprungstats angezeigt werden"
 		"ua"		"Де відображатиметься статистика стрибків"
+		"ru"		"Где показывается ваша статистика"
 	}
 	"Menu - JS Report Type HUD"
 	{
@@ -1091,6 +1272,7 @@
 		"nl"		"HUD"
 		"de"		"HUD"
 		"ua"		"HUD"
+		"ru"		"HUD"
 	}
 	"Menu - JS Report Type Chat"
 	{
@@ -1099,6 +1281,7 @@
 		"nl"		"Chat"
 		"de"		"Chat"
 		"ua"		"Чат"
+		"ru"		"Чат"
 	}
 	"Menu - JS Report Type Both"
 	{
@@ -1107,215 +1290,251 @@
 		"nl"		"Beide"
 		"de"		"Beide"
 		"ua"		"Чат і HUD"
+		"ru"		"Чат и HUD"
 	}
 	"Menu - JS Always Sub"
 	{
 		"en"		"Report every jump, ignoring the tier thresholds below"
 		"chi"		"报告每次跳跃, 忽略下方的等级阈值"
 		"ua"		"Повідомляти про кожен стрибок, ігноруючи пороги рівнів нижче"
+		"ru"		"Показывать каждый прыжок, игнорируя установленный порог"
 	}
 	"Menu - JS Always"
 	{
 		"en"		"Report every jump"
 		"chi"		"报告每次跳跃"
 		"ua"		"Повідомляти про кожен стрибок"
+		"ru"		"Показывать каждый прыжок"
 	}
 	"Menu - JS Extended Stats"
 	{
 		"en"		"Extended chat stats"
 		"chi"		"聊天栏扩展统计"
 		"ua"		"Розширена статистика в чаті"
+		"ru"		"Подробная статистика в чате"
 	}
 	"Menu - JS Failstats"
 	{
 		"en"		"Failstats"
 		"chi"		"失败统计"
 		"ua"		"Статистика невдалих стрибків"
+		"ru"		"Статистика недолётов"
 	}
 	"Menu - JS Failstats Console"
 	{
 		"en"		"Failstats in console"
 		"chi"		"控制台失败统计"
 		"ua"		"Статистика невдалих стрибків в консолі"
+		"ru"		"Статистика недолётов в консоли"
 	}
 	"Menu - JS Min Tier"
 	{
 		"en"		"Minimum chat tier"
 		"chi"		"聊天框跳跃数据最低等级"
 		"ua"		"Мінімальний поріг стрибку для відображення в чаті"
+		"ru"		"Минимальный tier в чате"
 	}
 	"Menu - JS Min Tier HUD"
 	{
 		"en"		"Minimum HUD tier"
 		"ua"		"Мінімальний поріг стрибку для відображення в HUD"
+		"ru"		"Минимальный tier в HUD"
 	}
 	"Menu - JS Min Tier Console"
 	{
 		"en"		"Minimum console tier"
 		"chi"		"控制台跳跃数据最低等级"
 		"ua"		"Мінімальний поріг стрибку для відображення в консолі"
+		"ru"		"Минимальный tier в консоли"
 	}
 	"Menu - JS Sound Min Tier"
 	{
 		"en"		"Minimum sound tier"
 		"chi"		"跳跃提示音最低等级"
 		"ua"		"Мінімальний поріг стрибку для відтворення звукового ефекту"
+		"ru"		"Минимальный tier для звуков"
 	}
 	"Menu - JS Broadcast Min Tier"
 	{
 		"en"		"Minimum broadcast tier"
 		"chi"		"广播跳跃数据最低等级"
 		"ua"		"Мінімальний поріг стрибку для трансляції в чаті"
+		"ru"		"Минимальный tier для трансляций прыжков в чате"
 	}
 	"Menu - JS Broadcast Min Tier Console"
 	{
 		"en"		"Minimum broadcast console tier"
 		"chi"		"控制台广播跳跃数据最低等级"
 		"ua"		"Мінімальний поріг стрибку для трансляції в консолі"
+		"ru"		"Минимальный tier для трансляций прыжков в консоли"
 	}
 	"Menu - JS Broadcast Sound Min Tier"
 	{
 		"en"		"Minimum broadcast sound tier"
 		"chi"		"广播跳跃数据音效最低等级"
 		"ua"		"Мінімальний поріг стрибку для трансляції звукового ефекту"
+		"ru"		"Минимальный tier для трансляций звуков"
 	}
 	"Menu - Tier None"
 	{
 		"en"		"None"
 		"chi"		"无"
 		"ua"		"Жоден"
+		"ru"		"Нет"
 	}
 	"Menu - Tier Meh"
 	{
 		"en"		"Meh"
 		"chi"		"Meh"
 		"ua"		"Meh"
+		"ru"		"Meh"
 	}
 	"Menu - Tier Impressive"
 	{
 		"en"		"Impressive"
 		"chi"		"Impressive"
 		"ua"		"Impressive"
+		"ru"		"Impressive"
 	}
 	"Menu - Tier Perfect"
 	{
 		"en"		"Perfect"
 		"chi"		"Perfect"
 		"ua"		"Perfect"
+		"ru"		"Perfect"
 	}
 	"Menu - Tier Godlike"
 	{
 		"en"		"Godlike"
 		"chi"		"Godlike"
 		"ua"		"Godlike"
+		"ru"		"Godlike"
 	}
 	"Menu - Tier Ownage"
 	{
 		"en"		"Ownage"
 		"chi"		"Ownage"
 		"ua"		"Ownage"
+		"ru"		"Ownage"
 	}
 	"Menu - Tier Wrecker"
 	{
 		"en"		"Wrecker"
 		"chi"		"Wrecker"
 		"ua"		"Wrecker"
+		"ru"		"Wrecker"
 	}
 	"Menu - Checkpoints"
 	{
 		"en"		"Checkpoints"
 		"chi"		"存点"
 		"ua"		"Чекпоінти"
+		"ru"		"Чекпоинты"
 	}
 	"Menu - Checkpoint Message"
 	{
 		"en"		"Checkpoint messages"
 		"chi"		"存点消息"
 		"ua"		"Повідомлення про чекпоінти"
+		"ru"		"Сообщения о чекпоинтах"
 	}
 	"Menu - Checkpoint Sound"
 	{
 		"en"		"Checkpoint sound"
 		"chi"		"存点音效"
 		"ua"		"Звук чекпоінту"
+		"ru"		"Звук чекпоинта"
 	}
 	"Menu - Teleport Sound"
 	{
 		"en"		"Teleport sound"
 		"chi"		"传送音效"
 		"ua"		"Звук телепорту"
+		"ru"		"Звук телепорта"
 	}
 	"Menu - Paint"
 	{
 		"en"		"Paint"
 		"chi"		"涂色"
 		"ua"		"Кольорова мітка"
+		"ru"		"Краска"
 	}
 	"Menu - Paint Color Sub"
 	{
 		"en"		"Use !paintcolor <r> <g> <b> for an exact color"
 		"chi"		"使用 !paintcolor <r> <g> <b> 设置精确颜色"
 		"ua"		"Використовуйте !paintcolor <r> <g> <b> для точного кольору"
+		"ru"		"Напишите !paintcolor <r> <g> <b> для точного цвета"
 	}
 	"Menu - Show All Paint"
 	{
 		"en"		"Show everyone's paint"
 		"chi"		"显示所有人的涂色"
 		"ua"		"Показувати кольорові мітки всіх гравців"
+		"ru"		"Показать краску других"
 	}
 	"Menu - Hide Other Players"
 	{
 		"en"		"Hide other players"
 		"chi"		"隐藏其他玩家"
 		"ua"		"Приховати інших гравців"
+		"ru"		"Скрыть других игроков"
 	}
 	"Menu - Hide Weapon"
 	{
 		"en"		"Hide weapon"
 		"chi"		"隐藏武器"
 		"ua"		"Приховати зброю"
+		"ru"		"Скрыть оружие"
 	}
 	"Menu - Hide Legs"
 	{
 		"en"		"Hide legs"
 		"chi"		"隐藏腿部"
 		"ua"		"Приховати ноги"
+		"ru"		"Скрыть ноги"
 	}
 	"Menu - Show Tips"
 	{
 		"en"		"Show tips"
 		"chi"		"显示提示"
 		"ua"		"Показувати підказки"
+		"ru"		"Показать подсказки"
 	}
 	"Menu - Export Prefs"
 	{
 		"en"		"Export preferences to console"
 		"chi"		"导出偏好设置到控制台"
 		"ua"		"Експортувати налаштування в консоль"
+		"ru"		"Экспортировать настройки в консоль"
 	}
 	"Prefs - Export Header"
 	{
 		"en"		"----- CS2KZ preferences: paste the lines below into another server's console -----"
 		"chi"		"----- CS2KZ 偏好设置: 将以下行粘贴到其他服务器的控制台 -----"
 		"ua"		"----- Налаштування CS2KZ: вставте рядки нижче в консоль іншого сервера -----"
+		"ru"		"----- Настройки CS2KZ: скопируйте строки ниже в консоль на другом сервере -----"
 	}
 	"Prefs - Export Launch Option"
 	{
 		"en"		"setinfo is ignored on workshop maps.\nEither paste these from the main menu before joining a server, or add -disable_workshop_command_filtering to your CS2 launch options.\nThe console only takes 512 characters at a time, so paste a few lines at a time or execute them from a config file instead."
 		"chi"		"创意工坊地图会忽略 setinfo.\n请在加入服务器前从主菜单粘贴这些内容, 或将 -disable_workshop_command_filtering 添加到 CS2 启动项.\n控制台一次只能接收 512 个字符, 因此请分批粘贴几行, 或改为从配置文件执行."
 		"ua"		"setinfo ігнорується на мапах з майстерні.\nАбо вставте їх з головного меню перед приєднанням до сервера, або додайте -disable_workshop_command_filtering до параметрів запуску CS2.\nКонсоль приймає лише 512 символів за раз, тому вставляйте кілька рядків за раз або виконуйте їх із конфігураційного файлу."
+		"ru"		"setinfo игнорируется на картах мастерской. \nЛибо вставляйте их из главного меню перед игрой на сервере, либо добавьте -disable_workshop_command_filtering в ваши параметры запуска CS2. \nКонсоль принимает только по 512 символов за раз, так что вставляйте команды частями или активируйте их через cfg-файл."
 	}
 	"Prefs - Export Stamp Note"
 	{
 		"en"		"The stamp line below is what makes a block apply once instead of on every connect.\nKeep it when you are moving your own preferences to another server. Leave it out when you are sharing them with someone else."
 		"chi"		"下方的标记行可使该配置块只生效一次, 而不是每次连接都生效.\n将你自己的偏好设置迁移到其他服务器时请保留它; 分享给他人时请删除它."
 		"ua"		"Рядок нижче змушує блок застосовуватися один раз замість кожного підключення.\nЗалиште його, коли ви переносите свої налаштування на інший сервер. Видаліть його, коли ви ділитеся ними з іншими."
+		"ru"		"Строка ниже применяет блок один раз вместо каждого подключения.\nОставьте её, когда вы переносите свои настройки на другой сервер. Удалите её, когда вы делитесь ими с другими."
 	}
 	"Prefs - Export Footer"
 	{
 		"en"		"----- end. To stop a preference from following you, run: setinfo kzp_<name> \"\" -----"
 		"chi"		"----- 结束. 若要阻止某项偏好设置跟随你, 请运行: setinfo kzp_<name> \"\" -----"
 		"ua"		"----- кінець. Щоб зупинити відстеження налаштування, виконайте: setinfo kzp_<name> \"\" -----"
+		"ru"		"----- конец. Чтобы открепить от вас настройку, напишите: setinfo kzp_<название> \"\" -----"
 	}
 	"Prefs - Exported"
 	{
@@ -1323,6 +1542,7 @@
 		"en"		"{grey}Exported {default}{count}{grey} preferences to your console."
 		"chi"		"{grey}已将 {default}{count}{grey} 项偏好设置导出到你的控制台."
 		"ua"		"{grey}Експортовано {default}{count}{grey} налаштувань у вашу консоль."
+		"ru"		"{grey}Экспортировано {default}{count}{grey} настроек в консоль."
 	}
 	"Prefs - Imported"
 	{
@@ -1330,244 +1550,293 @@
 		"en"		"{grey}Imported {default}{count}{grey} preferences."
 		"chi"		"{grey}已导入 {default}{count}{grey} 项偏好设置."
 		"ua"		"{grey}Імпортовано {default}{count}{grey} налаштувань."
+		"ru"		"{grey}Импортировано {default}{count}{grey} настроек."
 	}
 	"Menu - Unavailable"
 	{
 		"en"		"{grey}The options menu is currently unavailable."
 		"chi"		"{grey}选项菜单当前不可用."
 		"ua"		"{grey}Меню опцій наразі недоступне."
+		"ru"		"{grey}Меню настроек сейчас недоступно."
 	}
 	"Menu - Move Elements"
 	{
 		"en"		"Move elements"
 		"ua"		"Перемістити елементи"
+		"ru"		"Переместить элементы"
 	}
 	"Menu - Move Elements Sub"
 	{
 		"en"		"Drag HUD elements into place with the mouse"
 		"ua"		"Перетягніть елементи HUD мишкою"
+		"ru"		"Перетащите элементы HUD мышкой"
 	}
 	"Menu - Move With Mouse"
 	{
 		"en"		"Move with mouse"
 		"ua"		"Перемістити мишкою"
+		"ru"		"Переместить мышкой"
 	}
 	"Menu - Screen Aspect"
 	{
 		"en"		"Screen aspect ratio"
 		"ua"		"Співвідношення сторін екрану"
+		"ru"		"Соотношение сторон экрана"
 	}
 	"Menu - Screen Aspect Sub"
 	{
 		"en"		"Match your resolution so Move elements drags and snaps evenly on both axes"
 		"ua"		"Налаштуйте роздільну здатність так, щоб елементи «Переміщення» рівномірно перетягувалися та прив'язувалися по обох осях"
+		"ru"		"Настройте соотношение так, чтобы при перемещении элементы равномерно перетягивались и привязывались по обеим осям."
 	}
 	"Menu - JS Compact"
 	{
 		"en"		"Compact"
+		"ru"		"Компактно"
 	}
 	"Menu - JS Compact Sub"
 	{
 		"en"		"Only the pills, with no panel. The history is always on"
+		"ru"		"Кратко и строго, без панели. История всегда включена."
 	}
 	"Menu - JS History"
 	{
 		"en"		"Show history"
 		"ua"		"Показати історію"
+		"ru"		"Показать историю"
 	}
 	"Menu - JS History Sub"
 	{
 		"en"		"Your last few jumps, stacked next to the panel"
 		"ua"		"Ваші останні кілька стрибків, будуть розташовані над панеллю"
+		"ru"		"Ваши предыдущие прыжки, рядом с панелью"
 	}
 	"Menu - JS History Below"
 	{
 		"en"		"History below the panel"
 		"ua"		"Історія під панеллю"
+		"ru"		"История под панелью"
 	}
 	"Menu - JS History Below Sub"
 	{
 		"en"		"Stack the history under the panel instead of above it"
 		"ua"		"Розташувати історію під панеллю замість над нею"
+		"ru"		"Показывать историю под панелью, а не над ней"
 	}
 	"Menu - JS Duration"
 	{
 		"en"		"Panel duration"
 		"ua"		"Тривалість відображення панелі"
+		"ru"		"Длительность отображения панели"
 	}
 	"Menu - JS Duration Sub"
 	{
 		"en"		"How long the panel stays up after a jump"
 		"ua"		"Як довго панель залишається на екрані після стрибка"
+		"ru"		"Длительность отображения панели после прыжка"
 	}
 	"Menu - JS Field Block"
 	{
 		"en"		"Block"
 		"ua"		"Блок"
+		"ru"		"Блок"
 	}
 	"Menu - JS Field Strafes"
 	{
 		"en"		"Strafes"
 		"ua"		"Стрейфи"
+		"ru"		"Strafes"
 	}
 	"Menu - JS Field Sync"
 	{
 		"en"		"Sync"
 		"ua"		"Синхронізація"
+		"ru"		"Синх"
 	}
 	"Menu - JS Field Pre Max"
 	{
 		"en"		"Pre and max speed"
 		"ua"		"Пре-швидкість та максимальна швидкість"
+		"ru"		"Pre и макс. скорость"
 	}
 	"Menu - JS Field Height"
 	{
 		"en"		"Height"
 		"ua"		"Висота"
+		"ru"		"Высота"
 	}
 	"Menu - JS Field Air Time"
 	{
 		"en"		"Air time"
 		"ua"		"Час у повітрі (Air time)"
+		"ru"		"Air time"
 	}
 	"Menu - JS Field Width"
 	{
 		"en"		"Width"
 		"ua"		"Ширина"
+		"ru"		"Ширина"
 	}
 	"Menu - JS Field Gain Efficiency"
 	{
 		"en"		"Gain efficiency"
 		"ua"		"Ефективність приросту"
+		"ru"		"Эффективность прироста"
 	}
 	"Menu - JS Field Air Path"
 	{
 		"en"		"Air path"
 		"ua"		"Шлях у повітрі (Air path)"
+		"ru"		"Airpath"
 	}
 	"Menu - JS Field Bad Angles"
 	{
 		"en"		"Bad angles, overlap and dead air"
 		"ua"		"Bad angles, Перекриття (Overlap) та dead air"
+		"ru"		"Bad angles, overlap и dead air"
 	}
 	"Menu - JS Field Release"
 	{
 		"en"		"W release"
 		"ua"		"Відпускання W"
+		"ru"		"Отжатие W"
 	}
 	"Menu - JS Field Offset"
 	{
 		"en"		"Offset"
 		"ua"		"Зсув"
+		"ru"		"Сдвиг"
 	}
 	"Menu - JS Field Edge"
 	{
 		"en"		"Edge"
 		"ua"		"Край"
+		"ru"		"Край"
 	}
 	"Menu - JS Field Deviation"
 	{
 		"en"		"Deviation"
 		"ua"		"Відхилення (Deviation)"
+		"ru"		"Отклонение"
 	}
 	"Menu - JS Field Miss"
 	{
 		"en"		"Miss"
 		"ua"		"Брак (Miss)"
+		"ru"		"Нехватка"
 	}
 	"Menu - JS Fields"
 	{
 		"en"		"Fields"
 		"ua"		"Елементи статистики"
+		"ru"		"Элементы"
 	}
 	"Menu - JS Field Order"
 	{
 		"en"		"Order"
 		"ua"		"Послідовність"
+		"ru"		"Последовательность"
 	}
 	"Menu - JS Field Order Sub"
 	{
 		"en"		"Only the fields that are on are listed. The chat and the HUD panel share the order"
 		"ua"		"У списку відображаються лише ті поля, які увімкнені. Порядок відображення в чаті та на панелі HUD є однаковим"
+		"ru"		"Отображены только включенные элементы. Порядок одинаков в чате и HUD."
 	}
 	"Menu - JS Field Extended Sub"
 	{
 		"en"		"In chat, only on the extended stats line"
 		"ua"		"Відображається в чаті лише при увімкненій розширеній статистиці"
+		"ru"		"В чате, только в расширенной статистике"
 	}
 	"Menu - JS Extended Stats Sub"
 	{
 		"en"		"Adds a second chat line with the fields that are marked for it"
 		"ua"		"Додає другий рядок чату з полями, які позначені для цього"
+		"ru"		"Добавляет вторую линию в чате с обозначенными полями"
 	}
 	"Menu - Course Info"
 	{
 		"en"		"Course Info"
 		"ua"		"Інформація про курс"
+		"ru"		"Информация о маршруте"
 	}
 	"Menu - W Release"
 	{
 		"en"		"W Release"
 		"ua"		"Відпускання W"
+		"ru"		"Отжатие W"
 	}
 	"Menu - Course Show Map"
 	{
 		"en"		"Map and course"
 		"ua"		"Мапа та курс"
+		"ru"		"Карта и маршрут"
 	}
 	"Menu - Course Show Pro"
 	{
 		"en"		"Pro record"
 		"ua"		"Pro рекорд"
+		"ru"		"Pro рекорд"
 	}
 	"Menu - Course Show Pro Sub"
 	{
 		"en"		"A second row for the record without teleports"
 		"ua"		"Другий рядок для рекорду без телепортів"
+		"ru"		"Вторая строка для рекорда без телепортов"
 	}
 	"Menu - Course Show Splits"
 	{
 		"en"		"Zone times"
 		"ua"		"Час зон"
+		"ru"		"Время зон"
 	}
 	"Menu - Course Show Splits Sub"
 	{
 		"en"		"A pill for every split, checkpoint and stage, against your !comparelevel time"
 		"ua"		"Індикатор для кожного спліту, контрольної точки та етапу, у порівнянні з вашим часом !comparelevel"
+		"ru"		"Индикатор для каждого сплита, чекпоинта и этапа, в сравнении с вашим рекордом !comparelevel"
 	}
 	"Menu - Color Early"
 	{
 		"en"		"Early"
 		"ua"		"Зарано"
+		"ru"		"Рано"
 	}
 	"Menu - Color Perfect"
 	{
 		"en"		"Perfect"
 		"ua"		"Досконало"
+		"ru"		"Идеально"
 	}
 	"Menu - Color Late"
 	{
 		"en"		"Late"
 		"ua"		"Запізно"
+		"ru"		"Поздно"
 	}
 	"Menu - Course Show Progress"
 	{
 		"en"		"Zone progress"
 		"ua"		"Прогрес зон"
+		"ru"		"Прогресс маршрута"
 	}
 	"Menu - Course Show Progress Sub"
 	{
 		"en"		"Stages, checkpoints and splits reached, on courses that have them"
 		"ua"		"Етапи, контрольні точки та спліти, досягнуті на курсах, які мають такі"
+		"ru"		"Достигнутые этапы, контрольные точки и сплиты, если они есть"
 	}
 	"Menu - Course Show Records"
 	{
 		"en"		"Records"
 		"ua"		"Рекорди"
+		"ru"		"Рекорды"
 	}
 	"Menu - Course Show Records Sub"
 	{
 		"en"		"The world record and your gap to it, or the server record on a non-global map"
 		"ua"		"Світовий рекорд і ваше відставання від нього, або рекорд сервера на неглобальній карті"
+		"ru"		"Мировой рекорд и ваша с ним разница, либо рекорд сервера на неглобальной карте"
 	}
 }
