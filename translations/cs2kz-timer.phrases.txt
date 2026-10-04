@@ -61,6 +61,7 @@
 		"en"		"{lime}{player_name} {grey}finished {default}{course_name}{grey} on {default}{map_name}{grey} in {default}{time}{grey} | {mode_style_text} | {tp_count_text}"
 		"chi"		"{lime}{player_name} {grey}在 {default}{map_name}{grey} ({default}{course_name}{grey}) 中完成, 用时 {default}{time}{grey} | {mode_style_text} | {tp_count_text}"
 		"ua"		"{lime}{player_name} {grey}завершив {default}{course_name}{grey} на {default}{map_name}{grey} за {default}{time}{grey} | {mode_style_text} | {tp_count_text}"
+		"ru"		"{lime}{player_name} {grey}завершил {default}{course_name}{grey} на {default}{map_name}{grey} за {default}{time}{grey} | {mode_style_text} | {tp_count_text}"
 	}
 
 	"Beat Course Info - Local (TP)"
@@ -249,6 +250,7 @@
 		"en"		"{darkred}You can't pause while moving this fast."
 		"chi"		"{darkred}速度过快, 你现在不能暂停."
 		"ua"		"{darkred}Ви не можете поставити на паузу, рухаючись так швидко."
+		"ru"		"{darkred}Вы не можете поставить паузу, двигаясь так быстро."
 	}
 	"Can't Pause (Just Landed)"
 	{
@@ -945,6 +947,7 @@
 		"chi"		"{grey}地图信息显示已启用. 相关计时事件将打印到控制台."
 		"ua"		"{grey}Оверлей мапи увімкнено. Відповідні події таймера будуть виводитися в консоль."
 		"ko"		"{grey}맵 오버레이 헬퍼가 활성화되었습니다. 관련 타이머 이벤트가 콘솔에 출력됩니다."
+		"ru"		"{grey}Помощник для оверлея карты включен. Нужные события таймера будут выводиться в консоль."
 	}
 	"Map Overlay Disabled"
 	{
@@ -952,6 +955,7 @@
 		"chi"		"{grey}地图信息显示已禁用. 相关计时事件将不再打印到控制台."
 		"ua"		"{grey}Оверлей мапи вимкнено. Відповідні події таймера більше не будуть виводитися в консоль."
 		"ko"		"{grey}맵 오버레이 헬퍼가 비활성화되었습니다. 관련 타이머 이벤트가 더 이상 콘솔에 출력되지 않습니다."
+		"ru"		"{grey}Помощник для оверлея карты выключен. Нужные события таймера больше не будут выводиться в консоль."
 	}
 	"Started Run on Course"
 	{
