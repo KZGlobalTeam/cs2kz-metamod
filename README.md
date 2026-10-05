@@ -16,12 +16,6 @@ WIP, not ready for release
 
 - Download the latest version in the release section and extract them to your server's `csgo/` directory.
 
-## Command help
-
-Use `!help` or `/help` to browse command categories, aliases, and descriptions using existing translations for your selected language, with English fallback. `!help measure` opens a specific category.
-Rows are read-only; type a listed command in chat to use it. Large categories have previous/next pages.
-Use `kz_help [category ...]` for the console listing. Chat help also falls back to the console when the layout is unavailable or you are editing the HUD.
-
 ## Compilation
 
 - Remember to *recursively* clone the plugin:
