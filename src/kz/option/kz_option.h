@@ -7,6 +7,8 @@
 #include "keyvalues3.h"
 #include "utils/eventlisteners.h"
 
+#include <ctime>
+
 // Written into the set whenever it is saved, so the most recently written copy can be identified.
 #define KZ_PREF_UPDATED_AT "prefsUpdatedAt"
 // A server with a badly wrong clock would otherwise write a stamp that wins everywhere forever.
@@ -60,9 +62,23 @@ private:
 	bool localLoaded {};
 	bool globalLoaded {};
 
+	// When this session last changed a preference, 0 if it has not.
+	i64 modifiedAt {};
+
 	// True when a set carrying this stamp should replace what is already applied.
 	bool ShouldApplyPrefs(i64 incomingStamp, i32 incomingTier);
 	void StampPreferences();
+
+	void MarkUserSet(const char *optionName)
+	{
+		if (userSetPrefs.Find(optionName) == userSetPrefs.InvalidIndex())
+		{
+			userSetPrefs.AddToTail(optionName);
+		}
+		time_t now = 0;
+		time(&now);
+		modifiedAt = (i64)now;
+	}
 
 	KeyValues3 prefKV = KeyValues3(KV3_TYPEEX_TABLE, KV3_SUBTYPE_UNSPECIFIED);
 	CUtlVector<CUtlString> userSetPrefs; // Track user-modified preferences
@@ -75,8 +91,22 @@ public:
 		loadedStamp = 0;
 		localLoaded = false;
 		globalLoaded = false;
+		modifiedAt = 0;
 		prefKV.SetToEmptyTable();
 		userSetPrefs.Purge();
+	}
+
+	// Saving replaces the whole stored set, so it is only safe once this session has read that set. Before then prefKV
+	// holds nothing but this session's changes. A client that drops before its preferences arrive (the reconnect
+	// Multi Addon Manager forces to download the addon does this) would otherwise wipe every stored preference.
+	bool CanSaveLocalPrefs()
+	{
+		return localLoaded && dataState != NONE;
+	}
+
+	bool CanSaveGlobalPrefs()
+	{
+		return globalLoaded && dataState != NONE;
 	}
 
 	void InitializeLocalPrefs(CUtlString text);
@@ -109,10 +139,7 @@ public:
 	// Due to the way keyvalues3.h is written, we can't template these functions.
 	void SetPreferenceBool(const char *optionName, bool value)
 	{
-		if (userSetPrefs.Find(optionName) == userSetPrefs.InvalidIndex())
-		{
-			userSetPrefs.AddToTail(optionName); // Mark as user-set
-		}
+		MarkUserSet(optionName);
 		prefKV.FindOrCreateMember(optionName)->SetBool(value);
 		CALL_FORWARD(eventListeners, OnPlayerPreferenceChanged, this->player, optionName);
 	}
@@ -129,10 +156,7 @@ public:
 
 	void SetPreferenceFloat(const char *optionName, f64 value)
 	{
-		if (userSetPrefs.Find(optionName) == userSetPrefs.InvalidIndex())
-		{
-			userSetPrefs.AddToTail(optionName); // Mark as user-set
-		}
+		MarkUserSet(optionName);
 		prefKV.FindOrCreateMember(optionName)->SetDouble(value);
 		CALL_FORWARD(eventListeners, OnPlayerPreferenceChanged, this->player, optionName);
 	}
@@ -149,10 +173,7 @@ public:
 
 	void SetPreferenceInt(const char *optionName, i64 value)
 	{
-		if (userSetPrefs.Find(optionName) == userSetPrefs.InvalidIndex())
-		{
-			userSetPrefs.AddToTail(optionName); // Mark as user-set
-		}
+		MarkUserSet(optionName);
 		prefKV.FindOrCreateMember(optionName)->SetInt64(value);
 		CALL_FORWARD(eventListeners, OnPlayerPreferenceChanged, this->player, optionName);
 	}
@@ -169,10 +190,7 @@ public:
 
 	void SetPreferenceStr(const char *optionName, const char *value)
 	{
-		if (userSetPrefs.Find(optionName) == userSetPrefs.InvalidIndex())
-		{
-			userSetPrefs.AddToTail(optionName); // Mark as user-set
-		}
+		MarkUserSet(optionName);
 		prefKV.FindOrCreateMember(optionName)->SetString(value);
 		CALL_FORWARD(eventListeners, OnPlayerPreferenceChanged, this->player, optionName);
 	}
@@ -203,10 +221,7 @@ public:
 
 	void SetPreferenceVector(const char *optionName, const Vector &value)
 	{
-		if (userSetPrefs.Find(optionName) == userSetPrefs.InvalidIndex())
-		{
-			userSetPrefs.AddToTail(optionName); // Mark as user-set
-		}
+		MarkUserSet(optionName);
 		prefKV.FindOrCreateMember(optionName)->SetVector(value);
 		CALL_FORWARD(eventListeners, OnPlayerPreferenceChanged, this->player, optionName);
 	}
@@ -223,10 +238,7 @@ public:
 
 	void SetPreferenceTable(const char *optionName, const KeyValues3 &value)
 	{
-		if (userSetPrefs.Find(optionName) == userSetPrefs.InvalidIndex())
-		{
-			userSetPrefs.AddToTail(optionName); // Mark as user-set
-		}
+		MarkUserSet(optionName);
 		KeyValues3 *option = prefKV.FindOrCreateMember(optionName);
 		option->SetToEmptyTable();
 		*option = value;

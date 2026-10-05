@@ -464,6 +464,7 @@ void KZOptionServiceEventListener_Modes::OnPlayerPreferencesLoaded(KZPlayer *pla
 	// Give up changing modes if the player is already in the server for a while.
 	if (player->telemetryService->GetTimeInServer() < 30.0f && !player->timerService->GetTimerRunning())
 	{
-		modeManager.SwitchToMode(player, mode, false, false);
+		// Applying the loaded preference is not a change to it, and writing it back would mark it as one.
+		modeManager.SwitchToMode(player, mode, false, false, false);
 	}
 }

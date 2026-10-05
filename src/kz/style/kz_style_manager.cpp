@@ -565,7 +565,8 @@ void KZOptionServiceEventListener_Styles::OnPlayerPreferencesLoaded(KZPlayer *pl
 		CSplitString splitStyles(styles.c_str(), ",");
 		FOR_EACH_VEC(splitStyles, i)
 		{
-			styleManager.AddStyle(player, splitStyles[i]);
+			// Applying the loaded preference is not a change to it, and writing it back would mark it as one.
+			styleManager.AddStyle(player, splitStyles[i], false, false);
 		}
 	}
 }

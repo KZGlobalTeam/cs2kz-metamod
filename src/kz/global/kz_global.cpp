@@ -627,6 +627,13 @@ void KZGlobalService::OnClientDisconnect()
 		return;
 	}
 
+	// The API replaces the stored preferences with whatever this message carries and will not take one without them.
+	// Before the join ack arrives there is nothing safe to send, and the next join covers the API's session bookkeeping.
+	if (!this->player->optionService->CanSaveGlobalPrefs())
+	{
+		return;
+	}
+
 	u64 steamID = this->player->GetSteamId64();
 	std::string stringifiedSteamID = std::to_string(steamID);
 

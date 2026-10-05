@@ -240,11 +240,14 @@ static_function i64 ReadPrefsStamp(KeyValues3 *prefs)
 	return stamp;
 }
 
+// The stamp is when the set last changed, not when it was written. Saving an untouched set must not make it beat a newer
+// copy that another server wrote in the meantime.
 void KZOptionService::StampPreferences()
 {
-	time_t now = 0;
-	time(&now);
-	this->prefKV.FindOrCreateMember(KZ_PREF_UPDATED_AT)->SetInt64((i64)now);
+	if (this->modifiedAt > ReadPrefsStamp(&this->prefKV))
+	{
+		this->prefKV.FindOrCreateMember(KZ_PREF_UPDATED_AT)->SetInt64(this->modifiedAt);
+	}
 }
 
 bool KZOptionService::ShouldApplyPrefs(i64 incomingStamp, i32 incomingTier)
@@ -348,7 +351,7 @@ void KZOptionService::InitializeGlobalPrefs(std::string json)
 
 void KZOptionService::SaveLocalPrefs()
 {
-	if (this->player->IsFakeClient() || !this->player->IsAuthenticated())
+	if (this->player->IsFakeClient() || !this->player->IsAuthenticated() || !this->CanSaveLocalPrefs())
 	{
 		return;
 	}

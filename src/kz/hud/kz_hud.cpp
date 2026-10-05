@@ -38,6 +38,11 @@ static_global class KZOptionServiceEventListener_HUD : public KZOptionServiceEve
 	virtual void OnPlayerPreferenceChanged(KZPlayer *player, const char *optionName)
 	{
 		player->hudService->InvalidatePrefs();
+		// Cached outside MHUDPrefs, so a reset or an import has to refresh it here.
+		if (KZ_STREQI(optionName, "showPanel"))
+		{
+			player->hudService->ResetShowPanel();
+		}
 	}
 } optionEventListener;
 
