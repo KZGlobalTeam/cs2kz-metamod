@@ -98,8 +98,9 @@ bool KZMeasureService::EndMeasure(f32 minDistThreshold)
 		return true;
 	}
 
-	f32 horizontalDist = (endPos.origin - this->startPos.origin).Length2D();
-	f32 verticalDist = endPos.origin.z - this->startPos.origin.z;
+	const Vector delta = endPos.origin - this->startPos.origin;
+	f32 horizontalDist = delta.Length2D();
+	f32 verticalDist = delta.z;
 	f32 effectiveDist = KZMeasureService::GetEffectiveDistance(this->startPos.origin, endPos.origin);
 	// Wait, are we trying to measure a block?
 	if (minDistThreshold >= 0.0f && horizontalDist <= minDistThreshold && verticalDist <= minDistThreshold)
@@ -112,7 +113,8 @@ bool KZMeasureService::EndMeasure(f32 minDistThreshold)
 		return false;
 	}
 	utils::PlaySoundToClient(this->player->GetPlayerSlot(), KZ_MEASURE_SOUND_END);
-	this->player->languageService->PrintChat(true, false, "Measure - Result", horizontalDist, effectiveDist, verticalDist);
+	this->player->languageService->PrintChat(true, false, "Measure - Result", horizontalDist, effectiveDist, verticalDist, fabsf(delta.x),
+											 fabsf(delta.y));
 	this->lastMeasureTime = g_pKZUtils->GetServerGlobals()->curtime;
 
 	if (this->measurerHandle.Get())
