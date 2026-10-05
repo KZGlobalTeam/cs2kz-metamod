@@ -1,59 +1,47 @@
 #pragma once
-#include "kz/kz.h"
+#include "kz/ui/kz_ui.h"
+#include "kz/ui/player_layout.h"
 
-#include <string>
-#include <unordered_map>
+#define KZ_HELP_LAYOUT "panorama/layout/custom_game/cs2kz/help.xml"
 
-class CCSCustomHudLayout;
-class CCheckTransmitInfo;
-
-// Fixed slot counts, kept in step with help.xml.
+// Fixed slot counts, kept in step with help.xml. Rows cover the whole command registry.
 #define KZ_HELP_CATEGORIES 20
-#define KZ_HELP_ROWS       32
+#define KZ_HELP_ROWS       512
 
-class KZHelpService : public KZBaseService
+class HelpWindow : public KZ::ui::Window
 {
-	using KZBaseService::KZBaseService;
-
 public:
-	~KZHelpService() override
-	{
-		this->Reset();
-	}
+	HelpWindow(KZPlayer *player) : player(player) {}
 
 	// Returns false when the UI is unavailable; the command then prints console help.
 	bool Show(i32 category = 0);
-	void Close();
-	virtual void Reset() override;
-	void OnClientDisconnect();
 
-	static void OnCustomHudClicked(CPlayerSlot slot, CCSCustomHudLayout *layout, const char *buttonId);
-	static void OnCheckTransmit(CCheckTransmitInfo **pInfo, int infoCount);
-	static void Cleanup();
+	virtual KZ::ui::PlayerLayout *GetLayout() override
+	{
+		return &this->layout;
+	}
+
+	virtual bool CanOpen() override;
+	virtual void OnOpen() override;
+	virtual void OnClose(KZ::ui::CloseReason reason) override;
+	virtual void OnSuspend() override;
+	virtual void OnResume() override;
+	virtual void OnClick(const char *buttonId) override;
 
 private:
-	CCSCustomHudLayout *EnsureLayout();
-	void DestroyLayout();
+	void Hide();
 	void Render();
-	void SetBoolClass(CCSCustomHudLayout *layout, const char *panelId, const char *className, bool &cache, bool want);
-	void SetSwapClass(CCSCustomHudLayout *layout, const char *&cache, const char *want);
-	void SetVar(CCSCustomHudLayout *layout, const char *panelId, const char *var, const char *value);
 
-	bool open {};
+	KZPlayer *player;
+	KZ::ui::PlayerLayout layout {this->player, KZ_HELP_LAYOUT, "kzhelp"};
+	bool shown {};
 	i32 category {};
-	i32 page {};
-	CHandle<CBaseEntity> layoutEntity {};
-	std::unordered_map<std::string, std::string> writtenVars;
 
 	struct Applied
 	{
-		const char *font {};
-		const char *color {};
-		bool fontReflow {};
-		bool sounds {};
+		KZ::ui::WindowStyle style {};
+		bool rootHidden {true};
 		bool emptyHidden {true};
-		bool previousDisabled {};
-		bool nextDisabled {};
 		bool categoryHidden[KZ_HELP_CATEGORIES] {};
 		bool categorySelected[KZ_HELP_CATEGORIES] {};
 		bool rowHidden[KZ_HELP_ROWS] {};
