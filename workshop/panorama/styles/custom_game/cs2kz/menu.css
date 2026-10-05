@@ -341,63 +341,6 @@ VerticalScrollBar:hover .ScrollThumb {
 
 // --- popups -------------------------------------------------------------------------
 
-/* The command reference shares the menu chrome, with read-only, wrapping rows. */
-.help .item.disabled {
-	opacity: 1;
-}
-
-.help .item-ctl,
-.help .item-divider {
-	visibility: collapse;
-}
-
-.help .item-label,
-.help .item-sub {
-	white-space: normal;
-	text-overflow: clip;
-}
-
-.help .item-sub {
-	font-size: 16px;
-	opacity: 0.7;
-	margin-top: 4px;
-}
-
-.help .item:hover {
-	background-color: #00000000;
-}
-
-.help-footer,
-.help-empty {
-	visibility: collapse;
-}
-
-.help .help-footer {
-	visibility: visible;
-	width: 100%;
-	flow-children: right;
-	margin-top: 12px;
-}
-
-.help .help-empty:not(.hidden) {
-	visibility: visible;
-	width: 100%;
-	padding: 7px 12px;
-	font-size: 16px;
-}
-
-.help-hint {
-	width: fill-parent-flow(1);
-	vertical-align: center;
-	font-size: 13px;
-	opacity: 0.7;
-}
-
-.help-nav {
-	margin-top: 0px;
-	vertical-align: center;
-}
-
 .popup {
 	horizontal-align: center;
 	vertical-align: middle;

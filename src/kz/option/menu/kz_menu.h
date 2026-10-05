@@ -1,13 +1,15 @@
 #pragma once
 #include "kz/kz.h"
 #include "kz/option/menu/model.h"
+#include "kz/ui/kz_ui.h"
+#include "kz/ui/player_layout.h"
 
 #include <string>
-#include <unordered_map>
 #include <vector>
 
 class CCSCustomHudLayout;
-class CCheckTransmitInfo;
+
+#define KZ_MENU_LAYOUT "panorama/layout/custom_game/cs2kz/menu.xml"
 
 // Fixed slot counts, kept in step with menu.xml.
 #define KZ_MENU_CATS   20
@@ -18,7 +20,7 @@ class CCheckTransmitInfo;
 
 // Renders the KZ::menu model tree into menu.xml on the player's own masked layout entity, and
 // routes clicks back to it.
-class KZMenuService : public KZBaseService
+class KZMenuService : public KZBaseService, public KZ::ui::Window
 {
 	using KZBaseService::KZBaseService;
 
@@ -29,24 +31,22 @@ public:
 	virtual void Reset() override;
 
 	void Toggle();
-	// Returns false when the layout cannot be shown; callers can fall back to console help.
-	bool ShowHelp(i32 category = 0);
 	void Close();
-	// Close, remembering the page and the open popup so Resume can put the player back there.
-	void Suspend();
-	void Resume();
-
-	bool IsOpen() const
-	{
-		return this->open;
-	}
-
-	static void OnCustomHudClicked(CPlayerSlot slot, CCSCustomHudLayout *layout, const char *buttonId);
-	static void Cleanup();
-	// Masks each player's owned entity away from every client but its owner.
-	static void OnCheckTransmit(CCheckTransmitInfo **pInfo, int infoCount);
+	bool IsOpen() const;
 
 	void OnClientDisconnect();
+
+	virtual KZ::ui::PlayerLayout *GetLayout() override
+	{
+		return &this->menuLayout;
+	}
+
+	virtual bool CanOpen() override;
+	virtual void OnOpen() override;
+	virtual void OnClose(KZ::ui::CloseReason reason) override;
+	virtual void OnSuspend() override;
+	virtual void OnResume() override;
+	virtual void OnClick(const char *buttonId) override;
 
 private:
 	enum class Popup
@@ -66,13 +66,10 @@ private:
 		i32 subIndex {};
 	};
 
-	// Lazily spawned. `created` is set when this call spawned a fresh one, so the caller can rebuild its per-entity caches.
-	CCSCustomHudLayout *EnsureMenuLayout(bool &created);
-	CCSCustomHudLayout *MenuLayout();
-	void DestroyOwnedLayout();
-	// Drops cursor capture and releases the cs2menus slot.
-	void DropCapture();
-	bool Open(bool help);
+	// Spawns the layout if needed, and resets the class cache when it was just spawned.
+	CCSCustomHudLayout *EnsureLayout();
+	// Hides the menu without losing its page or open popup.
+	void Hide();
 
 	KZOptNode *ActiveNode();
 	// Flattens categories plus the selected category's subs into leftSlots; returns the count.
@@ -84,7 +81,6 @@ private:
 	void RenderChrome(CCSCustomHudLayout *layout);
 	void RenderLeft(CCSCustomHudLayout *layout);
 	void RenderItems(CCSCustomHudLayout *layout);
-	void RenderHelp(CCSCustomHudLayout *layout);
 	void RenderColorPopup(CCSCustomHudLayout *layout);
 	void RenderListPopup(CCSCustomHudLayout *layout);
 	void RenderStepPopup(CCSCustomHudLayout *layout);
@@ -105,34 +101,17 @@ private:
 
 	const KZOptItem *PopupItem();
 
-	// Writes are diff-cached: every write marks the whole entity for a full network resend.
-	void SetClass(CCSCustomHudLayout *layout, const char *panelId, const char *className, bool on);
-	void SetBoolClass(CCSCustomHudLayout *layout, const char *panelId, const char *className, bool &cache, bool want);
-	void SetSwapClass(CCSCustomHudLayout *layout, const char *panelId, const char *&cache, const char *want);
-	void SetVar(CCSCustomHudLayout *layout, const char *panelId, const char *var, const char *value);
-
-	bool open {};
-	bool help {};
-	i32 helpCategory {};
-	i32 helpPage {};
+	// Whether the menu is on screen, which it is not while another window is above it.
+	bool shown {};
 	i32 selectedCategory {};
 	i32 selectedSub {-1};
 	Popup popup {Popup::None};
 	i32 popupItemIndex {-1};
 
-	struct ResumeState
-	{
-		bool valid {};
-		i32 category {};
-		i32 sub {-1};
-		Popup popup {Popup::None};
-		i32 popupItemIndex {-1};
-	} resume {};
-
 	bool popupFont {}; // List popup: font faces vs a Choice provider
 	i32 popupPage {};
 
-	CHandle<CBaseEntity> layoutEntity {};
+	KZ::ui::PlayerLayout menuLayout {this->player, KZ_MENU_LAYOUT, "kzmenu"};
 
 	// Snapshot of what is on screen, so a click routes without rebuilding.
 	LeftEntry leftSlots[KZ_MENU_CATS] {};
@@ -143,31 +122,23 @@ private:
 	// Font picker only: index into listChoices where each family starts. One page per family.
 	std::vector<i32> fontPageStart;
 
-	// Last value written for each dialog variable, so an unchanged value is not resent.
-	std::unordered_map<std::string, std::string> writtenVars;
-
 	// The classes currently applied on the layout, so a render only writes what changed. Pointer
 	// fields hold the class string last applied on that panel, NULL for none.
 	struct Applied
 	{
-		const char *menuFont {};  // menu font class, set on menu_root and inherited
-		const char *menuColor {}; // menu color (pal-fg) class, likewise
-		bool rootHidden {true};   // menu_root "hidden"
-		bool help {};             // menu_root "help", a read-only command reference
-		bool helpEmptyHidden {true};
-		bool sounds {};             // menu_root "snd", gating every hover/click sound in menu.css
-		bool shift {};              // menu_root "shift", nudging the menu left so an open popup clears a 4:3/5:4 screen edge
-		bool fontReflow {};         // menu_root "font-reflow"
-		bool noBlur {};             // menu_box and popups "no-blur", so the player can see whats under it
-		bool colorHidden {true};    // color_popup "hidden"
-		bool listHidden {true};     // list_popup "hidden"
-		bool stepHidden {true};     // step_popup "hidden"
-		bool orderHidden {true};    // order_popup "hidden"
-		bool vstepHidden {true};    // the stepper's vertical rows "hidden" (Position and Vector)
-		bool zstepHidden {true};    // the stepper's z row "hidden" (Vector only)
-		bool stepFine {};           // step_popup "fine", which shows the tenths buttons and moves the readout above (positions only)
-		bool stepDragHidden {true}; // m_step_drag "hidden" (items with an onInteract)
-		bool noteHidden {true};     // the list popup's "* is a system font" footnote "hidden"
+		KZ::ui::WindowStyle style {}; // font, color, font-reflow and snd on menu_root
+		bool rootHidden {true};       // menu_root "hidden"
+		bool shift {};                // menu_root "shift", nudging the menu left so an open popup clears a 4:3/5:4 screen edge
+		bool noBlur {};               // menu_box and popups "no-blur", so the player can see whats under it
+		bool colorHidden {true};      // color_popup "hidden"
+		bool listHidden {true};       // list_popup "hidden"
+		bool stepHidden {true};       // step_popup "hidden"
+		bool orderHidden {true};      // order_popup "hidden"
+		bool vstepHidden {true};      // the stepper's vertical rows "hidden" (Position and Vector)
+		bool zstepHidden {true};      // the stepper's z row "hidden" (Vector only)
+		bool stepFine {};             // step_popup "fine", which shows the tenths buttons and moves the readout above (positions only)
+		bool stepDragHidden {true};   // m_step_drag "hidden" (items with an onInteract)
+		bool noteHidden {true};       // the list popup's "* is a system font" footnote "hidden"
 		// Left column, one slot each:
 		bool catHidden[KZ_MENU_CATS] {};   // slot "hidden" (unused)
 		bool catSel[KZ_MENU_CATS] {};      // "selected" (active node)

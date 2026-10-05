@@ -74,7 +74,6 @@
         </Button>
           </Panel>
           <Panel id="menu_items" class="items">
-        <Label id="help_empty" class="help-empty hidden" text="{s:helpempty}" />
         <Button id="item0" class="item hidden">
           <Panel class="item-row">
             <Panel class="item-text">
@@ -491,15 +490,6 @@
           </Panel>
           <Panel id="item_div31" class="item-divider" />
         </Button>
-          </Panel>
-        </Panel>
-
-        <Panel class="help-footer">
-          <Label id="help_hint" class="help-hint" text="{s:helphint}" />
-          <Panel class="popup-nav help-nav">
-            <Button id="help_prev" class="popup-btn"><Label class="popup-btn-label" text="&lt;" /></Button>
-            <Label id="help_page" class="popup-page" text="{s:helppage}" />
-            <Button id="help_next" class="popup-btn"><Label class="popup-btn-label" text="&gt;" /></Button>
           </Panel>
         </Panel>
 

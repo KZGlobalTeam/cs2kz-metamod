@@ -2,10 +2,10 @@
 #include "common.h"
 #include "utils/utils.h"
 #include "simplecmds.h"
+#include "kz/help/kz_help.h"
 #include "../kz/kz.h"
 #include "../kz/language/kz_language.h"
 #include "../kz/option/kz_option.h"
-#include "../kz/option/menu/kz_menu.h"
 #include "utils/tables.h"
 
 #include <algorithm>
@@ -178,7 +178,7 @@ SCMD(kz_help, SCFL_MISC)
 	}
 
 	const bool chat = args->Arg(0)[0] == SCMD_CHAT_TRIGGER || args->Arg(0)[0] == SCMD_CHAT_SILENT_TRIGGER;
-	if (chat && player->menuService->ShowHelp(categories.empty() ? 0 : categories.front()))
+	if (chat && player->helpService->Show(categories.empty() ? 0 : categories.front()))
 	{
 		return true;
 	}
