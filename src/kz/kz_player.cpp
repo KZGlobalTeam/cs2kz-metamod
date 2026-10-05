@@ -10,6 +10,7 @@
 #include "language/kz_language.h"
 #include "measure/kz_measure.h"
 #include "option/menu/kz_menu.h"
+#include "ui/kz_ui.h"
 #include "mode/kz_mode.h"
 #include "noclip/kz_noclip.h"
 #include "option/kz_option.h"
@@ -40,6 +41,9 @@ extern CSteamGameServerAPIContext g_steamAPI;
 
 void KZPlayer::DestroyServices()
 {
+	// First, so no window stack outlives the services whose windows it points at.
+	delete this->uiService;
+	this->uiService = nullptr;
 	delete this->anticheatService;
 	delete this->beamService;
 	delete this->checkpointService;
@@ -131,6 +135,7 @@ void KZPlayer::Init()
 	this->pistolService = new KZPistolService(this);
 	this->fovService = new KZFOVService(this);
 	this->ztopwatchService = new KZZtopwatchService(this);
+	this->uiService = new KZUIService(this);
 
 	KZ::mode::InitModeService(this);
 }
@@ -142,6 +147,7 @@ void KZPlayer::Reset()
 	this->lastCommandTime = 0.0f;
 
 	// Reset services that should not persist across player sessions.
+	this->uiService->Reset();
 	this->anticheatService->Reset();
 	this->languageService->Reset();
 	this->tipService->Reset();

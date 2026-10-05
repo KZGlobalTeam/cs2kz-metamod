@@ -2,11 +2,7 @@
 #include "kz/option/kz_option.h"
 #include "kz/option/menu/tables.h"
 #include "sdk/entity/ccscustomhudlayout.h"
-#include "sdk/datatypes.h"
-#include "checktransmitinfo.h"
-#include "entitykeyvalues.h"
 #include "utils/utils.h"
-#include "cs2kz.h"
 
 #include "tier0/memdbgon.h"
 
@@ -17,19 +13,7 @@ static_global const char *const ALIGN_CLASSES[] = {"align-left", NULL, "align-ri
 
 void KZHUDService::SetLayoutClass(CCSCustomHudLayout *layout, const char *panelId, const char *&cache, const char *className)
 {
-	if (cache == className)
-	{
-		return;
-	}
-	if (cache)
-	{
-		layout->SetHasClass(panelId, cache, k_eHudPanelClassStatus_DoesNotHaveClass);
-	}
-	if (className)
-	{
-		layout->SetHasClass(panelId, className, k_eHudPanelClassStatus_HasClass);
-	}
-	cache = className;
+	KZ::ui::SetSwapClass(layout, panelId, cache, className);
 }
 
 void KZHUDService::SetLayoutValueClass(CCSCustomHudLayout *layout, const char *panelId, i32 &cache, i32 value, const char *prefix, bool percent)
@@ -151,40 +135,17 @@ void KZHUDService::UpdateLayoutElement(CCSCustomHudLayout *layout, MHUDElement e
 CCSCustomHudLayout *KZHUDService::EnsureOwnedLayout(bool &created)
 {
 	created = false;
-	if (g_KZPlugin.unloading || !KZHUDService::IsLayoutHudAvailable())
+	if (!KZHUDService::IsLayoutHudAvailable())
 	{
 		return NULL;
 	}
-	if (CBaseEntity *cached = this->ownedLayout.Get())
-	{
-		return (CCSCustomHudLayout *)cached;
-	}
-	CCSCustomHudLayout *layout = utils::CreateEntityByName<CCSCustomHudLayout>("custom_hud_layout");
-	if (!layout)
-	{
-		return NULL;
-	}
-	CEntityKeyValues *pKeyValues = new CEntityKeyValues();
-	pKeyValues->SetString("layout", KZ_MHUD_LAYOUT);
-	// A per-slot targetname so the entity is identifiable in a debugger.
-	char name[32];
-	V_snprintf(name, sizeof(name), "kzmhud%i", this->player->GetPlayerSlot().Get());
-	pKeyValues->SetString("targetname", name);
-	layout->DispatchSpawn(pKeyValues);
-	this->ownedLayout = layout->GetRefEHandle();
-	created = true;
-	return layout;
+	return this->ownedLayout.Ensure(created);
 }
 
 void KZHUDService::DestroyOwnedLayout()
 {
 	this->AbortHudEdit();
-	// Null on server exit.
-	if (CBaseEntity *ent = GameEntitySystem() ? this->ownedLayout.Get() : nullptr)
-	{
-		g_pKZUtils->RemoveEntity(ent);
-	}
-	this->ownedLayout = nullptr;
+	this->ownedLayout.Destroy();
 	// Cleared here so a stale cache never survives a destroy without a matching entity.
 	for (i32 i = 0; i < (i32)MHUDElement::Count; i++)
 	{
@@ -208,67 +169,4 @@ void KZHUDService::Cleanup()
 			player->hudService->RestoreGameHud();
 		}
 	}
-}
-
-void KZHUDService::OnCheckTransmit(CCheckTransmitInfo **pInfo, int infoCount)
-{
-	static_persist const i32 offset = g_pGameConfig->GetOffset("QuietPlayerSlot");
-	for (i32 i = 0; i < infoCount; i++)
-	{
-		TransmitInfo *info = reinterpret_cast<TransmitInfo *>(pInfo[i]);
-		const i32 recipient = *reinterpret_cast<int *>(reinterpret_cast<uintptr_t>(info) + offset);
-		for (i32 owner = 0; owner < MAXPLAYERS; owner++)
-		{
-			if (owner == recipient)
-			{
-				continue;
-			}
-			KZPlayer *ownerPlayer = g_pKZPlayerManager->ToPlayer(CPlayerSlot(owner));
-			if (!ownerPlayer || !ownerPlayer->hudService)
-			{
-				continue;
-			}
-			CBaseEntity *ent = ownerPlayer->hudService->ownedLayout.Get();
-			if (ent)
-			{
-				info->m_pTransmitEdict->Clear(ent->entindex());
-			}
-		}
-	}
-}
-
-// === Shared entity (menu only) ======================================================
-
-CCSCustomHudLayout *KZHUDService::GetLayoutEntity(const char *layoutPath, CHandle<CBaseEntity> &cache)
-{
-	if (g_KZPlugin.unloading || !KZHUDService::IsLayoutHudAvailable())
-	{
-		return NULL;
-	}
-	if (CBaseEntity *cached = cache.Get())
-	{
-		return (CCSCustomHudLayout *)cached;
-	}
-	// A reloaded plugin loses the handle but not the entity, so adopt ours before spawning a second.
-	for (CBaseEntity *ent = utils::FindEntityByClassname(NULL, "custom_hud_layout"); ent;
-		 ent = utils::FindEntityByClassname(ent, "custom_hud_layout"))
-	{
-		CCSCustomHudLayout *existing = (CCSCustomHudLayout *)ent;
-		const char *path = existing->m_strLayout().String();
-		if (path && V_strcmp(path, layoutPath) == 0)
-		{
-			cache = existing->GetRefEHandle();
-			return existing;
-		}
-	}
-	CCSCustomHudLayout *layout = utils::CreateEntityByName<CCSCustomHudLayout>("custom_hud_layout");
-	if (!layout)
-	{
-		return NULL;
-	}
-	CEntityKeyValues *pKeyValues = new CEntityKeyValues();
-	pKeyValues->SetString("layout", layoutPath);
-	layout->DispatchSpawn(pKeyValues);
-	cache = layout->GetRefEHandle();
-	return layout;
 }

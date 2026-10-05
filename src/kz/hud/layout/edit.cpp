@@ -1,16 +1,12 @@
 #include "kz/hud/layout/layout.h"
 #include "kz/option/kz_option.h"
 #include "kz/option/menu/tables.h"
-#include "kz/option/menu/kz_menu.h"
 #include "kz/language/kz_language.h"
 #include "sdk/entity/ccscustomhudlayout.h"
 #include "sdk/entity/ccscustomplayercamera.h"
 #include "sdk/entity/cbaseplayerweapon.h"
 #include "sdk/usercmd.h"
 #include "utils/utils.h"
-
-#include <vendor/mm-cs2menus/src/public/ics2menus.h>
-extern ICS2Menus *g_pMenus;
 
 #include "tier0/memdbgon.h"
 
@@ -202,34 +198,9 @@ void KZHUDService::StartHudEdit(MHUDElement element)
 	{
 		return;
 	}
-	const CPlayerSlot slot = this->player->GetPlayerSlot();
-	CCSPlayerPawn *pawn = this->player->GetPlayerPawn();
-	bool created = false;
-	CCSCustomHudLayout *layout = this->IsUsingLayoutStyle() && pawn && pawn->IsAlive() ? this->EnsureOwnedLayout(created) : NULL;
-	if (!layout || !layout->GetPlayerLayoutState(slot))
-	{
-		this->player->languageService->PrintChat(true, false, "HUD Edit - Unavailable");
-		return;
-	}
-	if (this->player->menuService->IsOpen())
-	{
-		this->player->menuService->Close();
-	}
-	if (g_pMenus)
-	{
-		g_pMenus->CancelMenu(slot.Get());
-		g_pMenus->SetExternalBusy(slot.Get(), true);
-	}
-	this->edit = EditState();
-	this->edit.mode = EditMode::Picking;
-	this->edit.unitsPerPctX = this->GetOwnPrefs().screenWidth / 100.0f;
-	layout->SetInputCaptureEnabled(slot, true);
-	if (element < MHUDElement::Count && this->GetOwnPrefs().elements[(i32)element].enabled)
-	{
-		// Started from an element's position stepper, so after this one drag the player goes straight back there.
-		this->edit.returnToMenu = true;
-		this->BeginDrag(element);
-	}
+	this->editWindow.element = element;
+	// Started from an element's position stepper, so the menu stays underneath and comes back afterwards.
+	this->player->uiService->Open(&this->editWindow, element < MHUDElement::Count ? KZ::ui::OpenMode::Push : KZ::ui::OpenMode::Replace);
 }
 
 void KZHUDService::StopHudEdit()
@@ -240,25 +211,55 @@ void KZHUDService::StopHudEdit()
 
 void KZHUDService::AbortHudEdit()
 {
-	if (!this->IsEditingHud())
+	if (this->IsEditingHud())
 	{
-		return;
+		this->player->uiService->Close(&this->editWindow);
 	}
-	const CPlayerSlot slot = this->player->GetPlayerSlot();
-	RemoveEditCamera(this->edit.camera, this->edit.previousView);
+}
+
+bool KZHUDService::HudEditWindow::CanOpen()
+{
+	KZPlayer *player = this->hud->player;
+	CCSPlayerPawn *pawn = player->GetPlayerPawn();
+	bool created = false;
+	CCSCustomHudLayout *layout = this->hud->IsUsingLayoutStyle() && pawn && pawn->IsAlive() ? this->hud->EnsureOwnedLayout(created) : NULL;
+	if (!layout || !layout->GetPlayerLayoutState(player->GetPlayerSlot()))
+	{
+		player->languageService->PrintChat(true, false, "HUD Edit - Unavailable");
+		return false;
+	}
+	return true;
+}
+
+void KZHUDService::HudEditWindow::OnOpen()
+{
+	KZHUDService *hud = this->hud;
+	hud->edit = EditState();
+	hud->edit.mode = EditMode::Picking;
+	hud->edit.unitsPerPctX = hud->GetOwnPrefs().screenWidth / 100.0f;
+	if (this->element < MHUDElement::Count && hud->GetOwnPrefs().elements[(i32)this->element].enabled)
+	{
+		// After this one drag the player goes straight back to the stepper.
+		hud->edit.returnToMenu = true;
+		hud->BeginDrag(this->element);
+	}
+}
+
+void KZHUDService::HudEditWindow::OnClose(KZ::ui::CloseReason reason)
+{
+	KZHUDService *hud = this->hud;
+	RemoveEditCamera(hud->edit.camera, hud->edit.previousView);
 	if (GameEntitySystem())
 	{
-		HoldWeapons(this->player->GetPlayerPawn(), false, this->edit.nextAttack);
+		CCSPlayerPawn *pawn = hud->player->GetPlayerPawn();
+		// Closed mid-drag by something else, such as another window, so hand back the view the drag turned.
+		if (hud->edit.mode == EditMode::Dragging && pawn && pawn->IsAlive())
+		{
+			g_pKZUtils->SnapViewAngles(pawn, hud->edit.viewAngles);
+		}
+		HoldWeapons(pawn, false, hud->edit.nextAttack);
 	}
-	if (CBaseEntity *ent = GameEntitySystem() ? this->ownedLayout.Get() : nullptr)
-	{
-		((CCSCustomHudLayout *)ent)->SetInputCaptureEnabled(slot, false);
-	}
-	if (g_pMenus)
-	{
-		g_pMenus->SetExternalBusy(slot.Get(), false);
-	}
-	this->edit = EditState();
+	hud->edit = EditState();
 }
 
 void KZHUDService::ValidateHudEdit()
@@ -286,15 +287,10 @@ void KZHUDService::ValidateHudEdit()
 	}
 }
 
-void KZHUDService::OnCustomHudClicked(CPlayerSlot slot, CCSCustomHudLayout *layout, const char *buttonId)
+void KZHUDService::HudEditWindow::OnClick(const char *buttonId)
 {
-	KZPlayer *player = g_pKZPlayerManager->ToPlayer(slot);
-	if (!player || !player->hudService)
-	{
-		return;
-	}
-	KZHUDService *hud = player->hudService;
-	if (hud->edit.mode != EditMode::Picking || (CBaseEntity *)layout != hud->ownedLayout.Get())
+	KZHUDService *hud = this->hud;
+	if (hud->edit.mode != EditMode::Picking)
 	{
 		return;
 	}
@@ -334,7 +330,7 @@ void KZHUDService::BeginDrag(MHUDElement element, i32 corner)
 {
 	const CPlayerSlot slot = this->player->GetPlayerSlot();
 	CCSPlayerPawn *pawn = this->player->GetPlayerPawn();
-	CCSCustomHudLayout *layout = (CCSCustomHudLayout *)this->ownedLayout.Get();
+	CCSCustomHudLayout *layout = this->ownedLayout.Get();
 	if (!pawn || !pawn->IsAlive() || !layout)
 	{
 		return;
@@ -406,16 +402,12 @@ void KZHUDService::EndDrag(bool confirm)
 	if (this->edit.returnToMenu)
 	{
 		this->AbortHudEdit();
-		this->player->menuService->Resume();
 		return;
 	}
 	this->edit.mode = EditMode::Picking;
 	this->edit.corner = -1;
 	this->edit.guideShown[0] = this->edit.guideShown[1] = false;
-	if (CCSCustomHudLayout *layout = (CCSCustomHudLayout *)this->ownedLayout.Get())
-	{
-		layout->SetInputCaptureEnabled(this->player->GetPlayerSlot(), true);
-	}
+	this->ownedLayout.SetInputCapture(true);
 }
 
 void KZHUDService::SnapEditView(const QAngle &angles)

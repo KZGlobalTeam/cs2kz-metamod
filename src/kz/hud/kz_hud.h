@@ -2,7 +2,11 @@
 #include "kz/kz.h"
 #include "kz/timer/kz_timer.h"
 #include "kz/jumpstats/kz_jumpstats.h"
+#include "kz/ui/kz_ui.h"
+#include "kz/ui/player_layout.h"
 #include "entityhandle.h"
+
+#define KZ_MHUD_LAYOUT "panorama/layout/custom_game/cs2kz/mhud.vxml_c"
 
 #define KZ_HUD_TIMER_STOPPED_GRACE_TIME 3.0f
 #define KZ_HUD_ON_GROUND_THRESHOLD      0.07f
@@ -26,7 +30,6 @@ struct GameHudPartDef
 
 extern const GameHudPartDef GAME_HUD_PARTS[GAME_HUD_PART_COUNT];
 class CCSCustomHudLayout;
-class CCheckTransmitInfo;
 class Jump;
 class PlayerCommand;
 
@@ -455,7 +458,6 @@ public:
 		return this->edit.mode != EditMode::Off;
 	}
 
-	static void OnCustomHudClicked(CPlayerSlot slot, CCSCustomHudLayout *layout, const char *buttonId);
 	// Reads each usercmd as it arrives while dragging, and keeps the pawn's view where it was before the drag.
 	void OnProcessUsercmds(PlayerCommand *cmds, i32 numCmds);
 
@@ -627,7 +629,7 @@ private:
 		std::string texts[6] {}; // one per EDIT_TEXTS entry in edit.cpp
 	};
 
-	CHandle<CBaseEntity> ownedLayout {};
+	KZ::ui::PlayerLayout ownedLayout {this->player, KZ_MHUD_LAYOUT, "kzmhud"};
 	LayoutElementState layoutElements[(i32)MHUDElement::Count] {};
 	LayoutKeysState layoutKeys {};
 	LayoutJumpstatsState layoutJumpstats {};
@@ -670,7 +672,7 @@ private:
 		f32 startWidth {}, startHeight {}; // the box at startSize, in layout units
 		f32 fixedX {}, fixedY {};          // the opposite corner, which stays put while resizing
 		f32 nextAttack {};                 // CCSPlayer_WeaponServices::m_flNextAttack before edit mode held it
-		bool returnToMenu {};              // set when started from a position stepper, so the menu reopens when the drag ends
+		bool returnToMenu {};              // set when started from a position stepper, so edit mode ends with the drag
 		f32 unitsPerPctX {19.2f};          // layout width / 100, from the aspect ratio picked in the menu
 		// Anchor positions in percent, as stored in the preferences.
 		f32 startX {}, startY {};
@@ -692,6 +694,31 @@ private:
 	};
 
 	EditState edit {};
+
+	// Edit mode as a window, borrowing the HUD's own layout for its clicks and input capture.
+	class HudEditWindow : public KZ::ui::Window
+	{
+	public:
+		HudEditWindow(KZHUDService *hud) : hud(hud) {}
+
+		virtual KZ::ui::PlayerLayout *GetLayout() override
+		{
+			return &this->hud->ownedLayout;
+		}
+
+		virtual bool CanOpen() override;
+		virtual void OnOpen() override;
+		virtual void OnClose(KZ::ui::CloseReason reason) override;
+		virtual void OnClick(const char *buttonId) override;
+
+		// The element to start dragging straight away, or MHUDElement::Count to start by picking one.
+		MHUDElement element {MHUDElement::Count};
+
+	private:
+		KZHUDService *hud;
+	};
+
+	HudEditWindow editWindow {this};
 
 	void BeginDrag(MHUDElement element, i32 corner = -1);
 	void EndDrag(bool confirm);
@@ -736,7 +763,6 @@ public:
 	bool ShowJumpstat(Jump *jump, i32 colorTier);
 	// A split, checkpoint or stage the source reached, for the course panel's history.
 	void OnZoneReached(const KZTimerService::ZoneReport &report);
-	static CCSCustomHudLayout *GetLayoutEntity(const char *layoutPath, CHandle<CBaseEntity> &cache);
 
 	void DestroyOwnedLayout();
 
@@ -746,9 +772,6 @@ public:
 	}
 
 	static void Cleanup();
-
-	// Masks every player's owned entity away from every client but its owner.
-	static void OnCheckTransmit(CCheckTransmitInfo **pInfo, int infoCount);
 
 private:
 	MHUDPrefs prefs {};

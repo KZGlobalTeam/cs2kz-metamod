@@ -54,6 +54,7 @@ class KZTelemetryService;
 class KZTimerService;
 class KZTipService;
 class KZTriggerService;
+class KZUIService;
 class KZPistolService;
 class KZRecordingService;
 class KZFOVService;
@@ -185,6 +186,7 @@ public:
 	KZTimerService *timerService {};
 	KZTipService *tipService {};
 	KZTriggerService *triggerService {};
+	KZUIService *uiService {};
 	KZPistolService *pistolService {};
 	KZRecordingService *recordingService {};
 	KZFOVService *fovService {};

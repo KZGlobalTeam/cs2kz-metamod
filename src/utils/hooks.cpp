@@ -52,6 +52,7 @@
 #include "cstrike15_usermessages.pb.h"
 #include "sdk/entity/ccscustomhudlayout.h"
 #include "kz/option/menu/kz_menu.h"
+#include "kz/ui/kz_ui.h"
 #include "sdk/usercmd.h"
 
 #include "vprof.h"
@@ -223,8 +224,7 @@ static KHook::Return<void> CheckTransmitPost(ISource2GameEntities *pThis, CCheck
 	VPROF_BUDGET(__func__, "CS2KZ");
 	KZ::quiet::OnCheckTransmit(pInfos, infoCount);
 	KZProfileService::OnCheckTransmit();
-	KZMenuService::OnCheckTransmit(pInfos, infoCount);
-	KZHUDService::OnCheckTransmit(pInfos, infoCount);
+	KZUIService::OnCheckTransmit(pInfos, infoCount);
 	return {KHook::Action::Ignore};
 }
 
@@ -357,6 +357,7 @@ static KHook::Return<void> ClientDisconnectPost(ISource2GameClients *pThis, CPla
 	player->optionService->OnClientDisconnect();
 	player->racingService->OnClientDisconnect();
 	player->globalService->OnClientDisconnect();
+	player->uiService->OnClientDisconnect();
 	player->menuService->OnClientDisconnect();
 	player->hudService->OnClientDisconnect();
 	cvarquery::OnClientDisconnect(slot);
@@ -412,8 +413,7 @@ static KHook::Return<void> ClientSvcUserMessagePre(ISource2GameClients *pThis, C
 				 msg.custom_hud_layout());
 	if (CCSCustomHudLayout *layout = CCSCustomHudLayout::FromClickHandle(msg.custom_hud_layout()))
 	{
-		KZMenuService::OnCustomHudClicked(slot, layout, msg.button_id().c_str());
-		KZHUDService::OnCustomHudClicked(slot, layout, msg.button_id().c_str());
+		KZUIService::OnCustomHudClicked(slot, layout, msg.button_id().c_str());
 	}
 
 	return {KHook::Action::Ignore};

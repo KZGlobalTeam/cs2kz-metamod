@@ -81,14 +81,12 @@ static_function void PickScreenAspect(KZPlayer *player, i64, i64 id)
 
 static_function void MoveElements(KZPlayer *player, i64)
 {
-	player->menuService->Close();
 	player->hudService->StartHudEdit();
 }
 
 // tag is the element index, as on every other row of an element's page.
 static_function void MoveElement(KZPlayer *player, i64 tag)
 {
-	player->menuService->Suspend();
 	player->hudService->StartHudEdit((MHUDElement)tag);
 }
 

@@ -14,6 +14,7 @@
 #include "movement/movement.h"
 #include "kz/kz.h"
 #include "kz/option/menu/kz_menu.h"
+#include "kz/ui/kz_ui.h"
 #include "kz/anticheat/kz_anticheat.h"
 #include "kz/db/kz_db.h"
 #include "kz/hud/kz_hud.h"
@@ -131,8 +132,7 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 bool KZPlugin::Unload(char *error, size_t maxlen)
 {
 	this->unloading = true;
-	// Before anything else: this drops any input capture the options menu still holds.
-	KZMenuService::Cleanup();
+	KZUIService::Cleanup();
 	KZHUDService::Cleanup();
 	KZQuietService::Cleanup();
 	KZ::pubapi::Shutdown();
