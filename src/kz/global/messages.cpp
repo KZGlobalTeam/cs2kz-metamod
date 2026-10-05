@@ -118,7 +118,7 @@ bool KZ::api::messages::NewRecord::ToJson(Json &json) const
 
 bool KZ::api::messages::NewRecordAck::FromJson(const Json &json)
 {
-	if (!json.Get("record_id", this->recordId))
+	if (!json.Get("record_id", this->recordId) || !json.Get("replay_upload_key", this->replayUploadKey))
 	{
 		return false;
 	}
@@ -261,9 +261,4 @@ bool KZ::api::messages::WantPlayerRecords::ToJson(Json &json) const
 bool KZ::api::messages::PlayerRecords::FromJson(const Json &json)
 {
 	return json.Get("records", this->records);
-}
-
-bool KZ::api::messages::NewReplay::ToJson(Json &json) const
-{
-	return json.Set("id", this->replayID);
 }

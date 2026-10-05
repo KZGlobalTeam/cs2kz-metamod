@@ -278,6 +278,7 @@ void RunSubmission::OnAPIResponse(const KZ::api::messages::NewRecordAck &ack)
 	apiResponseReceived = true;
 	globalResponse.received = true;
 	globalResponse.recordId = ack.recordId;
+	globalResponse.replayUploadKey = ack.replayUploadKey;
 	globalResponse.overall.rank = ack.overallData.rank;
 	globalResponse.overall.points = ack.overallData.points;
 	globalResponse.overall.maxRank = ack.overallData.leaderboardSize;
@@ -335,7 +336,7 @@ void RunSubmission::OnReplayReady(std::vector<char> &&buffer)
 	{
 		if (global && apiResponseReceived && !globalResponse.recordId.empty() && !replayBuffer.empty())
 		{
-			KZGlobalService::QueueReplayUpload(finalUUID, std::vector<char>(replayBuffer));
+			KZGlobalService::QueueReplayUpload(finalUUID, globalResponse.replayUploadKey, std::vector<char>(replayBuffer));
 
 			if (KZOptionService::GetOptionInt("archiveRetentionMinutes", 2880) == 0)
 			{
@@ -476,7 +477,7 @@ void RunSubmission::TryFinalize()
 	// 2. Upload replay to the global API if the run was accepted.
 	if (global && apiResponseReceived && !globalResponse.recordId.empty() && !replayBuffer.empty())
 	{
-		KZGlobalService::QueueReplayUpload(finalUUID, std::vector<char>(replayBuffer));
+		KZGlobalService::QueueReplayUpload(finalUUID, globalResponse.replayUploadKey, std::vector<char>(replayBuffer));
 
 		// Delete local replay file after uploading if archiveRetentionMinutes is 0.
 		if (KZOptionService::GetOptionInt("archiveRetentionMinutes", 2880) == 0)
@@ -517,7 +518,7 @@ void RunSubmission::DoLateAPIResponse(const std::string &apiUUID)
 	// Upload replay now that we have the correct API-assigned UUID.
 	if (!replayBuffer.empty())
 	{
-		KZGlobalService::QueueReplayUpload(finalUUID, std::vector<char>(replayBuffer));
+		KZGlobalService::QueueReplayUpload(finalUUID, globalResponse.replayUploadKey, std::vector<char>(replayBuffer));
 
 		// Delete local replay file after uploading if archiveRetentionMinutes is 0.
 		if (KZOptionService::GetOptionInt("archiveRetentionMinutes", 2880) == 0)
@@ -534,7 +535,7 @@ void RunSubmission::DoLateAPIResponse(const std::string &apiUUID)
 		std::string uploadPath(newPath);
 		// clang-format off
 		g_asyncFileIO->QueueRead(uploadPath,
-			[uploadPath, uploadUUID = apiFinalUUID](bool success, std::vector<char> &&buffer)
+			[uploadPath, uploadUUID = apiFinalUUID, uploadKey = globalResponse.replayUploadKey](bool success, std::vector<char> &&buffer)
 			{
 				if (!success || buffer.empty())
 				{
@@ -543,7 +544,7 @@ void RunSubmission::DoLateAPIResponse(const std::string &apiUUID)
 					return;
 				}
 
-				KZGlobalService::QueueReplayUpload(uploadUUID, std::move(buffer));
+				KZGlobalService::QueueReplayUpload(uploadUUID, uploadKey, std::move(buffer));
 
 				if (KZOptionService::GetOptionInt("archiveRetentionMinutes", 2880) == 0)
 				{
