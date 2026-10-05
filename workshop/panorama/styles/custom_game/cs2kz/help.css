@@ -161,44 +161,6 @@
 	opacity: 0.7;
 }
 
-.help-nav {
-	flow-children: right;
-	vertical-align: center;
-	margin-left: 12px;
-}
-
-.help-page-button {
-	width: 32px;
-	height: 28px;
-	border-radius: 3px;
-	background-color: #ffffff14;
-}
-
-.help-page-button:hover {
-	background-color: #ffffff26;
-}
-
-.help-page-button.disabled {
-	opacity: 0.35;
-}
-
-.help-page-button.disabled:hover {
-	background-color: #ffffff14;
-}
-
-.help-page-button Label {
-	horizontal-align: center;
-	vertical-align: center;
-	font-size: 16px;
-}
-
-.help-page {
-	vertical-align: center;
-	text-align: center;
-	width: 60px;
-	font-size: 13px;
-}
-
 VerticalScrollBar {
 	width: 6px;
 	height: 100%;
@@ -221,13 +183,11 @@ VerticalScrollBar:hover .ScrollThumb {
 }
 
 .snd .help-close:hover,
-.snd .help-category:hover,
-.snd .help-page-button:not(.disabled):hover {
+.snd .help-category:hover {
 	sound: "UIPanorama.generic_button_rollover";
 }
 
 .snd .help-close:active,
-.snd .help-category:active,
-.snd .help-page-button:not(.disabled):active {
+.snd .help-category:active {
 	sound: "UIPanorama.generic_button_press";
 }

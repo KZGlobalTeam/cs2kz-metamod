@@ -18,4 +18,106 @@
 		"chi"		"此类别中没有指令。请选择其他类别。"
 		"ua"		"У цій категорії немає команд. Виберіть іншу категорію."
 	}
+	"Help - Category - Checkpoint"
+	{
+		"en"		"Checkpoints"
+		"chi"		"存点"
+		"ua"		"Чекпойнти"
+	}
+	"Help - Category - Record"
+	{
+		"en"		"Records"
+		"chi"		"记录"
+		"ua"		"Рекорди"
+	}
+	"Help - Category - Jumpstats"
+	{
+		"en"		"Jumpstats"
+		"chi"		"跳跃统计"
+		"ua"		"Статистика стрибків"
+	}
+	"Help - Category - Measure"
+	{
+		"en"		"Measurement"
+		"chi"		"测量"
+		"ua"		"Вимірювання"
+	}
+	"Help - Category - ModeStyle"
+	{
+		"en"		"Modes & styles"
+		"chi"		"模式与风格"
+		"ua"		"Режими та стилі"
+	}
+	"Help - Category - Preference"
+	{
+		"en"		"Preferences"
+		"chi"		"偏好设置"
+		"ua"		"Налаштування"
+	}
+	"Help - Category - Racing"
+	{
+		"en"		"Racing"
+		"chi"		"竞赛"
+		"ua"		"Перегони"
+	}
+	"Help - Category - Replay"
+	{
+		"en"		"Replays"
+		"chi"		"回放"
+		"ua"		"Повтори"
+	}
+	"Help - Category - Saveloc"
+	{
+		"en"		"Saved locations"
+		"chi"		"保存位置"
+		"ua"		"Збережені позиції"
+	}
+	"Help - Category - Spec"
+	{
+		"en"		"Spectating"
+		"chi"		"观战"
+		"ua"		"Спостереження"
+	}
+	"Help - Category - Status"
+	{
+		"en"		"Status"
+		"chi"		"状态"
+		"ua"		"Статус"
+	}
+	"Help - Category - Timer"
+	{
+		"en"		"Timer"
+		"chi"		"计时器"
+		"ua"		"Таймер"
+	}
+	"Help - Category - Player"
+	{
+		"en"		"Player"
+		"chi"		"玩家"
+		"ua"		"Гравець"
+	}
+	"Help - Category - Global"
+	{
+		"en"		"Global"
+		"chi"		"全球"
+		"ua"		"Глобальні"
+	}
+	"Help - Category - Misc"
+	{
+		"en"		"Other"
+		"chi"		"其他"
+		"ua"		"Інше"
+	}
+	"Help - Category - Map"
+	{
+		"en"		"Maps"
+		"chi"		"地图"
+		"ua"		"Мапи"
+	}
+	"Help - Category - HUD"
+	{
+		"en"		"HUD"
+		"chi"		"界面"
+		"ua"		"HUD"
+	}
 }

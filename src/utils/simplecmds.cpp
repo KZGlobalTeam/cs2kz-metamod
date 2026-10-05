@@ -178,7 +178,7 @@ SCMD(kz_help, SCFL_MISC)
 	}
 
 	const bool chat = args->Arg(0)[0] == SCMD_CHAT_TRIGGER || args->Arg(0)[0] == SCMD_CHAT_SILENT_TRIGGER;
-	if (chat && player->helpService->Show(categories.empty() ? 0 : categories.front()))
+	if (chat && player->uiService->GetWindow<HelpWindow>()->Show(categories.empty() ? 0 : categories.front()))
 	{
 		return true;
 	}
