@@ -9,6 +9,24 @@
 		"ua"		"Налаштування"
 		"ru"		"Настройки"
 	}
+	"Menu - Title Help"
+	{
+		"en"		"Command Help"
+		"chi"		"指令帮助"
+		"ua"		"Довідка команд"
+	}
+	"Menu - Help Hint"
+	{
+		"en"		"Type !command or /command in chat. Use kz_help for console help."
+		"chi"		"在聊天中输入 !指令 或 /指令。使用 kz_help 查看控制台帮助。"
+		"ua"		"Введіть !команда або /команда в чаті. kz_help показує довідку в консолі."
+	}
+	"Menu - Help Empty"
+	{
+		"en"		"No commands in this category. Choose another category."
+		"chi"		"此类别中没有指令。请选择其他类别。"
+		"ua"		"У цій категорії немає команд. Виберіть іншу категорію."
+	}
 	"Menu - HUD"
 	{
 		"en"		"HUD"
