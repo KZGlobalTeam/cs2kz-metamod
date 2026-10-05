@@ -399,9 +399,10 @@ void KZMenuService::RenderHelp(CCSCustomHudLayout *layout)
 		if (used)
 		{
 			const auto &command = commands[first + i];
+			const auto description = GetPhrase(this->player, command.descriptionKey.c_str());
 			this->SetVar(layout, ItemLbl(i), ItemLblVar(i), command.names.c_str());
-			this->SetVar(layout, ItemSub(i), ItemSubVar(i), GetPhrase(this->player, command.descriptionKey.c_str()).c_str());
-			this->SetBoolClass(layout, ItemPanel(i), "has-sub", this->applied.itemSub[i], true);
+			this->SetVar(layout, ItemSub(i), ItemSubVar(i), description.c_str());
+			this->SetBoolClass(layout, ItemPanel(i), "has-sub", this->applied.itemSub[i], description != command.descriptionKey);
 			this->SetBoolClass(layout, ItemPanel(i), "disabled", this->applied.itemDisabled[i], true);
 		}
 		this->SetBoolClass(layout, ItemPanel(i), "hidden", this->applied.itemHidden[i], !used);
