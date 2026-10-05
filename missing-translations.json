@@ -8294,7 +8294,7 @@
           "file": "cs2kz-measure.phrases.txt",
           "phrase": "Measure - Result",
           "line": 63,
-          "english_text": "{default}Distance{grey} - Horizontal: {default}{horizontal}{grey} ({default}{effective}{grey}), Vertical: {default}{vertical}{grey}"
+          "english_text": "{default}Distance{grey} - Horizontal: {default}{horizontal}{grey} ({default}{effective}{grey}), X: {default}{x}{grey}, Y: {default}{y}{grey}, Vertical: {default}{vertical}{grey}"
         },
         {
           "file": "cs2kz-measure.phrases.txt",
@@ -12902,7 +12902,7 @@
           "file": "cs2kz-measure.phrases.txt",
           "phrase": "Measure - Result",
           "line": 63,
-          "english_text": "{default}Distance{grey} - Horizontal: {default}{horizontal}{grey} ({default}{effective}{grey}), Vertical: {default}{vertical}{grey}"
+          "english_text": "{default}Distance{grey} - Horizontal: {default}{horizontal}{grey} ({default}{effective}{grey}), X: {default}{x}{grey}, Y: {default}{y}{grey}, Vertical: {default}{vertical}{grey}"
         },
         {
           "file": "cs2kz-measure.phrases.txt",
@@ -19317,7 +19317,7 @@
           "file": "cs2kz-measure.phrases.txt",
           "phrase": "Measure - Result",
           "line": 63,
-          "english_text": "{default}Distance{grey} - Horizontal: {default}{horizontal}{grey} ({default}{effective}{grey}), Vertical: {default}{vertical}{grey}"
+          "english_text": "{default}Distance{grey} - Horizontal: {default}{horizontal}{grey} ({default}{effective}{grey}), X: {default}{x}{grey}, Y: {default}{y}{grey}, Vertical: {default}{vertical}{grey}"
         },
         {
           "file": "cs2kz-measure.phrases.txt",
@@ -24436,7 +24436,7 @@
           "file": "cs2kz-measure.phrases.txt",
           "phrase": "Measure - Result",
           "line": 63,
-          "english_text": "{default}Distance{grey} - Horizontal: {default}{horizontal}{grey} ({default}{effective}{grey}), Vertical: {default}{vertical}{grey}"
+          "english_text": "{default}Distance{grey} - Horizontal: {default}{horizontal}{grey} ({default}{effective}{grey}), X: {default}{x}{grey}, Y: {default}{y}{grey}, Vertical: {default}{vertical}{grey}"
         },
         {
           "file": "cs2kz-measure.phrases.txt",
@@ -36032,7 +36032,7 @@
           "file": "cs2kz-measure.phrases.txt",
           "phrase": "Measure - Result",
           "line": 63,
-          "english_text": "{default}Distance{grey} - Horizontal: {default}{horizontal}{grey} ({default}{effective}{grey}), Vertical: {default}{vertical}{grey}"
+          "english_text": "{default}Distance{grey} - Horizontal: {default}{horizontal}{grey} ({default}{effective}{grey}), X: {default}{x}{grey}, Y: {default}{y}{grey}, Vertical: {default}{vertical}{grey}"
         },
         {
           "file": "cs2kz-measure.phrases.txt",
@@ -47986,7 +47986,7 @@
         {
           "name": "Measure - Result",
           "line": 63,
-          "english_text": "{default}Distance{grey} - Horizontal: {default}{horizontal}{grey} ({default}{effective}{grey}), Vertical: {default}{vertical}{grey}",
+          "english_text": "{default}Distance{grey} - Horizontal: {default}{horizontal}{grey} ({default}{effective}{grey}), X: {default}{x}{grey}, Y: {default}{y}{grey}, Vertical: {default}{vertical}{grey}",
           "existing_languages": [
             "chi",
             "de",

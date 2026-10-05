@@ -80,9 +80,9 @@ Automated translation linter reports for cs2kz-metamod.
 
 ## Last Updated
 
-- **Commit:** [`75d39c0`](https://github.com/KZGlobalTeam/cs2kz-metamod/commit/75d39c0c84a9f56682e67539f27549123ca0ddf7)
-- **Time:** 2026-10-04 06:10:47 UTC
-- **Message:** Russian translations (#654)
+- **Commit:** [`f4f3528`](https://github.com/KZGlobalTeam/cs2kz-metamod/commit/f4f35286180accd40649cc44b29719c030b32de3)
+- **Time:** 2026-10-05 08:30:44 UTC
+- **Message:** Add X/Y distances to measurement results (#653)
 
 ---
 
