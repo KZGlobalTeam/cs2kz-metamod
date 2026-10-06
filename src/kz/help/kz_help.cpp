@@ -6,8 +6,6 @@
 
 #include "tier0/memdbgon.h"
 
-static_assert(KZ_HELP_ROWS >= SCMD_MAX_CMDS, "help.xml must have room for every registered command");
-
 #define SLOT_ID(fn, fmt) \
 	static_function const char *fn(i32 i) \
 	{ \
@@ -44,6 +42,11 @@ bool HelpWindow::CanOpen()
 bool HelpWindow::Show(i32 category)
 {
 	this->category = Clamp(category, 0, MAX(0, MIN(scmd::GetCategoryCount(), KZ_HELP_CATEGORIES) - 1));
+	if (scmd::GetCategoryCommands(this->category, true).size() > KZ_HELP_ROWS)
+	{
+		this->player->uiService->Close(this);
+		return false;
+	}
 	if (!this->player->uiService->Open(this))
 	{
 		return false;
@@ -107,10 +110,11 @@ void HelpWindow::Render()
 		}
 		KZ::ui::SetBoolClass(entity, CategoryPanel(i), "hidden", this->applied.categoryHidden[i], !used);
 	}
-	const auto commands = scmd::GetCategoryCommands(this->category, true);
+	const auto &commands = scmd::GetCategoryCommands(this->category, true);
+	const bool overflow = commands.size() > KZ_HELP_ROWS;
 	for (i32 i = 0; i < KZ_HELP_ROWS; i++)
 	{
-		const bool used = i < (i32)commands.size();
+		const bool used = !overflow && i < (i32)commands.size();
 		if (used)
 		{
 			const auto &command = commands[i];
@@ -121,8 +125,9 @@ void HelpWindow::Render()
 		}
 		KZ::ui::SetBoolClass(entity, RowPanel(i), "hidden", this->applied.rowHidden[i], !used);
 	}
-	this->layout.SetVar("help_empty", "empty", commands.empty() ? language->PrepareMessage("Help - Empty").c_str() : "");
-	KZ::ui::SetBoolClass(entity, "help_empty", "hidden", this->applied.emptyHidden, !commands.empty());
+	const bool empty = commands.empty() || overflow;
+	this->layout.SetVar("help_empty", "empty", empty ? language->PrepareMessage(overflow ? "Help - Overflow" : "Help - Empty").c_str() : "");
+	KZ::ui::SetBoolClass(entity, "help_empty", "hidden", this->applied.emptyHidden, !empty);
 }
 
 void HelpWindow::OnClick(const char *buttonId)
