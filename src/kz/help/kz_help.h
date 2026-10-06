@@ -4,9 +4,9 @@
 
 #define KZ_HELP_LAYOUT "panorama/layout/custom_game/cs2kz/help.xml"
 
-// Fixed slot counts, kept in step with help.xml. Rows cover the whole command registry.
+// Fixed slot counts, kept in step with help.xml. Rows are reused for the selected category.
 #define KZ_HELP_CATEGORIES 20
-#define KZ_HELP_ROWS       512
+#define KZ_HELP_ROWS       128
 
 class HelpWindow : public KZ::ui::Window
 {

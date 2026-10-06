@@ -56,6 +56,7 @@ struct ScmdManager
 {
 	i32 cmdCount;
 	Scmd cmds[SCMD_MAX_CMDS];
+	u32 revision;
 };
 
 static_global ScmdManager g_cmdManager = {};
@@ -70,13 +71,28 @@ const char *scmd::GetCategoryName(i32 category)
 	return category >= 0 && category < scmd::GetCategoryCount() ? cmdFlagNames[category] : nullptr;
 }
 
-std::vector<scmd::CommandInfo> scmd::GetCategoryCommands(i32 category, bool chatNames)
+const std::vector<scmd::CommandInfo> &scmd::GetCategoryCommands(i32 category, bool chatNames)
 {
-	std::vector<CommandInfo> result;
+	static_persist const std::vector<CommandInfo> empty;
 	if (!scmd::GetCategoryName(category))
 	{
-		return result;
+		return empty;
 	}
+
+	struct CachedCommands
+	{
+		u32 revision {};
+		std::vector<CommandInfo> commands;
+	};
+
+	static_persist CachedCommands cache[KZ_ARRAYSIZE(cmdFlagNames)][2];
+	CachedCommands &cached = cache[category][chatNames ? 1 : 0];
+	if (cached.revision == g_cmdManager.revision)
+	{
+		return cached.commands;
+	}
+	auto &result = cached.commands;
+	result.clear();
 	for (i32 i = 0; i < g_cmdManager.cmdCount; i++)
 	{
 		const Scmd &cmd = g_cmdManager.cmds[i];
@@ -96,6 +112,7 @@ std::vector<scmd::CommandInfo> scmd::GetCategoryCommands(i32 category, bool chat
 			entry->names += (chatNames ? " / " : "/") + name;
 		}
 	}
+	cached.revision = g_cmdManager.revision;
 	return result;
 }
 
@@ -139,7 +156,7 @@ static_global void PrintCategoryCommands(KZPlayer *player, i32 category, bool pr
 	}
 	utils::Table<KZ_ARRAYSIZE(columnKeys)> table(player->languageService->PrepareMessage(tableName).c_str(), headers);
 
-	const auto commands = scmd::GetCategoryCommands(category);
+	const auto &commands = scmd::GetCategoryCommands(category);
 	for (u32 i = 0; i < commands.size(); i++)
 	{
 		table.SetRow(i, commands[i].names.c_str(), player->languageService->PrepareMessage(commands[i].descriptionKey.c_str()).c_str());
@@ -266,6 +283,7 @@ bool scmd::RegisterCmd(const char *name, scmd::Callback_t *callback, const char 
 	}
 
 	g_cmdManager.cmds[g_cmdManager.cmdCount++] = cmd;
+	g_cmdManager.revision++;
 
 	return true;
 }
@@ -300,6 +318,7 @@ bool scmd::UnregisterCmd(const char *name)
 			g_cmdManager.cmds[i] = g_cmdManager.cmds[i + 1];
 		}
 		g_cmdManager.cmdCount--;
+		g_cmdManager.revision++;
 		return true;
 	}
 	return false;

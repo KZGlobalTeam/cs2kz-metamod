@@ -53,8 +53,8 @@ namespace scmd
 
 	i32 GetCategoryCount();
 	const char *GetCategoryName(i32 category);
-	// Groups aliases by their shared description, as in the console help listing.
-	std::vector<CommandInfo> GetCategoryCommands(i32 category, bool chatNames = false);
+	// Groups aliases by their shared description. Cached until commands are registered or unregistered.
+	const std::vector<CommandInfo> &GetCategoryCommands(i32 category, bool chatNames = false);
 
 	bool OnClientCommand(CPlayerSlot &slot, const CCommand &args);
 	bool OnDispatchConCommand(ConCommandRef cmd, const CCommandContext &ctx, const CCommand &args);
