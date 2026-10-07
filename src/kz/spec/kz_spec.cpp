@@ -164,12 +164,13 @@ bool KZSpecService::SpectatePlayer(KZPlayer *target)
 	obsService->m_iObserverMode(OBS_MODE_IN_EYE);
 	obsService->m_iObserverLastMode(OBS_MODE_NONE);
 	obsService->m_hObserverTarget(target->GetPlayerPawn());
+	controller->m_DesiredObserverMode(OBS_MODE_IN_EYE);
+	controller->m_hDesiredObserverTarget(target->GetPlayerPawn());
 
 	if (target == this->player)
 	{
 		controller->m_DesiredObserverMode(OBS_MODE_ROAMING);
 		obsService->m_iObserverMode(OBS_MODE_ROAMING);
-		controller->m_hDesiredObserverTarget(target->GetPlayerPawn());
 		obsService->m_hObserverTarget(target->GetPlayerPawn());
 		Vector origin;
 		QAngle angles;
