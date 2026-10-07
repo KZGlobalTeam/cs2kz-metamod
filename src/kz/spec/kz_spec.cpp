@@ -107,7 +107,7 @@ bool KZSpecService::SpectatePlayer(const char *playerName)
 					continue;
 				}
 
-				if (V_strstr(V_strlower((char *)otherPlayer->GetName()), V_strlower((char *)playerName)))
+				if (V_stristr(otherPlayer->GetName(), playerName))
 				{
 					if (otherPlayer->GetController()->GetTeam() == CS_TEAM_SPECTATOR)
 					{

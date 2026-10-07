@@ -25,7 +25,7 @@ static_function KZPlayer *FindPerfStatsTarget(KZPlayer *requester, const char *p
 			continue;
 		}
 
-		if (V_strstr(V_strlower((char *)otherPlayer->GetName()), V_strlower((char *)playerNamePart)))
+		if (V_stristr(otherPlayer->GetName(), playerNamePart))
 		{
 			return otherPlayer;
 		}

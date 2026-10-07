@@ -310,7 +310,7 @@ SCMD(kz_playercheck, SCFL_PLAYER)
 				continue;
 			}
 
-			if (V_strstr(V_strlower((char *)g_pKZPlayerManager->players[i]->GetName()), V_strlower((char *)args->ArgS())))
+			if (V_stristr(g_pKZPlayerManager->players[i]->GetName(), args->ArgS()))
 			{
 				targetPlayer = g_pKZPlayerManager->ToPlayer(i);
 				break;

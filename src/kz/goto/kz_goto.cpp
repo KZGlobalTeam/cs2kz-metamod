@@ -61,7 +61,7 @@ bool KZGotoService::GotoPlayer(const char *playerNamePart)
 				continue;
 			}
 
-			if (V_strstr(V_strlower((char *)otherPlayer->GetName()), V_strlower((char *)playerNamePart)))
+			if (V_stristr(otherPlayer->GetName(), playerNamePart))
 			{
 				if (otherPlayer->GetController()->GetTeam() == CS_TEAM_SPECTATOR)
 				{
