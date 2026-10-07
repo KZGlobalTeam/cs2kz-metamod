@@ -13,8 +13,8 @@ class HelpWindow : public KZ::ui::Window
 public:
 	HelpWindow(KZPlayer *player) : player(player) {}
 
-	// Returns false when the UI is unavailable; the command then prints console help.
-	bool Show(i32 category = 0);
+	// Returns false when help cannot open; closing the window counts as success.
+	bool Toggle(i32 category = 0);
 
 	virtual KZ::ui::PlayerLayout *GetLayout() override
 	{

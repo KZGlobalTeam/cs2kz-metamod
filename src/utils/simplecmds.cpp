@@ -2,11 +2,8 @@
 #include "common.h"
 #include "utils/utils.h"
 #include "simplecmds.h"
-#include "kz/help/kz_help.h"
 #include "../kz/kz.h"
 #include "../kz/language/kz_language.h"
-#include "../kz/option/kz_option.h"
-#include "utils/tables.h"
 
 #include <algorithm>
 
@@ -43,11 +40,6 @@ const char* cmdFlagNames[] = {
 	"Misc",
 	"Map",
 	"HUD"
-};
-
-static_global const char *columnKeys[] = {
-	"Command List Header - Name",
-	"Command List Header - Description"
 };
 
 // clang-format on
@@ -142,77 +134,6 @@ static_global bool CanRunCommand(KZPlayer *player, u64 flags)
 	}
 
 	player->lastCommandTime = curtime;
-	return true;
-}
-
-static_global void PrintCategoryCommands(KZPlayer *player, i32 category, bool printEmpty)
-{
-	char tableName[64];
-	V_snprintf(tableName, sizeof(tableName), "Command List - %s", cmdFlagNames[category]);
-	CUtlString headers[KZ_ARRAYSIZE(columnKeys)];
-	for (u32 i = 0; i < KZ_ARRAYSIZE(columnKeys); i++)
-	{
-		headers[i] = player->languageService->PrepareMessage(columnKeys[i]).c_str();
-	}
-	utils::Table<KZ_ARRAYSIZE(columnKeys)> table(player->languageService->PrepareMessage(tableName).c_str(), headers);
-
-	const auto &commands = scmd::GetCategoryCommands(category);
-	for (u32 i = 0; i < commands.size(); i++)
-	{
-		table.SetRow(i, commands[i].names.c_str(), player->languageService->PrepareMessage(commands[i].descriptionKey.c_str()).c_str());
-	}
-	if (!printEmpty && commands.empty())
-	{
-		return;
-	}
-	player->PrintConsole(false, false, table.GetSeparator("="));
-	player->PrintConsole(false, false, table.GetTitle());
-	player->PrintConsole(false, false, table.GetHeader());
-
-	for (u32 i = 0; i < table.GetNumEntries(); i++)
-	{
-		player->PrintConsole(false, false, table.GetLine(i));
-	}
-	player->PrintConsole(false, false, table.GetSeparator("="));
-}
-
-SCMD(kz_help, SCFL_MISC)
-{
-	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
-	std::vector<i32> categories;
-	if (args->ArgC() >= 2)
-	{
-		for (i32 i = 1; i < args->ArgC(); i++)
-		{
-			for (i32 j = 0; j < KZ_ARRAYSIZE(cmdFlagNames); j++)
-			{
-				if (!V_stricmp(args->Arg(i), cmdFlagNames[j]))
-				{
-					categories.push_back(j);
-				}
-			}
-		}
-	}
-
-	const bool chat = args->Arg(0)[0] == SCMD_CHAT_TRIGGER || args->Arg(0)[0] == SCMD_CHAT_SILENT_TRIGGER;
-	if (chat && player->uiService->GetWindow<HelpWindow>()->Show(categories.empty() ? 0 : categories.front()))
-	{
-		return true;
-	}
-	player->languageService->PrintChat(true, false, "Command Help Response (Chat)");
-	player->languageService->PrintConsole(false, false, "Command Help Response (Console)");
-	for (i32 category : categories)
-	{
-		PrintCategoryCommands(player, category, true);
-	}
-	if (categories.empty())
-	{
-		player->languageService->PrintConsole(false, false, "Command Help Response Category Hint (Console)");
-		for (i32 i = 0; i < KZ_ARRAYSIZE(cmdFlagNames); i++)
-		{
-			PrintCategoryCommands(player, i, false);
-		}
-	}
 	return true;
 }
 

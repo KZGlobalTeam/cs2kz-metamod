@@ -12,10 +12,6 @@
 	{
 		"en"		"No commands in this category. Choose another category."
 	}
-	"Help - Overflow"
-	{
-		"en"		"Use kz_help in the console to see all commands in this category."
-	}
 	"Help - Category - Checkpoint"
 	{
 		"en"		"Checkpoints"
