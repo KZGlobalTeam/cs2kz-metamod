@@ -1,5 +1,6 @@
 #include "kz_trigger.h"
 #include "kz/checkpoint/kz_checkpoint.h"
+#include "kz/recording/kz_recording.h"
 #include "kz/jumpstats/kz_jumpstats.h"
 #include "kz/language/kz_language.h"
 #include "kz/mode/kz_mode.h"
@@ -214,6 +215,9 @@ bool KZTriggerService::TouchTeleportTrigger(TriggerTouchTracker tracker)
 	{
 		return false;
 	}
+	// The mapping API explicitly distinguishes failed bhop teleports from normal
+	// map teleports. Position proximity alone cannot identify a failed section.
+	KZRecordingService::ScopedTeleport replayTeleport(*this->player->recordingService, isBhopTrigger ? RPTELEPORT_BHOP_FAIL : RPTELEPORT_MAP_TRIGGER);
 
 	bool shouldReorientPlayer = tracker.kzTrigger->teleport.reorientPlayer && destAngles[YAW] != 0;
 	Vector up = Vector(0, 0, 1);

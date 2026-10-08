@@ -1,16 +1,20 @@
 ﻿#include "kz_replay.h"
 #include "compression.h"
+#include "parsing.h"
 #include "filesystem.h"
 #include "vendor/zstd/lib/zstd.h"
 
 using namespace KZ::replaysystem::compression;
+namespace parsing = KZ::replaysystem::parsing;
 
 // ========================================
 // Helper functions
 // ========================================
 
-static_function bool DecodeTickDataBuffer(const char *decompressedData, size_t uncompressedSize, u32 elementCount, u32 replayVersion,
-										  std::vector<TickData> &outTickData);
+// The route reader supplies a visitor to retain only positions and checkpoint data as ticks are decoded.
+// Normal replay playback leaves it null and keeps the full tick and subtick arrays.
+static_function bool DecodeTickDataBuffer(const char *decompressedData, size_t uncompressedSize, u32 elementCount,
+										  const parsing::VersionParser &parser, std::vector<TickData> *outTickData, const TickVisitor *visitor);
 
 static_function void AppendToBuffer(std::vector<char> &buffer, const void *data, size_t size)
 {
@@ -398,9 +402,14 @@ i32 KZ::replaysystem::compression::WriteTickDataCompressed(std::vector<char> &ou
 	return bytesWritten;
 }
 
-bool KZ::replaysystem::compression::ReadTickDataCompressed(const char *&cursor, const char *end, std::vector<TickData> &outTickData,
-														   std::vector<SubtickData> &outSubtickData, u32 replayVersion)
+static_function bool ReadTickDataSections(const char *&cursor, const char *end, std::vector<TickData> *outTickData,
+										  std::vector<SubtickData> *outSubtickData, u32 replayVersion, const TickVisitor *visitor)
 {
+	const auto *parser = parsing::GetVersionParser(replayVersion);
+	if (!parser)
+	{
+		return false;
+	}
 	if (cursor + (ptrdiff_t)sizeof(CompressedSectionHeader) > end)
 	{
 		return false;
@@ -429,12 +438,17 @@ bool KZ::replaysystem::compression::ReadTickDataCompressed(const char *&cursor, 
 	}
 
 	// Reconstruct tick data from delta-encoded buffer
-	bool decoded = DecodeTickDataBuffer(decompressedData, header.uncompressedSize, header.elementCount, replayVersion, outTickData);
+	bool decoded = DecodeTickDataBuffer(decompressedData, header.uncompressedSize, header.elementCount, *parser, outTickData, visitor);
 
 	delete[] decompressedData;
 	if (!decoded)
 	{
 		return false;
+	}
+
+	if (visitor)
+	{
+		return SkipCompressedSection(cursor, end);
 	}
 
 	// Read subtick data
@@ -452,10 +466,10 @@ bool KZ::replaysystem::compression::ReadTickDataCompressed(const char *&cursor, 
 	}
 
 	// v4+ uses subtickMoves[MAX_SUBTICK_MOVES]; older replays used subtickMoves[64].
-	if (replayVersion >= 4)
+	if (parser->compactSubticks)
 	{
-		outSubtickData.resize(subtickHeader.elementCount);
-		success = Decompress(cursor, subtickHeader.compressedSize, outSubtickData.data(), subtickHeader.uncompressedSize);
+		outSubtickData->resize(subtickHeader.elementCount);
+		success = Decompress(cursor, subtickHeader.compressedSize, outSubtickData->data(), subtickHeader.uncompressedSize);
 	}
 	else
 	{
@@ -463,17 +477,17 @@ bool KZ::replaysystem::compression::ReadTickDataCompressed(const char *&cursor, 
 		success = Decompress(cursor, subtickHeader.compressedSize, tempBuf, subtickHeader.uncompressedSize);
 		if (success)
 		{
-			outSubtickData.resize(subtickHeader.elementCount);
+			outSubtickData->resize(subtickHeader.elementCount);
 			if (subtickHeader.elementCount > 0)
 			{
 				size_t oldEntrySize = subtickHeader.uncompressedSize / subtickHeader.elementCount;
 				for (u32 i = 0; i < subtickHeader.elementCount; i++)
 				{
 					const char *entry = tempBuf + i * oldEntrySize;
-					memcpy(&outSubtickData[i], entry, MIN(oldEntrySize, sizeof(SubtickData)));
-					if (outSubtickData[i].numSubtickMoves > MAX_SUBTICK_MOVES)
+					memcpy(&(*outSubtickData)[i], entry, MIN(oldEntrySize, sizeof(SubtickData)));
+					if ((*outSubtickData)[i].numSubtickMoves > MAX_SUBTICK_MOVES)
 					{
-						outSubtickData[i].numSubtickMoves = MAX_SUBTICK_MOVES;
+						(*outSubtickData)[i].numSubtickMoves = MAX_SUBTICK_MOVES;
 					}
 				}
 			}
@@ -484,26 +498,35 @@ bool KZ::replaysystem::compression::ReadTickDataCompressed(const char *&cursor, 
 	return success;
 }
 
-static_function bool DecodeTickDataBuffer(const char *decompressedData, size_t uncompressedSize, u32 elementCount, u32 replayVersion,
-										  std::vector<TickData> &outTickData)
+bool KZ::replaysystem::compression::ReadTickDataCompressed(const char *&cursor, const char *end, std::vector<TickData> &ticks,
+														   std::vector<SubtickData> &subticks, u32 version)
 {
-	outTickData.clear();
-	outTickData.resize(elementCount);
+	return ReadTickDataSections(cursor, end, &ticks, &subticks, version, nullptr);
+}
 
-	const u64 weaponFlag = (1ULL << 39);
-	const u64 modernActualFlag = replayVersion >= 3 ? (1ULL << 40) : (replayVersion == 2 ? (1ULL << 39) : 0);
-	const u64 modernUsableFlag = replayVersion >= 3 ? (1ULL << 41) : (replayVersion == 2 ? (1ULL << 40) : 0);
-	const u64 modernLandedFlag = replayVersion >= 3 ? (1ULL << 42) : (replayVersion == 2 ? (1ULL << 41) : 0);
+bool KZ::replaysystem::compression::ReadTickDataCompressed(const char *&cursor, const char *end, u32 version, const TickVisitor &visitor)
+{
+	return ReadTickDataSections(cursor, end, nullptr, nullptr, version, &visitor);
+}
 
-	const bool hasModernJump = replayVersion >= 2;
-
+static_function bool DecodeTickDataBuffer(const char *decompressedData, size_t uncompressedSize, u32 elementCount,
+										  const parsing::VersionParser &parser, std::vector<TickData> *outTickData, const TickVisitor *visitor)
+{
+	if (outTickData)
+	{
+		outTickData->clear();
+		outTickData->reserve(elementCount);
+	}
+	const u64 weaponFlag = parser.weaponFlag;
+	const u64 modernActualFlag = parser.modernActualFlag;
+	const u64 modernUsableFlag = parser.modernUsableFlag;
+	const u64 modernLandedFlag = parser.modernLandedFlag;
 	const char *readPtr = decompressedData;
 	const char *endPtr = decompressedData + uncompressedSize;
 
+	TickData tick {};
 	for (u32 i = 0; i < elementCount; i++)
 	{
-		TickData &current = outTickData[i];
-
 		// Read change flags
 		u64 flags = 0;
 		if (!ReadFromBuffer(readPtr, endPtr, &flags, sizeof(flags)))
@@ -511,127 +534,88 @@ static_function bool DecodeTickDataBuffer(const char *decompressedData, size_t u
 			return false;
 		}
 
-		// Copy from previous tick if not changed (or apply expected increment)
+		// Unchanged scalar fields stay in tick. The sole implicit change is serverTick.
 		// clang-format off
-		if (i > 0)
-		{
-			// Server tick is expected to increment by 1
-			if (!(flags & CHANGED_SERVER_TICK)) current.serverTick = outTickData[i - 1].serverTick + 1;
-			if (!(flags & CHANGED_GAME_TIME)) current.gameTime = outTickData[i - 1].gameTime;
-			if (!(flags & CHANGED_REAL_TIME)) current.realTime = outTickData[i - 1].realTime;
-			if (!(flags & CHANGED_UNIX_TIME)) current.unixTime = outTickData[i - 1].unixTime;
-			if (!(flags & CHANGED_CMD_NUMBER)) current.cmdNumber = outTickData[i - 1].cmdNumber;
-			if (!(flags & CHANGED_CLIENT_TICK)) current.clientTick = outTickData[i - 1].clientTick;
-			if (!(flags & CHANGED_FORWARD)) current.forward = outTickData[i - 1].forward;
-			if (!(flags & CHANGED_LEFT)) current.left = outTickData[i - 1].left;
-			if (!(flags & CHANGED_UP)) current.up = outTickData[i - 1].up;
-			if (!(flags & CHANGED_LEFT_HANDED)) current.leftHanded = outTickData[i - 1].leftHanded;
-			if (!(flags & weaponFlag)) current.weapon = outTickData[i - 1].weapon;
-		}
+        if (i > 0 && !(flags & CHANGED_SERVER_TICK)) ++tick.serverTick;
 
 		// Read changed fields
-		if (!ReadIfFlag(flags, CHANGED_SERVER_TICK, readPtr, endPtr, &current.serverTick, sizeof(current.serverTick))) return false;
-		if (!ReadIfFlag(flags, CHANGED_GAME_TIME, readPtr, endPtr, &current.gameTime, sizeof(current.gameTime))) return false;
-		if (!ReadIfFlag(flags, CHANGED_REAL_TIME, readPtr, endPtr, &current.realTime, sizeof(current.realTime))) return false;
-		if (!ReadIfFlag(flags, CHANGED_UNIX_TIME, readPtr, endPtr, &current.unixTime, sizeof(current.unixTime))) return false;
-		if (!ReadIfFlag(flags, CHANGED_CMD_NUMBER, readPtr, endPtr, &current.cmdNumber, sizeof(current.cmdNumber))) return false;
-		if (!ReadIfFlag(flags, CHANGED_CLIENT_TICK, readPtr, endPtr, &current.clientTick, sizeof(current.clientTick))) return false;
-		if (!ReadIfFlag(flags, CHANGED_FORWARD, readPtr, endPtr, &current.forward, sizeof(current.forward))) return false;
-		if (!ReadIfFlag(flags, CHANGED_LEFT, readPtr, endPtr, &current.left, sizeof(current.left))) return false;
-		if (!ReadIfFlag(flags, CHANGED_UP, readPtr, endPtr, &current.up, sizeof(current.up))) return false;
-		if (!ReadIfFlag(flags, CHANGED_LEFT_HANDED, readPtr, endPtr, &current.leftHanded, sizeof(current.leftHanded))) return false;
-		if (!ReadIfFlag(flags, weaponFlag, readPtr, endPtr, &current.weapon, sizeof(current.weapon))) return false;
+		if (!ReadIfFlag(flags, CHANGED_SERVER_TICK, readPtr, endPtr, &tick.serverTick, sizeof(tick.serverTick))) return false;
+		if (!ReadIfFlag(flags, CHANGED_GAME_TIME, readPtr, endPtr, &tick.gameTime, sizeof(tick.gameTime))) return false;
+		if (!ReadIfFlag(flags, CHANGED_REAL_TIME, readPtr, endPtr, &tick.realTime, sizeof(tick.realTime))) return false;
+		if (!ReadIfFlag(flags, CHANGED_UNIX_TIME, readPtr, endPtr, &tick.unixTime, sizeof(tick.unixTime))) return false;
+		if (!ReadIfFlag(flags, CHANGED_CMD_NUMBER, readPtr, endPtr, &tick.cmdNumber, sizeof(tick.cmdNumber))) return false;
+		if (!ReadIfFlag(flags, CHANGED_CLIENT_TICK, readPtr, endPtr, &tick.clientTick, sizeof(tick.clientTick))) return false;
+		if (!ReadIfFlag(flags, CHANGED_FORWARD, readPtr, endPtr, &tick.forward, sizeof(tick.forward))) return false;
+		if (!ReadIfFlag(flags, CHANGED_LEFT, readPtr, endPtr, &tick.left, sizeof(tick.left))) return false;
+		if (!ReadIfFlag(flags, CHANGED_UP, readPtr, endPtr, &tick.up, sizeof(tick.up))) return false;
+		if (!ReadIfFlag(flags, CHANGED_LEFT_HANDED, readPtr, endPtr, &tick.leftHanded, sizeof(tick.leftHanded))) return false;
+		if (!ReadIfFlag(flags, weaponFlag, readPtr, endPtr, &tick.weapon, sizeof(tick.weapon))) return false;
 
-		// Reconstruct pre data
-		// For tick 0: compare with zero
-		// For tick N: compare with previous.post
-		TickData::MovementData prevPre = {};
-		if (i > 0)
-		{
-			prevPre = outTickData[i - 1].post;
-		}
-		
-		// Copy from previous or read changed
-		current.pre = prevPre;
+		// Pre movement inherits the preceding post, then post inherits this pre.
+        tick.pre = i > 0 ? tick.post : TickData::MovementData {};
 
-		if (!ReadIfFlag(flags, CHANGED_PRE_ORIGIN, readPtr, endPtr, &current.pre.origin, sizeof(current.pre.origin))) return false;
-		if (!ReadIfFlag(flags, CHANGED_PRE_VELOCITY, readPtr, endPtr, &current.pre.velocity, sizeof(current.pre.velocity))) return false;
-		if (!ReadIfFlag(flags, CHANGED_PRE_ANGLES, readPtr, endPtr, &current.pre.angles, sizeof(current.pre.angles))) return false;
-		if (!ReadIfFlag(flags, CHANGED_PRE_BUTTONS_0, readPtr, endPtr, &current.pre.buttons[0], sizeof(current.pre.buttons[0]))) return false;
-		if (!ReadIfFlag(flags, CHANGED_PRE_BUTTONS_1, readPtr, endPtr, &current.pre.buttons[1], sizeof(current.pre.buttons[1]))) return false;
-		if (!ReadIfFlag(flags, CHANGED_PRE_BUTTONS_2, readPtr, endPtr, &current.pre.buttons[2], sizeof(current.pre.buttons[2]))) return false;
-		if (!ReadIfFlag(flags, CHANGED_PRE_JUMP_PRESSED_TIME, readPtr, endPtr, &current.pre.jumpPressedTime, sizeof(current.pre.jumpPressedTime))) return false;
-		if (!ReadIfFlag(flags, CHANGED_PRE_DUCK_SPEED, readPtr, endPtr, &current.pre.duckSpeed, sizeof(current.pre.duckSpeed))) return false;
-		if (!ReadIfFlag(flags, CHANGED_PRE_DUCK_AMOUNT, readPtr, endPtr, &current.pre.duckAmount, sizeof(current.pre.duckAmount))) return false;
-		if (!ReadIfFlag(flags, CHANGED_PRE_DUCK_OFFSET, readPtr, endPtr, &current.pre.duckOffset, sizeof(current.pre.duckOffset))) return false;
-		if (!ReadIfFlag(flags, CHANGED_PRE_LAST_DUCK_TIME, readPtr, endPtr, &current.pre.lastDuckTime, sizeof(current.pre.lastDuckTime))) return false;
-		if (!ReadIfFlag(flags, CHANGED_PRE_REPLAY_FLAGS, readPtr, endPtr, &current.pre.replayFlags, sizeof(current.pre.replayFlags))) return false;
-		if (!ReadIfFlag(flags, CHANGED_PRE_ENTITY_FLAGS, readPtr, endPtr, &current.pre.entityFlags, sizeof(current.pre.entityFlags))) return false;
-		if (!ReadIfFlag(flags, CHANGED_PRE_MOVE_TYPE, readPtr, endPtr, &current.pre.moveType, sizeof(current.pre.moveType))) return false;
+		if (!ReadIfFlag(flags, CHANGED_PRE_ORIGIN, readPtr, endPtr, &tick.pre.origin, sizeof(tick.pre.origin))) return false;
+		if (!ReadIfFlag(flags, CHANGED_PRE_VELOCITY, readPtr, endPtr, &tick.pre.velocity, sizeof(tick.pre.velocity))) return false;
+		if (!ReadIfFlag(flags, CHANGED_PRE_ANGLES, readPtr, endPtr, &tick.pre.angles, sizeof(tick.pre.angles))) return false;
+		if (!ReadIfFlag(flags, CHANGED_PRE_BUTTONS_0, readPtr, endPtr, &tick.pre.buttons[0], sizeof(tick.pre.buttons[0]))) return false;
+		if (!ReadIfFlag(flags, CHANGED_PRE_BUTTONS_1, readPtr, endPtr, &tick.pre.buttons[1], sizeof(tick.pre.buttons[1]))) return false;
+		if (!ReadIfFlag(flags, CHANGED_PRE_BUTTONS_2, readPtr, endPtr, &tick.pre.buttons[2], sizeof(tick.pre.buttons[2]))) return false;
+		if (!ReadIfFlag(flags, CHANGED_PRE_JUMP_PRESSED_TIME, readPtr, endPtr, &tick.pre.jumpPressedTime, sizeof(tick.pre.jumpPressedTime))) return false;
+		if (!ReadIfFlag(flags, CHANGED_PRE_DUCK_SPEED, readPtr, endPtr, &tick.pre.duckSpeed, sizeof(tick.pre.duckSpeed))) return false;
+		if (!ReadIfFlag(flags, CHANGED_PRE_DUCK_AMOUNT, readPtr, endPtr, &tick.pre.duckAmount, sizeof(tick.pre.duckAmount))) return false;
+		if (!ReadIfFlag(flags, CHANGED_PRE_DUCK_OFFSET, readPtr, endPtr, &tick.pre.duckOffset, sizeof(tick.pre.duckOffset))) return false;
+		if (!ReadIfFlag(flags, CHANGED_PRE_LAST_DUCK_TIME, readPtr, endPtr, &tick.pre.lastDuckTime, sizeof(tick.pre.lastDuckTime))) return false;
+		if (!ReadIfFlag(flags, CHANGED_PRE_REPLAY_FLAGS, readPtr, endPtr, &tick.pre.replayFlags, sizeof(tick.pre.replayFlags))) return false;
+		if (!ReadIfFlag(flags, CHANGED_PRE_ENTITY_FLAGS, readPtr, endPtr, &tick.pre.entityFlags, sizeof(tick.pre.entityFlags))) return false;
+		if (!ReadIfFlag(flags, CHANGED_PRE_MOVE_TYPE, readPtr, endPtr, &tick.pre.moveType, sizeof(tick.pre.moveType))) return false;
 
-		// Reconstruct post data (compare with current.pre)
-		current.post = current.pre;
-		if (!ReadIfFlag(flags, CHANGED_POST_ORIGIN, readPtr, endPtr, &current.post.origin, sizeof(current.post.origin))) return false;
-		if (!ReadIfFlag(flags, CHANGED_POST_VELOCITY, readPtr, endPtr, &current.post.velocity, sizeof(current.post.velocity))) return false;
-		if (!ReadIfFlag(flags, CHANGED_POST_ANGLES, readPtr, endPtr, &current.post.angles, sizeof(current.post.angles))) return false;
-		if (!ReadIfFlag(flags, CHANGED_POST_BUTTONS_0, readPtr, endPtr, &current.post.buttons[0], sizeof(current.post.buttons[0]))) return false;
-		if (!ReadIfFlag(flags, CHANGED_POST_BUTTONS_1, readPtr, endPtr, &current.post.buttons[1], sizeof(current.post.buttons[1]))) return false;
-		if (!ReadIfFlag(flags, CHANGED_POST_BUTTONS_2, readPtr, endPtr, &current.post.buttons[2], sizeof(current.post.buttons[2]))) return false;
-		if (!ReadIfFlag(flags, CHANGED_POST_JUMP_PRESSED_TIME, readPtr, endPtr, &current.post.jumpPressedTime, sizeof(current.post.jumpPressedTime))) return false;
-		if (!ReadIfFlag(flags, CHANGED_POST_DUCK_SPEED, readPtr, endPtr, &current.post.duckSpeed, sizeof(current.post.duckSpeed))) return false;
-		if (!ReadIfFlag(flags, CHANGED_POST_DUCK_AMOUNT, readPtr, endPtr, &current.post.duckAmount, sizeof(current.post.duckAmount))) return false;
-		if (!ReadIfFlag(flags, CHANGED_POST_DUCK_OFFSET, readPtr, endPtr, &current.post.duckOffset, sizeof(current.post.duckOffset))) return false;
-		if (!ReadIfFlag(flags, CHANGED_POST_LAST_DUCK_TIME, readPtr, endPtr, &current.post.lastDuckTime, sizeof(current.post.lastDuckTime))) return false;
-		if (!ReadIfFlag(flags, CHANGED_POST_REPLAY_FLAGS, readPtr, endPtr, &current.post.replayFlags, sizeof(current.post.replayFlags))) return false;
-		if (!ReadIfFlag(flags, CHANGED_POST_ENTITY_FLAGS, readPtr, endPtr, &current.post.entityFlags, sizeof(current.post.entityFlags))) return false;
-		if (!ReadIfFlag(flags, CHANGED_POST_MOVE_TYPE, readPtr, endPtr, &current.post.moveType, sizeof(current.post.moveType))) return false;
+		// Reconstruct post data (compare with tick.pre)
+		tick.post = tick.pre;
+		if (!ReadIfFlag(flags, CHANGED_POST_ORIGIN, readPtr, endPtr, &tick.post.origin, sizeof(tick.post.origin))) return false;
+		if (!ReadIfFlag(flags, CHANGED_POST_VELOCITY, readPtr, endPtr, &tick.post.velocity, sizeof(tick.post.velocity))) return false;
+		if (!ReadIfFlag(flags, CHANGED_POST_ANGLES, readPtr, endPtr, &tick.post.angles, sizeof(tick.post.angles))) return false;
+		if (!ReadIfFlag(flags, CHANGED_POST_BUTTONS_0, readPtr, endPtr, &tick.post.buttons[0], sizeof(tick.post.buttons[0]))) return false;
+		if (!ReadIfFlag(flags, CHANGED_POST_BUTTONS_1, readPtr, endPtr, &tick.post.buttons[1], sizeof(tick.post.buttons[1]))) return false;
+		if (!ReadIfFlag(flags, CHANGED_POST_BUTTONS_2, readPtr, endPtr, &tick.post.buttons[2], sizeof(tick.post.buttons[2]))) return false;
+		if (!ReadIfFlag(flags, CHANGED_POST_JUMP_PRESSED_TIME, readPtr, endPtr, &tick.post.jumpPressedTime, sizeof(tick.post.jumpPressedTime))) return false;
+		if (!ReadIfFlag(flags, CHANGED_POST_DUCK_SPEED, readPtr, endPtr, &tick.post.duckSpeed, sizeof(tick.post.duckSpeed))) return false;
+		if (!ReadIfFlag(flags, CHANGED_POST_DUCK_AMOUNT, readPtr, endPtr, &tick.post.duckAmount, sizeof(tick.post.duckAmount))) return false;
+		if (!ReadIfFlag(flags, CHANGED_POST_DUCK_OFFSET, readPtr, endPtr, &tick.post.duckOffset, sizeof(tick.post.duckOffset))) return false;
+		if (!ReadIfFlag(flags, CHANGED_POST_LAST_DUCK_TIME, readPtr, endPtr, &tick.post.lastDuckTime, sizeof(tick.post.lastDuckTime))) return false;
+		if (!ReadIfFlag(flags, CHANGED_POST_REPLAY_FLAGS, readPtr, endPtr, &tick.post.replayFlags, sizeof(tick.post.replayFlags))) return false;
+		if (!ReadIfFlag(flags, CHANGED_POST_ENTITY_FLAGS, readPtr, endPtr, &tick.post.entityFlags, sizeof(tick.post.entityFlags))) return false;
+		if (!ReadIfFlag(flags, CHANGED_POST_MOVE_TYPE, readPtr, endPtr, &tick.post.moveType, sizeof(tick.post.moveType))) return false;
 
-		// Reconstruct checkpoint data (compare with previous)
-		if (i > 0)
-		{
-			current.checkpoint = outTickData[i - 1].checkpoint;
-		}
-		else
-		{
-			current.checkpoint = {};
-		}
+		// Checkpoint counters and jump state persist until their delta changes.
 		if (flags & CHANGED_CHECKPOINT)
 		{
-			if (!ReadFromBuffer(readPtr, endPtr, &current.checkpoint.index, sizeof(current.checkpoint.index))) return false;
-			if (!ReadFromBuffer(readPtr, endPtr, &current.checkpoint.checkpointCount, sizeof(current.checkpoint.checkpointCount))) return false;
-			if (!ReadFromBuffer(readPtr, endPtr, &current.checkpoint.teleportCount, sizeof(current.checkpoint.teleportCount))) return false;
-		}
-
-		// 2026 ModernJump fields
-		if (i > 0)
-		{
-			current.modernJump = outTickData[i - 1].modernJump;
-		}
-		else
-		{
-			current.modernJump = {};
+			if (!ReadFromBuffer(readPtr, endPtr, &tick.checkpoint.index, sizeof(tick.checkpoint.index))) return false;
+			if (!ReadFromBuffer(readPtr, endPtr, &tick.checkpoint.checkpointCount, sizeof(tick.checkpoint.checkpointCount))) return false;
+			if (!ReadFromBuffer(readPtr, endPtr, &tick.checkpoint.teleportCount, sizeof(tick.checkpoint.teleportCount))) return false;
 		}
 
 		// Only read these fields if present in the data (v2+)
-		if (hasModernJump)
+		if (parser.modernJump)
 		{
 			if (flags & modernActualFlag)
 			{
-				if (!ReadFromBuffer(readPtr, endPtr, &current.modernJump.lastActualJumpPressTick, sizeof(current.modernJump.lastActualJumpPressTick))) return false;
-				if (!ReadFromBuffer(readPtr, endPtr, &current.modernJump.lastActualJumpPressFrac, sizeof(current.modernJump.lastActualJumpPressFrac))) return false;
+				if (!ReadFromBuffer(readPtr, endPtr, &tick.modernJump.lastActualJumpPressTick, sizeof(tick.modernJump.lastActualJumpPressTick))) return false;
+				if (!ReadFromBuffer(readPtr, endPtr, &tick.modernJump.lastActualJumpPressFrac, sizeof(tick.modernJump.lastActualJumpPressFrac))) return false;
 			}
 			if (flags & modernUsableFlag)
 			{
-				if (!ReadFromBuffer(readPtr, endPtr, &current.modernJump.lastUsableJumpPressTick, sizeof(current.modernJump.lastUsableJumpPressTick))) return false;
-				if (!ReadFromBuffer(readPtr, endPtr, &current.modernJump.lastUsableJumpPressFrac, sizeof(current.modernJump.lastUsableJumpPressFrac))) return false;
+				if (!ReadFromBuffer(readPtr, endPtr, &tick.modernJump.lastUsableJumpPressTick, sizeof(tick.modernJump.lastUsableJumpPressTick))) return false;
+				if (!ReadFromBuffer(readPtr, endPtr, &tick.modernJump.lastUsableJumpPressFrac, sizeof(tick.modernJump.lastUsableJumpPressFrac))) return false;
 			}
 			if (flags & modernLandedFlag)
 			{
-				if (!ReadFromBuffer(readPtr, endPtr, &current.modernJump.lastLandedTick, sizeof(current.modernJump.lastLandedTick))) return false;
-				if (!ReadFromBuffer(readPtr, endPtr, &current.modernJump.lastLandedFrac, sizeof(current.modernJump.lastLandedFrac))) return false;
-				if (!ReadFromBuffer(readPtr, endPtr, &current.modernJump.lastLandedVelocity, sizeof(current.modernJump.lastLandedVelocity))) return false;
+				if (!ReadFromBuffer(readPtr, endPtr, &tick.modernJump.lastLandedTick, sizeof(tick.modernJump.lastLandedTick))) return false;
+				if (!ReadFromBuffer(readPtr, endPtr, &tick.modernJump.lastLandedFrac, sizeof(tick.modernJump.lastLandedFrac))) return false;
+				if (!ReadFromBuffer(readPtr, endPtr, &tick.modernJump.lastLandedVelocity, sizeof(tick.modernJump.lastLandedVelocity))) return false;
 			}
 		}
+		if (visitor && !(*visitor)(tick)) return false;
+		if (outTickData) outTickData->push_back(tick);
 	}
 	// clang-format on
 	return readPtr == endPtr;
@@ -712,55 +696,64 @@ bool KZ::replaysystem::compression::ReadWeaponsCompressed(const char *&cursor, c
 // Events compression
 // ========================================
 
-bool KZ::replaysystem::compression::ReadEventsCompressed(const char *&cursor, const char *end, std::vector<RpEvent> &outEvents)
+bool KZ::replaysystem::compression::SkipCompressedSection(const char *&cursor, const char *end)
 {
-	if (cursor + (ptrdiff_t)sizeof(CompressedSectionHeader) > end)
+	if ((size_t)(end - cursor) < sizeof(CompressedSectionHeader))
 	{
 		return false;
 	}
-	// Read section header
 	CompressedSectionHeader header;
 	memcpy(&header, cursor, sizeof(header));
 	cursor += sizeof(header);
-
-	if (cursor + (ptrdiff_t)header.compressedSize > end)
+	if (header.compressedSize > (size_t)(end - cursor))
 	{
 		return false;
 	}
-	// Resize output vector
-	outEvents.resize(header.elementCount);
-	bool success = Decompress(cursor, header.compressedSize, outEvents.data(), header.uncompressedSize);
 	cursor += header.compressedSize;
-	return success;
+	return true;
+}
+
+bool KZ::replaysystem::compression::ReadEventsCompressed(const char *&cursor, const char *end, std::vector<RpEvent> &outEvents, u32 version)
+{
+	const auto *parser = parsing::GetVersionParser(version);
+	if (!parser || (size_t)(end - cursor) < sizeof(CompressedSectionHeader))
+	{
+		return false;
+	}
+	CompressedSectionHeader header;
+	memcpy(&header, cursor, sizeof(header));
+	cursor += sizeof(header);
+	if (header.compressedSize > (size_t)(end - cursor))
+	{
+		return false;
+	}
+	std::vector<char> bytes(header.uncompressedSize);
+	if (!Decompress(cursor, header.compressedSize, bytes.data(), bytes.size()))
+	{
+		return false;
+	}
+	cursor += header.compressedSize;
+	return parser->readEvents(bytes.data(), bytes.size(), header.elementCount, outEvents);
 }
 
 i32 KZ::replaysystem::compression::WriteEventsCompressed(std::vector<char> &outBuffer, const std::vector<RpEvent> &events)
 {
-	i32 bytesWritten = 0;
-
-	void *compressedData = nullptr;
-	size_t compressedSize = 0;
-	size_t uncompressedSize = events.size() * sizeof(RpEvent);
-
-	bool success = Compress(events.data(), uncompressedSize, &compressedData, &compressedSize);
-	if (!success)
+	std::vector<char> bytes;
+	if (!parsing::EncodeEventsV6(events, bytes))
 	{
 		return 0;
 	}
-
-	CompressedSectionHeader header;
-	header.compressedSize = (u32)compressedSize;
-	header.uncompressedSize = (u32)uncompressedSize;
-	header.elementCount = (u32)events.size();
-
+	void *compressedData = nullptr;
+	size_t compressedSize = 0;
+	if (!Compress(bytes.data(), bytes.size(), &compressedData, &compressedSize))
+	{
+		return 0;
+	}
+	CompressedSectionHeader header {(u32)compressedSize, (u32)bytes.size(), (u32)events.size()};
 	AppendToBuffer(outBuffer, &header, sizeof(header));
-	bytesWritten += (i32)sizeof(header);
 	AppendToBuffer(outBuffer, compressedData, compressedSize);
-	bytesWritten += (i32)compressedSize;
-
 	delete[] static_cast<char *>(compressedData);
-
-	return bytesWritten;
+	return (i32)(sizeof(header) + compressedSize);
 }
 
 // ========================================
@@ -769,6 +762,11 @@ i32 KZ::replaysystem::compression::WriteEventsCompressed(std::vector<char> &outB
 
 bool KZ::replaysystem::compression::ReadJumpsCompressed(const char *&cursor, const char *end, std::vector<RpJumpStats> &outJumps, u32 replayVersion)
 {
+	const auto *parser = parsing::GetVersionParser(replayVersion);
+	if (!parser)
+	{
+		return false;
+	}
 	if (cursor + (ptrdiff_t)sizeof(CompressedSectionHeader) > end)
 	{
 		return false;
@@ -866,7 +864,7 @@ bool KZ::replaysystem::compression::ReadJumpsCompressed(const char *&cursor, con
 		}
 
 		jump.aaCalls.resize(numAACalls);
-		if (replayVersion >= 5)
+		if (parser->jumpFractions)
 		{
 			size_t aaCallsSize = sizeof(RpJumpStats::AAData) * (size_t)numAACalls;
 			if (aaCallsSize > (size_t)(readEnd - readPtr))
@@ -1022,6 +1020,11 @@ enum CmdDataChangeFlags : u64
 bool KZ::replaysystem::compression::ReadCmdDataCompressed(const char *&cursor, const char *end, std::vector<CmdData> &outCmdData,
 														  std::vector<SubtickData> &outCmdSubtickData, u32 replayVersion)
 {
+	const auto *parser = parsing::GetVersionParser(replayVersion);
+	if (!parser)
+	{
+		return false;
+	}
 	if (cursor + (ptrdiff_t)sizeof(CompressedSectionHeader) > end)
 	{
 		return false;
@@ -1147,7 +1150,7 @@ bool KZ::replaysystem::compression::ReadCmdDataCompressed(const char *&cursor, c
 	}
 
 	// v4+ uses subtickMoves[MAX_SUBTICK_MOVES]; older replays used subtickMoves[64].
-	if (replayVersion >= 4)
+	if (parser->compactSubticks)
 	{
 		outCmdSubtickData.resize(subtickHeader.elementCount);
 		success = Decompress(cursor, subtickHeader.compressedSize, outCmdSubtickData.data(), subtickHeader.uncompressedSize);
