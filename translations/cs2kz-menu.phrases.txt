@@ -21,7 +21,7 @@
 	{
 		"en"		"ON"
 		"chi"		"开"
-		"zho"		"開"
+		"zho"		"開啟"
 		"ua"		"УВІМК."
 		"ru"		"ВКЛ"
 	}
@@ -29,7 +29,7 @@
 	{
 		"en"		"OFF"
 		"chi"		"关"
-		"zho"		"關"
+		"zho"		"關閉"
 		"ua"		"ВИМК."
 		"ru"		"ВЫКЛ"
 	}
@@ -37,7 +37,7 @@
 	{
 		"en"		"The legacy centre-screen HUD; also affects the legacy layout HUD style"
 		"chi"		"旧版屏幕中心 HUD; 同时影响旧版布局 HUD 样式"
-		"zho"		"舊版畫面中央 HUD；也會影響舊版版面配置的 HUD 樣式"
+		"zho"		"舊版畫面中央 HUD；也會影響舊版配置式 HUD 樣式"
 		"ua"		"Центральний HUD старого зразка; також впливає на стиль HUD старого компонування"
 		"ru"		"Старый HUD по центру экрана; также влияет на стиль старого HUD"
 	}
@@ -61,7 +61,7 @@
 	{
 		"en"		"Mimic Spectated Player"
 		"chi"		"模仿被观察玩家"
-		"zho"		"模仿被觀察玩家"
+		"zho"		"套用觀戰玩家的設定"
 		"ua"		"Використовувати налаштування гравця під час спостереження"
 		"ru"		"Скопировать у наблюдаемого игрока"
 	}
@@ -69,61 +69,69 @@
 	{
 		"en"		"Use their HUD settings while spectating them"
 		"chi"		"观察该玩家时使用其 HUD 设置"
-		"zho"		"觀察該玩家時使用其 HUD 設置"
+		"zho"		"觀戰其他玩家時使用該玩家的 HUD 設定"
 		"ua"		"Використовувати їхні налаштування HUD під час спостереження за ними"
 		"ru"		"Показывать HUD наблюдаемого игрока"
 	}
 	"Menu - Game HUD"
 	{
 		"en"		"Game HUD"
-		"zho"		"遊戲 HUD"
+		"chi"		"游戏 HUD"
+		"zho"		"游戲 HUD"
 		"ua"		"HUD гри"
 		"ru"		"HUD игры"
 	}
 	"Menu - Game HUD All"
 	{
 		"en"		"Hide Everything"
-		"zho"		"隱藏全部"
+		"chi"		"隐藏所有内容"
+		"zho"		"隱藏所有內容"
 		"ua"		"Приховати все"
 		"ru"		"Спрятать всё"
 	}
 	"Menu - Game HUD All Sub"
 	{
 		"en"		"The only way to hide chat and the radar. Also applies to anyone spectating you directly"
-		"zho"		"這是隱藏聊天與雷達的唯一方式，也會影響直接觀戰你的玩家"
+		"chi"		"这是隐藏聊天栏和雷达的唯一方式，也会影响直接观战你的玩家"
+		"zho"		"這是隱藏聊天欄與雷達的唯一方式，也會影響直接觀戰你的玩家"
 		"ua"		"Єдиний спосіб приховати чат і радар"
 		"ru"		"Единственный способ скрыть чат и радар. Также скрывает их от наблюдателей"
 	}
 	"Menu - Game HUD Spectators Sub"
 	{
 		"en"		"Also applies to anyone spectating you directly"
+		"chi"		"也会影响直接观战你的玩家"
 		"zho"		"也會影響直接觀戰你的玩家"
 		"ru"		"Также скрывает от наблюдателей"
 	}
 	"Menu - Game HUD Crosshair"
 	{
 		"en"		"Hide Crosshair"
-		"zho"		"隱藏準星"
+		"chi"		"隐藏准星"
+		"zho"		"隱藏准星"
 		"ua"		"Приховати приціл"
 		"ru"		"Скрыть прицел"
 	}
 	"Menu - Game HUD Weapons"
 	{
 		"en"		"Hide Weapon Selection, Health and Ammo"
-		"zho"		"隱藏武器選擇、生命值與彈藥"
+		"chi"		"隐藏武器选择、生命值和弹药"
+		"zho"		"隱藏武器選擇、生命值和彈藥"
 		"ua"		"Приховати вибір зброї, здоров'я і боєприпаси"
 		"ru"		"Скрыть выбор оружия, здоровье и патроны"
 	}
 	"Menu - Game HUD Notices"
 	{
 		"en"		"Hide Kill Feed and Alerts"
-		"zho"		"隱藏擊殺資訊與提示"
+		"chi"		"隐藏击杀信息和提示"
+		"zho"		"隱藏擊殺信息和提示"
 		"ua"		"Приховати стрічку смертей та сповіщення"
 		"ru"		"Скрыть ленту смертей и оповещения"
 	}
 	"Menu - Game HUD Voice"
 	{
 		"en"		"Hide Voice Chat Indicator"
+		"chi"		"隐藏语音聊天指示器"
 		"zho"		"隱藏語音聊天指示器"
 		"ua"		"Приховати індикатор голосового чату"
 		"ru"		"Скрыть индикатор голосового чата"
@@ -156,7 +164,7 @@
 	{
 		"en"		"* depends on your local font installation, type !fonts for more information"
 		"chi"		"* 取决于你本地安装的字体, 输入 !fonts 了解更多信息"
-		"zho"		"* 取決於你本機安裝的字體, 輸入 !fonts 瞭解更多信息"
+		"zho"		"* 取決於你本地安裝的字體, 輸入 !fonts 瞭解更多信息"
 		"ua"		"* залежить від того, які шрифти встановлено у вашій системі, для отримання додаткової інформації введіть команду !fonts"
 		"ru"		"* зависит от локально установленных шрифтов, напишите !fonts для подробностей"
 	}
@@ -188,7 +196,7 @@
 	{
 		"en"		"Reset to defaults"
 		"chi"		"重置为默认值"
-		"zho"		"重設為默認值"
+		"zho"		"重置為預設值"
 		"ua"		"Скинути до типових значень"
 		"ru"		"Сброс настроек"
 	}
@@ -204,7 +212,7 @@
 	{
 		"en"		"Prespeed"
 		"chi"		"地速"
-		"zho"		"地速"
+		"zho"		"起跳前速度"
 		"ua"		"Пре-швидкість"
 		"ru"		"Prespeed"
 	}
@@ -316,7 +324,7 @@
 	{
 		"en"		"Jump/Ladder only ignores walk-offs, Always keeps it shown on the ground"
 		"chi"		"仅跳跃/梯子会忽略走下边缘的情况, 始终会在地面上持续显示"
-		"zho"		"「僅跳躍／梯子」會忽略直接走下邊緣的情況；「始終」則會在地面上持續顯示"
+		"zho"		"「僅跳躍／梯子」會忽略直接走出邊緣的情況；「始終顯示」則會在地面上持續顯示"
 		"ua"		"Стрибок/Драбина ігнорує лише випадки, коли ви сходите з блоку, і опція Завжди показує пре-швидкість на землі"
 		"ru"		"Только прыжок/лестница игнорирует сход с края, Всегда показывает prespeed на земле"
 	}
@@ -332,7 +340,7 @@
 	{
 		"en"		"Jump/Ladder only"
 		"chi"		"仅跳跃/梯子"
-		"zho"		"僅跳躍/梯子"
+		"zho"		"僅跳躍／梯子"
 		"ua"		"Тільки Стрибок/Драбина"
 		"ru"		"Только прыжок/лестница"
 	}
@@ -356,7 +364,7 @@
 	{
 		"en"		"Perfect bhop"
 		"chi"		"Perf"
-		"zho"		"完美連跳"
+		"zho"		"Perf（完美連跳）"
 		"ua"		"Perfect bhop"
 		"ru"		"Perfect bhop"
 	}
@@ -571,7 +579,7 @@
 	{
 		"en"		"Warns when opposite movement keys (W+S or A+D) are held at the same time"
 		"chi"		"当相反方向的移动键 (W+S 或 A+D) 被同时按下时发出警告"
-		"zho"		"當相反方向的移動鍵 (W+S 或 A+D) 被同時按下時發出警告"
+		"zho"		"同時按下相反方向的移動鍵（W+S 或 A+D）時發出警告"
 		"ua"		"Попереджає, коли протилежні клавіші руху (W+S або A+D) натиснуті одночасно"
 		"ru"		"Предупреждает, когда противоположные кнопки движения (W+S или A+D) нажаты одновременно"
 	}
@@ -587,7 +595,7 @@
 	{
 		"en"		"Overlap on axis only"
 		"chi"		"仅轴向重叠警告"
-		"zho"		"僅在對應方向鍵顯示重疊警告"
+		"zho"		"僅在重疊按鍵上警告"
 		"ua"		"Overlap лише по осі"	
 		"ru"		"Overlap только по оси"	
 	}
@@ -595,7 +603,7 @@
 	{
 		"en"		"Warn on the two overlapping keys instead of the whole overlay"
 		"chi"		"仅警告两个重叠的按键, 而非整个叠加层"
-		"zho"		"只在兩個重疊的按鍵上顯示警告，而非整個按鍵顯示區"
+		"zho"		"只標示同時按下的兩個衝突按鍵，而非整個按鍵顯示區"
 		"ua"		"Попереджати про Overlap двох клавіш замість всього оверлею"
 		"ru"		"Предупреждает об Overlap только на двух клавишах, вместо всего оверлея"
 	}
@@ -691,7 +699,7 @@
 	{
 		"en"		"Menu"
 		"chi"		"菜单"
-		"zho"		"菜單"
+		"zho"		"選單"
 		"ua"		"Меню"
 		"ru"		"Меню"
 	}
@@ -699,7 +707,7 @@
 	{
 		"en"		"Style"
 		"chi"		"风格"
-		"zho"		"風格"
+		"zho"		"樣式"
 		"ua"		"Стиль"
 		"ru"		"Стиль"
 	}
@@ -707,7 +715,7 @@
 	{
 		"en"		"Layout"
 		"chi"		"布局"
-		"zho"		"佈局"
+		"zho"		"配置式"
 		"ua"		"Компонування (mhud стиль)"
 		"ru"		"Макет"
 	}
@@ -723,7 +731,7 @@
 	{
 		"en"		"Checkpoints"
 		"chi"		"存点"
-		"zho"		"存點"
+		"zho"		"儲儲存點"
 		"ua"		"Чекпоінти"
 		"ru"		"Чекпоинты"
 	}
@@ -731,7 +739,7 @@
 	{
 		"en"		"Reset everything to defaults"
 		"chi"		"全部重置为默认值"
-		"zho"		"全部重設為默認值"
+		"zho"		"全部重置為預設值"
 		"ua"		"Скинути все до типових значень"
 		"ru"		"Сбросить все значения"
 	}
@@ -778,14 +786,16 @@
 	"Menu - Keys Jump Count"
 	{
 		"en"		"Count jump inputs"
-		"zho"		"計算跳躍輸入次數"
+		"chi"		"统计跳跃按键次数"
+		"zho"		"統計跳躍輸入次數"
 		"ua"		"Підраховувати кількість інпутів стрибка"
 		"ru"		"Считать нажатия прыжка"
 	}
 	"Menu - Keys Jump Count Sub"
 	{
 		"en"		"J shows how many jump presses came in, for jumping with the scroll wheel"
-		"zho"		"J 會顯示收到的跳躍輸入次數，適用於使用滑鼠滾輪跳躍"
+		"chi"		"J 显示跳跃键的触发次数，适用于使用滚轮跳跃"
+		"zho"		"J 會顯示跳躍輸入次數，適用於使用滑鼠滾輪跳躍"
 		"ua"		"J показує, скільки натискань стрибка було зроблено, для стрибків за допомогою колеса прокрутки"
 		"ru"		"J показывает, сколько раз нажат прыжок, для прыжков колёсиком мыши"
 	}
@@ -824,6 +834,7 @@
 	"Menu - Text Opacity"
 	{
 		"en"		"Text opacity"
+		"chi"		"文字不透明度"
 		"zho"		"文字不透明度"
 		"ua"		"Непрозорість тексту"
 		"ru"		"Непрозрачность текста"
@@ -831,6 +842,7 @@
 	"Menu - Background Opacity"
 	{
 		"en"		"Background opacity"
+		"chi"		"背景不透明度"
 		"zho"		"背景不透明度"
 		"ua"		"Непрозорість фону"
 		"ru"		"Непрозрачность фона"
@@ -855,7 +867,7 @@
 	{
 		"en"		"Menu sounds"
 		"chi"		"菜单音效"
-		"zho"		"菜單音效"
+		"zho"		"選單音效"
 		"ua"		"Звуки в меню"
 		"ru"		"Звуки в меню"
 	}
@@ -863,7 +875,7 @@
 	{
 		"en"		"Shift menu for popups"
 		"chi"		"弹出窗口时移动菜单"
-		"zho"		"彈出視窗時移動菜單"
+		"zho"		"彈出窗口時移動選單"
 		"ua"		"Зсув меню для спливаючих вікон"
 		"ru"		"Смещение меню для всплывающих окон"
 	}
@@ -871,7 +883,7 @@
 	{
 		"en"		"Moves the main menu to the left when a popup opens, so it fits on a 4:3 screen"
 		"chi"		"弹出窗口打开时将主菜单左移, 以便在 4:3 屏幕上完整显示"
-		"zho"		"彈出視窗打開時將主菜單左移, 以便在 4:3 螢幕上完整顯示"
+		"zho"		"彈出視窗開啟時將主選單往左移，讓內容能完整顯示於 4:3 畫面"
 		"ua"		"Переміщує головне меню вліво, коли відкривається спливаюче вікно, щоб воно помістилося на екрані 4:3"
 		"ru"		"Перемещает главное меню налево при появлении окна, чтобы оно поместилось на разрешении 4:3"
 	}
@@ -943,7 +955,7 @@
 	{
 		"en"		"Styles"
 		"chi"		"风格"
-		"zho"		"風格"
+		"zho"		"樣式"
 		"ua"		"Стилі"
 		"ru"		"Стили"
 	}
@@ -1135,7 +1147,7 @@
 	{
 		"en"		"简体中文"
 		"chi"		"简体中文"
-		"zho"		"簡體中文"
+		"zho"		"简体中文"
 		"ua"		"简体中文"
 		"ru"		"简体中文"
 	}
@@ -1207,7 +1219,7 @@
 	{
 		"en"		"Language"
 		"chi"		"语言"
-		"zho"		"語言"
+		"zho"		"语言"
 		"ua"		"Мова"
 		"ru"		"Язык"
 	}
@@ -1271,7 +1283,7 @@
 	{
 		"en"		"Record sound volume"
 		"chi"		"记录音效音量"
-		"zho"		"記錄音效音量"
+		"zho"		"紀錄音效音量"
 		"ua"		"Гучність звуку рекорду"
 		"ru"		"Громкость звука рекорда"
 	}
@@ -1279,7 +1291,7 @@
 	{
 		"en"		"Jumpstats sound volume"
 		"chi"		"起跳提示音音量"
-		"zho"		"起跳提示音音量"
+		"zho"		"Jumpstats 音效音量"
 		"ua"		"Гучність звуку статистики стрибків"
 		"ru"		"Громкость звуков статистики прыжков"
 	}
@@ -1295,7 +1307,7 @@
 	{
 		"en"		"Prints checkpoint/stage/split times to console for third-party map overlay tools to read"
 		"chi"		"将存点/阶段/分段计时输出到控制台, 供第三方地图叠加工具读取"
-		"zho"		"將存點/階段/分段計時輸出到控制台, 供第三方地圖疊加工具讀取"
+		"zho"		"將儲儲存點／階段／分段時間輸出至控制台，供第三方地圖覆蓋介面工具讀取"
 		"ua"		"Виводить чекпoinти/етапи/спліти в консоль для інструментів оверлею мапи сторонніх розробників"
 		"ru"		"Выводит время чекпоинтов/этапов/сплитов в консоль для интеграции сторонних оверлеев"
 	}
@@ -1303,7 +1315,7 @@
 	{
 		"en"		"Map overlay integration"
 		"chi"		"地图叠加层集成"
-		"zho"		"地圖疊加層集成"
+		"zho"		"地圖覆蓋介面整合"
 		"ua"		"Інтеграція оверлею мапи"
 		"ru"		"Интеграция оверлея карты"
 	}
@@ -1319,7 +1331,7 @@
 	{
 		"en"		"Blocks commands that would reset your timer during a valid run"
 		"chi"		"在有效跑图中阻止会重置计时器的命令"
-		"zho"		"在有效跑圖中阻止會重設計時器的命令"
+		"zho"		"在有效的跑圖過程中阻止會重設計時器的指令"
 		"ua"		"Блокує команди, які можуть скинути ваш таймер під час проходження мапи"
 		"ru"		"Блокирует команды, которые могут сбросить таймер на прохождении"
 	}
@@ -1327,7 +1339,7 @@
 	{
 		"en"		"Safeguard"
 		"chi"		"安全防护"
-		"zho"		"安全防護"
+		"zho"		"計時保護"
 		"ua"		"Запобіжник (Safeguard)"
 		"ru"		"Защита таймера"
 	}
@@ -1359,7 +1371,7 @@
 	{
 		"en"		"Which time your checkpoint/stage diffs are measured against during a run"
 		"chi"		"跑图过程中, 存点/阶段的时间差将与哪个记录进行比较"
-		"zho"		"跑圖過程中, 存點/階段的時間差將與哪個記錄進行比較"
+		"zho"		"跑圖時，選擇要將儲儲存點／階段的時間差與哪筆紀錄比較"
 		"ua"		"Який час використовується для порівняння різниці чекпоінтів/етапів під час проходження мапи"
 		"ru"		"Рекорд, с которым сравниваются чекпоинты/сплиты на прохождении"
 	}
@@ -1383,7 +1395,7 @@
 	{
 		"en"		"Local PB"
 		"chi"		"本地个人最佳"
-		"zho"		"本機個人最佳"
+		"zho"		"本機個人最佳紀錄"
 		"ua"		"Локальний PB"
 		"ru"		"Локальный PB"
 	}
@@ -1391,7 +1403,7 @@
 	{
 		"en"		"Global PB"
 		"chi"		"全球个人最佳"
-		"zho"		"全球個人最佳"
+		"zho"		"全球個人最佳紀錄"
 		"ua"		"Глобальний PB"
 		"ru"		"Глобальный PB"
 	}
@@ -1399,7 +1411,7 @@
 	{
 		"en"		"Server record"
 		"chi"		"服务器纪录"
-		"zho"		"服務器紀錄"
+		"zho"		"伺服器紀錄"
 		"ua"		"Рекорд сервера"
 		"ru"		"Рекорд сервера"
 	}
@@ -1415,7 +1427,7 @@
 	{
 		"en"		"Jumpstats"
 		"chi"		"起跳数据"
-		"zho"		"起跳數據"
+		"zho"		"跳躍數據"
 		"ua"		"Статистика стрибків"
 		"ru"		"Статистика прыжков"
 	}
@@ -1423,13 +1435,14 @@
 	{
 		"en"		"Report my jumps"
 		"chi"		"报告我的跳跃"
-		"zho"		"報告我的跳躍"
+		"zho"		"顯示我的跳躍數據"
 		"ua"		"Повідомляти про мої стрибки"
 		"ru"		"Показывать мои прыжки"
 	}
 	"Menu - JS Report Type"
 	{
 		"en"		"Report type"
+		"chi"		"显示方式"
 		"zho"		"顯示方式"
 		"pl"		"Typ reportu"
 		"nl"		"Type rapport"
@@ -1440,6 +1453,7 @@
 	"Menu - JS Report Type Sub"
 	{
 		"en"		"Where your jumpstats are shown"
+		"chi"		"选择跳跃数据的显示位置"
 		"zho"		"選擇跳躍數據的顯示位置"
 		"pl"		"Gdzie pokazywać statty skow"
 		"nl"		"Waar je sprongstats worden weergegeven"
@@ -1450,6 +1464,7 @@
 	"Menu - JS Report Type HUD"
 	{
 		"en"		"HUD"
+		"chi"		"HUD"
 		"zho"		"HUD"
 		"pl"		"HUD"
 		"nl"		"HUD"
@@ -1460,6 +1475,7 @@
 	"Menu - JS Report Type Chat"
 	{
 		"en"		"Chat"
+		"chi"		"聊天栏"
 		"zho"		"聊天欄"
 		"pl"		"Czat"
 		"nl"		"Chat"
@@ -1470,7 +1486,8 @@
 	"Menu - JS Report Type Both"
 	{
 		"en"		"Both"
-		"zho"		"兩者皆顯示"
+		"chi"		"两者都显示"
+		"zho"		"兩者都顯示"
 		"pl"		"Obydwa"
 		"nl"		"Beide"
 		"de"		"Beide"
@@ -1481,7 +1498,7 @@
 	{
 		"en"		"Report every jump, ignoring the tier thresholds below"
 		"chi"		"报告每次跳跃, 忽略下方的等级阈值"
-		"zho"		"報告每次跳躍, 忽略下方的等級閾值"
+		"zho"		"顯示每次跳躍，忽略下方的等級門檻"
 		"ua"		"Повідомляти про кожен стрибок, ігноруючи пороги рівнів нижче"
 		"ru"		"Показывать каждый прыжок, игнорируя установленный порог"
 	}
@@ -1489,7 +1506,7 @@
 	{
 		"en"		"Report every jump"
 		"chi"		"报告每次跳跃"
-		"zho"		"報告每次跳躍"
+		"zho"		"顯示每次跳躍"
 		"ua"		"Повідомляти про кожен стрибок"
 		"ru"		"Показывать каждый прыжок"
 	}
@@ -1505,7 +1522,7 @@
 	{
 		"en"		"Failstats"
 		"chi"		"失败统计"
-		"zho"		"失敗統計"
+		"zho"		"失敗跳躍統計"
 		"ua"		"Статистика невдалих стрибків"
 		"ru"		"Статистика недолётов"
 	}
@@ -1513,7 +1530,7 @@
 	{
 		"en"		"Failstats in console"
 		"chi"		"控制台失败统计"
-		"zho"		"控制台失敗統計"
+		"zho"		"在控制台顯示失敗跳躍統計"
 		"ua"		"Статистика невдалих стрибків в консолі"
 		"ru"		"Статистика недолётов в консоли"
 	}
@@ -1521,14 +1538,15 @@
 	{
 		"en"		"Minimum chat tier"
 		"chi"		"聊天框跳跃数据最低等级"
-		"zho"		"聊天框跳躍數據最低等級"
+		"zho"		"聊天欄跳躍數據最低等級"
 		"ua"		"Мінімальний поріг стрибку для відображення в чаті"
 		"ru"		"Минимальный tier в чате"
 	}
 	"Menu - JS Min Tier HUD"
 	{
 		"en"		"Minimum HUD tier"
-		"zho"		"HUD 最低等級"
+		"chi"		"HUD 跳跃数据最低等级"
+		"zho"		"HUD 跳躍數據最低等級"
 		"ua"		"Мінімальний поріг стрибку для відображення в HUD"
 		"ru"		"Минимальный tier в HUD"
 	}
@@ -1632,7 +1650,7 @@
 	{
 		"en"		"Checkpoints"
 		"chi"		"存点"
-		"zho"		"存點"
+		"zho"		"儲儲存點"
 		"ua"		"Чекпоінти"
 		"ru"		"Чекпоинты"
 	}
@@ -1640,7 +1658,7 @@
 	{
 		"en"		"Checkpoint messages"
 		"chi"		"存点消息"
-		"zho"		"存點消息"
+		"zho"		"儲存點訊息"
 		"ua"		"Повідомлення про чекпоінти"
 		"ru"		"Сообщения о чекпоинтах"
 	}
@@ -1648,7 +1666,7 @@
 	{
 		"en"		"Checkpoint sound"
 		"chi"		"存点音效"
-		"zho"		"存點音效"
+		"zho"		"儲存點音效"
 		"ua"		"Звук чекпоінту"
 		"ru"		"Звук чекпоинта"
 	}
@@ -1672,7 +1690,7 @@
 	{
 		"en"		"Use !paintcolor <r> <g> <b> for an exact color"
 		"chi"		"使用 !paintcolor <r> <g> <b> 设置精确颜色"
-		"zho"		"使用 !paintcolor <r> <g> <b> 設置精確顏色"
+		"zho"		"使用 !paintcolor <r> <g> <b> 設定精確顏色"
 		"ua"		"Використовуйте !paintcolor <r> <g> <b> для точного кольору"
 		"ru"		"Напишите !paintcolor <r> <g> <b> для точного цвета"
 	}
@@ -1680,7 +1698,7 @@
 	{
 		"en"		"Show everyone's paint"
 		"chi"		"显示所有人的涂色"
-		"zho"		"顯示所有人的塗色"
+		"zho"		"顯示所有玩家的塗色"
 		"ua"		"Показувати кольорові мітки всіх гравців"
 		"ru"		"Показать краску других"
 	}
@@ -1720,7 +1738,7 @@
 	{
 		"en"		"Export preferences to console"
 		"chi"		"导出偏好设置到控制台"
-		"zho"		"導出偏好設置到控制台"
+		"zho"		"將偏好設定匯出至控制台"
 		"ua"		"Експортувати налаштування в консоль"
 		"ru"		"Экспортировать настройки в консоль"
 	}
@@ -1728,7 +1746,7 @@
 	{
 		"en"		"----- CS2KZ preferences: paste the lines below into another server's console -----"
 		"chi"		"----- CS2KZ 偏好设置: 将以下行粘贴到其他服务器的控制台 -----"
-		"zho"		"----- CS2KZ 偏好設置: 將以下行粘貼到其他服務器的控制台 -----"
+		"zho"		"----- CS2KZ 偏好設定: 將以下行粘貼到其他伺服器的控制台 -----"
 		"ua"		"----- Налаштування CS2KZ: вставте рядки нижче в консоль іншого сервера -----"
 		"ru"		"----- Настройки CS2KZ: скопируйте строки ниже в консоль на другом сервере -----"
 	}
@@ -1736,7 +1754,7 @@
 	{
 		"en"		"setinfo is ignored on workshop maps.\nEither paste these from the main menu before joining a server, or add -disable_workshop_command_filtering to your CS2 launch options.\nThe console only takes 512 characters at a time, so paste a few lines at a time or execute them from a config file instead."
 		"chi"		"创意工坊地图会忽略 setinfo.\n请在加入服务器前从主菜单粘贴这些内容, 或将 -disable_workshop_command_filtering 添加到 CS2 启动项.\n控制台一次只能接收 512 个字符, 因此请分批粘贴几行, 或改为从配置文件执行."
-		"zho"		"創意工坊地圖會忽略 setinfo.\n請在加入服務器前從主菜單粘貼這些內容, 或將 -disable_workshop_command_filtering 添加到 CS2 啓動項.\n控制台一次只能接收 512 個字符, 因此請分批粘貼幾行, 或改為從配置文件執行."
+		"zho"		"創意工坊地圖會忽略 setinfo.\n請在加入伺服器前從主選單粘貼這些內容, 或將 -disable_workshop_command_filtering 添加到 CS2 啓動項.\n控制台一次只能接收 512 個字符, 因此請分批粘貼幾行, 或改為從配置文件執行."
 		"ua"		"setinfo ігнорується на мапах з майстерні.\nАбо вставте їх з головного меню перед приєднанням до сервера, або додайте -disable_workshop_command_filtering до параметрів запуску CS2.\nКонсоль приймає лише 512 символів за раз, тому вставляйте кілька рядків за раз або виконуйте їх із конфігураційного файлу."
 		"ru"		"setinfo игнорируется на картах мастерской. \nЛибо вставляйте их из главного меню перед игрой на сервере, либо добавьте -disable_workshop_command_filtering в ваши параметры запуска CS2. \nКонсоль принимает только по 512 символов за раз, так что вставляйте команды частями или активируйте их через cfg-файл."
 	}
@@ -1744,7 +1762,7 @@
 	{
 		"en"		"The stamp line below is what makes a block apply once instead of on every connect.\nKeep it when you are moving your own preferences to another server. Leave it out when you are sharing them with someone else."
 		"chi"		"下方的标记行可使该配置块只生效一次, 而不是每次连接都生效.\n将你自己的偏好设置迁移到其他服务器时请保留它; 分享给他人时请删除它."
-		"zho"		"下方的標記行可使該配置塊只生效一次, 而不是每次連接都生效.\n將你自己的偏好設置遷移到其他服務器時請保留它; 分享給他人時請刪除它."
+		"zho"		"下方的標記行可使該配置塊只生效一次, 而不是每次連接都生效.\n將你自己的偏好設定遷移到其他伺服器時請保留它; 分享給他人時請刪除它."
 		"ua"		"Рядок нижче змушує блок застосовуватися один раз замість кожного підключення.\nЗалиште його, коли ви переносите свої налаштування на інший сервер. Видаліть його, коли ви ділитеся ними з іншими."
 		"ru"		"Строка ниже применяет блок один раз вместо каждого подключения.\nОставьте её, когда вы переносите свои настройки на другой сервер. Удалите её, когда вы делитесь ими с другими."
 	}
@@ -1752,7 +1770,7 @@
 	{
 		"en"		"----- end. To stop a preference from following you, run: setinfo kzp_<name> \"\" -----"
 		"chi"		"----- 结束. 若要阻止某项偏好设置跟随你, 请运行: setinfo kzp_<name> \"\" -----"
-		"zho"		"----- 結束. 若要阻止某項偏好設置跟隨你, 請運行: setinfo kzp_<name> \"\" -----"
+		"zho"		"----- 結束. 若要阻止某項偏好設定跟隨你, 請運行: setinfo kzp_<name> \"\" -----"
 		"ua"		"----- кінець. Щоб зупинити відстеження налаштування, виконайте: setinfo kzp_<name> \"\" -----"
 		"ru"		"----- конец. Чтобы открепить от вас настройку, напишите: setinfo kzp_<название> \"\" -----"
 	}
@@ -1761,7 +1779,7 @@
 		"#format"	"count:d"
 		"en"		"{grey}Exported {default}{count}{grey} preferences to your console."
 		"chi"		"{grey}已将 {default}{count}{grey} 项偏好设置导出到你的控制台."
-		"zho"		"{grey}已將 {default}{count}{grey} 項偏好設置導出到你的控制台."
+		"zho"		"{grey}已將 {default}{count}{grey} 項偏好設定導出到你的控制台."
 		"ua"		"{grey}Експортовано {default}{count}{grey} налаштувань у вашу консоль."
 		"ru"		"{grey}Экспортировано {default}{count}{grey} настроек в консоль."
 	}
@@ -1770,7 +1788,7 @@
 		"#format"	"count:d"
 		"en"		"{grey}Imported {default}{count}{grey} preferences."
 		"chi"		"{grey}已导入 {default}{count}{grey} 项偏好设置."
-		"zho"		"{grey}已導入 {default}{count}{grey} 項偏好設置."
+		"zho"		"{grey}已導入 {default}{count}{grey} 項偏好設定."
 		"ua"		"{grey}Імпортовано {default}{count}{grey} налаштувань."
 		"ru"		"{grey}Импортировано {default}{count}{grey} настроек."
 	}
@@ -1778,27 +1796,30 @@
 	{
 		"en"		"{grey}The options menu is currently unavailable."
 		"chi"		"{grey}选项菜单当前不可用."
-		"zho"		"{grey}選項菜單當前不可用."
+		"zho"		"{grey}選項選單當前不可用."
 		"ua"		"{grey}Меню опцій наразі недоступне."
 		"ru"		"{grey}Меню настроек сейчас недоступно."
 	}
 	"Menu - Move Elements"
 	{
 		"en"		"Move elements"
-		"zho"		"移動介面元素"
+		"chi"		"移动元素"
+		"zho"		"移動元素"
 		"ua"		"Перемістити елементи"
 		"ru"		"Переместить элементы"
 	}
 	"Menu - Move Elements Sub"
 	{
 		"en"		"Drag HUD elements into place with the mouse"
-		"zho"		"使用滑鼠拖曳 HUD 元素來調整位置"
+		"chi"		"使用鼠标拖动 HUD 元素以调整位置"
+		"zho"		"使用滑鼠拖曳 HUD 元素以調整位置"
 		"ua"		"Перетягніть елементи HUD мишкою"
 		"ru"		"Перетащите элементы HUD мышкой"
 	}
 	"Menu - Move With Mouse"
 	{
 		"en"		"Move with mouse"
+		"chi"		"使用鼠标移动"
 		"zho"		"使用滑鼠移動"
 		"ua"		"Перемістити мишкою"
 		"ru"		"Переместить мышкой"
@@ -1806,6 +1827,7 @@
 	"Menu - Screen Aspect"
 	{
 		"en"		"Screen aspect ratio"
+		"chi"		"屏幕宽高比"
 		"zho"		"螢幕長寬比"
 		"ua"		"Співвідношення сторін екрану"
 		"ru"		"Соотношение сторон экрана"
@@ -1813,25 +1835,29 @@
 	"Menu - Screen Aspect Sub"
 	{
 		"en"		"Match your resolution so Move elements drags and snaps evenly on both axes"
-		"zho"		"配合你的螢幕解析度，讓移動元素時能在水平及垂直方向均勻拖曳與吸附"
+		"chi"		"匹配你的屏幕分辨率，使移动元素时在两个轴向上的拖动和吸附保持一致"
+		"zho"		"配合你的螢幕解析度，讓移動元素時的水平與垂直拖曳及吸附行為一致"
 		"ua"		"Налаштуйте роздільну здатність так, щоб елементи «Переміщення» рівномірно перетягувалися та прив'язувалися по обох осях"
 		"ru"		"Настройте соотношение так, чтобы при перемещении элементы равномерно перетягивались и привязывались по обеим осям."
 	}
 	"Menu - JS Compact"
 	{
 		"en"		"Compact"
-		"zho"		"精簡"
+		"chi"		"紧凑"
+		"zho"		"緊湊"
 		"ru"		"Компактно"
 	}
 	"Menu - JS Compact Sub"
 	{
 		"en"		"Only the pills, with no panel. The history is always on"
-		"zho"		"只顯示膠囊式資訊，不顯示面板；歷史紀錄會保持顯示"
+		"chi"		"仅显示数据标签，不显示面板；历史记录始终开启"
+		"zho"		"僅顯示數據標籤，不顯示面板；歷史紀錄始終開啓"
 		"ru"		"Кратко и строго, без панели. История всегда включена."
 	}
 	"Menu - JS History"
 	{
 		"en"		"Show history"
+		"chi"		"显示历史记录"
 		"zho"		"顯示歷史紀錄"
 		"ua"		"Показати історію"
 		"ru"		"Показать историю"
@@ -1839,20 +1865,23 @@
 	"Menu - JS History Sub"
 	{
 		"en"		"Your last few jumps, stacked next to the panel"
-		"zho"		"最近幾次跳躍的紀錄，排列在面板旁"
+		"chi"		"最近几次跳跃记录，排列在面板旁边"
+		"zho"		"最近幾次跳躍紀錄，排列在面板旁邊"
 		"ua"		"Ваші останні кілька стрибків, будуть розташовані над панеллю"
 		"ru"		"Ваши предыдущие прыжки, рядом с панелью"
 	}
 	"Menu - JS History Below"
 	{
 		"en"		"History below the panel"
-		"zho"		"歷史紀錄顯示於面板下方"
+		"chi"		"历史记录显示在面板下方"
+		"zho"		"歷史紀錄顯示在面板下方"
 		"ua"		"Історія під панеллю"
 		"ru"		"История под панелью"
 	}
 	"Menu - JS History Below Sub"
 	{
 		"en"		"Stack the history under the panel instead of above it"
+		"chi"		"将历史记录排列在面板下方，而不是上方"
 		"zho"		"將歷史紀錄排列在面板下方，而不是上方"
 		"ua"		"Розташувати історію під панеллю замість над нею"
 		"ru"		"Показывать историю под панелью, а не над ней"
@@ -1860,20 +1889,23 @@
 	"Menu - JS Duration"
 	{
 		"en"		"Panel duration"
-		"zho"		"面板顯示時間"
+		"chi"		"面板显示时长"
+		"zho"		"面板顯示時長"
 		"ua"		"Тривалість відображення панелі"
 		"ru"		"Длительность отображения панели"
 	}
 	"Menu - JS Duration Sub"
 	{
 		"en"		"How long the panel stays up after a jump"
-		"zho"		"跳躍後面板持續顯示的時間"
+		"chi"		"跳跃结束后面板保持显示的时间"
+		"zho"		"跳躍結束後面板保持顯示的時間"
 		"ua"		"Як довго панель залишається на екрані після стрибка"
 		"ru"		"Длительность отображения панели после прыжка"
 	}
 	"Menu - JS Field Block"
 	{
 		"en"		"Block"
+		"chi"		"板子"
 		"zho"		"板子"
 		"ua"		"Блок"
 		"ru"		"Блок"
@@ -1881,13 +1913,15 @@
 	"Menu - JS Field Strafes"
 	{
 		"en"		"Strafes"
-		"zho"		"加速次數"
+		"chi"		"加速"
+		"zho"		"Strafe 次數"
 		"ua"		"Стрейфи"
 		"ru"		"Strafes"
 	}
 	"Menu - JS Field Sync"
 	{
 		"en"		"Sync"
+		"chi"		"同步率"
 		"zho"		"同步率"
 		"ua"		"Синхронізація"
 		"ru"		"Синх"
@@ -1895,13 +1929,15 @@
 	"Menu - JS Field Pre Max"
 	{
 		"en"		"Pre and max speed"
-		"zho"		"地速與空速"
+		"chi"		"地速和空速"
+		"zho"		"起跳前速度與最大空速"
 		"ua"		"Пре-швидкість та максимальна швидкість"
 		"ru"		"Pre и макс. скорость"
 	}
 	"Menu - JS Field Height"
 	{
 		"en"		"Height"
+		"chi"		"高度"
 		"zho"		"高度"
 		"ua"		"Висота"
 		"ru"		"Высота"
@@ -1909,6 +1945,7 @@
 	"Menu - JS Field Air Time"
 	{
 		"en"		"Air time"
+		"chi"		"滞空时间"
 		"zho"		"滯空時間"
 		"ua"		"Час у повітрі (Air time)"
 		"ru"		"Air time"
@@ -1916,6 +1953,7 @@
 	"Menu - JS Field Width"
 	{
 		"en"		"Width"
+		"chi"		"幅度"
 		"zho"		"幅度"
 		"ua"		"Ширина"
 		"ru"		"Ширина"
@@ -1923,6 +1961,7 @@
 	"Menu - JS Field Gain Efficiency"
 	{
 		"en"		"Gain efficiency"
+		"chi"		"增益效率"
 		"zho"		"增益效率"
 		"ua"		"Ефективність приросту"
 		"ru"		"Эффективность прироста"
@@ -1930,6 +1969,7 @@
 	"Menu - JS Field Air Path"
 	{
 		"en"		"Air path"
+		"chi"		"空中路径"
 		"zho"		"空中路徑"
 		"ua"		"Шлях у повітрі (Air path)"
 		"ru"		"Airpath"
@@ -1937,20 +1977,23 @@
 	"Menu - JS Field Bad Angles"
 	{
 		"en"		"Bad angles, overlap and dead air"
-		"zho"		"無效角度、按鍵重疊與空中無操作"
+		"chi"		"无效角度、冲突和无操作"
+		"zho"		"無效角度、按鍵衝突與無操作"
 		"ua"		"Bad angles, Перекриття (Overlap) та dead air"
 		"ru"		"Bad angles, overlap и dead air"
 	}
 	"Menu - JS Field Release"
 	{
 		"en"		"W release"
-		"zho"		"鬆開 W"
+		"chi"		"松开 W"
+		"zho"		"放開 W"
 		"ua"		"Відпускання W"
 		"ru"		"Отжатие W"
 	}
 	"Menu - JS Field Offset"
 	{
 		"en"		"Offset"
+		"chi"		"位移"
 		"zho"		"位移"
 		"ua"		"Зсув"
 		"ru"		"Сдвиг"
@@ -1958,111 +2001,127 @@
 	"Menu - JS Field Edge"
 	{
 		"en"		"Edge"
-		"zho"		"邊距"
+		"chi"		"边距"
+		"zho"		"邊緣距離"
 		"ua"		"Край"
 		"ru"		"Край"
 	}
 	"Menu - JS Field Deviation"
 	{
 		"en"		"Deviation"
-		"zho"		"偏差"
+		"chi"		"偏移"
+		"zho"		"偏移"
 		"ua"		"Відхилення (Deviation)"
 		"ru"		"Отклонение"
 	}
 	"Menu - JS Field Miss"
 	{
 		"en"		"Miss"
-		"zho"		"差距"
+		"chi"		"距离差"
+		"zho"		"距離差"
 		"ua"		"Брак (Miss)"
 		"ru"		"Нехватка"
 	}
 	"Menu - JS Fields"
 	{
 		"en"		"Fields"
-		"zho"		"顯示欄位"
+		"chi"		"数据项目"
+		"zho"		"數據項目"
 		"ua"		"Елементи статистики"
 		"ru"		"Элементы"
 	}
 	"Menu - JS Field Order"
 	{
 		"en"		"Order"
-		"zho"		"排列順序"
+		"chi"		"顺序"
+		"zho"		"順序"
 		"ua"		"Послідовність"
 		"ru"		"Последовательность"
 	}
 	"Menu - JS Field Order Sub"
 	{
 		"en"		"Only the fields that are on are listed. The chat and the HUD panel share the order"
-		"zho"		"僅列出已啟用的欄位；聊天欄與 HUD 面板共用排列順序"
+		"chi"		"仅列出已启用的项目；聊天栏与 HUD 面板共用相同顺序"
+		"zho"		"僅列出已啓用的項目；聊天欄與 HUD 面板共用相同順序"
 		"ua"		"У списку відображаються лише ті поля, які увімкнені. Порядок відображення в чаті та на панелі HUD є однаковим"
 		"ru"		"Отображены только включенные элементы. Порядок одинаков в чате и HUD."
 	}
 	"Menu - JS Field Extended Sub"
 	{
 		"en"		"In chat, only on the extended stats line"
-		"zho"		"在聊天欄中僅顯示於擴充數據列"
+		"chi"		"在聊天栏中，仅显示在扩展统计行"
+		"zho"		"在聊天欄中，僅顯示在擴展統計行"
 		"ua"		"Відображається в чаті лише при увімкненій розширеній статистиці"
 		"ru"		"В чате, только в расширенной статистике"
 	}
 	"Menu - JS Extended Stats Sub"
 	{
 		"en"		"Adds a second chat line with the fields that are marked for it"
-		"zho"		"在聊天欄新增第二行，顯示標記為擴充數據的欄位"
+		"chi"		"新增第二行聊天信息，显示标记为扩展统计的项目"
+		"zho"		"在聊天欄新增第二行資訊，顯示標記為延伸統計的項目"
 		"ua"		"Додає другий рядок чату з полями, які позначені для цього"
 		"ru"		"Добавляет вторую линию в чате с обозначенными полями"
 	}
 	"Menu - Course Info"
 	{
 		"en"		"Course Info"
-		"zho"		"關卡資訊"
+		"chi"		"关卡信息"
+		"zho"		"關卡信息"
 		"ua"		"Інформація про курс"
 		"ru"		"Информация о маршруте"
 	}
 	"Menu - W Release"
 	{
 		"en"		"W Release"
-		"zho"		"鬆開 W"
+		"chi"		"松开 W"
+		"zho"		"放開 W"
 		"ua"		"Відпускання W"
 		"ru"		"Отжатие W"
 	}
 	"Menu - Course Show Map"
 	{
 		"en"		"Map and course"
-		"zho"		"地圖與關卡"
+		"chi"		"地图和关卡"
+		"zho"		"地圖和關卡"
 		"ua"		"Мапа та курс"
 		"ru"		"Карта и маршрут"
 	}
 	"Menu - Course Show Pro"
 	{
 		"en"		"Pro record"
-		"zho"		"Pro 紀錄"
+		"chi"		"PRO 记录"
+		"zho"		"PRO 紀錄"
 		"ua"		"Pro рекорд"
 		"ru"		"Pro рекорд"
 	}
 	"Menu - Course Show Pro Sub"
 	{
 		"en"		"A second row for the record without teleports"
-		"zho"		"額外顯示一列未使用傳送的紀錄"
+		"chi"		"额外显示一行不使用传送的记录"
+		"zho"		"額外顯示一行未使用傳送的紀錄"
 		"ua"		"Другий рядок для рекорду без телепортів"
 		"ru"		"Вторая строка для рекорда без телепортов"
 	}
 	"Menu - Course Show Splits"
 	{
 		"en"		"Zone times"
-		"zho"		"區段時間"
+		"chi"		"区域计时"
+		"zho"		"區域計時"
 		"ua"		"Час зон"
 		"ru"		"Время зон"
 	}
 	"Menu - Course Show Splits Sub"
 	{
 		"en"		"A pill for every split, checkpoint and stage, against your !comparelevel time"
-		"zho"		"為每個分段、存點與階段顯示資訊標籤，並與 !comparelevel 設定的時間比較"
+		"chi"		"显示每个分段、存点和阶段的时间，并与你通过 !comparelevel 设置的记录进行比较"
+		"zho"		"顯示每個分段、儲儲存點與階段的時間，並與透過 !comparelevel 設定的紀錄比較"
 		"ua"		"Індикатор для кожного спліту, контрольної точки та етапу, у порівнянні з вашим часом !comparelevel"
 		"ru"		"Индикатор для каждого сплита, чекпоинта и этапа, в сравнении с вашим рекордом !comparelevel"
 	}
 	"Menu - Color Early"
 	{
 		"en"		"Early"
+		"chi"		"过早"
 		"zho"		"過早"
 		"ua"		"Зарано"
 		"ru"		"Рано"
@@ -2070,6 +2129,7 @@
 	"Menu - Color Perfect"
 	{
 		"en"		"Perfect"
+		"chi"		"完美"
 		"zho"		"完美"
 		"ua"		"Досконало"
 		"ru"		"Идеально"
@@ -2077,6 +2137,7 @@
 	"Menu - Color Late"
 	{
 		"en"		"Late"
+		"chi"		"过晚"
 		"zho"		"過晚"
 		"ua"		"Запізно"
 		"ru"		"Поздно"
@@ -2084,20 +2145,23 @@
 	"Menu - Course Show Progress"
 	{
 		"en"		"Zone progress"
-		"zho"		"區段進度"
+		"chi"		"区域进度"
+		"zho"		"區域進度"
 		"ua"		"Прогрес зон"
 		"ru"		"Прогресс маршрута"
 	}
 	"Menu - Course Show Progress Sub"
 	{
 		"en"		"Stages, checkpoints and splits reached, on courses that have them"
-		"zho"		"顯示關卡中已到達的階段、存點與分段（若有）"
+		"chi"		"在包含相应区域的关卡中显示已到达的阶段、存点和分段"
+		"zho"		"在具有對應區域的關卡中，顯示已到達的階段、儲儲存點與分段"
 		"ua"		"Етапи, контрольні точки та спліти, досягнуті на курсах, які мають такі"
 		"ru"		"Достигнутые этапы, контрольные точки и сплиты, если они есть"
 	}
 	"Menu - Course Show Records"
 	{
 		"en"		"Records"
+		"chi"		"记录"
 		"zho"		"紀錄"
 		"ua"		"Рекорди"
 		"ru"		"Рекорды"
@@ -2105,7 +2169,8 @@
 	"Menu - Course Show Records Sub"
 	{
 		"en"		"The world record and your gap to it, or the server record on a non-global map"
-		"zho"		"顯示世界紀錄及你與紀錄的差距；非全球地圖則顯示伺服器紀錄"
+		"chi"		"显示世界纪录及你与它的时间差；非全球地图则显示服务器纪录"
+		"zho"		"顯示世界紀錄及你與它的時間差；非全球排名地圖則顯示伺服器紀錄"
 		"ua"		"Світовий рекорд і ваше відставання від нього, або рекорд сервера на неглобальній карті"
 		"ru"		"Мировой рекорд и ваша с ним разница, либо рекорд сервера на неглобальной карте"
 	}
