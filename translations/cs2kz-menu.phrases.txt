@@ -67,47 +67,55 @@
 	"Menu - Game HUD"
 	{
 		"en"		"Game HUD"
+		"chi"		"游戏 HUD"
 		"ua"		"HUD гри"
 		"ru"		"HUD игры"
 	}
 	"Menu - Game HUD All"
 	{
 		"en"		"Hide Everything"
+		"chi"		"隐藏所有内容"
 		"ua"		"Приховати все"
 		"ru"		"Спрятать всё"
 	}
 	"Menu - Game HUD All Sub"
 	{
 		"en"		"The only way to hide chat and the radar. Also applies to anyone spectating you directly"
+		"chi"		"这是隐藏聊天栏和雷达的唯一方式，也会影响直接观战你的玩家"
 		"ua"		"Єдиний спосіб приховати чат і радар"
 		"ru"		"Единственный способ скрыть чат и радар. Также скрывает их от наблюдателей"
 	}
 	"Menu - Game HUD Spectators Sub"
 	{
 		"en"		"Also applies to anyone spectating you directly"
+		"chi"		"也会影响直接观战你的玩家"
 		"ru"		"Также скрывает от наблюдателей"
 	}
 	"Menu - Game HUD Crosshair"
 	{
 		"en"		"Hide Crosshair"
+		"chi"		"隐藏准星"
 		"ua"		"Приховати приціл"
 		"ru"		"Скрыть прицел"
 	}
 	"Menu - Game HUD Weapons"
 	{
 		"en"		"Hide Weapon Selection, Health and Ammo"
+		"chi"		"隐藏武器选择、生命值和弹药"
 		"ua"		"Приховати вибір зброї, здоров'я і боєприпаси"
 		"ru"		"Скрыть выбор оружия, здоровье и патроны"
 	}
 	"Menu - Game HUD Notices"
 	{
 		"en"		"Hide Kill Feed and Alerts"
+		"chi"		"隐藏击杀信息和提示"
 		"ua"		"Приховати стрічку смертей та сповіщення"
 		"ru"		"Скрыть ленту смертей и оповещения"
 	}
 	"Menu - Game HUD Voice"
 	{
 		"en"		"Hide Voice Chat Indicator"
+		"chi"		"隐藏语音聊天指示器"
 		"ua"		"Приховати індикатор голосового чату"
 		"ru"		"Скрыть индикатор голосового чата"
 	}
@@ -680,12 +688,14 @@
 	"Menu - Keys Jump Count"
 	{
 		"en"		"Count jump inputs"
+		"chi"		"统计跳跃按键次数"
 		"ua"		"Підраховувати кількість інпутів стрибка"
 		"ru"		"Считать нажатия прыжка"
 	}
 	"Menu - Keys Jump Count Sub"
 	{
 		"en"		"J shows how many jump presses came in, for jumping with the scroll wheel"
+		"chi"		"J 显示跳跃键的触发次数，适用于使用滚轮跳跃"
 		"ua"		"J показує, скільки натискань стрибка було зроблено, для стрибків за допомогою колеса прокрутки"
 		"ru"		"J показывает, сколько раз нажат прыжок, для прыжков колёсиком мыши"
 	}
@@ -720,12 +730,14 @@
 	"Menu - Text Opacity"
 	{
 		"en"		"Text opacity"
+		"chi"		"文字不透明度"
 		"ua"		"Непрозорість тексту"
 		"ru"		"Непрозрачность текста"
 	}
 	"Menu - Background Opacity"
 	{
 		"en"		"Background opacity"
+		"chi"		"背景不透明度"
 		"ua"		"Непрозорість фону"
 		"ru"		"Непрозрачность фона"
 	}
@@ -1250,6 +1262,7 @@
 	"Menu - JS Report Type"
 	{
 		"en"		"Report type"
+		"chi"		"显示方式"
 		"pl"		"Typ reportu"
 		"nl"		"Type rapport"
 		"de"		"Berichtstyp"
@@ -1259,6 +1272,7 @@
 	"Menu - JS Report Type Sub"
 	{
 		"en"		"Where your jumpstats are shown"
+		"chi"		"选择跳跃数据的显示位置"
 		"pl"		"Gdzie pokazywać statty skow"
 		"nl"		"Waar je sprongstats worden weergegeven"
 		"de"		"Wo deine Sprungstats angezeigt werden"
@@ -1268,6 +1282,7 @@
 	"Menu - JS Report Type HUD"
 	{
 		"en"		"HUD"
+		"chi"		"HUD"
 		"pl"		"HUD"
 		"nl"		"HUD"
 		"de"		"HUD"
@@ -1277,6 +1292,7 @@
 	"Menu - JS Report Type Chat"
 	{
 		"en"		"Chat"
+		"chi"		"聊天栏"
 		"pl"		"Czat"
 		"nl"		"Chat"
 		"de"		"Chat"
@@ -1286,6 +1302,7 @@
 	"Menu - JS Report Type Both"
 	{
 		"en"		"Both"
+		"chi"		"两者都显示"
 		"pl"		"Obydwa"
 		"nl"		"Beide"
 		"de"		"Beide"
@@ -1337,6 +1354,7 @@
 	"Menu - JS Min Tier HUD"
 	{
 		"en"		"Minimum HUD tier"
+		"chi"		"HUD 跳跃数据最低等级"
 		"ua"		"Мінімальний поріг стрибку для відображення в HUD"
 		"ru"		"Минимальный tier в HUD"
 	}
@@ -1562,280 +1580,327 @@
 	"Menu - Move Elements"
 	{
 		"en"		"Move elements"
+		"chi"		"移动元素"
 		"ua"		"Перемістити елементи"
 		"ru"		"Переместить элементы"
 	}
 	"Menu - Move Elements Sub"
 	{
 		"en"		"Drag HUD elements into place with the mouse"
+		"chi"		"使用鼠标拖动 HUD 元素以调整位置"
 		"ua"		"Перетягніть елементи HUD мишкою"
 		"ru"		"Перетащите элементы HUD мышкой"
 	}
 	"Menu - Move With Mouse"
 	{
 		"en"		"Move with mouse"
+		"chi"		"使用鼠标移动"
 		"ua"		"Перемістити мишкою"
 		"ru"		"Переместить мышкой"
 	}
 	"Menu - Screen Aspect"
 	{
 		"en"		"Screen aspect ratio"
+		"chi"		"屏幕宽高比"
 		"ua"		"Співвідношення сторін екрану"
 		"ru"		"Соотношение сторон экрана"
 	}
 	"Menu - Screen Aspect Sub"
 	{
 		"en"		"Match your resolution so Move elements drags and snaps evenly on both axes"
+		"chi"		"匹配你的屏幕分辨率，使移动元素时在两个轴向上的拖动和吸附保持一致"
 		"ua"		"Налаштуйте роздільну здатність так, щоб елементи «Переміщення» рівномірно перетягувалися та прив'язувалися по обох осях"
 		"ru"		"Настройте соотношение так, чтобы при перемещении элементы равномерно перетягивались и привязывались по обеим осям."
 	}
 	"Menu - JS Compact"
 	{
 		"en"		"Compact"
+		"chi"		"紧凑"
 		"ru"		"Компактно"
 	}
 	"Menu - JS Compact Sub"
 	{
 		"en"		"Only the pills, with no panel. The history is always on"
+		"chi"		"仅显示数据标签，不显示面板；历史记录始终开启"
 		"ru"		"Кратко и строго, без панели. История всегда включена."
 	}
 	"Menu - JS History"
 	{
 		"en"		"Show history"
+		"chi"		"显示历史记录"
 		"ua"		"Показати історію"
 		"ru"		"Показать историю"
 	}
 	"Menu - JS History Sub"
 	{
 		"en"		"Your last few jumps, stacked next to the panel"
+		"chi"		"最近几次跳跃记录，排列在面板旁边"
 		"ua"		"Ваші останні кілька стрибків, будуть розташовані над панеллю"
 		"ru"		"Ваши предыдущие прыжки, рядом с панелью"
 	}
 	"Menu - JS History Below"
 	{
 		"en"		"History below the panel"
+		"chi"		"历史记录显示在面板下方"
 		"ua"		"Історія під панеллю"
 		"ru"		"История под панелью"
 	}
 	"Menu - JS History Below Sub"
 	{
 		"en"		"Stack the history under the panel instead of above it"
+		"chi"		"将历史记录排列在面板下方，而不是上方"
 		"ua"		"Розташувати історію під панеллю замість над нею"
 		"ru"		"Показывать историю под панелью, а не над ней"
 	}
 	"Menu - JS Duration"
 	{
 		"en"		"Panel duration"
+		"chi"		"面板显示时长"
 		"ua"		"Тривалість відображення панелі"
 		"ru"		"Длительность отображения панели"
 	}
 	"Menu - JS Duration Sub"
 	{
 		"en"		"How long the panel stays up after a jump"
+		"chi"		"跳跃结束后面板保持显示的时间"
 		"ua"		"Як довго панель залишається на екрані після стрибка"
 		"ru"		"Длительность отображения панели после прыжка"
 	}
 	"Menu - JS Field Block"
 	{
 		"en"		"Block"
+		"chi"		"板子"
 		"ua"		"Блок"
 		"ru"		"Блок"
 	}
 	"Menu - JS Field Strafes"
 	{
 		"en"		"Strafes"
+		"chi"		"加速"
 		"ua"		"Стрейфи"
 		"ru"		"Strafes"
 	}
 	"Menu - JS Field Sync"
 	{
 		"en"		"Sync"
+		"chi"		"同步率"
 		"ua"		"Синхронізація"
 		"ru"		"Синх"
 	}
 	"Menu - JS Field Pre Max"
 	{
 		"en"		"Pre and max speed"
+		"chi"		"地速和空速"
 		"ua"		"Пре-швидкість та максимальна швидкість"
 		"ru"		"Pre и макс. скорость"
 	}
 	"Menu - JS Field Height"
 	{
 		"en"		"Height"
+		"chi"		"高度"
 		"ua"		"Висота"
 		"ru"		"Высота"
 	}
 	"Menu - JS Field Air Time"
 	{
 		"en"		"Air time"
+		"chi"		"滞空时间"
 		"ua"		"Час у повітрі (Air time)"
 		"ru"		"Air time"
 	}
 	"Menu - JS Field Width"
 	{
 		"en"		"Width"
+		"chi"		"幅度"
 		"ua"		"Ширина"
 		"ru"		"Ширина"
 	}
 	"Menu - JS Field Gain Efficiency"
 	{
 		"en"		"Gain efficiency"
+		"chi"		"增益效率"
 		"ua"		"Ефективність приросту"
 		"ru"		"Эффективность прироста"
 	}
 	"Menu - JS Field Air Path"
 	{
 		"en"		"Air path"
+		"chi"		"空中路径"
 		"ua"		"Шлях у повітрі (Air path)"
 		"ru"		"Airpath"
 	}
 	"Menu - JS Field Bad Angles"
 	{
 		"en"		"Bad angles, overlap and dead air"
+		"chi"		"无效角度、冲突和无操作"
 		"ua"		"Bad angles, Перекриття (Overlap) та dead air"
 		"ru"		"Bad angles, overlap и dead air"
 	}
 	"Menu - JS Field Release"
 	{
 		"en"		"W release"
+		"chi"		"松开 W"
 		"ua"		"Відпускання W"
 		"ru"		"Отжатие W"
 	}
 	"Menu - JS Field Offset"
 	{
 		"en"		"Offset"
+		"chi"		"位移"
 		"ua"		"Зсув"
 		"ru"		"Сдвиг"
 	}
 	"Menu - JS Field Edge"
 	{
 		"en"		"Edge"
+		"chi"		"边距"
 		"ua"		"Край"
 		"ru"		"Край"
 	}
 	"Menu - JS Field Deviation"
 	{
 		"en"		"Deviation"
+		"chi"		"偏移"
 		"ua"		"Відхилення (Deviation)"
 		"ru"		"Отклонение"
 	}
 	"Menu - JS Field Miss"
 	{
 		"en"		"Miss"
+		"chi"		"距离差"
 		"ua"		"Брак (Miss)"
 		"ru"		"Нехватка"
 	}
 	"Menu - JS Fields"
 	{
 		"en"		"Fields"
+		"chi"		"数据项目"
 		"ua"		"Елементи статистики"
 		"ru"		"Элементы"
 	}
 	"Menu - JS Field Order"
 	{
 		"en"		"Order"
+		"chi"		"顺序"
 		"ua"		"Послідовність"
 		"ru"		"Последовательность"
 	}
 	"Menu - JS Field Order Sub"
 	{
 		"en"		"Only the fields that are on are listed. The chat and the HUD panel share the order"
+		"chi"		"仅列出已启用的项目；聊天栏与 HUD 面板共用相同顺序"
 		"ua"		"У списку відображаються лише ті поля, які увімкнені. Порядок відображення в чаті та на панелі HUD є однаковим"
 		"ru"		"Отображены только включенные элементы. Порядок одинаков в чате и HUD."
 	}
 	"Menu - JS Field Extended Sub"
 	{
 		"en"		"In chat, only on the extended stats line"
+		"chi"		"在聊天栏中，仅显示在扩展统计行"
 		"ua"		"Відображається в чаті лише при увімкненій розширеній статистиці"
 		"ru"		"В чате, только в расширенной статистике"
 	}
 	"Menu - JS Extended Stats Sub"
 	{
 		"en"		"Adds a second chat line with the fields that are marked for it"
+		"chi"		"新增第二行聊天信息，显示标记为扩展统计的项目"
 		"ua"		"Додає другий рядок чату з полями, які позначені для цього"
 		"ru"		"Добавляет вторую линию в чате с обозначенными полями"
 	}
 	"Menu - Course Info"
 	{
 		"en"		"Course Info"
+		"chi"		"关卡信息"
 		"ua"		"Інформація про курс"
 		"ru"		"Информация о маршруте"
 	}
 	"Menu - W Release"
 	{
 		"en"		"W Release"
+		"chi"		"松开 W"
 		"ua"		"Відпускання W"
 		"ru"		"Отжатие W"
 	}
 	"Menu - Course Show Map"
 	{
 		"en"		"Map and course"
+		"chi"		"地图和关卡"
 		"ua"		"Мапа та курс"
 		"ru"		"Карта и маршрут"
 	}
 	"Menu - Course Show Pro"
 	{
 		"en"		"Pro record"
+		"chi"		"PRO 记录"
 		"ua"		"Pro рекорд"
 		"ru"		"Pro рекорд"
 	}
 	"Menu - Course Show Pro Sub"
 	{
 		"en"		"A second row for the record without teleports"
+		"chi"		"额外显示一行不使用传送的记录"
 		"ua"		"Другий рядок для рекорду без телепортів"
 		"ru"		"Вторая строка для рекорда без телепортов"
 	}
 	"Menu - Course Show Splits"
 	{
 		"en"		"Zone times"
+		"chi"		"区域计时"
 		"ua"		"Час зон"
 		"ru"		"Время зон"
 	}
 	"Menu - Course Show Splits Sub"
 	{
 		"en"		"A pill for every split, checkpoint and stage, against your !comparelevel time"
+		"chi"		"显示每个分段、存点和阶段的时间，并与你通过 !comparelevel 设置的记录进行比较"
 		"ua"		"Індикатор для кожного спліту, контрольної точки та етапу, у порівнянні з вашим часом !comparelevel"
 		"ru"		"Индикатор для каждого сплита, чекпоинта и этапа, в сравнении с вашим рекордом !comparelevel"
 	}
 	"Menu - Color Early"
 	{
 		"en"		"Early"
+		"chi"		"过早"
 		"ua"		"Зарано"
 		"ru"		"Рано"
 	}
 	"Menu - Color Perfect"
 	{
 		"en"		"Perfect"
+		"chi"		"完美"
 		"ua"		"Досконало"
 		"ru"		"Идеально"
 	}
 	"Menu - Color Late"
 	{
 		"en"		"Late"
+		"chi"		"过晚"
 		"ua"		"Запізно"
 		"ru"		"Поздно"
 	}
 	"Menu - Course Show Progress"
 	{
 		"en"		"Zone progress"
+		"chi"		"区域进度"
 		"ua"		"Прогрес зон"
 		"ru"		"Прогресс маршрута"
 	}
 	"Menu - Course Show Progress Sub"
 	{
 		"en"		"Stages, checkpoints and splits reached, on courses that have them"
+		"chi"		"在包含相应区域的关卡中显示已到达的阶段、存点和分段"
 		"ua"		"Етапи, контрольні точки та спліти, досягнуті на курсах, які мають такі"
 		"ru"		"Достигнутые этапы, контрольные точки и сплиты, если они есть"
 	}
 	"Menu - Course Show Records"
 	{
 		"en"		"Records"
+		"chi"		"记录"
 		"ua"		"Рекорди"
 		"ru"		"Рекорды"
 	}
 	"Menu - Course Show Records Sub"
 	{
 		"en"		"The world record and your gap to it, or the server record on a non-global map"
+		"chi"		"显示世界纪录及你与它的时间差；非全球地图则显示服务器纪录"
 		"ua"		"Світовий рекорд і ваше відставання від нього, або рекорд сервера на неглобальній карті"
 		"ru"		"Мировой рекорд и ваша с ним разница, либо рекорд сервера на неглобальной карте"
 	}
