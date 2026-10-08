@@ -150,6 +150,8 @@ public:
 	// Other events
 	virtual void OnChangeTeamPost(i32 team) override;
 	virtual void OnTeleport(const Vector *origin, const QAngle *angles, const Vector *velocity) override;
+	virtual void OnTeleportBegin(const Vector *origin, const QAngle *angles, const Vector *velocity) override;
+	virtual void OnTeleportEnd() override;
 
 	void PlayErrorSound();
 

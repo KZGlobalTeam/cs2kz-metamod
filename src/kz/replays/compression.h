@@ -1,6 +1,7 @@
 #pragma once
 
 #include "kz_replay.h"
+#include <functional>
 
 namespace KZ::replaysystem::compression
 {
@@ -21,15 +22,25 @@ namespace KZ::replaysystem::compression
 	// Write compressed tick data with delta encoding
 	i32 WriteTickDataCompressed(std::vector<char> &outBuffer, const std::vector<TickData> &tickData, const std::vector<SubtickData> &subtickData);
 
+	// The route reader receives decoded ticks without retaining full tick/subtick arrays.
+	// Returning false aborts decoding, for example when a map change cancels loading.
+	using TickVisitor = std::function<bool(const TickData &)>;
+
 	// Read compressed tick data with delta decoding
 	bool ReadTickDataCompressed(const char *&cursor, const char *end, std::vector<TickData> &outTickData, std::vector<SubtickData> &outSubtickData,
 								u32 replayVersion);
+
+	// Visits movement ticks without allocating playback tick or subtick arrays.
+	bool ReadTickDataCompressed(const char *&cursor, const char *end, u32 replayVersion, const TickVisitor &visitor);
+
+	// Bounds-checks and advances past one compressed block without decompressing it.
+	bool SkipCompressedSection(const char *&cursor, const char *end);
 
 	// Read compressed weapon changes
 	bool ReadWeaponsCompressed(const char *&cursor, const char *end, std::vector<std::pair<i32, EconInfo>> &outWeaponTable);
 
 	// Read compressed events
-	bool ReadEventsCompressed(const char *&cursor, const char *end, std::vector<RpEvent> &outEvents);
+	bool ReadEventsCompressed(const char *&cursor, const char *end, std::vector<RpEvent> &outEvents, u32 replayVersion);
 
 	// Read compressed jumps
 	bool ReadJumpsCompressed(const char *&cursor, const char *end, std::vector<RpJumpStats> &outJumps, u32 replayVersion);

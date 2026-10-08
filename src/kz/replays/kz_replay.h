@@ -13,7 +13,7 @@ class KZPlayer;
 
 enum : u32
 {
-	KZ_REPLAY_VERSION = 5,
+	KZ_REPLAY_VERSION = 6,
 };
 
 // Maximum subtick moves per tick. The theoretical engine maximum is 64, but 36 is a much more reasonable amount.
@@ -33,6 +33,24 @@ enum RpEventType
 	RPEVENT_MODE_CHANGE,
 	RPEVENT_STYLE_CHANGE,
 	RPEVENT_TELEPORT,
+	RPEVENT_CHECKPOINT,
+	RPEVENT_UNKNOWN, // Placeholder preserves event indices for future event types.
+};
+
+enum RpEventPhase
+{
+	RPEVENT_BEFORE_PHYSICS,
+	RPEVENT_DURING_PHYSICS,
+	RPEVENT_AFTER_PHYSICS,
+};
+
+enum RpTeleportReason
+{
+	RPTELEPORT_UNKNOWN,
+	RPTELEPORT_CHECKPOINT,
+	RPTELEPORT_CHECKPOINT_UNDO,
+	RPTELEPORT_MAP_TRIGGER,
+	RPTELEPORT_BHOP_FAIL,
 };
 
 struct RpFlags
@@ -137,6 +155,8 @@ struct RpEvent
 {
 	RpEventType type;
 	u32 serverTick;
+	// Events retain their insertion order, including several CP/TP commands in one tick.
+	RpEventPhase phase;
 
 	union RpEventData
 	{
@@ -156,17 +176,33 @@ struct RpEvent
 
 			i32 index; // Course ID for start/end, split number for split, checkpoint number for cpz, stage number for stage.
 			f32 time;  // Final time for end, time reached split/checkpoint/stage for split/cpz/stage. Current time for pause/stop/resume.
+			f32 origin[3];
 		} timer;
 
 		RpModeStyleInfo modeChange;
 
 		RpStyleChangeInfo styleChange;
 
+		struct CheckpointEvent
+		{
+			enum CheckpointEventType
+			{
+				CHECKPOINT_SAVE,
+				CHECKPOINT_RESET = 3,
+			} type;
+
+			i32 index; // One-based saved checkpoint index; zero for reset.
+			f32 origin[3];
+		} checkpoint;
+
 		struct
 		{
+			RpTeleportReason reason;
+			i32 checkpointIndex; // One-based saved checkpoint, or zero when not applicable.
 			bool hasOrigin;
 			bool hasAngles;
 			bool hasVelocity;
+			f32 previousOrigin[3];
 			f32 origin[3];
 			f32 angles[3];
 			f32 velocity[3];

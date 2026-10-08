@@ -6,6 +6,7 @@
 #include "../language/kz_language.h"
 #include "kz/trigger/kz_trigger.h"
 #include "kz/racing/kz_racing.h"
+#include "kz/recording/kz_recording.h"
 #include "utils/utils.h"
 
 static_global class KZOptionServiceEventListener_Checkpoint : public KZOptionServiceEventListener
@@ -84,6 +85,7 @@ void KZCheckpointService::ResetCheckpoints(bool playSound, bool resetTeleports)
 		this->teleportTime = 0.0f;
 	}
 	this->checkpoints.Purge();
+	this->player->recordingService->OnCheckpointReset();
 }
 
 void KZCheckpointService::SetCheckpoint()
@@ -148,6 +150,7 @@ void KZCheckpointService::SetCheckpoint()
 	this->checkpoints.AddToTail(cp);
 	// newest checkpoints aren't deleted after using prev cp.
 	this->currentCpIndex = this->checkpoints.Count() - 1;
+	this->player->recordingService->OnCheckpointSave(this->currentCpIndex + 1, cp.origin);
 	if (showAreaWarning)
 	{
 		this->player->languageService->PrintChat(true, false, "Anti Checkpoint Area Warning");
@@ -192,7 +195,7 @@ void KZCheckpointService::UndoTeleport()
 		return;
 	}
 
-	this->DoTeleport(this->undoTeleportData);
+	this->DoTeleport(this->undoTeleportData, false, 0, true);
 }
 
 void KZCheckpointService::DoTeleport(i32 index)
@@ -214,7 +217,7 @@ void KZCheckpointService::DoTeleport(i32 index)
 	{
 		return;
 	}
-	this->DoTeleport(this->checkpoints[index]);
+	this->DoTeleport(this->checkpoints[index], false, index + 1, false);
 }
 
 void KZCheckpointService::DoTeleport(const Checkpoint cp)
@@ -223,6 +226,11 @@ void KZCheckpointService::DoTeleport(const Checkpoint cp)
 }
 
 void KZCheckpointService::DoTeleport(const Checkpoint cp, bool stayOnGround)
+{
+	this->DoTeleport(cp, stayOnGround, 0, false);
+}
+
+void KZCheckpointService::DoTeleport(const Checkpoint cp, bool stayOnGround, i32 checkpointIndex, bool undo)
 {
 	CCSPlayerPawn *pawn = this->player->GetPlayerPawn();
 	if (!pawn || !pawn->IsAlive())
@@ -239,6 +247,8 @@ void KZCheckpointService::DoTeleport(const Checkpoint cp, bool stayOnGround)
 
 	Vector currentOrigin;
 	this->player->GetOrigin(&currentOrigin);
+	KZRecordingService::ScopedTeleport replayTeleport(*this->player->recordingService, undo ? RPTELEPORT_CHECKPOINT_UNDO : RPTELEPORT_CHECKPOINT,
+													  checkpointIndex);
 
 	// Update data for undoing teleports
 	u32 flags = pawn->m_fFlags();
