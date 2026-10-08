@@ -5,6 +5,7 @@
 		"#format"	"point:s"
 		"en"		"{grey}Zone Stopwatch: {default}{point}{grey} set."
 		"chi"		"{grey}区域计时器: {default}{point}{grey} 已设置."
+		"zho"		"{grey}區域計時器: {default}{point}{grey} 已設定."
 		"ru"		"{grey}Zone Stopwatch: {default}{point}{grey} установлен."
 		"ua"		"{grey}Zone Stopwatch: {default}{point}{grey} встановлено."
 		"ko"		"{grey}존 스톱워치: {default}{point}{grey} 설정됨."
@@ -13,6 +14,7 @@
 	{
 		"en"		"Start Corner 1"
 		"chi"		"开始计时区域 1"
+		"zho"		"開始計時區域 1"
 		"ru"		"Угол старта 1"
 		"ua"		"Початковий кут 1"
 		"ko"		"시작 모서리 1"
@@ -21,6 +23,7 @@
 	{
 		"en"		"Start Corner 2"
 		"chi"		"开始计时区域 2"
+		"zho"		"開始計時區域 2"
 		"ru"		"Угол старта 2"
 		"ua"		"Початковий кут 2"
 		"ko"		"시작 모서리 2"
@@ -29,6 +32,7 @@
 	{
 		"en"		"End Corner 1"
 		"chi"		"计时停止区域 1"
+		"zho"		"計時停止區域 1"
 		"ru"		"Угол финиша 1"
 		"ua"		"Кінцевий кут 1"
 		"ko"		"종료 모서리 1"
@@ -37,6 +41,7 @@
 	{
 		"en"		"End Corner 2"
 		"chi"		"计时停止区域 2"
+		"zho"		"計時停止區域 2"
 		"ru"		"Угол финиша 2"
 		"ua"		"Кінцевий кут 2"
 		"ko"		"종료 모서리 2"
@@ -45,6 +50,7 @@
 	{
 		"en"		"{darkred}Zone Stopwatch is unavailable while the timer is running."
 		"chi"		"{darkred}区域计时器 在计时器运行时不可用."
+		"zho"		"{darkred}區域計時器 在計時器執行時不可用."
 		"ru"		"{darkred}Zone Stopwatch недоступен, пока работает таймер."
 		"ua"		"{darkred}Zone Stopwatch недоступний, поки таймер увімкнено."
 		"ko"		"{darkred}타이머가 실행 중일 때는 존 스톱워치를 사용할 수 없습니다."
@@ -53,6 +59,7 @@
 	{
 		"en"		"{grey}Zone Stopwatch {green}enabled{grey}. Timing will start when you enter the start zone."
 		"chi"		"{grey}区域计时器 已{green}启用{grey}. 进入起始区域时开始计时."
+		"zho"		"{grey}區域計時器 已{green}啟用{grey}. 進入起始區域時開始計時."
 		"ru"		"{grey}Zone Stopwatch {green}включен{grey}. Таймер пойдет при входе в старт-зону."
 		"ua"		"{grey}Zone Stopwatch {green}увімкнено{grey}. Відлік почнеться при вході в початкову зону."
 		"ko"		"{grey}존 스톱워치가 {green}활성화{grey}되었습니다. 시작 존에 진입하면 타이밍이 시작됩니다."
@@ -61,6 +68,7 @@
 	{
 		"en"		"{grey}Zone Stopwatch {darkred}disabled{grey}."
 		"chi"		"{grey}区域计时器 已{darkred}禁用{grey}."
+		"zho"		"{grey}區域計時器 已{darkred}停用{grey}."
 		"ru"		"{grey}Zone Stopwatch {darkred}выключен{grey}."
 		"ua"		"{grey}Zone Stopwatch {darkred}вимкнено{grey}."
 		"ko"		"{grey}존 스톱워치가 {darkred}비활성화{grey}되었습니다."
@@ -69,6 +77,7 @@
 	{
 		"en"		"{grey}Zone Stopwatch: All zones cleared."
 		"chi"		"{grey}区域计时器: 所有区域已清除."
+		"zho"		"{grey}區域計時器: 所有區域已清除."
 		"ru"		"{grey}Zone Stopwatch: Все зоны очищены."
 		"ua"		"{grey}Zone Stopwatch: Усі зони очищено."
 		"ko"		"{grey}존 스톱워치: 모든 존이 초기화되었습니다."
@@ -77,6 +86,7 @@
 	{
 		"en"		"{grey}Zone Stopwatch: Start on jump {green}enabled{grey}."
 		"chi"		"{grey}区域计时器: 起跳时开始已{green}启用{grey}."
+		"zho"		"{grey}區域計時器: 起跳時開始已{green}啟用{grey}."
 		"ru"		"{grey}Zone Stopwatch: Старт при прыжке {green}включен{grey}."
 		"ua"		"{grey}Zone Stopwatch: Старт при стрибку {green}увімкнено{grey}."
 		"ko"		"{grey}존 스톱워치: 점프 시 시작이 {green}활성화{grey}되었습니다."
@@ -85,6 +95,7 @@
 	{
 		"en"		"{grey}Zone Stopwatch: Start on jump {darkred}disabled{grey}."
 		"chi"		"{grey}区域计时器: 起跳时开始已{darkred}禁用{grey}."
+		"zho"		"{grey}區域計時器: 起跳時開始已{darkred}停用{grey}."
 		"ru"		"{grey}Zone Stopwatch: Старт при прыжке {darkred}выключен{grey}."
 		"ua"		"{grey}Zone Stopwatch: Старт при стрибку {darkred}вимкнено{grey}."
 		"ko"		"{grey}존 스톱워치: 점프 시 시작이 {darkred}비활성화{grey}되었습니다."
@@ -93,6 +104,7 @@
 	{
 		"en"		"{grey}Zone Stopwatch: Stop on land {green}enabled{grey}."
 		"chi"		"{grey}区域计时器: 落地时停止已{green}启用{grey}."
+		"zho"		"{grey}區域計時器: 落地時停止已{green}啟用{grey}."
 		"ru"		"{grey}Zone Stopwatch: Стоп при приземлении {green}включен{grey}."
 		"ua"		"{grey}Zone Stopwatch: Зупинка при приземленні {green}увімкнена{grey}."
 		"ko"		"{grey}존 스톱워치: 착지 시 정지가 {green}활성화{grey}되었습니다."
@@ -101,6 +113,7 @@
 	{
 		"en"		"{grey}Zone Stopwatch: Stop on land {darkred}disabled{grey}."
 		"chi"		"{grey}区域计时器: 落地时停止已{darkred}禁用{grey}."
+		"zho"		"{grey}區域計時器: 落地時停止已{darkred}停用{grey}."
 		"ru"		"{grey}Zone Stopwatch: Стоп при приземлении {darkred}выключен{grey}."
 		"ua"		"{grey}Zone Stopwatch: Зупинка при приземленні {darkred}вимкнена{grey}"
 		"ko"		"{grey}존 스톱워치: 착지 시 정지가 {darkred}비활성화{grey}되었습니다."
@@ -111,6 +124,7 @@
 		"#format"	"time:s"
 		"en"		"{grey}Elapsed time: {default}{time}"
 		"chi"		"{grey}已用时间: {default}{time}"
+		"zho"		"{grey}已用時間: {default}{time}"
 		"ru"		"{grey}Прошедшее время: {default}{time}"
 		"ua"		"{grey}Витрачений час: {default}{time}"
 		"ko"		"{grey}경과 시간: {default}{time}"
@@ -120,6 +134,7 @@
 		"#format"	"state:s"
 		"en"		"{grey}--- Zone Stopwatch [{default}{state}{grey}] ---"
 		"chi"		"{grey}--- 区域计时器 [{default}{state}{grey}] ---"
+		"zho"		"{grey}--- 區域計時器 [{default}{state}{grey}] ---"
 		"ru"		"{grey}--- Zone Stopwatch [{default}{state}{grey}] ---"
 		"ua"		"{grey}--- Zone Stopwatch [{default}{state}{grey}] ---"
 		"ko"		"{grey}--- 존 스톱워치 [{default}{state}{grey}] ---"
@@ -130,6 +145,7 @@
 		"#format"	"point:s,status:s,next:s"
 		"en"		"{grey}{default}{point}{grey}: {status}{next}"
 		"chi"		"{grey}{default}{point}{grey}: {status}{next}"
+		"zho"		"{grey}{default}{point}{grey}: {status}{next}"
 		"ru"		"{grey}{default}{point}{grey}: {status}{next}"
 		"ua"		"{grey}{default}{point}{grey}: {status}{next}"
 		"ko"		"{grey}{default}{point}{grey}: {status}{next}"
@@ -138,6 +154,7 @@
 	{
 		"en"		" <-- Next"
 		"chi"		" <-- 下一个"
+		"zho"		" <-- 下一個"
 		"ru"		" <-- Следующий"
 		"ua"		" <-- Наступний"
 		"ko"		" <-- 다음"
@@ -146,6 +163,7 @@
 	{
 		"en"		"ON"
 		"chi"		"开"
+		"zho"		"開"
 		"ru"		"ВКЛ"
 		"ua"		"УВІМК"
 		"ko"		"켜짐"
@@ -154,6 +172,7 @@
 	{
 		"en"		"OFF"
 		"chi"		"关"
+		"zho"		"關"
 		"ru"		"ВЫКЛ"
 		"ua"		"ВИМК"
 		"ko"		"꺼짐"
@@ -162,6 +181,7 @@
 	{
 		"en"		"Set"
 		"chi"		"已设置"
+		"zho"		"已設定"
 		"ru"		"Установлено"
 		"ua"		"Встановлено"
 		"ko"		"설정됨"
@@ -170,6 +190,7 @@
 	{
 		"en"		"Unset"
 		"chi"		"未设置"
+		"zho"		"未設定"
 		"ru"		"Не установлено"
 		"ua"		"Не встановлено"
 		"ko"		"설정 안됨"
@@ -180,6 +201,7 @@
 		"#format"	"startjump:s,stoponland:s"
 		"en"		"{grey}Start on jump: {default}{startjump}{grey} | Stop on land: {default}{stoponland}"
 		"chi"		"{grey}起跳时开始: {default}{startjump}{grey} | 落地时停止: {default}{stoponland}"
+		"zho"		"{grey}起跳時開始: {default}{startjump}{grey} | 落地時停止: {default}{stoponland}"
 		"ru"		"{grey}Старт при прыжке: {default}{startjump}{grey} | Стоп при приземлении: {default}{stoponland}"
 		"ua"		"{grey}Старт при стрибку: {default}{startjump}{grey} | Зупинка при приземленні: {default}{stoponland}"
 		"ko"		"{grey}점프 시 시작: {default}{startjump}{grey} | 착지 시 정지: {default}{stoponland}"
@@ -188,6 +210,7 @@
 	{
 		"en"		"{grey}Check console for Zone Stopwatch usage."
 		"chi"		"{grey}请在控制台中查看区域计时器用法."
+		"zho"		"{grey}請在控制台中檢視區域計時器用法."
 		"ru"		"{grey}Инструкция по Zone Stopwatch выведена в консоль."
 		"ua"		"{grey}Інструкція Zone Stopwatch виведена в консоль."
 		"ko"		"{grey}존 스톱워치 사용법은 콘솔을 확인하세요."
@@ -203,6 +226,7 @@
 		//   !ztopwatch status: Show current status
 		"en"		"Zone Stopwatch usage:\n  !ztopwatch / !zw: Toggle on/off\n  !ztopwatch place: Set next corner (cycles: start 1 -> start 2 -> end 1 -> end 2)\n  !ztopwatch clear: Clear all zones\n  !ztopwatch startjump / sj: Toggle start timer on jump (instead of on zone entry)\n  !ztopwatch stopland / sl: Toggle stop timer on land (instead of on zone entry)\n  !ztopwatch status: Show current status"
 		"chi"		"区域计时器用法:\n  !ztopwatch / !zw: 开关\n  !ztopwatch place: 设置下一个角落 (顺序: 起点角落 1 -> 起点角落 2 -> 终点角落 1 -> 终点角落 2)\n  !ztopwatch clear: 清除所有区域\n  !ztopwatch startjump / sj: 起跳时开始计时\n  !ztopwatch stopland / sl: 落地时停止计时\n  !ztopwatch status: 显示当前状态"
+		"zho"		"區域計時器用法:\n  !ztopwatch / !zw: 開關\n  !ztopwatch place: 設定下一個角落 (順序: 起點角落 1 -> 起點角落 2 -> 終點角落 1 -> 終點角落 2)\n  !ztopwatch clear: 清除所有區域\n  !ztopwatch startjump / sj: 起跳時開始計時\n  !ztopwatch stopland / sl: 落地時停止計時\n  !ztopwatch status: 顯示目前狀態"
 		"ru"		"Применение Zone Stopwatch:\n  !ztopwatch / !zw: Вкл./Выкл.\n  !ztopwatch place: Установить следующий угол (порядок: старт 1 -> старт 2 -> финиш 1 -> финиш 2)\n  !ztopwatch clear: Очистить все зоны\n  !ztopwatch startjump / sj: Вкл./Выкл. старт таймера при прыжке (вместо при входе в зону)\n  !ztopwatch stopland / sl: Вкл/Выкл. остановку таймера при приземлении (вместо при входе в зону)\n  !ztopwatch status: Показать текущий статус"
 		"ua"		"Використання Zone Stopwatch:\n  !ztopwatch / !zw: Увімкнути/вимкнути\n  !ztopwatch place: Встановити наступний кут (послідовність: початковий 1 -> початковий 2 -> кінцевий 1 -> кінцевий 2)\n  !ztopwatch clear: Очистити всі зони\n  !ztopwatch startjump / sj: Старт таймера при стрибку (замість входу в зону)\n  !ztopwatch stopland / sl: Зупинка таймера при приземленні (замість входу в зону)\n  !ztopwatch status: Показати поточний статус"
 		"ko"		"존 스톱워치 사용법:\n  !ztopwatch / !zw: 켜기/끄기\n  !ztopwatch place: 다음 모서리 설정 (순서: 시작 1 -> 시작 2 -> 종료 1 -> 종료 2)\n  !ztopwatch clear: 모든 존 초기화\n  !ztopwatch startjump / sj: 점프 시 타이머 시작 전환 (존 진입 대신)\n  !ztopwatch stopland / sl: 착지 시 타이머 정지 전환 (존 진입 대신)\n  !ztopwatch status: 현재 상태 표시"
