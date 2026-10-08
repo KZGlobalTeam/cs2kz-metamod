@@ -6,9 +6,74 @@
 #include "playback.h"
 #include "events.h"
 #include "commands.h"
+#include "kz_replay.h"
+#include "utils/uuid.h"
+#include "filesystem.h"
+
+#include <algorithm>
 
 namespace KZ::replaysystem
 {
+	static_global std::vector<ReplayEventListener *> replayEventListeners;
+
+	bool RegisterReplayEventListener(ReplayEventListener *listener)
+	{
+		if (!listener || std::find(replayEventListeners.begin(), replayEventListeners.end(), listener) != replayEventListeners.end())
+		{
+			return false;
+		}
+		replayEventListeners.push_back(listener);
+		return true;
+	}
+
+	bool UnregisterReplayEventListener(ReplayEventListener *listener)
+	{
+		const auto found = std::find(replayEventListeners.begin(), replayEventListeners.end(), listener);
+		if (found == replayEventListeners.end())
+		{
+			return false;
+		}
+		replayEventListeners.erase(found);
+		return true;
+	}
+
+	void NotifyReplayFileChanged(const char *uuid)
+	{
+		if (!uuid || !UUID_t::FromString(uuid))
+		{
+			return;
+		}
+		// A listener may unsubscribe while handling the notification.
+		const auto listeners = replayEventListeners;
+		for (ReplayEventListener *listener : listeners)
+		{
+			if (std::find(replayEventListeners.begin(), replayEventListeners.end(), listener) != replayEventListeners.end())
+			{
+				listener->OnReplayFileChanged(uuid);
+			}
+		}
+	}
+
+	bool FindReplayPath(const char *uuid, std::string &path)
+	{
+		path.clear();
+		UUID_t parsed(false);
+		if (!uuid || !g_pFullFileSystem || !UUID_t::FromString(uuid, &parsed))
+		{
+			return false;
+		}
+		const std::string filename = parsed.ToString() + ".replay";
+		for (const char *directory : {KZ_REPLAY_PATH, KZ_REPLAY_DOWNLOADS_PATH})
+		{
+			const std::string candidate = std::string(directory) + "/" + filename;
+			if (g_pFullFileSystem->FileExists(candidate.c_str()))
+			{
+				path = candidate;
+				return true;
+			}
+		}
+		return false;
+	}
 
 	void Init()
 	{

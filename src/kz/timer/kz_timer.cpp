@@ -1230,6 +1230,7 @@ void KZTimerService::ClearRecordCache()
 {
 	KZTimerService::srCache.clear();
 	KZTimerService::wrCache.clear();
+	CALL_FORWARD(eventListeners, OnRecordCacheCleared);
 	for (i32 i = 0; i < MAXPLAYERS + 1; i++)
 	{
 		KZPlayer *player = g_pKZPlayerManager->ToPlayer(i);
@@ -1259,8 +1260,8 @@ void KZTimerService::UpdateLocalRecordCache()
 				{
 					continue;
 				}
-				KZTimerService::InsertRecordToCache(result->GetFloat(0), course, modeInfo.id, true, false, result->GetString(3),
-													result->GetString(4));
+				KZTimerService::InsertRecordToCache(result->GetFloat(0), course, modeInfo.id, true, false, result->GetString(3), result->GetString(4),
+													result->GetString(5));
 			}
 		}
 		result = queries[1]->GetResultSet();
@@ -1279,7 +1280,7 @@ void KZTimerService::UpdateLocalRecordCache()
 					continue;
 				}
 				KZTimerService::InsertRecordToCache(result->GetFloat(0), course, modeInfo.id, false, false, result->GetString(3),
-													result->GetString(4));
+													result->GetString(4), result->GetString(5));
 			}
 		}
 	};
@@ -1299,12 +1300,18 @@ const PBData *KZTimerService::GetGlobalCachedRecord(const KZCourseDescriptor *co
 }
 
 void KZTimerService::InsertRecordToCache(f64 time, const KZCourseDescriptor *course, PluginId modeID, bool overall, bool global, CUtlString metadata,
-										 const char *holder)
+										 const char *holder, const char *replayUUID)
 {
 	PBData &pb = global ? KZTimerService::wrCache[ToPBDataKey(modeID, course->guid)] : KZTimerService::srCache[ToPBDataKey(modeID, course->guid)];
+	const bool referenceChanged = !KZ_STREQ((overall ? pb.overall : pb.pro).replayUUID.Get(), replayUUID ? replayUUID : "");
 
 	overall ? pb.overall.pbTime = time : pb.pro.pbTime = time;
 	(overall ? pb.overall.holder : pb.pro.holder) = holder ? holder : "";
+	(overall ? pb.overall : pb.pro).replayUUID = replayUUID;
+	if (referenceChanged)
+	{
+		CALL_FORWARD(eventListeners, OnRecordCacheUpdated, ToPBDataKey(modeID, course->guid));
+	}
 	KeyValues3 kv(KV3_TYPEEX_TABLE, KV3_SUBTYPE_UNSPECIFIED);
 	CUtlString error = "";
 	if (metadata.IsEmpty())

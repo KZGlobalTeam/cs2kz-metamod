@@ -8,6 +8,7 @@
 #include "kz/style/kz_style.h"
 #include "kz/option/kz_option.h"
 #include "kz/replays/kz_replay.h"
+#include "kz/replays/kz_replaysystem.h"
 #include "utils/async_file_io.h"
 #include "utils/utils.h"
 
@@ -315,21 +316,30 @@ void RunSubmission::OnReplayReady(std::vector<char> &&buffer)
 		finalUUID = UUID_t(globalResponse.recordId.c_str());
 	}
 
-	// Write replay to disk and notify the player regardless of local/global state.
-	//    QueueWriteBuffer takes the buffer by value, so replayBuffer is copy-constructed
-	//    and the original remains available for QueueReplayUpload below.
+	// Keep the buffer for upload; only announce and publish the file after its write succeeds.
 	char replayPath[512];
 	BuildReplayPath(replayPath, sizeof(replayPath), finalUUID);
-	if (g_asyncFileIO)
+	const auto onWritten = [uuid = finalUUID.ToString(), userID = this->userID, mapGeneration = this->mapGeneration](bool success)
 	{
-		g_asyncFileIO->QueueWriteBuffer(replayPath, replayBuffer);
-		// Notify the player now (write is async but fire-and-forget, effectively always succeeds).
-		KZPlayer *callbackPlayer = this->IsFromPreviousMap() ? nullptr : g_pKZPlayerManager->ToPlayer(userID);
+		if (!success)
+		{
+			return;
+		}
+		KZ::replaysystem::NotifyReplayFileChanged(uuid.c_str());
+		KZPlayer *callbackPlayer = mapGeneration != RunSubmission::currentMapGeneration ? nullptr : g_pKZPlayerManager->ToPlayer(userID);
 		if (callbackPlayer)
 		{
-			callbackPlayer->languageService->PrintChat(true, false, "Replay - Run Replay Saved", finalUUID.ToString().c_str());
-			callbackPlayer->languageService->PrintConsole(false, false, "Replay - Run Replay Saved (Console)", finalUUID.ToString().c_str());
+			callbackPlayer->languageService->PrintChat(true, false, "Replay - Run Replay Saved", uuid.c_str());
+			callbackPlayer->languageService->PrintConsole(false, false, "Replay - Run Replay Saved (Console)", uuid.c_str());
 		}
+	};
+	if (g_asyncFileIO)
+	{
+		g_asyncFileIO->QueueWriteBuffer(replayPath, replayBuffer, onWritten);
+	}
+	else
+	{
+		onWritten(utils::WriteBufferToFile(replayPath, replayBuffer));
 	}
 
 	if (finalized)
@@ -495,22 +505,32 @@ void RunSubmission::TryFinalize()
 
 void RunSubmission::DoLateAPIResponse(const std::string &apiUUID)
 {
-	if (!g_asyncFileIO)
-	{
-		return;
-	}
-
 	UUID_t apiFinalUUID(apiUUID.c_str());
 
 	char oldPath[512], newPath[512];
 	BuildReplayPath(oldPath, sizeof(oldPath), localUUID);
 	BuildReplayPath(newPath, sizeof(newPath), apiFinalUUID);
 
-	// Rename replay file on the bg thread
-	g_asyncFileIO->QueueRename(oldPath, newPath);
+	const auto onRenamed = [oldUUID = localUUID.ToString(), newUUID = apiFinalUUID.ToString()](bool success)
+	{
+		if (success)
+		{
+			KZ::replaysystem::NotifyReplayFileChanged(oldUUID.c_str());
+			KZ::replaysystem::NotifyReplayFileChanged(newUUID.c_str());
+		}
+	};
+	if (g_asyncFileIO)
+	{
+		g_asyncFileIO->QueueRename(oldPath, newPath, onRenamed);
+	}
+	else
+	{
+		onRenamed(utils::RenameFile(oldPath, newPath));
+	}
 
-	// Update DB row
-	KZDatabaseService::UpdateRunUUID(localUUID.ToString().c_str(), apiUUID.c_str(), nullptr, nullptr);
+	// A cached server record must follow the canonical ID after the database update completes.
+	KZDatabaseService::UpdateRunUUID(
+		localUUID.ToString().c_str(), apiUUID.c_str(), [](std::vector<ISQLQuery *>) { KZTimerService::UpdateLocalRecordCache(); }, nullptr);
 
 	// Keep finalUUID consistent with the authoritative API-assigned UUID
 	finalUUID = apiFinalUUID;
@@ -533,25 +553,31 @@ void RunSubmission::DoLateAPIResponse(const std::string &apiUUID)
 		// The buffer was released while this submission was parked waiting for the ack (see
 		// OnReplayReady), so read it back from disk.
 		std::string uploadPath(newPath);
-		// clang-format off
-		g_asyncFileIO->QueueRead(uploadPath,
-			[uploadPath, uploadUUID = apiFinalUUID, uploadKey = globalResponse.replayUploadKey](bool success, std::vector<char> &&buffer)
+		auto onRead = [uploadPath, uploadUUID = apiFinalUUID, uploadKey = globalResponse.replayUploadKey](bool success, std::vector<char> &&buffer)
+		{
+			if (!success || buffer.empty())
 			{
-				if (!success || buffer.empty())
-				{
-					KZ_LOG_WARN(LogChannel::Global, "Could not read replay '%s' back from disk; skipping upload.\n",
-								uploadPath.c_str());
-					return;
-				}
+				KZ_LOG_WARN(LogChannel::Global, "Could not read replay '%s' back from disk; skipping upload.\n", uploadPath.c_str());
+				return;
+			}
 
-				KZGlobalService::QueueReplayUpload(uploadUUID, uploadKey, std::move(buffer));
+			KZGlobalService::QueueReplayUpload(uploadUUID, uploadKey, std::move(buffer));
 
-				if (KZOptionService::GetOptionInt("archiveRetentionMinutes", 2880) == 0)
-				{
-					utils::RemoveFile(uploadPath.c_str());
-				}
-			});
-		// clang-format on
+			if (KZOptionService::GetOptionInt("archiveRetentionMinutes", 2880) == 0)
+			{
+				utils::RemoveFile(uploadPath.c_str());
+			}
+		};
+		if (g_asyncFileIO)
+		{
+			g_asyncFileIO->QueueRead(uploadPath, onRead);
+		}
+		else
+		{
+			std::vector<char> buffer;
+			const bool success = utils::ReadBufferFromFile(uploadPath.c_str(), buffer);
+			onRead(success, std::move(buffer));
+		}
 	}
 }
 

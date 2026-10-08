@@ -18,6 +18,7 @@
 #include "kz/anticheat/kz_anticheat.h"
 #include "kz/db/kz_db.h"
 #include "kz/hud/kz_hud.h"
+#include "kz/progress/kz_progress.h"
 #include "kz/mode/kz_mode.h"
 #include "kz/spec/kz_spec.h"
 #include "kz/goto/kz_goto.h"
@@ -85,6 +86,7 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 	KZSpecService::Init();
 	KZGotoService::Init();
 	KZHUDService::Init();
+	KZProgressService::Init();
 	KZMenuService::Init();
 	KZLanguageService::Init();
 	KZBeamService::Init();
@@ -133,6 +135,7 @@ bool KZPlugin::Unload(char *error, size_t maxlen)
 {
 	this->unloading = true;
 	KZUIService::Cleanup();
+	KZProgressService::Cleanup();
 	KZHUDService::Cleanup();
 	KZQuietService::Cleanup();
 	KZ::pubapi::Shutdown();
@@ -190,6 +193,7 @@ void KZPlugin::OnPluginUnload(PluginId id)
 void KZPlugin::OnLevelInit(char const *pMapName, char const *pMapEntities, char const *pOldLevel, char const *pLandmarkName, bool loadGame,
 						   bool background)
 {
+	KZProgressService::OnMapChange();
 	m_sCurrentMap = pMapName;
 }
 

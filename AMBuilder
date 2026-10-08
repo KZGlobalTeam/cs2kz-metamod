@@ -141,6 +141,8 @@ def configure_main(sdk_target, sdk, cxx):
     os.path.join(builder.sourcePath, 'src', 'kz', 'global', 'messages.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'global', 'replays.cpp'),
     
+    os.path.join(builder.sourcePath, 'src', 'kz', 'progress', 'kz_progress.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'progress', 'route.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'hud', 'kz_hud.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'hud', 'legacy.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'hud', 'layout', 'course.cpp'),

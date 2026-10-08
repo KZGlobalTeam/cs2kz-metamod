@@ -218,7 +218,7 @@ void KZGlobalService::OnWorldRecordsForCache(const KZ::api::messages::WorldRecor
 
 		if (!cached || cached->overall.pbTime == 0 || record.time < cached->overall.pbTime)
 		{
-			KZTimerService::InsertRecordToCache(record.time, course, modeID, true, true, "", record.player.name.c_str());
+			KZTimerService::InsertRecordToCache(record.time, course, modeID, true, true, "", record.player.name.c_str(), record.id.c_str());
 		}
 
 		// Inserting may rehash the cache and invalidate the pointer above.
@@ -226,7 +226,7 @@ void KZGlobalService::OnWorldRecordsForCache(const KZ::api::messages::WorldRecor
 
 		if (record.teleports == 0 && (!cached || cached->pro.pbTime == 0 || record.time < cached->pro.pbTime))
 		{
-			KZTimerService::InsertRecordToCache(record.time, course, modeID, false, true, "", record.player.name.c_str());
+			KZTimerService::InsertRecordToCache(record.time, course, modeID, false, true, "", record.player.name.c_str(), record.id.c_str());
 		}
 	}
 }
