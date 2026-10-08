@@ -1,0 +1,21 @@
+"Phrases"
+{
+    "Progress - Show"
+    {
+        "en" "Show Route Progress"
+        "chi" "显示路线进度"
+        "zho" "顯示路線進度"
+    }
+    "Progress - Show Label"
+    {
+        "en" "Show Progress Label"
+        "chi" "显示进度标签"
+        "zho" "顯示進度標籤"
+    }
+    "HUD - Progress Label"
+    {
+        "en" "Progress"
+        "chi" "进度"
+        "zho" "進度"
+    }
+}

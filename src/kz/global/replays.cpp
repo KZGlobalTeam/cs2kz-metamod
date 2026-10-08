@@ -5,6 +5,7 @@
 #include "kz/language/kz_language.h"
 #include "kz/option/kz_option.h"
 #include "kz/replays/kz_replay.h"
+#include "kz/replays/kz_replaysystem.h"
 #include "kz/replays/data.h"
 #include "kz/replays/bot.h"
 #include "kz/replays/playback.h"
@@ -126,13 +127,20 @@ void KZGlobalService::ReplayManager::OnReplayRequestSuccess(const std::vector<ch
 	{
 		char replayPath[512];
 		V_snprintf(replayPath, sizeof(replayPath), "%s/%s.replay", KZ_REPLAY_DOWNLOADS_PATH, replayID.ToString().c_str());
+		auto onWritten = [uuid = replayID.ToString()](bool success)
+		{
+			if (success)
+			{
+				NotifyReplayFileChanged(uuid.c_str());
+			}
+		};
 		if (g_asyncFileIO)
 		{
-			g_asyncFileIO->QueueWriteBuffer(replayPath, binaryData);
+			g_asyncFileIO->QueueWriteBuffer(replayPath, binaryData, onWritten);
 		}
 		else
 		{
-			utils::WriteBufferToFile(replayPath, binaryData);
+			onWritten(utils::WriteBufferToFile(replayPath, binaryData));
 		}
 	}
 

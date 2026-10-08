@@ -336,10 +336,51 @@ namespace KZ::replaysystem::data
 		return result;
 	}
 
-	// Complete-file reader shared by the replay loading entry points.
+	// Both read-only analysis and playback use the same complete-file reader.
 	static_function bool ReadReplayFile(const char *path, CUtlBuffer &buffer, const std::atomic<bool> &cancel)
 	{
 		return !cancel && g_pFullFileSystem->ReadFile(path, nullptr, buffer) && !cancel && buffer.TellPut() > 0;
+	}
+
+	bool ReadReplayMovement(const char *path, ReplayMovement &result, const std::atomic<bool> &cancel)
+	{
+		result = {};
+		CUtlBuffer buffer;
+		if (!ReadReplayFile(path, buffer, cancel))
+		{
+			return false;
+		}
+		const char *cursor = (const char *)buffer.Base();
+		const char *end = cursor + buffer.TellPut();
+		if (!ReadHeader(cursor, end, result.header))
+		{
+			return false;
+		}
+		// Exact route operations are a v6 feature. Older files remain playable.
+		if (result.header.version() < 6)
+		{
+			return false;
+		}
+		compression::TickVisitor visitor = [&](const TickData &tick)
+		{
+			if (cancel)
+			{
+				return false;
+			}
+			result.samples.push_back(
+				{tick.serverTick, tick.pre.origin, tick.post.origin, tick.pre.moveType == MOVETYPE_NOCLIP, tick.post.moveType == MOVETYPE_NOCLIP});
+			return true;
+		};
+		if (!compression::ReadTickDataCompressed(cursor, end, result.header.version(), visitor))
+		{
+			return false;
+		}
+		// No weapons or jumpstats are allocated for route analysis.
+		if (!compression::SkipCompressedSection(cursor, end) || !compression::SkipCompressedSection(cursor, end))
+		{
+			return false;
+		}
+		return !cancel && compression::ReadEventsCompressed(cursor, end, result.events, result.header.version());
 	}
 
 	// File-based entry point: reads the entire file into memory then parses.

@@ -78,11 +78,12 @@ void AsyncFileIO::QueueRead(std::string path, ReadCallback onRead)
 	EnqueueTask(std::move(task));
 }
 
-void AsyncFileIO::QueueWriteBuffer(std::string path, std::vector<char> buffer)
+void AsyncFileIO::QueueWriteBuffer(std::string path, std::vector<char> buffer, WriteCallback onDone)
 {
 	RawWriteTask task;
 	task.path = std::move(path);
 	task.buffer = std::move(buffer);
+	task.onDone = std::move(onDone);
 	EnqueueTask(std::move(task));
 }
 
@@ -127,6 +128,13 @@ void AsyncFileIO::RunFrame()
 						r.onRead(r.success, std::move(r.buffer));
 					}
 				},
+				[](RawWriteResult &r)
+				{
+					if (r.onDone)
+					{
+						r.onDone(r.success);
+					}
+				},
 			},
 			completed.front());
 		completed.pop();
@@ -166,7 +174,18 @@ void AsyncFileIO::ThreadRun()
 					std::lock_guard<std::mutex> lock(m_completedLock);
 					m_completedTasks.push(std::move(result));
 				},
-				[&](RawWriteTask &task) { bool ok = utils::WriteBufferToFile(task.path.c_str(), task.buffer); },
+				[&](RawWriteTask &task)
+				{
+					const bool ok = utils::WriteBufferToFile(task.path.c_str(), task.buffer);
+					if (task.onDone)
+					{
+						RawWriteResult result;
+						result.success = ok;
+						result.onDone = std::move(task.onDone);
+						std::lock_guard<std::mutex> lock(m_completedLock);
+						m_completedTasks.push(std::move(result));
+					}
+				},
 			},
 			anyTask);
 	};

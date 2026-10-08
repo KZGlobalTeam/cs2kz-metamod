@@ -44,6 +44,7 @@ class KZModeService;
 class KZNoclipService;
 class KZOptionService;
 class KZPaintService;
+class KZProgressService;
 class KZQuietService;
 class KZRacingService;
 class KZSpecService;
@@ -178,6 +179,7 @@ public:
 	KZNoclipService *noclipService {};
 	KZOptionService *optionService {};
 	KZPaintService *paintService {};
+	KZProgressService *progressService {};
 	KZQuietService *quietService {};
 	KZRacingService *racingService {};
 	KZSpecService *specService {};
