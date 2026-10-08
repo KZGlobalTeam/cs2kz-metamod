@@ -663,6 +663,7 @@
     "Command Description - kz_jstierhud"
     {
         "en"		"Set your minimum jumpstats HUD reporting tier."
+		"chi"		"设置在 HUD 中显示跳跃数据的最低等级."
 		"ua"		"Встановити мінімальний рівень для відображення статистики стрибків в HUD."
         "ru"		"Установить минимальный уровень отображения статистики прыжков в HUD."
 	}
@@ -1843,6 +1844,7 @@
 	"Command Description - kz_hudedit"
 	{
 		"en"		"Move HUD elements with the mouse."
+		"chi"		"使用鼠标移动 HUD 元素."
 		"ua"		"Переміщати елементи HUD за допомогою миші."
 		"ru"		"Перемещение элементов HUD мышью."
 	}

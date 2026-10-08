@@ -337,42 +337,49 @@
 	"HUD Edit - Pick Hint"
 	{
 		"en"		"Click an element to move it, or one of its corners to resize it"
+		"chi"		"点击元素可移动位置，拖动角落可调整大小"
 		"ua"		"Натисніть на елемент, щоб перемістити його, або на один із його кутів, щоб змінити його розмір"
 		"ru"		"Кликните на элемент, чтобы его переместить, или на угол, чтобы изменить его размер"
 	}
 	"HUD Edit - Place"
 	{
 		"en"		"Place"
+		"chi"		"放置"
 		"ua"		"Розмістити"
 		"ru"		"Разместить"
 	}
 	"HUD Edit - Cancel"
 	{
 		"en"		"Cancel"
+		"chi"		"取消"
 		"ua"		"Скасувати"
 		"ru"		"Отменить"
 	}
 	"HUD Edit - Default"
 	{
 		"en"		"Default position"
+		"chi"		"默认位置"
 		"ua"		"Початкове положення"
 		"ru"		"Сброс положения"
 	}
 	"HUD Edit - Free Move"
 	{
 		"en"		"Hold: no snapping"
+		"chi"		"按住：自由移动"
 		"ua"		"Утримуйте щоб вільно переміщати"
 		"ru"		"Удержание: свободное перемещение"
 	}
 	"HUD Edit - Done"
 	{
 		"en"		"Done"
+		"chi"		"完成"
 		"ua"		"Готово"
 		"ru"		"Готово"
 	}
 	"HUD Edit - Unavailable"
 	{
 		"en"		"{grey}Moving HUD elements needs the layout HUD style and a living player."
+		"chi"		"{grey}移动 HUD 元素需要启用布局 HUD 样式，并且玩家必须处于存活状态。"
 		"ua"		"{grey}Для переміщення елементів HUD потрібно увімкнути стиль Компонування (mhud стиль) та мати живого гравця на сервері."
 		"ru"		"{grey}Вы должны включить HUD и быть живы, чтобы перемещать элементы HUD."
 	}
@@ -381,18 +388,21 @@
 		// +0.5 W
 		"#format"	"value:s"
 		"en"		"{value} W"
+		"chi"		"{value} W"
 		"ua"		"{value} W"
 		"ru"		"{value} W"
 	}
 	"HUD - Course Global"
 	{
 		"en"		"Global"
+		"chi"		"全球"
 		"ua"		"Глобальний"
 		"ru"		"Глобальный"
 	}
 	"HUD - Course Non Global"
 	{
 		"en"		"Non-global"
+		"chi"		"非全球"
 		"ua"		"Неглобальний"
 		"ru"		"Неглобальный"
 	}
@@ -401,6 +411,7 @@
 		// Main · CKZ
 		"#format"	"course:s,mode:s"
 		"en"		"{course} · {mode}"
+		"chi"		"{course} · {mode}"
 		"ua"		"{course} · {mode}"
 		"ru"		"{course} · {mode}"
 	}
@@ -409,6 +420,7 @@
 		//  · T3
 		"#format"	"tier:i"
 		"en"		" · T{tier}"
+		"chi"		" · T{tier}"
 		"ua"		" · T{tier}"
 		"ru"		" · T{tier}"
 	}
@@ -417,6 +429,7 @@
 		//  · T3 / Pro T5
 		"#format"	"tp:i,pro:i"
 		"en"		" · T{tp} / Pro T{pro}"
+		"chi"		" · T{tp} / Pro T{pro}"
 		"ua"		" · T{tp} / Pro T{pro}"
 		"ru"		" · T{tp} / Pro T{pro}"
 	}
@@ -424,6 +437,7 @@
 	{
 		"#format"	"number:i"
 		"en"		"Split {number}"
+		"chi"		"分段 {number}"
 		"ua"		"Спліт {number}"
 		"ru"		"Сплит {number}"
 	}
@@ -431,6 +445,7 @@
 	{
 		"#format"	"number:i"
 		"en"		"CP {number}"
+		"chi"		"CP {number}"
 		"ua"		"CP {number}"
 		"ru"		"CP {number}"
 	}
@@ -438,6 +453,7 @@
 	{
 		"#format"	"number:i"
 		"en"		"Stage {number}"
+		"chi"		"关卡 {number}"
 		"ua"		"Етап {number}"
 		"ru"		"Этап {number}"
 	}
@@ -446,30 +462,35 @@
 		// 1:23.456 vs PB
 		"#format"	"time:s,target:s"
 		"en"		"{time} vs {target}"
+		"chi"		"{time} vs {target}"
 		"ua"		"{time} проти {target}"
 		"ru"		"{time} vs {target}"
 	}
 	"HUD - Compare Server PB"
 	{
 		"en"		"SPB"
+		"chi"		"SPB"
 		"ua"		"SPB"
 		"ru"		"SPB"
 	}
 	"HUD - Compare Global PB"
 	{
 		"en"		"GPB"
+		"chi"		"GPB"
 		"ua"		"GPB"
 		"ru"		"GPB"
 	}
 	"HUD - Compare SR"
 	{
 		"en"		"SR"
+		"chi"		"SR"
 		"ua"		"SR"
 		"ru"		"SR"
 	}
 	"HUD - Compare WR"
 	{
 		"en"		"WR"
+		"chi"		"WR"
 		"ua"		"WR"
 		"ru"		"WR"
 	}
@@ -478,24 +499,28 @@
 		// PB Pro
 		"#format"	"target:s"
 		"en"		"{target} Pro"
+		"chi"		"{target} Pro"
 		"ua"		"{target} Pro"
 		"ru"		"{target} Pro"
 	}
 	"HUD - Course Stages"
 	{
 		"en"		"Stages"
+		"chi"		"关卡"
 		"ua"		"Етапи"
 		"ru"		"Этапы"
 	}
 	"HUD - Course Checkpoints"
 	{
 		"en"		"Checkpoints"
+		"chi"		"存点"
 		"ua"		"Чекпоінти"
 		"ru"		"Чекпоинты"
 	}
 	"HUD - Course Splits"
 	{
 		"en"		"Splits"
+		"chi"		"分段"
 		"ua"		"Спліти"
 		"ru"		"Сплиты"
 	}
@@ -504,30 +529,35 @@
 		// 2 / 5
 		"#format"	"reached:i,total:i"
 		"en"		"{reached} / {total}"
+		"chi"		"{reached} / {total}"
 		"ua"		"{reached} / {total}"
 		"ru"		"{reached} / {total}"
 	}
 	"HUD - Course All"
 	{
 		"en"		"All"
+		"chi"		"全部"
 		"ua"		"Всі"
 		"ru"		"Все"
 	}
 	"HUD - Course Pro"
 	{
 		"en"		"Pro"
+		"chi"		"Pro"
 		"ua"		"Pro"
 		"ru"		"Pro"
 	}
 	"HUD - Course Badge TP"
 	{
 		"en"		"TP"
+		"chi"		"TP"
 		"ua"		"TP"
 		"ru"		"TP"
 	}
 	"HUD - Course Badge Pro"
 	{
 		"en"		"PRO"
+		"chi"		"PRO"
 		"ua"		"PRO"
 		"ru"		"PRO"
 	}
@@ -535,6 +565,7 @@
 	{
 		"#format"	"name:s"
 		"en"		"by {name}"
+		"chi"		"由 {name} 创下"
 		"ua"		"від {name}"
 		"ru"		"от {name}"
 	}
@@ -543,30 +574,35 @@
 		// (+1.234)
 		"#format"	"gap:s"
 		"en"		"({gap})"
+		"chi"		"({gap})"
 		"ua"		"({gap})"
 		"ru"		"({gap})"
 	}
 	"HUD - Course No Records"
 	{
 		"en"		"No records yet"
+		"chi"		"暂无记录"
 		"ua"		"Немає даних"
 		"ru"		"Нет рекордов... пока"
 	}
 	"HUD - Course Ranked"
 	{
 		"en"		"Ranked"
+		"chi"		"已排名"
 		"ua"		"Рейтинговий"
 		"ru"		"Рейтинговый"
 	}
 	"HUD - Course Pending"
 	{
 		"en"		"Pending"
+		"chi"		"待审核"
 		"ua"		"Очікує"
 		"ru"		"Ожидание"
 	}
 	"HUD - Course Unranked"
 	{
 		"en"		"Unranked"
+		"chi"		"未排名"
 		"ua"		"Нерейтинговий"
 		"ru"		"Без рейтинга"
 	}
