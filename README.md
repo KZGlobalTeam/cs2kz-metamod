@@ -8,16 +8,16 @@ Automated translation linter reports for cs2kz-metamod.
 |--------|-------|
 | **Linter Errors** | 0 |
 | **Linter Warnings** | 24 |
-| **Total Languages** | 14 |
+| **Total Languages** | 15 |
 | **Total Phrases** | 995 |
 | **Phrases Missing Translations** | 995 |
-| **Total Missing Entries** | 6354 |
+| **Total Missing Entries** | 6392 |
 | **Menu Files** | 11 |
 
 ## Language Coverage (Phrases)
 
 ```
-  chi (schinese)       [███████████████████░]  97.8% (973/995)
+  chi (schinese)       [██████████████████░░]  94.0% (935/995)
   de (german)          [██████████░░░░░░░░░░]  52.1% (518/995)
   en (english)         [████████████████████] 100.0% (995/995)
   es (spanish)         [█████████░░░░░░░░░░░]  48.6% (484/995)
@@ -31,6 +31,7 @@ Automated translation linter reports for cs2kz-metamod.
   sv (swedish)         [███████░░░░░░░░░░░░░]  39.4% (392/995)
   tr (turkish)         [█████░░░░░░░░░░░░░░░]  26.3% (262/995)
   ua (ukrainian)       [████████████████████] 100.0% (995/995)
+  zho (tchinese)       [████████████████████] 100.0% (995/995)
 ```
 
 ## Menu Translation Status
@@ -80,9 +81,9 @@ Automated translation linter reports for cs2kz-metamod.
 
 ## Last Updated
 
-- **Commit:** [`edef4b1`](https://github.com/KZGlobalTeam/cs2kz-metamod/commit/edef4b127b5b75f7c892d8e5a9528e1db71dbd30)
-- **Time:** 2026-10-09 12:25:53 UTC
-- **Message:** Ukrainian translations (#656)
+- **Commit:** [`19a2ef5`](https://github.com/KZGlobalTeam/cs2kz-metamod/commit/19a2ef5859dfcd4eca89e775c50c2a5afe18de5c)
+- **Time:** 2026-10-09 12:28:39 UTC
+- **Message:** Add Traditional Chinese (zho) translations (#657)
 
 ---
 
