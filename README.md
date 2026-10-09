@@ -11,7 +11,7 @@ Automated translation linter reports for cs2kz-metamod.
 | **Total Languages** | 14 |
 | **Total Phrases** | 995 |
 | **Phrases Missing Translations** | 995 |
-| **Total Missing Entries** | 6357 |
+| **Total Missing Entries** | 6354 |
 | **Menu Files** | 11 |
 
 ## Language Coverage (Phrases)
@@ -30,7 +30,7 @@ Automated translation linter reports for cs2kz-metamod.
   ru (russian)         [███████████████████░]  99.9% (994/995)
   sv (swedish)         [███████░░░░░░░░░░░░░]  39.4% (392/995)
   tr (turkish)         [█████░░░░░░░░░░░░░░░]  26.3% (262/995)
-  ua (ukrainian)       [███████████████████░]  99.7% (992/995)
+  ua (ukrainian)       [████████████████████] 100.0% (995/995)
 ```
 
 ## Menu Translation Status
@@ -80,9 +80,9 @@ Automated translation linter reports for cs2kz-metamod.
 
 ## Last Updated
 
-- **Commit:** [`3848ade`](https://github.com/KZGlobalTeam/cs2kz-metamod/commit/3848adea4644bc080bfec42441b864f3c4d99acc)
-- **Time:** 2026-10-08 11:29:30 UTC
-- **Message:** Add missing Simplified Chinese translations (#655)
+- **Commit:** [`edef4b1`](https://github.com/KZGlobalTeam/cs2kz-metamod/commit/edef4b127b5b75f7c892d8e5a9528e1db71dbd30)
+- **Time:** 2026-10-09 12:25:53 UTC
+- **Message:** Ukrainian translations (#656)
 
 ---
 
