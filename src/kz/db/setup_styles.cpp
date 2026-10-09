@@ -15,6 +15,10 @@ void KZDatabaseService::UpdateStyleIDs()
 	KZDatabaseService::GetDatabaseConnection()->Query(sql_styles_fetch_all,
 		[](ISQLQuery *query)
 		{
+			if (!query || !query->GetResultSet())
+			{
+				return;
+			}
 			auto resultSet = query->GetResultSet();
 			while (resultSet->FetchRow())
 			{
