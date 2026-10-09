@@ -5,6 +5,7 @@
 		"#format"	"map_name:s,course_name:s,mode_name:s"
 		"en"		"{map_name} ({course_name}) {mode_name} Overall Server Top"
 		"chi"		"{map_name} ({course_name}) {mode_name} 总体服务器榜单"
+		"zho"		"{map_name} ({course_name}) {mode_name} 總體伺服器榜單"
 		"pl"		"{map_name} ({course_name}) {mode_name} Ogólne Top Serwera"
 		"ru"		"{map_name} ({course_name}) {mode_name} Общий топ сервера"
 		"ua"		"{map_name} ({course_name}) {mode_name} Загальний топ сервера"
@@ -20,6 +21,7 @@
 		"#format"	"map_name:s,course_name:s,mode_name:s"
 		"en"		"{map_name} ({course_name}) {mode_name} PRO Server Top"
 		"chi"		"{map_name} ({course_name}) {mode_name} 裸跳服务器榜单"
+		"zho"		"{map_name} ({course_name}) {mode_name} 裸跳伺服器榜單"
 		"pl"		"{map_name} ({course_name}) {mode_name} PRO Top Serwera"
 		"ru"		"{map_name} ({course_name}) {mode_name} PRO топ сервера"
 		"ua"		"{map_name} ({course_name}) {mode_name} PRO топ сервера"
@@ -35,6 +37,7 @@
 		"#format"	"map_name:s,course_name:s,mode_name:s"
 		"en"		"{map_name} ({course_name}) {mode_name} Overall Global Top"
 		"chi"		"{map_name} ({course_name}) {mode_name} 总体全球榜单"
+		"zho"		"{map_name} ({course_name}) {mode_name} 總體全球榜單"
 		"pl"		"{map_name} ({course_name}) {mode_name} Ogólne Top Globalnie"
 		"ru"		"{map_name} ({course_name}) {mode_name} Общий глобальный топ"
 		"ua"		"{map_name} ({course_name}) {mode_name} Загальний глобальний топ"
@@ -50,6 +53,7 @@
 		"#format"	"map_name:s,course_name:s,mode_name:s"
 		"en"		"{map_name} ({course_name}) {mode_name} PRO Global Top"
 		"chi"		"{map_name} ({course_name}) {mode_name} 裸跳全球榜单"
+		"zho"		"{map_name} ({course_name}) {mode_name} 裸跳全球榜單"
 		"pl"		"{map_name} ({course_name}) {mode_name} PRO Top Globalnie"
 		"ru"		"{map_name} ({course_name}) {mode_name} Глобальный PRO топ"
 		"ua"		"{map_name} ({course_name}) {mode_name} Глобальний PRO топ"
@@ -64,6 +68,7 @@
 	{
 		"en"		"Alias"
 		"chi"		"玩家名称"
+		"zho"		"玩家名稱"
 		"ru"		"Никнейм"
 		"sv"		"Alias"
 		"tr"		"İsim"
@@ -80,6 +85,7 @@
 	{
 		"en"		"Time"
 		"chi"		"时间"
+		"zho"		"時間"
 		"ru"		"Время"
 		"sv"		"Tid"
 		"tr"		"Süre"
@@ -96,6 +102,7 @@
 	{
 		"en"		"Teleports"
 		"chi"		"存点数量"
+		"zho"		"存點數量"
 		"ru"		"Телепорты"
 		"sv"		"Teleporteringar"
 		"tr"		"Işınlanmalar"
@@ -112,6 +119,7 @@
 	{
 		"en"		"SteamID64"
 		"chi"		"SteamID64"
+		"zho"		"SteamID64"
 		"ru"		"SteamID64"
 		"sv"		"SteamID64"
 		"tr"		"SteamID64"
@@ -128,6 +136,7 @@
 	{
 		"en"		"Run ID"
 		"chi"		"ID"
+		"zho"		"ID"
 		"ru"		"ID прохождения"
 		"sv"		"Run ID"
 		"tr"		"Süre ID'si"
@@ -144,6 +153,7 @@
 	{
 		"en"		"Points"
 		"chi"		"分数"
+		"zho"		"分數"
 		"pl"		"Punkty"
 		"ru"		"Очки"
 		"ua"		"Очки"
@@ -158,6 +168,7 @@
 	{
 		"en"		"{darkred}Failed to retrieve course top information."
 		"chi"		"{darkred}无法找到地图排行信息."
+		"zho"		"{darkred}無法找到地圖排名信息."
 		"ru"		"{darkred}Не удалось получить таблицу лидеров маршрута."
 		"sv"		"{darkred}Det gick inte att hämta banans toppinformation."
 		"tr"		"{darkred}Süre bilgisi alınırken hata."
@@ -174,6 +185,7 @@
 	{
 		"en"		"{darkred}Failed to retrieve course top information. {grey}(Invalid course name {default}{course_name}{grey})"
 		"chi"		"{darkred}无法找到地图排行信息.{grey}(不存在的关卡 {default}{course_name}{grey})"
+		"zho"		"{darkred}無法找到地圖排名信息.{grey}(不存在的關卡 {default}{course_name}{grey})"
 		"ru"		"{darkred}Не удалось получить таблицу лидеров маршрута. {grey}(Неверное название маршрута {default}{course_name}{grey})"
 		"sv"		"{darkred}Det gick inte att hämta banans toppinformation. {grey}(Ogiltigt namn av bana {default}{course_name}{grey})"
 		"tr"		"{darkred}Süre bilgisi alınırken hata. {grey}(Bilinmeyen harita ismi {default}{course_name}{grey})"
@@ -190,6 +202,7 @@
 	{
 		"en"		"{grey}Course top data retrieved. Check console for details!"
 		"chi"		"{grey}地图排行榜已获取. 打开控制台查看详细数据!"
+		"zho"		"{grey}地圖排行榜已獲取. 打開控制台檢視詳細資料!"
 		"ru"		"{grey}Данные таблицы лидеров маршрута получены. Подробности выведены в консоль!"
 		"sv"		"{grey}Banans toppinformation hämtades. Kolla konsolen för detaljer!"
 		"tr"		"{grey}Sıralama bilgileri alındı. Detaylar için konsola bak!"
@@ -206,6 +219,7 @@
 	{
 		"en"		"{grey}Usage: {default}kz_ctop {purple}<c/course/map/mode/l/limit/o/offset=...>{grey}. Check console for details!"
 		"chi"		"{grey}用法: {default}kz_ctop {purple}<c/course/map/mode/l/limit/o/offset=...>{grey}. 打开控制台查看详细数据!"
+		"zho"		"{grey}用法: {default}kz_ctop {purple}<c/course/map/mode/l/limit/o/offset=...>{grey}. 打開控制台檢視詳細資料!"
 		"ru"		"{grey}Применение: {default}kz_ctop {purple}<c/course/map/mode/l/limit/o/offset=...>{grey}. Подробности выведены в консоль!"
 		"sv"		"{grey}Anvädning: {default}kz_ctop {purple}<c/course/map/mode/l/limit/o/offset=...>{grey}. Kolla konsolen för detaljer!"
 		"tr"		"{grey}Kullanım: {default}kz_ctop {purple}<c/course/map/mode/l/limit/o/offset=...>{grey}. Detaylar için konsola bak!!"
@@ -222,6 +236,7 @@
 	{
 		"en"		"Usage: kz_ctop/kz_coursetop/kz_maptop/ <c/course/map/mode=...>\nExample: \"kz_ctop map=kz_map c=Main o=10 l=20\". Add 'g' or 's' to the start before the 'top' suffix to specify global/server only (eg. kz_gctop)."
 		"chi"		"用法: kz_ctop/kz_coursetop/kz_maptop/ <c/course/map/mode=...>\n 例子: \"kz_ctop map=kz_map c=Main o=10 l=20\". 在'top'后缀前添加'g'或's', 以指定全局/仅服务器记录 (eg. kz_gctop)."
+		"zho"		"用法: kz_ctop/kz_coursetop/kz_maptop/ <c/course/map/mode=...>\n 例子: \"kz_ctop map=kz_map c=Main o=10 l=20\". 在'top'後綴前添加'g'或's', 以指定全局/僅伺服器紀錄 (eg. kz_gctop)."
 		"ru"		"Применение: kz_ctop/kz_coursetop/kz_maptop/ <c/course/map/mode=...>\nПример: \"kz_ctop map=kz_map c=Main o=10 l=20\". Добавьте 'g' или 's' перед суффиксом 'top', чтобы указать глобальную/серверную таблицу лидеров (например kz_gctop)."
 		"sv"		"Användning: kz_ctop/kz_coursetop/kz_maptop/ <c/course/map/mode=...>\nTill exempel: \"kz_ctop map=kz_map c=Main o=10 l=20\". Lägg till 'g' eller 's' före 'top' suffixet för att specifikt visa globala/server tider (eg. kz_gctop)."
 		"tr"		"Kullanım: kz_ctop/kz_coursetop/kz_maptop/ <c/course/map/mode=...>\nÖrnek: \"kz_ctop map=kz_map c=Main o=10 l=20\". Ctop'un başına 'g' veya 's' ekleyerek sunucu ve global olarak belirtebilirsin.(örn. kz_gctop)."

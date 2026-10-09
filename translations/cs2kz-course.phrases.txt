@@ -4,6 +4,7 @@
 	{
 		"en"		"{grey}You have no current course. Check console for list of available courses!"
 		"chi"		"{grey}你当前没有关卡. 控制台可查看可用关卡列表!"
+		"zho"		"{grey}你目前沒有選擇關卡。請在控制台查看可用關卡列表！"
 		"pl"		"{grey}Nie masz aktualnej trasy. Otwórz konsolę, by zobaczyć listę dostępnych tras!"
 		"ru"		"{grey}У вас сейчас нет маршрута. Список доступных маршрутов выведен в консоль."
 		"sv"		"{grey}Du har inte valt en bana. Kolla konsolen för en lista av tillgängliga banor!"
@@ -20,6 +21,7 @@
 		"#format"	"course:s"
 		"en"		"{grey}Your current course is {default}{course}{grey}. Check console for list of available courses!"
 		"chi"		"{grey}你当前关卡为 {default}{course}{grey}. 控制台可查看可用关卡列表!"
+		"zho"		"{grey}你目前的關卡為 {default}{course}{grey}。請在控制台查看可用關卡列表！"
 		"pl"		"{grey}Twoja aktualna trasa to {default}{course}{grey}. Otwórz konsolę, by zobaczyć listę dostępnych tras!"
 		"ru"		"{grey}Ваш текущий маршрут: {default}{course}{grey}. Список доступных маршрутов выведен в консоль."
 		"sv"		"{grey}Din nuvarande bana är {default}{course}{grey}. Kolla konsolen för en lista av tillgängliga banor!"
@@ -35,6 +37,7 @@
 	{
 		"en"		"List of available courses (use kz_r <course name> to teleport to course):"
 		"chi"		"关卡列表 (使用 kz_r <关卡名称> 传送到该关卡):"
+		"zho"		"可用關卡列表（使用 kz_r <關卡名稱> 傳送至指定關卡）："
 		"pl"		"Lista dostępnych trash (użyj komendy kz_r <nazwa trasy> do teleportacji na wybraną trasę):"
 		"ru"		"Список доступных маршрутов (используйте kz_r <название маршрута>, чтобы телепортировать на маршрут):"
 		"sv"		"Lista av möjliga banor (använd kz_r <banans namn> för att teleportera till banan):"
@@ -51,6 +54,7 @@
 	{
 		"en"		"{yellow}Warning: {grey}The server is not connected to the CS2KZ API."
 		"chi"		"{yellow}警告: {grey}当前服务器未连接到CS2KZ API."
+		"zho"		"{yellow}警告：{grey}目前伺服器未連線至 CS2KZ API。"
 		"ru"		"{yellow}Внимание: {grey}Сервер не подключен к CS2KZ API."
 		"ua"		"{yellow}Увага: {grey}Сервер не підключений до CS2KZ API."
 		"es"		"{yellow}Atención: {grey}Este servidor no esta conectado al API de CS2KZ."
@@ -60,6 +64,7 @@
 	{
 		"en"		"{yellow}Warning: {grey}The server is not connected to the CS2KZ API. Some map information may be unavailable."
 		"chi"		"{yellow}警告: {grey}当前服务器未连接到CS2KZ API. 部分地图信息可能不可用."
+		"zho"		"{yellow}警告：{grey}目前伺服器未連線至 CS2KZ API，部分地圖資訊可能無法取得。"
 		"ru"		"{yellow}Внимание: {grey}Сервер не подключен к CS2KZ API. Некоторая информация о карте может быть недоступна."
 		"ua"		"{yellow}Увага: {grey}Сервер не підключений до CS2KZ API. Деяка інформація про мапу може бути недоступною."
 		"es"		"{yellow}Atención: {grey}Este servidor no esta conectado al API de CS2KZ. Alguna información del mapa puede no estar disponible."
@@ -69,6 +74,7 @@
 	{
 		"en"		"{yellow}Warning: {grey}No map data found on the CS2KZ API for this map."
 		"chi"		"{yellow}警告: {grey}CS2KZ API上未找到此地图的数据."
+		"zho"		"{yellow}警告：{grey}CS2KZ API 中找不到此地圖的資料。"
 		"ru"		"{yellow}Внимание: {grey}Данные этой карты не найдены в CS2KZ API."
 		"ua"		"{yellow}Увага: {grey}Не знайдено даних про цю мапу в CS2KZ API."
 		"es"		"{yellow}Atención: {grey}No se han encontrado datos en la API de CS2KZ para este mapa."
@@ -78,6 +84,7 @@
 	{
 		"en"		"{yellow}Warning: {grey}No map data found on the CS2KZ API for this map. Some map information may be unavailable."
 		"chi"		"{yellow}警告: {grey}CS2KZ API上未找到此地图的数据. 部分地图信息可能不可用."
+		"zho"		"{yellow}警告：{grey}CS2KZ API 中找不到此地圖的資料，部分地圖資訊可能無法取得。"
 		"ru"		"{yellow}Внимание: {grey}Данные этой карты не найдены в CS2KZ API. Некоторая информация о карте может быть недоступна."
 		"ua"		"{yellow}Увага: {grey}Не знайдено даних про цю мапу в CS2KZ API. Деяка інформація про мапу може бути недоступною."
 		"es"		"{yellow}Atención: {grey}No se han encontrado datos en la API de CS2KZ para este mapa. Alguna información del mapa puede no estar disponible."
@@ -87,6 +94,7 @@
 	{
 		"en"		"{grey}Check console for details!"
 		"chi"		"{grey}检查控制台获取详细信息!"
+		"zho"		"{grey}請查看控制台以取得詳細資訊！"
 		"ru"		"{grey}Детальная информация выведена в консоль!"
 		"ua"		"{grey}Перевірте консоль для детальної інформації!"
 		"es"		"{grey}¡Abre la consola para obtener más detalles!"
@@ -97,6 +105,7 @@
 		"#format"	"map:s"
 		"en"		"{default}{map} {grey}is currently {yellow}in testing{grey}."
 		"chi"		"{default}{map} {grey}当前正在{yellow}测试中{grey}."
+		"zho"		"{default}{map} {grey}目前{yellow}正在測試中{grey}。"
 		"ru"		"{default}{map} {grey}на данный момент {yellow}находится на стадии тестирования{grey}."
 		"ua"		"{default}{map} {grey}наразі {yellow}перебуває на стадії тестування{grey}."
 		"es"		"{default}{map} {grey}está {yellow}en pruebas{grey}."
@@ -107,6 +116,7 @@
 		"#format"	"map:s"
 		"en"		"{map} Map Information"
 		"chi"		"{map} 地图信息"
+		"zho"		"{map} 地圖資訊"
 		"ru"		"{map} Информация о карте"
 		"ua"		"{map} Інформація про мапу"
 		"es"		"{map} Información del mapa"
@@ -117,6 +127,7 @@
 		"#format"	"mappers:s"
 		"en"		"Mappers: {mappers}"
 		"chi"		"地图作者: {mappers}"
+		"zho"		"地圖作者：{mappers}"
 		"ru"		"Создатели: {mappers}"
 		"ua"		"Мапери: {mappers}"
 		"es"		"Mapeadores: {mappers}"
@@ -127,6 +138,7 @@
 		"#format"	"state:s"
 		"en"		"State: {state}"
 		"chi"		"地图状态: {state}"
+		"zho"		"地圖狀態：{state}"
 		"ru"		"Статус: {state}"
 		"ua"		"Статус: {state}"
 		"es"		"Estado: {state}"
@@ -137,6 +149,7 @@
 		"#format"	"description:s"
 		"en"		"Description: {description}"
 		"chi"		"描述: {description}"
+		"zho"		"描述：{description}"
 		"ru"		"Описание: {description}"
 		"ua"		"Опис: {description}"
 		"es"		"Descripción: {description}"
@@ -146,6 +159,7 @@
 	{
 		"en"		"N/A"
 		"chi"		"N/A"
+		"zho"		"N/A"
 		"ru"		"Н/Д"
 		"ua"		"Н/Д"
 		"es"			"N/A"
@@ -155,6 +169,7 @@
 	{
 		"en"		"In Testing"
 		"chi"		"测试中"
+		"zho"		"測試中"
 		"ru"		"На стадии тестирования"
 		"ua"		"На стадії тестування"
 		"es"		"En pruebas"
@@ -165,6 +180,7 @@
 		"#format"	"date:s"
 		"en"		"Approved ({date})"
 		"chi"		"已批准 ({date})"
+		"zho"		"已核准（{date}）"
 		"ru"		"Одобрена ({date})"
 		"ua"		"Схвалено ({date})"
 		"es"		"Aprobado ({date})"
@@ -174,6 +190,7 @@
 	{
 		"en"		"Unranked"
 		"chi"		"未排名"
+		"zho"		"未排名"
 		"ru"		"Без рейтинга"
 		"ua"		"Без рейтингу"
 		"es"		"Sin nivel"
@@ -183,6 +200,7 @@
 	{
 		"en"		"Pending"
 		"chi"		"待审批"
+		"zho"		"待審核"
 		"ru"		"На рассмотрении"
 		"ua"		"На розгляді"
 		"es"		"Pendiente"
@@ -192,6 +210,7 @@
 	{
 		"en"		"Ranked"
 		"chi"		"已排名"
+		"zho"		"已排名"
 		"ru"		"Рейтинговый"
 		"ua"		"Рейтинговий"
 		"es"		"Nivelado"
@@ -201,6 +220,7 @@
 	{
 		"en"		"Courses"
 		"chi"		"关卡"
+		"zho"		"關卡"
 		"ru"		"Маршруты"
 		"ua"		"Курси"
 		"es"		"Caminos"
@@ -210,6 +230,7 @@
 	{
 		"en"		"Name"
 		"chi"		"名称"
+		"zho"		"名稱"
 		"ru"		"Название"
 		"ua"		"Назва"
 		"es"		"Nombre"
@@ -219,6 +240,7 @@
 	{
 		"en"		"Mappers"
 		"chi"		"作者"
+		"zho"		"作者"
 		"ru"		"Создатели"
 		"ua"		"Мапери"
 		"es"		"Mapeadores"
@@ -228,6 +250,7 @@
 	{
 		"en"		"Tier (Vanilla)"
 		"chi"		"Tier (Vanilla)"
+		"zho"		"Tier (Vanilla)"
 		"ru"		"Tier (Vanilla)"
 		"ua"		"Складність (Vanilla)"
 		"es"		"Nivel (Vanilla)"
@@ -237,6 +260,7 @@
 	{
 		"en"		"Tier (Classic)"
 		"chi"		"Tier (Classic)"
+		"zho"		"Tier (Classic)"
 		"ru"		"Tier (Classic)"
 		"ua"		"Складність (Classic)"
 		"es"		"Nivel (Classic)"
@@ -246,6 +270,7 @@
 	{
 		"en"		"State (Vanilla)"
 		"chi"		"状态 (Vanilla)"
+		"zho"		"狀態 (Vanilla)"
 		"ru"		"Статус (Vanilla)"
 		"ua"		"Статус (Vanilla)"
 		"es"		"Estado (Vanilla)"
@@ -255,6 +280,7 @@
 	{
 		"en"		"State (Classic)"
 		"chi"		"状态 (Classic)"
+		"zho"		"狀態 (Classic)"
 		"ru"		"Статус (Classic)"
 		"ua"		"Статус (Classic)"
 		"es"		"Estado (Classic)"
@@ -266,6 +292,7 @@
 		"#format"	"course:s"
 		"en"		"{darkred}Data for course {default}{course}{darkred} cannot be retrieved."
 		"chi"		"{darkred}无法获取关卡 {default}{course}{darkred} 的数据."
+		"zho"		"{darkred}無法取得關卡 {default}{course}{darkred} 的資料。"
 		"ru"		"{darkred}Невозможно получить данные о маршруте {default}{course}{darkred}."
 		"ua"		"{darkred}Неможливо отримати дані про курс {default}{course}{darkred}."
 		"es"		"{darkred}Datos del curso {default}{course}{darkred} inaccesibles."
@@ -278,6 +305,7 @@
 		"#format"	"course:s,tier_nub:d,tier_pro:d,state:s,description:s"
 		"en"		"{default}{course}{grey} ({purple}{state}{grey}) - Tier {yellow}{tier_nub}{grey}/{blue}{tier_pro}{grey}{description}"
 		"chi"		"{default}{course}{grey} ({purple}{state}{grey}) - Tier {yellow}{tier_nub}{grey}/{blue}{tier_pro}{grey}{description}"
+		"zho"		"{default}{course}{grey} ({purple}{state}{grey}) - Tier {yellow}{tier_nub}{grey}/{blue}{tier_pro}{grey}{description}"
 		"ru"		"{default}{course}{grey} ({purple}{state}{grey}) - Tier {yellow}{tier_nub}{grey}/{blue}{tier_pro}{grey}{description}"
 		"ua"		"{default}{course}{grey} ({purple}{state}{grey}) - Tier {yellow}{tier_nub}{grey}/{blue}{tier_pro}{grey}{description}"
 		"es"		"{default}{course}{grey} ({purple}{state}{grey}) - Nivel {yellow}{tier_nub}{grey}/{blue}{tier_pro}{grey}{description}"

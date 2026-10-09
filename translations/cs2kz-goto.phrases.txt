@@ -4,6 +4,7 @@
 	{
 		"en"		"{darkred}Stop your timer before trying to teleport."
 		"chi"		"{darkred}请在传送前停止你的计时器."
+		"zho"		"{darkred}請先停止計時器再進行傳送。"
 		"pl"		"{darkred}Zatrzymaj swój timer przed próbą teleportacji."
 		"ru"		"{darkred}Остановите свой таймер перед попыткой телепортации."
 		"fi"		"{darkred}Pysäytä ajastimesi ennen, kuin koitat teleportata."
@@ -21,6 +22,7 @@
 		"#format"	"player:s"
 		"en"		"{darkred}Cannot teleport. {player} is a spectator."
 		"chi"		"{darkred}传送失败. {player} 处于观察状态."
+		"zho"		"{darkred}無法傳送，{player} 目前處於觀戰狀態。"
 		"pl"		"{darkred}Nie możesz się teleportować. {player} jest obserwatorem."
 		"ru"		"{darkred}Невозможно телепортироваться. {player} находится в наблюдателях."
 		"fi"		"{darkred}Ei voida teleportata. {player} on katselija."
@@ -38,6 +40,7 @@
 		"#format"	"player:s"
 		"en"		"{grey}Teleported to {player}."
 		"chi"		"{grey}传送到 {player}."
+		"zho"		"{grey}已傳送至 {player}。"
 		"pl"		"{grey}Teleportowano do {player}."
 		"ru"		"{grey}Телепортация к {player}."
 		"fi"		"{grey}Teleporttasit pelaajan {player} luokse."
@@ -54,6 +57,7 @@
 	{
 		"en"		"{grey}Usage: {default}kz_goto <player name>"
 		"chi"		"{grey}用法: {default}kz_goto <玩家名字>"
+		"zho"		"{grey}用法：{default}kz_goto <玩家名稱>"
 		"pl"		"{grey}Użycie: {default}kz_goto <nazwa gracza>"
 		"ru"		"{grey}Применение: {default}kz_goto <никнейм игрока>"
 		"fi"		"{grey}Käyttö: {default}kz_goto <pelaajan nimi>"

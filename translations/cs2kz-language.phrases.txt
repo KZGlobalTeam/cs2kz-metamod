@@ -6,6 +6,7 @@
 		"#format"	"language:s"
 		"en"		"{grey}You have switched your language to {default}{language}{grey}."
 		"chi"		"{grey}你选择了你的语言为 {default}{language}{grey}."
+		"zho"		"{grey}你已將語言切換為 {default}{language}{grey}。"
 		"pl"		"{grey}Zmieniłeś język na {default}{language}{grey}."
 		"ru"		"{grey}Вы изменили свой язык на {default}{language}{grey}."
 		"fi"		"{grey}Kielesi on nyt {default}{language}{grey}."
@@ -22,6 +23,7 @@
 	"Language Command Usage"
 	{
 		"en"		"{grey}Usage: {default}kz_language <language>{grey}."
+		"zho"		"{grey}用法：{default}kz_language <language>{grey}。"
 		"ua"		"{grey}Використання: {default}kz_language <мова>{grey}."
 		"ru"		"{grey}Применение: {default}kz_language <язык>{grey}."
 	}
@@ -31,6 +33,7 @@
 		// Menus are now accessible via your radio hotkeys, or radio/radio1/radio2 console commands!
 		"en"		"{lime}Menus are now accessible via your radio hotkeys, or {default}radio{lime}/{default}radio1{lime}/{default}radio2{lime} console commands!"
 		"chi"		"{lime}你现在可以通过无线电快捷键,或在控制台输入 {default}radio{lime}/{default}radio1{lime}/{default}radio2{lime} 来打开菜单!"
+		"zho"		"{lime}現在可以使用無線電快捷鍵，或在控制台輸入 {default}radio{lime}/{default}radio1{lime}/{default}radio2{lime} 指令開啟選單！"
 		"pl"		"{lime}Menu są dostępne używając klawiszy radio, lub poprzez komendy {default}radio{lime}/{default}radio1{lime}/{default}radio2{lime}, które należy wpisać w konsoli!"
 		"ru"		"{lime}Меню теперь доступны через горячие клавиши радиокоманд (по умолчанию: клавиша Z) или консольные команды {default}radio{lime}/{default}radio1{lime}/{default}radio2!"
 		"ua"		"{lime}Меню тепер доступні за допомогою гарячих клавіш радіокоманд або {default}radio{lime}/{default}radio1{lime}/{default}radio2{lime} команд в консолі!"
@@ -45,6 +48,7 @@
 	{
 		"en"		"{yellow}Please reconnect to the server to apply changes to the menu."
 		"chi"		"{yellow}请重新连接服务器以应用菜单更改."
+		"zho"		"{yellow}請重新連線至伺服器，以套用選單變更。"
 		"pl"		"{yellow}Proszę się ponownie połączyć z serwerem, by odświeżyć zmiany w menu."
 		"ru"		"{yellow}Пожалуйста переподключитесь к серверу, чтобы применить новые настройки меню."
 		"ua"		"{yellow}Будь ласка, перепідключіться до сервера, щоб застосувати зміни в меню."

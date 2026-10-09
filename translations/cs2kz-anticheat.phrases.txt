@@ -4,6 +4,7 @@
 	{
 		"en"		"{darkred}Warning{grey}: Your {default}m_yaw{grey} value must be less or equal to 0.3 to play on this server. You will be disconnected."
 		"chi"		"{darkred}警告{grey}: 你的 {default}m_yaw{grey} 数值必须小于或等于 0.3 才能在此服务器上游玩. 你将会断开连接."
+		"zho"		"{darkred}警告{grey}: 你的 {default}m_yaw{grey} 數值必須小於或等於 0.3 才能在此伺服器上遊玩. 你將會斷開連線."
 		"pl"		"{darkred}UWAGA!{grey}: Wartość {default}m_yaw{grey} musi być mniejsza lub równa 0.3, by grać na tym serwerze. Zostaniesz rozłączony."
 		"ua"		"{darkred}Увага{grey}: Щоб грати на цьому сервері, ваше значення {default}m_yaw{grey} має бути меншим або дорівнювати 0.3. Вас буде від'єднано."
 		"sv"		"{darkred}Varning{grey}: Ditt {default}m_yaw{grey} värde måste mindre eller lika med 0.3 för att spela på den här servern. Du blir disconnectad."
@@ -18,6 +19,7 @@
 	{
 		"en"		"Warning: Your m_yaw value must be less or equal to 0.3 to play on this server. You will be disconnected."
 		"chi"		"警告: 你的 m_yaw 数值必须小于或等于 0.3 才能在此服务器上游玩. 你将会断开连接."
+		"zho"		"警告: 你的 m_yaw 數值必須小於或等於 0.3 才能在此伺服器上遊玩. 你將會斷開連線."
 		"pl"		"UWAGA!: Wartość m_yaw musi być mniejsza lub równa 0.3, by grać na tym serwerze. Zostaniesz rozłączony."
 		"ua"		"Увага: Ваше значення m_yaw має бути меншим або дорівнювати 0.3. Вас буде від'єднано."
 		"sv"		"Varning: Ditt m_yaw värde måste mindre eller lika med 0.3 för att spela på den här servern. Du blir disconnectad."
@@ -32,6 +34,7 @@
 	{
 		"en"		"{darkred}Warning{grey}: Your {default}fps_max{grey} value must be more or equal to 64 to play on this server. You will be disconnected."
 		"chi"		"{darkred}警告{grey}: 你的 {default}fps_max{grey} 数值必须大于或等于 64 才能在此服务器上游玩. 你将会断开连接."
+		"zho"		"{darkred}警告{grey}: 你的 {default}fps_max{grey} 數值必須大於或等於 64 才能在此伺服器上遊玩. 你將會斷開連線."
 		"pl"		"{darkred}UWAGA!{grey}: Wartość {default}fps_max{grey} musi być większa lub równa 64, by grać na tym serwerze. Zostaniesz rozłączony."
 		"ua"		"{darkred}Увага{grey}: Для гри на цьому сервері ваше значення {default}fps_max{grey} має бути більшим або рівним 64. Вас буде від'єднано."
 		"sv"		"{darkred}Varning{grey}: Ditt {default}fps_max{grey} värde måste vara mer eller lika med 64 för att spela på den här servern. Du blir disconnectad."
@@ -46,6 +49,7 @@
 	{
 		"en"		"Warning: Your fps_max value must be more or equal to 64 to play on this server. You will be disconnected."
 		"chi"		"警告: 你的 fps_max 数值必须大于或等于 64 才能在此服务器上游玩. 你将会断开连接."
+		"zho"		"警告: 你的 fps_max 數值必須大於或等於 64 才能在此伺服器上遊玩. 你將會斷開連線."
 		"pl"		"UWAGA!: Wartość fps_max musi być większa lub równa 64, by grać na tym serwerze. Zostaniesz rozłączony."
 		"ua"		"Увага: Для гри на цьому сервері ваше значення fps_max має бути більшим або рівним 64. Вас буде від'єднано."
 		"sv"		"Varning: Ditt fps_max värde måste vara mer eller lika med 64 för att spela på den här servern. Du blir disconnectad."
@@ -60,6 +64,7 @@
 	{
 		"en"		"{darkred}WARNING: Any use of hardware/software/configs to gain unfair advantage is strictly forbidden! This includes, but is not limited to: hacks, macros, hyperscrolling, SOCD/nulls, desubtick and mouse abuse configs."
 		"chi"		"{darkred}警告：严禁使用任何硬件/软件/配置获取不公平优势! 包括但不限于: 作弊工具、自动宏、超速滚动、SOCD/Null、desubtick以及鼠标滥用配置等."
+		"zho"		"{darkred}警告：嚴禁使用任何硬體/軟體/設定獲取不公平優勢! 包括但不限於: 作弊工具、自動巨集、超速滾動、SOCD/Null、desubtick以及滑鼠濫用設定等."
 		"ua"		"{darkred}УВАГА: Будь-яке використання апаратного/програмного забезпечення/конфігів з метою отримання нечесної переваги суворо заборонено! Це включає, але не обмежується: хаки, макроси, гіперскролінг, SOCD/nulls, desubtick та конфіги, що зловживають мишкою."
 		"ru"		"{darkred}ВНИМАНИЕ: Любое использование аппаратного/программного обеспечения или конфигов для получения нечестного преимущества строго запрещено! Это включает в себя, но не ограничивается: читами, макросами, hyperscroll'ом, SOCD/snap tap/нуллами, desubtick-биндами и читерскими конфигами мыши."
 		"es"		"{darkred}ATENCIÓN: Cualquier uso de hardware/software/configs con el que se ganen ventajas injustas esta extrictamente prohibido! Esto incluye, pero no se limita a: hacks, macros, hyperscrolling, SOCD/nulls, desubtick y configuraciones para trampear el ratón (mouse abuse configs)."
@@ -69,6 +74,7 @@
 	{
 		"en"		"{darkred}WARNING: You are currently banned. Your jumps and records will not be saved."
 		"chi"		"{darkred}警告：你已被封禁. 你的跳跃和记录将不会保存."
+		"zho"		"{darkred}警告：你已被封禁. 你的跳躍和紀錄將不會儲存."
 		"ua"		"{darkred}УВАГА: Ви забанені. Ваші стрибки та рекорди не будуть збережені."
 		"ru"		"{darkred}ВНИМАНИЕ: Вы забанены. Ваши прыжки и рекорды не будут сохранены."
 		"es"		"{darkred}ATENCIÓN: Actualmente estas baneado. Tus saltos y recorridos no serán guardados."

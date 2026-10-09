@@ -4,6 +4,7 @@
 	{
 		"en"		"{grey}You have disabled your player beams."
 		"chi"		"{grey}你已关闭玩家光束效果."
+		"zho"		"{grey}你已關閉玩家光束效果."
 		"pl"		"{grey}Wyłączyłeś smugi swojego gracza."
 		"sv"		"{grey}Du har inaktiverat din spelarstråle."
 		"ua"		"{grey}Ви вимкнули промені руху під час стрибка."
@@ -16,6 +17,7 @@
 	{
 		"en"		"{grey}You have set your player beam type to {default}Ground{grey}."
 		"chi"		"{grey}你已将玩家光束类型设置为 {default}地面{grey}."
+		"zho"		"{grey}你已將玩家光束類型設定為 {default}地面{grey}."
 		"pl"		"{grey}Ustawiłeś rodzaj smugi gracza na {default}Ziemia{grey}."
 		"sv"		"{grey}Du har ställt in din spelarstråltyp till {default}Mark{grey}."
 		"ua"		"{grey}Ви встановили тип променя — {default}По землі{grey}."
@@ -28,6 +30,7 @@
 	{
 		"en"		"{grey}You have set your player beam type to {default}Feet{grey}."
 		"chi"		"{grey}你已将玩家光束类型设置为 {default}脚下{grey}."
+		"zho"		"{grey}你已將玩家光束類型設定為 {default}腳下{grey}."
 		"pl"		"{grey}Ustawiłeś rodzaj smugi gracza na {default}Stopy{grey}."
 		"sv"		"{grey}Du har ställt in din spelarstråltyp till {default}Fötter{grey}."
 		"ua"		"{grey}Ви встановили тип променя — {default}Від ніг{grey}."
@@ -40,6 +43,7 @@
 	{
 		"en"		"{grey}Usage: {default}kz_beamoffset <x> <y> <z>"
 		"chi"		"{grey}用法: {default}kz_beamoffset <x> <y> <z>"
+		"zho"		"{grey}用法: {default}kz_beamoffset <x> <y> <z>"
 		"pl"		"{grey}Użycie: {default}kz_beamoffset <x> <y> <z>"
 		"sv"		"{grey}Användning: {default}kz_beamoffset <x> <y> <z>"
 		"ua"		"{grey}Використання: {default}kz_beamoffset <x> <y> <z>"
@@ -52,6 +56,7 @@
 	{
 		"en"		"{grey}Usage: {default}kz_beam <off/feet/ground>"
 		"chi"		"{grey}用法：{default}kz_beam <off/feet/ground>"
+		"zho"		"{grey}用法：{default}kz_beam <off/feet/ground>"
 		"pl"		"{grey}Użycie: {default}kz_beam <off/feet/ground>"
 		"sv"		"{grey}Användning: {default}kz_beam <off/feet/ground>"
 		"ua"		"{grey}Використання：{default}kz_beam <off/feet/ground>"
@@ -66,6 +71,7 @@
 		"#format"	"x:.2f,y:.2f,z:.2f"
 		"en"		"{grey}Current beam offset: {default}{x} {y} {z}"
 		"chi"		"{grey}当前光束偏移：{default}{x} {y} {z}"
+		"zho"		"{grey}目前光束偏移：{default}{x} {y} {z}"
 		"pl"		"{grey}Aktualne przesunięcie smugi: {default}{x} {y} {z}"
 		"sv"		"{grey}Nuvarande stråloffset: {default}{x} {y} {z}"
 		"ua"		"{grey}Поточне зміщення променя: {default}{x} {y} {z}"

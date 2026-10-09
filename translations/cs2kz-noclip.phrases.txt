@@ -4,6 +4,7 @@
 	{
 		"en"		"{grey}Noclip enabled."
 		"chi"		"{grey}飞行已启用."
+		"zho"		"{grey}飛行已啟用。"
 		"pl"		"{grey}Noclip włączony."
 		"ru"		"{grey}Noclip включен."
 		"fi"		"{grey}Noclip asetettu päälle."
@@ -20,6 +21,7 @@
 	{
 		"en"		"{grey}Noclip disabled."
 		"chi"		"{grey}飞行已禁用."
+		"zho"		"{grey}飛行已停用。"
 		"pl"		"{grey}Noclip wyłączony."
 		"ru"		"{grey}Noclip выключен."
 		"fi"		"{grey}Noclip asetettu pois päältä."

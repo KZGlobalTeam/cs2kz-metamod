@@ -5,6 +5,7 @@
 		"#format"	"api:s,server:s,map:s,player:s,mode:s,styles:s"
 		"en"		"API {api} {grey}| {default} Server {server} {grey}| {default} Map {map} {grey}| {default} You {player} {grey}| {default} Mode {mode} {grey}| {default} Styles {styles}"
 		"chi"		"API {api} {grey}| {default} 服务器 {server} {grey}| {default} 地图 {map} {grey}| {default} 你 {player} {grey}| {default} 模式 {mode} {grey}| {default} 风格 {styles}"
+		"zho"		"API {api} {grey}| {default} 伺服器 {server} {grey}| {default} 地圖 {map} {grey}| {default} 你 {player} {grey}| {default} 模式 {mode} {grey}| {default} 風格 {styles}"
 		"pl"		"API {api} {grey}| {default} Serwer {server} {grey}| {default} Mapa {map} {grey}| {default} Ty {player} {grey}| {default} Tryb {mode} {grey}| {default} Style {styles}"
 		"sv"		"API {api} {grey}| {default} Server {server} {grey}| {default} Karta {map} {grey}| {default} Du {player} {grey}| {default} Mode {mode} {grey}| {default} Stil {styles}"
 		"ua"		"API {api} {grey}| {default} Сервер {server} {grey}| {default} Мапа {map} {grey}| {default} Ви {player} {grey}| {default} Режим {mode} {grey}| {default} Стилі {styles}"
@@ -19,6 +20,7 @@
 	{
 		"en"		"{yellow}Warning{grey}: The current map is not globally approved. Runs on this map will not be globally submitted."
 		"chi"		"{yellow}警告{grey}: 当前地图未获全球认可. 在此地图上完成的成绩记录将不会被提交至全球排行榜."
+		"zho"		"{yellow}警告{grey}: 目前地圖尚未獲得全球認可. 在此地圖上完成的成績紀錄將不會提交至全球排行榜."
 		"ua"		"{yellow}Увага{grey}: Поточна мапа не затверджена на глобальному рівні. Проходження на цій мапі не будуть зараховані до глобальної статистики."
 		"ru"		"{yellow}Внимание{grey}: Текущая карта не одобрена глобально. Прохождения на этой карте не будут внесены в глобальную статистику."
 		"es"		"{yellow}Atención{grey}: Este mapa no está aprobado para el ranking global. Los records de este mapa no seran publicados globalmente."

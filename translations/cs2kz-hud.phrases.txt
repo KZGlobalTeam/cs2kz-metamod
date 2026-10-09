@@ -4,6 +4,7 @@
 	{
 		"en"	"Speed"
 		"chi"	"速度"
+		"zho"	"速度"
 		"pl"	"Prędkość"
 		"ru"	"Скорость"
 		"fi"	"Nopeus"
@@ -20,6 +21,7 @@
 	{
 		"en"		"PERFECT BHOP"
 		"chi"		"完美连跳"
+		"zho"		"完美連跳"
 		"ua"		"PERFECT BHOP"
 		"ru"		"PERFECT BHOP"
 	}
@@ -27,6 +29,7 @@
 	{
 		"en"		"PERF"
 		"chi"		"PERF"
+		"zho"		"PERF"
 		"ua"		"PERF"
 		"ru"		"PERF"
 	}
@@ -34,6 +37,7 @@
 	{
 		"en"		"CROUCH JUMP"
 		"chi"		"蹲跳"
+		"zho"		"蹲跳"
 		"ua"		"CROUCH JUMP"
 		"ru"		"CROUCH JUMP"
 	}
@@ -41,6 +45,7 @@
 	{
 		"en"		"CJ"
 		"chi"		"CJ"
+		"zho"		"CJ"
 		"ua"		"CJ"
 		"ru"		"CJ"
 	}
@@ -48,6 +53,7 @@
 	{
 		"en"		"JUMPBUG"
 		"chi"		"JUMPBUG"
+		"zho"		"JUMPBUG"
 		"ua"		"JUMPBUG"
 		"ru"		"JUMPBUG"
 	}
@@ -55,6 +61,7 @@
 	{
 		"en"		"JB"
 		"chi"		"JB"
+		"zho"		"JB"
 		"ua"		"JB"
 		"ru"		"JB"
 	}
@@ -63,6 +70,7 @@
 		// (STOPPED)
 		"en"		" (STOPPED)"
 		"chi"		" (停止)"
+		"zho"		" (停止)"
 		"pl"		" (ZATRZYMANY)"
 		"ru"		" (ОСТАНОВЛЕНО)"
 		"fi"		" (PYSÄYTETTY)"
@@ -80,6 +88,7 @@
 		// (PAUSED)
 		"en"		" (PAUSED)"
 		"chi"		" (暂停)"
+		"zho"		" (暫停)"
 		"pl"		" (WSTRZYMANY)"
 		"ru"		" (НА ПАУЗЕ)"
 		"fi"		" (KESKEYTETTY)"
@@ -98,6 +107,7 @@
 		"#format"	"speed:.0f"
 		"en"		"Speed: {speed}"
 		"chi"		"速度: {speed}"
+		"zho"		"速度: {speed}"
 		"pl"		"Prędkość: {speed}"
 		"ru"		"Скорость: {speed}"
 		"fi"		"Nopeus: {speed}"
@@ -116,6 +126,7 @@
 		"#format"	"speed:.0f,color:s,takeoff_speed:.0f,crouch_jump:s"
 		"en"		"Speed: {speed} ({color}{takeoff_speed}</font>){crouch_jump}"
 		"chi"		"速度: {speed} ({color}{takeoff_speed}</font>){crouch_jump}"
+		"zho"		"速度: {speed} ({color}{takeoff_speed}</font>){crouch_jump}"
 		"pl"		"Prędkość: {speed} ({color}{takeoff_speed}</font>){crouch_jump}"
 		"ru"		"Скорость: {speed} ({color}{takeoff_speed}</font>){crouch_jump}"
 		"fi"		"Nopeus: {speed} ({color}{takeoff_speed}</font>){crouch_jump}"
@@ -134,6 +145,7 @@
 		"#format"	"left:c,forward:c,back:c,right:c,duck:c,jump:c"
 		"en"		"Keys: {left} {forward} {back} {right} {duck} {jump}"
 		"chi"		"按键: {left} {forward} {back} {right} {duck} {jump}"
+		"zho"		"按鍵: {left} {forward} {back} {right} {duck} {jump}"
 		"pl"		"Klawisze: {left} {forward} {back} {right} {duck} {jump}"
 		"ru"		"Кнопки: {left} {forward} {back} {right} {duck} {jump}"
 		"fi"		"Näppäimet: {left} {forward} {back} {right} {duck} {jump}"
@@ -152,6 +164,7 @@
 		"#format"	"checkpoint_index:d,checkpoint_count:d,teleport_count:d"
 		"en"		"CP: {checkpoint_index}/{checkpoint_count} TPs: {teleport_count}"
 		"chi"		"存点: {checkpoint_index}/{checkpoint_count} 传送: {teleport_count}"
+		"zho"		"存點: {checkpoint_index}/{checkpoint_count} 傳送: {teleport_count}"
 		"pl"		"CP: {checkpoint_index}/{checkpoint_count} TPs: {teleport_count}"
 		"ru"		"CP: {checkpoint_index}/{checkpoint_count} TPs: {teleport_count}"
 		"fi"		"CP: {checkpoint_index}/{checkpoint_count} TPs: {teleport_count}"
@@ -170,6 +183,7 @@
 		"#format"	"time:s,stop_text:s,pause_text:s"
 		"en"		"{time}{stop_text}{pause_text}"
 		"chi"		"计时: {time}{stop_text}{pause_text}"
+		"zho"		"計時: {time}{stop_text}{pause_text}"
 		"pl"		"{time}{stop_text}{pause_text}"
 		"ru"		"{time}{stop_text}{pause_text}"
 		"fi"		"{time}{stop_text}{pause_text}"
@@ -189,6 +203,7 @@
 		"#format"	"key_text:s,checkpoint_text:s,timer_text:s,speed_text:s"
 		"en"		"{checkpoint_text}\n{timer_text}"
 		"chi"		"{checkpoint_text}\n{timer_text}"
+		"zho"		"{checkpoint_text}\n{timer_text}"
 		"pl"		"{checkpoint_text}\n{timer_text}"
 		"ru"		"{checkpoint_text}\n{timer_text}"
 		"fi"		"{checkpoint_text}\n{timer_text}"
@@ -209,6 +224,7 @@
 		"#format"	"key_text:s,checkpoint_text:s,timer_text:s,speed_text:s"
 		"en"		""
 		"chi"		""
+		"zho"		""
 		"pl"		""
 		"ru"		""
 		"fi"		""
@@ -229,6 +245,7 @@
 		"#format"	"key_text:s,checkpoint_text:s,timer_text:s,speed_text:s"
 		"en"		"{speed_text}<br>{key_text}"
 		"chi"		"{speed_text}<br>{key_text}"
+		"zho"		"{speed_text}<br>{key_text}"
 		"pl"		"{speed_text}<br>{key_text}"
 		"ru"		"{speed_text}<br>{key_text}"
 		"fi"		"{speed_text}<br>{key_text}"
@@ -246,6 +263,7 @@
 	{
 		"en"		"Panel disabled."
 		"chi"		"面板关闭."
+		"zho"		"面板已停用。"
 		"ru"		"Панель отключена."
 		"fi"		"Paneeli poistettu käytöstä."
 		"sv"		"Panel inaktiverad."
@@ -263,6 +281,7 @@
 	{
 		"en"		"{grey}Your centre information panel has been enabled."
 		"chi"		"{grey}你的中心面板已打开."
+		"zho"		"{grey}中央資訊面板已開啟。"
 		"ru"		"{grey}Ваша центральная информационная панель была включена."
 		"pl"		"{grey}Środkowy panel informacyjny został włączony."
 		"fi"		"{grey}Sinun keski-infopaneelisi on otettu käyttöön."
@@ -279,6 +298,7 @@
 	{
 		"en"		"{grey}Your centre information panel has been disabled."
 		"chi"		"{grey}你的中心面板已关闭."
+		"zho"		"{grey}中央資訊面板已關閉。"
 		"ru"		"{grey}Ваша центральная информационная панель была выключена."
 		"pl"		"{grey}Środkowy panel informacyjny został wyłączony."
 		"fi"		"{grey}Sinun keski-infopaneelisi on poistettu käyttöstä."
@@ -295,6 +315,7 @@
 	{
 		"en"		"{grey}Compact panel enabled."
 		"chi"		"{grey}紧凑面板已启用."
+		"zho"		"{grey}精簡面板已啟用。"
 		"ru"		"{grey}Компактная панель включена."
 		"ua"		"{grey}Компактна панель увімкнена."
 		"ko"		"{grey}소형 패널이 활성화되었습니다."
@@ -303,6 +324,7 @@
 	{
 		"en"		"{grey}Compact panel disabled."
 		"chi"		"{grey}紧凑面板已禁用."
+		"zho"		"{grey}精簡面板已停用。"
 		"ru"		"{grey}Компактная панель выключена."
 		"ua"		"{grey}Компактна панель вимкнена."
 		"ko"		"{grey}소형 패널이 비활성화되었습니다."
@@ -311,6 +333,7 @@
 	{
 		"en"		"{grey}Usage: {default}kz_panel <compact>{grey}."
 		"chi"		"{grey}用法: {default}kz_panel <compact>{grey}."
+		"zho"		"{grey}用法: {default}kz_panel <compact>{grey}."
 		"ru"		"{grey}Применение: {default}kz_panel <compact>{grey}."
 		"ua"		"{grey}Використання: {default}kz_panel <compact>{grey}."
 		"ko"		"{grey}사용법: {default}kz_panel <compact>{grey}."
@@ -319,6 +342,7 @@
 	{
 		"en"		"{grey}Check console for instructions!"
 		"chi"		"{grey}请查看控制台获取说明!"
+		"zho"		"{grey}請查看控制台中的說明！"
 		"ua"		"{grey}Перевірте консоль для інструкцій!"
 		"ru"		"{grey}Инструкции выведены в консоль!"
 	}
@@ -331,55 +355,56 @@
 		// 3. Restart the game fully.
 		"en"		"----- Fonts marked * in the font picker -----\nThe game only loads installed font files whose name matches an entry in fonts.conf.\n1. Install the font for all users.\n2. Open csgo\\panorama\\fonts\\fonts.conf and add a line next to the others: <fontpattern>yourfontfilename</fontpattern>\n3. Restart the game fully."
 		"chi"		"----- 字体选择器中标记为 * 的字体 -----\n游戏只会加载文件名与 fonts.conf 中条目匹配的已安装字体文件.\n1. 为所有用户安装该字体.\n2. 打开 csgo\\panorama\\fonts\\fonts.conf, 在其他行旁边添加一行: <fontpattern>你的字体文件名</fontpattern>\n3. 完全重启游戏."
+		"zho"		"----- 字型選擇器中標記 * 的字型 -----\n遊戲只會載入已安裝且檔名與 fonts.conf 中項目相符的字型檔案。\n1. 為所有使用者安裝該字型。\n2. 開啟 csgo\\panorama\\fonts\\fonts.conf，並在其他項目旁新增一行：<fontpattern>你的字型檔名</fontpattern>\n3. 完全重新啟動遊戲。"
 		"ua"		"----- Шрифти, позначені * у виборі шрифтів -----\nГра завантажує лише встановлені файли шрифтів, ім'я яких збігається з записом у fonts.conf.\n1. Встановіть шрифт для всіх користувачів.\n2. Відкрийте csgo\\panorama\\fonts\\fonts.conf і додайте рядок поруч з іншими: <fontpattern>yourfontfilename</fontpattern>\n3. Повністю перезапустіть гру."
 		"ru"		"----- Шрифты, обозначенные * в выборе шрифтов -----\nИгра загружает только шрифты, которые записаны в файле fonts.conf.\n1. Установите шрифт для всех пользователей.\n2. Откройте csgo\\panorama\\fonts\\fonts.conf и добавьте линию к остальным: <fontpattern>названиеФайлаШрифта</fontpattern>\n3. Полностью перезапустите игру."
 	}
 	"HUD Edit - Pick Hint"
 	{
 		"en"		"Click an element to move it, or one of its corners to resize it"
-		"chi"		"点击元素可移动位置，拖动角落可调整大小"
+		"zho"		"點擊元素可移動位置，拖曳角落可調整大小"
 		"ua"		"Натисніть на елемент, щоб перемістити його, або на один із його кутів, щоб змінити його розмір"
 		"ru"		"Кликните на элемент, чтобы его переместить, или на угол, чтобы изменить его размер"
 	}
 	"HUD Edit - Place"
 	{
 		"en"		"Place"
-		"chi"		"放置"
+		"zho"		"放置"
 		"ua"		"Розмістити"
 		"ru"		"Разместить"
 	}
 	"HUD Edit - Cancel"
 	{
 		"en"		"Cancel"
-		"chi"		"取消"
+		"zho"		"取消"
 		"ua"		"Скасувати"
 		"ru"		"Отменить"
 	}
 	"HUD Edit - Default"
 	{
 		"en"		"Default position"
-		"chi"		"默认位置"
+		"zho"		"預設位置"
 		"ua"		"Початкове положення"
 		"ru"		"Сброс положения"
 	}
 	"HUD Edit - Free Move"
 	{
 		"en"		"Hold: no snapping"
-		"chi"		"按住：自由移动"
+		"zho"		"按住：停用吸附"
 		"ua"		"Утримуйте щоб вільно переміщати"
 		"ru"		"Удержание: свободное перемещение"
 	}
 	"HUD Edit - Done"
 	{
 		"en"		"Done"
-		"chi"		"完成"
+		"zho"		"完成"
 		"ua"		"Готово"
 		"ru"		"Готово"
 	}
 	"HUD Edit - Unavailable"
 	{
 		"en"		"{grey}Moving HUD elements needs the layout HUD style and a living player."
-		"chi"		"{grey}移动 HUD 元素需要启用布局 HUD 样式，并且玩家必须处于存活状态。"
+		"zho"		"{grey}必須使用版面配置 HUD 樣式，且玩家處於存活狀態，才能移動 HUD 元素。"
 		"ua"		"{grey}Для переміщення елементів HUD потрібно увімкнути стиль Компонування (mhud стиль) та мати живого гравця на сервері."
 		"ru"		"{grey}Вы должны включить HUD и быть живы, чтобы перемещать элементы HUD."
 	}
@@ -388,21 +413,21 @@
 		// +0.5 W
 		"#format"	"value:s"
 		"en"		"{value} W"
-		"chi"		"{value} W"
+		"zho"		"{value} W"
 		"ua"		"{value} W"
 		"ru"		"{value} W"
 	}
 	"HUD - Course Global"
 	{
 		"en"		"Global"
-		"chi"		"全球"
+		"zho"		"全球"
 		"ua"		"Глобальний"
 		"ru"		"Глобальный"
 	}
 	"HUD - Course Non Global"
 	{
 		"en"		"Non-global"
-		"chi"		"非全球"
+		"zho"		"非全球"
 		"ua"		"Неглобальний"
 		"ru"		"Неглобальный"
 	}
@@ -411,7 +436,7 @@
 		// Main · CKZ
 		"#format"	"course:s,mode:s"
 		"en"		"{course} · {mode}"
-		"chi"		"{course} · {mode}"
+		"zho"		"{course} · {mode}"
 		"ua"		"{course} · {mode}"
 		"ru"		"{course} · {mode}"
 	}
@@ -420,7 +445,7 @@
 		//  · T3
 		"#format"	"tier:i"
 		"en"		" · T{tier}"
-		"chi"		" · T{tier}"
+		"zho"		" · T{tier}"
 		"ua"		" · T{tier}"
 		"ru"		" · T{tier}"
 	}
@@ -429,7 +454,7 @@
 		//  · T3 / Pro T5
 		"#format"	"tp:i,pro:i"
 		"en"		" · T{tp} / Pro T{pro}"
-		"chi"		" · T{tp} / Pro T{pro}"
+		"zho"		" · T{tp} / Pro T{pro}"
 		"ua"		" · T{tp} / Pro T{pro}"
 		"ru"		" · T{tp} / Pro T{pro}"
 	}
@@ -437,7 +462,7 @@
 	{
 		"#format"	"number:i"
 		"en"		"Split {number}"
-		"chi"		"分段 {number}"
+		"zho"		"分段 {number}"
 		"ua"		"Спліт {number}"
 		"ru"		"Сплит {number}"
 	}
@@ -445,7 +470,7 @@
 	{
 		"#format"	"number:i"
 		"en"		"CP {number}"
-		"chi"		"CP {number}"
+		"zho"		"CP {number}"
 		"ua"		"CP {number}"
 		"ru"		"CP {number}"
 	}
@@ -453,7 +478,7 @@
 	{
 		"#format"	"number:i"
 		"en"		"Stage {number}"
-		"chi"		"关卡 {number}"
+		"zho"		"階段 {number}"
 		"ua"		"Етап {number}"
 		"ru"		"Этап {number}"
 	}
@@ -462,35 +487,35 @@
 		// 1:23.456 vs PB
 		"#format"	"time:s,target:s"
 		"en"		"{time} vs {target}"
-		"chi"		"{time} vs {target}"
+		"zho"		"{time} vs {target}"
 		"ua"		"{time} проти {target}"
 		"ru"		"{time} vs {target}"
 	}
 	"HUD - Compare Server PB"
 	{
 		"en"		"SPB"
-		"chi"		"SPB"
+		"zho"		"SPB"
 		"ua"		"SPB"
 		"ru"		"SPB"
 	}
 	"HUD - Compare Global PB"
 	{
 		"en"		"GPB"
-		"chi"		"GPB"
+		"zho"		"GPB"
 		"ua"		"GPB"
 		"ru"		"GPB"
 	}
 	"HUD - Compare SR"
 	{
 		"en"		"SR"
-		"chi"		"SR"
+		"zho"		"SR"
 		"ua"		"SR"
 		"ru"		"SR"
 	}
 	"HUD - Compare WR"
 	{
 		"en"		"WR"
-		"chi"		"WR"
+		"zho"		"WR"
 		"ua"		"WR"
 		"ru"		"WR"
 	}
@@ -499,28 +524,28 @@
 		// PB Pro
 		"#format"	"target:s"
 		"en"		"{target} Pro"
-		"chi"		"{target} Pro"
+		"zho"		"{target} Pro"
 		"ua"		"{target} Pro"
 		"ru"		"{target} Pro"
 	}
 	"HUD - Course Stages"
 	{
 		"en"		"Stages"
-		"chi"		"关卡"
+		"zho"		"階段"
 		"ua"		"Етапи"
 		"ru"		"Этапы"
 	}
 	"HUD - Course Checkpoints"
 	{
 		"en"		"Checkpoints"
-		"chi"		"存点"
+		"zho"		"檢查點"
 		"ua"		"Чекпоінти"
 		"ru"		"Чекпоинты"
 	}
 	"HUD - Course Splits"
 	{
 		"en"		"Splits"
-		"chi"		"分段"
+		"zho"		"分段"
 		"ua"		"Спліти"
 		"ru"		"Сплиты"
 	}
@@ -529,35 +554,35 @@
 		// 2 / 5
 		"#format"	"reached:i,total:i"
 		"en"		"{reached} / {total}"
-		"chi"		"{reached} / {total}"
+		"zho"		"{reached} / {total}"
 		"ua"		"{reached} / {total}"
 		"ru"		"{reached} / {total}"
 	}
 	"HUD - Course All"
 	{
 		"en"		"All"
-		"chi"		"全部"
+		"zho"		"全部"
 		"ua"		"Всі"
 		"ru"		"Все"
 	}
 	"HUD - Course Pro"
 	{
 		"en"		"Pro"
-		"chi"		"Pro"
+		"zho"		"Pro"
 		"ua"		"Pro"
 		"ru"		"Pro"
 	}
 	"HUD - Course Badge TP"
 	{
 		"en"		"TP"
-		"chi"		"TP"
+		"zho"		"TP"
 		"ua"		"TP"
 		"ru"		"TP"
 	}
 	"HUD - Course Badge Pro"
 	{
 		"en"		"PRO"
-		"chi"		"PRO"
+		"zho"		"PRO"
 		"ua"		"PRO"
 		"ru"		"PRO"
 	}
@@ -565,7 +590,7 @@
 	{
 		"#format"	"name:s"
 		"en"		"by {name}"
-		"chi"		"由 {name} 创下"
+		"zho"		"由 {name} 創下"
 		"ua"		"від {name}"
 		"ru"		"от {name}"
 	}
@@ -574,35 +599,35 @@
 		// (+1.234)
 		"#format"	"gap:s"
 		"en"		"({gap})"
-		"chi"		"({gap})"
+		"zho"		"({gap})"
 		"ua"		"({gap})"
 		"ru"		"({gap})"
 	}
 	"HUD - Course No Records"
 	{
 		"en"		"No records yet"
-		"chi"		"暂无记录"
+		"zho"		"尚無紀錄"
 		"ua"		"Немає даних"
 		"ru"		"Нет рекордов... пока"
 	}
 	"HUD - Course Ranked"
 	{
 		"en"		"Ranked"
-		"chi"		"已排名"
+		"zho"		"已排名"
 		"ua"		"Рейтинговий"
 		"ru"		"Рейтинговый"
 	}
 	"HUD - Course Pending"
 	{
 		"en"		"Pending"
-		"chi"		"待审核"
+		"zho"		"待審核"
 		"ua"		"Очікує"
 		"ru"		"Ожидание"
 	}
 	"HUD - Course Unranked"
 	{
 		"en"		"Unranked"
-		"chi"		"未排名"
+		"zho"		"未排名"
 		"ua"		"Нерейтинговий"
 		"ru"		"Без рейтинга"
 	}

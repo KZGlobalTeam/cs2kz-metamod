@@ -4,6 +4,7 @@
 	{
 		"en"	"{grey}Use {default}/panel {grey}to toggle the panel in the middle of your screen."
 		"chi"	"{grey}使用 {default}/panel {grey}可以切换屏幕中心面板的显示."
+		"zho"	"{grey}使用 {default}/panel {grey}可以切換屏幕中心面板的顯示."
 		"pl"	"{grey}Użyj {default}/panel {grey}aby włączyć lub wyłączyć panel na środku ekranu."
 		"ru"	"{grey}Напишите {default}/panel{grey}, чтобы включить/выключить панель по центру экрана."
 		"fi"	"{grey}Käytä {default}/panel {grey}komentoa vaihtaaksesi keskipaneelin näyttämisen asetusta."
@@ -20,6 +21,7 @@
 	{
 		"en"	"{grey}You can toggle your leg visibility by typing{default} /hidelegs{grey}."
 		"chi"	"{grey}你需要隐藏腿部吗？ 输入 {default}/hidelegs{grey} 切换显示或隐藏."
+		"zho"	"{grey}你需要隱藏腿部嗎？ 輸入 {default}/hidelegs{grey} 切換顯示或隱藏."
 		"pl"	"{grey}Jeśli nie chcesz widzieć swoich nóg, użyj{default} /hidelegs{grey}."
 		"ru"	"{grey}Вы можете спрятать/показать ваши ноги, написав{default} /hidelegs{grey}."
 		"fi"	"{grey}Voit vaihtaa jalkojesi näkyvyyttä kirjoittamalla{default} /hidelegs{grey} komennon."
@@ -36,6 +38,7 @@
 	{
 		"en"	"{grey}Don't want to see other players? Use {default}/hide{grey}."
 		"chi"	"{grey}不想看到其他玩家？ 输入 {default}/hide{grey} 切换显示或隐藏."
+		"zho"	"{grey}不想看到其他玩家？ 輸入 {default}/hide{grey} 切換顯示或隱藏."
 		"pl"	"{grey}Nie chcesz widzieć innych graczy? Użyj {default}/hide{grey}."
 		"ru"	"{grey}Мешаются другие игроки? Напишите {default}/hide{grey}."
 		"fi"	"{grey}Etkö halua nähdä muita pelaajia? Käytä {default}/hide{grey} komentoa."
@@ -52,6 +55,7 @@
 	{
 		"en"	"{grey}Type {default}/hideweapon {grey}to toggle your weapon visibility."
 		"chi"	"{grey}输入 {default}/hideweapon {grey}可以关掉枪械模型显示."
+		"zho"	"{grey}輸入 {default}/hideweapon {grey}可以關掉槍械模型顯示."
 		"pl"	"{grey}Użyj {default}/hideweapon {grey}aby włączyć lub wyłączyć widoczność broni."
 		"ru"	"{grey}Напишите {default}/hideweapon{grey}, чтобы спрятать/показать ваше оружие."
 		"fi"	"{grey}Kirjoita {default}/hideweapon {grey}vaihtaaksesi aseesi näkyvyyden asetusta."
@@ -68,6 +72,7 @@
 	{
 		"en"	"{grey}Use {default}/fov {purple}<value> {grey}to change your FOV."
 		"chi"	"{grey}输入 {default}/fov {purple}<值> {grey}可以改变你的视野."
+		"zho"	"{grey}輸入 {default}/fov {purple}<值> {grey}可以改變你的視野."
 		"ru"	"{grey}Напишите {default}/fov {purple}<значение>{grey}, чтобы изменить свой FOV."
 		"ua"	"{grey}Напишіть в чаті {default}/fov {purple}<значення> {grey}, щоб змінити ваш FOV."
 		"es"	"{grey}Usa {default}/fov {purple}<valor> {grey}para cambiar tu campo de visión (FOV)."
