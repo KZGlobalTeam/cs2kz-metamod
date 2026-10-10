@@ -4,6 +4,7 @@
 #include "utils/utils.h"
 #include "utils/uuid.h"
 #include "compression.h"
+#include "parsing.h"
 #include <thread>
 #include <mutex>
 #include <atomic>
@@ -146,6 +147,41 @@ namespace KZ::replaysystem::data
 		}
 	}
 
+	static_function bool ReadHeader(const char *&cursor, const char *end, ReplayHeader &header)
+	{
+		// Try to read header size (u32). If this fails, the data is invalid or corrupted.
+		if (cursor + (ptrdiff_t)sizeof(u32) > end)
+		{
+			return false;
+		}
+		u32 headerSize = 0;
+		memcpy(&headerSize, cursor, sizeof(headerSize));
+		cursor += sizeof(headerSize);
+
+		if (headerSize == 0 || headerSize > 5 * 1024 * 1024) // sanity limit 5MB
+		{
+			return false;
+		}
+		if (cursor + (ptrdiff_t)headerSize > end)
+		{
+			return false;
+		}
+
+		std::string serialized(cursor, cursor + headerSize);
+		cursor += headerSize;
+
+		if (!header.ParseFromString(serialized))
+		{
+			return false;
+		}
+
+		if (!parsing::GetVersionParser(header.version()))
+		{
+			return false;
+		}
+		return true;
+	}
+
 	// Parses replay data from an in-memory byte array.
 	static_function ReplayPlayback LoadReplayFromMemory(const char *data, size_t size, UUID_t uuid, std::atomic<f32> &progress,
 														std::atomic<bool> &shouldCancel)
@@ -163,38 +199,12 @@ namespace KZ::replaysystem::data
 		}
 		KZ_LOG_DEBUG(LogChannel::Replays, "Loading replay protobuf header...\n");
 
-		// Try to read header size (u32). If this fails, the data is invalid or corrupted.
-		if (cursor + (ptrdiff_t)sizeof(u32) > end)
-		{
-			return result;
-		}
-		u32 headerSize = 0;
-		memcpy(&headerSize, cursor, sizeof(headerSize));
-		cursor += sizeof(headerSize);
-
-		if (headerSize == 0 || headerSize > 5 * 1024 * 1024) // sanity limit 5MB
-		{
-			return result;
-		}
-		if (cursor + (ptrdiff_t)headerSize > end)
-		{
-			return result;
-		}
-
-		std::string serialized(cursor, cursor + headerSize);
-		cursor += headerSize;
-
-		if (!result.header.ParseFromString(serialized))
+		if (!ReadHeader(cursor, end, result.header))
 		{
 			return result;
 		}
 
 		UpdateProgress(cursor, data, size, progress);
-
-		if (result.header.version() < 1 || result.header.version() > KZ_REPLAY_VERSION)
-		{
-			return result;
-		}
 
 		// Load tick data
 		if (shouldCancel)
@@ -303,7 +313,7 @@ namespace KZ::replaysystem::data
 
 		std::vector<RpEvent> eventsVec;
 
-		if (!KZ::replaysystem::compression::ReadEventsCompressed(cursor, end, eventsVec))
+		if (!KZ::replaysystem::compression::ReadEventsCompressed(cursor, end, eventsVec, result.header.version()))
 		{
 			delete[] result.tickData;
 			delete[] result.subtickData;
@@ -326,33 +336,26 @@ namespace KZ::replaysystem::data
 		return result;
 	}
 
+	// Complete-file reader shared by the replay loading entry points.
+	static_function bool ReadReplayFile(const char *path, CUtlBuffer &buffer, const std::atomic<bool> &cancel)
+	{
+		return !cancel && g_pFullFileSystem->ReadFile(path, nullptr, buffer) && !cancel && buffer.TellPut() > 0;
+	}
+
 	// File-based entry point: reads the entire file into memory then parses.
 	static_function ReplayPlayback LoadReplayWithProgress(const char *path, std::atomic<f32> &progress, std::atomic<bool> &shouldCancel)
 	{
-		ReplayPlayback result = {};
-
-		FileHandle_t file = g_pFullFileSystem->Open(path, "rb");
-		if (!file)
+		CUtlBuffer buffer;
+		if (!ReadReplayFile(path, buffer, shouldCancel))
 		{
-			return result;
+			return {};
 		}
-
-		size_t fileSize = g_pFullFileSystem->Size(file);
-		std::vector<char> fileData(fileSize);
-		if (g_pFullFileSystem->Read(fileData.data(), (int)fileSize, file) != (int)fileSize)
-		{
-			g_pFullFileSystem->Close(file);
-			return result;
-		}
-		g_pFullFileSystem->Close(file);
-
 		UUID_t uuid(false);
 		if (!UUID_t::FromString(CUtlString(path).GetBaseFilename().StripExtension().Get(), &uuid))
 		{
-			return result;
+			return {};
 		}
-
-		return LoadReplayFromMemory(fileData.data(), fileSize, uuid, progress, shouldCancel);
+		return LoadReplayFromMemory((const char *)buffer.Base(), buffer.TellPut(), uuid, progress, shouldCancel);
 	}
 
 	// Memory-based entry point: parse directly from a provided buffer.

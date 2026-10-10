@@ -1,6 +1,7 @@
 #include "kz_trigger.h"
 #include "utils/hooks.h"
 #include "kz/checkpoint/kz_checkpoint.h"
+#include "kz/recording/kz_recording.h"
 #include "kz/jumpstats/kz_jumpstats.h"
 #include "kz/language/kz_language.h"
 #include "kz/mode/kz_mode.h"
@@ -417,6 +418,7 @@ void KZTriggerService::StartTouch(CBaseTrigger *trigger)
 
 	// Handle changes in origin and velocity due to this event.
 	this->UpdatePreTouchData();
+	KZRecordingService::ScopedTeleport replayTeleport(*this->player->recordingService, RPTELEPORT_MAP_TRIGGER);
 	hooks::CallOriginalStartTouch(trigger, pawn);
 	hooks::CallOriginalStartTouch(pawn, pawn);
 	tracker->startedTouch = true;
@@ -454,6 +456,7 @@ void KZTriggerService::Touch(CBaseTrigger *trigger, bool silent)
 	if (shouldTouch)
 	{
 		this->UpdatePreTouchData();
+		KZRecordingService::ScopedTeleport replayTeleport(*this->player->recordingService, RPTELEPORT_MAP_TRIGGER);
 		hooks::CallOriginalTouch(trigger, pawn);
 		hooks::CallOriginalTouch(pawn, trigger);
 		if (!silent)
@@ -494,6 +497,7 @@ void KZTriggerService::EndTouch(CBaseTrigger *trigger)
 			this->Touch(trigger);
 		}
 		this->UpdatePreTouchData();
+		KZRecordingService::ScopedTeleport replayTeleport(*this->player->recordingService, RPTELEPORT_MAP_TRIGGER);
 		hooks::CallOriginalEndTouch(trigger, pawn);
 		hooks::CallOriginalEndTouch(pawn, trigger);
 		this->UpdatePlayerPostTouch();

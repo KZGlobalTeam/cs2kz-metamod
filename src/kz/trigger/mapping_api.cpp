@@ -1,5 +1,6 @@
 #include "kz_trigger.h"
 #include "kz/checkpoint/kz_checkpoint.h"
+#include "kz/recording/kz_recording.h"
 #include "kz/jumpstats/kz_jumpstats.h"
 #include "kz/language/kz_language.h"
 #include "kz/mode/kz_mode.h"
@@ -214,6 +215,9 @@ bool KZTriggerService::TouchTeleportTrigger(TriggerTouchTracker tracker)
 	{
 		return false;
 	}
+	// The mapping API explicitly distinguishes failed bhop teleports from normal
+	// map teleports. Position proximity alone cannot identify a failed section.
+	KZRecordingService::ScopedTeleport replayTeleport(*this->player->recordingService, isBhopTrigger ? RPTELEPORT_BHOP_FAIL : RPTELEPORT_MAP_TRIGGER);
 
 	bool shouldReorientPlayer = tracker.kzTrigger->teleport.reorientPlayer && destAngles[YAW] != 0;
 	Vector up = Vector(0, 0, 1);
@@ -244,21 +248,25 @@ bool KZTriggerService::TouchTeleportTrigger(TriggerTouchTracker tracker)
 		// Maybe we should check m_nHighestGeneratedServerViewAngleChangeIndex for angles overridding...
 		VectorRotate(finalVelocity, QAngle(0, destAngles[YAW], 0), finalVelocity);
 		finalPlayerAngles[YAW] -= destAngles[YAW];
-		this->player->SetAngles(finalPlayerAngles);
 	}
 	else if (!tracker.kzTrigger->teleport.reorientPlayer && tracker.kzTrigger->teleport.useDestinationAngles)
 	{
-		this->player->SetAngles(destAngles);
+		finalPlayerAngles = destAngles;
 	}
 
 	if (tracker.kzTrigger->teleport.resetSpeed)
 	{
-		this->player->SetVelocity(vec3_origin);
+		finalVelocity = vec3_origin;
 	}
-	else
+	bool changeAngles = shouldReorientPlayer || (!tracker.kzTrigger->teleport.reorientPlayer && tracker.kzTrigger->teleport.useDestinationAngles);
+	// Angle, velocity and position changes are one mapping API teleport even when
+	// SetVelocity only updates movement data instead of issuing an engine call.
+	this->player->OnTeleportBegin(&finalOrigin, changeAngles ? &finalPlayerAngles : nullptr, &finalVelocity);
+	if (changeAngles)
 	{
-		this->player->SetVelocity(finalVelocity);
+		this->player->SetAngles(finalPlayerAngles);
 	}
+	this->player->SetVelocity(finalVelocity);
 	// Prevent the player from being teleported into the air for one tick if they were on the ground before teleporting.
 	CEntityHandle groundEntity = this->player->GetPlayerPawn()->m_hGroundEntity();
 	bool restoreGround = this->player->GetPlayerPawn()->m_fFlags & FL_ONGROUND && groundEntity.IsValid();
@@ -268,6 +276,7 @@ bool KZTriggerService::TouchTeleportTrigger(TriggerTouchTracker tracker)
 		this->player->GetPlayerPawn()->m_fFlags(this->player->GetPlayerPawn()->m_fFlags | FL_ONGROUND);
 		this->player->GetPlayerPawn()->m_hGroundEntity(groundEntity);
 	}
+	this->player->OnTeleportEnd();
 	return true;
 }
 

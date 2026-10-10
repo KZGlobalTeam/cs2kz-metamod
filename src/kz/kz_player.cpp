@@ -918,6 +918,16 @@ void KZPlayer::OnChangeMoveType(MoveType_t oldMoveType)
 	}
 }
 
+void KZPlayer::OnTeleportBegin(const Vector *origin, const QAngle *angles, const Vector *velocity)
+{
+	this->recordingService->OnTeleportBegin(origin, angles, velocity);
+}
+
+void KZPlayer::OnTeleportEnd()
+{
+	this->recordingService->OnTeleportEnd();
+}
+
 void KZPlayer::OnTeleport(const Vector *origin, const QAngle *angles, const Vector *velocity)
 {
 	VPROF_BUDGET(__func__, "CS2KZ");

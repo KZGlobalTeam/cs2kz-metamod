@@ -219,6 +219,11 @@ public:
 		return true;
 	}
 
+	// A logical teleport may use separate engine calls for view angles and position.
+	virtual void OnTeleportBegin(const Vector *origin, const QAngle *angles, const Vector *velocity) {}
+
+	virtual void OnTeleportEnd() {}
+
 	bool IsAlive()
 	{
 		return this->GetPlayerPawn() ? this->GetPlayerPawn()->IsAlive() : false;

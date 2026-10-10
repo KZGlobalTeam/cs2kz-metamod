@@ -201,6 +201,7 @@ def configure_main(sdk_target, sdk, cxx):
     os.path.join(builder.sourcePath, 'src', 'kz', 'replays', 'watcher.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'replays', 'kz_replaysystem.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'replays', 'compression.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'replays', 'parsing.cpp'),
     
     os.path.join(builder.sourcePath, 'src', 'kz', 'recording', 'kz_recording.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'recording', 'events.cpp'),

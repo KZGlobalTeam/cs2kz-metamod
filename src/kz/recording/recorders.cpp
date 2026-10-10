@@ -58,6 +58,7 @@ JumpRecorder::JumpRecorder(Jump *jump) : Recorder(jump->player, 5.0f, RP_JUMPSTA
 RunRecorder::RunRecorder(KZPlayer *player) : Recorder(player, 5.0f, RP_RUN, true, DistanceTier_Ownage)
 {
 	auto *runProto = replayHeader.mutable_run();
+	runProto->set_start_event_index(this->totalEventsRecorded);
 	runProto->set_course_name(player->timerService->GetCourse()->GetName().Get());
 	auto modeInfo = KZ::mode::GetModeInfo(player->modeService);
 	runProto->mutable_mode()->set_name(modeInfo.longModeName.Get());
@@ -78,6 +79,7 @@ void RunRecorder::End(f32 time, i32 numTeleports)
 	auto *runProto = replayHeader.mutable_run();
 	runProto->set_time(time);
 	runProto->set_num_teleports(numTeleports);
+	runProto->set_end_event_index(this->totalEventsRecorded - 1);
 	this->desiredStopTime = g_pKZUtils->GetServerGlobals()->curtime + 4.0f;
 }
 
@@ -255,6 +257,8 @@ Recorder::Recorder(KZPlayer *player, f32 numSeconds, ReplayType type, bool copyT
 			}
 		}
 	}
+	// Circular-buffer events precede the first event inserted into this recorder.
+	this->totalEventsRecorded = (u32)this->rpEvents.size();
 }
 
 Recorder::~Recorder()
@@ -647,12 +651,15 @@ bool Recorder::WriteToMemory(std::vector<char> &outBuffer)
 	UnpackSubtickData(unpackedCmdSubtick, allCmdSubtickCounts, allCmdSubtickMoves);
 
 	// Order of writing must match order of reading in kz_replaydata.cpp
-	this->WriteHeader(outBuffer);
-	KZ::replaysystem::compression::WriteTickDataCompressed(outBuffer, allTickData, unpackedSubtick);
-	KZ::replaysystem::compression::WriteWeaponsCompressed(outBuffer, this->weaponTable);
-	KZ::replaysystem::compression::WriteJumpsCompressed(outBuffer, allJumps);
-	KZ::replaysystem::compression::WriteEventsCompressed(outBuffer, allEvents);
-	KZ::replaysystem::compression::WriteCmdDataCompressed(outBuffer, allCmdData, unpackedCmdSubtick);
+	if (!this->WriteHeader(outBuffer) || !KZ::replaysystem::compression::WriteTickDataCompressed(outBuffer, allTickData, unpackedSubtick)
+		|| !KZ::replaysystem::compression::WriteWeaponsCompressed(outBuffer, this->weaponTable)
+		|| !KZ::replaysystem::compression::WriteJumpsCompressed(outBuffer, allJumps)
+		|| !KZ::replaysystem::compression::WriteEventsCompressed(outBuffer, allEvents)
+		|| !KZ::replaysystem::compression::WriteCmdDataCompressed(outBuffer, allCmdData, unpackedCmdSubtick))
+	{
+		outBuffer.clear();
+		return false;
+	}
 
 	return true;
 }
