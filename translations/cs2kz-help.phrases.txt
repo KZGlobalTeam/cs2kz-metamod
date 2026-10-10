@@ -1,0 +1,83 @@
+"Phrases"
+{
+	"Help - Title"
+	{
+		"en"		"Command Help"
+	}
+	"Help - Hint"
+	{
+		"en"		"Type !command or /command in chat. Use kz_help for console help."
+	}
+	"Help - Empty"
+	{
+		"en"		"No commands in this category. Choose another category."
+	}
+	"Help - Category - Checkpoint"
+	{
+		"en"		"Checkpoints"
+	}
+	"Help - Category - Record"
+	{
+		"en"		"Records"
+	}
+	"Help - Category - Jumpstats"
+	{
+		"en"		"Jumpstats"
+	}
+	"Help - Category - Measure"
+	{
+		"en"		"Measurement"
+	}
+	"Help - Category - ModeStyle"
+	{
+		"en"		"Modes & styles"
+	}
+	"Help - Category - Preference"
+	{
+		"en"		"Preferences"
+	}
+	"Help - Category - Racing"
+	{
+		"en"		"Racing"
+	}
+	"Help - Category - Replay"
+	{
+		"en"		"Replays"
+	}
+	"Help - Category - Saveloc"
+	{
+		"en"		"Saved locations"
+	}
+	"Help - Category - Spec"
+	{
+		"en"		"Spectating"
+	}
+	"Help - Category - Status"
+	{
+		"en"		"Status"
+	}
+	"Help - Category - Timer"
+	{
+		"en"		"Timer"
+	}
+	"Help - Category - Player"
+	{
+		"en"		"Player"
+	}
+	"Help - Category - Global"
+	{
+		"en"		"Global"
+	}
+	"Help - Category - Misc"
+	{
+		"en"		"Other"
+	}
+	"Help - Category - Map"
+	{
+		"en"		"Maps"
+	}
+	"Help - Category - HUD"
+	{
+		"en"		"HUD"
+	}
+}

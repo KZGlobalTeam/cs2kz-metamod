@@ -1,0 +1,597 @@
+<root>
+  <styles>
+    <include src="file://{resources}/styles/custom_game/cs2kz/help.css" />
+  </styles>
+  <Panel class="root" hittest="false">
+    <Panel id="help_root" class="hidden">
+      <Panel class="help-box">
+        <Panel class="help-header">
+          <Label id="help_title" class="help-title" text="{s:title}" />
+          <Button id="help_close" class="help-close" />
+        </Panel>
+        <Panel class="help-panes">
+          <Panel class="help-categories">
+            <Button id="help_cat0" class="help-category hidden">
+              <Label id="help_cat_label0" class="help-category-label" text="{s:hc0}" />
+            </Button>
+            <Button id="help_cat1" class="help-category hidden">
+              <Label id="help_cat_label1" class="help-category-label" text="{s:hc1}" />
+            </Button>
+            <Button id="help_cat2" class="help-category hidden">
+              <Label id="help_cat_label2" class="help-category-label" text="{s:hc2}" />
+            </Button>
+            <Button id="help_cat3" class="help-category hidden">
+              <Label id="help_cat_label3" class="help-category-label" text="{s:hc3}" />
+            </Button>
+            <Button id="help_cat4" class="help-category hidden">
+              <Label id="help_cat_label4" class="help-category-label" text="{s:hc4}" />
+            </Button>
+            <Button id="help_cat5" class="help-category hidden">
+              <Label id="help_cat_label5" class="help-category-label" text="{s:hc5}" />
+            </Button>
+            <Button id="help_cat6" class="help-category hidden">
+              <Label id="help_cat_label6" class="help-category-label" text="{s:hc6}" />
+            </Button>
+            <Button id="help_cat7" class="help-category hidden">
+              <Label id="help_cat_label7" class="help-category-label" text="{s:hc7}" />
+            </Button>
+            <Button id="help_cat8" class="help-category hidden">
+              <Label id="help_cat_label8" class="help-category-label" text="{s:hc8}" />
+            </Button>
+            <Button id="help_cat9" class="help-category hidden">
+              <Label id="help_cat_label9" class="help-category-label" text="{s:hc9}" />
+            </Button>
+            <Button id="help_cat10" class="help-category hidden">
+              <Label id="help_cat_label10" class="help-category-label" text="{s:hc10}" />
+            </Button>
+            <Button id="help_cat11" class="help-category hidden">
+              <Label id="help_cat_label11" class="help-category-label" text="{s:hc11}" />
+            </Button>
+            <Button id="help_cat12" class="help-category hidden">
+              <Label id="help_cat_label12" class="help-category-label" text="{s:hc12}" />
+            </Button>
+            <Button id="help_cat13" class="help-category hidden">
+              <Label id="help_cat_label13" class="help-category-label" text="{s:hc13}" />
+            </Button>
+            <Button id="help_cat14" class="help-category hidden">
+              <Label id="help_cat_label14" class="help-category-label" text="{s:hc14}" />
+            </Button>
+            <Button id="help_cat15" class="help-category hidden">
+              <Label id="help_cat_label15" class="help-category-label" text="{s:hc15}" />
+            </Button>
+            <Button id="help_cat16" class="help-category hidden">
+              <Label id="help_cat_label16" class="help-category-label" text="{s:hc16}" />
+            </Button>
+            <Button id="help_cat17" class="help-category hidden">
+              <Label id="help_cat_label17" class="help-category-label" text="{s:hc17}" />
+            </Button>
+            <Button id="help_cat18" class="help-category hidden">
+              <Label id="help_cat_label18" class="help-category-label" text="{s:hc18}" />
+            </Button>
+            <Button id="help_cat19" class="help-category hidden">
+              <Label id="help_cat_label19" class="help-category-label" text="{s:hc19}" />
+            </Button>
+          </Panel>
+          <Panel class="help-commands">
+            <Label id="help_empty" class="help-empty hidden" text="{s:empty}" />
+            <Panel id="help_row0" class="help-row hidden" hittest="false">
+              <Label id="help_command0" class="help-command" text="{s:hn0}" hittest="false" />
+              <Label id="help_description0" class="help-description" text="{s:hd0}" hittest="false" />
+            </Panel>
+            <Panel id="help_row1" class="help-row hidden" hittest="false">
+              <Label id="help_command1" class="help-command" text="{s:hn1}" hittest="false" />
+              <Label id="help_description1" class="help-description" text="{s:hd1}" hittest="false" />
+            </Panel>
+            <Panel id="help_row2" class="help-row hidden" hittest="false">
+              <Label id="help_command2" class="help-command" text="{s:hn2}" hittest="false" />
+              <Label id="help_description2" class="help-description" text="{s:hd2}" hittest="false" />
+            </Panel>
+            <Panel id="help_row3" class="help-row hidden" hittest="false">
+              <Label id="help_command3" class="help-command" text="{s:hn3}" hittest="false" />
+              <Label id="help_description3" class="help-description" text="{s:hd3}" hittest="false" />
+            </Panel>
+            <Panel id="help_row4" class="help-row hidden" hittest="false">
+              <Label id="help_command4" class="help-command" text="{s:hn4}" hittest="false" />
+              <Label id="help_description4" class="help-description" text="{s:hd4}" hittest="false" />
+            </Panel>
+            <Panel id="help_row5" class="help-row hidden" hittest="false">
+              <Label id="help_command5" class="help-command" text="{s:hn5}" hittest="false" />
+              <Label id="help_description5" class="help-description" text="{s:hd5}" hittest="false" />
+            </Panel>
+            <Panel id="help_row6" class="help-row hidden" hittest="false">
+              <Label id="help_command6" class="help-command" text="{s:hn6}" hittest="false" />
+              <Label id="help_description6" class="help-description" text="{s:hd6}" hittest="false" />
+            </Panel>
+            <Panel id="help_row7" class="help-row hidden" hittest="false">
+              <Label id="help_command7" class="help-command" text="{s:hn7}" hittest="false" />
+              <Label id="help_description7" class="help-description" text="{s:hd7}" hittest="false" />
+            </Panel>
+            <Panel id="help_row8" class="help-row hidden" hittest="false">
+              <Label id="help_command8" class="help-command" text="{s:hn8}" hittest="false" />
+              <Label id="help_description8" class="help-description" text="{s:hd8}" hittest="false" />
+            </Panel>
+            <Panel id="help_row9" class="help-row hidden" hittest="false">
+              <Label id="help_command9" class="help-command" text="{s:hn9}" hittest="false" />
+              <Label id="help_description9" class="help-description" text="{s:hd9}" hittest="false" />
+            </Panel>
+            <Panel id="help_row10" class="help-row hidden" hittest="false">
+              <Label id="help_command10" class="help-command" text="{s:hn10}" hittest="false" />
+              <Label id="help_description10" class="help-description" text="{s:hd10}" hittest="false" />
+            </Panel>
+            <Panel id="help_row11" class="help-row hidden" hittest="false">
+              <Label id="help_command11" class="help-command" text="{s:hn11}" hittest="false" />
+              <Label id="help_description11" class="help-description" text="{s:hd11}" hittest="false" />
+            </Panel>
+            <Panel id="help_row12" class="help-row hidden" hittest="false">
+              <Label id="help_command12" class="help-command" text="{s:hn12}" hittest="false" />
+              <Label id="help_description12" class="help-description" text="{s:hd12}" hittest="false" />
+            </Panel>
+            <Panel id="help_row13" class="help-row hidden" hittest="false">
+              <Label id="help_command13" class="help-command" text="{s:hn13}" hittest="false" />
+              <Label id="help_description13" class="help-description" text="{s:hd13}" hittest="false" />
+            </Panel>
+            <Panel id="help_row14" class="help-row hidden" hittest="false">
+              <Label id="help_command14" class="help-command" text="{s:hn14}" hittest="false" />
+              <Label id="help_description14" class="help-description" text="{s:hd14}" hittest="false" />
+            </Panel>
+            <Panel id="help_row15" class="help-row hidden" hittest="false">
+              <Label id="help_command15" class="help-command" text="{s:hn15}" hittest="false" />
+              <Label id="help_description15" class="help-description" text="{s:hd15}" hittest="false" />
+            </Panel>
+            <Panel id="help_row16" class="help-row hidden" hittest="false">
+              <Label id="help_command16" class="help-command" text="{s:hn16}" hittest="false" />
+              <Label id="help_description16" class="help-description" text="{s:hd16}" hittest="false" />
+            </Panel>
+            <Panel id="help_row17" class="help-row hidden" hittest="false">
+              <Label id="help_command17" class="help-command" text="{s:hn17}" hittest="false" />
+              <Label id="help_description17" class="help-description" text="{s:hd17}" hittest="false" />
+            </Panel>
+            <Panel id="help_row18" class="help-row hidden" hittest="false">
+              <Label id="help_command18" class="help-command" text="{s:hn18}" hittest="false" />
+              <Label id="help_description18" class="help-description" text="{s:hd18}" hittest="false" />
+            </Panel>
+            <Panel id="help_row19" class="help-row hidden" hittest="false">
+              <Label id="help_command19" class="help-command" text="{s:hn19}" hittest="false" />
+              <Label id="help_description19" class="help-description" text="{s:hd19}" hittest="false" />
+            </Panel>
+            <Panel id="help_row20" class="help-row hidden" hittest="false">
+              <Label id="help_command20" class="help-command" text="{s:hn20}" hittest="false" />
+              <Label id="help_description20" class="help-description" text="{s:hd20}" hittest="false" />
+            </Panel>
+            <Panel id="help_row21" class="help-row hidden" hittest="false">
+              <Label id="help_command21" class="help-command" text="{s:hn21}" hittest="false" />
+              <Label id="help_description21" class="help-description" text="{s:hd21}" hittest="false" />
+            </Panel>
+            <Panel id="help_row22" class="help-row hidden" hittest="false">
+              <Label id="help_command22" class="help-command" text="{s:hn22}" hittest="false" />
+              <Label id="help_description22" class="help-description" text="{s:hd22}" hittest="false" />
+            </Panel>
+            <Panel id="help_row23" class="help-row hidden" hittest="false">
+              <Label id="help_command23" class="help-command" text="{s:hn23}" hittest="false" />
+              <Label id="help_description23" class="help-description" text="{s:hd23}" hittest="false" />
+            </Panel>
+            <Panel id="help_row24" class="help-row hidden" hittest="false">
+              <Label id="help_command24" class="help-command" text="{s:hn24}" hittest="false" />
+              <Label id="help_description24" class="help-description" text="{s:hd24}" hittest="false" />
+            </Panel>
+            <Panel id="help_row25" class="help-row hidden" hittest="false">
+              <Label id="help_command25" class="help-command" text="{s:hn25}" hittest="false" />
+              <Label id="help_description25" class="help-description" text="{s:hd25}" hittest="false" />
+            </Panel>
+            <Panel id="help_row26" class="help-row hidden" hittest="false">
+              <Label id="help_command26" class="help-command" text="{s:hn26}" hittest="false" />
+              <Label id="help_description26" class="help-description" text="{s:hd26}" hittest="false" />
+            </Panel>
+            <Panel id="help_row27" class="help-row hidden" hittest="false">
+              <Label id="help_command27" class="help-command" text="{s:hn27}" hittest="false" />
+              <Label id="help_description27" class="help-description" text="{s:hd27}" hittest="false" />
+            </Panel>
+            <Panel id="help_row28" class="help-row hidden" hittest="false">
+              <Label id="help_command28" class="help-command" text="{s:hn28}" hittest="false" />
+              <Label id="help_description28" class="help-description" text="{s:hd28}" hittest="false" />
+            </Panel>
+            <Panel id="help_row29" class="help-row hidden" hittest="false">
+              <Label id="help_command29" class="help-command" text="{s:hn29}" hittest="false" />
+              <Label id="help_description29" class="help-description" text="{s:hd29}" hittest="false" />
+            </Panel>
+            <Panel id="help_row30" class="help-row hidden" hittest="false">
+              <Label id="help_command30" class="help-command" text="{s:hn30}" hittest="false" />
+              <Label id="help_description30" class="help-description" text="{s:hd30}" hittest="false" />
+            </Panel>
+            <Panel id="help_row31" class="help-row hidden" hittest="false">
+              <Label id="help_command31" class="help-command" text="{s:hn31}" hittest="false" />
+              <Label id="help_description31" class="help-description" text="{s:hd31}" hittest="false" />
+            </Panel>
+            <Panel id="help_row32" class="help-row hidden" hittest="false">
+              <Label id="help_command32" class="help-command" text="{s:hn32}" hittest="false" />
+              <Label id="help_description32" class="help-description" text="{s:hd32}" hittest="false" />
+            </Panel>
+            <Panel id="help_row33" class="help-row hidden" hittest="false">
+              <Label id="help_command33" class="help-command" text="{s:hn33}" hittest="false" />
+              <Label id="help_description33" class="help-description" text="{s:hd33}" hittest="false" />
+            </Panel>
+            <Panel id="help_row34" class="help-row hidden" hittest="false">
+              <Label id="help_command34" class="help-command" text="{s:hn34}" hittest="false" />
+              <Label id="help_description34" class="help-description" text="{s:hd34}" hittest="false" />
+            </Panel>
+            <Panel id="help_row35" class="help-row hidden" hittest="false">
+              <Label id="help_command35" class="help-command" text="{s:hn35}" hittest="false" />
+              <Label id="help_description35" class="help-description" text="{s:hd35}" hittest="false" />
+            </Panel>
+            <Panel id="help_row36" class="help-row hidden" hittest="false">
+              <Label id="help_command36" class="help-command" text="{s:hn36}" hittest="false" />
+              <Label id="help_description36" class="help-description" text="{s:hd36}" hittest="false" />
+            </Panel>
+            <Panel id="help_row37" class="help-row hidden" hittest="false">
+              <Label id="help_command37" class="help-command" text="{s:hn37}" hittest="false" />
+              <Label id="help_description37" class="help-description" text="{s:hd37}" hittest="false" />
+            </Panel>
+            <Panel id="help_row38" class="help-row hidden" hittest="false">
+              <Label id="help_command38" class="help-command" text="{s:hn38}" hittest="false" />
+              <Label id="help_description38" class="help-description" text="{s:hd38}" hittest="false" />
+            </Panel>
+            <Panel id="help_row39" class="help-row hidden" hittest="false">
+              <Label id="help_command39" class="help-command" text="{s:hn39}" hittest="false" />
+              <Label id="help_description39" class="help-description" text="{s:hd39}" hittest="false" />
+            </Panel>
+            <Panel id="help_row40" class="help-row hidden" hittest="false">
+              <Label id="help_command40" class="help-command" text="{s:hn40}" hittest="false" />
+              <Label id="help_description40" class="help-description" text="{s:hd40}" hittest="false" />
+            </Panel>
+            <Panel id="help_row41" class="help-row hidden" hittest="false">
+              <Label id="help_command41" class="help-command" text="{s:hn41}" hittest="false" />
+              <Label id="help_description41" class="help-description" text="{s:hd41}" hittest="false" />
+            </Panel>
+            <Panel id="help_row42" class="help-row hidden" hittest="false">
+              <Label id="help_command42" class="help-command" text="{s:hn42}" hittest="false" />
+              <Label id="help_description42" class="help-description" text="{s:hd42}" hittest="false" />
+            </Panel>
+            <Panel id="help_row43" class="help-row hidden" hittest="false">
+              <Label id="help_command43" class="help-command" text="{s:hn43}" hittest="false" />
+              <Label id="help_description43" class="help-description" text="{s:hd43}" hittest="false" />
+            </Panel>
+            <Panel id="help_row44" class="help-row hidden" hittest="false">
+              <Label id="help_command44" class="help-command" text="{s:hn44}" hittest="false" />
+              <Label id="help_description44" class="help-description" text="{s:hd44}" hittest="false" />
+            </Panel>
+            <Panel id="help_row45" class="help-row hidden" hittest="false">
+              <Label id="help_command45" class="help-command" text="{s:hn45}" hittest="false" />
+              <Label id="help_description45" class="help-description" text="{s:hd45}" hittest="false" />
+            </Panel>
+            <Panel id="help_row46" class="help-row hidden" hittest="false">
+              <Label id="help_command46" class="help-command" text="{s:hn46}" hittest="false" />
+              <Label id="help_description46" class="help-description" text="{s:hd46}" hittest="false" />
+            </Panel>
+            <Panel id="help_row47" class="help-row hidden" hittest="false">
+              <Label id="help_command47" class="help-command" text="{s:hn47}" hittest="false" />
+              <Label id="help_description47" class="help-description" text="{s:hd47}" hittest="false" />
+            </Panel>
+            <Panel id="help_row48" class="help-row hidden" hittest="false">
+              <Label id="help_command48" class="help-command" text="{s:hn48}" hittest="false" />
+              <Label id="help_description48" class="help-description" text="{s:hd48}" hittest="false" />
+            </Panel>
+            <Panel id="help_row49" class="help-row hidden" hittest="false">
+              <Label id="help_command49" class="help-command" text="{s:hn49}" hittest="false" />
+              <Label id="help_description49" class="help-description" text="{s:hd49}" hittest="false" />
+            </Panel>
+            <Panel id="help_row50" class="help-row hidden" hittest="false">
+              <Label id="help_command50" class="help-command" text="{s:hn50}" hittest="false" />
+              <Label id="help_description50" class="help-description" text="{s:hd50}" hittest="false" />
+            </Panel>
+            <Panel id="help_row51" class="help-row hidden" hittest="false">
+              <Label id="help_command51" class="help-command" text="{s:hn51}" hittest="false" />
+              <Label id="help_description51" class="help-description" text="{s:hd51}" hittest="false" />
+            </Panel>
+            <Panel id="help_row52" class="help-row hidden" hittest="false">
+              <Label id="help_command52" class="help-command" text="{s:hn52}" hittest="false" />
+              <Label id="help_description52" class="help-description" text="{s:hd52}" hittest="false" />
+            </Panel>
+            <Panel id="help_row53" class="help-row hidden" hittest="false">
+              <Label id="help_command53" class="help-command" text="{s:hn53}" hittest="false" />
+              <Label id="help_description53" class="help-description" text="{s:hd53}" hittest="false" />
+            </Panel>
+            <Panel id="help_row54" class="help-row hidden" hittest="false">
+              <Label id="help_command54" class="help-command" text="{s:hn54}" hittest="false" />
+              <Label id="help_description54" class="help-description" text="{s:hd54}" hittest="false" />
+            </Panel>
+            <Panel id="help_row55" class="help-row hidden" hittest="false">
+              <Label id="help_command55" class="help-command" text="{s:hn55}" hittest="false" />
+              <Label id="help_description55" class="help-description" text="{s:hd55}" hittest="false" />
+            </Panel>
+            <Panel id="help_row56" class="help-row hidden" hittest="false">
+              <Label id="help_command56" class="help-command" text="{s:hn56}" hittest="false" />
+              <Label id="help_description56" class="help-description" text="{s:hd56}" hittest="false" />
+            </Panel>
+            <Panel id="help_row57" class="help-row hidden" hittest="false">
+              <Label id="help_command57" class="help-command" text="{s:hn57}" hittest="false" />
+              <Label id="help_description57" class="help-description" text="{s:hd57}" hittest="false" />
+            </Panel>
+            <Panel id="help_row58" class="help-row hidden" hittest="false">
+              <Label id="help_command58" class="help-command" text="{s:hn58}" hittest="false" />
+              <Label id="help_description58" class="help-description" text="{s:hd58}" hittest="false" />
+            </Panel>
+            <Panel id="help_row59" class="help-row hidden" hittest="false">
+              <Label id="help_command59" class="help-command" text="{s:hn59}" hittest="false" />
+              <Label id="help_description59" class="help-description" text="{s:hd59}" hittest="false" />
+            </Panel>
+            <Panel id="help_row60" class="help-row hidden" hittest="false">
+              <Label id="help_command60" class="help-command" text="{s:hn60}" hittest="false" />
+              <Label id="help_description60" class="help-description" text="{s:hd60}" hittest="false" />
+            </Panel>
+            <Panel id="help_row61" class="help-row hidden" hittest="false">
+              <Label id="help_command61" class="help-command" text="{s:hn61}" hittest="false" />
+              <Label id="help_description61" class="help-description" text="{s:hd61}" hittest="false" />
+            </Panel>
+            <Panel id="help_row62" class="help-row hidden" hittest="false">
+              <Label id="help_command62" class="help-command" text="{s:hn62}" hittest="false" />
+              <Label id="help_description62" class="help-description" text="{s:hd62}" hittest="false" />
+            </Panel>
+            <Panel id="help_row63" class="help-row hidden" hittest="false">
+              <Label id="help_command63" class="help-command" text="{s:hn63}" hittest="false" />
+              <Label id="help_description63" class="help-description" text="{s:hd63}" hittest="false" />
+            </Panel>
+            <Panel id="help_row64" class="help-row hidden" hittest="false">
+              <Label id="help_command64" class="help-command" text="{s:hn64}" hittest="false" />
+              <Label id="help_description64" class="help-description" text="{s:hd64}" hittest="false" />
+            </Panel>
+            <Panel id="help_row65" class="help-row hidden" hittest="false">
+              <Label id="help_command65" class="help-command" text="{s:hn65}" hittest="false" />
+              <Label id="help_description65" class="help-description" text="{s:hd65}" hittest="false" />
+            </Panel>
+            <Panel id="help_row66" class="help-row hidden" hittest="false">
+              <Label id="help_command66" class="help-command" text="{s:hn66}" hittest="false" />
+              <Label id="help_description66" class="help-description" text="{s:hd66}" hittest="false" />
+            </Panel>
+            <Panel id="help_row67" class="help-row hidden" hittest="false">
+              <Label id="help_command67" class="help-command" text="{s:hn67}" hittest="false" />
+              <Label id="help_description67" class="help-description" text="{s:hd67}" hittest="false" />
+            </Panel>
+            <Panel id="help_row68" class="help-row hidden" hittest="false">
+              <Label id="help_command68" class="help-command" text="{s:hn68}" hittest="false" />
+              <Label id="help_description68" class="help-description" text="{s:hd68}" hittest="false" />
+            </Panel>
+            <Panel id="help_row69" class="help-row hidden" hittest="false">
+              <Label id="help_command69" class="help-command" text="{s:hn69}" hittest="false" />
+              <Label id="help_description69" class="help-description" text="{s:hd69}" hittest="false" />
+            </Panel>
+            <Panel id="help_row70" class="help-row hidden" hittest="false">
+              <Label id="help_command70" class="help-command" text="{s:hn70}" hittest="false" />
+              <Label id="help_description70" class="help-description" text="{s:hd70}" hittest="false" />
+            </Panel>
+            <Panel id="help_row71" class="help-row hidden" hittest="false">
+              <Label id="help_command71" class="help-command" text="{s:hn71}" hittest="false" />
+              <Label id="help_description71" class="help-description" text="{s:hd71}" hittest="false" />
+            </Panel>
+            <Panel id="help_row72" class="help-row hidden" hittest="false">
+              <Label id="help_command72" class="help-command" text="{s:hn72}" hittest="false" />
+              <Label id="help_description72" class="help-description" text="{s:hd72}" hittest="false" />
+            </Panel>
+            <Panel id="help_row73" class="help-row hidden" hittest="false">
+              <Label id="help_command73" class="help-command" text="{s:hn73}" hittest="false" />
+              <Label id="help_description73" class="help-description" text="{s:hd73}" hittest="false" />
+            </Panel>
+            <Panel id="help_row74" class="help-row hidden" hittest="false">
+              <Label id="help_command74" class="help-command" text="{s:hn74}" hittest="false" />
+              <Label id="help_description74" class="help-description" text="{s:hd74}" hittest="false" />
+            </Panel>
+            <Panel id="help_row75" class="help-row hidden" hittest="false">
+              <Label id="help_command75" class="help-command" text="{s:hn75}" hittest="false" />
+              <Label id="help_description75" class="help-description" text="{s:hd75}" hittest="false" />
+            </Panel>
+            <Panel id="help_row76" class="help-row hidden" hittest="false">
+              <Label id="help_command76" class="help-command" text="{s:hn76}" hittest="false" />
+              <Label id="help_description76" class="help-description" text="{s:hd76}" hittest="false" />
+            </Panel>
+            <Panel id="help_row77" class="help-row hidden" hittest="false">
+              <Label id="help_command77" class="help-command" text="{s:hn77}" hittest="false" />
+              <Label id="help_description77" class="help-description" text="{s:hd77}" hittest="false" />
+            </Panel>
+            <Panel id="help_row78" class="help-row hidden" hittest="false">
+              <Label id="help_command78" class="help-command" text="{s:hn78}" hittest="false" />
+              <Label id="help_description78" class="help-description" text="{s:hd78}" hittest="false" />
+            </Panel>
+            <Panel id="help_row79" class="help-row hidden" hittest="false">
+              <Label id="help_command79" class="help-command" text="{s:hn79}" hittest="false" />
+              <Label id="help_description79" class="help-description" text="{s:hd79}" hittest="false" />
+            </Panel>
+            <Panel id="help_row80" class="help-row hidden" hittest="false">
+              <Label id="help_command80" class="help-command" text="{s:hn80}" hittest="false" />
+              <Label id="help_description80" class="help-description" text="{s:hd80}" hittest="false" />
+            </Panel>
+            <Panel id="help_row81" class="help-row hidden" hittest="false">
+              <Label id="help_command81" class="help-command" text="{s:hn81}" hittest="false" />
+              <Label id="help_description81" class="help-description" text="{s:hd81}" hittest="false" />
+            </Panel>
+            <Panel id="help_row82" class="help-row hidden" hittest="false">
+              <Label id="help_command82" class="help-command" text="{s:hn82}" hittest="false" />
+              <Label id="help_description82" class="help-description" text="{s:hd82}" hittest="false" />
+            </Panel>
+            <Panel id="help_row83" class="help-row hidden" hittest="false">
+              <Label id="help_command83" class="help-command" text="{s:hn83}" hittest="false" />
+              <Label id="help_description83" class="help-description" text="{s:hd83}" hittest="false" />
+            </Panel>
+            <Panel id="help_row84" class="help-row hidden" hittest="false">
+              <Label id="help_command84" class="help-command" text="{s:hn84}" hittest="false" />
+              <Label id="help_description84" class="help-description" text="{s:hd84}" hittest="false" />
+            </Panel>
+            <Panel id="help_row85" class="help-row hidden" hittest="false">
+              <Label id="help_command85" class="help-command" text="{s:hn85}" hittest="false" />
+              <Label id="help_description85" class="help-description" text="{s:hd85}" hittest="false" />
+            </Panel>
+            <Panel id="help_row86" class="help-row hidden" hittest="false">
+              <Label id="help_command86" class="help-command" text="{s:hn86}" hittest="false" />
+              <Label id="help_description86" class="help-description" text="{s:hd86}" hittest="false" />
+            </Panel>
+            <Panel id="help_row87" class="help-row hidden" hittest="false">
+              <Label id="help_command87" class="help-command" text="{s:hn87}" hittest="false" />
+              <Label id="help_description87" class="help-description" text="{s:hd87}" hittest="false" />
+            </Panel>
+            <Panel id="help_row88" class="help-row hidden" hittest="false">
+              <Label id="help_command88" class="help-command" text="{s:hn88}" hittest="false" />
+              <Label id="help_description88" class="help-description" text="{s:hd88}" hittest="false" />
+            </Panel>
+            <Panel id="help_row89" class="help-row hidden" hittest="false">
+              <Label id="help_command89" class="help-command" text="{s:hn89}" hittest="false" />
+              <Label id="help_description89" class="help-description" text="{s:hd89}" hittest="false" />
+            </Panel>
+            <Panel id="help_row90" class="help-row hidden" hittest="false">
+              <Label id="help_command90" class="help-command" text="{s:hn90}" hittest="false" />
+              <Label id="help_description90" class="help-description" text="{s:hd90}" hittest="false" />
+            </Panel>
+            <Panel id="help_row91" class="help-row hidden" hittest="false">
+              <Label id="help_command91" class="help-command" text="{s:hn91}" hittest="false" />
+              <Label id="help_description91" class="help-description" text="{s:hd91}" hittest="false" />
+            </Panel>
+            <Panel id="help_row92" class="help-row hidden" hittest="false">
+              <Label id="help_command92" class="help-command" text="{s:hn92}" hittest="false" />
+              <Label id="help_description92" class="help-description" text="{s:hd92}" hittest="false" />
+            </Panel>
+            <Panel id="help_row93" class="help-row hidden" hittest="false">
+              <Label id="help_command93" class="help-command" text="{s:hn93}" hittest="false" />
+              <Label id="help_description93" class="help-description" text="{s:hd93}" hittest="false" />
+            </Panel>
+            <Panel id="help_row94" class="help-row hidden" hittest="false">
+              <Label id="help_command94" class="help-command" text="{s:hn94}" hittest="false" />
+              <Label id="help_description94" class="help-description" text="{s:hd94}" hittest="false" />
+            </Panel>
+            <Panel id="help_row95" class="help-row hidden" hittest="false">
+              <Label id="help_command95" class="help-command" text="{s:hn95}" hittest="false" />
+              <Label id="help_description95" class="help-description" text="{s:hd95}" hittest="false" />
+            </Panel>
+            <Panel id="help_row96" class="help-row hidden" hittest="false">
+              <Label id="help_command96" class="help-command" text="{s:hn96}" hittest="false" />
+              <Label id="help_description96" class="help-description" text="{s:hd96}" hittest="false" />
+            </Panel>
+            <Panel id="help_row97" class="help-row hidden" hittest="false">
+              <Label id="help_command97" class="help-command" text="{s:hn97}" hittest="false" />
+              <Label id="help_description97" class="help-description" text="{s:hd97}" hittest="false" />
+            </Panel>
+            <Panel id="help_row98" class="help-row hidden" hittest="false">
+              <Label id="help_command98" class="help-command" text="{s:hn98}" hittest="false" />
+              <Label id="help_description98" class="help-description" text="{s:hd98}" hittest="false" />
+            </Panel>
+            <Panel id="help_row99" class="help-row hidden" hittest="false">
+              <Label id="help_command99" class="help-command" text="{s:hn99}" hittest="false" />
+              <Label id="help_description99" class="help-description" text="{s:hd99}" hittest="false" />
+            </Panel>
+            <Panel id="help_row100" class="help-row hidden" hittest="false">
+              <Label id="help_command100" class="help-command" text="{s:hn100}" hittest="false" />
+              <Label id="help_description100" class="help-description" text="{s:hd100}" hittest="false" />
+            </Panel>
+            <Panel id="help_row101" class="help-row hidden" hittest="false">
+              <Label id="help_command101" class="help-command" text="{s:hn101}" hittest="false" />
+              <Label id="help_description101" class="help-description" text="{s:hd101}" hittest="false" />
+            </Panel>
+            <Panel id="help_row102" class="help-row hidden" hittest="false">
+              <Label id="help_command102" class="help-command" text="{s:hn102}" hittest="false" />
+              <Label id="help_description102" class="help-description" text="{s:hd102}" hittest="false" />
+            </Panel>
+            <Panel id="help_row103" class="help-row hidden" hittest="false">
+              <Label id="help_command103" class="help-command" text="{s:hn103}" hittest="false" />
+              <Label id="help_description103" class="help-description" text="{s:hd103}" hittest="false" />
+            </Panel>
+            <Panel id="help_row104" class="help-row hidden" hittest="false">
+              <Label id="help_command104" class="help-command" text="{s:hn104}" hittest="false" />
+              <Label id="help_description104" class="help-description" text="{s:hd104}" hittest="false" />
+            </Panel>
+            <Panel id="help_row105" class="help-row hidden" hittest="false">
+              <Label id="help_command105" class="help-command" text="{s:hn105}" hittest="false" />
+              <Label id="help_description105" class="help-description" text="{s:hd105}" hittest="false" />
+            </Panel>
+            <Panel id="help_row106" class="help-row hidden" hittest="false">
+              <Label id="help_command106" class="help-command" text="{s:hn106}" hittest="false" />
+              <Label id="help_description106" class="help-description" text="{s:hd106}" hittest="false" />
+            </Panel>
+            <Panel id="help_row107" class="help-row hidden" hittest="false">
+              <Label id="help_command107" class="help-command" text="{s:hn107}" hittest="false" />
+              <Label id="help_description107" class="help-description" text="{s:hd107}" hittest="false" />
+            </Panel>
+            <Panel id="help_row108" class="help-row hidden" hittest="false">
+              <Label id="help_command108" class="help-command" text="{s:hn108}" hittest="false" />
+              <Label id="help_description108" class="help-description" text="{s:hd108}" hittest="false" />
+            </Panel>
+            <Panel id="help_row109" class="help-row hidden" hittest="false">
+              <Label id="help_command109" class="help-command" text="{s:hn109}" hittest="false" />
+              <Label id="help_description109" class="help-description" text="{s:hd109}" hittest="false" />
+            </Panel>
+            <Panel id="help_row110" class="help-row hidden" hittest="false">
+              <Label id="help_command110" class="help-command" text="{s:hn110}" hittest="false" />
+              <Label id="help_description110" class="help-description" text="{s:hd110}" hittest="false" />
+            </Panel>
+            <Panel id="help_row111" class="help-row hidden" hittest="false">
+              <Label id="help_command111" class="help-command" text="{s:hn111}" hittest="false" />
+              <Label id="help_description111" class="help-description" text="{s:hd111}" hittest="false" />
+            </Panel>
+            <Panel id="help_row112" class="help-row hidden" hittest="false">
+              <Label id="help_command112" class="help-command" text="{s:hn112}" hittest="false" />
+              <Label id="help_description112" class="help-description" text="{s:hd112}" hittest="false" />
+            </Panel>
+            <Panel id="help_row113" class="help-row hidden" hittest="false">
+              <Label id="help_command113" class="help-command" text="{s:hn113}" hittest="false" />
+              <Label id="help_description113" class="help-description" text="{s:hd113}" hittest="false" />
+            </Panel>
+            <Panel id="help_row114" class="help-row hidden" hittest="false">
+              <Label id="help_command114" class="help-command" text="{s:hn114}" hittest="false" />
+              <Label id="help_description114" class="help-description" text="{s:hd114}" hittest="false" />
+            </Panel>
+            <Panel id="help_row115" class="help-row hidden" hittest="false">
+              <Label id="help_command115" class="help-command" text="{s:hn115}" hittest="false" />
+              <Label id="help_description115" class="help-description" text="{s:hd115}" hittest="false" />
+            </Panel>
+            <Panel id="help_row116" class="help-row hidden" hittest="false">
+              <Label id="help_command116" class="help-command" text="{s:hn116}" hittest="false" />
+              <Label id="help_description116" class="help-description" text="{s:hd116}" hittest="false" />
+            </Panel>
+            <Panel id="help_row117" class="help-row hidden" hittest="false">
+              <Label id="help_command117" class="help-command" text="{s:hn117}" hittest="false" />
+              <Label id="help_description117" class="help-description" text="{s:hd117}" hittest="false" />
+            </Panel>
+            <Panel id="help_row118" class="help-row hidden" hittest="false">
+              <Label id="help_command118" class="help-command" text="{s:hn118}" hittest="false" />
+              <Label id="help_description118" class="help-description" text="{s:hd118}" hittest="false" />
+            </Panel>
+            <Panel id="help_row119" class="help-row hidden" hittest="false">
+              <Label id="help_command119" class="help-command" text="{s:hn119}" hittest="false" />
+              <Label id="help_description119" class="help-description" text="{s:hd119}" hittest="false" />
+            </Panel>
+            <Panel id="help_row120" class="help-row hidden" hittest="false">
+              <Label id="help_command120" class="help-command" text="{s:hn120}" hittest="false" />
+              <Label id="help_description120" class="help-description" text="{s:hd120}" hittest="false" />
+            </Panel>
+            <Panel id="help_row121" class="help-row hidden" hittest="false">
+              <Label id="help_command121" class="help-command" text="{s:hn121}" hittest="false" />
+              <Label id="help_description121" class="help-description" text="{s:hd121}" hittest="false" />
+            </Panel>
+            <Panel id="help_row122" class="help-row hidden" hittest="false">
+              <Label id="help_command122" class="help-command" text="{s:hn122}" hittest="false" />
+              <Label id="help_description122" class="help-description" text="{s:hd122}" hittest="false" />
+            </Panel>
+            <Panel id="help_row123" class="help-row hidden" hittest="false">
+              <Label id="help_command123" class="help-command" text="{s:hn123}" hittest="false" />
+              <Label id="help_description123" class="help-description" text="{s:hd123}" hittest="false" />
+            </Panel>
+            <Panel id="help_row124" class="help-row hidden" hittest="false">
+              <Label id="help_command124" class="help-command" text="{s:hn124}" hittest="false" />
+              <Label id="help_description124" class="help-description" text="{s:hd124}" hittest="false" />
+            </Panel>
+            <Panel id="help_row125" class="help-row hidden" hittest="false">
+              <Label id="help_command125" class="help-command" text="{s:hn125}" hittest="false" />
+              <Label id="help_description125" class="help-description" text="{s:hd125}" hittest="false" />
+            </Panel>
+            <Panel id="help_row126" class="help-row hidden" hittest="false">
+              <Label id="help_command126" class="help-command" text="{s:hn126}" hittest="false" />
+              <Label id="help_description126" class="help-description" text="{s:hd126}" hittest="false" />
+            </Panel>
+            <Panel id="help_row127" class="help-row hidden" hittest="false">
+              <Label id="help_command127" class="help-command" text="{s:hn127}" hittest="false" />
+              <Label id="help_description127" class="help-description" text="{s:hd127}" hittest="false" />
+            </Panel>
+          </Panel>
+        </Panel>
+        <Panel class="help-footer">
+          <Label id="help_hint" class="help-hint" text="{s:hint}" />
+        </Panel>
+      </Panel>
+    </Panel>
+  </Panel>
+</root>

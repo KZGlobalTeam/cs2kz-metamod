@@ -4,8 +4,8 @@
 #include "simplecmds.h"
 #include "../kz/kz.h"
 #include "../kz/language/kz_language.h"
-#include "../kz/option/kz_option.h"
-#include "utils/tables.h"
+
+#include <algorithm>
 
 #include "tier0/memdbgon.h"
 // private structs
@@ -42,20 +42,71 @@ const char* cmdFlagNames[] = {
 	"HUD"
 };
 
-static_global const char *columnKeys[] = {
-	"Command List Header - Name",
-	"Command List Header - Description"
-};
-
 // clang-format on
 
 struct ScmdManager
 {
 	i32 cmdCount;
 	Scmd cmds[SCMD_MAX_CMDS];
+	u32 revision;
 };
 
 static_global ScmdManager g_cmdManager = {};
+
+i32 scmd::GetCategoryCount()
+{
+	return KZ_ARRAYSIZE(cmdFlagNames);
+}
+
+const char *scmd::GetCategoryName(i32 category)
+{
+	return category >= 0 && category < scmd::GetCategoryCount() ? cmdFlagNames[category] : nullptr;
+}
+
+const std::vector<scmd::CommandInfo> &scmd::GetCategoryCommands(i32 category, bool chatNames)
+{
+	static_persist const std::vector<CommandInfo> empty;
+	if (!scmd::GetCategoryName(category))
+	{
+		return empty;
+	}
+
+	struct CachedCommands
+	{
+		u32 revision {};
+		std::vector<CommandInfo> commands;
+	};
+
+	static_persist CachedCommands cache[KZ_ARRAYSIZE(cmdFlagNames)][2];
+	CachedCommands &cached = cache[category][chatNames ? 1 : 0];
+	if (cached.revision == g_cmdManager.revision)
+	{
+		return cached.commands;
+	}
+	auto &result = cached.commands;
+	result.clear();
+	for (i32 i = 0; i < g_cmdManager.cmdCount; i++)
+	{
+		const Scmd &cmd = g_cmdManager.cmds[i];
+		if (!(cmd.flags & (1ull << category)))
+		{
+			continue;
+		}
+		const std::string name =
+			chatNames ? std::string(1, SCMD_CHAT_TRIGGER) + (cmd.hasConsolePrefix ? cmd.name + strlen(SCMD_CONSOLE_PREFIX) : cmd.name) : cmd.name;
+		auto entry = std::find_if(result.begin(), result.end(), [&](const CommandInfo &row) { return row.descriptionKey == cmd.descKey; });
+		if (entry == result.end())
+		{
+			result.push_back({name, cmd.descKey});
+		}
+		else
+		{
+			entry->names += (chatNames ? " / " : "/") + name;
+		}
+	}
+	cached.revision = g_cmdManager.revision;
+	return result;
+}
 
 #define SCMD_COOLDOWN 0.2f
 
@@ -83,93 +134,6 @@ static_global bool CanRunCommand(KZPlayer *player, u64 flags)
 	}
 
 	player->lastCommandTime = curtime;
-	return true;
-}
-
-static_global void PrintCategoryCommands(KZPlayer *player, i32 category, bool printEmpty)
-{
-	char tableName[64];
-	V_snprintf(tableName, sizeof(tableName), "Command List - %s", cmdFlagNames[category]);
-	CUtlString headers[KZ_ARRAYSIZE(columnKeys)];
-	for (u32 i = 0; i < KZ_ARRAYSIZE(columnKeys); i++)
-	{
-		headers[i] = player->languageService->PrepareMessage(columnKeys[i]).c_str();
-	}
-	Scmd *cmds = g_cmdManager.cmds;
-	utils::Table<KZ_ARRAYSIZE(columnKeys)> table(player->languageService->PrepareMessage(tableName).c_str(), headers);
-
-	u32 cmdCount = 0;
-	CUtlVector<CUtlString> uniqueCallbacks;
-	CUtlVector<i32> callbackRowIndices;
-	for (i32 i = 0; i < g_cmdManager.cmdCount; i++)
-	{
-		if (cmds[i].flags & (1ull << category))
-		{
-			i32 existingIndex = uniqueCallbacks.Find(cmds[i].descKey);
-			if (existingIndex == -1)
-			{
-				uniqueCallbacks.AddToTail(cmds[i].descKey);
-				callbackRowIndices.AddToTail(cmdCount);
-				table.SetRow(cmdCount, cmds[i].name, player->languageService->PrepareMessage(cmds[i].descKey).c_str());
-				cmdCount++;
-			}
-			else
-			{
-				i32 rowIndex = callbackRowIndices[existingIndex];
-				CUtlString newEntry = table.GetEntry(rowIndex).data[0];
-				// Remove the trailing space that exists in each column
-				newEntry.SetLength(newEntry.Length() - strlen("ᅟ"));
-				newEntry.Append("/");
-				newEntry.Append(cmds[i].name);
-				table.Set(rowIndex, 0, newEntry);
-			}
-		}
-	}
-	if (!printEmpty && cmdCount == 0)
-	{
-		return;
-	}
-	player->PrintConsole(false, false, table.GetSeparator("="));
-	player->PrintConsole(false, false, table.GetTitle());
-	player->PrintConsole(false, false, table.GetHeader());
-
-	for (u32 i = 0; i < table.GetNumEntries(); i++)
-	{
-		player->PrintConsole(false, false, table.GetLine(i));
-	}
-	player->PrintConsole(false, false, table.GetSeparator("="));
-}
-
-SCMD(kz_help, SCFL_MISC)
-{
-	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
-	player->languageService->PrintChat(true, false, "Command Help Response (Chat)");
-	player->languageService->PrintConsole(false, false, "Command Help Response (Console)");
-	u64 category = 0;
-	bool foundCategory {};
-	if (args->ArgC() >= 2)
-	{
-		for (i32 i = 1; i < args->ArgC(); i++)
-		{
-			for (i32 j = 0; j < KZ_ARRAYSIZE(cmdFlagNames); j++)
-			{
-				if (!V_stricmp(args->Arg(i), cmdFlagNames[j]))
-				{
-					PrintCategoryCommands(player, j, true);
-					foundCategory = true;
-				}
-			}
-		}
-	}
-
-	if (!foundCategory)
-	{
-		player->languageService->PrintConsole(false, false, "Command Help Response Category Hint (Console)");
-		for (i32 i = 0; i < KZ_ARRAYSIZE(cmdFlagNames); i++)
-		{
-			PrintCategoryCommands(player, i, false);
-		}
-	}
 	return true;
 }
 
@@ -240,6 +204,7 @@ bool scmd::RegisterCmd(const char *name, scmd::Callback_t *callback, const char 
 	}
 
 	g_cmdManager.cmds[g_cmdManager.cmdCount++] = cmd;
+	g_cmdManager.revision++;
 
 	return true;
 }
@@ -274,6 +239,7 @@ bool scmd::UnregisterCmd(const char *name)
 			g_cmdManager.cmds[i] = g_cmdManager.cmds[i + 1];
 		}
 		g_cmdManager.cmdCount--;
+		g_cmdManager.revision++;
 		return true;
 	}
 	return false;

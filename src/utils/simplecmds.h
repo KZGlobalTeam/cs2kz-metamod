@@ -4,6 +4,9 @@
 #ifndef SIMPLECMDS_H
 #define SIMPLECMDS_H
 
+#include <string>
+#include <vector>
+
 class CCSPlayerController;
 
 enum
@@ -41,6 +44,17 @@ namespace scmd
 	bool RegisterCmd(const char *name, Callback_t *callback, const char *descKey = nullptr, u64 flags = 0);
 	bool LinkCmd(const char *name, const char *linkedName);
 	bool UnregisterCmd(const char *name);
+
+	struct CommandInfo
+	{
+		std::string names;
+		std::string descriptionKey;
+	};
+
+	i32 GetCategoryCount();
+	const char *GetCategoryName(i32 category);
+	// Groups aliases by their shared description. Cached until commands are registered or unregistered.
+	const std::vector<CommandInfo> &GetCategoryCommands(i32 category, bool chatNames = false);
 
 	bool OnClientCommand(CPlayerSlot &slot, const CCommand &args);
 	bool OnDispatchConCommand(ConCommandRef cmd, const CCommandContext &ctx, const CCommand &args);
