@@ -45,7 +45,6 @@ void SubtickData::RpSubtickMove::FromMove(const CSubtickMoveStep &move)
 void Recorder::Init(ReplayHeader &hdr, KZPlayer *player, ReplayType type)
 {
 	hdr.set_version(KZ_REPLAY_VERSION);
-	hdr.set_event_encoding(cs2kz::replay::EVENT_ENCODING_PROTOBUF_LENGTH_PREFIX);
 	hdr.set_type(static_cast<cs2kz::replay::ReplayType>(type));
 
 	// Map info

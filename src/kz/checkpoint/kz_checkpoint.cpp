@@ -247,8 +247,9 @@ void KZCheckpointService::DoTeleport(const Checkpoint cp, bool stayOnGround, i32
 
 	Vector currentOrigin;
 	this->player->GetOrigin(&currentOrigin);
-	KZRecordingService::ScopedTeleport replayTeleport(*this->player->recordingService, undo ? RPTELEPORT_CHECKPOINT_UNDO : RPTELEPORT_CHECKPOINT,
-													  checkpointIndex);
+	// Custom start positions use this path too, but are not saved checkpoints.
+	RpTeleportReason reason = undo ? RPTELEPORT_CHECKPOINT_UNDO : checkpointIndex > 0 ? RPTELEPORT_CHECKPOINT : RPTELEPORT_UNKNOWN;
+	KZRecordingService::ScopedTeleport replayTeleport(*this->player->recordingService, reason, checkpointIndex);
 
 	// Update data for undoing teleports
 	u32 flags = pawn->m_fFlags();

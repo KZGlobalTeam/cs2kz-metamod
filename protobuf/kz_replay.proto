@@ -115,63 +115,56 @@ message ReplayHeader {
 	optional float viewmodel_offset_y = 19 [default = 1];
 	optional float viewmodel_offset_z = 20 [default = -1];
 	optional float viewmodel_fov = 21 [default = 60];
-	// Distinguishes the extensible v6 format from unpublished native-struct prototypes.
-	optional EventEncoding event_encoding = 22 [default = EVENT_ENCODING_NATIVE];
-}
-
-enum EventEncoding {
-	EVENT_ENCODING_NATIVE = 0;
-	EVENT_ENCODING_PROTOBUF_LENGTH_PREFIX = 1;
 }
 
 // v6 events are individually length-prefixed protobuf messages. Unknown event
 // types and optional fields can be skipped without changing the next event.
 message EventVector {
-	required float x = 1;
-	required float y = 2;
-	required float z = 3;
+	optional float x = 1;
+	optional float y = 2;
+	optional float z = 3;
 }
 
 message TimerEvent {
-	required uint32 type = 1;
-	required int32 index = 2;
-	required float time = 3;
-	required EventVector origin = 4;
+	optional uint32 type = 1;
+	optional int32 index = 2;
+	optional float time = 3;
+	optional EventVector origin = 4;
 }
 
 message StyleEvent {
-	required ModeStyleInfo style = 1;
+	optional ModeStyleInfo style = 1;
 	optional bool clear_styles = 2;
 }
 
 enum TeleportReason {
-	TELEPORT_UNKNOWN = 0;
-	TELEPORT_CHECKPOINT = 1;
-	TELEPORT_CHECKPOINT_UNDO = 2;
-	TELEPORT_MAP_TRIGGER = 3;
-	TELEPORT_BHOP_FAIL = 4;
+	TELEPORT_UNKNOWN = -1;
+	TELEPORT_CHECKPOINT = 0;
+	TELEPORT_CHECKPOINT_UNDO = 1;
+	TELEPORT_MAP_TRIGGER = 2;
+	TELEPORT_BHOP_FAIL = 3;
 }
 
 message TeleportEvent {
 	optional TeleportReason reason = 1;
 	optional int32 checkpoint_index = 2;
-	required EventVector previous_origin = 3;
+	optional EventVector previous_origin = 3;
 	optional EventVector origin = 4;
 	optional EventVector angles = 5;
 	optional EventVector velocity = 6;
 }
 
 message CheckpointEvent {
-	// Only saving (0) and resetting (3) checkpoints. Teleports have one event.
-	required uint32 type = 1;
+	// Only saving (0) and resetting (1) checkpoints. Teleports have one event.
+	optional uint32 type = 1;
 	optional int32 index = 2;
 	optional EventVector origin = 3;
 }
 
 message ReplayEvent {
-	required uint32 type = 1;
-	required uint32 server_tick = 2;
-	required uint32 phase = 3;
+	optional uint32 type = 1;
+	optional uint32 server_tick = 2;
+	optional uint32 phase = 3;
 	oneof data {
 		TimerEvent timer = 4;
 		ModeStyleInfo mode = 5;

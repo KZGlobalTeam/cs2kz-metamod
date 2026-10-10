@@ -248,21 +248,25 @@ bool KZTriggerService::TouchTeleportTrigger(TriggerTouchTracker tracker)
 		// Maybe we should check m_nHighestGeneratedServerViewAngleChangeIndex for angles overridding...
 		VectorRotate(finalVelocity, QAngle(0, destAngles[YAW], 0), finalVelocity);
 		finalPlayerAngles[YAW] -= destAngles[YAW];
-		this->player->SetAngles(finalPlayerAngles);
 	}
 	else if (!tracker.kzTrigger->teleport.reorientPlayer && tracker.kzTrigger->teleport.useDestinationAngles)
 	{
-		this->player->SetAngles(destAngles);
+		finalPlayerAngles = destAngles;
 	}
 
 	if (tracker.kzTrigger->teleport.resetSpeed)
 	{
-		this->player->SetVelocity(vec3_origin);
+		finalVelocity = vec3_origin;
 	}
-	else
+	bool changeAngles = shouldReorientPlayer || (!tracker.kzTrigger->teleport.reorientPlayer && tracker.kzTrigger->teleport.useDestinationAngles);
+	// Angle, velocity and position changes are one mapping API teleport even when
+	// SetVelocity only updates movement data instead of issuing an engine call.
+	this->player->OnTeleportBegin(&finalOrigin, changeAngles ? &finalPlayerAngles : nullptr, &finalVelocity);
+	if (changeAngles)
 	{
-		this->player->SetVelocity(finalVelocity);
+		this->player->SetAngles(finalPlayerAngles);
 	}
+	this->player->SetVelocity(finalVelocity);
 	// Prevent the player from being teleported into the air for one tick if they were on the ground before teleporting.
 	CEntityHandle groundEntity = this->player->GetPlayerPawn()->m_hGroundEntity();
 	bool restoreGround = this->player->GetPlayerPawn()->m_fFlags & FL_ONGROUND && groundEntity.IsValid();
@@ -272,6 +276,7 @@ bool KZTriggerService::TouchTeleportTrigger(TriggerTouchTracker tracker)
 		this->player->GetPlayerPawn()->m_fFlags(this->player->GetPlayerPawn()->m_fFlags | FL_ONGROUND);
 		this->player->GetPlayerPawn()->m_hGroundEntity(groundEntity);
 	}
+	this->player->OnTeleportEnd();
 	return true;
 }
 

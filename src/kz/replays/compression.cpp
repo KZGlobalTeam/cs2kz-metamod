@@ -536,7 +536,7 @@ static_function bool DecodeTickDataBuffer(const char *decompressedData, size_t u
 
 		// Unchanged scalar fields stay in tick. The sole implicit change is serverTick.
 		// clang-format off
-        if (i > 0 && !(flags & CHANGED_SERVER_TICK)) ++tick.serverTick;
+		if (i > 0 && !(flags & CHANGED_SERVER_TICK)) ++tick.serverTick;
 
 		// Read changed fields
 		if (!ReadIfFlag(flags, CHANGED_SERVER_TICK, readPtr, endPtr, &tick.serverTick, sizeof(tick.serverTick))) return false;
@@ -552,7 +552,7 @@ static_function bool DecodeTickDataBuffer(const char *decompressedData, size_t u
 		if (!ReadIfFlag(flags, weaponFlag, readPtr, endPtr, &tick.weapon, sizeof(tick.weapon))) return false;
 
 		// Pre movement inherits the preceding post, then post inherits this pre.
-        tick.pre = i > 0 ? tick.post : TickData::MovementData {};
+		tick.pre = i > 0 ? tick.post : TickData::MovementData {};
 
 		if (!ReadIfFlag(flags, CHANGED_PRE_ORIGIN, readPtr, endPtr, &tick.pre.origin, sizeof(tick.pre.origin))) return false;
 		if (!ReadIfFlag(flags, CHANGED_PRE_VELOCITY, readPtr, endPtr, &tick.pre.velocity, sizeof(tick.pre.velocity))) return false;

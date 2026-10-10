@@ -368,7 +368,7 @@ private:
 	// cannot be inferred from MovementPlayer::processingMovement alone.
 	bool physicsSimulationActive {};
 	bool hasRecordedTick {};
-	RpTeleportReason teleportReason {};
+	RpTeleportReason teleportReason {RPTELEPORT_UNKNOWN};
 	i32 teleportCheckpointIndex {};
 	u32 teleportDepth {};
 	RpEvent teleportEvent {};
