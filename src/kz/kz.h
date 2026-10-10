@@ -44,6 +44,7 @@ class KZModeService;
 class KZNoclipService;
 class KZOptionService;
 class KZPaintService;
+class KZProgressService;
 class KZQuietService;
 class KZRacingService;
 class KZSpecService;
@@ -150,6 +151,8 @@ public:
 	// Other events
 	virtual void OnChangeTeamPost(i32 team) override;
 	virtual void OnTeleport(const Vector *origin, const QAngle *angles, const Vector *velocity) override;
+	virtual void OnTeleportBegin(const Vector *origin, const QAngle *angles, const Vector *velocity) override;
+	virtual void OnTeleportEnd() override;
 
 	void PlayErrorSound();
 
@@ -176,6 +179,7 @@ public:
 	KZNoclipService *noclipService {};
 	KZOptionService *optionService {};
 	KZPaintService *paintService {};
+	KZProgressService *progressService {};
 	KZQuietService *quietService {};
 	KZRacingService *racingService {};
 	KZSpecService *specService {};

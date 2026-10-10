@@ -244,8 +244,12 @@ void KZRecordingService::OnTeleport(const Vector *origin, const QAngle *angles, 
 	{
 		return;
 	}
-	KZ_LOG_DEBUG(LogChannel::Recording, "Teleport\n");
-	this->InsertTeleportEvent(origin, angles, velocity);
+	// Logical teleports may use separate engine calls for angles, velocity and
+	// position. Their begin/end pair owns one event; raw teleports are recorded here.
+	if (this->teleportDepth == 0)
+	{
+		this->InsertTeleportEvent(origin, angles, velocity);
+	}
 }
 
 void KZRecordingService::OnJumpFinish(Jump *jump)
@@ -288,6 +292,54 @@ void KZRecordingService::OnJumpFinish(Jump *jump)
 	{
 		this->jumpRecorders.push_back(JumpRecorder(jump));
 		this->jumpRecorders.back().uuid = this->lastJumpUUID;
+	}
+}
+
+void KZRecordingService::OnCheckpointSave(i32 index, const Vector &origin)
+{
+	if (!this->player->IsFakeClient() && !KZ::replaysystem::IsReplayBot(this->player))
+	{
+		this->InsertCheckpointEvent(RpEvent::RpEventData::CheckpointEvent::CHECKPOINT_SAVE, index, origin);
+	}
+}
+
+void KZRecordingService::OnTeleportBegin(const Vector *origin, const QAngle *angles, const Vector *velocity)
+{
+	if (KZ::replaysystem::IsReplayBot(this->player))
+	{
+		return;
+	}
+	if (this->teleportDepth++ == 0)
+	{
+		// SetAngles sends a zero pitch to the entity teleport and snaps view angles
+		// separately. The merged event must retain that entity-angle behavior.
+		QAngle absoluteAngles = angles ? *angles : vec3_angle;
+		absoluteAngles.x = 0;
+		this->teleportEvent = this->CreateTeleportEvent(origin, angles ? &absoluteAngles : nullptr, velocity);
+	}
+}
+
+void KZRecordingService::OnTeleportEnd()
+{
+	if (KZ::replaysystem::IsReplayBot(this->player) || this->teleportDepth == 0)
+	{
+		return;
+	}
+	if (--this->teleportDepth == 0)
+	{
+		this->InsertEvent(this->teleportEvent);
+	}
+}
+
+void KZRecordingService::OnCheckpointReset()
+{
+	if (!this->circularRecording && this->runRecorders.empty() && this->jumpRecorders.empty())
+	{
+		return;
+	}
+	if (!this->player->IsFakeClient() && !KZ::replaysystem::IsReplayBot(this->player))
+	{
+		this->InsertCheckpointEvent(RpEvent::RpEventData::CheckpointEvent::CHECKPOINT_RESET, 0, vec3_origin);
 	}
 }
 
@@ -337,6 +389,7 @@ void KZRecordingService::OnClientDisconnect()
 
 void KZRecordingService::OnPhysicsSimulate()
 {
+	this->physicsSimulationActive = false;
 	if (KZ::replaysystem::IsReplayBot(this->player))
 	{
 		return;
@@ -366,6 +419,7 @@ void KZRecordingService::OnSetupMove(PlayerCommand *pc)
 
 void KZRecordingService::OnPhysicsSimulatePost()
 {
+	this->physicsSimulationActive = false;
 	if (this->player->IsFakeClient() || KZ::replaysystem::IsReplayBot(this->player))
 	{
 		return;

@@ -1,4 +1,5 @@
 #include "kz_recording.h"
+#include "kz/replays/kz_replaysystem.h"
 #include "filesystem.h"
 #include "cs2kz.h"
 #include "utils/utils.h"
@@ -85,16 +86,13 @@ void ReplayFileWriter::QueueWriteToFile(std::unique_ptr<Recorder> recorder, Disk
 			UUID_t uuid = rec->uuid;
 			f32 duration = rec->totalTicksRecorded * ENGINE_FIXED_TICK_INTERVAL;
 			bool ok = rec->WriteToFile();
-			if (!onSuccess && !onFailure)
-			{
-				return;
-			}
 			std::lock_guard<std::mutex> lock(m_completedLock);
 			if (ok)
 			{
 				m_completedCallbacks.push(
 					[uuid, duration, onSuccess]()
 					{
+						KZ::replaysystem::NotifyReplayFileChanged(uuid.ToString().c_str());
 						if (onSuccess)
 						{
 							onSuccess(uuid, duration);

@@ -43,6 +43,10 @@ namespace KZ::replaysystem::events
 				case RPEVENT_TELEPORT:
 					HandleTeleportEvent(player, event);
 					break;
+
+				case RPEVENT_CHECKPOINT:
+					// Playback uses the tick's checkpoint counters and the associated teleport event.
+					break;
 			}
 
 			replay->currentEvent++;
@@ -509,6 +513,8 @@ namespace KZ::replaysystem::events
 					// is tracked via checkpoint data in tickData
 					break;
 				}
+				case RPEVENT_CHECKPOINT:
+					break;
 			}
 
 			// Update current event index if this event is at or before target server tick

@@ -27,6 +27,7 @@
 #include "kz/beam/kz_beam.h"
 #include "kz/language/kz_language.h"
 #include "kz/hud/kz_hud.h"
+#include "kz/progress/kz_progress.h"
 #include "kz/jumpstats/kz_jumpstats.h"
 #include "kz/option/kz_option.h"
 #include "kz/option/pref_registry.h"
@@ -248,6 +249,7 @@ static KHook::Return<void> GameFramePre(ISource2Server *pThis, bool simulating, 
 	KZBeamService::UpdateBeams();
 	KZPaintService::OnGameFrame();
 	KZ::replaysystem::OnGameFrame();
+	KZProgressService::OnGameFrame();
 	KZRacingService::BroadcastRaceInfo();
 	return {KHook::Action::Ignore};
 }

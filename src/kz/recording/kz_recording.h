@@ -97,8 +97,9 @@ struct Recorder
 	// Every 15 minutes, in-memory data is written to a temp file on disk to keep memory bounded during long runs.
 	static constexpr u32 FLUSH_INTERVAL_TICKS = 57600; // 15 minutes at 64 ticks/sec
 	u32 numFlushedChunks = 0;
-	u32 totalTicksRecorded = 0; // Total across all flushed chunks + in-memory
-	std::string tempFileBase;   // Set on first flush; empty means no flushing has occurred
+	u32 totalTicksRecorded = 0;  // Total across all flushed chunks + in-memory
+	u32 totalEventsRecorded = 0; // Preserves run event indices across disk flushes.
+	std::string tempFileBase;    // Set on first flush; empty means no flushing has occurred
 
 	// Flush in-memory recording data to a temp chunk file on disk, then clear in-memory vectors.
 	void FlushChunkToDisk();
@@ -142,6 +143,7 @@ struct Recorder
 		else if constexpr (std::is_same<T, RpEvent>::value)
 		{
 			rpEvents.push_back(data);
+			totalEventsRecorded++;
 		}
 		else if constexpr (std::is_same<T, RpJumpStats>::value)
 		{
@@ -305,6 +307,25 @@ public:
 	void OnCPZ(i32 cpz);
 	void OnStage(i32 stage);
 	void OnTeleport(const Vector *origin, const QAngle *angles, const Vector *velocity);
+	void OnTeleportBegin(const Vector *origin, const QAngle *angles, const Vector *velocity);
+	void OnTeleportEnd();
+	void OnCheckpointSave(i32 index, const Vector &origin);
+	void OnCheckpointReset();
+
+	// Identifies teleports at their source. Restores the enclosing reason on exit.
+	class ScopedTeleport
+	{
+	public:
+		ScopedTeleport(KZRecordingService &service, RpTeleportReason reason, i32 checkpointIndex = 0);
+		~ScopedTeleport();
+		ScopedTeleport(const ScopedTeleport &) = delete;
+		ScopedTeleport &operator=(const ScopedTeleport &) = delete;
+
+	private:
+		KZRecordingService &service;
+		RpTeleportReason previousReason;
+		i32 previousCheckpointIndex;
+	};
 
 	void OnJumpFinish(Jump *jump);
 
@@ -333,13 +354,24 @@ public:
 	void EnsureCircularRecorderInitialized();
 
 private:
+	RpEvent CreateEvent(RpEventType type) const;
 	// Insert a replay event into the circular buffer and all active recorders.
 	void InsertEvent(const RpEvent &event);
 
 	void InsertTimerEvent(RpEvent::RpEventData::TimerEvent::TimerEventType type, f32 time, i32 index = -1);
 	void InsertTeleportEvent(const Vector *origin, const QAngle *angles, const Vector *velocity);
+	RpEvent CreateTeleportEvent(const Vector *origin, const QAngle *angles, const Vector *velocity) const;
 	void InsertModeChangeEvent(const char *name, const char *md5);
 	void InsertStyleChangeEvent(const char *name, const char *md5, bool firstStyle);
+	void InsertCheckpointEvent(RpEvent::RpEventData::CheckpointEvent::CheckpointEventType type, i32 index, const Vector &origin);
+	// PhysicsSimulate includes trigger work outside ProcessMovement. Its phase
+	// cannot be inferred from MovementPlayer::processingMovement alone.
+	bool physicsSimulationActive {};
+	bool hasRecordedTick {};
+	RpTeleportReason teleportReason {RPTELEPORT_UNKNOWN};
+	i32 teleportCheckpointIndex {};
+	u32 teleportDepth {};
+	RpEvent teleportEvent {};
 
 public:
 	// Write a replay file with completion callbacks

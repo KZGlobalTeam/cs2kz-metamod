@@ -102,10 +102,17 @@ void KZRecordingService::Reset()
 	this->currentWeaponID = -1;
 	this->weapons.clear();
 	this->lastJumpUUID = UUID_t(false);
+	this->physicsSimulationActive = false;
+	this->teleportReason = RPTELEPORT_UNKNOWN;
+	this->teleportCheckpointIndex = 0;
+	this->teleportDepth = 0;
+	this->hasRecordedTick = false;
 }
 
 void KZRecordingService::RecordTickData_PhysicsSimulate()
 {
+	this->physicsSimulationActive = true;
+	this->hasRecordedTick = true;
 	// Reset the tick data.
 	this->currentTickData = {};
 	this->currentSubtickData = {};
@@ -447,6 +454,26 @@ void KZRecordingService::EnsureCircularRecorderInitialized()
 	}
 }
 
+RpEvent KZRecordingService::CreateEvent(RpEventType type) const
+{
+	RpEvent event = {};
+	event.type = type;
+	event.serverTick = g_pKZUtils->GetServerGlobals()->tickcount;
+	if (this->physicsSimulationActive)
+	{
+		event.phase = RPEVENT_DURING_PHYSICS;
+	}
+	else if (this->hasRecordedTick && this->currentTickData.serverTick == event.serverTick)
+	{
+		event.phase = RPEVENT_AFTER_PHYSICS;
+	}
+	else
+	{
+		event.phase = RPEVENT_BEFORE_PHYSICS;
+	}
+	return event;
+}
+
 void KZRecordingService::InsertEvent(const RpEvent &event)
 {
 	this->EnsureCircularRecorderInitialized();
@@ -460,20 +487,30 @@ void KZRecordingService::InsertEvent(const RpEvent &event)
 
 void KZRecordingService::InsertTimerEvent(RpEvent::RpEventData::TimerEvent::TimerEventType type, f32 time, i32 index)
 {
-	RpEvent event;
-	event.serverTick = this->currentTickData.serverTick;
-	event.type = RpEventType::RPEVENT_TIMER_EVENT;
+	RpEvent event = this->CreateEvent(RPEVENT_TIMER_EVENT);
 	event.data.timer.type = type;
 	event.data.timer.index = index;
 	event.data.timer.time = time;
+	Vector origin;
+	this->player->GetOrigin(&origin);
+	for (i32 i = 0; i < 3; i++)
+	{
+		event.data.timer.origin[i] = origin[i];
+	}
 	this->InsertEvent(event);
 }
 
-void KZRecordingService::InsertTeleportEvent(const Vector *origin, const QAngle *angles, const Vector *velocity)
+RpEvent KZRecordingService::CreateTeleportEvent(const Vector *origin, const QAngle *angles, const Vector *velocity) const
 {
-	RpEvent event;
-	event.serverTick = this->currentTickData.serverTick;
-	event.type = RpEventType::RPEVENT_TELEPORT;
+	RpEvent event = this->CreateEvent(RPEVENT_TELEPORT);
+	event.data.teleport.reason = this->teleportReason;
+	event.data.teleport.checkpointIndex = this->teleportCheckpointIndex;
+	Vector previousOrigin;
+	this->player->GetOrigin(&previousOrigin);
+	for (i32 i = 0; i < 3; i++)
+	{
+		event.data.teleport.previousOrigin[i] = previousOrigin[i];
+	}
 	event.data.teleport.hasOrigin = origin != nullptr;
 	event.data.teleport.hasAngles = angles != nullptr;
 	event.data.teleport.hasVelocity = velocity != nullptr;
@@ -498,14 +535,36 @@ void KZRecordingService::InsertTeleportEvent(const Vector *origin, const QAngle 
 			event.data.teleport.velocity[i] = velocity->operator[](i);
 		}
 	}
-	this->InsertEvent(event);
+	// A same-position checkpoint teleport is still an operation with an identity.
+	if (!origin && (this->teleportReason == RPTELEPORT_CHECKPOINT || this->teleportReason == RPTELEPORT_CHECKPOINT_UNDO))
+	{
+		event.data.teleport.hasOrigin = true;
+		memcpy(event.data.teleport.origin, event.data.teleport.previousOrigin, sizeof(event.data.teleport.origin));
+	}
+	return event;
+}
+
+void KZRecordingService::InsertTeleportEvent(const Vector *origin, const QAngle *angles, const Vector *velocity)
+{
+	this->InsertEvent(this->CreateTeleportEvent(origin, angles, velocity));
+}
+
+KZRecordingService::ScopedTeleport::ScopedTeleport(KZRecordingService &service, RpTeleportReason reason, i32 checkpointIndex)
+	: service(service), previousReason(service.teleportReason), previousCheckpointIndex(service.teleportCheckpointIndex)
+{
+	service.teleportReason = reason;
+	service.teleportCheckpointIndex = checkpointIndex;
+}
+
+KZRecordingService::ScopedTeleport::~ScopedTeleport()
+{
+	service.teleportReason = previousReason;
+	service.teleportCheckpointIndex = previousCheckpointIndex;
 }
 
 void KZRecordingService::InsertModeChangeEvent(const char *name, const char *md5)
 {
-	RpEvent event;
-	event.serverTick = this->currentTickData.serverTick;
-	event.type = RpEventType::RPEVENT_MODE_CHANGE;
+	RpEvent event = this->CreateEvent(RPEVENT_MODE_CHANGE);
 	V_strncpy(event.data.modeChange.name, name, sizeof(event.data.modeChange.name));
 	V_strncpy(event.data.modeChange.md5, md5, sizeof(event.data.modeChange.md5));
 	this->InsertEvent(event);
@@ -513,12 +572,22 @@ void KZRecordingService::InsertModeChangeEvent(const char *name, const char *md5
 
 void KZRecordingService::InsertStyleChangeEvent(const char *name, const char *md5, bool firstStyle)
 {
-	RpEvent event;
-	event.serverTick = this->currentTickData.serverTick;
-	event.type = RpEventType::RPEVENT_STYLE_CHANGE;
+	RpEvent event = this->CreateEvent(RPEVENT_STYLE_CHANGE);
 	V_strncpy(event.data.styleChange.name, name, sizeof(event.data.styleChange.name));
 	V_strncpy(event.data.styleChange.md5, md5, sizeof(event.data.styleChange.md5));
 	event.data.styleChange.clearStyles = firstStyle;
+	this->InsertEvent(event);
+}
+
+void KZRecordingService::InsertCheckpointEvent(RpEvent::RpEventData::CheckpointEvent::CheckpointEventType type, i32 index, const Vector &origin)
+{
+	RpEvent event = this->CreateEvent(RPEVENT_CHECKPOINT);
+	event.data.checkpoint.type = type;
+	event.data.checkpoint.index = index;
+	for (i32 i = 0; i < 3; i++)
+	{
+		event.data.checkpoint.origin[i] = origin[i];
+	}
 	this->InsertEvent(event);
 }
 

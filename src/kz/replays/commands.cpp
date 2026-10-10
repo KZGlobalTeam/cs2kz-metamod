@@ -10,6 +10,7 @@
 #include "kz/db/kz_db.h"
 #include "kz/timer/kz_timer.h"
 #include "commands.h"
+#include "kz_replaysystem.h"
 #include "data.h"
 #include "bot.h"
 #include "events.h"
@@ -82,19 +83,11 @@ namespace KZ::replaysystem::commands
 			parsedUuid = matches[0];
 		}
 
-		// Validate uuid format
-		char replayPath[512];
-		V_snprintf(replayPath, sizeof(replayPath), KZ_REPLAY_PATH "/%s.replay", parsedUuid.ToString().c_str());
-
-		if (!g_pFullFileSystem->FileExists(replayPath))
+		std::string replayPath;
+		if (!FindReplayPath(parsedUuid.ToString().c_str(), replayPath))
 		{
-			// Also check the downloads directory.
-			V_snprintf(replayPath, sizeof(replayPath), KZ_REPLAY_DOWNLOADS_PATH "/%s.replay", parsedUuid.ToString().c_str());
-			if (!g_pFullFileSystem->FileExists(replayPath))
-			{
-				KZGlobalService::RequestReplay(player, parsedUuid);
-				return;
-			}
+			KZGlobalService::RequestReplay(player, parsedUuid);
+			return;
 		}
 
 		// Show loading message
@@ -543,17 +536,8 @@ namespace KZ::replaysystem::commands
 			player->languageService->PrintChat(true, false, "Replay - Not Found");
 			return;
 		}
-		char replayPath[512];
-		V_snprintf(replayPath, sizeof(replayPath), KZ_REPLAY_PATH "/%s.replay", uuid.ToString().c_str());
-		if (g_pFullFileSystem->FileExists(replayPath))
-		{
-			LoadReplay(player, uuid.ToString().c_str());
-			return;
-		}
-
-		char downloadPath[512];
-		V_snprintf(downloadPath, sizeof(downloadPath), KZ_REPLAY_DOWNLOADS_PATH "/%s.replay", uuid.ToString().c_str());
-		if (g_pFullFileSystem->FileExists(downloadPath))
+		std::string replayPath;
+		if (FindReplayPath(uuid.ToString().c_str(), replayPath))
 		{
 			LoadReplay(player, uuid.ToString().c_str());
 			return;
