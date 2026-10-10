@@ -220,7 +220,6 @@ public:
 	}
 
 	// A logical teleport may use separate engine calls for view angles and position.
-	// Append these hooks after the existing virtuals to preserve their slot order.
 	virtual void OnTeleportBegin(const Vector *origin, const QAngle *angles, const Vector *velocity) {}
 
 	virtual void OnTeleportEnd() {}

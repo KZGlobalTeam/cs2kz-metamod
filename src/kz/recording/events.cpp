@@ -244,8 +244,8 @@ void KZRecordingService::OnTeleport(const Vector *origin, const QAngle *angles, 
 	{
 		return;
 	}
-	// MovementPlayer::Teleport emits two engine hooks for one logical operation.
-	// Its begin/end pair owns that event; raw engine teleports are recorded here.
+	// Logical teleports may use separate engine calls for angles, velocity and
+	// position. Their begin/end pair owns one event; raw teleports are recorded here.
 	if (this->teleportDepth == 0)
 	{
 		this->InsertTeleportEvent(origin, angles, velocity);

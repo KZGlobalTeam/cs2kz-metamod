@@ -29,16 +29,18 @@ enum ReplayType : u32
 
 enum RpEventType
 {
+	RPEVENT_UNKNOWN = -1, // Placeholder preserves event indices for future event types.
 	RPEVENT_TIMER_EVENT,
 	RPEVENT_MODE_CHANGE,
 	RPEVENT_STYLE_CHANGE,
 	RPEVENT_TELEPORT,
 	RPEVENT_CHECKPOINT,
-	RPEVENT_UNKNOWN, // Placeholder preserves event indices for future event types.
+	RPEVENT_COUNT,
 };
 
 enum RpEventPhase
 {
+	RPEVENT_PHASE_UNKNOWN = -1,
 	RPEVENT_BEFORE_PHYSICS,
 	RPEVENT_DURING_PHYSICS,
 	RPEVENT_AFTER_PHYSICS,
@@ -46,7 +48,7 @@ enum RpEventPhase
 
 enum RpTeleportReason
 {
-	RPTELEPORT_UNKNOWN,
+	RPTELEPORT_UNKNOWN = -1,
 	RPTELEPORT_CHECKPOINT,
 	RPTELEPORT_CHECKPOINT_UNDO,
 	RPTELEPORT_MAP_TRIGGER,
@@ -187,8 +189,8 @@ struct RpEvent
 		{
 			enum CheckpointEventType
 			{
-				CHECKPOINT_SAVE,
-				CHECKPOINT_RESET = 3,
+				CHECKPOINT_SAVE = 0,
+				CHECKPOINT_RESET,
 			} type;
 
 			i32 index; // One-based saved checkpoint index; zero for reset.

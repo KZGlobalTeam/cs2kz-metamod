@@ -179,9 +179,7 @@ namespace KZ::replaysystem::data
 		{
 			return false;
 		}
-		// Official v1-v5 files retain their original playback. Native-struct v6
-		// prototypes were unpublished and are not the extensible format below.
-		return header.version() < 6 || header.event_encoding() == cs2kz::replay::EVENT_ENCODING_PROTOBUF_LENGTH_PREFIX;
+		return true;
 	}
 
 	// Parses replay data from an in-memory byte array.

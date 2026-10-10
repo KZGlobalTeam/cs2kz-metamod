@@ -756,13 +756,7 @@ bool utils::WriteBufferToFile(const char *relativePath, const std::vector<char> 
 	V_ExtractFilePath(absPath, dir, sizeof(dir));
 	if (dir[0])
 	{
-		std::error_code error;
-		std::filesystem::create_directories(dir, error);
-		if (error)
-		{
-			KZ_LOG_WARN(LogChannel::General, "Failed to create directory for writing: %s\n", dir);
-			return false;
-		}
+		std::filesystem::create_directories(dir);
 	}
 
 	char tmpPath[1024];
@@ -774,14 +768,8 @@ bool utils::WriteBufferToFile(const char *relativePath, const std::vector<char> 
 		KZ_LOG_WARN(LogChannel::General, "Failed to open file for writing: %s\n", tmpPath);
 		return false;
 	}
-	const bool written = fwrite(buffer.data(), 1, buffer.size(), fp) == buffer.size();
-	const bool closed = fclose(fp) == 0;
-	if (!written || !closed)
-	{
-		KZ_LOG_WARN(LogChannel::General, "Failed to finish writing file: %s\n", tmpPath);
-		remove(tmpPath);
-		return false;
-	}
+	fwrite(buffer.data(), 1, buffer.size(), fp);
+	fclose(fp);
 
 #ifdef _WIN32
 	if (!MoveFileExA(tmpPath, absPath, MOVEFILE_REPLACE_EXISTING))
