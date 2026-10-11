@@ -16,6 +16,7 @@
 
 using RenameCallback = std::function<void(bool success)>;
 using ReadCallback = std::function<void(bool success, std::vector<char> &&buffer)>;
+using WriteCallback = std::function<void(bool success)>;
 
 // ---------------------------------------------------------------------------
 // Task types
@@ -34,11 +35,12 @@ struct ReadTask
 	ReadCallback onRead;
 };
 
-// Fire-and-forget: write a raw buffer to a path on the background thread.
+// Write a raw buffer on the background thread, with an optional main-thread callback.
 struct RawWriteTask
 {
 	std::string path;
 	std::vector<char> buffer;
+	WriteCallback onDone;
 };
 
 using AsyncAnyTask = std::variant<RenameTask, ReadTask, RawWriteTask>;
@@ -60,7 +62,13 @@ struct ReadResult
 	ReadCallback onRead;
 };
 
-using AsyncAnyResult = std::variant<RenameResult, ReadResult>;
+struct RawWriteResult
+{
+	bool success;
+	WriteCallback onDone;
+};
+
+using AsyncAnyResult = std::variant<RenameResult, ReadResult, RawWriteResult>;
 
 // ---------------------------------------------------------------------------
 // AsyncFileIO — single background thread for generic file operations.
@@ -86,8 +94,8 @@ public:
 	// Queue a file read on the bg thread; onRead is called on the main thread with the loaded buffer
 	void QueueRead(std::string path, ReadCallback onRead);
 
-	// Queue a raw buffer write on the bg thread (fire-and-forget, no callback)
-	void QueueWriteBuffer(std::string path, std::vector<char> buffer);
+	// Queue a raw buffer write; onDone (optional) is called on the main thread after it finishes.
+	void QueueWriteBuffer(std::string path, std::vector<char> buffer, WriteCallback onDone = nullptr);
 
 	// Block until all queued tasks have been processed by the background thread.
 	void Drain();

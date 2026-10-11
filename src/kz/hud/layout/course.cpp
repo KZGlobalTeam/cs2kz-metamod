@@ -3,6 +3,7 @@
 #include "kz/language/kz_language.h"
 #include "kz/mode/kz_mode.h"
 #include "kz/timer/kz_timer.h"
+#include "kz/progress/kz_progress.h"
 #include "sdk/entity/ccscustomhudlayout.h"
 #include "utils/utils.h"
 
@@ -61,7 +62,8 @@ static_global const char *const COURSE_COMPARE_PHRASES[KZTimerService::COMPARETY
 #define COURSE_TEXT_COURSE   2
 #define COURSE_TEXT_ROWS     3
 #define COURSE_TEXT_PROGRESS (COURSE_TEXT_ROWS + MHUD_COURSE_ROW_COUNT * 5)
-#define COURSE_TEXT_STATE    (COURSE_TEXT_PROGRESS + MHUD_COURSE_PROGRESS_COUNT * 2)
+#define COURSE_TEXT_ROUTE    (COURSE_TEXT_PROGRESS + MHUD_COURSE_PROGRESS_COUNT * 2)
+#define COURSE_TEXT_STATE    (COURSE_TEXT_ROUTE + 2)
 
 // The course's ranked state in the player's mode, as the API reports it.
 struct CourseStateDef
@@ -310,7 +312,7 @@ void KZHUDService::UpdateCourseElement(CCSCustomHudLayout *layout, KZPlayer *sou
 			}
 			layout->SetHasClass(panelId, fontClass, k_eHudPanelClassStatus_HasClass);
 		};
-		for (const char *panelId : {"mhud_ci_map", "mhud_ci_status", "mhud_ci_course", "mhud_ci_state"})
+		for (const char *panelId : {"mhud_ci_map", "mhud_ci_status", "mhud_ci_course", "mhud_ci_state", "mhud_ci_route_label", "mhud_ci_route_value"})
 		{
 			setFont(panelId);
 		}
@@ -347,14 +349,9 @@ void KZHUDService::UpdateCourseElement(CCSCustomHudLayout *layout, KZPlayer *sou
 	setHidden("mhud_ci_history", ci.historyHidden, !prefs.courseSplits);
 	setHidden(COURSE_ROWS[COURSE_ROW_ALL][0], ci.rowHidden[COURSE_ROW_ALL], !prefs.courseRecords);
 	setHidden(COURSE_ROWS[COURSE_ROW_PRO][0], ci.rowHidden[COURSE_ROW_PRO], !prefs.courseRecords || !prefs.coursePro);
-	// Only the kinds of zone the course has get a row, and a course with none loses the block and its gap.
-	bool anyProgress = false;
-	for (i32 i = 0; i < MHUD_COURSE_PROGRESS_COUNT; i++)
-	{
-		setHidden(COURSE_PROGRESS_ROWS[i][0], ci.progressRowHidden[i], ci.progressTotals[i] <= 0);
-		anyProgress |= ci.progressTotals[i] > 0;
-	}
-	setHidden("mhud_ci_progress", ci.progressHidden, !prefs.courseProgress || !anyProgress);
+	f32 percentage = 100;
+	bool approximate = false;
+	const bool routeVisible = prefs.courseShowProgress && (preview || source->progressService->GetProgress(percentage, approximate));
 
 	auto setText = [&](i32 slot, const char *panelId, const std::string &text)
 	{
@@ -392,6 +389,32 @@ void KZHUDService::UpdateCourseElement(CCSCustomHudLayout *layout, KZPlayer *sou
 					lang->PrepareMessage("HUD - Course Progress", info.reached[i], info.totals[i]));
 		}
 	};
+	auto updateProgressRows = [&]()
+	{
+		bool anyVisible = routeVisible;
+		for (i32 i = 0; i < MHUD_COURSE_PROGRESS_COUNT; i++)
+		{
+			const bool visible = prefs.courseProgress && ci.progressTotals[i] > 0;
+			setHidden(COURSE_PROGRESS_ROWS[i][0], ci.progressRowHidden[i], !visible);
+			anyVisible |= visible;
+		}
+		setHidden("mhud_ci_progress", ci.progressHidden, !anyVisible);
+		setHidden("mhud_ci_route", ci.routeHidden, !routeVisible);
+		setHidden("mhud_ci_route_label", ci.routeLabelHidden, !prefs.courseShowProgressLabel);
+		if (routeVisible)
+		{
+			char percentageText[32];
+			V_snprintf(percentageText, sizeof(percentageText), "%s%.2f%%", approximate ? "~" : "", percentage);
+			// The viewer's language and preference invalidation are the only inputs to this static label.
+			if (prefs.courseShowProgressLabel && (ci.routeLabelDirty || ci.routeLabelLanguage != lang->GetLanguage()))
+			{
+				setText(COURSE_TEXT_ROUTE, "mhud_ci_route_label", lang->PrepareMessage("HUD - Progress Label"));
+				ci.routeLabelLanguage = lang->GetLanguage();
+				ci.routeLabelDirty = false;
+			}
+			setText(COURSE_TEXT_ROUTE + 1, "mhud_ci_route_value", percentageText);
+		}
+	};
 
 	if (preview)
 	{
@@ -416,6 +439,7 @@ void KZHUDService::UpdateCourseElement(CCSCustomHudLayout *layout, KZPlayer *sou
 				this->SetLayoutClass(layout, ids[0], pill.ageClass, COURSE_AGE_CLASSES[i]);
 			}
 		}
+		updateProgressRows();
 		return;
 	}
 	if (ci.preview)
@@ -431,5 +455,6 @@ void KZHUDService::UpdateCourseElement(CCSCustomHudLayout *layout, KZPlayer *sou
 		GetCourseInfo(this->player, source, info);
 		apply(info);
 	}
+	updateProgressRows();
 	this->UpdatePills(layout, ci.pills, COURSE_PILL_PANELS);
 }

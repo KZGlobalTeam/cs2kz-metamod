@@ -85,11 +85,12 @@ f32 MovementPlayer::GetCurtime()
 void MovementPlayer::Teleport(const Vector *origin, const QAngle *angles, const Vector *velocity)
 {
 	CBasePlayerPawn *pawn = this->GetPlayerPawn();
-	if (!pawn)
+	if (!pawn || (!origin && !angles && !velocity))
 	{
 		return;
 	}
 	// We handle angles differently.
+	this->OnTeleportBegin(origin, angles, velocity);
 	if (angles)
 	{
 		this->SetAngles(*angles);
@@ -98,6 +99,7 @@ void MovementPlayer::Teleport(const Vector *origin, const QAngle *angles, const 
 	{
 		pawn->Teleport(origin, NULL, velocity);
 	}
+	this->OnTeleportEnd();
 }
 
 void MovementPlayer::SetOrigin(const Vector &origin)

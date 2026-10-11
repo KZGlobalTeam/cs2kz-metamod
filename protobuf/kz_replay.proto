@@ -63,6 +63,9 @@ message RunReplayData {
 	repeated ModeStyleInfo styles = 3;  // Array of styles
 	optional float time = 4;
 	optional int32 num_teleports = 5;
+	// Exact event boundaries, including events copied from the pre-run buffer.
+	optional uint32 start_event_index = 6;
+	optional uint32 end_event_index = 7;
 }
 
 message JumpReplayData {
@@ -112,4 +115,61 @@ message ReplayHeader {
 	optional float viewmodel_offset_y = 19 [default = 1];
 	optional float viewmodel_offset_z = 20 [default = -1];
 	optional float viewmodel_fov = 21 [default = 60];
+}
+
+// v6 events are individually length-prefixed protobuf messages. Unknown event
+// types and optional fields can be skipped without changing the next event.
+message EventVector {
+	optional float x = 1;
+	optional float y = 2;
+	optional float z = 3;
+}
+
+message TimerEvent {
+	optional uint32 type = 1;
+	optional int32 index = 2;
+	optional float time = 3;
+	optional EventVector origin = 4;
+}
+
+message StyleEvent {
+	optional ModeStyleInfo style = 1;
+	optional bool clear_styles = 2;
+}
+
+enum TeleportReason {
+	TELEPORT_UNKNOWN = -1;
+	TELEPORT_CHECKPOINT = 0;
+	TELEPORT_CHECKPOINT_UNDO = 1;
+	TELEPORT_MAP_TRIGGER = 2;
+	TELEPORT_BHOP_FAIL = 3;
+}
+
+message TeleportEvent {
+	optional TeleportReason reason = 1;
+	optional int32 checkpoint_index = 2;
+	optional EventVector previous_origin = 3;
+	optional EventVector origin = 4;
+	optional EventVector angles = 5;
+	optional EventVector velocity = 6;
+}
+
+message CheckpointEvent {
+	// Only saving (0) and resetting (1) checkpoints. Teleports have one event.
+	optional uint32 type = 1;
+	optional int32 index = 2;
+	optional EventVector origin = 3;
+}
+
+message ReplayEvent {
+	optional uint32 type = 1;
+	optional uint32 server_tick = 2;
+	optional uint32 phase = 3;
+	oneof data {
+		TimerEvent timer = 4;
+		ModeStyleInfo mode = 5;
+		StyleEvent style = 6;
+		TeleportEvent teleport = 7;
+		CheckpointEvent checkpoint = 8;
+	}
 }

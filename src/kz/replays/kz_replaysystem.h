@@ -13,6 +13,23 @@ class CBaseTrigger;
 
 namespace KZ::replaysystem
 {
+	// Receives completed replay writes and renames on the main thread.
+	class ReplayEventListener
+	{
+	public:
+		virtual ~ReplayEventListener() = default;
+
+		virtual void OnReplayFileChanged(const char *uuid) {}
+	};
+
+	// Register and unregister listeners on the main thread; duplicate registration returns false.
+	bool RegisterReplayEventListener(ReplayEventListener *listener);
+	bool UnregisterReplayEventListener(ReplayEventListener *listener);
+	// Synchronously notify listeners after a replay file changes. Main thread only.
+	void NotifyReplayFileChanged(const char *uuid);
+	// Find a valid UUID at the existing local/downloaded replay paths. Main thread only.
+	bool FindReplayPath(const char *uuid, std::string &path);
+
 	void Init();
 	void Cleanup();
 	void OnRoundStart();
