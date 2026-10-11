@@ -1831,6 +1831,7 @@
   	"Command Description - kz_rptimescale"
 	{
 		"en"		"Set the playback speed of the current replay."
+		"ua"		"Встановити швидкість відтворення поточного повтору."
 	}
   	"Command Description - kz_rploadprogress"
 	{
@@ -1993,213 +1994,266 @@
 	"Command Description - kz_exportprefs"
 	{
 		"en"		"Export your preferences to the console."
+		"ua"		"Експортувати ваші налаштування в консоль."
 	}
 	"Command Description - kz_mapoverlay"
 	{
 		"en"		"Toggle map overlay helpers, which print relevant timer events to the console."
+		"ua"		"Увімк./Вимк. допоміжні елементи оверлею мапи, які виводять відповідні події таймера в консоль."
 	}
 	"Command Description - kz_options"
 	{
 		"en"		"Open or close the options menu."
+		"ua"		"Відкрити або закрити меню налаштувань."
 	}
 	"Command Description - kz_safeguard"
 	{
 		"en"		"Toggle the safeguard, which blocks commands that would stop your timer during a valid run."
+		"ua"		"Увімк./Вимк. запобіжник (Safeguard), який блокує команди, що зупинять ваш таймер під час валідного проходження."
 	}
 	"Command Description - kz_pro"
 	{
 		"en"		"Toggle the PRO safeguard, which also blocks teleports during a valid PRO run."
+		"ua"		"Увімк./Вимк. PRO запобіжник (Safeguard), який також блокує телепорти під час валідного PRO проходження."
 	}
 	"Command Usage - kz_beam"
 	{
 		"en"		"!beam [off/feet/ground]"
+		"ua"		"!beam [off/feet/ground]"
 	}
 	"Command Usage - kz_beamoffset"
 	{
 		"en"		"!beamoffset <x> <y> <z>"
+		"ua"		"!beamoffset <x> <y> <z>"
 	}
 	"Command Usage - kz_fov"
 	{
 		"en"		"!fov [fov]"
+		"ua"		"!fov [fov]"
 	}
 	"Command Usage - kz_goto"
 	{
 		"en"		"!goto <player name>"
+		"ua"		"!goto <нік гравця>"
 	}
 	"Command Usage - kz_help"
 	{
 		"en"		"!help [category]"
+		"ua"		"!help [категорія]"
 	}
 	"Command Usage - kz_panel"
 	{
 		"en"		"!panel [compact]"
+		"ua"		"!panel [compact]"
 	}
 	"Command Usage - kz_jstier"
 	{
 		"en"		"!jstier <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>"
+		"ua"		"!jstier <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>"
 	}
 	"Command Usage - kz_jstierhud"
 	{
 		"en"		"!jstierhud <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>"
+		"ua"		"!jstierhud <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>"
 	}
 	"Command Usage - kz_jstierconsole"
 	{
 		"en"		"!jstierconsole <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>"
+		"ua"		"!jstierconsole <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>"
 	}
 	"Command Usage - kz_jssound"
 	{
 		"en"		"!jssound <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>"
+		"ua"		"!jssound <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>"
 	}
 	"Command Usage - kz_jsbroadcast"
 	{
 		"en"		"!jsbroadcast <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>"
+		"ua"		"!jsbroadcast <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>"
 	}
 	"Command Usage - kz_jsbroadcastconsole"
 	{
 		"en"		"!jsbroadcastconsole <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>"
+		"ua"		"!jsbroadcastconsole <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>"
 	}
 	"Command Usage - kz_jsbroadcastsound"
 	{
 		"en"		"!jsbroadcastsound <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>"
+		"ua"		"!jsbroadcastsound <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>"
 	}
 	"Command Usage - kz_jsvolume"
 	{
 		"en"		"!jsvolume [0-2]"
+		"ua"		"!jsvolume [0-2]"
 	}
 	"Command Usage - kz_language"
 	{
 		"en"		"!language <language>"
+		"ua"		"!language <мова>"
 	}
 	"Command Usage - kz_course"
 	{
 		"en"		"!course [course name/ID]"
+		"ua"		"!course [назва/ID курсу]"
 	}
 	"Command Usage - kz_tier"
 	{
 		"en"		"!tier [course name/ID]"
+		"ua"		"!tier [назва/ID курсу]"
 	}
 	"Command Usage - kz_end"
 	{
 		"en"		"!end [course name/ID]"
+		"ua"		"!end [назва/ID курсу]"
 	}
 	"Command Usage - kz_restart"
 	{
 		"en"		"!restart [course name/ID]"
+		"ua"		"!restart [назва/ID курсу]"
 	}
 	"Command Usage - kz_playercheck"
 	{
 		"en"		"!playercheck [player name]"
+		"ua"		"!playercheck [нік гравця]"
 	}
 	"Command Usage - kz_mode"
 	{
 		"en"		"!mode <mode>"
+		"ua"		"!mode <режим>"
 	}
 	"Command Usage - kz_paintcolor"
 	{
 		"en"		"!paintcolor <color name> or <R> <G> <B> [A]"
+		"ua"		"!paintcolor <колір> або <R> <G> <B> [A]"
 	}
 	"Command Usage - kz_paintsize"
 	{
 		"en"		"!paintsize <size>"
+		"ua"		"!paintsize <розмір>"
 	}
 	"Command Usage - kz_pistol"
 	{
 		"en"		"!pistol <name/off>"
+		"ua"		"!pistol <назва/off>"
 	}
 	"Command Usage - kz_rpsave"
 	{
 		"en"		"!rpsave [seconds]"
+		"ua"		"!rpsave [секунди]"
 	}
 	"Command Usage - kz_replay"
 	{
 		"en"		"!replay <ID> or <wr/sr/pb/gpb/spb[pro]> [<course> [<mode>]]"
+		"ua"		"!replay <ID> або <wr/sr/pb/gpb/spb[pro]> [<назва курсу> [<режим>]]"
 	}
 	"Command Usage - kz_rpgoto"
 	{
 		"en"		"!rpgoto <time> (Examples: 1:23.45, +10, -5.2)"
+		"ua"		"!rpgoto <час> (Приклади: 1:23.45, +10, -5.2)"
 	}
 	"Command Usage - kz_rpgototick"
 	{
 		"en"		"!rpgototick <tick> (Examples: 1234, +100, -50)"
+		"ua"		"!rpgototick <тік> (Приклади: 1234, +100, -50)"
 	}
 	"Command Usage - kz_rptimescale"
 	{
 		"en"		"!rptimescale [scale] (Examples: 0.1, 0.5, 2, 5. 0 pauses the replay)"
+		"ua"		"!rptimescale [швидкість] (Приклади: 0.1, 0.5, 2, 5. 0 призупиняє відтворення)"
 	}
 	"Command Usage - kz_replays"
 	{
 		"en"		"!replays [type=run/r/jump/j/manual/m] [options...]"
+		"ua"		"!replays [type=run/r/jump/j/manual/m] [опції...]"
 	}
 	"Command Usage - kz_spec"
 	{
 		"en"		"!spec [player name/@me]"
+		"ua"		"!spec [нік гравця/@me]"
 	}
 	"Command Usage - kz_style"
 	{
 		"en"		"!style [<style>/+<style>/-<style>]"
+		"ua"		"!style [<назва стилю>/+<назва стилю>/-<назва стилю>]"
 	}
 	"Command Usage - kz_togglestyle"
 	{
 		"en"		"!togglestyle <style>"
+		"ua"		"!togglestyle <назва стилю>"
 	}
 	"Command Usage - kz_addstyle"
 	{
 		"en"		"!addstyle <style>"
+		"ua"		"!addstyle <назва стилю>"
 	}
 	"Command Usage - kz_removestyle"
 	{
 		"en"		"!removestyle <style>"
+		"ua"		"!removestyle <назва стилю>"
 	}
 	"Command Usage - kz_modernperfstats"
 	{
 		"en"		"!modernperfstats [player name]"
+		"ua"		"!modernperfstats [нік гравця]"
 	}
 	"Command Usage - kz_legacyperfstats"
 	{
 		"en"		"!legacyperfstats [player name]"
+		"ua"		"!legacyperfstats [нік гравця]"
 	}
 	"Command Usage - kz_comparelevel"
 	{
 		"en"		"!comparelevel <none/off/spb/pb/gpb/sr/wr>"
+		"ua"		"!comparelevel <none/off/spb/pb/gpb/sr/wr>"
 	}
 	"Command Usage - kz_recordvolume"
 	{
 		"en"		"!recordvolume <0-2>"
+		"ua"		"!recordvolume <0-2>"
 	}
 	"Command Usage - kz_ctop"
 	{
 		"en"		"!ctop [c/course/map/mode/l/limit/o/offset=...]"
+		"ua"		"!ctop [c/course/map/mode/l/limit/o/offset=...]"
 	}
 	"Command Usage - kz_gctop"
 	{
 		"en"		"!gctop [c/course/map/mode/l/limit/o/offset=...]"
+		"ua"		"!gctop [c/course/map/mode/l/limit/o/offset=...]"
 	}
 	"Command Usage - kz_sctop"
 	{
 		"en"		"!sctop [c/course/map/mode/l/limit/o/offset=...]"
+		"ua"		"!sctop [c/course/map/mode/l/limit/o/offset=...]"
 	}
 	"Command Usage - kz_pb"
 	{
 		"en"		"!pb [c/course/map/mode/p/player/s/style=...]"
+		"ua"		"!pb [c/course/map/mode/p/player/s/style=...]"
 	}
 	"Command Usage - kz_spb"
 	{
 		"en"		"!spb [c/course/map/mode/p/player/s/style=...]"
+		"ua"		"!spb [c/course/map/mode/p/player/s/style=...]"
 	}
 	"Command Usage - kz_gpb"
 	{
 		"en"		"!gpb [c/course/map/mode/p/player/s/style=...]"
+		"ua"		"!gpb [c/course/map/mode/p/player/s/style=...]"
 	}
 	"Command Usage - kz_wr"
 	{
 		"en"		"!wr [c/course/map/mode=...]"
+		"ua"		"!wr [c/course/map/mode=...]"
 	}
 	"Command Usage - kz_sr"
 	{
 		"en"		"!sr [c/course/map/mode=...]"
+		"ua"		"!sr [c/course/map/mode=...]"
 	}
 	"Command Usage - kz_ztopwatch"
 	{
 		"en"		"!ztopwatch [place/clear/startjump/stopland/status]"
+		"ua"		"!ztopwatch [place/clear/startjump/stopland/status]"
 	}
 }
