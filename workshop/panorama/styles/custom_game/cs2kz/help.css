@@ -1,0 +1,210 @@
+@import url("file://{resources}/styles/custom_game/cs2kz/palette.css");
+@import url("file://{resources}/styles/custom_game/cs2kz/fonts.css");
+
+.root,
+#help_root {
+	width: 100%;
+	height: 100%;
+	z-index: 100;
+}
+
+.hidden {
+	visibility: collapse;
+}
+
+.help-box {
+	horizontal-align: center;
+	vertical-align: middle;
+	flow-children: down;
+	width: 860px;
+	height: 620px;
+	padding: 18px;
+	border: 1px solid #5f494926;
+	border-radius: 5px;
+	background-image: url("s2r://panorama/images/backgrounds/bluedots_large_png.vtex");
+	background-size: 360px 360px;
+	background-img-opacity: 0.01;
+	background-color: rgba(1, 1, 1, 0.95);
+}
+
+/* Force label reflow when the shared font preference changes. */
+.font-reflow .help-box {
+	padding-right: 17px;
+}
+
+.help-header {
+	width: 100%;
+	flow-children: right;
+	margin-bottom: 14px;
+}
+
+.help-title {
+	width: fill-parent-flow(1);
+	vertical-align: center;
+	font-size: 20px;
+	text-transform: uppercase;
+	font-weight: bold;
+	letter-spacing: 2px;
+}
+
+.help-close {
+	width: 20px;
+	height: 20px;
+	margin-left: 10px;
+	horizontal-align: right;
+	vertical-align: center;
+	wash-color: #888888;
+	background-image: url("s2r://panorama/images/control_icons/x_close_png.vtex");
+	background-size: 20px 20px;
+	background-repeat: no-repeat;
+	background-position: 50% 50%;
+	transition-property: wash-color;
+	transition-duration: 0.1s;
+}
+
+.help-close:hover {
+	wash-color: #ffffff;
+}
+
+.help-close:active {
+	background-size: 17px 17px;
+}
+
+.help-panes {
+	flow-children: right;
+	width: 100%;
+	height: fill-parent-flow(1);
+}
+
+.help-categories {
+	flow-children: down;
+	width: 240px;
+	height: 100%;
+	overflow: squish scroll;
+	padding-right: 12px;
+	margin-right: 14px;
+	border-right: 1px solid #ffffff1a;
+}
+
+.help-category {
+	width: 100%;
+	padding: 8px 10px;
+	border-radius: 3px;
+	background-color: #00000000;
+	transition-property: background-color;
+	transition-duration: 0.1s;
+}
+
+.help-category:hover {
+	background-color: #ffffff1a;
+}
+
+.help-category.selected {
+	background-color: #ffffff26;
+}
+
+.help-category-label {
+	width: 100%;
+	font-size: 16px;
+	text-overflow: clip;
+}
+
+.help-commands {
+	flow-children: down;
+	width: fill-parent-flow(1);
+	height: 100%;
+	overflow: squish scroll;
+}
+
+.help-row {
+	width: 100%;
+	flow-children: down;
+	padding: 0px 12px 7px 12px;
+}
+
+/* Every row after the first starts with a divider, so there is one between each pair of shown rows. */
+#help_row0 {
+	padding-top: 7px;
+}
+
+.help-divider {
+	width: 100%;
+	height: 1px;
+	margin-bottom: 7px;
+	background-color: #ffffff1f;
+}
+
+.help-command {
+	width: 100%;
+	font-size: 18px;
+	white-space: normal;
+	text-overflow: clip;
+}
+
+.help-description {
+	width: 100%;
+	font-size: 15px;
+	opacity: 0.7;
+	margin-top: 4px;
+	white-space: normal;
+	text-overflow: clip;
+}
+
+.help-usage {
+	width: 100%;
+	font-size: 13px;
+	opacity: 0.55;
+	margin-top: 4px;
+	white-space: normal;
+	text-overflow: clip;
+}
+
+.help-footer {
+	width: 100%;
+	flow-children: right;
+	margin-top: 12px;
+}
+
+.help-hint {
+	width: fill-parent-flow(1);
+	vertical-align: center;
+	font-size: 13px;
+	white-space: normal;
+	opacity: 0.7;
+}
+
+VerticalScrollBar {
+	width: 6px;
+	height: 100%;
+	horizontal-align: right;
+	layout-position: fixed;
+	margin: 2px 0px;
+	border-radius: 3px;
+	background-color: #ffffff14;
+}
+
+VerticalScrollBar .ScrollThumb {
+	width: 100%;
+	min-height: 32px;
+	border-radius: 3px;
+	background-color: #ffffff59;
+}
+
+VerticalScrollBar:hover .ScrollThumb {
+	background-color: #ffffff99;
+}
+
+/* Lines the command list's scroll bar up under the close button. */
+.help-commands VerticalScrollBar {
+	margin-right: 6px;
+}
+
+.snd .help-close:hover,
+.snd .help-category:hover {
+	sound: "UIPanorama.generic_button_rollover";
+}
+
+.snd .help-close:active,
+.snd .help-category:active {
+	sound: "UIPanorama.generic_button_press";
+}

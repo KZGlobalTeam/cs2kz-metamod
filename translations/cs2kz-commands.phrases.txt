@@ -1990,4 +1990,216 @@
 		"ua"		"Переміщати елементи HUD за допомогою миші."
 		"ru"		"Перемещение элементов HUD мышью."
 	}
+	"Command Description - kz_exportprefs"
+	{
+		"en"		"Export your preferences to the console."
+	}
+	"Command Description - kz_mapoverlay"
+	{
+		"en"		"Toggle map overlay helpers, which print relevant timer events to the console."
+	}
+	"Command Description - kz_options"
+	{
+		"en"		"Open or close the options menu."
+	}
+	"Command Description - kz_safeguard"
+	{
+		"en"		"Toggle the safeguard, which blocks commands that would stop your timer during a valid run."
+	}
+	"Command Description - kz_pro"
+	{
+		"en"		"Toggle the PRO safeguard, which also blocks teleports during a valid PRO run."
+	}
+	"Command Usage - kz_beam"
+	{
+		"en"		"!beam [off/feet/ground]"
+	}
+	"Command Usage - kz_beamoffset"
+	{
+		"en"		"!beamoffset <x> <y> <z>"
+	}
+	"Command Usage - kz_fov"
+	{
+		"en"		"!fov [fov]"
+	}
+	"Command Usage - kz_goto"
+	{
+		"en"		"!goto <player name>"
+	}
+	"Command Usage - kz_help"
+	{
+		"en"		"!help [category]"
+	}
+	"Command Usage - kz_panel"
+	{
+		"en"		"!panel [compact]"
+	}
+	"Command Usage - kz_jstier"
+	{
+		"en"		"!jstier <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>"
+	}
+	"Command Usage - kz_jstierhud"
+	{
+		"en"		"!jstierhud <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>"
+	}
+	"Command Usage - kz_jstierconsole"
+	{
+		"en"		"!jstierconsole <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>"
+	}
+	"Command Usage - kz_jssound"
+	{
+		"en"		"!jssound <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>"
+	}
+	"Command Usage - kz_jsbroadcast"
+	{
+		"en"		"!jsbroadcast <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>"
+	}
+	"Command Usage - kz_jsbroadcastconsole"
+	{
+		"en"		"!jsbroadcastconsole <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>"
+	}
+	"Command Usage - kz_jsbroadcastsound"
+	{
+		"en"		"!jsbroadcastsound <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>"
+	}
+	"Command Usage - kz_jsvolume"
+	{
+		"en"		"!jsvolume [0-2]"
+	}
+	"Command Usage - kz_language"
+	{
+		"en"		"!language <language>"
+	}
+	"Command Usage - kz_course"
+	{
+		"en"		"!course [course name/ID]"
+	}
+	"Command Usage - kz_tier"
+	{
+		"en"		"!tier [course name/ID]"
+	}
+	"Command Usage - kz_end"
+	{
+		"en"		"!end [course name/ID]"
+	}
+	"Command Usage - kz_restart"
+	{
+		"en"		"!restart [course name/ID]"
+	}
+	"Command Usage - kz_playercheck"
+	{
+		"en"		"!playercheck [player name]"
+	}
+	"Command Usage - kz_mode"
+	{
+		"en"		"!mode <mode>"
+	}
+	"Command Usage - kz_paintcolor"
+	{
+		"en"		"!paintcolor <color name> or <R> <G> <B> [A]"
+	}
+	"Command Usage - kz_paintsize"
+	{
+		"en"		"!paintsize <size>"
+	}
+	"Command Usage - kz_pistol"
+	{
+		"en"		"!pistol <name/off>"
+	}
+	"Command Usage - kz_rpsave"
+	{
+		"en"		"!rpsave [seconds]"
+	}
+	"Command Usage - kz_replay"
+	{
+		"en"		"!replay <ID> or <wr/sr/pb/gpb/spb[pro]> [<course> [<mode>]]"
+	}
+	"Command Usage - kz_rpgoto"
+	{
+		"en"		"!rpgoto <time> (Examples: 1:23.45, +10, -5.2)"
+	}
+	"Command Usage - kz_rpgototick"
+	{
+		"en"		"!rpgototick <tick> (Examples: 1234, +100, -50)"
+	}
+	"Command Usage - kz_rptimescale"
+	{
+		"en"		"!rptimescale [scale] (Examples: 0.1, 0.5, 2, 5. 0 pauses the replay)"
+	}
+	"Command Usage - kz_replays"
+	{
+		"en"		"!replays [type=run/r/jump/j/manual/m] [options...]"
+	}
+	"Command Usage - kz_spec"
+	{
+		"en"		"!spec [player name/@me]"
+	}
+	"Command Usage - kz_style"
+	{
+		"en"		"!style [<style>/+<style>/-<style>]"
+	}
+	"Command Usage - kz_togglestyle"
+	{
+		"en"		"!togglestyle <style>"
+	}
+	"Command Usage - kz_addstyle"
+	{
+		"en"		"!addstyle <style>"
+	}
+	"Command Usage - kz_removestyle"
+	{
+		"en"		"!removestyle <style>"
+	}
+	"Command Usage - kz_modernperfstats"
+	{
+		"en"		"!modernperfstats [player name]"
+	}
+	"Command Usage - kz_legacyperfstats"
+	{
+		"en"		"!legacyperfstats [player name]"
+	}
+	"Command Usage - kz_comparelevel"
+	{
+		"en"		"!comparelevel <none/off/spb/pb/gpb/sr/wr>"
+	}
+	"Command Usage - kz_recordvolume"
+	{
+		"en"		"!recordvolume <0-2>"
+	}
+	"Command Usage - kz_ctop"
+	{
+		"en"		"!ctop [c/course/map/mode/l/limit/o/offset=...]"
+	}
+	"Command Usage - kz_gctop"
+	{
+		"en"		"!gctop [c/course/map/mode/l/limit/o/offset=...]"
+	}
+	"Command Usage - kz_sctop"
+	{
+		"en"		"!sctop [c/course/map/mode/l/limit/o/offset=...]"
+	}
+	"Command Usage - kz_pb"
+	{
+		"en"		"!pb [c/course/map/mode/p/player/s/style=...]"
+	}
+	"Command Usage - kz_spb"
+	{
+		"en"		"!spb [c/course/map/mode/p/player/s/style=...]"
+	}
+	"Command Usage - kz_gpb"
+	{
+		"en"		"!gpb [c/course/map/mode/p/player/s/style=...]"
+	}
+	"Command Usage - kz_wr"
+	{
+		"en"		"!wr [c/course/map/mode=...]"
+	}
+	"Command Usage - kz_sr"
+	{
+		"en"		"!sr [c/course/map/mode=...]"
+	}
+	"Command Usage - kz_ztopwatch"
+	{
+		"en"		"!ztopwatch [place/clear/startjump/stopland/status]"
+	}
 }
