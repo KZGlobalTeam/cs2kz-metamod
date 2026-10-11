@@ -6,28 +6,28 @@ Generated for: /home/runner/work/cs2kz-metamod/cs2kz-metamod
 SUMMARY
 ----------------------------------------------------------------------
 Total languages: 15
-Total phrases: 1000
-Phrases with missing translations: 1000
-Total missing translation entries: 6462
+Total phrases: 1073
+Phrases with missing translations: 1073
+Total missing translation entries: 7484
 
 LANGUAGE COVERAGE (Phrases)
 ----------------------------------------------------------------------
 
-  chi (schinese)       [██████████████████░░]  93.5% (935/1000)
-  de (german)          [██████████░░░░░░░░░░]  51.8% (518/1000)
-  en (english)         [████████████████████] 100.0% (1000/1000)
-  es (spanish)         [█████████░░░░░░░░░░░]  48.4% (484/1000)
-  fi (finnish)         [████░░░░░░░░░░░░░░░░]  23.3% (233/1000)
-  it (italian)         [████░░░░░░░░░░░░░░░░]  22.5% (225/1000)
-  ko (korean)          [█████████████░░░░░░░]  65.2% (652/1000)
-  lv (latvian)         [██████░░░░░░░░░░░░░░]  32.8% (328/1000)
-  nl (dutch)           [░░░░░░░░░░░░░░░░░░░░]   0.5% (5/1000)
-  pl (polish)          [██████████░░░░░░░░░░]  52.0% (520/1000)
-  ru (russian)         [███████████████████░]  99.4% (994/1000)
-  sv (swedish)         [███████░░░░░░░░░░░░░]  39.2% (392/1000)
-  tr (turkish)         [█████░░░░░░░░░░░░░░░]  26.2% (262/1000)
-  ua (ukrainian)       [███████████████████░]  99.5% (995/1000)
-  zho (tchinese)       [███████████████████░]  99.5% (995/1000)
+  chi (schinese)       [█████████████████░░░]  87.1% (935/1073)
+  de (german)          [█████████░░░░░░░░░░░]  48.3% (518/1073)
+  en (english)         [████████████████████] 100.0% (1073/1073)
+  es (spanish)         [█████████░░░░░░░░░░░]  45.1% (484/1073)
+  fi (finnish)         [████░░░░░░░░░░░░░░░░]  21.7% (233/1073)
+  it (italian)         [████░░░░░░░░░░░░░░░░]  21.0% (225/1073)
+  ko (korean)          [████████████░░░░░░░░]  60.8% (652/1073)
+  lv (latvian)         [██████░░░░░░░░░░░░░░]  30.6% (328/1073)
+  nl (dutch)           [░░░░░░░░░░░░░░░░░░░░]   0.5% (5/1073)
+  pl (polish)          [█████████░░░░░░░░░░░]  48.5% (520/1073)
+  ru (russian)         [██████████████████░░]  92.6% (994/1073)
+  sv (swedish)         [███████░░░░░░░░░░░░░]  36.5% (392/1073)
+  tr (turkish)         [████░░░░░░░░░░░░░░░░]  24.4% (262/1073)
+  ua (ukrainian)       [██████████████████░░]  92.7% (995/1073)
+  zho (tchinese)       [██████████████████░░]  92.7% (995/1073)
 
 Global languages (15): chi, de, en, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
 
@@ -444,6 +444,112 @@ cs2kz-commands.phrases.txt
     Missing (9): de, es, fi, it, lv, nl, pl, sv, tr
   Line 1986: "Command Description - kz_hudedit"
     Missing (11): chi, de, es, fi, it, ko, lv, nl, pl, sv, tr
+  Line 1993: "Command Description - kz_exportprefs"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 1997: "Command Description - kz_mapoverlay"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 2001: "Command Description - kz_options"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 2005: "Command Description - kz_safeguard"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 2009: "Command Description - kz_pro"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 2013: "Command Usage - kz_beam"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 2017: "Command Usage - kz_beamoffset"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 2021: "Command Usage - kz_fov"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 2025: "Command Usage - kz_goto"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 2029: "Command Usage - kz_help"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 2033: "Command Usage - kz_panel"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 2037: "Command Usage - kz_jstier"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 2041: "Command Usage - kz_jstierhud"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 2045: "Command Usage - kz_jstierconsole"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 2049: "Command Usage - kz_jssound"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 2053: "Command Usage - kz_jsbroadcast"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 2057: "Command Usage - kz_jsbroadcastconsole"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 2061: "Command Usage - kz_jsbroadcastsound"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 2065: "Command Usage - kz_jsvolume"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 2069: "Command Usage - kz_language"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 2073: "Command Usage - kz_course"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 2077: "Command Usage - kz_tier"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 2081: "Command Usage - kz_end"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 2085: "Command Usage - kz_restart"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 2089: "Command Usage - kz_playercheck"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 2093: "Command Usage - kz_mode"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 2097: "Command Usage - kz_paintcolor"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 2101: "Command Usage - kz_paintsize"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 2105: "Command Usage - kz_pistol"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 2109: "Command Usage - kz_rpsave"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 2113: "Command Usage - kz_replay"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 2117: "Command Usage - kz_rpgoto"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 2121: "Command Usage - kz_rpgototick"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 2125: "Command Usage - kz_rptimescale"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 2129: "Command Usage - kz_replays"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 2133: "Command Usage - kz_spec"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 2137: "Command Usage - kz_style"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 2141: "Command Usage - kz_togglestyle"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 2145: "Command Usage - kz_addstyle"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 2149: "Command Usage - kz_removestyle"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 2153: "Command Usage - kz_modernperfstats"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 2157: "Command Usage - kz_legacyperfstats"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 2161: "Command Usage - kz_comparelevel"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 2165: "Command Usage - kz_recordvolume"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 2169: "Command Usage - kz_ctop"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 2173: "Command Usage - kz_gctop"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 2177: "Command Usage - kz_sctop"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 2181: "Command Usage - kz_pb"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 2185: "Command Usage - kz_spb"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 2189: "Command Usage - kz_gpb"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 2193: "Command Usage - kz_wr"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 2197: "Command Usage - kz_sr"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 2201: "Command Usage - kz_ztopwatch"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
 
 cs2kz-common.phrases.txt
 ----------------------------------------------------------------------
@@ -540,6 +646,49 @@ cs2kz-goto.phrases.txt
     Missing (1): nl
   Line 56: "Goto - Command Usage"
     Missing (1): nl
+
+cs2kz-help.phrases.txt
+----------------------------------------------------------------------
+  Line 3: "Help - Title"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 7: "Help - Hint"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 11: "Help - Usage"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 16: "Help - Category - Checkpoint"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 20: "Help - Category - Record"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 24: "Help - Category - Jumpstats"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 28: "Help - Category - Measure"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 32: "Help - Category - ModeStyle"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 36: "Help - Category - Preference"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 40: "Help - Category - Racing"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 44: "Help - Category - Replay"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 48: "Help - Category - Saveloc"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 52: "Help - Category - Spec"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 56: "Help - Category - Status"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 60: "Help - Category - Timer"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 64: "Help - Category - Player"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 68: "Help - Category - Global"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 72: "Help - Category - Misc"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 76: "Help - Category - Map"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 80: "Help - Category - HUD"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
 
 cs2kz-hud.phrases.txt
 ----------------------------------------------------------------------
