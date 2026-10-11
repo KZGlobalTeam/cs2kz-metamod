@@ -6,28 +6,28 @@ Generated for: /home/runner/work/cs2kz-metamod/cs2kz-metamod
 SUMMARY
 ----------------------------------------------------------------------
 Total languages: 15
-Total phrases: 995
-Phrases with missing translations: 995
-Total missing translation entries: 6392
+Total phrases: 1000
+Phrases with missing translations: 1000
+Total missing translation entries: 6462
 
 LANGUAGE COVERAGE (Phrases)
 ----------------------------------------------------------------------
 
-  chi (schinese)       [██████████████████░░]  94.0% (935/995)
-  de (german)          [██████████░░░░░░░░░░]  52.1% (518/995)
-  en (english)         [████████████████████] 100.0% (995/995)
-  es (spanish)         [█████████░░░░░░░░░░░]  48.6% (484/995)
-  fi (finnish)         [████░░░░░░░░░░░░░░░░]  23.4% (233/995)
-  it (italian)         [████░░░░░░░░░░░░░░░░]  22.6% (225/995)
-  ko (korean)          [█████████████░░░░░░░]  65.5% (652/995)
-  lv (latvian)         [██████░░░░░░░░░░░░░░]  33.0% (328/995)
-  nl (dutch)           [░░░░░░░░░░░░░░░░░░░░]   0.5% (5/995)
-  pl (polish)          [██████████░░░░░░░░░░]  52.3% (520/995)
-  ru (russian)         [███████████████████░]  99.9% (994/995)
-  sv (swedish)         [███████░░░░░░░░░░░░░]  39.4% (392/995)
-  tr (turkish)         [█████░░░░░░░░░░░░░░░]  26.3% (262/995)
-  ua (ukrainian)       [████████████████████] 100.0% (995/995)
-  zho (tchinese)       [████████████████████] 100.0% (995/995)
+  chi (schinese)       [██████████████████░░]  93.5% (935/1000)
+  de (german)          [██████████░░░░░░░░░░]  51.8% (518/1000)
+  en (english)         [████████████████████] 100.0% (1000/1000)
+  es (spanish)         [█████████░░░░░░░░░░░]  48.4% (484/1000)
+  fi (finnish)         [████░░░░░░░░░░░░░░░░]  23.3% (233/1000)
+  it (italian)         [████░░░░░░░░░░░░░░░░]  22.5% (225/1000)
+  ko (korean)          [█████████████░░░░░░░]  65.2% (652/1000)
+  lv (latvian)         [██████░░░░░░░░░░░░░░]  32.8% (328/1000)
+  nl (dutch)           [░░░░░░░░░░░░░░░░░░░░]   0.5% (5/1000)
+  pl (polish)          [██████████░░░░░░░░░░]  52.0% (520/1000)
+  ru (russian)         [███████████████████░]  99.4% (994/1000)
+  sv (swedish)         [███████░░░░░░░░░░░░░]  39.2% (392/1000)
+  tr (turkish)         [█████░░░░░░░░░░░░░░░]  26.2% (262/1000)
+  ua (ukrainian)       [███████████████████░]  99.5% (995/1000)
+  zho (tchinese)       [███████████████████░]  99.5% (995/1000)
 
 Global languages (15): chi, de, en, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
 
@@ -412,35 +412,37 @@ cs2kz-commands.phrases.txt
     Missing (6): fi, it, lv, nl, sv, tr
   Line 1819: "Command Description - kz_rppause"
     Missing (6): fi, it, lv, nl, sv, tr
-  Line 1831: "Command Description - kz_rploadprogress"
+  Line 1831: "Command Description - kz_rptimescale"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 1835: "Command Description - kz_rploadprogress"
     Missing (6): fi, it, lv, nl, sv, tr
-  Line 1843: "Command Description - kz_rpcancelload"
+  Line 1847: "Command Description - kz_rpcancelload"
     Missing (6): fi, it, lv, nl, sv, tr
-  Line 1855: "Command Description - kz_recordvolume"
+  Line 1859: "Command Description - kz_recordvolume"
     Missing (6): fi, it, lv, nl, sv, tr
-  Line 1867: "Command Description - kz_cpmessage"
+  Line 1871: "Command Description - kz_cpmessage"
     Missing (6): fi, it, lv, nl, sv, tr
-  Line 1879: "Command Description - kz_rphidelegs"
+  Line 1883: "Command Description - kz_rphidelegs"
     Missing (6): fi, it, lv, nl, sv, tr
-  Line 1891: "Command Description - kz_accept"
+  Line 1895: "Command Description - kz_accept"
     Missing (7): de, fi, it, lv, nl, sv, tr
-  Line 1902: "Command Description - kz_surrender"
+  Line 1906: "Command Description - kz_surrender"
     Missing (7): de, fi, it, lv, nl, sv, tr
-  Line 1913: "Command Description - kz_mapinfo"
+  Line 1917: "Command Description - kz_mapinfo"
     Missing (8): de, fi, it, lv, nl, pl, sv, tr
-  Line 1923: "Command Description - kz_tier"
+  Line 1927: "Command Description - kz_tier"
     Missing (8): de, fi, it, lv, nl, pl, sv, tr
-  Line 1933: "Command Description - kz_modernperfstats"
+  Line 1937: "Command Description - kz_modernperfstats"
     Missing (8): de, fi, it, lv, nl, pl, sv, tr
-  Line 1943: "Command Description - kz_legacyperfstats"
+  Line 1947: "Command Description - kz_legacyperfstats"
     Missing (8): de, fi, it, lv, nl, pl, sv, tr
-  Line 1953: "Command Description - kz_resetperfstats"
+  Line 1957: "Command Description - kz_resetperfstats"
     Missing (8): de, fi, it, lv, nl, pl, sv, tr
-  Line 1963: "Command Description - kz_fov"
+  Line 1967: "Command Description - kz_fov"
     Missing (8): de, fi, it, lv, nl, pl, sv, tr
-  Line 1973: "Command Description - kz_mhud"
+  Line 1977: "Command Description - kz_mhud"
     Missing (9): de, es, fi, it, lv, nl, pl, sv, tr
-  Line 1982: "Command Description - kz_hudedit"
+  Line 1986: "Command Description - kz_hudedit"
     Missing (11): chi, de, es, fi, it, ko, lv, nl, pl, sv, tr
 
 cs2kz-common.phrases.txt
@@ -1598,125 +1600,133 @@ cs2kz-replays.phrases.txt
     Missing (7): es, fi, it, lv, nl, sv, tr
   Line 287: "Replay - Resumed"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 298: "Replay - Loading"
+  Line 298: "Replay - Timescale Set"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 303: "Replay - Current Timescale"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 308: "Replay - Usage Timescale"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 312: "Replay - Invalid Timescale"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 317: "Replay - Loading"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 309: "Replay - Loading Already"
+  Line 328: "Replay - Loading Already"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 320: "Replay - Invalid UUID"
+  Line 339: "Replay - Invalid UUID"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 331: "Replay - Multiple Matches"
+  Line 350: "Replay - Multiple Matches"
     Missing (9): de, es, fi, it, lv, nl, pl, sv, tr
-  Line 341: "Replay - Loaded Successfully"
+  Line 360: "Replay - Loaded Successfully"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 352: "Replay - No Loading Progress"
+  Line 371: "Replay - No Loading Progress"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 363: "Replay - Loading Progress"
+  Line 382: "Replay - Loading Progress"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 375: "Replay - Loading Completed"
+  Line 394: "Replay - Loading Completed"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 386: "Replay - Loading Cancelled"
+  Line 405: "Replay - Loading Cancelled"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 397: "Replay - Usage Command"
+  Line 416: "Replay - Usage Command"
     Missing (9): de, es, fi, it, lv, nl, pl, sv, tr
-  Line 406: "Replay - Load Cancelled"
+  Line 425: "Replay - Load Cancelled"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 417: "Replay - Invalid File Format"
+  Line 436: "Replay - Invalid File Format"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 428: "Replay - Manual Replay Failed"
+  Line 447: "Replay - Manual Replay Failed"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 439: "Replay - Invalid Manual Replay Duration"
+  Line 458: "Replay - Invalid Manual Replay Duration"
     Missing (10): de, es, fi, it, ko, lv, nl, pl, sv, tr
-  Line 447: "Replay - Manual Replay Saved"
+  Line 466: "Replay - Manual Replay Saved"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 459: "Replay - Manual Replay Saved (Console)"
+  Line 478: "Replay - Manual Replay Saved (Console)"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 471: "Replay - Run Replay Failed"
+  Line 490: "Replay - Run Replay Failed"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 482: "Replay - Run Replay Saved"
+  Line 501: "Replay - Run Replay Saved"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 494: "Replay - Run Replay Saved (Console)"
+  Line 513: "Replay - Run Replay Saved (Console)"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 506: "Replay - Wrong Map"
+  Line 525: "Replay - Wrong Map"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 518: "Replay - Unknown Mode"
+  Line 537: "Replay - Unknown Mode"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 530: "Replay - Unknown Style"
+  Line 549: "Replay - Unknown Style"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 542: "Replay List - Check Console"
+  Line 561: "Replay List - Check Console"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 553: "Replay List - Usage Title"
+  Line 572: "Replay List - Usage Title"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 565: "Replay List - Usage General Options"
+  Line 584: "Replay List - Usage General Options"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 582: "Replay List - Usage Type Options"
+  Line 601: "Replay List - Usage Type Options"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 597: "Replay List - No Matching Replays"
+  Line 616: "Replay List - No Matching Replays"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 608: "Cheater Replays - Table Name"
+  Line 627: "Cheater Replays - Table Name"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 619: "Run Replays - Table Name"
+  Line 638: "Run Replays - Table Name"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 630: "Jump Replays - Table Name"
+  Line 649: "Jump Replays - Table Name"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 641: "Manual Replays - Table Name"
+  Line 660: "Manual Replays - Table Name"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 652: "Replay Table Header - Player"
+  Line 671: "Replay Table Header - Player"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 663: "Replay Table Header - Map"
+  Line 682: "Replay Table Header - Map"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 674: "Replay Table Header - Reason"
+  Line 693: "Replay Table Header - Reason"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 685: "Replay Table Header - SteamID"
+  Line 704: "Replay Table Header - SteamID"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 696: "Replay Table Header - UUID"
+  Line 715: "Replay Table Header - UUID"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 707: "Replay Table Header - Course"
+  Line 726: "Replay Table Header - Course"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 718: "Replay Table Header - Mode"
+  Line 737: "Replay Table Header - Mode"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 729: "Replay Table Header - Styles"
+  Line 748: "Replay Table Header - Styles"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 740: "Replay Table Header - Time"
+  Line 759: "Replay Table Header - Time"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 751: "Replay Table Header - Teleports"
+  Line 770: "Replay Table Header - Teleports"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 762: "Replay Table Header - Jump Type"
+  Line 781: "Replay Table Header - Jump Type"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 773: "Replay Table Header - Distance"
+  Line 792: "Replay Table Header - Distance"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 784: "Replay Table Header - Block"
+  Line 803: "Replay Table Header - Block"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 795: "Replay Table Header - Strafes"
+  Line 814: "Replay Table Header - Strafes"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 806: "Replay Table Header - Saved By"
+  Line 825: "Replay Table Header - Saved By"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 817: "Replay - Not Found"
+  Line 836: "Replay - Not Found"
     Missing (9): de, es, fi, it, lv, nl, pl, sv, tr
-  Line 826: "Replay - No Course"
+  Line 845: "Replay - No Course"
     Missing (9): de, es, fi, it, lv, nl, pl, sv, tr
-  Line 835: "Replay - Invalid Mode Arg"
+  Line 854: "Replay - Invalid Mode Arg"
     Missing (9): de, es, fi, it, lv, nl, pl, sv, tr
-  Line 844: "Replay - SR Not Found"
+  Line 863: "Replay - SR Not Found"
     Missing (9): de, es, fi, it, lv, nl, pl, sv, tr
-  Line 853: "Replay - SPB Not Found"
+  Line 872: "Replay - SPB Not Found"
     Missing (9): de, es, fi, it, lv, nl, pl, sv, tr
-  Line 862: "Replay - Global Mode Only"
+  Line 881: "Replay - Global Mode Only"
     Missing (9): de, es, fi, it, lv, nl, pl, sv, tr
-  Line 871: "Replay - API Not Available"
+  Line 890: "Replay - API Not Available"
     Missing (9): de, es, fi, it, lv, nl, pl, sv, tr
-  Line 880: "Replay - Querying WR"
+  Line 899: "Replay - Querying WR"
     Missing (9): de, es, fi, it, lv, nl, pl, sv, tr
-  Line 889: "Replay - WR Not Found"
+  Line 908: "Replay - WR Not Found"
     Missing (9): de, es, fi, it, lv, nl, pl, sv, tr
-  Line 898: "Replay - Querying GPB"
+  Line 917: "Replay - Querying GPB"
     Missing (9): de, es, fi, it, lv, nl, pl, sv, tr
-  Line 907: "Replay - GPB Not Found"
+  Line 926: "Replay - GPB Not Found"
     Missing (9): de, es, fi, it, lv, nl, pl, sv, tr
-  Line 916: "Replay Request - Sending"
+  Line 935: "Replay Request - Sending"
     Missing (9): de, es, fi, it, lv, nl, pl, sv, tr
-  Line 926: "Replay Request - Already Requested"
+  Line 945: "Replay Request - Already Requested"
     Missing (9): de, es, fi, it, lv, nl, pl, sv, tr
-  Line 936: "Replay Request - Error"
+  Line 955: "Replay Request - Error"
     Missing (9): de, es, fi, it, lv, nl, pl, sv, tr
 
 cs2kz-spec.phrases.txt
