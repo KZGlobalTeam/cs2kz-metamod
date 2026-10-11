@@ -299,20 +299,24 @@
 	{
 		"#format"	"timescale:.2f"
 		"en"		"{grey}Replay timescale set to {default}{timescale}x{grey}."
+		"ua"		"{grey}Швидкість відтворення встановлена на {default}{timescale}x{grey}."
 	}
 	"Replay - Current Timescale"
 	{
 		"#format"	"timescale:.2f"
 		"en"		"{grey}Current replay timescale: {default}{timescale}x{grey}."
+		"ua"		"{grey}Поточна швидкість відтворення повтору: {default}{timescale}x{grey}."
 	}
 	"Replay - Usage Timescale"
 	{
 		"en"		"{grey}Usage: kz_rptimescale <scale> (Examples: 0.1, 0.5, 2, 5. 0 pauses the replay)"
+		"ua"		"{grey}Використання: kz_rptimescale <значення> (Наприклад: 0.1, 0.5, 2, 5. 0 призупиняє повтор)"
 	}
 	"Replay - Invalid Timescale"
 	{
 		"#format"	"max:.0f"
 		"en"		"{darkred}Invalid timescale. It must be a number between 0 and {max}."
+		"ua"		"{darkred}Невірна швидкість відтворення. Вона повинна бути числом між 0 та {max}."
 	}
 	"Replay - Loading"
 	{
