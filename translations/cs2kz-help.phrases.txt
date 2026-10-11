@@ -6,11 +6,12 @@
 	}
 	"Help - Hint"
 	{
-		"en"		"Type !command or /command in chat. Use kz_help for console help."
+		"en"		"Type !<command> or /<command> in chat. Type kz_help in console for console help."
 	}
-	"Help - Empty"
+	"Help - Usage"
 	{
-		"en"		"No commands in this category. Choose another category."
+		"#format"	"usage:s"
+		"en"		"Usage: {usage}"
 	}
 	"Help - Category - Checkpoint"
 	{

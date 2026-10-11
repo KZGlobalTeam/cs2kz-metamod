@@ -13,8 +13,10 @@ class HelpWindow : public KZ::ui::Window
 public:
 	HelpWindow(KZPlayer *player) : player(player) {}
 
-	// Returns false when help cannot open; closing the window counts as success.
-	bool Toggle(i32 category = 0);
+	// Opens help on the category, or switches to it when help is already on top. Returns false when help cannot open.
+	bool Show(i32 category);
+	// Closes help when it is on top, and opens it on the first category otherwise. Returns false when help cannot open.
+	bool Toggle();
 
 	virtual KZ::ui::PlayerLayout *GetLayout() override
 	{
@@ -29,22 +31,22 @@ public:
 	virtual void OnClick(const char *buttonId) override;
 
 private:
+	bool IsShown();
 	void Hide();
 	void Render();
 
 	KZPlayer *player;
 	KZ::ui::PlayerLayout layout {this->player, KZ_HELP_LAYOUT, "kzhelp"};
-	bool shown {};
 	i32 category {};
 
 	struct Applied
 	{
 		KZ::ui::WindowStyle style {};
 		bool rootHidden {true};
-		bool emptyHidden {true};
 		bool categoryHidden[KZ_HELP_CATEGORIES] {};
 		bool categorySelected[KZ_HELP_CATEGORIES] {};
 		bool rowHidden[KZ_HELP_ROWS] {};
+		bool usageHidden[KZ_HELP_ROWS] {};
 		bool descriptionHidden[KZ_HELP_ROWS] {};
 
 		Applied()
@@ -54,6 +56,10 @@ private:
 				hidden = true;
 			}
 			for (bool &hidden : this->rowHidden)
+			{
+				hidden = true;
+			}
+			for (bool &hidden : this->usageHidden)
 			{
 				hidden = true;
 			}

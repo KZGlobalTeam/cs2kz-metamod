@@ -12,23 +12,23 @@ class CCSPlayerController;
 enum
 {
 	SCFL_HIDDEN = 0,
-	SCFL_CHECKPOINT = 1 << 0,
-	SCFL_RECORD = 1 << 1,
-	SCFL_JUMPSTATS = 1 << 2,
-	SCFL_MEASURE = 1 << 3,
-	SCFL_MODESTYLE = 1 << 4,
-	SCFL_PREFERENCE = 1 << 5,
-	SCFL_RACING = 1 << 6,
-	SCFL_REPLAY = 1 << 7,
-	SCFL_SAVELOC = 1 << 8,
-	SCFL_SPEC = 1 << 9,
-	SCFL_STATUS = 1 << 10,
-	SCFL_TIMER = 1 << 11,
-	SCFL_PLAYER = 1 << 12,
-	SCFL_GLOBAL = 1 << 13,
-	SCFL_MISC = 1 << 14,
-	SCFL_MAP = 1 << 15,
-	SCFL_HUD = 1 << 16
+	SCFL_TIMER = 1 << 0,
+	SCFL_CHECKPOINT = 1 << 1,
+	SCFL_HUD = 1 << 2,
+	SCFL_RECORD = 1 << 3,
+	SCFL_JUMPSTATS = 1 << 4,
+	SCFL_MODESTYLE = 1 << 5,
+	SCFL_REPLAY = 1 << 6,
+	SCFL_PLAYER = 1 << 7,
+	SCFL_GLOBAL = 1 << 8,
+	SCFL_PREFERENCE = 1 << 9,
+	SCFL_MAP = 1 << 10,
+	SCFL_SPEC = 1 << 11,
+	SCFL_MEASURE = 1 << 12,
+	SCFL_RACING = 1 << 13,
+	SCFL_STATUS = 1 << 14,
+	SCFL_SAVELOC = 1 << 15,
+	SCFL_MISC = 1 << 16
 };
 
 #define SCMD_CALLBACK(name) bool name(CCSPlayerController *controller, const CCommand *args)
@@ -49,6 +49,8 @@ namespace scmd
 	{
 		std::string names;
 		std::string descriptionKey;
+		// Phrase holding the command's arguments, only present for commands that take any.
+		std::string usageKey;
 	};
 
 	i32 GetCategoryCount();

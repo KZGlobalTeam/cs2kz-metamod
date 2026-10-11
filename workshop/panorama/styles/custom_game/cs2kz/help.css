@@ -51,6 +51,7 @@
 	width: 20px;
 	height: 20px;
 	margin-left: 10px;
+	horizontal-align: right;
 	vertical-align: center;
 	wash-color: #888888;
 	background-image: url("s2r://panorama/images/control_icons/x_close_png.vtex");
@@ -118,33 +119,44 @@
 .help-row {
 	width: 100%;
 	flow-children: down;
-	padding: 7px 12px;
+	padding: 0px 12px 7px 12px;
 }
 
-.help-command,
-.help-description {
+/* Every row after the first starts with a divider, so there is one between each pair of shown rows. */
+#help_row0 {
+	padding-top: 7px;
+}
+
+.help-divider {
 	width: 100%;
+	height: 1px;
+	margin-bottom: 7px;
+	background-color: #ffffff1f;
+}
+
+.help-command {
+	width: 100%;
+	font-size: 18px;
 	white-space: normal;
 	text-overflow: clip;
 }
 
-.help-command {
-	font-size: 18px;
-}
-
-.help-description,
-.help-empty {
-	font-size: 16px;
-}
-
 .help-description {
+	width: 100%;
+	font-size: 15px;
 	opacity: 0.7;
 	margin-top: 4px;
+	white-space: normal;
+	text-overflow: clip;
 }
 
-.help-empty {
+.help-usage {
 	width: 100%;
-	padding: 7px 12px;
+	font-size: 13px;
+	opacity: 0.55;
+	margin-top: 4px;
+	white-space: normal;
+	text-overflow: clip;
 }
 
 .help-footer {
@@ -180,6 +192,11 @@ VerticalScrollBar .ScrollThumb {
 
 VerticalScrollBar:hover .ScrollThumb {
 	background-color: #ffffff99;
+}
+
+/* Lines the command list's scroll bar up under the close button. */
+.help-commands VerticalScrollBar {
+	margin-right: 6px;
 }
 
 .snd .help-close:hover,

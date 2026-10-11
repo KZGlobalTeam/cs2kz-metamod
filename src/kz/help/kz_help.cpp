@@ -21,9 +21,29 @@ SLOT_ID(CategoryVar, "hc%i")
 SLOT_ID(RowPanel, "help_row%i")
 SLOT_ID(CommandLabel, "help_command%i")
 SLOT_ID(CommandVar, "hn%i")
+SLOT_ID(UsageLabel, "help_usage%i")
+SLOT_ID(UsageVar, "hu%i")
 SLOT_ID(DescriptionLabel, "help_description%i")
 SLOT_ID(DescriptionVar, "hd%i")
 #undef SLOT_ID
+
+// Categories without commands get no button.
+static_function bool HasCommands(i32 category)
+{
+	return category >= 0 && category < KZ_HELP_CATEGORIES && !scmd::GetCategoryCommands(category, true).empty();
+}
+
+static_function i32 FirstCategoryWithCommands()
+{
+	for (i32 i = 0; i < scmd::GetCategoryCount(); i++)
+	{
+		if (HasCommands(i))
+		{
+			return i;
+		}
+	}
+	return 0;
+}
 
 bool HelpWindow::CanOpen()
 {
@@ -40,23 +60,39 @@ bool HelpWindow::CanOpen()
 	return entity && entity->GetPlayerLayoutState(this->player->GetPlayerSlot());
 }
 
-bool HelpWindow::Toggle(i32 category)
+bool HelpWindow::IsShown()
 {
-	this->category = Clamp(category, 0, MAX(0, MIN(scmd::GetCategoryCount(), KZ_HELP_CATEGORIES) - 1));
-	const bool closing = this->player->uiService->GetTop() == this && this->layout.Get();
-	this->player->uiService->Toggle(this);
-	return closing || this->player->uiService->IsOpen(this);
+	return this->player->uiService->GetTop() == this && this->layout.Get();
+}
+
+bool HelpWindow::Show(i32 category)
+{
+	this->category = HasCommands(category) ? category : FirstCategoryWithCommands();
+	if (this->IsShown())
+	{
+		this->Render();
+		return true;
+	}
+	return this->player->uiService->Open(this);
+}
+
+bool HelpWindow::Toggle()
+{
+	if (this->IsShown())
+	{
+		this->player->uiService->Close(this);
+		return true;
+	}
+	return this->Show(FirstCategoryWithCommands());
 }
 
 void HelpWindow::OnOpen()
 {
-	this->shown = true;
 	this->Render();
 }
 
 void HelpWindow::Hide()
 {
-	this->shown = false;
 	if (CCSCustomHudLayout *entity = this->layout.Get())
 	{
 		KZ::ui::SetBoolClass(entity, "help_root", "hidden", this->applied.rootHidden, true);
@@ -75,14 +111,13 @@ void HelpWindow::OnSuspend()
 
 void HelpWindow::OnResume()
 {
-	this->shown = true;
 	this->Render();
 }
 
 void HelpWindow::Render()
 {
 	CCSCustomHudLayout *entity = this->layout.Get();
-	if (!this->shown || !entity)
+	if (!entity || this->player->uiService->GetTop() != this)
 	{
 		return;
 	}
@@ -93,7 +128,7 @@ void HelpWindow::Render()
 	this->layout.SetVar("help_hint", "hint", language->PrepareMessage("Help - Hint").c_str());
 	for (i32 i = 0; i < KZ_HELP_CATEGORIES; i++)
 	{
-		const bool used = i < scmd::GetCategoryCount();
+		const bool used = HasCommands(i);
 		if (used)
 		{
 			char key[64];
@@ -111,15 +146,19 @@ void HelpWindow::Render()
 		{
 			const auto &command = commands[i];
 			const auto description = language->PrepareMessage(command.descriptionKey.c_str());
+			const auto usage = language->PrepareMessage(command.usageKey.c_str());
+			const bool hasUsage = usage != command.usageKey;
 			this->layout.SetVar(CommandLabel(i), CommandVar(i), command.names.c_str());
+			if (hasUsage)
+			{
+				this->layout.SetVar(UsageLabel(i), UsageVar(i), language->PrepareMessage("Help - Usage", usage.c_str()).c_str());
+			}
+			KZ::ui::SetBoolClass(entity, UsageLabel(i), "hidden", this->applied.usageHidden[i], !hasUsage);
 			this->layout.SetVar(DescriptionLabel(i), DescriptionVar(i), description.c_str());
 			KZ::ui::SetBoolClass(entity, DescriptionLabel(i), "hidden", this->applied.descriptionHidden[i], description == command.descriptionKey);
 		}
 		KZ::ui::SetBoolClass(entity, RowPanel(i), "hidden", this->applied.rowHidden[i], !used);
 	}
-	const bool empty = commands.empty();
-	this->layout.SetVar("help_empty", "empty", empty ? language->PrepareMessage("Help - Empty").c_str() : "");
-	KZ::ui::SetBoolClass(entity, "help_empty", "hidden", this->applied.emptyHidden, !empty);
 }
 
 void HelpWindow::OnClick(const char *buttonId)
@@ -129,9 +168,9 @@ void HelpWindow::OnClick(const char *buttonId)
 		this->player->uiService->Close(this);
 		return;
 	}
-	for (i32 i = 0; i < MIN(scmd::GetCategoryCount(), KZ_HELP_CATEGORIES); i++)
+	for (i32 i = 0; i < KZ_HELP_CATEGORIES; i++)
 	{
-		if (KZ_STREQ(buttonId, CategoryPanel(i)))
+		if (HasCommands(i) && KZ_STREQ(buttonId, CategoryPanel(i)))
 		{
 			this->category = i;
 			this->Render();
@@ -192,9 +231,13 @@ SCMD(kz_help, SCFL_MISC)
 	}
 
 	const bool chat = args->Arg(0)[0] == SCMD_CHAT_TRIGGER || args->Arg(0)[0] == SCMD_CHAT_SILENT_TRIGGER;
-	if (chat && player->uiService->GetWindow<HelpWindow>()->Toggle(categories.empty() ? 0 : categories.front()))
+	if (chat)
 	{
-		return true;
+		HelpWindow *help = player->uiService->GetWindow<HelpWindow>();
+		if (categories.empty() ? help->Toggle() : help->Show(categories.front()))
+		{
+			return true;
+		}
 	}
 	player->languageService->PrintChat(true, false, "Command Help Response (Chat)");
 	player->languageService->PrintConsole(false, false, "Command Help Response (Console)");

@@ -23,23 +23,23 @@ struct Scmd
 
 // clang-format off
 const char* cmdFlagNames[] = {
+	"Timer",
 	"Checkpoint",
+	"HUD",
 	"Record",
 	"Jumpstats",
-	"Measure",
 	"ModeStyle",
-	"Preference",
-	"Racing",
 	"Replay",
-	"Saveloc",
-	"Spec",
-	"Status",
-	"Timer",
 	"Player",
 	"Global",
-	"Misc",
+	"Preference",
 	"Map",
-	"HUD"
+	"Spec",
+	"Measure",
+	"Racing",
+	"Status",
+	"Saveloc",
+	"Misc"
 };
 
 // clang-format on
@@ -97,7 +97,7 @@ const std::vector<scmd::CommandInfo> &scmd::GetCategoryCommands(i32 category, bo
 		auto entry = std::find_if(result.begin(), result.end(), [&](const CommandInfo &row) { return row.descriptionKey == cmd.descKey; });
 		if (entry == result.end())
 		{
-			result.push_back({name, cmd.descKey});
+			result.push_back({name, cmd.descKey, std::string("Command Usage - ") + cmd.name});
 		}
 		else
 		{
