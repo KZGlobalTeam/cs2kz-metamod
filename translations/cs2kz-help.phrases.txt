@@ -3,82 +3,102 @@
 	"Help - Title"
 	{
 		"en"		"Command Help"
+		"ua" 		"Довідка щодо команд"
 	}
 	"Help - Hint"
 	{
 		"en"		"Type !<command> or /<command> in chat. Type kz_help in console for console help."
+		"ua"		"Напишіть !<команда> або /<команда> в чаті. Введіть kz_help в консолі для довідки."
 	}
 	"Help - Usage"
 	{
 		"#format"	"usage:s"
 		"en"		"Usage: {usage}"
+		"ua"		"Використання: {usage}"
 	}
 	"Help - Category - Checkpoint"
 	{
 		"en"		"Checkpoints"
+		"ua"		"Чекпоінти"
 	}
 	"Help - Category - Record"
 	{
 		"en"		"Records"
+		"ua"		"Рекорди"
 	}
 	"Help - Category - Jumpstats"
 	{
 		"en"		"Jumpstats"
+		"ua"		"Статистика стрибків"
 	}
 	"Help - Category - Measure"
 	{
 		"en"		"Measurement"
+		"ua"		"Вимірювання дистанції"
 	}
 	"Help - Category - ModeStyle"
 	{
 		"en"		"Modes & styles"
+		"ua"		"Режими та стилі"
 	}
 	"Help - Category - Preference"
 	{
 		"en"		"Preferences"
+		"ua"		"Налаштування"
 	}
 	"Help - Category - Racing"
 	{
 		"en"		"Racing"
+		"ua"		"Перегони"
 	}
 	"Help - Category - Replay"
 	{
 		"en"		"Replays"
+		"ua"		"Повтори"
 	}
 	"Help - Category - Saveloc"
 	{
 		"en"		"Saved locations"
+		"ua"		"Меню збережених позицій (Saveloc)"
 	}
 	"Help - Category - Spec"
 	{
 		"en"		"Spectating"
+		"ua"		"Спостереження"
 	}
 	"Help - Category - Status"
 	{
 		"en"		"Status"
+		"ua"		"Статус"
 	}
 	"Help - Category - Timer"
 	{
 		"en"		"Timer"
+		"ua"		"Таймер"
 	}
 	"Help - Category - Player"
 	{
 		"en"		"Player"
+		"ua"		"Гравець"
 	}
 	"Help - Category - Global"
 	{
 		"en"		"Global"
+		"ua"		"Глобальні"
 	}
 	"Help - Category - Misc"
 	{
 		"en"		"Other"
+		"ua"		"Інше"
 	}
 	"Help - Category - Map"
 	{
 		"en"		"Maps"
+		"ua"		"Мапи"
 	}
 	"Help - Category - HUD"
 	{
 		"en"		"HUD"
+		"ua"		"HUD"
 	}
 }
