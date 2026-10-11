@@ -131,7 +131,7 @@ void KZBeamService::Update()
 		if ((this->player->GetPlayerPawn()->m_fFlags() & FL_ONGROUND && this->player->GetMoveType() == MOVETYPE_WALK)
 			|| this->player->GetMoveType() == MOVETYPE_LADDER)
 		{
-			this->validBeam |= g_pKZUtils->GetServerGlobals()->curtime - this->player->landingTime >= 0.04f;
+			this->validBeam |= this->player->GetCurtime() - this->player->landingTime >= 0.04f;
 		}
 
 		if (this->player->noclipService->JustNoclipped() || this->teleportedThisTick)
@@ -151,7 +151,7 @@ void KZBeamService::UpdatePlayerBeam()
 	shouldDraw &= this->target && this->target->GetPlayerPawn() && this->target->GetPlayerPawn()->IsAlive()
 	 	&& this->target->beamService->validBeam
 	 	&& this->target->takeoffTime > 0.0f
-	 	&& (!(this->target->GetPlayerPawn()->m_fFlags() & FL_ONGROUND) || g_pKZUtils->GetServerGlobals()->curtime - this->target->landingTime < 0.04f);
+	 	&& (!(this->target->GetPlayerPawn()->m_fFlags() & FL_ONGROUND) || this->target->GetCurtime() - this->target->landingTime < 0.04f);
 	// clang-format on
 	if (!shouldDraw)
 	{

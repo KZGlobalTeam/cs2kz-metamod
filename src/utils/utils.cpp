@@ -276,6 +276,11 @@ f32 utils::GetAngleDifference(const f32 source, const f32 target, const f32 c, b
 	return fmod(fabs(target - source) + c, 2 * c) - c;
 }
 
+f32 utils::LerpAngle(f32 from, f32 to, f32 fraction)
+{
+	return from + utils::GetAngleDifference(from, to, 180.0f, true) * fraction;
+}
+
 bool utils::SetConVarValue(CPlayerSlot slot, const char *name, const char *value, bool replicate, bool triggerCallback)
 {
 	if (!name || !value)

@@ -84,6 +84,8 @@ public:
 
 	virtual void OnPhysicsSimulate() override;
 	virtual void OnPhysicsSimulatePost() override;
+	// Returns false when the command must not run.
+	bool OnPlayerRunCommand(PlayerCommand *cmd);
 	virtual void OnProcessUsercmds(PlayerCommand *, int) override;
 	virtual void OnProcessUsercmdsPost(PlayerCommand *, int) override;
 	virtual void OnSetupMove(PlayerCommand *) override;
@@ -160,6 +162,11 @@ private:
 
 	// Deletes and nulls every service this player owns.
 	void DestroyServices();
+
+	// The per-tick logic around a command.
+	// A replay bot can run this zero or several times in one server tick.
+	void SimulateTick();
+	void SimulateTickPost();
 
 public:
 	KZAnticheatService *anticheatService {};

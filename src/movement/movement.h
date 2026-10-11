@@ -69,6 +69,9 @@ public:
 
 	virtual TurnState GetTurning();
 
+	// The time of this player's last command, which is the clock takeoffTime and landingTime are on.
+	f32 GetCurtime();
+
 	virtual bool IsButtonPressed(InputBitMask_t button, bool onlyDown = false);
 	virtual bool IsButtonNewlyPressed(InputBitMask_t button);
 

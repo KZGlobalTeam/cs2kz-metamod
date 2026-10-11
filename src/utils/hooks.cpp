@@ -704,11 +704,19 @@ static KHook::Return<void> PlayerRunCommandPre(CCSPlayer_MovementServices *pThis
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(pThis);
-	KZ::replaysystem::OnPlayerRunCommandPre(player, pCmd);
+	if (!player->OnPlayerRunCommand(pCmd))
+	{
+		return {KHook::Action::Supersede};
+	}
 	return {KHook::Action::Ignore};
 }
 
 static KHook::Virtual<CCSPlayer_MovementServices, void, PlayerCommand *> playerRunCommandHook(PlayerRunCommandPre, nullptr);
+
+void hooks::CallOriginalPlayerRunCommand(CCSPlayer_MovementServices *pThis, PlayerCommand *pCmd)
+{
+	playerRunCommandHook.CallOriginal(pThis, pCmd);
+}
 
 static KHook::Return<void> FinishMovePre(CCSPlayer_MovementServices *pThis, PlayerCommand *pCmd, CMoveData *pMoveData)
 {

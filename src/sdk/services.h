@@ -132,6 +132,7 @@ class CPlayer_MovementServices_Humanoid : public CPlayer_MovementServices
 public:
 	DECLARE_SCHEMA_CLASS_ENTITY(CPlayer_MovementServices_Humanoid);
 	SCHEMA_FIELD(float, m_flSurfaceFriction)
+	SCHEMA_FIELD(float, m_flFallVelocity)
 };
 
 // Not a real class, just something that the two classes below can inherit from

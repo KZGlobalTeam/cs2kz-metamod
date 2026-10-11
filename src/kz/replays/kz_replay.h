@@ -8,6 +8,8 @@
 #define KZ_REPLAY_PATH           "kzreplays"
 #define KZ_REPLAY_DOWNLOADS_PATH KZ_REPLAY_PATH "/downloads"
 
+#define KZ_REPLAY_MAX_TIMESCALE 10.0f
+
 class CSubtickMoveStep;
 class KZPlayer;
 

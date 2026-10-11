@@ -31,6 +31,7 @@ namespace KZ::replaysystem::commands
 
 		// Reset replay state and reprocess events up to target tick
 		data::ResetReplayState(replay);
+		playback::ResetBotClock(bot::GetBotPlayer(), replay->tickData[targetTick].serverTick);
 		events::ReprocessEventsUpToTick(replay, targetTick);
 
 		// Set current tick
@@ -441,6 +442,47 @@ namespace KZ::replaysystem::commands
 		{
 			player->languageService->PrintChat(true, false, "Replay - Resumed");
 		}
+	}
+
+	void SetReplayTimescale(KZPlayer *player, const char *input)
+	{
+		if (!player)
+		{
+			return;
+		}
+
+		if (!data::IsReplayPlaying())
+		{
+			player->languageService->PrintChat(true, false, "Replay - No Replay Playing");
+			return;
+		}
+
+		auto replay = data::GetCurrentReplay();
+		if (!input || input[0] == '\0')
+		{
+			player->languageService->PrintChat(true, false, "Replay - Current Timescale", replay->timescale);
+			player->languageService->PrintChat(true, false, "Replay - Usage Timescale");
+			return;
+		}
+
+		char *endPtr;
+		f32 timescale = strtof(input, &endPtr);
+		if (endPtr == input || *endPtr != '\0' || !(timescale >= 0.0f && timescale <= KZ_REPLAY_MAX_TIMESCALE))
+		{
+			player->languageService->PrintChat(true, false, "Replay - Invalid Timescale", KZ_REPLAY_MAX_TIMESCALE);
+			return;
+		}
+
+		// A timescale of 0 is a pause, so resuming goes back to the speed the replay had before.
+		if (timescale == 0.0f)
+		{
+			replay->replayPaused = true;
+			player->languageService->PrintChat(true, false, "Replay - Paused");
+			return;
+		}
+
+		replay->timescale = timescale;
+		player->languageService->PrintChat(true, false, "Replay - Timescale Set", timescale);
 	}
 
 	void CheckReplayLoadProgress(KZPlayer *player)
@@ -933,6 +975,18 @@ SCMD(kz_rppause, SCFL_REPLAY)
 	}
 
 	KZ::replaysystem::commands::ToggleReplayPause(player);
+	return true;
+}
+
+SCMD(kz_rptimescale, SCFL_REPLAY)
+{
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
+	if (!player)
+	{
+		return true;
+	}
+
+	KZ::replaysystem::commands::SetReplayTimescale(player, args->ArgC() >= 2 ? args->Arg(1) : "");
 	return true;
 }
 

@@ -1,6 +1,7 @@
 #include "kz.h"
 #include "utils/utils.h"
 #include "utils/ctimer.h"
+#include "utils/hooks.h"
 #include "anticheat/kz_anticheat.h"
 #include "beam/kz_beam.h"
 #include "checkpoint/kz_checkpoint.h"
@@ -220,6 +221,43 @@ void KZPlayer::OnAuthorized()
 void KZPlayer::OnPhysicsSimulate()
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
+	if (KZ::replaysystem::BeginServerTick(this))
+	{
+		this->SimulateTick();
+	}
+}
+
+void KZPlayer::OnPhysicsSimulatePost()
+{
+	VPROF_BUDGET(__func__, "CS2KZ");
+	if (!KZ::replaysystem::IsHoldingTick(this))
+	{
+		this->SimulateTickPost();
+	}
+	KZ::replaysystem::EndServerTick(this);
+}
+
+bool KZPlayer::OnPlayerRunCommand(PlayerCommand *cmd)
+{
+	if (!KZ::replaysystem::OnPlayerRunCommandPre(this, cmd))
+	{
+		return false;
+	}
+	// Fast replay playback simulates several replay ticks in one server tick. The engine runs the last command, the
+	// others run here with the same per-tick logic around them.
+	while (KZ::replaysystem::HasQueuedReplayTicks(this))
+	{
+		hooks::CallOriginalPlayerRunCommand(this->GetMoveServices(), cmd);
+		this->SimulateTickPost();
+		KZ::replaysystem::BeginReplayTick(this);
+		this->SimulateTick();
+		KZ::replaysystem::OnPlayerRunCommandPre(this, cmd);
+	}
+	return true;
+}
+
+void KZPlayer::SimulateTick()
+{
 	MovementPlayer::OnPhysicsSimulate();
 
 	// sv_subtick_movement_view_angles is checked inside SetupMove, so the cvars have to be set before that.
@@ -239,9 +277,8 @@ void KZPlayer::OnPhysicsSimulate()
 	KZ::replaysystem::OnPhysicsSimulate(this);
 }
 
-void KZPlayer::OnPhysicsSimulatePost()
+void KZPlayer::SimulateTickPost()
 {
-	VPROF_BUDGET(__func__, "CS2KZ");
 	MovementPlayer::OnPhysicsSimulatePost();
 	this->anticheatService->OnPhysicsSimulatePost();
 	this->recordingService->OnPhysicsSimulatePost();

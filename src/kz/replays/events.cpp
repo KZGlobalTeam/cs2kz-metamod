@@ -89,7 +89,7 @@ namespace KZ::replaysystem::events
 					spec->timerService->PlayTimerStartSound();
 				}
 
-				replay->startTime = g_pKZUtils->GetServerGlobals()->curtime - event->data.timer.time;
+				replay->startTime = event->serverTick * ENGINE_FIXED_TICK_INTERVAL - event->data.timer.time;
 				replay->endTime = 0.0f;
 				replay->lastSplitTime = 0.0f;
 				replay->lastCPZTime = 0.0f;
@@ -397,14 +397,8 @@ namespace KZ::replaysystem::events
 							replay->lastCPZTime = 0.0f;
 							replay->lastStageTime = 0.0f;
 
-							// Calculate start time relative to current server time
-							replay->startTime = g_pKZUtils->GetServerGlobals()->curtime - event->data.timer.time;
-
-							// When seeking, adjust start time by the time difference
-							f32 eventGameTime = event->serverTick * ENGINE_FIXED_TICK_INTERVAL;
-							f32 targetGameTime = replay->tickData[targetTick].gameTime;
-							f32 timeDifference = targetGameTime - eventGameTime;
-							replay->startTime -= timeDifference;
+							// The bot's clock is the recording's, so the timer started where the recording says it did.
+							replay->startTime = event->serverTick * ENGINE_FIXED_TICK_INTERVAL - event->data.timer.time;
 
 							// Pause calculation
 							inPause = false;

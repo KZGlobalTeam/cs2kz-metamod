@@ -3,6 +3,9 @@
 #include "igameevents.h"
 #include "iserver.h"
 
+class CCSPlayer_MovementServices;
+class PlayerCommand;
+
 namespace hooks
 {
 	bool Initialize(char *error, size_t maxlen);
@@ -15,4 +18,5 @@ namespace hooks
 	void CallOriginalStartTouch(CBaseEntity *pThis, CBaseEntity *pOther);
 	void CallOriginalTouch(CBaseEntity *pThis, CBaseEntity *pOther);
 	void CallOriginalEndTouch(CBaseEntity *pThis, CBaseEntity *pOther);
+	void CallOriginalPlayerRunCommand(CCSPlayer_MovementServices *pThis, PlayerCommand *pCmd);
 } // namespace hooks

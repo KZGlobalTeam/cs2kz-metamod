@@ -32,6 +32,31 @@ namespace KZ::replaysystem
 		data::ProcessAsyncLoadCompletion();
 	}
 
+	bool BeginServerTick(KZPlayer *player)
+	{
+		return playback::BeginServerTick(player);
+	}
+
+	void BeginReplayTick(KZPlayer *player)
+	{
+		playback::BeginReplayTick(player);
+	}
+
+	bool HasQueuedReplayTicks(KZPlayer *player)
+	{
+		return playback::HasQueuedReplayTicks(player);
+	}
+
+	bool IsHoldingTick(KZPlayer *player)
+	{
+		return playback::IsHoldingTick(player);
+	}
+
+	void EndServerTick(KZPlayer *player)
+	{
+		playback::EndServerTick(player);
+	}
+
 	void OnPhysicsSimulate(KZPlayer *player)
 	{
 		playback::OnPhysicsSimulate(player);
@@ -57,9 +82,9 @@ namespace KZ::replaysystem
 		playback::OnPhysicsSimulatePost(player);
 	}
 
-	void OnPlayerRunCommandPre(KZPlayer *player, PlayerCommand *command)
+	bool OnPlayerRunCommandPre(KZPlayer *player, PlayerCommand *command)
 	{
-		playback::OnPlayerRunCommandPre(player, command);
+		return playback::OnPlayerRunCommandPre(player, command);
 	}
 
 	bool IsReplayBot(KZPlayer *player)

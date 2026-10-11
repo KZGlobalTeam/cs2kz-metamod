@@ -17,12 +17,20 @@ namespace KZ::replaysystem
 	void Cleanup();
 	void OnRoundStart();
 	void OnGameFrame();
+	// A replay bot runs its per-tick logic once per replay tick, which can be zero or several times in a server tick.
+	// playback.h explains the order these are called in.
+	bool BeginServerTick(KZPlayer *player);
+	void BeginReplayTick(KZPlayer *player);
+	bool HasQueuedReplayTicks(KZPlayer *player);
+	bool IsHoldingTick(KZPlayer *player);
+	void EndServerTick(KZPlayer *player);
 	void OnPhysicsSimulate(KZPlayer *player);
 	void OnProcessMovement(KZPlayer *player);
 	void OnProcessMovementPost(KZPlayer *player);
 	void OnFinishMovePre(KZPlayer *player, CMoveData *pMoveData);
 	void OnPhysicsSimulatePost(KZPlayer *player);
-	void OnPlayerRunCommandPre(KZPlayer *player, PlayerCommand *command);
+	// Returns false when the command must not run.
+	bool OnPlayerRunCommandPre(KZPlayer *player, PlayerCommand *command);
 	bool IsReplayBot(KZPlayer *player);
 	bool CanTouchTrigger(KZPlayer *player, CBaseTrigger *trigger);
 

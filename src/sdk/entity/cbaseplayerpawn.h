@@ -7,7 +7,7 @@ class CPlayer_CameraServices;
 class CCSPlayer_ItemServices;
 class CPlayer_WeaponServices;
 
-#include "cbasemodelentity.h"
+#include "cbaseanimgraph.h"
 
 // One pending server-side view angle change. SnapViewAngles clears the vector and appends an absolute
 // one; the client echoes the last nIndex it applied as CBaseUserCmdPB::consumed_server_angle_changes.
@@ -20,7 +20,7 @@ public:
 	SCHEMA_FIELD(uint32, nIndex)
 };
 
-class CBasePlayerPawn : public CBaseModelEntity
+class CBasePlayerPawn : public CBaseAnimGraph
 {
 public:
 	DECLARE_SCHEMA_CLASS_ENTITY(CBasePlayerPawn);

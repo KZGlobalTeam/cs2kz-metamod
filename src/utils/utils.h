@@ -43,6 +43,8 @@ namespace utils
 	// Gets the difference in angle between 2 angles.
 	// c can be PI (for radians) or 180.0 (for degrees);
 	f32 GetAngleDifference(const f32 x, const f32 y, const f32 c, bool relative = false);
+	// Interpolates between 2 angles in degrees the short way around.
+	f32 LerpAngle(f32 from, f32 to, f32 fraction);
 
 	// Print functions
 	bool CFormat(char *buffer, u64 buffer_size, const char *text);

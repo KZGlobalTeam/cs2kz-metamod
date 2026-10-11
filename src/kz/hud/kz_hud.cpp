@@ -109,7 +109,7 @@ void KZHUDService::OnSetupMove(PlayerCommand *cmd)
 	{
 		return;
 	}
-	const f64 now = g_pKZUtils->GetServerGlobals()->curtime;
+	const f64 now = this->player->GetCurtime();
 	if (now >= this->jumpInputExpireTime)
 	{
 		this->jumpInputCount = 0;
@@ -120,7 +120,7 @@ void KZHUDService::OnSetupMove(PlayerCommand *cmd)
 
 i32 KZHUDService::GetJumpInputCount() const
 {
-	return g_pKZUtils->GetServerGlobals()->curtime < this->jumpInputExpireTime ? this->jumpInputCount : 0;
+	return this->player->GetCurtime() < this->jumpInputExpireTime ? this->jumpInputCount : 0;
 }
 
 KZHUDService::SpeedInfo KZHUDService::GetSpeedInfo(const MHUDPrefs &prefs)
@@ -144,8 +144,8 @@ KZHUDService::SpeedInfo KZHUDService::GetSpeedInfo(const MHUDPrefs &prefs)
 	info.speed = velocity.Length2D();
 	// Keep the takeoff velocity on for a while after landing so the speed values flicker less.
 	// mhudPrespeedShow == Always skips this timeout, so the last takeoff speed keeps showing while grounded.
-	const bool pastGraceWindow = this->player->GetPlayerPawn()->m_fFlags & FL_ONGROUND
-								 && g_pKZUtils->GetServerGlobals()->curtime - this->player->landingTime > KZ_HUD_ON_GROUND_THRESHOLD;
+	const bool pastGraceWindow =
+		this->player->GetPlayerPawn()->m_fFlags & FL_ONGROUND && this->player->GetCurtime() - this->player->landingTime > KZ_HUD_ON_GROUND_THRESHOLD;
 	if ((pastGraceWindow && prefs.prespeedShow != MHUDPrespeedShow::Always)
 		|| (this->player->GetPlayerPawn()->m_MoveType == MOVETYPE_LADDER && !player->IsButtonPressed(IN_JUMP)))
 	{

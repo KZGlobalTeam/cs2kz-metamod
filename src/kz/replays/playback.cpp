@@ -1,5 +1,7 @@
 #include "cs2kz.h"
 #include "kz/kz.h"
+#include "kz/hud/kz_hud.h"
+#include "kz/mode/kz_mode.h"
 #include "kz_replay.h"
 #include "playback.h"
 #include "data.h"
@@ -7,9 +9,147 @@
 #include "item.h"
 #include "events.h"
 #include "sdk/usercmd.h"
+#include "utils/utils.h"
 
 namespace KZ::replaysystem::playback
 {
+	struct HeldState
+	{
+		Vector origin;
+		QAngle angles;
+		Vector velocity;
+	};
+
+	static_global CHandle<CCSPlayerController> clockOwner;
+	static_global bool botTimeApplied;
+	static_global i32 serverTickCount;
+	static_global f32 serverCurtime;
+
+	static_function bool IsTeleportInTick(const data::ReplayPlayback *replay, const TickData *tickData)
+	{
+		// The tick has not been played yet, so its events start at currentEvent.
+		for (u32 i = replay->currentEvent; i < replay->numEvents && replay->events[i].serverTick <= tickData->serverTick; i++)
+		{
+			if (replay->events[i].type == RPEVENT_TELEPORT && replay->events[i].serverTick == tickData->serverTick)
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	// The bot's state part of the way through currentTick, shown on server ticks that do not simulate a replay tick.
+	static_function HeldState GetHeldState(const data::ReplayPlayback *replay, const TickData *tickData)
+	{
+		// A teleport during the tick cannot be interpolated across, so the bot waits where the tick starts.
+		f32 fraction = IsTeleportInTick(replay, tickData) ? 0.0f : replay->tickProgress;
+		const TickData::MovementData &pre = tickData->pre;
+		const TickData::MovementData &post = tickData->post;
+		// A tick's pre angles are already the ones its command asks for, so the turn is from where the last tick ended.
+		const QAngle &from = replay->currentTick > 0 ? replay->tickData[replay->currentTick - 1].post.angles : pre.angles;
+
+		HeldState state;
+		state.origin = Lerp(fraction, pre.origin, post.origin);
+		state.angles.x = utils::LerpAngle(from.x, post.angles.x, fraction);
+		state.angles.y = utils::LerpAngle(from.y, post.angles.y, fraction);
+		state.angles.z = utils::LerpAngle(from.z, post.angles.z, fraction);
+		state.velocity = Lerp(fraction, pre.velocity, post.velocity);
+		return state;
+	}
+
+	// The bot's clock only moves when a replay tick is simulated. While it simulates, the plugin's copy of the server
+	// globals holds that clock, the same way PlayerRunCommand puts it in the engine's globals.
+	static_function void ApplyBotTime()
+	{
+		if (!botTimeApplied)
+		{
+			serverTickCount = g_KZPlugin.serverGlobals.tickcount;
+			serverCurtime = g_KZPlugin.serverGlobals.curtime;
+			botTimeApplied = true;
+		}
+		g_KZPlugin.serverGlobals.tickcount = data::GetBotTickcount();
+		g_KZPlugin.serverGlobals.curtime = data::GetBotCurtime();
+	}
+
+	static_function void RestoreServerTime()
+	{
+		if (botTimeApplied)
+		{
+			g_KZPlugin.serverGlobals.tickcount = serverTickCount;
+			g_KZPlugin.serverGlobals.curtime = serverCurtime;
+			botTimeApplied = false;
+		}
+	}
+
+	static_function bool IsPlayingOn(KZPlayer *player)
+	{
+		return player && bot::IsValidBot(player->GetController()) && data::GetCurrentReplay()->playingReplay;
+	}
+
+	bool BeginServerTick(KZPlayer *player)
+	{
+		if (!IsPlayingOn(player))
+		{
+			return true;
+		}
+
+		auto replay = data::GetCurrentReplay();
+		if (clockOwner != player->GetController())
+		{
+			clockOwner = player->GetController();
+			replay->hasLastMoveData = false;
+		}
+
+		replay->tickProgress += replay->replayPaused ? 0.0f : replay->timescale;
+		u32 ticks = (u32)replay->tickProgress;
+		replay->tickProgress -= (f32)ticks;
+		if (!replay->hasLastMoveData && ticks == 0)
+		{
+			// Holding reuses the move data of a simulated tick, so the bot has to simulate one first.
+			ticks = 1;
+			replay->tickProgress = 0.0f;
+		}
+		// The replay must not end in the middle of a command, so its last tick is always the one the engine runs.
+		replay->pendingTicks = MIN(ticks, replay->tickCount - replay->currentTick);
+		replay->holdingTick = replay->pendingTicks == 0;
+		if (replay->holdingTick)
+		{
+			return false;
+		}
+		BeginReplayTick(player);
+		return true;
+	}
+
+	void BeginReplayTick(KZPlayer *player)
+	{
+		if (!IsPlayingOn(player))
+		{
+			return;
+		}
+		data::SetBotTickcount(data::GetCurrentReplay()->tickData[data::GetCurrentReplay()->currentTick].serverTick);
+		ApplyBotTime();
+	}
+
+	bool HasQueuedReplayTicks(KZPlayer *player)
+	{
+		return IsPlayingOn(player) && data::GetCurrentReplay()->pendingTicks > 1;
+	}
+
+	bool IsHoldingTick(KZPlayer *player)
+	{
+		return IsPlayingOn(player) && data::GetCurrentReplay()->holdingTick;
+	}
+
+	void EndServerTick(KZPlayer *player)
+	{
+		RestoreServerTime();
+		if (IsPlayingOn(player))
+		{
+			data::GetCurrentReplay()->pendingTicks = 0;
+			data::GetCurrentReplay()->holdingTick = false;
+		}
+	}
+
 	void OnPhysicsSimulate(KZPlayer *player)
 	{
 		if (!player || !bot::IsValidBot(player->GetController()))
@@ -32,25 +172,21 @@ namespace KZ::replaysystem::playback
 		pawn->m_vecAbsVelocity(tickData->pre.velocity);
 
 		auto moveServices = player->GetMoveServices();
-		moveServices->m_LegacyJump().m_flJumpPressedTime =
-			g_pKZUtils->GetServerGlobals()->curtime + tickData->pre.jumpPressedTime - tickData->gameTime;
+		// The bot's clock is the one the replay was recorded on, so recorded times can be used directly instead of being adjusted.
+		moveServices->m_LegacyJump().m_flJumpPressedTime = tickData->pre.jumpPressedTime;
 
 		moveServices->m_flDuckSpeed = tickData->pre.duckSpeed;
 		moveServices->m_flDuckAmount = tickData->pre.duckAmount;
-		moveServices->m_flLastDuckTime = g_pKZUtils->GetServerGlobals()->curtime + tickData->pre.lastDuckTime - tickData->gameTime;
+		moveServices->m_flLastDuckTime = tickData->pre.lastDuckTime;
 		moveServices->m_bDucking = tickData->pre.replayFlags.ducking;
 		moveServices->m_bDucked = tickData->pre.replayFlags.ducked;
 		moveServices->m_bDesiresDuck = tickData->pre.replayFlags.desiresDuck;
 
-		// Apply modern jump data with tick offset
-		moveServices->m_ModernJump().m_nLastActualJumpPressTick =
-			g_pKZUtils->GetServerGlobals()->tickcount + tickData->modernJump.lastActualJumpPressTick - tickData->serverTick;
+		moveServices->m_ModernJump().m_nLastActualJumpPressTick = tickData->modernJump.lastActualJumpPressTick;
 		moveServices->m_ModernJump().m_flLastActualJumpPressFrac = tickData->modernJump.lastActualJumpPressFrac;
-		moveServices->m_ModernJump().m_nLastUsableJumpPressTick =
-			g_pKZUtils->GetServerGlobals()->tickcount + tickData->modernJump.lastUsableJumpPressTick - tickData->serverTick;
+		moveServices->m_ModernJump().m_nLastUsableJumpPressTick = tickData->modernJump.lastUsableJumpPressTick;
 		moveServices->m_ModernJump().m_flLastUsableJumpPressFrac = tickData->modernJump.lastUsableJumpPressFrac;
-		moveServices->m_ModernJump().m_nLastLandedTick =
-			g_pKZUtils->GetServerGlobals()->tickcount + tickData->modernJump.lastLandedTick - tickData->serverTick;
+		moveServices->m_ModernJump().m_nLastLandedTick = tickData->modernJump.lastLandedTick;
 		moveServices->m_ModernJump().m_flLastLandedFrac = tickData->modernJump.lastLandedFrac;
 		moveServices->m_ModernJump().m_flLastLandedVelocityX = tickData->modernJump.lastLandedVelocity.x;
 		moveServices->m_ModernJump().m_flLastLandedVelocityY = tickData->modernJump.lastLandedVelocity.y;
@@ -113,13 +249,23 @@ namespace KZ::replaysystem::playback
 		// Setting the origin via teleport will break client interp, set the values directly.
 		// We have to do it here to be ahead of SetAbsOrigin calls in FinishMove.
 		TickData *tickData = &replay->tickData[replay->currentTick];
-		mv->m_vecAbsOrigin = tickData->post.origin;
-		mv->m_vecVelocity = tickData->post.velocity;
-		mv->m_vecViewAngles = tickData->post.angles;
+		if (replay->holdingTick)
+		{
+			HeldState held = GetHeldState(replay, tickData);
+			mv->m_vecAbsOrigin = held.origin;
+			mv->m_vecVelocity = held.velocity;
+			mv->m_vecViewAngles = held.angles;
+		}
+		else
+		{
+			mv->m_vecAbsOrigin = tickData->post.origin;
+			mv->m_vecVelocity = tickData->post.velocity;
+			mv->m_vecViewAngles = tickData->post.angles;
+		}
 
 		// Directly set the pawn's origin/angles/velocity to something else so that they will be resynchronized.
 		auto pawn = player->GetPlayerPawn();
-		pawn->m_CBodyComponent()->m_pSceneNode()->m_vecAbsOrigin(tickData->post.origin + Vector(0, 0, 1000)); // Move it up so it's obviously wrong
+		pawn->m_CBodyComponent()->m_pSceneNode()->m_vecAbsOrigin(mv->m_vecAbsOrigin + Vector(0, 0, 1000)); // Move it up so it's obviously wrong
 	}
 
 	void OnPhysicsSimulatePost(KZPlayer *player)
@@ -142,12 +288,11 @@ namespace KZ::replaysystem::playback
 		moveServices->m_nButtons().m_pButtonStates[0] = tickData->post.buttons[0];
 		moveServices->m_nButtons().m_pButtonStates[1] = tickData->post.buttons[1];
 		moveServices->m_nButtons().m_pButtonStates[2] = tickData->post.buttons[2];
-		moveServices->m_LegacyJump().m_flJumpPressedTime =
-			g_pKZUtils->GetServerGlobals()->curtime + tickData->post.jumpPressedTime - tickData->gameTime;
+		moveServices->m_LegacyJump().m_flJumpPressedTime = tickData->post.jumpPressedTime;
 
 		moveServices->m_flDuckSpeed = tickData->post.duckSpeed;
 		moveServices->m_flDuckAmount = tickData->post.duckAmount;
-		moveServices->m_flLastDuckTime = g_pKZUtils->GetServerGlobals()->curtime + tickData->post.lastDuckTime - tickData->gameTime;
+		moveServices->m_flLastDuckTime = tickData->post.lastDuckTime;
 		moveServices->m_bDucking = tickData->post.replayFlags.ducking;
 		moveServices->m_bDucked = tickData->post.replayFlags.ducked;
 		moveServices->m_bDesiresDuck = tickData->post.replayFlags.desiresDuck;
@@ -155,24 +300,14 @@ namespace KZ::replaysystem::playback
 		u32 playerFlagBits = (-1) & ~((u32)(FL_CLIENT | FL_FAKECLIENT | FL_BOT));
 		pawn->m_fFlags = (pawn->m_fFlags & ~playerFlagBits) | (tickData->post.entityFlags & playerFlagBits);
 		pawn->v_angle = tickData->post.angles;
+		pawn->SetAnimGraphUpdateEnabled(true);
 
-		// If replay is paused, disable gravity and freeze the bot at current tick
-		if (replay->replayPaused)
+		// MoveHeldBot hands this back to FinishMove on server ticks that do not simulate.
+		if (player->currentMoveData)
 		{
-			// Disable gravity to prevent physics interference
-			pawn->SetGravityScale(0.0f);
-			// Keep velocity at zero to prevent movement
-			pawn->m_vecAbsVelocity(Vector(0, 0, 0));
-			// Don't advance tick or process events/jumps
-			if (replay->startTime > 0.0f)
-			{
-				replay->startTime += ENGINE_FIXED_TICK_INTERVAL;
-			}
-			return;
+			memcpy(replay->lastMoveData, player->currentMoveData, sizeof(replay->lastMoveData));
+			replay->hasLastMoveData = true;
 		}
-
-		// Restore normal gravity when not paused
-		pawn->SetGravityScale(1.0f);
 
 		// Update checkpoint state from current tick data
 		replay->currentCpIndex = tickData->checkpoint.index;
@@ -189,6 +324,10 @@ namespace KZ::replaysystem::playback
 		}
 
 		replay->currentTick++;
+		if (replay->pendingTicks > 0)
+		{
+			replay->pendingTicks--;
+		}
 		if (replay->currentTick >= replay->tickCount)
 		{
 			bot::KickBot();
@@ -196,22 +335,56 @@ namespace KZ::replaysystem::playback
 		}
 	}
 
-	void OnPlayerRunCommandPre(KZPlayer *player, PlayerCommand *command)
+	// Moves the bot between two replay ticks without simulating, so that nothing but where it is changes.
+	static_function void MoveHeldBot(KZPlayer *player, PlayerCommand *command)
+	{
+		auto replay = data::GetCurrentReplay();
+		auto pawn = player->GetPlayerPawn();
+		auto moveServices = player->GetMoveServices();
+		if (!replay->hasLastMoveData || !pawn || !moveServices)
+		{
+			return;
+		}
+
+		CMoveData *mv = reinterpret_cast<CMoveData *>(replay->lastMoveData);
+		mv->m_nPlayerHandle = pawn->GetRefEHandle();
+		f32 fallVelocity = moveServices->m_flFallVelocity;
+		// OnFinishMovePre fills in the held state.
+		static_persist const i32 offset = g_pGameConfig->GetOffset("FinishMove");
+		CALL_VIRTUAL(void, offset, moveServices, command, mv);
+		moveServices->m_flFallVelocity = fallVelocity;
+		// The engine resets a bot's tick base every server tick, and GetCurtime reads it.
+		player->GetController()->m_nTickBase(data::GetBotTickcount());
+
+		pawn->m_angEyeAngles(mv->m_vecViewAngles);
+		// Freezes the pose on clients until the next replay tick, so slow playback also slows the animations.
+		pawn->SetAnimGraphUpdateEnabled(false);
+	}
+
+	bool OnPlayerRunCommandPre(KZPlayer *player, PlayerCommand *command)
 	{
 		if (!player || !bot::IsValidBot(player->GetController()))
 		{
-			return;
+			return true;
 		}
 
 		auto replay = data::GetCurrentReplay();
 		if (!replay->playingReplay)
 		{
-			return;
+			return true;
 		}
 		if (replay->currentTick >= replay->tickCount)
 		{
-			return;
+			return true;
 		}
+		if (replay->holdingTick)
+		{
+			MoveHeldBot(player, command);
+			return false;
+		}
+
+		// PlayerRunCommand advances the tick base by one and runs the command at that tick.
+		player->GetController()->m_nTickBase(data::GetBotTickcount() - 1);
 
 		TickData *tickData = &replay->tickData[replay->currentTick];
 		command->mutable_base()->set_forwardmove(tickData->forward);
@@ -232,21 +405,25 @@ namespace KZ::replaysystem::playback
 			command->mutable_base()->mutable_viewangles()->set_z(tickData->pre.angles.z);
 		}
 
+		// Fast playback runs the same command object for several replay ticks, so nothing may be left over from the last one.
+		command->mutable_base()->mutable_buttons_pb()->Clear();
+		command->mutable_base()->clear_weaponselect();
+		command->clear_left_hand_desired();
 		if (tickData->pre.buttons[0])
 		{
 			command->mutable_base()->mutable_buttons_pb()->set_buttonstate1(tickData->pre.buttons[0]);
-			command->buttonstates.m_pButtonStates[0] = tickData->pre.buttons[0];
 		}
 		if (tickData->pre.buttons[1])
 		{
 			command->mutable_base()->mutable_buttons_pb()->set_buttonstate2(tickData->pre.buttons[1]);
-			command->buttonstates.m_pButtonStates[1] = tickData->pre.buttons[1];
 		}
 		if (tickData->pre.buttons[2])
 		{
 			command->mutable_base()->mutable_buttons_pb()->set_buttonstate3(tickData->pre.buttons[2]);
-			command->buttonstates.m_pButtonStates[2] = tickData->pre.buttons[2];
 		}
+		command->buttonstates.m_pButtonStates[0] = tickData->pre.buttons[0];
+		command->buttonstates.m_pButtonStates[1] = tickData->pre.buttons[1];
+		command->buttonstates.m_pButtonStates[2] = tickData->pre.buttons[2];
 
 		if (tickData->leftHanded)
 		{
@@ -289,6 +466,7 @@ namespace KZ::replaysystem::playback
 		}
 		KZ_LOG_DEBUG(LogChannel::Replays, "%s\n", command->DebugString().c_str());
 		CheckWeapon(*player, *command);
+		return true;
 	}
 
 	void CheckWeapon(KZPlayer &player, PlayerCommand &cmd)
@@ -389,6 +567,10 @@ namespace KZ::replaysystem::playback
 			CBasePlayerWeapon *newWeapon = player.GetPlayerPawn()->m_pItemServices()->GiveNamedItem(weaponName.c_str());
 			if (newWeapon)
 			{
+				// The weapon stamps its attack timers with server time when it is given, but they run on the bot's clock.
+				i32 clockOffset = data::GetBotTickcount() - g_pKZUtils->GetGlobals()->tickcount;
+				newWeapon->m_nNextPrimaryAttackTick(newWeapon->m_nNextPrimaryAttackTick() + clockOffset);
+				newWeapon->m_nNextSecondaryAttackTick(newWeapon->m_nNextSecondaryAttackTick() + clockOffset);
 				KZ::replaysystem::item::ApplyItemAttributesToWeapon(*newWeapon, desiredWeapon);
 				cmd.mutable_base()->set_weaponselect(newWeapon->entindex());
 			}
@@ -417,7 +599,38 @@ namespace KZ::replaysystem::playback
 		}
 		replay->playingReplay = true;
 		replay->replayPaused = false;
+		replay->timescale = 1.0f;
+		replay->tickProgress = 0.0f;
 		replay->currentTick = 0;
+		ResetBotClock(bot::GetBotPlayer(), replay->tickData[0].serverTick);
+	}
+
+	void ResetBotClock(KZPlayer *player, u32 tick)
+	{
+		data::SetBotTickcount(tick);
+		if (!player || !player->GetPlayerPawn())
+		{
+			return;
+		}
+
+		// Anything stamped on the clock before the jump can now be in the future.
+		player->takeoffTime = 0.0f;
+		player->landingTime = 0.0f;
+		player->landingTimeServer = 0.0f;
+		player->landingTimeActual = 0.0f;
+		player->hudService->Reset();
+		player->modeService->Reset();
+		CUtlVector<CHandle<CBasePlayerWeapon>> *weapons = player->GetPlayerPawn()->m_pWeaponServices()->m_hMyWeapons();
+		for (i32 i = 0; i < weapons->Count(); i++)
+		{
+			CBasePlayerWeapon *weapon = weapons->Element(i).Get();
+			if (!weapon)
+			{
+				continue;
+			}
+			weapon->m_nNextPrimaryAttackTick(MIN(weapon->m_nNextPrimaryAttackTick(), (i32)tick));
+			weapon->m_nNextSecondaryAttackTick(MIN(weapon->m_nNextSecondaryAttackTick(), (i32)tick));
+		}
 	}
 
 	void ApplyTickState(KZPlayer *player, const TickData *tickData)
@@ -439,7 +652,7 @@ namespace KZ::replaysystem::playback
 		auto moveServices = player->GetMoveServices();
 		moveServices->m_flDuckSpeed = tickData->post.duckSpeed;
 		moveServices->m_flDuckAmount = tickData->post.duckAmount;
-		moveServices->m_flLastDuckTime = g_pKZUtils->GetServerGlobals()->curtime + tickData->post.lastDuckTime - tickData->gameTime;
+		moveServices->m_flLastDuckTime = tickData->post.lastDuckTime;
 		moveServices->m_bDucking = tickData->post.replayFlags.ducking;
 		moveServices->m_bDucked = tickData->post.replayFlags.ducked;
 		moveServices->m_bDesiresDuck = tickData->post.replayFlags.desiresDuck;

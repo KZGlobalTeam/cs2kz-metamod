@@ -76,6 +76,12 @@ void MovementPlayer::GetOrigin(Vector *origin)
 	}
 }
 
+f32 MovementPlayer::GetCurtime()
+{
+	CCSPlayerController *controller = this->GetController();
+	return controller ? controller->m_nTickBase() * ENGINE_FIXED_TICK_INTERVAL : g_pKZUtils->GetServerGlobals()->curtime;
+}
+
 void MovementPlayer::Teleport(const Vector *origin, const QAngle *angles, const Vector *velocity)
 {
 	CBasePlayerPawn *pawn = this->GetPlayerPawn();

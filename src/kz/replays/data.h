@@ -50,6 +50,16 @@ namespace KZ::replaysystem::data
 		u32 currentTick;
 		bool playingReplay;
 		bool replayPaused;
+		f32 timescale;
+		// How far the bot is from currentTick's pre state to its post state, in replay ticks.
+		f32 tickProgress;
+		// Replay ticks left to simulate this server tick.
+		u32 pendingTicks;
+		// Set on server ticks that simulate nothing and only move the bot between two replay ticks.
+		bool holdingTick;
+		bool hasLastMoveData;
+		// Raw bytes, the engine's CUtlVectors inside must not be copied or freed by ReplayPlayback.
+		alignas(CMoveData) u8 lastMoveData[sizeof(CMoveData)];
 	};
 
 	// Callback function types for async loading
@@ -102,6 +112,10 @@ namespace KZ::replaysystem::data
 	i32 GetCheckpointCount();
 	i32 GetTeleportCount();
 	f32 GetReplayTime();
+	// The bot's clock, which moves one tick per simulated replay tick, not with the server.
+	i32 GetBotTickcount();
+	void SetBotTickcount(i32 tick);
+	f32 GetBotCurtime();
 	f32 GetEndTime();
 	bool GetPaused();
 	const char *GetCourseName();

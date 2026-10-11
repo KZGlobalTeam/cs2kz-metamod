@@ -1828,6 +1828,10 @@
 		"es"		"Pausar o resumir la repetición actual."
 		"ko"		"현재 리플레이를 일시 정지하거나 재개합니다."
 	}
+  	"Command Description - kz_rptimescale"
+	{
+		"en"		"Set the playback speed of the current replay."
+	}
   	"Command Description - kz_rploadprogress"
 	{
 		"en"		"Display the loading progress of the replay."

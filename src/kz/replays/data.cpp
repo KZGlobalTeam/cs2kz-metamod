@@ -15,6 +15,7 @@ static KZ::replaysystem::data::ReplayPlayback g_currentReplay = {};
 static KZ::replaysystem::data::AsyncLoadStatus g_loadStatus = {};
 static std::thread g_loadThread;
 static std::atomic<bool> g_cancelLoad {false};
+static_global i32 botTickcount;
 
 namespace KZ::replaysystem::data
 {
@@ -76,6 +77,7 @@ namespace KZ::replaysystem::data
 
 		// Reset replay pause state
 		replay->replayPaused = false;
+		replay->tickProgress = 0.0f;
 	}
 
 	ReplayPlayback *GetCurrentReplay()
@@ -110,7 +112,22 @@ namespace KZ::replaysystem::data
 
 	f32 GetReplayTime()
 	{
-		return g_currentReplay.startTime == 0.0f ? 0.0f : (g_pKZUtils->GetServerGlobals()->curtime - g_currentReplay.startTime);
+		return g_currentReplay.startTime == 0.0f ? 0.0f : (GetBotCurtime() - g_currentReplay.startTime);
+	}
+
+	i32 GetBotTickcount()
+	{
+		return botTickcount;
+	}
+
+	void SetBotTickcount(i32 tick)
+	{
+		botTickcount = tick;
+	}
+
+	f32 GetBotCurtime()
+	{
+		return botTickcount * ENGINE_FIXED_TICK_INTERVAL;
 	}
 
 	f32 GetEndTime()

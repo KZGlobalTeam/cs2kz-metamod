@@ -29,6 +29,7 @@ public:
 	SCHEMA_FIELD_POINTER(char, m_iszPlayerName)
 	SCHEMA_FIELD(PlayerConnectedState, m_iConnected)
 	SCHEMA_FIELD(uint32, m_iDesiredFOV)
+	SCHEMA_FIELD(uint32, m_nTickBase)
 
 	void SetOrRefreshPlayerName(const char *name = nullptr)
 	{
