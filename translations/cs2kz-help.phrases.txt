@@ -4,13 +4,13 @@
 	"Help - Title"
 	{
 		"en"		"Command Help"
-		"chi"		"命令帮助"
+		"chi"		"指令帮助"
 		"zho"		"指令說明"
 	}
 	"Help - Hint"
 	{
 		"en"		"Type !<command> or /<command> in chat. Type kz_help in console for console help."
-		"chi"		"在聊天栏输入 !<command> 或 /<command>。在控制台输入 kz_help 查看控制台帮助。"
+		"chi"		"在聊天栏输入 !<command> 或 /<command>。在控制台输入 kz_help 查看控制台指令帮助。"
 		"zho"		"在聊天欄輸入 !<command> 或 /<command>。在控制台輸入 kz_help 查看控制台指令說明。"
 	}
 	"Help - Usage"
