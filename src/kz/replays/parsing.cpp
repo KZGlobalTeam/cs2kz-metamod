@@ -30,6 +30,9 @@ namespace KZ::replaysystem::parsing
 		} data;
 	};
 
+	// Should always stay the same, if this fails that means old replays will no longer be compatible.
+	static_assert(sizeof(LegacyEvent) == 172);
+
 	static_function bool ReadLegacyEvents(const char *bytes, size_t size, u32 count, std::vector<RpEvent> &events)
 	{
 		if ((u64)count * sizeof(LegacyEvent) != size)
