@@ -52,6 +52,7 @@ private:
 	CustomStartPosition customStartPosition;
 	Checkpoint lastTeleportedCheckpoint {};
 	bool lastTeleportForcedOnGround {};
+	void DoTeleport(const Checkpoint cp, bool stayOnGround, i32 checkpointIndex, bool undo);
 
 public:
 	void OnPlayerPreferencesLoaded();
