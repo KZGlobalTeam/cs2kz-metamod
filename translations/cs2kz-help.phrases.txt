@@ -1,84 +1,125 @@
+
 "Phrases"
 {
 	"Help - Title"
 	{
 		"en"		"Command Help"
+		"chi"		"命令帮助"
+		"zho"		"指令說明"
 	}
 	"Help - Hint"
 	{
 		"en"		"Type !<command> or /<command> in chat. Type kz_help in console for console help."
+		"chi"		"在聊天栏输入 !<command> 或 /<command>。在控制台输入 kz_help 查看控制台帮助。"
+		"zho"		"在聊天欄輸入 !<command> 或 /<command>。在控制台輸入 kz_help 查看控制台指令說明。"
 	}
 	"Help - Usage"
 	{
 		"#format"	"usage:s"
 		"en"		"Usage: {usage}"
+		"chi"		"用法：{usage}"
+		"zho"		"使用方式：{usage}"
 	}
 	"Help - Category - Checkpoint"
 	{
 		"en"		"Checkpoints"
+		"chi"		"存点"
+		"zho"		"儲存點"
 	}
 	"Help - Category - Record"
 	{
 		"en"		"Records"
+		"chi"		"记录"
+		"zho"		"紀錄"
 	}
 	"Help - Category - Jumpstats"
 	{
 		"en"		"Jumpstats"
+		"chi"		"跳跃数据"
+		"zho"		"跳躍數據"
 	}
 	"Help - Category - Measure"
 	{
 		"en"		"Measurement"
+		"chi"		"测量"
+		"zho"		"測量"
 	}
 	"Help - Category - ModeStyle"
 	{
 		"en"		"Modes & styles"
+		"chi"		"模式与风格"
+		"zho"		"模式與樣式"
 	}
 	"Help - Category - Preference"
 	{
 		"en"		"Preferences"
+		"chi"		"偏好设置"
+		"zho"		"偏好設定"
 	}
 	"Help - Category - Racing"
 	{
 		"en"		"Racing"
+		"chi"		"竞速"
+		"zho"		"競速"
 	}
 	"Help - Category - Replay"
 	{
 		"en"		"Replays"
+		"chi"		"回放"
+		"zho"		"回放"
 	}
 	"Help - Category - Saveloc"
 	{
 		"en"		"Saved locations"
+		"chi"		"已保存的位置"
+		"zho"		"已儲存的位置"
 	}
 	"Help - Category - Spec"
 	{
 		"en"		"Spectating"
+		"chi"		"观战"
+		"zho"		"觀戰"
 	}
 	"Help - Category - Status"
 	{
 		"en"		"Status"
+		"chi"		"状态"
+		"zho"		"狀態"
 	}
 	"Help - Category - Timer"
 	{
 		"en"		"Timer"
+		"chi"		"计时器"
+		"zho"		"計時器"
 	}
 	"Help - Category - Player"
 	{
 		"en"		"Player"
+		"chi"		"玩家"
+		"zho"		"玩家"
 	}
 	"Help - Category - Global"
 	{
 		"en"		"Global"
+		"chi"		"全局"
+		"zho"		"全域"
 	}
 	"Help - Category - Misc"
 	{
 		"en"		"Other"
+		"chi"		"其他"
+		"zho"		"其他"
 	}
 	"Help - Category - Map"
 	{
 		"en"		"Maps"
+		"chi"		"地图"
+		"zho"		"地圖"
 	}
 	"Help - Category - HUD"
 	{
 		"en"		"HUD"
+		"chi"		"HUD"
+		"zho"		"HUD"
 	}
 }
