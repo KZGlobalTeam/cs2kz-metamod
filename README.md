@@ -81,9 +81,9 @@ Automated translation linter reports for cs2kz-metamod.
 
 ## Last Updated
 
-- **Commit:** [`df0abea`](https://github.com/KZGlobalTeam/cs2kz-metamod/commit/df0abea78c2db6908002558d9599476919bb55ce)
-- **Time:** 2026-10-11 09:58:45 UTC
-- **Message:** Add categorized !help UI, add missing command descriptions (#652)
+- **Commit:** [`bbada23`](https://github.com/KZGlobalTeam/cs2kz-metamod/commit/bbada23edfb38a036b73aa0a82164a7ecfd1720c)
+- **Time:** 2026-10-15 12:58:51 UTC
+- **Message:** Fix replay bot view punch never decaying for spectators
 
 ---
 
