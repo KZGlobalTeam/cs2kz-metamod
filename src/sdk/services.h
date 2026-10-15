@@ -187,6 +187,10 @@ public:
 	SCHEMA_FIELD(bool, m_duckUntilOnGround)
 	SCHEMA_FIELD(CCSPlayerLegacyJump, m_LegacyJump)
 	SCHEMA_FIELD(CCSPlayerModernJump, m_ModernJump)
+	SCHEMA_FIELD(GameTime_t, m_fStashGrenadeParameterWhen)
+	SCHEMA_FIELD(bool, m_bUseFrictionStashedSpeed)
+	SCHEMA_FIELD(float, m_flUseFrictionStashedSpeedUntilFrac)
+	SCHEMA_FIELD(float, m_flFrictionStashedSpeed)
 };
 
 class CCSPlayer_WaterServices : public CPlayerPawnComponent

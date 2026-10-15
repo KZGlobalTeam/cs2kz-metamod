@@ -156,6 +156,12 @@ void KZClassicModeService::Cleanup()
 	{
 		pawn->m_flVelocityModifier(1.0f);
 	}
+	CCSPlayer_MovementServices *moveServices = this->player->GetMoveServices();
+	if (moveServices)
+	{
+		this->ClearFrictionSplit();
+		moveServices->m_fStashGrenadeParameterWhen(GameTime_t(0.0f));
+	}
 }
 
 const char *KZClassicModeService::GetModeName()
@@ -255,21 +261,39 @@ void KZClassicModeService::OnPhysicsSimulate()
 	{
 		return;
 	}
+	// The engine splits the move at the friction stash fraction as well.
+	if (moveServices->m_bUseFrictionStashedSpeed() && moveServices->m_flUseFrictionStashedSpeedUntilFrac() == 0.5f)
+	{
+		return;
+	}
 	u32 tickCount = g_pKZUtils->GetServerGlobals()->tickcount;
 
 	f32 subtickMoveTime = (tickCount - 0.5) * ENGINE_FIXED_TICK_INTERVAL;
-	for (u32 i = 0; i < 4; i++)
+	f32 *slots = moveServices->m_arrForceSubtickMoveWhen;
+	u32 replace = 0;
+	for (u32 i = 0; i < FORCED_SUBTICK_SLOTS; i++)
 	{
-		if (fabs(subtickMoveTime - moveServices->m_arrForceSubtickMoveWhen[i]) < 0.001)
+		if (fabs(subtickMoveTime - slots[i]) < 0.001)
 		{
 			return;
 		}
-		if (subtickMoveTime > moveServices->m_arrForceSubtickMoveWhen[i])
+		if (slots[i] < slots[replace])
 		{
-			moveServices->SetForcedSubtickMove(i, subtickMoveTime, false);
-			return;
+			replace = i;
 		}
 	}
+	// No stale slot left, give up the furthest one instead.
+	if (slots[replace] > subtickMoveTime)
+	{
+		for (u32 i = 0; i < FORCED_SUBTICK_SLOTS; i++)
+		{
+			if (slots[i] > slots[replace])
+			{
+				replace = i;
+			}
+		}
+	}
+	moveServices->SetForcedSubtickMove(replace, subtickMoveTime, false);
 }
 
 void KZClassicModeService::OnPhysicsSimulatePost()
@@ -281,8 +305,45 @@ void KZClassicModeService::OnPhysicsSimulatePost()
 	}
 	u32 tickCount = g_pKZUtils->GetServerGlobals()->tickcount;
 
-	f32 subtickMoveTime = (tickCount + 0.5) * ENGINE_FIXED_TICK_INTERVAL;
-	for (u32 i = 0; i < 4; i++)
+	/*
+		The client only predicts the half tick split for the commands m_arrForceSubtickMoveWhen covers, so two more engine fields are used to
+		cover two more commands. The friction stash makes the engine split the next command at its fraction, and gets cleared by FinishMove
+		while in the air. It changes ground friction, so it is only used when the next command can't reach the ground.
+	*/
+	bool frictionSplit = this->CanUseFrictionSplit();
+	if (frictionSplit)
+	{
+		Vector velocity;
+		this->player->GetVelocity(&velocity);
+		f32 speed = velocity.Length2D();
+		if (!moveServices->m_bUseFrictionStashedSpeed())
+		{
+			moveServices->m_bUseFrictionStashedSpeed(true);
+		}
+		if (moveServices->m_flUseFrictionStashedSpeedUntilFrac() != 0.5f)
+		{
+			moveServices->m_flUseFrictionStashedSpeedUntilFrac(0.5f);
+		}
+		// Only used if the player reaches the ground anyway, matches the friction they would have gotten without the stash.
+		if (moveServices->m_flFrictionStashedSpeed() != speed)
+		{
+			moveServices->m_flFrictionStashedSpeed(speed);
+		}
+	}
+	else
+	{
+		this->ClearFrictionSplit();
+	}
+
+	f64 firstSplitTick = tickCount + (frictionSplit ? 1.5 : 0.5);
+	f32 grenadeSplitTime = (firstSplitTick + FORCED_SUBTICK_SLOTS) * ENGINE_FIXED_TICK_INTERVAL;
+	if (moveServices->m_fStashGrenadeParameterWhen().GetTime() != grenadeSplitTime)
+	{
+		moveServices->m_fStashGrenadeParameterWhen(GameTime_t(grenadeSplitTime));
+	}
+
+	f32 subtickMoveTime = firstSplitTick * ENGINE_FIXED_TICK_INTERVAL;
+	for (u32 i = 0; i < FORCED_SUBTICK_SLOTS; i++)
 	{
 		if (fabs(subtickMoveTime - moveServices->m_arrForceSubtickMoveWhen[i]) < 0.001)
 		{
@@ -295,6 +356,49 @@ void KZClassicModeService::OnPhysicsSimulatePost()
 			subtickMoveTime += ENGINE_FIXED_TICK_INTERVAL;
 		}
 	}
+}
+
+bool KZClassicModeService::CanUseFrictionSplit()
+{
+	CCSPlayerPawn *pawn = this->player->GetPlayerPawn();
+	if (!pawn || this->player->GetMoveType() != MOVETYPE_WALK || (pawn->m_fFlags() & FL_ONGROUND))
+	{
+		return false;
+	}
+
+	Vector origin, velocity, baseVelocity;
+	this->player->GetOrigin(&origin);
+	this->player->GetVelocity(&velocity);
+	this->player->GetBaseVelocity(&baseVelocity);
+	velocity += baseVelocity;
+
+	// Sweep a hull widened by how far the player can travel sideways in one tick down by how far they can fall in one tick.
+	f32 gravity = MAX(KZ::mode::modeCvarRefs[MODECVAR_SV_GRAVITY]->GetFloat() * pawn->m_flActualGravityScale(), 0.0f);
+	f32 drop = MAX(-velocity.z, 0.0f) * ENGINE_FIXED_TICK_INTERVAL + 0.5f * gravity * ENGINE_FIXED_TICK_INTERVAL * ENGINE_FIXED_TICK_INTERVAL;
+	f32 reach = velocity.Length2D() * ENGINE_FIXED_TICK_INTERVAL + FRICTION_SPLIT_MARGIN;
+
+	bbox_t bounds;
+	this->player->GetBBoxBounds(&bounds);
+	Vector widen(reach, reach, 0.0f);
+	Vector end = origin;
+	end.z -= drop + FRICTION_SPLIT_MARGIN;
+
+	CTraceFilterPlayerMovementCS filter(pawn);
+	trace_t trace;
+	INavPhysicsInterface::TraceShape(Ray_t(bounds.mins - widen, bounds.maxs + widen), origin, end, &filter, &trace);
+	return !trace.m_bStartInSolid && trace.m_flFraction == 1.0f;
+}
+
+// The engine only relies on the friction stash on the ground, so off the ground it can always be cleared.
+void KZClassicModeService::ClearFrictionSplit()
+{
+	CCSPlayerPawn *pawn = this->player->GetPlayerPawn();
+	CCSPlayer_MovementServices *moveServices = this->player->GetMoveServices();
+	if (!pawn || !moveServices || (pawn->m_fFlags() & FL_ONGROUND) || !moveServices->m_bUseFrictionStashedSpeed())
+	{
+		return;
+	}
+	moveServices->m_bUseFrictionStashedSpeed(false);
 }
 
 void KZClassicModeService::OnSetupMove(PlayerCommand *pc)
@@ -869,6 +973,9 @@ void KZClassicModeService::OnWaterMovePost()
 
 void KZClassicModeService::OnTeleport(const Vector *newPosition, const QAngle *newAngles, const Vector *newVelocity)
 {
+	// The teleport can put the player on the ground, where the friction stash would change friction.
+	this->ClearFrictionSplit();
+
 	// Prevent prekeep from teleporting the player to a lower speed.
 	if (newVelocity)
 	{

@@ -34,6 +34,9 @@
 #define BH_LANDING_DECREMENT_MULTIPLIER 75.0f // How much would a non real perf impact the takeoff speed
 // Magic number so that landing speed at max ground prestrafe speed would result in the same takeoff velocity
 #define BH_NORMALIZE_FACTOR (BH_BASE_MULTIPLIER * log(SPEED_NORMAL + PS_SPEED_MAX) - (SPEED_NORMAL + PS_SPEED_MAX))
+// Forced half tick splits
+#define FORCED_SUBTICK_SLOTS  4    // Size of m_arrForceSubtickMoveWhen
+#define FRICTION_SPLIT_MARGIN 2.5f // Extra distance the next tick's reach is padded by, covers the 2 unit ground snap
 // Misc
 #define DUCK_SPEED_NORMAL  8.0f
 #define DUCK_SPEED_MINIMUM 6.0234375f // Equal to if you just ducked/unducked for the first time in a while
@@ -175,6 +178,11 @@ class KZClassicModeService : public KZModeService
 	// Keep track of TryPlayerMove path for triggerfixing.
 	bool airMoving {};
 	CUtlVector<Vector> tpmTriggerFixOrigins;
+
+	// Hijack friction to add one more subtick split.
+	// Friction split can only be applied when the player is *off* the ground, as it's only unused in the air.
+	bool CanUseFrictionSplit();
+	void ClearFrictionSplit();
 
 public:
 	virtual void Reset() override;
