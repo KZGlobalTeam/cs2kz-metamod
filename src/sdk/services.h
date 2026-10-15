@@ -89,6 +89,10 @@ class CPlayer_CameraServices : public CPlayerPawnComponent
 
 public:
 	DECLARE_SCHEMA_CLASS_ENTITY(CPlayer_CameraServices)
+	SCHEMA_FIELD(QAngle, m_vecCsViewPunchAngle)
+	// Clients decay the view punch by the time since this tick.
+	SCHEMA_FIELD(i32, m_nCsViewPunchAngleTick)
+	SCHEMA_FIELD(f32, m_flCsViewPunchAngleTickRatio)
 	// If this resolves on the client, it skips the viewmodel render passes.
 	SCHEMA_FIELD(CHandle<CBaseEntity>, m_hViewEntity)
 };

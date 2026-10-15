@@ -24,6 +24,39 @@ namespace KZ::replaysystem::playback
 	static_global bool botTimeApplied;
 	static_global i32 serverTickCount;
 	static_global f32 serverCurtime;
+	// The bot stamps its view punch with its own clock, but clients decay it by the time since that tick on the server's.
+	// The networked stamp is moved to the server's clock after each replay tick and back before the next one.
+	static_global i32 botPunchTick;
+	static_global i32 serverPunchTick;
+	static_global bool punchOnServerClock;
+
+	static_function void PutPunchOnBotClock(KZPlayer *player)
+	{
+		CPlayer_CameraServices *camera = player->GetPlayerPawn() ? player->GetPlayerPawn()->m_pCameraServices() : nullptr;
+		if (camera && punchOnServerClock)
+		{
+			camera->m_nCsViewPunchAngleTick(botPunchTick);
+		}
+		punchOnServerClock = false;
+	}
+
+	// Only a new punch gets a new server stamp, so the client keeps decaying an old one in real time through hold ticks.
+	static_function void PutPunchOnServerClock(KZPlayer *player, i32 serverTick)
+	{
+		CPlayer_CameraServices *camera = player->GetPlayerPawn() ? player->GetPlayerPawn()->m_pCameraServices() : nullptr;
+		if (!camera)
+		{
+			return;
+		}
+		const i32 stamp = camera->m_nCsViewPunchAngleTick();
+		if (stamp != botPunchTick)
+		{
+			botPunchTick = stamp;
+			serverPunchTick = stamp + serverTick - data::GetBotTickcount();
+		}
+		camera->m_nCsViewPunchAngleTick(serverPunchTick);
+		punchOnServerClock = true;
+	}
 
 	static_function bool IsTeleportInTick(const data::ReplayPlayback *replay, const TickData *tickData)
 	{
@@ -128,6 +161,7 @@ namespace KZ::replaysystem::playback
 		}
 		data::SetBotTickcount(data::GetCurrentReplay()->tickData[data::GetCurrentReplay()->currentTick].serverTick);
 		ApplyBotTime();
+		PutPunchOnBotClock(player);
 	}
 
 	bool HasQueuedReplayTicks(KZPlayer *player)
@@ -317,6 +351,8 @@ namespace KZ::replaysystem::playback
 		// Process jumps and events after physics simulation
 		events::CheckJumps(*player);
 		events::CheckEvents(*player);
+
+		PutPunchOnServerClock(player, botTimeApplied ? serverTickCount : g_KZPlugin.serverGlobals.tickcount);
 
 		if (replay->paused && replay->startTime > 0.0f)
 		{
@@ -631,6 +667,16 @@ namespace KZ::replaysystem::playback
 			weapon->m_nNextPrimaryAttackTick(MIN(weapon->m_nNextPrimaryAttackTick(), (i32)tick));
 			weapon->m_nNextSecondaryAttackTick(MIN(weapon->m_nNextSecondaryAttackTick(), (i32)tick));
 		}
+		// A punch from before the jump does not belong to the new position.
+		if (CPlayer_CameraServices *camera = player->GetPlayerPawn()->m_pCameraServices())
+		{
+			camera->m_vecCsViewPunchAngle(vec3_angle);
+			camera->m_nCsViewPunchAngleTick(0);
+			camera->m_flCsViewPunchAngleTickRatio(0.0f);
+		}
+		botPunchTick = 0;
+		serverPunchTick = 0;
+		punchOnServerClock = false;
 	}
 
 	void ApplyTickState(KZPlayer *player, const TickData *tickData)
