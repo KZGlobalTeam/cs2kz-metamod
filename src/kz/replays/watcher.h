@@ -1,3 +1,4 @@
+#pragma once
 #include <optional>
 #include <thread>
 #include "kz_replay.h"

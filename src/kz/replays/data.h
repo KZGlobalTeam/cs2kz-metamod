@@ -1,5 +1,4 @@
-#ifndef KZ_REPLAYDATA_H
-#define KZ_REPLAYDATA_H
+#pragma once
 
 #include "sdk/datatypes.h"
 #include "kz_replay.h"
@@ -120,5 +119,3 @@ namespace KZ::replaysystem::data
 	bool GetPaused();
 	const char *GetCourseName();
 } // namespace KZ::replaysystem::data
-
-#endif // KZ_REPLAYDATA_H

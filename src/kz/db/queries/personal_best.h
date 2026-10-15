@@ -1,4 +1,4 @@
-
+#pragma once
 constexpr char sql_getpb[] = R"(
     SELECT Times.ID, Times.RunTime, Times.Teleports 
         FROM Times

@@ -1,3 +1,4 @@
+#pragma once
 // =====[ MIGRATIONS ]=====
 
 constexpr char mysql_migrations_create[] = R"(

@@ -1,3 +1,4 @@
+#pragma once
 // =====[ GENERAL ]=====
 
 constexpr char sql_getpb[] = R"(

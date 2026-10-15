@@ -1,4 +1,4 @@
-
+#pragma once
 // =====[ PLAYERS ]=====
 
 constexpr char sqlite_players_create[] = R"(

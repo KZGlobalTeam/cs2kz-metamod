@@ -1,5 +1,4 @@
-#ifndef KZ_REPLAYPLAYBACK_H
-#define KZ_REPLAYPLAYBACK_H
+#pragma once
 #include "common.h"
 #include "sdk/datatypes.h"
 
@@ -86,5 +85,3 @@ namespace KZ::replaysystem::playback
 	// Navigation support
 	void ApplyTickState(KZPlayer *player, const TickData *tickData);
 } // namespace KZ::replaysystem::playback
-
-#endif // KZ_REPLAYPLAYBACK_H

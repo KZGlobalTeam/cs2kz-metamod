@@ -1,6 +1,4 @@
-
-#ifndef KZ_REPLAYSYSTEM_H
-#define KZ_REPLAYSYSTEM_H
+#pragma once
 #include "sdk/datatypes.h"
 
 class KZPlayer;
@@ -56,5 +54,3 @@ namespace KZ::replaysystem
 	void InitWatcher();
 	void CleanupWatcher();
 } // namespace KZ::replaysystem
-
-#endif // KZ_REPLAYSYSTEM_H

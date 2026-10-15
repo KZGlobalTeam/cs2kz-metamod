@@ -1,4 +1,4 @@
-
+#pragma once
 // =====[ BANS ]=====
 
 constexpr char sqlite_bans_create[] = R"(

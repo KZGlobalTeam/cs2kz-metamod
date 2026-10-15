@@ -1,3 +1,4 @@
+#pragma once
 constexpr char sql_getcoursetop[] = R"(
     SELECT t.ID, t.SteamID64, p.Alias, t.RunTime AS PBTime, t.Teleports 
         FROM Times t 

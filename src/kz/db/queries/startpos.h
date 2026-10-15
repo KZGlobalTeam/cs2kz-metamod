@@ -1,3 +1,4 @@
+#pragma once
 // =====[ START POSITIONS ]=====
 
 constexpr char sqlite_startpos_create[] = R"(

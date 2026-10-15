@@ -1,3 +1,4 @@
+#pragma once
 #include "kz_style.h"
 #include "version_gen.h"
 

@@ -1,5 +1,4 @@
-#ifndef KZ_REPLAYBOT_H
-#define KZ_REPLAYBOT_H
+#pragma once
 
 #include "sdk/datatypes.h"
 #include "kz_replay.h"
@@ -25,5 +24,3 @@ namespace KZ::replaysystem::bot
 	// Bot spectator handling
 	void SpectateBot(KZPlayer *spectator);
 } // namespace KZ::replaysystem::bot
-
-#endif // KZ_REPLAYBOT_H

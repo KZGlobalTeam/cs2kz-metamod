@@ -1,4 +1,4 @@
-
+#pragma once
 // =====[ MAPCOURSES ]=====
 
 constexpr char sqlite_mapcourses_create[] = R"(
