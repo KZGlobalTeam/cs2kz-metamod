@@ -117,7 +117,7 @@ class KZClassicModeService : public KZModeService
 		(float)800.0f,  // sv_gravity
 		(float)302.0f,  // sv_jump_impulse
 		(bool)false,    // sv_jump_precision_enable
-		(float)0.0f,    // sv_jump_spam_penalty_time
+		(float)-1.267f, // sv_jump_spam_penalty_time
 		(float)-0.707f, // sv_ladder_angle
 		(float)1.0f,    // sv_ladder_dampen
 		(float)1.0f,    // sv_ladder_scale_speed
@@ -144,7 +144,6 @@ class KZClassicModeService : public KZModeService
 
 	bool hasValidDesiredViewAngle {};
 	QAngle lastValidDesiredViewAngle;
-	f32 lastJumpReleaseTime {};
 	bool oldDuckPressed {};
 	bool oldJumpPressed {};
 	bool forcedUnduck {};

@@ -126,7 +126,6 @@ void KZClassicModeService::Reset()
 {
 	this->hasValidDesiredViewAngle = {};
 	this->lastValidDesiredViewAngle = vec3_angle;
-	this->lastJumpReleaseTime = {};
 	this->oldDuckPressed = {};
 	this->forcedUnduck = {};
 	this->postProcessMovementZSpeed = {};
@@ -411,21 +410,6 @@ void KZClassicModeService::OnSetupMove(PlayerCommand *pc)
 			continue;
 		}
 		float when = subtickMove->when();
-		if (subtickMove->button() == IN_JUMP)
-		{
-			f32 inputTime = (g_pKZUtils->GetGlobals()->tickcount + when - 1) * ENGINE_FIXED_TICK_INTERVAL;
-			if (when != 0)
-			{
-				if (subtickMove->pressed() && inputTime - this->lastJumpReleaseTime > 0.5 * ENGINE_FIXED_TICK_INTERVAL)
-				{
-					this->player->GetMoveServices()->m_LegacyJump().m_bOldJumpPressed = false;
-				}
-				if (!subtickMove->pressed())
-				{
-					this->lastJumpReleaseTime = (g_pKZUtils->GetGlobals()->tickcount + when - 1) * ENGINE_FIXED_TICK_INTERVAL;
-				}
-			}
-		}
 		subtickMove->set_when(when >= 0.5 ? 0.5 : 0);
 	}
 }
