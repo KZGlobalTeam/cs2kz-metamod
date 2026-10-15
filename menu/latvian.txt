@@ -14,28 +14,28 @@
 				{
 					"hotkey"	"1"
 					"label"		"Checkpoint"
-					"cmd"		"kz_cp; radio"
+					"cmd"		"radio; say /cp"
 				}
 
 				"Teleport"
 				{
 					"hotkey"	"2"
 					"label"		"Teleportēties"
-					"cmd"		"kz_tp; radio"
+					"cmd"		"radio; say /tp"
 				}
 
 				"Pause"
 				{
 					"hotkey"	"3"
 					"label"		"Pauzēt/Atjaunot"
-					"cmd"		"kz_pause; radio"
+					"cmd"		"radio; say /pause"
 				}
 
 				"Restart"
 				{
 					"hotkey"	"4"
 					"label"		"Restartēt/Atdzimt"
-					"cmd"		"kz_r; radio"
+					"cmd"		"radio; say /r"
 				}
 			}
 		}
@@ -52,56 +52,56 @@
 				{
 					"hotkey"	"1"
 					"label"		"Checkpoint"
-					"cmd"		"kz_cp; radio1"
+					"cmd"		"radio1; say /cp"
 				}
 
 				"Teleport"
 				{
 					"hotkey"	"2"
 					"label"		"Teleportēties"
-					"cmd"		"kz_tp; radio1"
+					"cmd"		"radio1; say /tp"
 				}
 
 				"Prev Checkpoint"
 				{
 					"hotkey"	"3"
 					"label"		"Iepriekšējais CP"
-					"cmd"		"kz_prevcp; radio1"
+					"cmd"		"radio1; say /prevcp"
 				}
 
 				"Next Checkpoint"
 				{
 					"hotkey"	"4"
 					"label"		"Nākamais CP"
-					"cmd"		"kz_nextcp; radio1"
+					"cmd"		"radio1; say /nextcp"
 				}
 
 				"Undo Teleport"
 				{
 					"hotkey"	"5"
 					"label"		"Atcelt TP"
-					"cmd"		"kz_undo; radio1"
+					"cmd"		"radio1; say /undo"
 				}
 
 				"Pause"
 				{
 					"hotkey"	"6"
 					"label"		"Pauzēt/Atjaunot"
-					"cmd"		"kz_pause; radio1"
+					"cmd"		"radio1; say /pause"
 				}
 
 				"Restart"
 				{
 					"hotkey"	"7"
 					"label"		"Restartēt/Atdzimt"
-					"cmd"		"kz_r; radio1"
+					"cmd"		"radio1; say /r"
 				}
 
 				"Noclip"
 				{
 					"hotkey"	"8"
 					"label"		"Mainīt Noclip"
-					"cmd"		"kz_noclip; radio1"
+					"cmd"		"radio1; say /noclip"
 				}
 			}
 		}
@@ -118,49 +118,49 @@
 				{
 					"hotkey"	"1"
 					"label"		"Iestatīt pielāgoto starta pozīciju"
-					"cmd"		"kz_ssp"
+					"cmd"		"say /ssp"
 				}
 
 				"Clear Custom Start Position"
 				{
 					"hotkey"	"2"
 					"label"		"Notīrīt pielāgoto starta pozīciju"
-					"cmd"		"kz_csp"
+					"cmd"		"say /csp"
 				}
 
 				"Hide"
 				{
 					"hotkey"	"3"
 					"label"		"Parādīt/Slēpt citus spēlētājus"
-					"cmd"		"kz_hide"
+					"cmd"		"say /hide"
 				}
 
 				"Hide Weapon"
 				{
 					"hotkey"	"4"
 					"label"		"Parādīt/Slēpt ieročus"
-					"cmd"		"kz_hideweapon"
+					"cmd"		"say /hideweapon"
 				}
 
 				"Hide Legs"
 				{
 					"hotkey"	"5"
 					"label"		"Parādīt/Slēpt kājas"
-					"cmd"		"kz_hidelegs"
+					"cmd"		"say /hidelegs"
 				}
 
 				"Toggle Jumpstats"
 				{
 					"hotkey"	"6"
 					"label"		"Ieslēgt/Izslēgt Jumpstats Display"
-					"cmd"		"kz_togglejs"
+					"cmd"		"say /js"
 				}
 
 				"Toggle Jumpstats Always"
 				{
 					"hotkey"	"7"
 					"label"		"Ieslēgt/Izslēgt Jumpstats vienmēr"
-					"cmd"		"kz_jsalways"
+					"cmd"		"say /jsalways"
 				}
 			}
 		}

@@ -14,28 +14,28 @@
 				{
 					"hotkey"	"1"
 					"label"		"存点"
-					"cmd"		"kz_cp; radio"
+					"cmd"		"radio; say /cp"
 				}
 
 				"Teleport"
 				{
 					"hotkey"	"2"
 					"label"		"传送"
-					"cmd"		"kz_tp; radio"
+					"cmd"		"radio; say /tp"
 				}
 
 				"Pause"
 				{
 					"hotkey"	"3"
 					"label"		"暂停/继续"
-					"cmd"		"kz_pause; radio"
+					"cmd"		"radio; say /pause"
 				}
 
 				"Restart"
 				{
 					"hotkey"	"4"
 					"label"		"重置/重生"
-					"cmd"		"kz_r; radio"
+					"cmd"		"radio; say /r"
 				}
 			}
 		}
@@ -52,56 +52,56 @@
 				{
 					"hotkey"	"1"
 					"label"		"存点"
-					"cmd"		"kz_cp; radio1"
+					"cmd"		"radio1; say /cp"
 				}
 
 				"Teleport"
 				{
 					"hotkey"	"2"
 					"label"		"传送"
-					"cmd"		"kz_tp; radio1"
+					"cmd"		"radio1; say /tp"
 				}
 
 				"Prev Checkpoint"
 				{
 					"hotkey"	"3"
 					"label"		"上一个存点"
-					"cmd"		"kz_prevcp; radio1"
+					"cmd"		"radio1; say /prevcp"
 				}
 
 				"Next Checkpoint"
 				{
 					"hotkey"	"4"
 					"label"		"下一个存点"
-					"cmd"		"kz_nextcp; radio1"
+					"cmd"		"radio1; say /nextcp"
 				}
 
 				"Undo Teleport"
 				{
 					"hotkey"	"5"
 					"label"		"撤销传送"
-					"cmd"		"kz_undo; radio1"
+					"cmd"		"radio1; say /undo"
 				}
 
 				"Pause"
 				{
 					"hotkey"	"6"
 					"label"		"暂停/继续"
-					"cmd"		"kz_pause; radio1"
+					"cmd"		"radio1; say /pause"
 				}
 
 				"Restart"
 				{
 					"hotkey"	"7"
 					"label"		"重置/重生"
-					"cmd"		"kz_r; radio1"
+					"cmd"		"radio1; say /r"
 				}
 
 				"Noclip"
 				{
 					"hotkey"	"8"
 					"label"		"切换飞行模式"
-					"cmd"		"kz_noclip; radio1"
+					"cmd"		"radio1; say /noclip"
 				}
 			}
 		}
@@ -118,49 +118,49 @@
 				{
 					"hotkey"	"1"
 					"label"		"设置自定义起点"
-					"cmd"		"kz_ssp"
+					"cmd"		"say /ssp"
 				}
 
 				"Clear Custom Start Position"
 				{
 					"hotkey"	"2"
 					"label"		"清除自定义起点"
-					"cmd"		"kz_csp"
+					"cmd"		"say /csp"
 				}
 
 				"Hide"
 				{
 					"hotkey"	"3"
 					"label"		"显示/隐藏其他玩家"
-					"cmd"		"kz_hide"
+					"cmd"		"say /hide"
 				}
 
 				"Hide Weapon"
 				{
 					"hotkey"	"4"
 					"label"		"显示/隐藏武器"
-					"cmd"		"kz_hideweapon"
+					"cmd"		"say /hideweapon"
 				}
 
 				"Hide Legs"
 				{
 					"hotkey"	"5"
 					"label"		"显示/隐藏腿部"
-					"cmd"		"kz_hidelegs"
+					"cmd"		"say /hidelegs"
 				}
 
 				"Toggle Jumpstats"
 				{
 					"hotkey"	"6"
 					"label"		"切换跳跃数据展示"
-					"cmd"		"kz_togglejs"
+					"cmd"		"say /js"
 				}
 
 				"Toggle Jumpstats Always"
 				{
 					"hotkey"	"7"
 					"label"		"切换总是显示跳跃数据"
-					"cmd"		"kz_jsalways"
+					"cmd"		"say /jsalways"
 				}
 			}
 		}

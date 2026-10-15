@@ -16,28 +16,28 @@
 				{
 					"hotkey"	"1"
 					"label"		"Checkpoint"
-					"cmd"		"kz_cp; radio"
+					"cmd"		"radio; say /cp"
 				}
 
 				"Teleport"
 				{
 					"hotkey"	"2"
 					"label"		"Teleportera"
-					"cmd"		"kz_tp; radio"
+					"cmd"		"radio; say /tp"
 				}
 
 				"Pause"
 				{
 					"hotkey"	"3"
 					"label"		"Pausa/Fortsätt"
-					"cmd"		"kz_pause; radio"
+					"cmd"		"radio; say /pause"
 				}
 
 				"Restart"
 				{
 					"hotkey"	"4"
 					"label"		"Starta om"
-					"cmd"		"kz_r; radio"
+					"cmd"		"radio; say /r"
 				}
 			}
 		}
@@ -54,56 +54,56 @@
 				{
 					"hotkey"	"1"
 					"label"		"Checkpoint"
-					"cmd"		"kz_cp; radio1"
+					"cmd"		"radio1; say /cp"
 				}
 
 				"Teleport"
 				{
 					"hotkey"	"2"
 					"label"		"Teleportera"
-					"cmd"		"kz_tp; radio1"
+					"cmd"		"radio1; say /tp"
 				}
 
 				"Prev Checkpoint"
 				{
 					"hotkey"	"3"
 					"label"		"Förra CP"
-					"cmd"		"kz_prevcp; radio1"
+					"cmd"		"radio1; say /prevcp"
 				}
 
 				"Next Checkpoint"
 				{
 					"hotkey"	"4"
 					"label"		"Nästa CP"
-					"cmd"		"kz_nextcp; radio1"
+					"cmd"		"radio1; say /nextcp"
 				}
 
 				"Undo Teleport"
 				{
 					"hotkey"	"5"
 					"label"		"Ångra TP"
-					"cmd"		"kz_undo; radio1"
+					"cmd"		"radio1; say /undo"
 				}
 
 				"Pause"
 				{
 					"hotkey"	"6"
 					"label"		"Pausa/Fortsätt"
-					"cmd"		"kz_pause; radio1"
+					"cmd"		"radio1; say /pause"
 				}
 
 				"Restart"
 				{
 					"hotkey"	"7"
 					"label"		"Starta Om"
-					"cmd"		"kz_r; radio1"
+					"cmd"		"radio1; say /r"
 				}
 
 				"Noclip"
 				{
 					"hotkey"	"8"
 					"label"		"Toggla Noclip"
-					"cmd"		"kz_noclip; radio1"
+					"cmd"		"radio1; say /noclip"
 				}
 			}
 		}
@@ -120,49 +120,49 @@
 				{
 					"hotkey"	"1"
 					"label"		"Skapa Justerad Startposition"
-					"cmd"		"kz_ssp"
+					"cmd"		"say /ssp"
 				}
 
 				"Clear Custom Start Position"
 				{
 					"hotkey"	"2"
 					"label"		"Rensa Justerad Startposition"
-					"cmd"		"kz_csp"
+					"cmd"		"say /csp"
 				}
 
 				"Hide"
 				{
 					"hotkey"	"3"
 					"label"		"Visa/Dölj Andra Spelare"
-					"cmd"		"kz_hide"
+					"cmd"		"say /hide"
 				}
 
 				"Hide Weapon"
 				{
 					"hotkey"	"4"
 					"label"		"Visa/Dölj Vapen"
-					"cmd"		"kz_hideweapon"
+					"cmd"		"say /hideweapon"
 				}
 
 				"Hide Legs"
 				{
 					"hotkey"	"5"
 					"label"		"Visa/Dölj Ben"
-					"cmd"		"kz_hidelegs"
+					"cmd"		"say /hidelegs"
 				}
 
 				"Toggle Jumpstats"
 				{
 					"hotkey"	"6"
 					"label"		"Toggla Jumpstats"
-					"cmd"		"kz_togglejs"
+					"cmd"		"say /js"
 				}
 
 				"Toggle Jumpstats Always"
 				{
 					"hotkey"	"7"
 					"label"		"Toggla Alla Jumpstats"
-					"cmd"		"kz_jsalways"
+					"cmd"		"say /jsalways"
 				}
 			}
 		}

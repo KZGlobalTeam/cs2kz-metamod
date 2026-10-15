@@ -14,28 +14,28 @@ RadioPanel.txt
 				{
 					"hotkey"	"1"
 					"label"		"Checkpoint"
-					"cmd"		"kz_cp; radio"
+					"cmd"		"radio; say /cp"
 				}
 
 				"Teleport"
 				{
 					"hotkey"	"2"
 					"label"		"Teleport"
-					"cmd"		"kz_tp; radio"
+					"cmd"		"radio; say /tp"
 				}
 
 				"Pause"
 				{
 					"hotkey"	"3"
 					"label"		"Pauze/Hervatten"
-					"cmd"		"kz_pause; radio"
+					"cmd"		"radio; say /pause"
 				}
 
 				"Restart"
 				{
 					"hotkey"	"4"
 					"label"		"Herstarten/Respawn"
-					"cmd"		"kz_r; radio"
+					"cmd"		"radio; say /r"
 				}
 			}
 		}
@@ -52,56 +52,56 @@ RadioPanel.txt
 				{
 					"hotkey"	"1"
 					"label"		"Checkpoint"
-					"cmd"		"kz_cp; radio1"
+					"cmd"		"radio1; say /cp"
 				}
 
 				"Teleport"
 				{
 					"hotkey"	"2"
 					"label"		"Teleport"
-					"cmd"		"kz_tp; radio1"
+					"cmd"		"radio1; say /tp"
 				}
 
 				"Prev Checkpoint"
 				{
 					"hotkey"	"3"
 					"label"		"Vorige CP"
-					"cmd"		"kz_prevcp; radio1"
+					"cmd"		"radio1; say /prevcp"
 				}
 
 				"Next Checkpoint"
 				{
 					"hotkey"	"4"
 					"label"		"Volgende CP"
-					"cmd"		"kz_nextcp; radio1"
+					"cmd"		"radio1; say /nextcp"
 				}
 
 				"Undo Teleport"
 				{
 					"hotkey"	"5"
 					"label"		"Ongedaan maken Teleport"
-					"cmd"		"kz_undo; radio1"
+					"cmd"		"radio1; say /undo"
 				}
 
 				"Pause"
 				{
 					"hotkey"	"6"
 					"label"		"Pauze/Hervatten"
-					"cmd"		"kz_pause; radio1"
+					"cmd"		"radio1; say /pause"
 				}
 
 				"Restart"
 				{
 					"hotkey"	"7"
 					"label"		"Herstarten/Respawn"
-					"cmd"		"kz_r; radio1"
+					"cmd"		"radio1; say /r"
 				}
 
 				"Noclip"
 				{
 					"hotkey"	"8"
 					"label"		"Noclip in-/uitschakelen"
-					"cmd"		"kz_noclip; radio1"
+					"cmd"		"radio1; say /noclip"
 				}
 			}
 		}
@@ -118,49 +118,49 @@ RadioPanel.txt
 				{
 					"hotkey"	"1"
 					"label"		"Aangepaste startpositie instellen"
-					"cmd"		"kz_ssp"
+					"cmd"		"say /ssp"
 				}
 
 				"Clear Custom Start Position"
 				{
 					"hotkey"	"2"
 					"label"		"Aangepaste startpositie verwijderen"
-					"cmd"		"kz_csp"
+					"cmd"		"say /csp"
 				}
 
 				"Hide"
 				{
 					"hotkey"	"3"
 					"label"		"Toon/Verberg andere spelers"
-					"cmd"		"kz_hide"
+					"cmd"		"say /hide"
 				}
 
 				"Hide Weapon"
 				{
 					"hotkey"	"4"
 					"label"		"Toon/Verberg wapen"
-					"cmd"		"kz_hideweapon"
+					"cmd"		"say /hideweapon"
 				}
 
 				"Hide Legs"
 				{
 					"hotkey"	"5"
 					"label"		"Toon/Verberg benen"
-					"cmd"		"kz_hidelegs"
+					"cmd"		"say /hidelegs"
 				}
 
 				"Toggle Jumpstats"
 				{
 					"hotkey"	"6"
 					"label"		"Jumpstats in-/uitschakelen"
-					"cmd"		"kz_togglejs"
+					"cmd"		"say /js"
 				}
 
 				"Toggle Jumpstats Always"
 				{
 					"hotkey"	"7"
 					"label"		"Toon altijd Jumpstats"
-					"cmd"		"kz_jsalways"
+					"cmd"		"say /jsalways"
 				}
 			}
 		}
