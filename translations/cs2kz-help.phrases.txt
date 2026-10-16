@@ -6,12 +6,14 @@
 		"en"		"Command Help"
 		"chi"		"指令帮助"
 		"zho"		"指令說明"
+		"ua" 		"Довідка щодо команд"
 	}
 	"Help - Hint"
 	{
 		"en"		"Type !<command> or /<command> in chat. Type kz_help in console for console help."
 		"chi"		"在聊天栏输入 !<command> 或 /<command>。在控制台输入 kz_help 查看控制台指令帮助。"
 		"zho"		"在聊天欄輸入 !<command> 或 /<command>。在控制台輸入 kz_help 查看控制台指令說明。"
+		"ua"		"Напишіть !<команда> або /<команда> в чаті. Введіть kz_help в консолі для довідки."
 	}
 	"Help - Usage"
 	{
@@ -19,107 +21,125 @@
 		"en"		"Usage: {usage}"
 		"chi"		"用法：{usage}"
 		"zho"		"使用方式：{usage}"
+		"ua"		"Використання: {usage}"
 	}
 	"Help - Category - Checkpoint"
 	{
 		"en"		"Checkpoints"
 		"chi"		"存点"
 		"zho"		"儲存點"
+		"ua"		"Чекпоінти"
 	}
 	"Help - Category - Record"
 	{
 		"en"		"Records"
 		"chi"		"记录"
 		"zho"		"紀錄"
+		"ua"		"Рекорди"
 	}
 	"Help - Category - Jumpstats"
 	{
 		"en"		"Jumpstats"
 		"chi"		"跳跃数据"
 		"zho"		"跳躍數據"
+		"ua"		"Статистика стрибків"
 	}
 	"Help - Category - Measure"
 	{
 		"en"		"Measurement"
 		"chi"		"测量"
 		"zho"		"測量"
+		"ua"		"Вимірювання дистанції"
 	}
 	"Help - Category - ModeStyle"
 	{
 		"en"		"Modes & styles"
 		"chi"		"模式与风格"
 		"zho"		"模式與樣式"
+		"ua"		"Режими та стилі"
 	}
 	"Help - Category - Preference"
 	{
 		"en"		"Preferences"
 		"chi"		"偏好设置"
 		"zho"		"偏好設定"
+		"ua"		"Налаштування"
 	}
 	"Help - Category - Racing"
 	{
 		"en"		"Racing"
 		"chi"		"竞速"
 		"zho"		"競速"
+		"ua"		"Перегони"
 	}
 	"Help - Category - Replay"
 	{
 		"en"		"Replays"
 		"chi"		"回放"
 		"zho"		"回放"
+		"ua"		"Повтори"
 	}
 	"Help - Category - Saveloc"
 	{
 		"en"		"Saved locations"
 		"chi"		"已保存的位置"
 		"zho"		"已儲存的位置"
+		"ua"		"Меню збережених позицій (Saveloc)"
 	}
 	"Help - Category - Spec"
 	{
 		"en"		"Spectating"
 		"chi"		"观战"
 		"zho"		"觀戰"
+		"ua"		"Спостереження"
 	}
 	"Help - Category - Status"
 	{
 		"en"		"Status"
 		"chi"		"状态"
 		"zho"		"狀態"
+		"ua"		"Статус"
 	}
 	"Help - Category - Timer"
 	{
 		"en"		"Timer"
 		"chi"		"计时器"
 		"zho"		"計時器"
+		"ua"		"Таймер"
 	}
 	"Help - Category - Player"
 	{
 		"en"		"Player"
 		"chi"		"玩家"
 		"zho"		"玩家"
+		"ua"		"Гравець"
 	}
 	"Help - Category - Global"
 	{
 		"en"		"Global"
 		"chi"		"全局"
 		"zho"		"全域"
+		"ua"		"Глобальні"
 	}
 	"Help - Category - Misc"
 	{
 		"en"		"Other"
 		"chi"		"其他"
 		"zho"		"其他"
+		"ua"		"Інше"
 	}
 	"Help - Category - Map"
 	{
 		"en"		"Maps"
 		"chi"		"地图"
 		"zho"		"地圖"
+		"ua"		"Мапи"
 	}
 	"Help - Category - HUD"
 	{
 		"en"		"HUD"
 		"chi"		"HUD"
 		"zho"		"HUD"
+		"ua"		"HUD"
 	}
 }
