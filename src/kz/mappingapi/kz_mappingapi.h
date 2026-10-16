@@ -9,14 +9,14 @@
 
 #define KZ_MAPAPI_VERSION 2
 
-#define KZ_MAX_SPLIT_ZONES        64
-#define KZ_MAX_CHECKPOINT_ZONES   64
-#define KZ_MAX_STAGE_ZONES        64
+#define KZ_MAX_SPLIT_ZONES      64
+#define KZ_MAX_CHECKPOINT_ZONES 64
+#define KZ_MAX_STAGE_ZONES      64
 // Split, checkpoint and stage zones of one course combined that replay playback can mark on its bar.
 #define KZ_MAX_REPLAY_MARKED_ZONES 64
-#define KZ_MAX_COURSE_COUNT       128
-#define KZ_MAX_COURSE_NAME_LENGTH 65
-#define KZ_MAX_TRIGGER_COUNT      2048
+#define KZ_MAX_COURSE_COUNT        128
+#define KZ_MAX_COURSE_NAME_LENGTH  65
+#define KZ_MAX_TRIGGER_COUNT       2048
 
 #define INVALID_SPLIT_NUMBER      0
 #define INVALID_CHECKPOINT_NUMBER 0
