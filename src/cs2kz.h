@@ -68,6 +68,7 @@ public:
 
 	bool simulatingPhysics = false;
 	CGlobalVars serverGlobals;
+	CGlobalVars unmodifiedServerGlobals;
 	bool unloading = false;
 	bool loading = true;
 

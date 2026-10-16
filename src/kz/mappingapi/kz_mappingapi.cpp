@@ -59,6 +59,7 @@ static_global struct
 
 static_global CTimer<> *g_errorTimer;
 static_global const char *g_errorPrefix = "{darkred} ERROR: ";
+static_global const char *g_warningPrefix = "{gold} WARNING: ";
 static_global const char *g_triggerNames[] = {"Disabled",   "Modifier",   "Reset Checkpoints", "Single Bhop Reset", "Antibhop",
 											  "Start zone", "End zone",   "Split zone",        "Checkpoint zone",   "Stage zone",
 											  "Teleport",   "Multi bhop", "Single bhop",       "Sequential bhop"};
@@ -70,7 +71,8 @@ static_global CUtlSortVector<KZCourseDescriptor *, CourseLessFunc> g_sortedCours
 
 // TODO: add error check to make sure a course has at least 1 start zone and 1 end zone
 
-static_function void Mapi_Error(const char *format, ...)
+// Errors and warnings share one list, each message stored with its prefix.
+static_function void Mapi_AddMessage(const char *prefix, const char *format, va_list args)
 {
 	i32 errorIndex = g_mappingApi.errorCount;
 	if (errorIndex >= KZ_ARRAYSIZE(g_mappingApi.errors))
@@ -79,16 +81,40 @@ static_function void Mapi_Error(const char *format, ...)
 	}
 	else if (errorIndex == KZ_ARRAYSIZE(g_mappingApi.errors) - 1)
 	{
-		snprintf(g_mappingApi.errors[errorIndex], sizeof(g_mappingApi.errors[errorIndex]), "Too many errors to list!");
+		snprintf(g_mappingApi.errors[errorIndex], sizeof(g_mappingApi.errors[errorIndex]), "%sToo many errors to list!", g_errorPrefix);
 		return;
 	}
 
-	va_list args;
-	va_start(args, format);
-	vsnprintf(g_mappingApi.errors[errorIndex], sizeof(g_mappingApi.errors[errorIndex]), format, args);
-	va_end(args);
+	char message[sizeof(g_mappingApi.errors[0])];
+	vsnprintf(message, sizeof(message), format, args);
+	snprintf(g_mappingApi.errors[errorIndex], sizeof(g_mappingApi.errors[errorIndex]), "%s%s", prefix, message);
+	// Courses are checked again every round, and a course that passes keeps any warning it gets.
+	for (i32 i = 0; i < errorIndex; i++)
+	{
+		if (KZ_STREQ(g_mappingApi.errors[i], g_mappingApi.errors[errorIndex]))
+		{
+			return;
+		}
+	}
 
 	g_mappingApi.errorCount++;
+}
+
+static_function void Mapi_Error(const char *format, ...)
+{
+	va_list args;
+	va_start(args, format);
+	Mapi_AddMessage(g_errorPrefix, format, args);
+	va_end(args);
+}
+
+// For maps that still work, but not fully.
+static_function void Mapi_Warning(const char *format, ...)
+{
+	va_list args;
+	va_start(args, format);
+	Mapi_AddMessage(g_warningPrefix, format, args);
+	va_end(args);
 }
 
 static_function f64 Mapi_PrintErrors()
@@ -103,7 +129,7 @@ static_function f64 Mapi_PrintErrors()
 	}
 	for (i32 i = 0; i < g_mappingApi.errorCount; i++)
 	{
-		utils::CPrintChatAll("%s%s", g_errorPrefix, g_mappingApi.errors[i]);
+		utils::CPrintChatAll("%s", g_mappingApi.errors[i]);
 	}
 
 	return 60.0;
@@ -728,6 +754,12 @@ void KZ::mapapi::OnRoundStart()
 			g_mappingApi.courseDescriptors.FastRemove(courseInd);
 			courseInd--;
 			continue;
+		}
+
+		if (splitCount + cpCount + stageCount > KZ_MAX_REPLAY_MARKED_ZONES)
+		{
+			Mapi_Warning("Course \"%s\" has %i split, checkpoint and stage zones. Replays only mark the first %i of them.", courseDescriptor->name,
+						 splitCount + cpCount + stageCount, KZ_MAX_REPLAY_MARKED_ZONES);
 		}
 		courseDescriptor->splitCount = splitCount;
 		courseDescriptor->checkpointCount = cpCount;

@@ -79,6 +79,7 @@ namespace KZ::replaysystem::data
 		// Reset replay pause state
 		replay->replayPaused = false;
 		replay->tickProgress = 0.0f;
+		replay->stepTicks = 0;
 	}
 
 	ReplayPlayback *GetCurrentReplay()

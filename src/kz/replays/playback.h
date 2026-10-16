@@ -81,6 +81,8 @@ namespace KZ::replaysystem::playback
 	// Sets the bot's clock, which jumps when a replay starts or is seeked.
 	// Clears the times the bot stamped on the old clock, which can be in the future of the new one.
 	void ResetBotClock(KZPlayer *player, u32 tick);
+	// Pauses the replay and plays one more replay tick on the next server tick.
+	void StepTick();
 
 	// Navigation support
 	void ApplyTickState(KZPlayer *player, const TickData *tickData);

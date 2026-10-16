@@ -634,7 +634,8 @@ bool KZHUDService::ShowJumpstat(Jump *jump, i32 colorTier)
 	js.shownDist = text.dist;
 	js.shownTier = colorTier;
 	js.hasShown = true;
-	js.hideTime = g_pKZUtils->GetServerGlobals()->curtime + this->GetPrefs().jsDuration;
+	// Unmodified, because the replay bot's clock stands in for curtime while its jumps and zones are reported.
+	js.hideTime = g_pKZUtils->GetServerGlobals(true)->curtime + this->GetPrefs().jsDuration;
 	return true;
 }
 
@@ -664,7 +665,7 @@ i32 KZHUDService::AdvancePills(LayoutPill (&pills)[MHUD_JS_PILL_COUNT])
 	}
 
 	LayoutPill &pill = pills[index];
-	pill.born = g_pKZUtils->GetServerGlobals()->curtime;
+	pill.born = g_pKZUtils->GetServerGlobals(true)->curtime;
 	pill.rank = 0;
 	pill.live = true;
 	pill.expired = false;
@@ -674,7 +675,7 @@ i32 KZHUDService::AdvancePills(LayoutPill (&pills)[MHUD_JS_PILL_COUNT])
 
 void KZHUDService::UpdatePills(CCSCustomHudLayout *layout, LayoutPill (&pills)[MHUD_JS_PILL_COUNT], const char *const (*ids)[4])
 {
-	const f64 now = g_pKZUtils->GetServerGlobals()->curtime;
+	const f64 now = g_pKZUtils->GetServerGlobals(true)->curtime;
 	for (i32 i = 0; i < MHUD_JS_PILL_COUNT; i++)
 	{
 		LayoutPill &pill = pills[i];
@@ -870,7 +871,7 @@ void KZHUDService::UpdateJumpstatsElement(CCSCustomHudLayout *layout, bool show,
 		this->ClearJumpstatPreview(layout);
 	}
 
-	const f64 now = g_pKZUtils->GetServerGlobals()->curtime;
+	const f64 now = g_pKZUtils->GetServerGlobals(true)->curtime;
 	// Turning compact on while the panel is up files that jump into the history right away.
 	if (js.hasShown && (now >= js.hideTime || prefs.jsCompact))
 	{

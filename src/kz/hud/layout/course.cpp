@@ -2,6 +2,7 @@
 #include "kz/global/kz_global.h"
 #include "kz/language/kz_language.h"
 #include "kz/mode/kz_mode.h"
+#include "kz/replays/kz_replaysystem.h"
 #include "kz/timer/kz_timer.h"
 #include "sdk/entity/ccscustomhudlayout.h"
 #include "utils/utils.h"
@@ -122,8 +123,13 @@ static_function void GetCourseInfo(KZPlayer *viewer, KZPlayer *source, CourseInf
 	KZLanguageService *lang = viewer->languageService;
 	out.map = g_pKZUtils->GetCurrentMapName().Get();
 
+	// The replay bot's run lives in the replay rather than in its timer.
+	const bool replay = KZ::replaysystem::IsReplayBot(source);
+	const KZ::replaysystem::RunStatus run = replay ? KZ::replaysystem::GetRunStatus() : KZ::replaysystem::RunStatus {};
+	const KZCourseDescriptor *runCourse = replay ? run.course : source->timerService->GetCourse();
+
 	// Before the timer has started on a course, the map's first one stands in for it.
-	const KZCourseDescriptor *course = source->timerService->GetCourse();
+	const KZCourseDescriptor *course = runCourse;
 	if (!course)
 	{
 		course = KZ::course::GetFirstCourse();
@@ -172,14 +178,27 @@ static_function void GetCourseInfo(KZPlayer *viewer, KZPlayer *source, CourseInf
 		return;
 	}
 
-	// The run only counts zones on its own course, so another course shows none reached yet.
-	const bool running = source->timerService->GetCourse() == course;
-	out.totals[0] = course->stageCount;
-	out.totals[1] = course->checkpointCount;
-	out.totals[2] = course->splitCount;
-	out.reached[0] = running ? source->timerService->GetReachedStages() : 0;
-	out.reached[1] = running ? source->timerService->GetReachedCheckpoints() : 0;
-	out.reached[2] = running ? source->timerService->GetReachedSplits() : 0;
+	// The run only counts zones on its own course, so another course shows none reached yet. A replay without a timer
+	// has no zones to count at all.
+	const bool running = runCourse == course;
+	if (!replay || run.timed)
+	{
+		out.totals[0] = course->stageCount;
+		out.totals[1] = course->checkpointCount;
+		out.totals[2] = course->splitCount;
+	}
+	if (replay)
+	{
+		out.reached[0] = run.stages;
+		out.reached[1] = run.checkpoints;
+		out.reached[2] = run.splits;
+	}
+	else
+	{
+		out.reached[0] = running ? source->timerService->GetReachedStages() : 0;
+		out.reached[1] = running ? source->timerService->GetReachedCheckpoints() : 0;
+		out.reached[2] = running ? source->timerService->GetReachedSplits() : 0;
+	}
 
 	out.course = lang->PrepareMessage("HUD - Course Line", course->name, modeInfo.shortModeName.Get());
 	if (nubTier > 0)
@@ -193,12 +212,15 @@ static_function void GetCourseInfo(KZPlayer *viewer, KZPlayer *source, CourseInf
 	const PBData *wr = KZTimerService::GetCachedRecord(key, true);
 	const bool global = wr && (wr->overall.pbTime > 0 || wr->pro.pbTime > 0);
 	const PBData *record = global ? wr : KZTimerService::GetCachedRecord(key, false);
-	const PBData *pb = source->timerService->GetCachedPB(key, global);
+	// The gaps are from the watched player's personal best, or from the time of the run the bot replays.
+	const PBData *pb = replay ? nullptr : source->timerService->GetCachedPB(key, global);
+	const f64 pbOverall = replay ? run.runTime : (pb ? pb->overall.pbTime : 0);
+	const f64 pbPro = replay ? (run.runPro ? run.runTime : 0) : (pb ? pb->pro.pbTime : 0);
 	// The overall record only counts as a pro run when it is also the pro record.
 	const f64 overall = record ? record->overall.pbTime : 0;
 	const f64 pro = record ? record->pro.pbTime : 0;
-	FormatRecordRow(lang, out, COURSE_ROW_ALL, overall, overall != pro, record ? record->overall.holder : "", pb ? pb->overall.pbTime : 0);
-	FormatRecordRow(lang, out, COURSE_ROW_PRO, pro, false, record ? record->pro.holder : "", pb ? pb->pro.pbTime : 0);
+	FormatRecordRow(lang, out, COURSE_ROW_ALL, overall, overall != pro, record ? record->overall.holder : "", pbOverall);
+	FormatRecordRow(lang, out, COURSE_ROW_PRO, pro, false, record ? record->pro.holder : "", pbPro);
 }
 
 static_function void GetCourseSample(KZLanguageService *lang, CourseInfoText &out)

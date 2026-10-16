@@ -8,6 +8,7 @@
 #include "bot.h"
 #include "item.h"
 #include "events.h"
+#include "controls.h"
 #include "sdk/usercmd.h"
 #include "utils/utils.h"
 
@@ -136,6 +137,13 @@ namespace KZ::replaysystem::playback
 		replay->tickProgress += replay->replayPaused ? 0.0f : replay->timescale;
 		u32 ticks = (u32)replay->tickProgress;
 		replay->tickProgress -= (f32)ticks;
+		if (replay->stepTicks > 0)
+		{
+			// A stepped tick ends with the bot on the next tick's pre state, not part of the way into it.
+			ticks += replay->stepTicks;
+			replay->stepTicks = 0;
+			replay->tickProgress = 0.0f;
+		}
 		if (!replay->hasLastMoveData && ticks == 0)
 		{
 			// Holding reuses the move data of a simulated tick, so the bot has to simulate one first.
@@ -637,8 +645,21 @@ namespace KZ::replaysystem::playback
 		replay->replayPaused = false;
 		replay->timescale = 1.0f;
 		replay->tickProgress = 0.0f;
+		replay->stepTicks = 0;
 		replay->currentTick = 0;
 		ResetBotClock(bot::GetBotPlayer(), replay->tickData[0].serverTick);
+		controls::OnReplayStart();
+	}
+
+	void StepTick()
+	{
+		auto replay = data::GetCurrentReplay();
+		replay->replayPaused = true;
+		// Playing the last replay tick ends the replay, so a step never reaches it.
+		if (replay->currentTick + replay->stepTicks + 1 < replay->tickCount)
+		{
+			replay->stepTicks++;
+		}
 	}
 
 	void ResetBotClock(KZPlayer *player, u32 tick)

@@ -54,6 +54,8 @@ namespace KZ::replaysystem::data
 		f32 tickProgress;
 		// Replay ticks left to simulate this server tick.
 		u32 pendingTicks;
+		// Replay ticks to play on the next server tick even while paused.
+		u32 stepTicks;
 		// Set on server ticks that simulate nothing and only move the bot between two replay ticks.
 		bool holdingTick;
 		bool hasLastMoveData;

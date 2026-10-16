@@ -1,6 +1,7 @@
 #include "cs2kz.h"
 #include "kz/kz.h"
 #include "kz/timer/kz_timer.h"
+#include "kz/hud/kz_hud.h"
 #include "kz/mode/kz_mode.h"
 #include "kz/style/kz_style.h"
 #include "kz/language/kz_language.h"
@@ -10,6 +11,18 @@
 
 namespace KZ::replaysystem::events
 {
+	// Gives the bot's spectators the course panel's zone pill. A replay has nothing to compare the time with.
+	static_function void ReportZone(KZPlayer &player, KZTimerService::ZoneKind kind, const RpEvent *event)
+	{
+		KZTimerService::ZoneReport report;
+		report.kind = kind;
+		report.number = event->data.timer.index;
+		report.time = event->data.timer.time;
+		for (KZPlayer *spec = player.specService->GetNextSpectator(NULL); spec != NULL; spec = player.specService->GetNextSpectator(spec))
+		{
+			spec->hudService->OnZoneReached(report);
+		}
+	}
 
 	void CheckEvents(KZPlayer &player)
 	{
@@ -93,7 +106,8 @@ namespace KZ::replaysystem::events
 					spec->timerService->PlayTimerStartSound();
 				}
 
-				replay->startTime = event->serverTick * ENGINE_FIXED_TICK_INTERVAL - event->data.timer.time;
+				// A live timer starts a fraction of a tick below zero and gains a whole tick before the end of that tick.
+				replay->startTime = (event->serverTick - 1) * ENGINE_FIXED_TICK_INTERVAL - event->data.timer.time;
 				replay->endTime = 0.0f;
 				replay->lastSplitTime = 0.0f;
 				replay->lastCPZTime = 0.0f;
@@ -193,6 +207,7 @@ namespace KZ::replaysystem::events
 				}
 
 				player.languageService->PrintChat(true, true, "Course Split Reached", event->data.timer.index, time.Get(), "", "");
+				ReportZone(player, KZTimerService::ZoneKind::Split, event);
 				replay->lastSplitTime = event->data.timer.time;
 				break;
 			}
@@ -219,6 +234,7 @@ namespace KZ::replaysystem::events
 				}
 
 				player.languageService->PrintChat(true, true, "Course Checkpoint Reached", event->data.timer.index, time.Get(), "", "");
+				ReportZone(player, KZTimerService::ZoneKind::Checkpoint, event);
 				replay->lastCPZTime = event->data.timer.time;
 				break;
 			}
@@ -240,6 +256,7 @@ namespace KZ::replaysystem::events
 				}
 
 				player.languageService->PrintChat(true, true, "Course Stage Reached", event->data.timer.index, time.Get(), "", "");
+				ReportZone(player, KZTimerService::ZoneKind::Stage, event);
 				replay->lastStageTime = event->data.timer.time;
 				break;
 			}
@@ -401,8 +418,7 @@ namespace KZ::replaysystem::events
 							replay->lastCPZTime = 0.0f;
 							replay->lastStageTime = 0.0f;
 
-							// The bot's clock is the recording's, so the timer started where the recording says it did.
-							replay->startTime = event->serverTick * ENGINE_FIXED_TICK_INTERVAL - event->data.timer.time;
+							replay->startTime = (event->serverTick - 1) * ENGINE_FIXED_TICK_INTERVAL - event->data.timer.time;
 
 							// Pause calculation
 							inPause = false;

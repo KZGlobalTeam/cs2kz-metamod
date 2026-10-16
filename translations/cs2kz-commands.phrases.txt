@@ -1892,6 +1892,10 @@
 		"es"		"Activar/desactivar la visibilidad de las piernas del bot en la repetición."
 		"ko"		"리플레이 봇의 1인칭 다리 표시를 전환합니다."
 	}
+	"Command Description - kz_rpcontrols"
+	{
+		"en"		"Toggle replay controls while spectating the replay bot."
+	}
 	"Command Description - kz_accept"
 	{
 		"en"		"Accept an incoming race."
