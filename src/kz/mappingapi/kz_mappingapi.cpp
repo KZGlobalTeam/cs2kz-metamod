@@ -513,8 +513,14 @@ static_function void Mapi_OnInfoTeleportDestinationSpawn(const EntitySpawnInfo_t
 
 void KZ::mapapi::Init()
 {
+	// Sorted courses and players' trigger trackers point into these, so their storage is kept across resets and never reallocates.
+	auto courseDescriptors = std::move(g_mappingApi.courseDescriptors);
+	auto triggers = std::move(g_mappingApi.triggers);
 	g_mappingApi = {};
-	// Sorted courses and trigger trackers point into these, so they must never reallocate.
+	g_mappingApi.courseDescriptors = std::move(courseDescriptors);
+	g_mappingApi.triggers = std::move(triggers);
+	g_mappingApi.courseDescriptors.clear();
+	g_mappingApi.triggers.clear();
 	g_mappingApi.courseDescriptors.reserve(KZ_MAX_COURSE_COUNT);
 	g_mappingApi.triggers.reserve(KZ_MAX_TRIGGER_COUNT);
 
