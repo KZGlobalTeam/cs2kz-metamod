@@ -20,8 +20,8 @@
 	"Command Help Response (Console)"
 	{
 		"en"		"To use these commands, you can type \"bind <key> kz_<command name>\" in your console, or type !<command name> or /<command name> in the chat.\nFor example: \"bind 1 kz_cp\" or \"!cp\" or \"/cp\""
-		"chi"		"使用这些命令, 你可以在控制台中输入 \"bind <按键> kz_<命令名字>\", 或者在聊天栏中输入 !<命令名字> 或 /<命令名字>.\n例如: \"bind 1 kz_cp\" 或 \"!cp\" 或 \"/cp\""
-		"zho"		"使用這些指令, 你可以在控制台中輸入 \"bind <按鍵> kz_<指令名字>\", 或者在聊天欄中輸入 !<指令名字> 或 /<指令名字>.\n例如: \"bind 1 kz_cp\" 或 \"!cp\" 或 \"/cp\""
+		"chi"		"使用这些指令时，可以在控制台输入 \"bind <按键> kz_<指令名称>\" 绑定按键，或者在聊天栏输入 !<指令名称> 或 /<指令名称>.\n例如：\"bind 1 kz_cp\"、\"!cp\" 或 \"/cp\"."
+		"zho"		"使用這些指令時，可以在控制台輸入 \"bind <按鍵> kz_<指令名稱>\" 綁定按鍵，或在聊天欄輸入 !<指令名稱> 或 /<指令名稱>。\n例如：\"bind 1 kz_cp\"、\"!cp\" 或 \"/cp\"。"
 		"pl"		"Aby użyć tych komend, wpisz w konsoli \"bind <klawisz> kz_<nazwa komendy>\", albo wpisz !<nazwa komendy> lub /<nazwa komendy> na czacie.\nnp.: \"bind 1 kz_cp\" lub \"!cp\" lub \"/cp\""
 		"ru"		"Чтобы использовать эти команды, вы можете написать \"bind <кнопка> kz_<название команды>\" в консоли, либо написать !<название команды> или /<название команды> в чате.\nНапример: \"bind 1 kz_cp\" или \"!cp\" или \"/cp\""
 		"fi"		"Käyttääksesi näitä komentoja, voit kirjoittaa \"bind <key> kz_<komennon nimi>\" konsoliisi, tai kirjoittaa !<komento> tai /<komento> chattiin.\nEsimerkiksi: \"bind 1 kz_cp\" tai \"!cp\" tai \"/cp\""
@@ -37,8 +37,8 @@
 	"Command Help Response Category Hint (Console)"
 	{
 		"en"		"You can use \"kz_help <category>\" to get a list of commands related to a specific category (eg. kz_help checkpoint misc).\nList of available categories: checkpoint, record, jumpstats, measure, modestyle, preference, racing, replay, saveloc, spec, status, timer, player, global, misc, map"
-		"chi"		"你可以使用 \"kz_help <类别>\" 获取特定类别的命令列表 (例如：kz_help checkpoint misc).\n可用类别列表: checkpoint(存点), record(记录), jumpstats(跳跃统计), measure(测量), modestyle(模式风格), preference(偏好设置), racing(竞速), replay(重播), saveloc(保存位置), spec(观察), status(状态), timer(计时器), player(玩家), global(全球), misc(杂项), map(地图)"
-		"zho"		"你可以使用 \"kz_help <類別>\" 取得特定類別的指令清單 (例如：kz_help checkpoint misc).\n可用類別清單: checkpoint(存點), record(紀錄), jumpstats(跳躍資料), measure(測量), modestyle(模式風格), preference(偏好設定), racing(競速), replay(重播), saveloc(儲存位置), spec(觀察), status(狀態), timer(計時器), player(玩家), global(全球), misc(雜項), map(地圖)"
+		"chi"		"你可以使用 \"kz_help <类别>\" 查看指定类别的指令列表（例如：kz_help checkpoint misc）.\n可用类别：checkpoint（存点）、record（记录）、jumpstats（跳跃数据）、measure（测量）、modestyle（模式与风格）、preference（偏好设置）、racing（竞速）、replay（回放）、saveloc（保存位置）、spec（观战）、status（状态）、timer（计时器）、player（玩家）、global（全局）、misc（其他）、map（地图）"
+		"zho"		"你可以使用 \"kz_help <類別>\" 查看指定類別的指令清單（例如：kz_help checkpoint misc）。\n可用類別：checkpoint（儲存點）、record（紀錄）、jumpstats（跳躍數據）、measure（測量）、modestyle（模式與風格）、preference（偏好設定）、racing（競速）、replay（回放）、saveloc（儲存位置）、spec（觀戰）、status（狀態）、timer（計時器）、player（玩家）、global（全域）、misc（其他）、map（地圖）"
 		"pl"		"Możesz użyć \"kz_help <kategoria>\", aby uzyskać listę komend dla danej kategorii (np. kz_help checkpoint misc).\nLista dostępnych kategorii: checkpoint, record, jumpstats, measure, modestyle, preference, racing, replay, saveloc, spec, status, timer, player, global, misc, map"
 		"ru"		"Используйте \"kz_help <категория>\", чтобы получить список команд для конкретной категории (например: kz_help checkpoint misc).\nСписок доступных категорий: checkpoint, record, jumpstats, measure, modestyle, preference, racing, replay, saveloc, spec, status, timer, player, global, misc, map"
 		"sv"		"Du kan använda \"kz_help <kategori>\" för att lista kommandon relaterade till en specifik kategori (t.ex. kz_help checkpoint misc).\nLista över tillgängliga kategorier: checkpoint, record, jumpstats, measure, modestyle, preference, racing, replay, saveloc, spec, status, timer, player, global, misc, map"
@@ -81,8 +81,8 @@
 	"Command List - Checkpoint"
 	{
 		"en"		"Checkpoint Commands:"
-		"chi"		"存点 命令:"
-		"zho"		"存點 指令:"
+		"chi"		"存点指令："
+		"zho"		"儲存點指令："
 		"pl"		"Komendy Checkpoint:"
 		"ru"		"Команды чекпоинтов:"
 		"sv"		"Checkpointkommandon:"
@@ -95,8 +95,8 @@
 	"Command List - Record"
 	{
 		"en"		"Record Commands:"
-		"chi"		"记录 命令:"
-		"zho"		"紀錄 指令:"
+		"chi"		"记录指令："
+		"zho"		"紀錄指令："
 		"pl"		"Komendy Rekordów:"
 		"ru"		"Команды рекордов:"
 		"sv"		"Rekordkommandon:"
@@ -109,8 +109,8 @@
 	"Command List - Jumpstats"
 	{
 		"en"		"Jumpstats Commands:"
-		"chi"		"起跳数据 命令:"
-		"zho"		"起跳資料 指令:"
+		"chi"		"跳跃数据指令："
+		"zho"		"跳躍數據指令："
 		"pl"		"Komendy Jumpstats:"
 		"ru"		"Команды статистики прыжков:"
 		"sv"		"Jumpstatkommandon:"
@@ -123,8 +123,8 @@
 	"Command List - Measure"
 	{
 		"en"		"Measure Commands:"
-		"chi"		"测量 命令:"
-		"zho"		"測量 指令:"
+		"chi"		"测量指令："
+		"zho"		"測量指令："
 		"pl"		"Komendy Mierzenia:"
 		"ru"		"Команды измерения:"
 		"sv"		"Mätningskommandon:"
@@ -137,8 +137,8 @@
 	"Command List - ModeStyle"
 	{
 		"en"		"Mode/Style Commands:"
-		"chi"		"模式/风格 命令:"
-		"zho"		"模式/風格 指令:"
+		"chi"		"模式与风格指令："
+		"zho"		"模式與風格指令："
 		"pl"		"Komendy Trybu/Stylu:"
 		"ru"		"Команды режимов/стилей:"
 		"sv"		"Mode/Stilkommandon:"
@@ -151,8 +151,8 @@
 	"Command List - Preference"
 	{
 		"en"		"Preference Commands:"
-		"chi"		"偏好设置 命令:"
-		"zho"		"偏好設定 指令:"
+		"chi"		"偏好设置指令："
+		"zho"		"偏好設定指令："
 		"pl"		"Komendy Ustawień:"
 		"ru"		"Команды настроек:"
 		"sv"		"Preferenskommandon:"
@@ -165,8 +165,8 @@
 	"Command List - Racing"
 	{
 		"en"		"Racing Commands:"
-		"chi"		"竞速 命令:"
-		"zho"		"競速 指令:"
+		"chi"		"竞速指令："
+		"zho"		"競速指令："
 		"pl"		"Komendy Wyścigu:"
 		"ru"		"Команды гонок:"
 		"sv"		"Racingkommandon:"
@@ -179,8 +179,8 @@
 	"Command List - Replay"
 	{
 		"en"		"Replay Commands:"
-		"chi"		"重播 命令:"
-		"zho"		"重播 指令:"
+		"chi"		"回放指令："
+		"zho"		"回放指令："
 		"pl"		"Komendy Powtórek:"
 		"ru"		"Команды повторов:"
 		"sv"		"Repriskommandon:"
@@ -193,8 +193,8 @@
 	"Command List - Saveloc"
 	{
 		"en"		"Saveloc Commands:"
-		"chi"		"保存位置 命令:"
-		"zho"		"儲存位置 指令:"
+		"chi"		"保存位置指令："
+		"zho"		"儲存位置指令："
 		"pl"		"Komendy Saveloc:"
 		"ru"		"Команды Saveloc:"
 		"sv"		"Saveloc kommandon:"
@@ -207,8 +207,8 @@
 	"Command List - Spec"
 	{
 		"en"		"Spectate Commands:"
-		"chi"		"观察 命令:"
-		"zho"		"觀察 指令:"
+		"chi"		"观战指令："
+		"zho"		"觀戰指令："
 		"pl"		"Komendy Obserwatora:"
 		"ru"		"Команды наблюдения:"
 		"sv"		"Åskådningskommandon:"
@@ -221,8 +221,8 @@
 	"Command List - Status"
 	{
 		"en"		"Status Commands:"
-		"chi"		"状态 命令:"
-		"zho"		"狀態 指令:"
+		"chi"		"状态指令："
+		"zho"		"狀態指令："
 		"pl"		"Komendy Statusu:"
 		"ru"		"Команды статуса:"
 		"sv"		"Statuskommandon:"
@@ -235,8 +235,8 @@
 	"Command List - Timer"
 	{
 		"en"		"Timer Commands:"
-		"chi"		"计时器 命令:"
-		"zho"		"計時器 指令:"
+		"chi"		"计时器指令："
+		"zho"		"計時器指令："
 		"pl"		"Komendy Timera:"
 		"ru"		"Команды таймера:"
 		"sv"		"Timerkommandon:"
@@ -249,8 +249,8 @@
 	"Command List - Player"
 	{
 		"en"		"Player Commands:"
-		"chi"		"玩家 命令:"
-		"zho"		"玩家 指令:"
+		"chi"		"玩家指令："
+		"zho"		"玩家指令："
 		"pl"		"Komendy Gracza:"
 		"ru"		"Команды игрока:"
 		"sv"		"Spelarkommandon:"
@@ -263,8 +263,8 @@
 	"Command List - Global"
 	{
 		"en"		"Global Commands:"
-		"chi"		"全球 命令:"
-		"zho"		"全球 指令:"
+		"chi"		"全局指令："
+		"zho"		"全域指令："
 		"pl"		"Komendy Globalne:"
 		"ru"		"Глобальные команды:"
 		"sv"		"Globala Kommandon:"
@@ -277,8 +277,8 @@
 	"Command List - Misc"
 	{
 		"en"		"Miscellaneous Commands:"
-		"chi"		"杂项 命令:"
-		"zho"		"雜項 指令:"
+		"chi"		"其他指令："
+		"zho"		"其他指令："
 		"pl"		"Inne Komendy:"
 		"ru"		"Прочие команды:"
 		"sv"		"Blandade Kommandon:"
@@ -291,8 +291,8 @@
 	"Command List - Map"
 	{
 		"en"		"Map Commands:"
-		"chi"		"地图 命令:"
-		"zho"		"地圖 指令:"
+		"chi"		"地图指令："
+		"zho"		"地圖指令："
 		"pl"		"Komendy Mapy:"
 		"ru"		"Команды карты:"
 		"sv"		"Kartkommandon:"
@@ -305,8 +305,8 @@
 	"Command List - HUD"
 	{
 		"en"		"HUD Commands:"
-		"chi"		"HUD 命令:"
-		"zho"		"HUD 指令:"
+		"chi"		"HUD指令："
+		"zho"		"HUD指令："
 		"pl"		"Komendy HUDa:"
 		"ru"		"Команды HUD:"
 		"sv"		"HUD Kommandon:"
@@ -321,7 +321,7 @@
 	{
 		"en"		"Undo teleport."
 		"chi"		"撤销传送."
-		"zho"		"撤銷傳送."
+		"zho"		"撤銷傳送。"
 		"pl"		"Cofnij teleport."
 		"ru"		"Отменить телепорт."
 		"fi"		"Kumoa teleportti."
@@ -338,7 +338,7 @@
 	{
 		"en"		"Set a checkpoint on ground or on a ladder."
 		"chi"		"在地上或梯子上设置一个存点."
-		"zho"		"在地上或梯子上設定一個存點."
+		"zho"		"在地上或梯子上設定一個儲存點。"
 		"pl"		"Ustaw checkpoint na ziemi bądź drabinie."
 		"ru"		"Поставить чекпоинт на земле или лестнице."
 		"fi"		"Asettaa tallennuspisteen maahan tai tikkaille."
@@ -355,7 +355,7 @@
 	{
 		"en"		"Set a checkpoint on ground or on a ladder."
 		"chi"		"在地上或梯子上设置一个存点."
-		"zho"		"在地上或梯子上設定一個存點."
+		"zho"		"在地上或梯子上設定一個儲存點。"
 		"pl"		"Ustaw checkpoint na ziemi bądź drabinie."
 		"ru"		"Поставить чекпоинт на земле или лестнице."
 		"fi"		"Asettaa tallennuspisteen maahan tai tikkaille."
@@ -372,7 +372,7 @@
 	{
 		"en"		"Teleport to the current checkpoint."
 		"chi"		"传送到当前存点."
-		"zho"		"傳送到目前存點."
+		"zho"		"傳送到目前儲存點。"
 		"pl"		"Teleportuj się do aktualnego checkpointu."
 		"ru"		"Телепортироваться к текущему чекпоинту."
 		"fi"		"Teleporttaa tämänhetkiseen tallennuspisteeseen."
@@ -389,7 +389,7 @@
 	{
 		"en"		"Teleport to the current checkpoint."
 		"chi"		"传送到当前存点."
-		"zho"		"傳送到目前存點."
+		"zho"		"傳送到目前儲存點。"
 		"pl"		"Teleportuj się do aktualnego checkpointu."
 		"ru"		"Телепортироваться к текущему чекпоинту."
 		"fi"		"Teleporttaa tämänhetkiseen tallennuspisteeseen."
@@ -406,7 +406,7 @@
 	{
 		"en"		"Teleport to the last checkpoint."
 		"chi"		"传送到上一个存点."
-		"zho"		"傳送到上一個存點."
+		"zho"		"傳送到上一個儲存點。"
 		"pl"		"Teleportuj się do poprzedniego checkpointu."
 		"ru"		"Телепортироваться к предыдущему чекпоинту."
 		"fi"		"Teleporttaa edelliseen tallennuspisteeseen."
@@ -423,7 +423,7 @@
 	{
 		"en"		"Teleport to the last checkpoint."
 		"chi"		"传送到上一个存点."
-		"zho"		"傳送到上一個存點."
+		"zho"		"傳送到上一個儲存點。"
 		"pl"		"Teleportuj się do poprzedniego checkpointu."
 		"ru"		"Телепортироваться к предыдущему чекпоинту."
 		"fi"		"Teleporttaa edelliseen tallennuspisteeseen."
@@ -440,7 +440,7 @@
 	{
 		"en"		"Teleport to the next checkpoint."
 		"chi"		"传送到下一个存点."
-		"zho"		"傳送到下一個存點."
+		"zho"		"傳送到下一個儲存點。"
 		"pl"		"Teleportuj się do następnego checkpointu."
 		"ru"		"Телепортироваться к следующему чекпоинту."
 		"fi"		"Teleporttaa seuraavaan tallennuspisteeseen."
@@ -457,7 +457,7 @@
 	{
 		"en"		"Teleport to the next checkpoint."
 		"chi"		"传送到下一个存点."
-		"zho"		"傳送到下一個存點."
+		"zho"		"傳送到下一個儲存點。"
 		"pl"		"Teleportuj się do następnego checkpointu."
 		"ru"		"Телепортироваться к следующему чекпоинту."
 		"fi"		"Teleporttaa seuraavaan tallennuspisteeseen."
@@ -474,7 +474,7 @@
 	{
 		"en"		"Set your custom start position to your current position."
 		"chi"		"设置你的自定义起点为当前位置."
-		"zho"		"設定你的自定義起點為目前位置."
+		"zho"		"設定你的自定義起點為目前位置。"
 		"pl"		"Ustaw własną pozycję startową."
 		"ru"		"Поставить стартовую позицию на вашу текущую позицию."
 		"fi"		"Aseta custom aloituspisteesi tämänhetkiseen sijaintiisi."
@@ -491,7 +491,7 @@
 	{
 		"en"		"Set your custom start position to your current position."
 		"chi"		"设置你的自定义起点为当前位置."
-		"zho"		"設定你的自定義起點為目前位置."
+		"zho"		"設定你的自定義起點為目前位置。"
 		"pl"		"Ustaw własną pozycję startową."
 		"ru"		"Поставить стартовую позицию на вашу текущую позицию."
 		"fi"		"Aseta custom aloituspisteesi tämänhetkiseen sijaintiisi."
@@ -508,7 +508,7 @@
 	{
 		"en"		"Clear your custom start position."
 		"chi"		"清除你的自定义起点."
-		"zho"		"清除你的自定義起點."
+		"zho"		"清除你的自定義起點。"
 		"pl"		"Usuń własną pozycję startową."
 		"ru"		"Сбросить вашу стартовую позицию."
 		"fi"		"Tyhjennä custom aloituspisteesi."
@@ -525,7 +525,7 @@
 	{
 		"en"		"Clear your custom start position."
 		"chi"		"清除你的自定义起点."
-		"zho"		"清除你的自定義起點."
+		"zho"		"清除你的自定義起點。"
 		"pl"		"Usuń własną pozycję startową."
 		"ru"		"Сбросить вашу стартовую позицию."
 		"fi"		"Tyhjennä custom aloituspisteesi."
@@ -542,7 +542,7 @@
 	{
 		"en"		"Toggle checkpoint sound effect."
 		"chi"		"切换存点音效是否播放."
-		"zho"		"切換存點音效是否播放."
+		"zho"		"切換儲存點音效是否播放。"
 		"pl"		"Włącz/wyłącz dźwięk checkpointa."
 		"ru"		"Включить/Выключить звук чекпоинта."
 		"ua"		"Перемикання звуку чекпоінту."
@@ -554,8 +554,8 @@
 	"Command Description - kz_tpsound"
 	{
 		"en"		"Toggle teleport sound effect."
-		"chi"		"切换读点音效是否播放."
-		"zho"		"切換讀點音效是否播放."
+		"chi"		"切换传送音效是否播放."
+		"zho"		"切換傳送音效是否播放。"
 		"pl"		"Włącz/wyłącz dźwięk teleportu."
 		"ru"		"Включить/Выключить звук телепорта."
 		"ua"		"Перемикання звуку телепорту."
@@ -568,7 +568,7 @@
 	{
 		"en"		"How to install the fonts marked * in the font picker."
 		"chi"		"如何安装字体选择器中标记为 * 的字体."
-		"zho"		"如何安裝字體選擇器中標記為 * 的字體."
+		"zho"		"如何安裝字體選擇器中標記為 * 的字體。"
 		"ru"		"Как установить шрифты, обозначеннные * в выборе шрифтов."
 		"ua"		"Як встановити шрифти, позначені * у виборі шрифтів."
 	}
@@ -576,7 +576,7 @@
 	{
 		"en"		"Toggle centre panel display."
 		"chi"		"切换中心面板的显示."
-		"zho"		"切換中心面板的顯示."
+		"zho"		"切換中心面板的顯示。"
 		"pl"		"Włącz/wyłącz wyświetlanie panelu środkowego."
 		"ru"		"Включить/Выключить центральную панель."
 		"fi"		"Vaihda keskipaneelin näyttämisen asetusta."
@@ -593,7 +593,7 @@
 	{
 		"en"		"Change jumpstats minimum threshold for broadcasting."
 		"chi"		"更改广播跳跃提示的最小阈值."
-		"zho"		"更改廣播跳躍提示的最小閾值."
+		"zho"		"更改廣播跳躍提示的最小閾值。"
 		"pl"		"Ustaw minimalny próg dla wyświetlania jumpstatów."
 		"ru"		"Изменить минимальный порог отображения в чате прыжков других игроков."
 		"fi"		"Muuta muiden pelaajien chatissä näkyvien jumpstattien minimi kynnysarvoa."
@@ -610,7 +610,7 @@
 	{
 		"en"		"Change jumpstats minimum threshold for sound effects."
 		"chi"		"更改播放跳跃提示音的最小阈值."
-		"zho"		"更改播放跳躍提示音的最小閾值."
+		"zho"		"更改播放跳躍提示音的最小閾值。"
 		"pl"		"Ustaw minimalny próg dla efektów dźwiękowych podczas jumpstatów."
 		"ru"		"Изменить минимальный порог звуковых эффектов прыжков."
 		"fi"		"Muuta jumpstattien äänitehosteiden minimi kynnysarvoa."
@@ -626,8 +626,8 @@
 	"Command Description - kz_togglestats"
 	{
 		"en"		"Toggle jumpstats reporting."
-		"chi"		"切换是否显示起跳提示报告"
-		"zho"		"切換是否顯示起跳提示報告"
+		"chi"		"开启或关闭跳跃数据报告."
+		"zho"		"開啟或關閉跳躍數據報告。"
 		"pl"		"Włącz/wyłącz raportowanie jumpstatów."
 		"ru"		"Включить/Выключить отображение статистики прыжков."
 		"fi"		"Vaihda jumpstattien reportoinnin asetusta."
@@ -643,8 +643,8 @@
 	"Command Description - kz_jumpstats"
 	{
 		"en"		"Toggle jumpstats reporting."
-		"chi"		"切换是否显示起跳提示报告"
-		"zho"		"切換是否顯示起跳提示報告"
+		"chi"		"开启或关闭跳跃数据报告."
+		"zho"		"開啟或關閉跳躍數據報告。"
 		"pl"		"Włącz/wyłącz raportowanie jumpstatów."
 		"ru"		"Включить/Выключить отображение статистики прыжков."
 		"fi"		"Vaihda jumpstattien reportoinnin asetusta."
@@ -660,8 +660,8 @@
 	"Command Description - kz_jsalways"
 	{
 		"en"		"Toggle the always-on jumpstats."
-		"chi"		"切换是否总是显示跳跃数据"
-		"zho"		"切換是否總是顯示跳躍資料"
+		"chi"		"开启或关闭始终显示跳跃数据的功能."
+		"zho"		"開啟或關閉持續顯示跳躍數據的功能。"
 		"pl"		"Włącz/wyłącz stałe wyświetlanie jumpstatów."
 		"ru"		"Включить/Выключить постоянное отображение статистики прыжков."
 		"fi"		"Vaihda \"aina-päällä\" jumpstattien reportoinnin asetusta."
@@ -678,7 +678,7 @@
 	{
 		"en"		"Toggle failstats chat reporting."
 		"chi"		"切换是否在聊天框展示失败统计."
-		"zho"		"切換是否在聊天框展示失敗統計."
+		"zho"		"切換是否在聊天框展示失敗統計。"
 		"ru"		"Вкл/Выкл вывод проваленных прыжков в чат."
 		"ua"		"Увімк./Вимк. показ статистики невдалих стрибків в чаті."
 		"es"		"Activar/desactivar reporte de estadísticas de fallo en el chat."
@@ -688,7 +688,7 @@
 	{
 		"en"		"Toggle failstats console reporting."
 		"chi"		"切换是否在控制台展示失败统计."
-		"zho"		"切換是否在控制台展示失敗統計."
+		"zho"		"切換是否在控制台展示失敗統計。"
 		"ru"		"Вкл/Выкл вывод проваленных прыжков в консоль."
 		"ua"		"Увімк./Вимк. показ статистики невдалих стрибків в консолі."
 		"es"		"Activar/desactivar reporte de estadísticas de fallo en consola."
@@ -698,7 +698,7 @@
     {
         "en"		"Set your minimum jumpstats reporting tier."
 		"chi"		"设置显示你的跳跃数据的最低等级."
-		"zho"		"設定顯示你的跳躍資料的最低等級."
+		"zho"		"設定顯示你的跳躍數據的最低等級。"
         "pl"		"Ustaw minimalny poziom wyświetlania jumpstatów."
 		"ru"		"Установить минимальный уровень прыжков для отображения статистики."
         "ua"		"Встановити мінімальний рівень для відображення статистики стрибків."
@@ -710,7 +710,8 @@
     "Command Description - kz_jstierhud"
     {
         "en"		"Set your minimum jumpstats HUD reporting tier."
-        "zho"		"設定 HUD 顯示跳躍資料的最低等級。"
+        "chi"		"设置 HUD 显示跳跃数据的最低等级."
+        "zho"		"設定 HUD 顯示跳躍數據的最低等級。"
 		"ua"		"Встановити мінімальний рівень для відображення статистики стрибків в HUD."
         "ru"		"Установить минимальный уровень отображения статистики прыжков в HUD."
 	}
@@ -718,7 +719,7 @@
     {
         "en"		"Set your minimum jumpstats console reporting tier."
 		"chi"		"设置在控制台显示你的跳跃数据的最低等级."
-		"zho"		"設定在控制台顯示你的跳躍資料的最低等級."
+		"zho"		"設定在控制台顯示你的跳躍數據的最低等級。"
         "pl"		"Ustaw minimalny poziom wyświetlania jumpstatów w konsoli."
 		"ru"		"Установить минимальный уровень прыжков для отображения в консоли."
         "ua"		"Встановити мінімальний рівень для відображення статистики стрибків в консолі."
@@ -731,7 +732,7 @@
     {
         "en"		"Set the minimum tier for jumpstats sound broadcast."
 		"chi"		"设置广播跳跃数据音效的最低等级."
-		"zho"		"設定廣播跳躍資料音效的最低等級."
+		"zho"		"設定廣播跳躍數據音效的最低等級。"
         "pl"		"Ustaw minimalny poziom dla odtwarzania dźwięków jumpstat."
 		"ru"		"Установить минимальный уровень прыжков для звуковых эффектов."
         "ua"		"Встановити мінімальний рівень для звукових ефектів під час стрибків."
@@ -744,7 +745,7 @@
 	{
 		"en"		"Set the minimum tier for jumpstats console broadcast."
 		"chi"		"设置在控制台广播跳跃数据的最低等级."
-		"zho"		"設定在控制台廣播跳躍資料的最低等級."
+		"zho"		"設定在控制台廣播跳躍數據的最低等級。"
 		"pl"		"Ustaw minimalny tier transmitowania jumpstatów w konsoli."
 		"ru"		"Установить минимальный уровень прыжков других игроков для звуковых эффектов."
 		"ua"		"Встановити мінімальний тір статистики стрибків для трансляції в консолі."
@@ -756,7 +757,7 @@
 	{
 		"en"		"Toggle extended jumpstats reporting in chat."
 		"chi"		"切换是否在聊天框展示详细跳跃数据."
-		"zho"		"切換是否在聊天框展示詳細跳躍資料."
+		"zho"		"切換是否在聊天框展示詳細跳躍數據。"
 		"pl"		"Włącz/wyłącz rozszerzone raportowanie jumpstatów na czacie."
 		"ru"		"Включить/Выключить подробную статистику прыжков в чате."
 		"ua"		"Перемикання розширеної статистики стрибків у чаті."
@@ -769,7 +770,7 @@
 	{
 		"en"		"Set jumpstats sound effect volume."
 		"chi"		"设置跳跃数据音效的音量."
-		"zho"		"設定跳躍資料音效的音量."
+		"zho"		"設定跳躍數據音效的音量。"
 		"pl"		"Ustaw głośność efektów dźwiękowych jumpstatów."
 		"ru"		"Установить громкость звуковых эффектов прыжков."
 		"ua"		"Встановити гучність ефектів стрибків."
@@ -781,8 +782,8 @@
 	"Command Description - kz_mode"
 	{
 		"en"		"List or change mode."
-		"chi"		"列出或更改模式."
-		"zho"		"列出或更改模式."
+		"chi"		"列出或切换模式."
+		"zho"		"列出或切換模式。"
 		"pl"		"Wyświetl listę lub zmień tryb."
 		"ru"		"Переключить режим."
 		"fi"		"Listaa tai vaihda moodia."
@@ -799,7 +800,7 @@
 	{
 		"en"		"Toggle noclip."
 		"chi"		"切换飞行状态."
-		"zho"		"切換飛行狀態."
+		"zho"		"切換飛行狀態。"
 		"pl"		"Włącz lub wyłącz noclipa."
 		"ru"		"Включить/Выключить noclip."
 		"fi"		"Vaiha noclip:n tilaa."
@@ -816,7 +817,7 @@
 	{
 		"en"		"Toggle noclip."
 		"chi"		"切换飞行状态."
-		"zho"		"切換飛行狀態."
+		"zho"		"切換飛行狀態。"
 		"pl"		"Włącz lub wyłącz noclipa."
 		"ru"		"Включить/Выключить noclip."
 		"fi"		"Vaiha noclip:n tilaa."
@@ -833,7 +834,7 @@
 	{
 		"en"		"Toggle noclip."
 		"chi"		"切换飞行状态."
-		"zho"		"切換飛行狀態."
+		"zho"		"切換飛行狀態。"
 		"pl"		"Włącz lub wyłącz noclipa."
 		"ru"		"Включить/Выключить noclip."
 		"fi"		"Vaiha noclip:n tilaa."
@@ -849,8 +850,8 @@
 	"Command Description - kz_spec"
 	{
 		"en"		"Spectate a player."
-		"chi"		"观看一个玩家."
-		"zho"		"觀看一個玩家."
+		"chi"		"观战一个玩家."
+		"zho"		"觀戰一個玩家。"
 		"pl"		"Obserwuj innego gracza."
 		"ru"		"Наблюдать за игроком."
 		"fi"		"Katsele pelaajaa."
@@ -866,8 +867,8 @@
 	"Command Description - kz_specs"
 	{
 		"en"		"List currently spectating players in chat."
-		"chi"		"在聊天栏列出当前观看中的玩家."
-		"zho"		"在聊天欄列出目前觀看中的玩家."
+		"chi"		"在聊天栏列出当前观战中的玩家."
+		"zho"		"在聊天欄列出目前觀戰中的玩家。"
 		"pl"		"Wyświetl na czacie listę obserwujących graczy."
 		"ru"		"Вывести в чат список текущих наблюдателей."
 		"ua"		"Показати в чаті список спостерігачів."
@@ -880,7 +881,7 @@
 	{
 		"en"		"Go to a player."
 		"chi"		"传送到一个玩家身边."
-		"zho"		"傳送到一個玩家身邊."
+		"zho"		"傳送到一個玩家身邊。"
 		"pl"		"Przejdź do gracza."
 		"ru"		"Телепортироваться к игроку."
 		"fi"		"Mene pelaajan luokse."
@@ -896,8 +897,8 @@
 	"Command Description - kz_style"
 	{
 		"en"		"List, add, remove or toggle style."
-		"chi"		"列出, 添加, 移除或切换风格."
-		"zho"		"列出, 添加, 移除或切換風格."
+		"chi"		"列出、添加、移除或切换风格."
+		"zho"		"列出、添加、移除或切換風格。"
 		"pl"		"Wyświetl, dodaj, usuń lub przełącz styl."
 		"ru"		"Показать, добавить, удалить или переключить стиль."
 		"fi"		"Listaa, lisää, poista tai vaihda tyyliä."
@@ -914,7 +915,7 @@
 	{
 		"en"		"List or add style."
 		"chi"		"列出或添加风格."
-		"zho"		"列出或添加風格."
+		"zho"		"列出或添加風格。"
 		"pl"		"Wyświetl listę lub dodaj styl."
 		"ru"		"Показать или добавить стиль"
 		"fi"		"Listaa tai lisää tyyli."
@@ -931,7 +932,7 @@
 	{
 		"en"		"List active styles or remove style."
 		"chi"		"列出已激活风格或移除风格."
-		"zho"		"列出已激活風格或移除風格."
+		"zho"		"列出已激活風格或移除風格。"
 		"pl"		"Wyświetl listę aktywnych stylów lub usuń styl."
 		"ru"		"Показать активные стили или удалить стиль."
 		"fi"		"Listaa aktiiviset tyylit tai poista tyyli."
@@ -948,7 +949,7 @@
 	{
 		"en"		"List or toggle style."
 		"chi"		"列出或切换风格."
-		"zho"		"列出或切換風格."
+		"zho"		"列出或切換風格。"
 		"pl"		"Wyświetl lub przełącz styl."
 		"ru"		"Показать или переключить стиль."
 		"fi"		"Listaa tai vaihda tyyliä."
@@ -965,7 +966,7 @@
 	{
 		"en"		"Clear all styles."
 		"chi"		"清除所有风格."
-		"zho"		"清除所有風格."
+		"zho"		"清除所有風格。"
 		"pl"		"Wyczyść wszystkie style."
 		"ru"		"Очистить все стили."
 		"fi"		"Tyhjennä kaikki tyylit."
@@ -982,7 +983,7 @@
 	{
 		"en"		"Stop timer."
 		"chi"		"停止计时."
-		"zho"		"停止計時."
+		"zho"		"停止計時。"
 		"pl"		"Wyłącz timer."
 		"ru"		"Остановить таймер."
 		"fi"		"Pysäytä ajastin."
@@ -998,8 +999,8 @@
 	"Command Description - kz_pause"
 	{
 		"en"		"Toggle timer pause."
-		"chi"		"暂停计时."
-		"zho"		"暫停計時."
+		"chi"		"切换计时器暂停状态."
+		"zho"		"切換計時器暫停狀態。"
 		"pl"		"Włącz/Wyłącz pauzę timera."
 		"ru"		"Поставить таймер на паузу."
 		"fi"		"Vaihda ajastimen keskeytyksen asetusta."
@@ -1016,7 +1017,7 @@
 	{
 		"en"		"Toggle tips."
 		"chi"		"开关提示."
-		"zho"		"開關提示."
+		"zho"		"開關提示。"
 		"pl"		"Włącz lub wyłącz wskazówki."
 		"ru"		"Включить/Выключить подсказки."
 		"fi"		"Vaihda vihjeiden asetusta."
@@ -1033,7 +1034,7 @@
 	{
 		"en"		"Hide your legs in first person."
 		"chi"		"在第一人称中隐藏腿部."
-		"zho"		"在第一人稱中隱藏腿部."
+		"zho"		"在第一人稱中隱藏腿部。"
 		"pl"		"Nie pokazuj nóg w pierwszej osobie."
 		"ru"		"Спрятать ноги в виде от первого лица."
 		"fi"		"Piilota omat jalkasi ensimmäisessä persoonassa."
@@ -1050,7 +1051,7 @@
 	{
 		"en"		"Hide other players."
 		"chi"		"隐藏其他的玩家."
-		"zho"		"隱藏其他的玩家."
+		"zho"		"隱藏其他的玩家。"
 		"pl"		"Ukryj innych graczy."
 		"ru"		"Спрятать других игроков."
 		"fi"		"Piilota muut pelaajat."
@@ -1067,7 +1068,7 @@
 	{
 		"en"		"Restart."
 		"chi"		"重新开始."
-		"zho"		"重新開始."
+		"zho"		"重新開始。"
 		"pl"		"Restart."
 		"ru"		"Рестарт."
 		"fi"		"Aloita alusta."
@@ -1084,7 +1085,7 @@
 	{
 		"en"		"Restart."
 		"chi"		"重新开始."
-		"zho"		"重新開始."
+		"zho"		"重新開始。"
 		"pl"		"Restart."
 		"ru"		"Рестарт."
 		"fi"		"Aloita alusta."
@@ -1100,8 +1101,8 @@
 	"Command Description - kz_lj"
 	{
 		"en"		"Teleport to the jumpstat area."
-		"chi"		"传送到LJ房间."
-		"zho"		"傳送到LJ房間."
+		"chi"		"传送到LJ房."
+		"zho"		"傳送到LJ房。"
 		"pl"		"Teleportuj do strefy jumpstatów LJ."
 		"ru"		"Телепортироваться в Longjump-комнату."
 		"sv"		"Teleportera till jumpstat-området"
@@ -1114,8 +1115,8 @@
 	"Command Description - kz_ljarea"
 	{
 		"en"		"Teleport to the jumpstat area."
-		"chi"		"传送到LJ房间."
-		"zho"		"傳送到LJ房間."
+		"chi"		"传送到LJ房."
+		"zho"		"傳送到LJ房。"
 		"pl"		"Teleportuj do strefy jumpstatów LJ."
 		"ru"		"Телепортироваться в Longjump-комнату."
 		"sv"		"Teleportera till jumpstat-området"
@@ -1128,8 +1129,8 @@
 	"Command Description - kz_jsarea"
 	{
 		"en"		"Teleport to the jumpstat area."
-		"chi"		"传送到LJ房间."
-		"zho"		"傳送到LJ房間."
+		"chi"		"传送到LJ房."
+		"zho"		"傳送到LJ房。"
 		"pl"		"Teleportuj do strefy jumpstatów LJ."
 		"ru"		"Телепортироваться в Longjump-комнату."
 		"sv"		"Teleportera till jumpstat-området"
@@ -1142,8 +1143,8 @@
 	"Command Description - kz_end"
 	{
 		"en"		"Teleport to the end."
-		"chi"		"传送到了终点."
-		"zho"		"傳送到了終點."
+		"chi"		"传送到终点."
+		"zho"		"傳送到終點。"
 		"pl"		"Teleportuj na koniec mapy."
 		"ru"		"Телепортироваться в конец."
 		"sv"		"Teleportera till slutet."
@@ -1157,7 +1158,7 @@
 	{
 		"en"		"Hide weapon viewmodel."
 		"chi"		"隐藏武器模型显示."
-		"zho"		"隱藏武器模型顯示."
+		"zho"		"隱藏武器模型顯示。"
 		"pl"		"Ukryj broń."
 		"ru"		"Спрятать модель оружия."
 		"fi"		"Piilota ase ja pelaajamalli."
@@ -1174,7 +1175,7 @@
 	{
 		"en"		"Show this help message."
 		"chi"		"显示帮助信息."
-		"zho"		"顯示幫助資訊."
+		"zho"		"顯示幫助資訊。"
 		"pl"		"Wyświetl ten komunikat pomocy."
 		"ru"		"Показать это справочное сообщение."
 		"fi"		"Näytä tämä apuviesti."
@@ -1191,7 +1192,7 @@
 	{
 		"en"		"Switch current language."
 		"chi"		"切换当前语言."
-		"zho"		"切換目前語言."
+		"zho"		"切換目前語言。"
 		"pl"		"Zmień obecnie ustawiony język"
 		"ru"		"Сменить язык."
 		"fi"		"Vaihda käytössäolevaa kieltä."
@@ -1208,7 +1209,7 @@
 	{
 		"en"		"Switch to Vanilla mode."
 		"chi"		"切换为官匹模式."
-		"zho"		"切換為官匹模式."
+		"zho"		"切換為官匹模式。"
 		"pl"		"Zmień tryb na Vanilla"
 		"ru"		"Переключить режим на Vanilla."
 		"fi"		"Vaihda Vanilla moodiin."
@@ -1225,7 +1226,7 @@
 	{
 		"en"		"Switch to Classic mode."
 		"chi"		"切换为经典模式."
-		"zho"		"切換為經典模式."
+		"zho"		"切換為經典模式。"
 		"pl"		"Zmień tryb na Classic."
 		"ru"		"Переключить режим на Classic (CKZ)."
 		"fi"		"Vaihda Classic moodiin."
@@ -1242,7 +1243,7 @@
 	{
 		"en"		"Retrieve personal best statistics."
 		"chi"		"查询个人最佳数据."
-		"zho"		"查詢個人最佳資料."
+		"zho"		"查詢個人最佳資料。"
 		"pl"		"Wyświetl statystyki rekordów życiowych."
 		"ru"		"Показать личный рекорд."
 		"fi"		"Hae henkilökohtaiset parhaat statistiikat."
@@ -1259,7 +1260,7 @@
 	{
 		"en"		"Retrieve server and world records."
 		"chi"		"查询服务器记录和世界记录."
-		"zho"		"查詢伺服器紀錄和世界紀錄."
+		"zho"		"查詢伺服器紀錄和世界紀錄。"
 		"pl"		"Wyświetl rekordy serwera i świata."
 		"ru"		"Показать рекорд сервера и мировой рекорд."
 		"fi"		"Hae palvelimen ja maailman ennätykset."
@@ -1276,7 +1277,7 @@
 	{
 		"en"		"Retrieve server records."
 		"chi"		"查询服务器记录."
-		"zho"		"查詢伺服器紀錄."
+		"zho"		"查詢伺服器紀錄。"
 		"pl"		"Wyświetl rekordy serwera."
 		"ru"		"Показать рекорд сервера."
 		"fi"		"Hae palvelimen ennätykset."
@@ -1292,8 +1293,8 @@
 	"Command Description - kz_ctop"
 	{
 		"en"		"Retrieve top course times of a map."
-		"chi"		"查询地图的排行榜前列."
-		"zho"		"查詢地圖的排行榜前列."
+		"chi"		"查看地图关卡的最佳通关时间排行榜."
+		"zho"		"查看地圖關卡的最佳通關時間排行榜。"
 		"pl"		"Wyświetl najlepsze czasy trasy na danej mapie."
 		"ru"		"Показать рекорды маршрута карты."
 		"sv"		"Hämta topptider av en karta."
@@ -1308,8 +1309,8 @@
 	"Command Description - kz_coursetop"
 	{
 		"en"		"Retrieve top course times of a map."
-		"chi"		"查询地图的排行榜前列."
-		"zho"		"查詢地圖的排行榜前列."
+		"chi"		"查看地图关卡的最佳通关时间排行榜."
+		"zho"		"查看地圖關卡的最佳通關時間排行榜。"
 		"pl"		"Wyświetl najlepsze czasy trasy na danej mapie."
 		"ru"		"Показать рекорды маршрута карты."
 		"sv"		"Hämta topptider av en karta."
@@ -1324,8 +1325,8 @@
 	"Command Description - kz_maptop"
 	{
 		"en"		"Retrieve top course times of a map."
-		"chi"		"查询地图的排行榜前列."
-		"zho"		"查詢地圖的排行榜前列."
+		"chi"		"查看地图关卡的最佳通关时间排行榜."
+		"zho"		"查看地圖關卡的最佳通關時間排行榜。"
 		"pl"		"Wyświetl najlepsze czasy trasy na danej mapie."
 		"ru"		"Показать рекорды маршрута карты."
 		"sv"		"Hämta topptider av en karta."
@@ -1340,8 +1341,8 @@
 	"Command Description - kz_gctop"
 	{
 		"en"		"Retrieve global top course times of a map."
-		"chi"		"查询地图的全球排行榜前列."
-		"zho"		"查詢地圖的全球排行榜前列."
+		"chi"		"查看地图关卡的全局最佳通关时间排行榜."
+		"zho"		"查看地圖關卡的全域最佳通關時間排行榜。"
 		"pl"		"Wyświetl globalne najlepsze czasy trasy na danej mapie."
 		"ru"		"Показать мировые рекорды маршрута карты."
 		"sv"		"Hämta globala topptider av en karta."
@@ -1356,8 +1357,8 @@
 	"Command Description - kz_gcoursetop"
 	{
 		"en"		"Retrieve global top course times of a map."
-		"chi"		"查询地图的全球排行榜前列."
-		"zho"		"查詢地圖的全球排行榜前列."
+		"chi"		"查看地图关卡的全局最佳通关时间排行榜."
+		"zho"		"查看地圖關卡的全域最佳通關時間排行榜。"
 		"pl"		"Wyświetl globalne najlepsze czasy trasy na danej mapie."
 		"ru"		"Показать мировые рекорды маршрута карты."
 		"sv"		"Hämta globala topptider av en karta."
@@ -1372,8 +1373,8 @@
 	"Command Description - kz_gmaptop"
 	{
 		"en"		"Retrieve global top course times of a map."
-		"chi"		"查询地图的全球排行榜前列."
-		"zho"		"查詢地圖的全球排行榜前列."
+		"chi"		"查看地图关卡的全局最佳通关时间排行榜."
+		"zho"		"查看地圖關卡的全域最佳通關時間排行榜。"
 		"pl"		"Wyświetl globalne najlepsze czasy trasy na danej mapie."
 		"ru"		"Показать мировые рекорды маршрута карты."
 		"sv"		"Hämta globala topptider av en karta."
@@ -1388,8 +1389,8 @@
 	"Command Description - kz_sctop"
 	{
 		"en"		"Retrieve server top course times of a map."
-		"chi"		"查询地图的服务器排行榜前列."
-		"zho"		"查詢地圖的伺服器排行榜前列."
+		"chi"		"查看地图关卡的服务器最佳通关时间排行榜."
+		"zho"		"查看地圖關卡的伺服器最佳通關時間排行榜。"
 		"pl"		"Wyświetl najlepsze czasy trasy serwera na danej mapie."
 		"ru"		"Показать рекорды маршрута карты этого сервера."
 		"sv"		"Hämta server topptider av en karta."
@@ -1404,8 +1405,8 @@
 	"Command Description - kz_scoursetop"
 	{
 		"en"		"Retrieve server top course times of a map."
-		"chi"		"查询地图的服务器排行榜前列."
-		"zho"		"查詢地圖的伺服器排行榜前列."
+		"chi"		"查看地图关卡的服务器最佳通关时间排行榜."
+		"zho"		"查看地圖關卡的伺服器最佳通關時間排行榜。"
 		"pl"		"Wyświetl najlepsze czasy trasy serwera na danej mapie."
 		"ru"		"Показать рекорды маршрута карты этого сервера."
 		"sv"		"Hämta server topptider av en karta."
@@ -1420,8 +1421,8 @@
 	"Command Description - kz_smaptop"
 	{
 		"en"		"Retrieve server top course times of a map."
-		"chi"		"查询地图的服务器排行榜前列."
-		"zho"		"查詢地圖的伺服器排行榜前列."
+		"chi"		"查看地图关卡的服务器最佳通关时间排行榜."
+		"zho"		"查看地圖關卡的伺服器最佳通關時間排行榜。"
 		"pl"		"Wyświetl najlepsze czasy trasy serwera na danej mapie."
 		"ru"		"Показать рекорды маршрута карты этого сервера."
 		"sv"		"Hämta server topptider av en karta."
@@ -1437,7 +1438,7 @@
 	{
 		"en"		"Set the maximum preferred level of run comparison."
 		"chi"		"设置比较记录时的最大首选级别."
-		"zho"		"設定比較紀錄時的最大首選級別."
+		"zho"		"設定比較紀錄時的最大首選級別。"
 		"pl"		"Ustaw maksymalny preferowany poziom porównywania przebiegów."
 		"ru"		"Установить максимальный уровень сравнения прохождений."
 		"sv"		"Ställ in den högsta önskade nivån för run jämförelse."
@@ -1451,7 +1452,7 @@
 	{
 		"en"		"Check the status of the specified player (default to self)."
 		"chi"		"检查指定玩家的状态 (默认为自己)."
-		"zho"		"檢查指定玩家的狀態 (預設為自己)."
+		"zho"		"檢查指定玩家的狀態 (預設為自己)。"
 		"pl"		"Sprawdź status gracza (domyślnie: siebie)."
 		"ru"		"Проверить статус указанного игрока (по умолчанию: себя)"
 		"sv"		"Kolla status av en specifik spelare (förinställt på dig själv)."
@@ -1466,7 +1467,7 @@
 	{
 		"en"		"Check the status of the specified player (default to self)."
 		"chi"		"检查指定玩家的状态 (默认为自己)."
-		"zho"		"檢查指定玩家的狀態 (預設為自己)."
+		"zho"		"檢查指定玩家的狀態 (預設為自己)。"
 		"pl"		"Sprawdź status gracza (domyślnie: siebie)."
 		"ru"		"Проверить статус указанного игрока (по умолчанию: себя)"
 		"sv"		"Kolla status av en specifik spelare (förinställt på dig själv)."
@@ -1480,8 +1481,8 @@
 	"Command Description - kz_course"
 	{
 		"en"		"Teleport to a course, or display the current course and the list of all courses in the map."
-		"chi"		"传送到一个关卡, 或显示当前关卡和地图中的所有关卡列表."
-		"zho"		"傳送到一個關卡, 或顯示目前關卡和地圖中的所有關卡清單."
+		"chi"		"传送到一个关卡，或显示当前关卡和地图中的所有关卡列表."
+		"zho"		"傳送到一個關卡，或顯示目前關卡和地圖中的所有關卡清單。"
 		"pl"		"Teleportuj się do trasy lub wyświetl aktualną trasę i listę wszystkich tras na mapie."
 		"ru"		"Телепортироваться на маршрут или показать текущий маршрут и список всех маршрутов карты."
 		"ua"		"Телепортуватися до курсу або показати поточний курс та список всіх курсів на мапі."
@@ -1493,7 +1494,7 @@
 	{
 		"en"		"Display the current course and the list of all courses in the map."
 		"chi"		"显示当前关卡与当前地图的关卡列表."
-		"zho"		"顯示目前關卡與目前地圖的關卡清單."
+		"zho"		"顯示目前關卡與目前地圖的關卡清單。"
 		"pl"		"Wyświetl aktualną trasę i listę wszystkich tras na mapie."
 		"ru"		"Показать текущий маршрут и список всех маршрутов карты."
 		"sv"		"Visa tillfälliga banan och lista alla tillgängliga banor på kartan."
@@ -1508,7 +1509,7 @@
 	{
 		"en"		"Retrieve server personal best statistics."
 		"chi"		"获取服务器个人最佳数据."
-		"zho"		"取得伺服器個人最佳資料."
+		"zho"		"取得伺服器個人最佳資料。"
 		"pl"		"Wyświetl moje rekordy życiowe na tym serwerze."
 		"ru"		"Показать персональный рекорд на сервере."
 		"ua"		"Показати персональний найкращий час на сервері."
@@ -1521,8 +1522,8 @@
 	"Command Description - kz_gpb"
 	{
 		"en"		"Retrieve global personal best statistics."
-		"chi"		"获取全球个人最佳数据."
-		"zho"		"取得全球個人最佳資料."
+		"chi"		"获取全局个人最佳数据."
+		"zho"		"取得全域個人最佳資料。"
 		"pl"		"Wyświetl moje globalne rekordy życiowe."
 		"ru"		"Показать глобальный персональный рекорд."
 		"ua"		"Показати глобальний персональний найкращий час."
@@ -1535,8 +1536,8 @@
 	"Command Description - kz_globalcheck"
 	{
 		"en"		"Display the status of the GlobalAPI."
-		"chi"		"显示 全球API 的状态."
-		"zho"		"顯示 全球API 的狀態."
+		"chi"		"显示 GlobalAPI 的状态."
+		"zho"		"顯示 GlobalAPI 的狀態。"
 		"pl"		"Wyświetl status GlobalAPI."
 		"ru"		"Показать статус GlobalAPI."
 		"ua"		"Показати статус GlobalAPI."
@@ -1549,8 +1550,8 @@
 	"Command Description - kz_gc"
 	{
 		"en"		"Display the status of the GlobalAPI."
-		"chi"		"显示 全球API 的状态."
-		"zho"		"顯示 全球API 的狀態."
+		"chi"		"显示 GlobalAPI 的状态."
+		"zho"		"顯示 GlobalAPI 的狀態。"
 		"pl"		"Wyświetl status GlobalAPI."
 		"ru"		"Показать статус GlobalAPI."
 		"ua"		"Показати статус GlobalAPI."
@@ -1563,8 +1564,8 @@
 	"Command Description - kz_beam"
 	{
 		"en"		"Set or toggle player beam type (off/ground/feet)."
-		"chi"		"设置或关闭玩家的光束类型 (关闭/地面/脚下)."
-		"zho"		"設定或關閉玩家的光束類型 (關閉/地面/腳下)."
+		"chi"		"设置或切换玩家光束类型（off/ground/feet）."
+		"zho"		"設定或切換玩家光束類型（off/ground/feet）。"
 		"pl"		"Ustaw lub Włącz/Wyłącz rodzaj smugi (off/ground/feet)."
 		"ru"		"Установить тип луча (выключен/земля/ноги)."
 		"sv"		"Ställ in eller växla spelarens stråltyp (av/mark/fötter)."
@@ -1577,7 +1578,7 @@
 	{
 		"en"		"Set or get player beam offset."
 		"chi"		"设置或获取玩家光束的偏移值."
-		"zho"		"設定或取得玩家光束的偏移值."
+		"zho"		"設定或取得玩家光束的偏移值。"
 		"pl"		"Ustaw lub wyświetl przesunięcie smugi."
 		"ru"		"Установить/Показать отклонение луча."
 		"sv"		"Ställ in eller hämta spelarens stråloffset."
@@ -1589,8 +1590,8 @@
 	"Command Description - kz_measure"
 	{
 		"en"		"Measure the distance between two points, or measure the block distance if two points are at the same place."
-		"chi"		"测量两个点之间的距离, 或当两个点相同时测量方块距离."
-		"zho"		"測量兩個點之間的距離, 或當兩個點相同時測量方塊距離."
+		"chi"		"测量两点之间的距离；如果两点位于同一位置，则测量方块距离."
+		"zho"		"測量兩點之間的距離；若兩點位於相同位置，則測量方塊距離。"
 		"pl"		"Zmierz odległość między dwoma punktami lub długość bloku, jeśli punkty znajdują się w tym samym miejscu."
 		"ru"		"Измерить дистанцию между двумя точками или измерить дистанцию блока, если обе точки в одном и том же месте."
 		"sv"		"Mät avståndet mellan två punkter, eller mät blockavståndet om två punkter är på samma plats."
@@ -1603,7 +1604,7 @@
 	{
 		"en"		"Set the start position of the measurement."
 		"chi"		"设置测量的起始位置."
-		"zho"		"設定測量的起始位置."
+		"zho"		"設定測量的起始位置。"
 		"pl"		"Ustaw pozycję startową pomiaru."
 		"ru"		"Установить начальную позицию измерения."
 		"sv"		"Ställ in startpositionen för mätningen."
@@ -1616,7 +1617,7 @@
 	{
 		"en"		"Set the end position of the measurement and calculate the distance."
 		"chi"		"设置测量的结束位置并计算距离."
-		"zho"		"設定測量的結束位置並計算距離."
+		"zho"		"設定測量的結束位置並計算距離。"
 		"pl"		"Ustaw pozycję końcową pomiaru i policz odległość."
 		"ru"		"Установить конечную позицию измерения и рассчитать дистанцию."
 		"sv"		"Ställ in mätningens slutposition och beräkna avståndet."
@@ -1628,8 +1629,8 @@
 	"Command Description - kz_ztopwatch"
 	{
 		"en"		"Toggle the zone stopwatch on/off, or use subcommands: place (set next corner), clear (reset zones), startjump/sj (toggle start on jump), stopland/sl (toggle stop on land), status."
-		"chi"		"切换区域计时开关, 或使用子命令: place (设置下一角), clear (重置区域), startjump/sj (跳跃时开始), stopland/sl (着陆时停止), status."
-		"zho"		"切換區域計時開關, 或使用子指令: place (設定下一角), clear (重置區域), startjump/sj (跳躍時開始), stopland/sl (著陸時停止), status."
+		"chi"		"开启或关闭区域秒表，也可使用子指令：place（设置下一个角点）、clear（重置区域）、startjump/sj（切换起跳开始计时）、stopland/sl（切换落地停止计时）、status（查看状态）."
+		"zho"		"開啟或關閉區域碼錶，也可使用子指令：place（設定下一個角點）、clear（重設區域）、startjump/sj（切換起跳開始計時）、stopland/sl（切換落地停止計時）、status（查看狀態）。"
 		"ru"		"Вкл./Выкл. Zone Stopwatch или использовать подкоманды: place (поставить след. угол), clear (сбросить зоны), startjump/sj (вкл./выкл. старт при прыжке), stopland/sl (вкл./выкл. остановку при приземлении), status."
 		"ua"		"Увімк./Вимк. Zone Stopwatch або використати підкоманди: place (встановити наступний кут), clear (скинути зони), startjump/sj (увімк./вимк. старт при стрибку), stopland/sl (увімк./вимк. зупинку при приземленні), status."
 		"ko"		"구역 스톱워치를 켜거나 끄거나, 하위 명령어를 사용합니다: place (다음 모서리 설정), clear (구역 초기화), startjump/sj (점프 시 시작 전환), stopland/sl (착지 시 정지 전환), status."
@@ -1638,7 +1639,7 @@
 	{
 		"en"		"Measure the block distance."
 		"chi"		"测量方块之间的距离."
-		"zho"		"測量方塊之間的距離."
+		"zho"		"測量方塊之間的距離。"
 		"pl"		"Zmierz długość bloku."
 		"ru"		"Рассчитать дистанцию блока."
 		"sv"		"Mät blockavståndet."
@@ -1651,7 +1652,7 @@
 	{
 		"en"		"Place a paint decal on the surface you are aiming at."
 		"chi"		"在你瞄准的表面上放置涂色标记."
-		"zho"		"在你瞄准的表面上放置塗色標記."
+		"zho"		"在你瞄準的表面上放置塗色標記。"
 		"ua"		"Нанести кольорову мітку на поверхню, на яку ви наводите приціл."
 		"ru"		"Покрасить поверхность, на которую наведен прицел."
 		"es"		"Poner una pintura sbore la superficie a la que se esté apuntando."
@@ -1660,8 +1661,8 @@
 	"Command Description - kz_paintcolor"
 	{
 		"en"		"Set or display your paint color. Accepts a color name (red, white, black, blue, brown, green, yellow, purple) or R G B [A] values."
-		"chi"		"设置或显示你的涂色颜色. 支持颜色名称 (red, white, black, blue, brown, green, yellow, purple) 或 R G B [A] 数值."
-		"zho"		"設定或顯示你的塗色顏色. 支持顏色名稱 (red, white, black, blue, brown, green, yellow, purple) 或 R G B [A] 數值."
+		"chi"		"设置或显示涂色颜色.可使用颜色名称（red、white、black、blue、brown、green、yellow、purple）或 R G B [A] 数值."
+		"zho"		"設定或顯示塗色顏色。可使用顏色名稱（red、white、black、blue、brown、green、yellow、purple）或 R G B [A] 數值。"
 		"ua"		"Встановити або показати колір мітки. Можна вказати назву кольору (red, white, black, blue, brown, green, yellow, purple) або значення R G B [A]."
 		"ru"		"Установить или отобразить цвет краски. Команда принимает название (red, white, black, blue, brown, green, yellow, purple) или значения R G B [A]."
 		"es"		"Establecer o mostrar el color de la pintura. Debe ser o un color en Inglés (red, white, black, blue, brown, green, yellow, purple) o un valores con formato: R G B [A]."
@@ -1670,8 +1671,8 @@
 	"Command Description - kz_paintsize"
 	{
 		"en"		"Set or display your paint size. Accepts a positive number (default: 8)."
-		"chi"		"设置或显示你的涂色大小. 接受正数 (默认: 8)."
-		"zho"		"設定或顯示你的塗色大小. 接受正數 (預設: 8)."
+		"chi"		"设置或显示涂色大小，接受正数（默认：8）."
+		"zho"		"設定或顯示塗色大小，接受正數（預設：8）。"
 		"ua"		"Встановити або показати розмір кольорової мітки. Приймає додатне число (за замовчуванням: 8)."
 		"ru"		"Установить или отобразить размер метки краски. Размер - положительное число (по умолчанию: 8)."
 		"es"		"Establecer o mostrar la medida de la pintura. Debe ser un número positivo (por defecto: 8)."
@@ -1680,8 +1681,8 @@
 	"Command Description - kz_togglepaint"
 	{
 		"en"		"Toggle auto painting every 50ms while aiming at surfaces."
-		"chi"		"切换每50毫秒自动在你瞄准的表面涂色."
-		"zho"		"切換每50毫秒自動在你瞄准的表面塗色."
+		"chi"		"开启或关闭自动涂色；瞄准表面时每 50ms 涂色一次."
+		"zho"		"開啟或關閉自動塗色；瞄準表面時每 50ms 塗色一次。"
 		"ua"		"Увімк./Вимк. автоматичну кольорову мітку кожні 50мс, поки ви цілетеся на поверхню."
 		"ru"		"Вкл./Выкл. автопокраску каждые 50мс, пока вы целитесь на поверхность."
 		"es"		"Activar/desactivar el dibujado de pinturas automático cada 50ms al apuntar sobre superficies."
@@ -1691,7 +1692,7 @@
 	{
 		"en"		"Toggle between showing only your own paint and showing paint from all players."
 		"chi"		"切换仅显示自己的涂色或显示所有玩家的涂色."
-		"zho"		"切換僅顯示自己的塗色或顯示所有玩家的塗色."
+		"zho"		"切換僅顯示自己的塗色或顯示所有玩家的塗色。"
 		"ua"		"Показувати лише ваші кольорові мітки або мітки всіх гравців."
 		"ru"		"Показывать только вашу краску / краску всех игроков."
 		"es"		"Alternar entre mostrar solo tus pinturas propias o las de todos los jugadores."
@@ -1701,7 +1702,7 @@
 	{
 		"en"		"Remove all decals from the map."
 		"chi"		"移除地图上所有的涂色标记."
-		"zho"		"移除地圖上所有的塗色標記."
+		"zho"		"移除地圖上所有的塗色標記。"
 		"ua"		"Прибрати всі кольорові мітки на мапі."
 		"ru"		"Удалить всю краску с карты."
 		"es"		"Borrar todas las pinturas del mapa."
@@ -1711,7 +1712,7 @@
 	{
 		"en"		"Toggle the timer stop sound."
 		"chi"		"开关计时器停止音效."
-		"zho"		"開關計時器停止音效."
+		"zho"		"開關計時器停止音效。"
 		"pl"		"Włącz/Wyłącz dźwięk zatrzymania timera."
 		"ru"		"Включить/Выключить звук остановки таймера."
 		"ua"		"Увімк./Вимк. звук зупинки таймера."
@@ -1723,8 +1724,8 @@
 	"Command Description - kz_autohideweapon"
 	{
 		"en"		"Toggle the automatic hiding of weapon viewmodel."
-		"chi"		"切换武器视图模型的自动隐藏."
-		"zho"		"切換武器視圖模型的自動隱藏."
+		"chi"		"开启或关闭自动隐藏第一人称武器模型的功能."
+		"zho"		"開啟或關閉自動隱藏第一人稱武器模型的功能。"
 		"pl"		"Włącz/wyłącz automatyczne ukrywanie modelu broni."
 		"ru"		"Включить/Выключить автоматическое скрытие модели оружия."
 		"ua"		"Увімк./Вимк. автоматичне приховування зброї."
@@ -1737,7 +1738,7 @@
 	{
 		"en"		"Change or remove the current pistol."
 		"chi"		"更改或移除当前手枪."
-		"zho"		"更改或移除目前手槍."
+		"zho"		"更改或移除目前手槍。"
 		"pl"		"Zmień lub usuń obecny pistolet."
 		"ru"		"Сменить или удалить текущий пистолет."
 		"ua"		"Змінити або видалити поточний пістолет."
@@ -1749,8 +1750,8 @@
 	"Command Description - kz_rpsave"
 	{
 		"en"		"Manually save past gameplay into a replay."
-		"chi"		"手动将过往游戏数据保存为回放."
-		"zho"		"手動將過往游戲資料儲存為回放."
+		"chi"		"将之前的游戏过程手动保存为回放."
+		"zho"		"將先前的遊戲過程手動儲存為回放。"
 		"pl"		"Ręcznie zapisz ostatni przebieg jako powtórkę."
 		"ru"		"Вручную сохранить предыдущий геймплей в повтор."
 		"ua"		"Вручну зберегти попередній геймплей як повтор."
@@ -1761,8 +1762,8 @@
 	"Command Description - kz_replay"
 	{
 		"en"		"Play a previously saved replay, or look up a record replay by type (wr, sr, pb, etc.)."
-		"chi"		"播放之前保存的回放, 或根据类型查找记录回放 (wr, sr, pb 等)."
-		"zho"		"播放之前儲存的回放, 或根據類型查找紀錄回放 (wr, sr, pb 等)."
+		"chi"		"播放已保存的回放，或按记录类型（wr、sr、pb 等）查找回放."
+		"zho"		"播放已儲存的回放，或依紀錄類型（wr、sr、pb 等）查找回放。"
 		"ua"		"Відтворити раніше збережений повтор або знайти повтор рекорду за типом (wr, sr, pb тощо)."
 		"ru"		"Проиграть сохранённый повтор или найти повтор рекорда по типу (wr, sr, pb, т.д.)."
 		"es"		"Reproducir una repetición guardada o mirar una repetición de record por tipo (wr, sr, pb, etc.)."
@@ -1772,7 +1773,7 @@
 	{
 		"en"		"List saved replays."
 		"chi"		"列出已保存的回放."
-		"zho"		"列出已儲存的回放."
+		"zho"		"列出已儲存的回放。"
 		"pl"		"Wyświetl listę zapisanych powtórek."
 		"ru"		"Показать сохранённые повторы."
 		"ua"		"Показати список збережених повторів."
@@ -1795,8 +1796,8 @@
   	"Command Description - kz_rpgototick"
 	{
 		"en"		"Go to a specific tick in the replay."
-		"chi"		"跳转到回放中的特定的Tick."
-		"zho"		"跳轉到回放中的特定的Tick."
+		"chi"		"跳转到回放中的指定 tick."
+		"zho"		"跳轉到回放中的指定 tick。"
 		"pl"		"Przejdź do konkretnego ticku w powtórce."
 		"ru"		"Перейти к конкретному тику в повторе."
 		"ua"		"Перейти до конкретного тіку в повторі."
@@ -1808,7 +1809,7 @@
 	{
 		"en"		"Display information about the current replay."
 		"chi"		"显示当前回放的信息."
-		"zho"		"顯示目前回放的資訊."
+		"zho"		"顯示目前回放的資訊。"
 		"pl"		"Wyświetl informacje o obecnej powtórce."
 		"ru"		"Показать информацию про текущицй повтор."
 		"ua"		"Відобразити інформацію про поточний повтор."
@@ -1820,7 +1821,7 @@
 	{
 		"en"		"Pause or resume the current replay."
 		"chi"		"暂停或继续当前回放."
-		"zho"		"暫停或繼續目前回放."
+		"zho"		"暫停或繼續目前回放。"
 		"pl"		"Wstrzymaj lub wznów obecną powtórkę."
 		"ru"		"Приостановить или возобновить текущий повтор."
 		"ua"		"Поставити на паузу або продовжити відтворення поточного повтору."
@@ -1831,12 +1832,14 @@
   	"Command Description - kz_rptimescale"
 	{
 		"en"		"Set the playback speed of the current replay."
+		"chi"		"设置当前回放的播放速度."
+		"zho"		"設定目前回放的播放速度。"
 	}
   	"Command Description - kz_rploadprogress"
 	{
 		"en"		"Display the loading progress of the replay."
 		"chi"		"显示回放的加载进度."
-		"zho"		"顯示回放的載入進度."
+		"zho"		"顯示回放的載入進度。"
 		"pl"		"Wyświetl postęp ładowania powtórki."
 		"ru"		"Показать прогресс загрузки повтора."
 		"ua"		"Показати прогрес завантаження повтору."
@@ -1848,7 +1851,7 @@
 	{
 		"en"		"Cancel the loading of the replay."
 		"chi"		"取消加载回放."
-		"zho"		"取消載入回放."
+		"zho"		"取消載入回放。"
 		"pl"		"Anuluj ładowanie powtórki."
 		"ru"		"Отменить загрузку повтора."
 		"ua"		"Скасувати завантаження повтору."
@@ -1859,8 +1862,8 @@
 	"Command Description - kz_recordvolume"
 	{
 		"en"		"Set the volume of the world record sound effect."
-		"chi"		"设置世界纪录音效的音量."
-		"zho"		"設定世界紀錄音效的音量."
+		"chi"		"设置世界记录音效的音量."
+		"zho"		"設定世界紀錄音效的音量。"
 		"pl"		"Ustaw głośność efektu dźwiękowego rekordu świata."
 		"ru"		"Установить громкость звука мирового рекорда."
 		"ua"		"Встановити гучність звукового ефекту світового рекорду."
@@ -1871,8 +1874,8 @@
 	"Command Description - kz_cpmessage"
 	{
 		"en"		"Toggle checkpoint messages."
-		"chi"		"切换检查点消息是否显示."
-		"zho"		"切換檢查點消息是否顯示."
+		"chi"		"切换存点提示是否显示."
+		"zho"		"切換儲存點提示是否顯示。"
 		"pl"		"Włącz/wyłącz wiadomości o checkpointach."
 		"ru"		"Включить/Выключить сообщения о чекпоинтах."
 		"ua"		"Увімк./Вимк. повідомлення про чекпоінт."
@@ -1883,8 +1886,8 @@
 	"Command Description - kz_rphidelegs"
 	{
 		"en"		"Toggle replay bot's first person legs visibility."
-		"chi"		"切换回放bot的第一人称腿部是否显示."
-		"zho"		"切換回放bot的第一人稱腿部是否顯示."
+		"chi"		"开启或关闭回放机器人第一人称视角中的腿部显示."
+		"zho"		"開啟或關閉回放機器人第一人稱視角中的腿部顯示。"
 		"pl"		"Włącz/wyłącz widoczność nóg bota w powtórce (w pierwszej osobie)."
 		"ru"		"Спрятать/Показать ноги бота в повторе (от первого лица)."
 		"ua"		"Увімк./Вимк. відображення ніг бота повтору від першої особи."
@@ -1900,7 +1903,7 @@
 	{
 		"en"		"Accept an incoming race."
 		"chi"		"接受比赛邀请."
-		"zho"		"接受比賽邀請."
+		"zho"		"接受比賽邀請。"
 		"ua"		"Прийняти запрошення на участь у гонці."
 		"pl"		"Zaakceptuj nadchodzący wyścig."
 		"ru"		"Принять приглашение в гонку."
@@ -1911,7 +1914,7 @@
 	{
 		"en"		"Surrender an ongoing race."
 		"chi"		"放弃当前比赛."
-		"zho"		"放棄目前比賽."
+		"zho"		"放棄目前比賽。"
 		"ua"		"Здатися в поточній гонці."
 		"pl"		"Poddaj bieżący wyścig."
 		"ru"		"Сдаться в гонке."
@@ -1922,7 +1925,7 @@
 	{
 		"en"		"Display information about the current map."
 		"chi"		"显示当前地图的信息."
-		"zho"		"顯示目前地圖的資訊."
+		"zho"		"顯示目前地圖的資訊。"
 		"ua"		"Показати інформацію про поточну мапу."
 		"ru"		"Показать информацию про текущую карту."
 		"es"		"Mostrar información sobre el mapa actual."
@@ -1932,7 +1935,7 @@
 	{
 		"en"		"Display the tier of the current course or a specified course."
 		"chi"		"显示当前关卡或指定关卡的等级."
-		"zho"		"顯示目前關卡或指定關卡的等級."
+		"zho"		"顯示目前關卡或指定關卡的等級。"
 		"ua"		"Показати складнісь поточного курсу або вказаного курсу."
 		"ru"		"Показать сложность текущего маршрута или указанного маршрута."
 		"es"		"Mostrar el nivel(tier) del recorrido actual o de un recorrido específico."
@@ -1942,7 +1945,7 @@
 	{
 		"en"		"Retrieve bhop statistics for modern jumping."
 		"chi"		"获取现代跳跃的bhop统计信息."
-		"zho"		"取得現代跳躍的bhop統計資訊."
+		"zho"		"取得現代跳躍的bhop統計資訊。"
 		"ua"		"Показати статистику bhop для сучасних стрибків."
 		"ru"		"Показать bhop-статистику для современных прыжков."
 		"es"		"Obtener estadísticas de bhop para los saltos modernos."
@@ -1952,7 +1955,7 @@
 	{
 		"en"		"Retrieve bhop statistics for legacy jumping."
 		"chi"		"获取传统跳跃的bhop统计信息."
-		"zho"		"取得傳統跳躍的bhop統計資訊."
+		"zho"		"取得傳統跳躍的bhop統計資訊。"
 		"ua"		"Показати статистику bhop для класичних стрибків."
 		"ru"		"Показать bhop-статистику для устаревших прыжков."
 		"es"		"Obtener estadísticas de bhop para saltos tipo legado."
@@ -1962,7 +1965,7 @@
 	{
 		"en"		"Reset bhop statistics for modern and legacy jumping."
 		"chi"		"重置现代跳跃和传统跳跃的bhop统计信息."
-		"zho"		"重置現代跳躍和傳統跳躍的bhop統計資訊."
+		"zho"		"重置現代跳躍和傳統跳躍的bhop統計資訊。"
 		"ua"		"Скинути статистику bhop для сучасних і класичних стрибків."
 		"ru"		"Сбросить bhop-статистику для современных и устаревших прыжков."
 		"es"		"Reiniciar las estadísticas de bhop para saltos de tipo modernos y de legado."
@@ -1971,8 +1974,8 @@
 	"Command Description - kz_fov"
 	{
 		"en"		"Change your FOV."
-		"chi"		"改变你的FOV."
-		"zho"		"改變你的FOV."
+		"chi"		"调整视野角度（FOV）."
+		"zho"		"調整視野角度（FOV）。"
 		"ua"		"Змінити FOV."
 		"ru"		"Изменить FOV."
 		"es"		"Cambiar tu campo de visión (FOV)."
@@ -1981,8 +1984,8 @@
 	"Command Description - kz_mhud"
 	{
 		"en"		"Configure the HUD. Usage: kz_mhud <speed|prespeed|timer|keys> [property] [value...]"
-		"chi"		"配置HUD. 用法: kz_mhud <speed|prespeed|timer|keys> [属性] [值...]"
-		"zho"		"配置HUD. 用法: kz_mhud <speed|prespeed|timer|keys> [屬性] [值...]"
+		"chi"		"设置 HUD.用法：kz_mhud <speed|prespeed|timer|keys> [属性] [数值...]"
+		"zho"		"設定 HUD。用法：kz_mhud <speed|prespeed|timer|keys> [屬性] [數值...]"
 		"ua"		"Налаштувати HUD. Використання: kz_mhud <speed|prespeed|timer|keys> [властивість] [значення...]"
 		"ru"		"Настроить HUD. Применение: kz_mhud <speed|prespeed|timer|keys> [свойство] [значение...]"
 		"ko"		"HUD를 설정합니다. 사용법: kz_mhud <speed|prespeed|timer|keys> [속성] [값...]"
@@ -1990,220 +1993,327 @@
 	"Command Description - kz_hudedit"
 	{
 		"en"		"Move HUD elements with the mouse."
-		"zho"		"編輯 HUD 設定。"
+		"chi"		"使用鼠标移动 HUD 元素."
+		"zho"		"使用滑鼠移動 HUD 元素。"
 		"ua"		"Переміщати елементи HUD за допомогою миші."
 		"ru"		"Перемещение элементов HUD мышью."
 	}
 	"Command Description - kz_exportprefs"
 	{
 		"en"		"Export your preferences to the console."
+		"chi"		"将个人偏好设置导出到控制台."
+		"zho"		"將個人偏好設定匯出至控制台。"
 	}
 	"Command Description - kz_mapoverlay"
 	{
 		"en"		"Toggle map overlay helpers, which print relevant timer events to the console."
+		"chi"		"开启或关闭地图辅助覆盖层，并将相关计时器事件输出到控制台."
+		"zho"		"開啟或關閉地圖輔助覆蓋層，並將相關計時器事件輸出至控制台。"
 	}
 	"Command Description - kz_options"
 	{
 		"en"		"Open or close the options menu."
+		"chi"		"打开或关闭选项菜单."
+		"zho"		"開啟或關閉選項選單。"
 	}
 	"Command Description - kz_safeguard"
 	{
 		"en"		"Toggle the safeguard, which blocks commands that would stop your timer during a valid run."
+		"chi"		"开启或关闭保护功能，防止在有效跑图过程中执行会停止计时器的指令."
+		"zho"		"開啟或關閉保護功能，防止在有效跑圖過程中執行會停止計時器的指令。"
 	}
 	"Command Description - kz_pro"
 	{
 		"en"		"Toggle the PRO safeguard, which also blocks teleports during a valid PRO run."
+		"chi"		"开启或关闭 PRO 保护功能，在有效的 PRO 跑图过程中同时阻止传送."
+		"zho"		"開啟或關閉 PRO 保護功能，在有效的 PRO 跑圖過程中同時阻止傳送。"
 	}
 	"Command Usage - kz_beam"
 	{
 		"en"		"!beam [off/feet/ground]"
+		"chi"		"!beam [关闭/脚下/地面]"
+		"zho"		"!beam [關閉/腳下/地面]"
 	}
 	"Command Usage - kz_beamoffset"
 	{
 		"en"		"!beamoffset <x> <y> <z>"
+		"chi"		"!beamoffset <x> <y> <z>"
+		"zho"		"!beamoffset <x> <y> <z>"
 	}
 	"Command Usage - kz_fov"
 	{
 		"en"		"!fov [fov]"
+		"chi"		"!fov [视野角度]"
+		"zho"		"!fov [視野角度]"
 	}
 	"Command Usage - kz_goto"
 	{
 		"en"		"!goto <player name>"
+		"chi"		"!goto <玩家名称>"
+		"zho"		"!goto <玩家名稱>"
 	}
 	"Command Usage - kz_help"
 	{
 		"en"		"!help [category]"
+		"chi"		"!help [类别]"
+		"zho"		"!help [類別]"
 	}
 	"Command Usage - kz_panel"
 	{
 		"en"		"!panel [compact]"
+		"chi"		"!panel [compact]"
+		"zho"		"!panel [compact]"
 	}
 	"Command Usage - kz_jstier"
 	{
 		"en"		"!jstier <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>"
+		"chi"		"!jstier <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>"
+		"zho"		"!jstier <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>"
 	}
 	"Command Usage - kz_jstierhud"
 	{
 		"en"		"!jstierhud <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>"
+		"chi"		"!jstierhud <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>"
+		"zho"		"!jstierhud <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>"
 	}
 	"Command Usage - kz_jstierconsole"
 	{
 		"en"		"!jstierconsole <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>"
+		"chi"		"!jstierconsole <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>"
+		"zho"		"!jstierconsole <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>"
 	}
 	"Command Usage - kz_jssound"
 	{
 		"en"		"!jssound <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>"
+		"chi"		"!jssound <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>"
+		"zho"		"!jssound <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>"
 	}
 	"Command Usage - kz_jsbroadcast"
 	{
 		"en"		"!jsbroadcast <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>"
+		"chi"		"!jsbroadcast <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>"
+		"zho"		"!jsbroadcast <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>"
 	}
 	"Command Usage - kz_jsbroadcastconsole"
 	{
 		"en"		"!jsbroadcastconsole <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>"
+		"chi"		"!jsbroadcastconsole <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>"
+		"zho"		"!jsbroadcastconsole <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>"
 	}
 	"Command Usage - kz_jsbroadcastsound"
 	{
 		"en"		"!jsbroadcastsound <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>"
+		"chi"		"!jsbroadcastsound <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>"
+		"zho"		"!jsbroadcastsound <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>"
 	}
 	"Command Usage - kz_jsvolume"
 	{
 		"en"		"!jsvolume [0-2]"
+		"chi"		"!jsvolume [0-2]"
+		"zho"		"!jsvolume [0-2]"
 	}
 	"Command Usage - kz_language"
 	{
 		"en"		"!language <language>"
+		"chi"		"!language <语言>"
+		"zho"		"!language <語言>"
 	}
 	"Command Usage - kz_course"
 	{
 		"en"		"!course [course name/ID]"
+		"chi"		"!course [路线名称/ID]"
+		"zho"		"!course [路線名稱/ID]"
 	}
 	"Command Usage - kz_tier"
 	{
 		"en"		"!tier [course name/ID]"
+		"chi"		"!tier [路线名称/ID]"
+		"zho"		"!tier [路線名稱/ID]"
 	}
 	"Command Usage - kz_end"
 	{
 		"en"		"!end [course name/ID]"
+		"chi"		"!end [路线名称/ID]"
+		"zho"		"!end [路線名稱/ID]"
 	}
 	"Command Usage - kz_restart"
 	{
 		"en"		"!restart [course name/ID]"
+		"chi"		"!restart [路线名称/ID]"
+		"zho"		"!restart [路線名稱/ID]"
 	}
 	"Command Usage - kz_playercheck"
 	{
 		"en"		"!playercheck [player name]"
+		"chi"		"!playercheck [玩家名称]"
+		"zho"		"!playercheck [玩家名稱]"
 	}
 	"Command Usage - kz_mode"
 	{
 		"en"		"!mode <mode>"
+		"chi"		"!mode <模式>"
+		"zho"		"!mode <模式>"
 	}
 	"Command Usage - kz_paintcolor"
 	{
 		"en"		"!paintcolor <color name> or <R> <G> <B> [A]"
+		"chi"		"!paintcolor <颜色名称> 或 <R> <G> <B> [A]"
+		"zho"		"!paintcolor <顏色名稱> 或 <R> <G> <B> [A]"
 	}
 	"Command Usage - kz_paintsize"
 	{
 		"en"		"!paintsize <size>"
+		"chi"		"!paintsize <大小>"
+		"zho"		"!paintsize <大小>"
 	}
 	"Command Usage - kz_pistol"
 	{
 		"en"		"!pistol <name/off>"
+		"chi"		"!pistol <手枪名称/off>"
+		"zho"		"!pistol <手槍名稱/off>"
 	}
 	"Command Usage - kz_rpsave"
 	{
 		"en"		"!rpsave [seconds]"
+		"chi"		"!rpsave [秒数]"
+		"zho"		"!rpsave [秒數]"
 	}
 	"Command Usage - kz_replay"
 	{
 		"en"		"!replay <ID> or <wr/sr/pb/gpb/spb[pro]> [<course> [<mode>]]"
+		"chi"		"!replay <ID> 或 <wr/sr/pb/gpb/spb[pro]> [<路线> [<模式>]]"
+		"zho"		"!replay <ID> 或 <wr/sr/pb/gpb/spb[pro]> [<路線> [<模式>]]"
 	}
 	"Command Usage - kz_rpgoto"
 	{
 		"en"		"!rpgoto <time> (Examples: 1:23.45, +10, -5.2)"
+		"chi"		"!rpgoto <时间>（例如：1:23.45、+10、-5.2）"
+		"zho"		"!rpgoto <時間>（例如：1:23.45、+10、-5.2）"
 	}
 	"Command Usage - kz_rpgototick"
 	{
 		"en"		"!rpgototick <tick> (Examples: 1234, +100, -50)"
+		"chi"		"!rpgototick <tick 数>（例如：1234、+100、-50）"
+		"zho"		"!rpgototick <tick 數>（例如：1234、+100、-50）"
 	}
 	"Command Usage - kz_rptimescale"
 	{
 		"en"		"!rptimescale [scale] (Examples: 0.1, 0.5, 2, 5. 0 pauses the replay)"
+		"chi"		"!rptimescale [播放速度倍率]（例如：0.1、0.5、2、5；0 表示暂停回放）"
+		"zho"		"!rptimescale [播放速度倍率]（例如：0.1、0.5、2、5；0 表示暫停回放）"
 	}
 	"Command Usage - kz_replays"
 	{
 		"en"		"!replays [type=run/r/jump/j/manual/m] [options...]"
+		"chi"		"!replays [type=run/r/jump/j/manual/m] [选项...]"
+		"zho"		"!replays [type=run/r/jump/j/manual/m] [選項...]"
 	}
 	"Command Usage - kz_spec"
 	{
 		"en"		"!spec [player name/@me]"
+		"chi"		"!spec [玩家名称/@me]"
+		"zho"		"!spec [玩家名稱/@me]"
 	}
 	"Command Usage - kz_style"
 	{
 		"en"		"!style [<style>/+<style>/-<style>]"
+		"chi"		"!style [<风格>/+<风格>/-<风格>]"
+		"zho"		"!style [<風格>/+<風格>/-<風格>]"
 	}
 	"Command Usage - kz_togglestyle"
 	{
 		"en"		"!togglestyle <style>"
+		"chi"		"!togglestyle <风格>"
+		"zho"		"!togglestyle <風格>"
 	}
 	"Command Usage - kz_addstyle"
 	{
 		"en"		"!addstyle <style>"
+		"chi"		"!addstyle <风格>"
+		"zho"		"!addstyle <風格>"
 	}
 	"Command Usage - kz_removestyle"
 	{
 		"en"		"!removestyle <style>"
+		"chi"		"!removestyle <风格>"
+		"zho"		"!removestyle <風格>"
 	}
 	"Command Usage - kz_modernperfstats"
 	{
 		"en"		"!modernperfstats [player name]"
+		"chi"		"!modernperfstats [玩家名称]"
+		"zho"		"!modernperfstats [玩家名稱]"
 	}
 	"Command Usage - kz_legacyperfstats"
 	{
 		"en"		"!legacyperfstats [player name]"
+		"chi"		"!legacyperfstats [玩家名称]"
+		"zho"		"!legacyperfstats [玩家名稱]"
 	}
 	"Command Usage - kz_comparelevel"
 	{
 		"en"		"!comparelevel <none/off/spb/pb/gpb/sr/wr>"
+		"chi"		"!comparelevel <none/off/spb/pb/gpb/sr/wr>"
+		"zho"		"!comparelevel <none/off/spb/pb/gpb/sr/wr>"
 	}
 	"Command Usage - kz_recordvolume"
 	{
 		"en"		"!recordvolume <0-2>"
+		"chi"		"!recordvolume <0-2>"
+		"zho"		"!recordvolume <0-2>"
 	}
 	"Command Usage - kz_ctop"
 	{
 		"en"		"!ctop [c/course/map/mode/l/limit/o/offset=...]"
+		"chi"		"!ctop [c/course/map/mode/l/limit/o/offset=...]"
+		"zho"		"!ctop [c/course/map/mode/l/limit/o/offset=...]"
 	}
 	"Command Usage - kz_gctop"
 	{
 		"en"		"!gctop [c/course/map/mode/l/limit/o/offset=...]"
+		"chi"		"!gctop [c/course/map/mode/l/limit/o/offset=...]"
+		"zho"		"!gctop [c/course/map/mode/l/limit/o/offset=...]"
 	}
 	"Command Usage - kz_sctop"
 	{
 		"en"		"!sctop [c/course/map/mode/l/limit/o/offset=...]"
+		"chi"		"!sctop [c/course/map/mode/l/limit/o/offset=...]"
+		"zho"		"!sctop [c/course/map/mode/l/limit/o/offset=...]"
 	}
 	"Command Usage - kz_pb"
 	{
 		"en"		"!pb [c/course/map/mode/p/player/s/style=...]"
+		"chi"		"!pb [c/course/map/mode/p/player/s/style=...]"
+		"zho"		"!pb [c/course/map/mode/p/player/s/style=...]"
 	}
 	"Command Usage - kz_spb"
 	{
 		"en"		"!spb [c/course/map/mode/p/player/s/style=...]"
+		"chi"		"!spb [c/course/map/mode/p/player/s/style=...]"
+		"zho"		"!spb [c/course/map/mode/p/player/s/style=...]"
 	}
 	"Command Usage - kz_gpb"
 	{
 		"en"		"!gpb [c/course/map/mode/p/player/s/style=...]"
+		"chi"		"!gpb [c/course/map/mode/p/player/s/style=...]"
+		"zho"		"!gpb [c/course/map/mode/p/player/s/style=...]"
 	}
 	"Command Usage - kz_wr"
 	{
 		"en"		"!wr [c/course/map/mode=...]"
+		"chi"		"!wr [c/course/map/mode=...]"
+		"zho"		"!wr [c/course/map/mode=...]"
 	}
 	"Command Usage - kz_sr"
 	{
 		"en"		"!sr [c/course/map/mode=...]"
+		"chi"		"!sr [c/course/map/mode=...]"
+		"zho"		"!sr [c/course/map/mode=...]"
 	}
 	"Command Usage - kz_ztopwatch"
 	{
 		"en"		"!ztopwatch [place/clear/startjump/stopland/status]"
+		"chi"		"!ztopwatch [place/clear/startjump/stopland/status]"
+		"zho"		"!ztopwatch [place/clear/startjump/stopland/status]"
 	}
 }
