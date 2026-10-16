@@ -3,7 +3,7 @@
     "total_languages": 15,
     "total_phrases": 1091,
     "phrases_with_missing": 1091,
-    "total_missing_entries": 7736,
+    "total_missing_entries": 7696,
     "all_languages": [
       "chi",
       "de",
@@ -59,9 +59,9 @@
   "languages": {
     "chi": {
       "name": "schinese",
-      "coverage_percent": 85.7,
-      "translated": 935,
-      "missing": 156,
+      "coverage_percent": 87.53,
+      "translated": 955,
+      "missing": 136,
       "missing_phrases": [
         {
           "file": "cs2kz-commands.phrases.txt",
@@ -404,126 +404,6 @@
           "phrase": "Command Usage - kz_ztopwatch",
           "line": 2205,
           "english_text": "!ztopwatch [place/clear/startjump/stopland/status]"
-        },
-        {
-          "file": "cs2kz-help.phrases.txt",
-          "phrase": "Help - Title",
-          "line": 3,
-          "english_text": "Command Help"
-        },
-        {
-          "file": "cs2kz-help.phrases.txt",
-          "phrase": "Help - Hint",
-          "line": 7,
-          "english_text": "Type !<command> or /<command> in chat. Type kz_help in console for console help."
-        },
-        {
-          "file": "cs2kz-help.phrases.txt",
-          "phrase": "Help - Usage",
-          "line": 11,
-          "english_text": "Usage: {usage}"
-        },
-        {
-          "file": "cs2kz-help.phrases.txt",
-          "phrase": "Help - Category - Checkpoint",
-          "line": 16,
-          "english_text": "Checkpoints"
-        },
-        {
-          "file": "cs2kz-help.phrases.txt",
-          "phrase": "Help - Category - Record",
-          "line": 20,
-          "english_text": "Records"
-        },
-        {
-          "file": "cs2kz-help.phrases.txt",
-          "phrase": "Help - Category - Jumpstats",
-          "line": 24,
-          "english_text": "Jumpstats"
-        },
-        {
-          "file": "cs2kz-help.phrases.txt",
-          "phrase": "Help - Category - Measure",
-          "line": 28,
-          "english_text": "Measurement"
-        },
-        {
-          "file": "cs2kz-help.phrases.txt",
-          "phrase": "Help - Category - ModeStyle",
-          "line": 32,
-          "english_text": "Modes & styles"
-        },
-        {
-          "file": "cs2kz-help.phrases.txt",
-          "phrase": "Help - Category - Preference",
-          "line": 36,
-          "english_text": "Preferences"
-        },
-        {
-          "file": "cs2kz-help.phrases.txt",
-          "phrase": "Help - Category - Racing",
-          "line": 40,
-          "english_text": "Racing"
-        },
-        {
-          "file": "cs2kz-help.phrases.txt",
-          "phrase": "Help - Category - Replay",
-          "line": 44,
-          "english_text": "Replays"
-        },
-        {
-          "file": "cs2kz-help.phrases.txt",
-          "phrase": "Help - Category - Saveloc",
-          "line": 48,
-          "english_text": "Saved locations"
-        },
-        {
-          "file": "cs2kz-help.phrases.txt",
-          "phrase": "Help - Category - Spec",
-          "line": 52,
-          "english_text": "Spectating"
-        },
-        {
-          "file": "cs2kz-help.phrases.txt",
-          "phrase": "Help - Category - Status",
-          "line": 56,
-          "english_text": "Status"
-        },
-        {
-          "file": "cs2kz-help.phrases.txt",
-          "phrase": "Help - Category - Timer",
-          "line": 60,
-          "english_text": "Timer"
-        },
-        {
-          "file": "cs2kz-help.phrases.txt",
-          "phrase": "Help - Category - Player",
-          "line": 64,
-          "english_text": "Player"
-        },
-        {
-          "file": "cs2kz-help.phrases.txt",
-          "phrase": "Help - Category - Global",
-          "line": 68,
-          "english_text": "Global"
-        },
-        {
-          "file": "cs2kz-help.phrases.txt",
-          "phrase": "Help - Category - Misc",
-          "line": 72,
-          "english_text": "Other"
-        },
-        {
-          "file": "cs2kz-help.phrases.txt",
-          "phrase": "Help - Category - Map",
-          "line": 76,
-          "english_text": "Maps"
-        },
-        {
-          "file": "cs2kz-help.phrases.txt",
-          "phrase": "Help - Category - HUD",
-          "line": 80,
-          "english_text": "HUD"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
@@ -1674,121 +1554,121 @@
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Title",
-          "line": 3,
+          "line": 4,
           "english_text": "Command Help"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Hint",
-          "line": 7,
+          "line": 10,
           "english_text": "Type !<command> or /<command> in chat. Type kz_help in console for console help."
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Usage",
-          "line": 11,
+          "line": 16,
           "english_text": "Usage: {usage}"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Checkpoint",
-          "line": 16,
+          "line": 23,
           "english_text": "Checkpoints"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Record",
-          "line": 20,
+          "line": 29,
           "english_text": "Records"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Jumpstats",
-          "line": 24,
+          "line": 35,
           "english_text": "Jumpstats"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Measure",
-          "line": 28,
+          "line": 41,
           "english_text": "Measurement"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - ModeStyle",
-          "line": 32,
+          "line": 47,
           "english_text": "Modes & styles"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Preference",
-          "line": 36,
+          "line": 53,
           "english_text": "Preferences"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Racing",
-          "line": 40,
+          "line": 59,
           "english_text": "Racing"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Replay",
-          "line": 44,
+          "line": 65,
           "english_text": "Replays"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Saveloc",
-          "line": 48,
+          "line": 71,
           "english_text": "Saved locations"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Spec",
-          "line": 52,
+          "line": 77,
           "english_text": "Spectating"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Status",
-          "line": 56,
+          "line": 83,
           "english_text": "Status"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Timer",
-          "line": 60,
+          "line": 89,
           "english_text": "Timer"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Player",
-          "line": 64,
+          "line": 95,
           "english_text": "Player"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Global",
-          "line": 68,
+          "line": 101,
           "english_text": "Global"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Misc",
-          "line": 72,
+          "line": 107,
           "english_text": "Other"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Map",
-          "line": 76,
+          "line": 113,
           "english_text": "Maps"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - HUD",
-          "line": 80,
+          "line": 119,
           "english_text": "HUD"
         },
         {
@@ -4849,121 +4729,121 @@
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Title",
-          "line": 3,
+          "line": 4,
           "english_text": "Command Help"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Hint",
-          "line": 7,
+          "line": 10,
           "english_text": "Type !<command> or /<command> in chat. Type kz_help in console for console help."
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Usage",
-          "line": 11,
+          "line": 16,
           "english_text": "Usage: {usage}"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Checkpoint",
-          "line": 16,
+          "line": 23,
           "english_text": "Checkpoints"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Record",
-          "line": 20,
+          "line": 29,
           "english_text": "Records"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Jumpstats",
-          "line": 24,
+          "line": 35,
           "english_text": "Jumpstats"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Measure",
-          "line": 28,
+          "line": 41,
           "english_text": "Measurement"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - ModeStyle",
-          "line": 32,
+          "line": 47,
           "english_text": "Modes & styles"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Preference",
-          "line": 36,
+          "line": 53,
           "english_text": "Preferences"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Racing",
-          "line": 40,
+          "line": 59,
           "english_text": "Racing"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Replay",
-          "line": 44,
+          "line": 65,
           "english_text": "Replays"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Saveloc",
-          "line": 48,
+          "line": 71,
           "english_text": "Saved locations"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Spec",
-          "line": 52,
+          "line": 77,
           "english_text": "Spectating"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Status",
-          "line": 56,
+          "line": 83,
           "english_text": "Status"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Timer",
-          "line": 60,
+          "line": 89,
           "english_text": "Timer"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Player",
-          "line": 64,
+          "line": 95,
           "english_text": "Player"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Global",
-          "line": 68,
+          "line": 101,
           "english_text": "Global"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Misc",
-          "line": 72,
+          "line": 107,
           "english_text": "Other"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Map",
-          "line": 76,
+          "line": 113,
           "english_text": "Maps"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - HUD",
-          "line": 80,
+          "line": 119,
           "english_text": "HUD"
         },
         {
@@ -9308,121 +9188,121 @@
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Title",
-          "line": 3,
+          "line": 4,
           "english_text": "Command Help"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Hint",
-          "line": 7,
+          "line": 10,
           "english_text": "Type !<command> or /<command> in chat. Type kz_help in console for console help."
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Usage",
-          "line": 11,
+          "line": 16,
           "english_text": "Usage: {usage}"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Checkpoint",
-          "line": 16,
+          "line": 23,
           "english_text": "Checkpoints"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Record",
-          "line": 20,
+          "line": 29,
           "english_text": "Records"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Jumpstats",
-          "line": 24,
+          "line": 35,
           "english_text": "Jumpstats"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Measure",
-          "line": 28,
+          "line": 41,
           "english_text": "Measurement"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - ModeStyle",
-          "line": 32,
+          "line": 47,
           "english_text": "Modes & styles"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Preference",
-          "line": 36,
+          "line": 53,
           "english_text": "Preferences"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Racing",
-          "line": 40,
+          "line": 59,
           "english_text": "Racing"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Replay",
-          "line": 44,
+          "line": 65,
           "english_text": "Replays"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Saveloc",
-          "line": 48,
+          "line": 71,
           "english_text": "Saved locations"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Spec",
-          "line": 52,
+          "line": 77,
           "english_text": "Spectating"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Status",
-          "line": 56,
+          "line": 83,
           "english_text": "Status"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Timer",
-          "line": 60,
+          "line": 89,
           "english_text": "Timer"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Player",
-          "line": 64,
+          "line": 95,
           "english_text": "Player"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Global",
-          "line": 68,
+          "line": 101,
           "english_text": "Global"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Misc",
-          "line": 72,
+          "line": 107,
           "english_text": "Other"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Map",
-          "line": 76,
+          "line": 113,
           "english_text": "Maps"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - HUD",
-          "line": 80,
+          "line": 119,
           "english_text": "HUD"
         },
         {
@@ -14492,121 +14372,121 @@
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Title",
-          "line": 3,
+          "line": 4,
           "english_text": "Command Help"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Hint",
-          "line": 7,
+          "line": 10,
           "english_text": "Type !<command> or /<command> in chat. Type kz_help in console for console help."
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Usage",
-          "line": 11,
+          "line": 16,
           "english_text": "Usage: {usage}"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Checkpoint",
-          "line": 16,
+          "line": 23,
           "english_text": "Checkpoints"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Record",
-          "line": 20,
+          "line": 29,
           "english_text": "Records"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Jumpstats",
-          "line": 24,
+          "line": 35,
           "english_text": "Jumpstats"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Measure",
-          "line": 28,
+          "line": 41,
           "english_text": "Measurement"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - ModeStyle",
-          "line": 32,
+          "line": 47,
           "english_text": "Modes & styles"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Preference",
-          "line": 36,
+          "line": 53,
           "english_text": "Preferences"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Racing",
-          "line": 40,
+          "line": 59,
           "english_text": "Racing"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Replay",
-          "line": 44,
+          "line": 65,
           "english_text": "Replays"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Saveloc",
-          "line": 48,
+          "line": 71,
           "english_text": "Saved locations"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Spec",
-          "line": 52,
+          "line": 77,
           "english_text": "Spectating"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Status",
-          "line": 56,
+          "line": 83,
           "english_text": "Status"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Timer",
-          "line": 60,
+          "line": 89,
           "english_text": "Timer"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Player",
-          "line": 64,
+          "line": 95,
           "english_text": "Player"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Global",
-          "line": 68,
+          "line": 101,
           "english_text": "Global"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Misc",
-          "line": 72,
+          "line": 107,
           "english_text": "Other"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Map",
-          "line": 76,
+          "line": 113,
           "english_text": "Maps"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - HUD",
-          "line": 80,
+          "line": 119,
           "english_text": "HUD"
         },
         {
@@ -18872,121 +18752,121 @@
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Title",
-          "line": 3,
+          "line": 4,
           "english_text": "Command Help"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Hint",
-          "line": 7,
+          "line": 10,
           "english_text": "Type !<command> or /<command> in chat. Type kz_help in console for console help."
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Usage",
-          "line": 11,
+          "line": 16,
           "english_text": "Usage: {usage}"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Checkpoint",
-          "line": 16,
+          "line": 23,
           "english_text": "Checkpoints"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Record",
-          "line": 20,
+          "line": 29,
           "english_text": "Records"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Jumpstats",
-          "line": 24,
+          "line": 35,
           "english_text": "Jumpstats"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Measure",
-          "line": 28,
+          "line": 41,
           "english_text": "Measurement"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - ModeStyle",
-          "line": 32,
+          "line": 47,
           "english_text": "Modes & styles"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Preference",
-          "line": 36,
+          "line": 53,
           "english_text": "Preferences"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Racing",
-          "line": 40,
+          "line": 59,
           "english_text": "Racing"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Replay",
-          "line": 44,
+          "line": 65,
           "english_text": "Replays"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Saveloc",
-          "line": 48,
+          "line": 71,
           "english_text": "Saved locations"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Spec",
-          "line": 52,
+          "line": 77,
           "english_text": "Spectating"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Status",
-          "line": 56,
+          "line": 83,
           "english_text": "Status"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Timer",
-          "line": 60,
+          "line": 89,
           "english_text": "Timer"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Player",
-          "line": 64,
+          "line": 95,
           "english_text": "Player"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Global",
-          "line": 68,
+          "line": 101,
           "english_text": "Global"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Misc",
-          "line": 72,
+          "line": 107,
           "english_text": "Other"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Map",
-          "line": 76,
+          "line": 113,
           "english_text": "Maps"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - HUD",
-          "line": 80,
+          "line": 119,
           "english_text": "HUD"
         },
         {
@@ -22083,121 +21963,121 @@
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Title",
-          "line": 3,
+          "line": 4,
           "english_text": "Command Help"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Hint",
-          "line": 7,
+          "line": 10,
           "english_text": "Type !<command> or /<command> in chat. Type kz_help in console for console help."
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Usage",
-          "line": 11,
+          "line": 16,
           "english_text": "Usage: {usage}"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Checkpoint",
-          "line": 16,
+          "line": 23,
           "english_text": "Checkpoints"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Record",
-          "line": 20,
+          "line": 29,
           "english_text": "Records"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Jumpstats",
-          "line": 24,
+          "line": 35,
           "english_text": "Jumpstats"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Measure",
-          "line": 28,
+          "line": 41,
           "english_text": "Measurement"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - ModeStyle",
-          "line": 32,
+          "line": 47,
           "english_text": "Modes & styles"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Preference",
-          "line": 36,
+          "line": 53,
           "english_text": "Preferences"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Racing",
-          "line": 40,
+          "line": 59,
           "english_text": "Racing"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Replay",
-          "line": 44,
+          "line": 65,
           "english_text": "Replays"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Saveloc",
-          "line": 48,
+          "line": 71,
           "english_text": "Saved locations"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Spec",
-          "line": 52,
+          "line": 77,
           "english_text": "Spectating"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Status",
-          "line": 56,
+          "line": 83,
           "english_text": "Status"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Timer",
-          "line": 60,
+          "line": 89,
           "english_text": "Timer"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Player",
-          "line": 64,
+          "line": 95,
           "english_text": "Player"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Global",
-          "line": 68,
+          "line": 101,
           "english_text": "Global"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Misc",
-          "line": 72,
+          "line": 107,
           "english_text": "Other"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Map",
-          "line": 76,
+          "line": 113,
           "english_text": "Maps"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - HUD",
-          "line": 80,
+          "line": 119,
           "english_text": "HUD"
         },
         {
@@ -27406,121 +27286,121 @@
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Title",
-          "line": 3,
+          "line": 4,
           "english_text": "Command Help"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Hint",
-          "line": 7,
+          "line": 10,
           "english_text": "Type !<command> or /<command> in chat. Type kz_help in console for console help."
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Usage",
-          "line": 11,
+          "line": 16,
           "english_text": "Usage: {usage}"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Checkpoint",
-          "line": 16,
+          "line": 23,
           "english_text": "Checkpoints"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Record",
-          "line": 20,
+          "line": 29,
           "english_text": "Records"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Jumpstats",
-          "line": 24,
+          "line": 35,
           "english_text": "Jumpstats"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Measure",
-          "line": 28,
+          "line": 41,
           "english_text": "Measurement"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - ModeStyle",
-          "line": 32,
+          "line": 47,
           "english_text": "Modes & styles"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Preference",
-          "line": 36,
+          "line": 53,
           "english_text": "Preferences"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Racing",
-          "line": 40,
+          "line": 59,
           "english_text": "Racing"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Replay",
-          "line": 44,
+          "line": 65,
           "english_text": "Replays"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Saveloc",
-          "line": 48,
+          "line": 71,
           "english_text": "Saved locations"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Spec",
-          "line": 52,
+          "line": 77,
           "english_text": "Spectating"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Status",
-          "line": 56,
+          "line": 83,
           "english_text": "Status"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Timer",
-          "line": 60,
+          "line": 89,
           "english_text": "Timer"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Player",
-          "line": 64,
+          "line": 95,
           "english_text": "Player"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Global",
-          "line": 68,
+          "line": 101,
           "english_text": "Global"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Misc",
-          "line": 72,
+          "line": 107,
           "english_text": "Other"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Map",
-          "line": 76,
+          "line": 113,
           "english_text": "Maps"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - HUD",
-          "line": 80,
+          "line": 119,
           "english_text": "HUD"
         },
         {
@@ -32927,121 +32807,121 @@
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Title",
-          "line": 3,
+          "line": 4,
           "english_text": "Command Help"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Hint",
-          "line": 7,
+          "line": 10,
           "english_text": "Type !<command> or /<command> in chat. Type kz_help in console for console help."
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Usage",
-          "line": 11,
+          "line": 16,
           "english_text": "Usage: {usage}"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Checkpoint",
-          "line": 16,
+          "line": 23,
           "english_text": "Checkpoints"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Record",
-          "line": 20,
+          "line": 29,
           "english_text": "Records"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Jumpstats",
-          "line": 24,
+          "line": 35,
           "english_text": "Jumpstats"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Measure",
-          "line": 28,
+          "line": 41,
           "english_text": "Measurement"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - ModeStyle",
-          "line": 32,
+          "line": 47,
           "english_text": "Modes & styles"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Preference",
-          "line": 36,
+          "line": 53,
           "english_text": "Preferences"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Racing",
-          "line": 40,
+          "line": 59,
           "english_text": "Racing"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Replay",
-          "line": 44,
+          "line": 65,
           "english_text": "Replays"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Saveloc",
-          "line": 48,
+          "line": 71,
           "english_text": "Saved locations"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Spec",
-          "line": 52,
+          "line": 77,
           "english_text": "Spectating"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Status",
-          "line": 56,
+          "line": 83,
           "english_text": "Status"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Timer",
-          "line": 60,
+          "line": 89,
           "english_text": "Timer"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Player",
-          "line": 64,
+          "line": 95,
           "english_text": "Player"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Global",
-          "line": 68,
+          "line": 101,
           "english_text": "Global"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Misc",
-          "line": 72,
+          "line": 107,
           "english_text": "Other"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Map",
-          "line": 76,
+          "line": 113,
           "english_text": "Maps"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - HUD",
-          "line": 80,
+          "line": 119,
           "english_text": "HUD"
         },
         {
@@ -36054,121 +35934,121 @@
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Title",
-          "line": 3,
+          "line": 4,
           "english_text": "Command Help"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Hint",
-          "line": 7,
+          "line": 10,
           "english_text": "Type !<command> or /<command> in chat. Type kz_help in console for console help."
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Usage",
-          "line": 11,
+          "line": 16,
           "english_text": "Usage: {usage}"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Checkpoint",
-          "line": 16,
+          "line": 23,
           "english_text": "Checkpoints"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Record",
-          "line": 20,
+          "line": 29,
           "english_text": "Records"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Jumpstats",
-          "line": 24,
+          "line": 35,
           "english_text": "Jumpstats"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Measure",
-          "line": 28,
+          "line": 41,
           "english_text": "Measurement"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - ModeStyle",
-          "line": 32,
+          "line": 47,
           "english_text": "Modes & styles"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Preference",
-          "line": 36,
+          "line": 53,
           "english_text": "Preferences"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Racing",
-          "line": 40,
+          "line": 59,
           "english_text": "Racing"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Replay",
-          "line": 44,
+          "line": 65,
           "english_text": "Replays"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Saveloc",
-          "line": 48,
+          "line": 71,
           "english_text": "Saved locations"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Spec",
-          "line": 52,
+          "line": 77,
           "english_text": "Spectating"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Status",
-          "line": 56,
+          "line": 83,
           "english_text": "Status"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Timer",
-          "line": 60,
+          "line": 89,
           "english_text": "Timer"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Player",
-          "line": 64,
+          "line": 95,
           "english_text": "Player"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Global",
-          "line": 68,
+          "line": 101,
           "english_text": "Global"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Misc",
-          "line": 72,
+          "line": 107,
           "english_text": "Other"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Map",
-          "line": 76,
+          "line": 113,
           "english_text": "Maps"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - HUD",
-          "line": 80,
+          "line": 119,
           "english_text": "HUD"
         },
         {
@@ -37069,121 +36949,121 @@
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Title",
-          "line": 3,
+          "line": 4,
           "english_text": "Command Help"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Hint",
-          "line": 7,
+          "line": 10,
           "english_text": "Type !<command> or /<command> in chat. Type kz_help in console for console help."
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Usage",
-          "line": 11,
+          "line": 16,
           "english_text": "Usage: {usage}"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Checkpoint",
-          "line": 16,
+          "line": 23,
           "english_text": "Checkpoints"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Record",
-          "line": 20,
+          "line": 29,
           "english_text": "Records"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Jumpstats",
-          "line": 24,
+          "line": 35,
           "english_text": "Jumpstats"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Measure",
-          "line": 28,
+          "line": 41,
           "english_text": "Measurement"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - ModeStyle",
-          "line": 32,
+          "line": 47,
           "english_text": "Modes & styles"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Preference",
-          "line": 36,
+          "line": 53,
           "english_text": "Preferences"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Racing",
-          "line": 40,
+          "line": 59,
           "english_text": "Racing"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Replay",
-          "line": 44,
+          "line": 65,
           "english_text": "Replays"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Saveloc",
-          "line": 48,
+          "line": 71,
           "english_text": "Saved locations"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Spec",
-          "line": 52,
+          "line": 77,
           "english_text": "Spectating"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Status",
-          "line": 56,
+          "line": 83,
           "english_text": "Status"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Timer",
-          "line": 60,
+          "line": 89,
           "english_text": "Timer"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Player",
-          "line": 64,
+          "line": 95,
           "english_text": "Player"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Global",
-          "line": 68,
+          "line": 101,
           "english_text": "Global"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Misc",
-          "line": 72,
+          "line": 107,
           "english_text": "Other"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Map",
-          "line": 76,
+          "line": 113,
           "english_text": "Maps"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - HUD",
-          "line": 80,
+          "line": 119,
           "english_text": "HUD"
         },
         {
@@ -41654,121 +41534,121 @@
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Title",
-          "line": 3,
+          "line": 4,
           "english_text": "Command Help"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Hint",
-          "line": 7,
+          "line": 10,
           "english_text": "Type !<command> or /<command> in chat. Type kz_help in console for console help."
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Usage",
-          "line": 11,
+          "line": 16,
           "english_text": "Usage: {usage}"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Checkpoint",
-          "line": 16,
+          "line": 23,
           "english_text": "Checkpoints"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Record",
-          "line": 20,
+          "line": 29,
           "english_text": "Records"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Jumpstats",
-          "line": 24,
+          "line": 35,
           "english_text": "Jumpstats"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Measure",
-          "line": 28,
+          "line": 41,
           "english_text": "Measurement"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - ModeStyle",
-          "line": 32,
+          "line": 47,
           "english_text": "Modes & styles"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Preference",
-          "line": 36,
+          "line": 53,
           "english_text": "Preferences"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Racing",
-          "line": 40,
+          "line": 59,
           "english_text": "Racing"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Replay",
-          "line": 44,
+          "line": 65,
           "english_text": "Replays"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Saveloc",
-          "line": 48,
+          "line": 71,
           "english_text": "Saved locations"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Spec",
-          "line": 52,
+          "line": 77,
           "english_text": "Spectating"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Status",
-          "line": 56,
+          "line": 83,
           "english_text": "Status"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Timer",
-          "line": 60,
+          "line": 89,
           "english_text": "Timer"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Player",
-          "line": 64,
+          "line": 95,
           "english_text": "Player"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Global",
-          "line": 68,
+          "line": 101,
           "english_text": "Global"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Misc",
-          "line": 72,
+          "line": 107,
           "english_text": "Other"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Map",
-          "line": 76,
+          "line": 113,
           "english_text": "Maps"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - HUD",
-          "line": 80,
+          "line": 119,
           "english_text": "HUD"
         },
         {
@@ -45848,121 +45728,121 @@
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Title",
-          "line": 3,
+          "line": 4,
           "english_text": "Command Help"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Hint",
-          "line": 7,
+          "line": 10,
           "english_text": "Type !<command> or /<command> in chat. Type kz_help in console for console help."
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Usage",
-          "line": 11,
+          "line": 16,
           "english_text": "Usage: {usage}"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Checkpoint",
-          "line": 16,
+          "line": 23,
           "english_text": "Checkpoints"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Record",
-          "line": 20,
+          "line": 29,
           "english_text": "Records"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Jumpstats",
-          "line": 24,
+          "line": 35,
           "english_text": "Jumpstats"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Measure",
-          "line": 28,
+          "line": 41,
           "english_text": "Measurement"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - ModeStyle",
-          "line": 32,
+          "line": 47,
           "english_text": "Modes & styles"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Preference",
-          "line": 36,
+          "line": 53,
           "english_text": "Preferences"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Racing",
-          "line": 40,
+          "line": 59,
           "english_text": "Racing"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Replay",
-          "line": 44,
+          "line": 65,
           "english_text": "Replays"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Saveloc",
-          "line": 48,
+          "line": 71,
           "english_text": "Saved locations"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Spec",
-          "line": 52,
+          "line": 77,
           "english_text": "Spectating"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Status",
-          "line": 56,
+          "line": 83,
           "english_text": "Status"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Timer",
-          "line": 60,
+          "line": 89,
           "english_text": "Timer"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Player",
-          "line": 64,
+          "line": 95,
           "english_text": "Player"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Global",
-          "line": 68,
+          "line": 101,
           "english_text": "Global"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Misc",
-          "line": 72,
+          "line": 107,
           "english_text": "Other"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - Map",
-          "line": 76,
+          "line": 113,
           "english_text": "Maps"
         },
         {
           "file": "cs2kz-help.phrases.txt",
           "phrase": "Help - Category - HUD",
-          "line": 80,
+          "line": 119,
           "english_text": "HUD"
         },
         {
@@ -46100,9 +45980,9 @@
     },
     "zho": {
       "name": "tchinese",
-      "coverage_percent": 91.2,
-      "translated": 995,
-      "missing": 96,
+      "coverage_percent": 93.03,
+      "translated": 1015,
+      "missing": 76,
       "missing_phrases": [
         {
           "file": "cs2kz-commands.phrases.txt",
@@ -46433,126 +46313,6 @@
           "phrase": "Command Usage - kz_ztopwatch",
           "line": 2205,
           "english_text": "!ztopwatch [place/clear/startjump/stopland/status]"
-        },
-        {
-          "file": "cs2kz-help.phrases.txt",
-          "phrase": "Help - Title",
-          "line": 3,
-          "english_text": "Command Help"
-        },
-        {
-          "file": "cs2kz-help.phrases.txt",
-          "phrase": "Help - Hint",
-          "line": 7,
-          "english_text": "Type !<command> or /<command> in chat. Type kz_help in console for console help."
-        },
-        {
-          "file": "cs2kz-help.phrases.txt",
-          "phrase": "Help - Usage",
-          "line": 11,
-          "english_text": "Usage: {usage}"
-        },
-        {
-          "file": "cs2kz-help.phrases.txt",
-          "phrase": "Help - Category - Checkpoint",
-          "line": 16,
-          "english_text": "Checkpoints"
-        },
-        {
-          "file": "cs2kz-help.phrases.txt",
-          "phrase": "Help - Category - Record",
-          "line": 20,
-          "english_text": "Records"
-        },
-        {
-          "file": "cs2kz-help.phrases.txt",
-          "phrase": "Help - Category - Jumpstats",
-          "line": 24,
-          "english_text": "Jumpstats"
-        },
-        {
-          "file": "cs2kz-help.phrases.txt",
-          "phrase": "Help - Category - Measure",
-          "line": 28,
-          "english_text": "Measurement"
-        },
-        {
-          "file": "cs2kz-help.phrases.txt",
-          "phrase": "Help - Category - ModeStyle",
-          "line": 32,
-          "english_text": "Modes & styles"
-        },
-        {
-          "file": "cs2kz-help.phrases.txt",
-          "phrase": "Help - Category - Preference",
-          "line": 36,
-          "english_text": "Preferences"
-        },
-        {
-          "file": "cs2kz-help.phrases.txt",
-          "phrase": "Help - Category - Racing",
-          "line": 40,
-          "english_text": "Racing"
-        },
-        {
-          "file": "cs2kz-help.phrases.txt",
-          "phrase": "Help - Category - Replay",
-          "line": 44,
-          "english_text": "Replays"
-        },
-        {
-          "file": "cs2kz-help.phrases.txt",
-          "phrase": "Help - Category - Saveloc",
-          "line": 48,
-          "english_text": "Saved locations"
-        },
-        {
-          "file": "cs2kz-help.phrases.txt",
-          "phrase": "Help - Category - Spec",
-          "line": 52,
-          "english_text": "Spectating"
-        },
-        {
-          "file": "cs2kz-help.phrases.txt",
-          "phrase": "Help - Category - Status",
-          "line": 56,
-          "english_text": "Status"
-        },
-        {
-          "file": "cs2kz-help.phrases.txt",
-          "phrase": "Help - Category - Timer",
-          "line": 60,
-          "english_text": "Timer"
-        },
-        {
-          "file": "cs2kz-help.phrases.txt",
-          "phrase": "Help - Category - Player",
-          "line": 64,
-          "english_text": "Player"
-        },
-        {
-          "file": "cs2kz-help.phrases.txt",
-          "phrase": "Help - Category - Global",
-          "line": 68,
-          "english_text": "Global"
-        },
-        {
-          "file": "cs2kz-help.phrases.txt",
-          "phrase": "Help - Category - Misc",
-          "line": 72,
-          "english_text": "Other"
-        },
-        {
-          "file": "cs2kz-help.phrases.txt",
-          "phrase": "Help - Category - Map",
-          "line": 76,
-          "english_text": "Maps"
-        },
-        {
-          "file": "cs2kz-help.phrases.txt",
-          "phrase": "Help - Category - HUD",
-          "line": 80,
-          "english_text": "HUD"
         },
         {
           "file": "cs2kz-replays.phrases.txt",
@@ -53344,13 +53104,14 @@
       "phrases": [
         {
           "name": "Help - Title",
-          "line": 3,
+          "line": 4,
           "english_text": "Command Help",
           "existing_languages": [
-            "en"
+            "chi",
+            "en",
+            "zho"
           ],
           "missing_languages": [
-            "chi",
             "de",
             "es",
             "fi",
@@ -53362,19 +53123,19 @@
             "ru",
             "sv",
             "tr",
-            "ua",
-            "zho"
+            "ua"
           ]
         },
         {
           "name": "Help - Hint",
-          "line": 7,
+          "line": 10,
           "english_text": "Type !<command> or /<command> in chat. Type kz_help in console for console help.",
           "existing_languages": [
-            "en"
+            "chi",
+            "en",
+            "zho"
           ],
           "missing_languages": [
-            "chi",
             "de",
             "es",
             "fi",
@@ -53386,19 +53147,19 @@
             "ru",
             "sv",
             "tr",
-            "ua",
-            "zho"
+            "ua"
           ]
         },
         {
           "name": "Help - Usage",
-          "line": 11,
+          "line": 16,
           "english_text": "Usage: {usage}",
           "existing_languages": [
-            "en"
+            "chi",
+            "en",
+            "zho"
           ],
           "missing_languages": [
-            "chi",
             "de",
             "es",
             "fi",
@@ -53410,19 +53171,19 @@
             "ru",
             "sv",
             "tr",
-            "ua",
-            "zho"
+            "ua"
           ]
         },
         {
           "name": "Help - Category - Checkpoint",
-          "line": 16,
+          "line": 23,
           "english_text": "Checkpoints",
           "existing_languages": [
-            "en"
+            "chi",
+            "en",
+            "zho"
           ],
           "missing_languages": [
-            "chi",
             "de",
             "es",
             "fi",
@@ -53434,19 +53195,19 @@
             "ru",
             "sv",
             "tr",
-            "ua",
-            "zho"
+            "ua"
           ]
         },
         {
           "name": "Help - Category - Record",
-          "line": 20,
+          "line": 29,
           "english_text": "Records",
           "existing_languages": [
-            "en"
+            "chi",
+            "en",
+            "zho"
           ],
           "missing_languages": [
-            "chi",
             "de",
             "es",
             "fi",
@@ -53458,19 +53219,19 @@
             "ru",
             "sv",
             "tr",
-            "ua",
-            "zho"
+            "ua"
           ]
         },
         {
           "name": "Help - Category - Jumpstats",
-          "line": 24,
+          "line": 35,
           "english_text": "Jumpstats",
           "existing_languages": [
-            "en"
+            "chi",
+            "en",
+            "zho"
           ],
           "missing_languages": [
-            "chi",
             "de",
             "es",
             "fi",
@@ -53482,19 +53243,19 @@
             "ru",
             "sv",
             "tr",
-            "ua",
-            "zho"
+            "ua"
           ]
         },
         {
           "name": "Help - Category - Measure",
-          "line": 28,
+          "line": 41,
           "english_text": "Measurement",
           "existing_languages": [
-            "en"
+            "chi",
+            "en",
+            "zho"
           ],
           "missing_languages": [
-            "chi",
             "de",
             "es",
             "fi",
@@ -53506,19 +53267,19 @@
             "ru",
             "sv",
             "tr",
-            "ua",
-            "zho"
+            "ua"
           ]
         },
         {
           "name": "Help - Category - ModeStyle",
-          "line": 32,
+          "line": 47,
           "english_text": "Modes & styles",
           "existing_languages": [
-            "en"
+            "chi",
+            "en",
+            "zho"
           ],
           "missing_languages": [
-            "chi",
             "de",
             "es",
             "fi",
@@ -53530,19 +53291,19 @@
             "ru",
             "sv",
             "tr",
-            "ua",
-            "zho"
+            "ua"
           ]
         },
         {
           "name": "Help - Category - Preference",
-          "line": 36,
+          "line": 53,
           "english_text": "Preferences",
           "existing_languages": [
-            "en"
+            "chi",
+            "en",
+            "zho"
           ],
           "missing_languages": [
-            "chi",
             "de",
             "es",
             "fi",
@@ -53554,19 +53315,19 @@
             "ru",
             "sv",
             "tr",
-            "ua",
-            "zho"
+            "ua"
           ]
         },
         {
           "name": "Help - Category - Racing",
-          "line": 40,
+          "line": 59,
           "english_text": "Racing",
           "existing_languages": [
-            "en"
+            "chi",
+            "en",
+            "zho"
           ],
           "missing_languages": [
-            "chi",
             "de",
             "es",
             "fi",
@@ -53578,19 +53339,19 @@
             "ru",
             "sv",
             "tr",
-            "ua",
-            "zho"
+            "ua"
           ]
         },
         {
           "name": "Help - Category - Replay",
-          "line": 44,
+          "line": 65,
           "english_text": "Replays",
           "existing_languages": [
-            "en"
+            "chi",
+            "en",
+            "zho"
           ],
           "missing_languages": [
-            "chi",
             "de",
             "es",
             "fi",
@@ -53602,19 +53363,19 @@
             "ru",
             "sv",
             "tr",
-            "ua",
-            "zho"
+            "ua"
           ]
         },
         {
           "name": "Help - Category - Saveloc",
-          "line": 48,
+          "line": 71,
           "english_text": "Saved locations",
           "existing_languages": [
-            "en"
+            "chi",
+            "en",
+            "zho"
           ],
           "missing_languages": [
-            "chi",
             "de",
             "es",
             "fi",
@@ -53626,19 +53387,19 @@
             "ru",
             "sv",
             "tr",
-            "ua",
-            "zho"
+            "ua"
           ]
         },
         {
           "name": "Help - Category - Spec",
-          "line": 52,
+          "line": 77,
           "english_text": "Spectating",
           "existing_languages": [
-            "en"
+            "chi",
+            "en",
+            "zho"
           ],
           "missing_languages": [
-            "chi",
             "de",
             "es",
             "fi",
@@ -53650,19 +53411,19 @@
             "ru",
             "sv",
             "tr",
-            "ua",
-            "zho"
+            "ua"
           ]
         },
         {
           "name": "Help - Category - Status",
-          "line": 56,
+          "line": 83,
           "english_text": "Status",
           "existing_languages": [
-            "en"
+            "chi",
+            "en",
+            "zho"
           ],
           "missing_languages": [
-            "chi",
             "de",
             "es",
             "fi",
@@ -53674,19 +53435,19 @@
             "ru",
             "sv",
             "tr",
-            "ua",
-            "zho"
+            "ua"
           ]
         },
         {
           "name": "Help - Category - Timer",
-          "line": 60,
+          "line": 89,
           "english_text": "Timer",
           "existing_languages": [
-            "en"
+            "chi",
+            "en",
+            "zho"
           ],
           "missing_languages": [
-            "chi",
             "de",
             "es",
             "fi",
@@ -53698,19 +53459,19 @@
             "ru",
             "sv",
             "tr",
-            "ua",
-            "zho"
+            "ua"
           ]
         },
         {
           "name": "Help - Category - Player",
-          "line": 64,
+          "line": 95,
           "english_text": "Player",
           "existing_languages": [
-            "en"
+            "chi",
+            "en",
+            "zho"
           ],
           "missing_languages": [
-            "chi",
             "de",
             "es",
             "fi",
@@ -53722,19 +53483,19 @@
             "ru",
             "sv",
             "tr",
-            "ua",
-            "zho"
+            "ua"
           ]
         },
         {
           "name": "Help - Category - Global",
-          "line": 68,
+          "line": 101,
           "english_text": "Global",
           "existing_languages": [
-            "en"
+            "chi",
+            "en",
+            "zho"
           ],
           "missing_languages": [
-            "chi",
             "de",
             "es",
             "fi",
@@ -53746,19 +53507,19 @@
             "ru",
             "sv",
             "tr",
-            "ua",
-            "zho"
+            "ua"
           ]
         },
         {
           "name": "Help - Category - Misc",
-          "line": 72,
+          "line": 107,
           "english_text": "Other",
           "existing_languages": [
-            "en"
+            "chi",
+            "en",
+            "zho"
           ],
           "missing_languages": [
-            "chi",
             "de",
             "es",
             "fi",
@@ -53770,19 +53531,19 @@
             "ru",
             "sv",
             "tr",
-            "ua",
-            "zho"
+            "ua"
           ]
         },
         {
           "name": "Help - Category - Map",
-          "line": 76,
+          "line": 113,
           "english_text": "Maps",
           "existing_languages": [
-            "en"
+            "chi",
+            "en",
+            "zho"
           ],
           "missing_languages": [
-            "chi",
             "de",
             "es",
             "fi",
@@ -53794,19 +53555,19 @@
             "ru",
             "sv",
             "tr",
-            "ua",
-            "zho"
+            "ua"
           ]
         },
         {
           "name": "Help - Category - HUD",
-          "line": 80,
+          "line": 119,
           "english_text": "HUD",
           "existing_languages": [
-            "en"
+            "chi",
+            "en",
+            "zho"
           ],
           "missing_languages": [
-            "chi",
             "de",
             "es",
             "fi",
@@ -53818,8 +53579,7 @@
             "ru",
             "sv",
             "tr",
-            "ua",
-            "zho"
+            "ua"
           ]
         }
       ]

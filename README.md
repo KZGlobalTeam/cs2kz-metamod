@@ -11,13 +11,13 @@ Automated translation linter reports for cs2kz-metamod.
 | **Total Languages** | 15 |
 | **Total Phrases** | 1091 |
 | **Phrases Missing Translations** | 1091 |
-| **Total Missing Entries** | 7736 |
+| **Total Missing Entries** | 7696 |
 | **Menu Files** | 11 |
 
 ## Language Coverage (Phrases)
 
 ```
-  chi (schinese)       [█████████████████░░░]  85.7% (935/1091)
+  chi (schinese)       [█████████████████░░░]  87.5% (955/1091)
   de (german)          [█████████░░░░░░░░░░░]  47.5% (518/1091)
   en (english)         [████████████████████] 100.0% (1091/1091)
   es (spanish)         [████████░░░░░░░░░░░░]  44.4% (484/1091)
@@ -31,7 +31,7 @@ Automated translation linter reports for cs2kz-metamod.
   sv (swedish)         [███████░░░░░░░░░░░░░]  35.9% (392/1091)
   tr (turkish)         [████░░░░░░░░░░░░░░░░]  24.0% (262/1091)
   ua (ukrainian)       [██████████████████░░]  91.2% (995/1091)
-  zho (tchinese)       [██████████████████░░]  91.2% (995/1091)
+  zho (tchinese)       [██████████████████░░]  93.0% (1015/1091)
 ```
 
 ## Menu Translation Status
@@ -81,9 +81,9 @@ Automated translation linter reports for cs2kz-metamod.
 
 ## Last Updated
 
-- **Commit:** [`32ab6f0`](https://github.com/KZGlobalTeam/cs2kz-metamod/commit/32ab6f01a5b6f5efc3613c70e65d7699311b438f)
-- **Time:** 2026-10-16 13:16:53 UTC
-- **Message:** Fixed several typos in the Traditional Chinese (zho) translations. (#660)
+- **Commit:** [`54468d9`](https://github.com/KZGlobalTeam/cs2kz-metamod/commit/54468d92a572f466730fb166d96bf409e465ad62)
+- **Time:** 2026-10-16 13:17:18 UTC
+- **Message:** Add Simplified and Traditional Chinese help translations (#661)
 
 ---
 
