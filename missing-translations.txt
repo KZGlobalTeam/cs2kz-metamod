@@ -6,28 +6,28 @@ Generated for: /home/runner/work/cs2kz-metamod/cs2kz-metamod
 SUMMARY
 ----------------------------------------------------------------------
 Total languages: 15
-Total phrases: 1073
-Phrases with missing translations: 1073
-Total missing translation entries: 7484
+Total phrases: 1091
+Phrases with missing translations: 1091
+Total missing translation entries: 7736
 
 LANGUAGE COVERAGE (Phrases)
 ----------------------------------------------------------------------
 
-  chi (schinese)       [█████████████████░░░]  87.1% (935/1073)
-  de (german)          [█████████░░░░░░░░░░░]  48.3% (518/1073)
-  en (english)         [████████████████████] 100.0% (1073/1073)
-  es (spanish)         [█████████░░░░░░░░░░░]  45.1% (484/1073)
-  fi (finnish)         [████░░░░░░░░░░░░░░░░]  21.7% (233/1073)
-  it (italian)         [████░░░░░░░░░░░░░░░░]  21.0% (225/1073)
-  ko (korean)          [████████████░░░░░░░░]  60.8% (652/1073)
-  lv (latvian)         [██████░░░░░░░░░░░░░░]  30.6% (328/1073)
-  nl (dutch)           [░░░░░░░░░░░░░░░░░░░░]   0.5% (5/1073)
-  pl (polish)          [█████████░░░░░░░░░░░]  48.5% (520/1073)
-  ru (russian)         [██████████████████░░]  92.6% (994/1073)
-  sv (swedish)         [███████░░░░░░░░░░░░░]  36.5% (392/1073)
-  tr (turkish)         [████░░░░░░░░░░░░░░░░]  24.4% (262/1073)
-  ua (ukrainian)       [██████████████████░░]  92.7% (995/1073)
-  zho (tchinese)       [██████████████████░░]  92.7% (995/1073)
+  chi (schinese)       [█████████████████░░░]  85.7% (935/1091)
+  de (german)          [█████████░░░░░░░░░░░]  47.5% (518/1091)
+  en (english)         [████████████████████] 100.0% (1091/1091)
+  es (spanish)         [████████░░░░░░░░░░░░]  44.4% (484/1091)
+  fi (finnish)         [████░░░░░░░░░░░░░░░░]  21.4% (233/1091)
+  it (italian)         [████░░░░░░░░░░░░░░░░]  20.6% (225/1091)
+  ko (korean)          [███████████░░░░░░░░░]  59.8% (652/1091)
+  lv (latvian)         [██████░░░░░░░░░░░░░░]  30.1% (328/1091)
+  nl (dutch)           [░░░░░░░░░░░░░░░░░░░░]   0.5% (5/1091)
+  pl (polish)          [█████████░░░░░░░░░░░]  47.7% (520/1091)
+  ru (russian)         [██████████████████░░]  91.1% (994/1091)
+  sv (swedish)         [███████░░░░░░░░░░░░░]  35.9% (392/1091)
+  tr (turkish)         [████░░░░░░░░░░░░░░░░]  24.0% (262/1091)
+  ua (ukrainian)       [██████████████████░░]  91.2% (995/1091)
+  zho (tchinese)       [██████████████████░░]  91.2% (995/1091)
 
 Global languages (15): chi, de, en, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
 
@@ -424,131 +424,133 @@ cs2kz-commands.phrases.txt
     Missing (6): fi, it, lv, nl, sv, tr
   Line 1883: "Command Description - kz_rphidelegs"
     Missing (6): fi, it, lv, nl, sv, tr
-  Line 1895: "Command Description - kz_accept"
+  Line 1895: "Command Description - kz_rpcontrols"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 1899: "Command Description - kz_accept"
     Missing (7): de, fi, it, lv, nl, sv, tr
-  Line 1906: "Command Description - kz_surrender"
+  Line 1910: "Command Description - kz_surrender"
     Missing (7): de, fi, it, lv, nl, sv, tr
-  Line 1917: "Command Description - kz_mapinfo"
+  Line 1921: "Command Description - kz_mapinfo"
     Missing (8): de, fi, it, lv, nl, pl, sv, tr
-  Line 1927: "Command Description - kz_tier"
+  Line 1931: "Command Description - kz_tier"
     Missing (8): de, fi, it, lv, nl, pl, sv, tr
-  Line 1937: "Command Description - kz_modernperfstats"
+  Line 1941: "Command Description - kz_modernperfstats"
     Missing (8): de, fi, it, lv, nl, pl, sv, tr
-  Line 1947: "Command Description - kz_legacyperfstats"
+  Line 1951: "Command Description - kz_legacyperfstats"
     Missing (8): de, fi, it, lv, nl, pl, sv, tr
-  Line 1957: "Command Description - kz_resetperfstats"
+  Line 1961: "Command Description - kz_resetperfstats"
     Missing (8): de, fi, it, lv, nl, pl, sv, tr
-  Line 1967: "Command Description - kz_fov"
+  Line 1971: "Command Description - kz_fov"
     Missing (8): de, fi, it, lv, nl, pl, sv, tr
-  Line 1977: "Command Description - kz_mhud"
+  Line 1981: "Command Description - kz_mhud"
     Missing (9): de, es, fi, it, lv, nl, pl, sv, tr
-  Line 1986: "Command Description - kz_hudedit"
+  Line 1990: "Command Description - kz_hudedit"
     Missing (11): chi, de, es, fi, it, ko, lv, nl, pl, sv, tr
-  Line 1993: "Command Description - kz_exportprefs"
+  Line 1997: "Command Description - kz_exportprefs"
     Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 1997: "Command Description - kz_mapoverlay"
+  Line 2001: "Command Description - kz_mapoverlay"
     Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2001: "Command Description - kz_options"
+  Line 2005: "Command Description - kz_options"
     Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2005: "Command Description - kz_safeguard"
+  Line 2009: "Command Description - kz_safeguard"
     Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2009: "Command Description - kz_pro"
+  Line 2013: "Command Description - kz_pro"
     Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2013: "Command Usage - kz_beam"
+  Line 2017: "Command Usage - kz_beam"
     Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2017: "Command Usage - kz_beamoffset"
+  Line 2021: "Command Usage - kz_beamoffset"
     Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2021: "Command Usage - kz_fov"
+  Line 2025: "Command Usage - kz_fov"
     Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2025: "Command Usage - kz_goto"
+  Line 2029: "Command Usage - kz_goto"
     Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2029: "Command Usage - kz_help"
+  Line 2033: "Command Usage - kz_help"
     Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2033: "Command Usage - kz_panel"
+  Line 2037: "Command Usage - kz_panel"
     Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2037: "Command Usage - kz_jstier"
+  Line 2041: "Command Usage - kz_jstier"
     Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2041: "Command Usage - kz_jstierhud"
+  Line 2045: "Command Usage - kz_jstierhud"
     Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2045: "Command Usage - kz_jstierconsole"
+  Line 2049: "Command Usage - kz_jstierconsole"
     Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2049: "Command Usage - kz_jssound"
+  Line 2053: "Command Usage - kz_jssound"
     Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2053: "Command Usage - kz_jsbroadcast"
+  Line 2057: "Command Usage - kz_jsbroadcast"
     Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2057: "Command Usage - kz_jsbroadcastconsole"
+  Line 2061: "Command Usage - kz_jsbroadcastconsole"
     Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2061: "Command Usage - kz_jsbroadcastsound"
+  Line 2065: "Command Usage - kz_jsbroadcastsound"
     Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2065: "Command Usage - kz_jsvolume"
+  Line 2069: "Command Usage - kz_jsvolume"
     Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2069: "Command Usage - kz_language"
+  Line 2073: "Command Usage - kz_language"
     Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2073: "Command Usage - kz_course"
+  Line 2077: "Command Usage - kz_course"
     Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2077: "Command Usage - kz_tier"
+  Line 2081: "Command Usage - kz_tier"
     Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2081: "Command Usage - kz_end"
+  Line 2085: "Command Usage - kz_end"
     Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2085: "Command Usage - kz_restart"
+  Line 2089: "Command Usage - kz_restart"
     Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2089: "Command Usage - kz_playercheck"
+  Line 2093: "Command Usage - kz_playercheck"
     Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2093: "Command Usage - kz_mode"
+  Line 2097: "Command Usage - kz_mode"
     Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2097: "Command Usage - kz_paintcolor"
+  Line 2101: "Command Usage - kz_paintcolor"
     Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2101: "Command Usage - kz_paintsize"
+  Line 2105: "Command Usage - kz_paintsize"
     Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2105: "Command Usage - kz_pistol"
+  Line 2109: "Command Usage - kz_pistol"
     Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2109: "Command Usage - kz_rpsave"
+  Line 2113: "Command Usage - kz_rpsave"
     Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2113: "Command Usage - kz_replay"
+  Line 2117: "Command Usage - kz_replay"
     Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2117: "Command Usage - kz_rpgoto"
+  Line 2121: "Command Usage - kz_rpgoto"
     Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2121: "Command Usage - kz_rpgototick"
+  Line 2125: "Command Usage - kz_rpgototick"
     Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2125: "Command Usage - kz_rptimescale"
+  Line 2129: "Command Usage - kz_rptimescale"
     Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2129: "Command Usage - kz_replays"
+  Line 2133: "Command Usage - kz_replays"
     Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2133: "Command Usage - kz_spec"
+  Line 2137: "Command Usage - kz_spec"
     Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2137: "Command Usage - kz_style"
+  Line 2141: "Command Usage - kz_style"
     Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2141: "Command Usage - kz_togglestyle"
+  Line 2145: "Command Usage - kz_togglestyle"
     Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2145: "Command Usage - kz_addstyle"
+  Line 2149: "Command Usage - kz_addstyle"
     Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2149: "Command Usage - kz_removestyle"
+  Line 2153: "Command Usage - kz_removestyle"
     Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2153: "Command Usage - kz_modernperfstats"
+  Line 2157: "Command Usage - kz_modernperfstats"
     Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2157: "Command Usage - kz_legacyperfstats"
+  Line 2161: "Command Usage - kz_legacyperfstats"
     Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2161: "Command Usage - kz_comparelevel"
+  Line 2165: "Command Usage - kz_comparelevel"
     Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2165: "Command Usage - kz_recordvolume"
+  Line 2169: "Command Usage - kz_recordvolume"
     Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2169: "Command Usage - kz_ctop"
+  Line 2173: "Command Usage - kz_ctop"
     Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2173: "Command Usage - kz_gctop"
+  Line 2177: "Command Usage - kz_gctop"
     Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2177: "Command Usage - kz_sctop"
+  Line 2181: "Command Usage - kz_sctop"
     Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2181: "Command Usage - kz_pb"
+  Line 2185: "Command Usage - kz_pb"
     Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2185: "Command Usage - kz_spb"
+  Line 2189: "Command Usage - kz_spb"
     Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2189: "Command Usage - kz_gpb"
+  Line 2193: "Command Usage - kz_gpb"
     Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2193: "Command Usage - kz_wr"
+  Line 2197: "Command Usage - kz_wr"
     Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2197: "Command Usage - kz_sr"
+  Line 2201: "Command Usage - kz_sr"
     Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2201: "Command Usage - kz_ztopwatch"
+  Line 2205: "Command Usage - kz_ztopwatch"
     Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
 
 cs2kz-common.phrases.txt
@@ -1877,6 +1879,40 @@ cs2kz-replays.phrases.txt
     Missing (9): de, es, fi, it, lv, nl, pl, sv, tr
   Line 955: "Replay Request - Error"
     Missing (9): de, es, fi, it, lv, nl, pl, sv, tr
+  Line 964: "Replay Controls - Not Watching"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 968: "Replay Controls - Show Cursor"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 972: "Replay Controls - Hide Cursor"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 976: "Replay Controls - Skip Breather"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 980: "Replay Controls - Skip Pause"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 984: "Replay Controls - Tick"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 988: "Replay Controls - Previous Tick"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 992: "Replay Controls - Next Tick"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 996: "Replay Controls - Split"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 1001: "Replay Controls - Checkpoint"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 1006: "Replay Controls - Stage"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 1011: "Replay Controls - Zone Split"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 1015: "Replay Controls - Zone Checkpoint"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 1019: "Replay Controls - Zone Stage"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 1023: "Replay Controls - Zone Teleport"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 1027: "Replay Controls - Time"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 1031: "Replay Controls - Hide Controls"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
 
 cs2kz-spec.phrases.txt
 ----------------------------------------------------------------------
