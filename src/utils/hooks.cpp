@@ -73,7 +73,7 @@ static MovementPlayerManager *playerManager;
 
 #ifdef DEBUG_TPM
 static bool g_traceShapeEnabled = false;
-CUtlVector<TraceHistory> traceHistory;
+std::vector<TraceHistory> traceHistory;
 #endif
 
 // ============================================================
@@ -752,7 +752,7 @@ static KHook::Return<bool> TraceShapePost(const void *physicsQuery, const Ray_t 
 			break;
 		}
 	}
-	traceHistory.AddToTail({start, end, ray, pm->DidHit(), pm->m_vStartPos, pm->m_vEndPos, pm->m_vHitNormal, pm->m_vHitPoint, pm->m_flHitOffset,
+	traceHistory.push_back({start, end, ray, pm->DidHit(), pm->m_vStartPos, pm->m_vEndPos, pm->m_vHitNormal, pm->m_vHitPoint, pm->m_flHitOffset,
 							pm->m_flFraction, error, velocity});
 	return {KHook::Action::Ignore};
 }
@@ -1233,17 +1233,17 @@ static KHook::Return<void> TryPlayerMovePre(CCSPlayer_MovementServices *ms, CMov
 	VPROF_BUDGET(__func__, "CS2KZ");
 	MovementPlayer *player = playerManager->ToPlayer(ms);
 #ifdef DEBUG_TPM
-	traceHistory.RemoveAll();
+	traceHistory.clear();
 	f32 initialError = ms->m_flAccumulatedJumpError();
 	Vector initialVelocity = mv->m_vecVelocity;
 	g_traceShapeEnabled = true;
 	player->OnTryPlayerMove(pFirstDest, pFirstTrace, bIsSurfing);
 	Vector oldVelocity = mv->m_vecVelocity;
-	i32 count = traceHistory.Count();
+	i32 count = (i32)traceHistory.size();
 	TryPlayerMove.CallOriginal(ms, mv, pFirstDest, pFirstTrace, bIsSurfing);
-	if (traceHistory.Count() != count)
+	if ((i32)traceHistory.size() != count)
 	{
-		for (i32 i = 0; i + count < traceHistory.Count(); i++)
+		for (i32 i = 0; i + count < (i32)traceHistory.size(); i++)
 		{
 			if (traceHistory[i].end != traceHistory[i + count].end)
 			{

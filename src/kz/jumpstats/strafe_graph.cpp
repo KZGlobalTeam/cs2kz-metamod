@@ -43,9 +43,9 @@ static_global constexpr i32 JS_CONSOLE_GRAPH_MAX_FRAMES = 150;
 static_function i32 GetTotalAACallCount(const Jump &jump)
 {
 	i32 totalCalls = 0;
-	FOR_EACH_VEC(jump.strafes, i)
+	for (const Strafe &strafe : jump.strafes)
 	{
-		totalCalls += jump.strafes[i].aaCalls.Count();
+		totalCalls += (i32)strafe.aaCalls.size();
 	}
 	return totalCalls;
 }
@@ -290,15 +290,15 @@ bool Jump::BuildConsoleStrafeMouseGraph(std::string &strafeLeft, std::string &st
 
 	std::vector<const AACall *> calls;
 	calls.reserve(graphCallCount);
-	FOR_EACH_VEC(this->strafes, i)
+	for (const Strafe &strafe : this->strafes)
 	{
-		FOR_EACH_VEC(this->strafes[i].aaCalls, j)
+		for (const AACall &call : strafe.aaCalls)
 		{
 			if ((i32)calls.size() >= graphCallCount)
 			{
 				break;
 			}
-			calls.push_back(&this->strafes[i].aaCalls[j]);
+			calls.push_back(&call);
 		}
 		if ((i32)calls.size() >= graphCallCount)
 		{

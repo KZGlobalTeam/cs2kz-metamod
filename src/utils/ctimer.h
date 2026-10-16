@@ -3,7 +3,7 @@
 #include <functional>
 #include <tuple>
 #include "utils/utils.h"
-#include "tier0/utlvector.h"
+#include <vector>
 #include "interfaces.h"
 
 /*
@@ -31,8 +31,8 @@ void RemoveNonPersistentTimers();
 // Deletes every remaining timer, persistent ones included. Plugin unload only.
 void RemoveAllTimers();
 
-extern CUtlVector<CTimerBase *> g_NonPersistentTimers;
-extern CUtlVector<CTimerBase *> g_PersistentTimers;
+extern std::vector<CTimerBase *> g_NonPersistentTimers;
+extern std::vector<CTimerBase *> g_PersistentTimers;
 
 template<typename... Args>
 class CTimer : public CTimerBase

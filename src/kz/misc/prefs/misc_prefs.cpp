@@ -64,8 +64,8 @@ static_function void PickPistol(KZPlayer *player, i64, i64 id)
 // and the current mode is matched by name.
 static_function void GetModeChoices(KZPlayer *, i64, std::vector<KZChoice> &out)
 {
-	const CUtlVector<KZModeManager::ModePluginInfo> &modes = KZModeManager::GetModes();
-	FOR_EACH_VEC(modes, i)
+	const std::vector<KZModeManager::ModePluginInfo> &modes = KZModeManager::GetModes();
+	for (i32 i = 0; i < (i32)modes.size(); i++)
 	{
 		out.push_back({modes[i].longModeName.Get(), i, NULL});
 	}
@@ -75,8 +75,8 @@ static_function i64 GetCurrentMode(KZPlayer *player, i64)
 {
 	// The live mode, not the stored preference: someone who never picked one is on the server default.
 	const char *current = player->modeService->GetModeName();
-	const CUtlVector<KZModeManager::ModePluginInfo> &modes = KZModeManager::GetModes();
-	FOR_EACH_VEC(modes, i)
+	const std::vector<KZModeManager::ModePluginInfo> &modes = KZModeManager::GetModes();
+	for (i32 i = 0; i < (i32)modes.size(); i++)
 	{
 		if (KZ_STREQI(modes[i].longModeName.Get(), current) || KZ_STREQI(modes[i].shortModeName.Get(), current))
 		{
@@ -88,8 +88,8 @@ static_function i64 GetCurrentMode(KZPlayer *player, i64)
 
 static_function void PickMode(KZPlayer *player, i64, i64 id)
 {
-	const CUtlVector<KZModeManager::ModePluginInfo> &modes = KZModeManager::GetModes();
-	if (id >= 0 && id < modes.Count())
+	const std::vector<KZModeManager::ModePluginInfo> &modes = KZModeManager::GetModes();
+	if (id >= 0 && id < (i32)modes.size())
 	{
 		g_pKZModeManager->SwitchToMode(player, modes[id].longModeName.Get());
 	}
@@ -99,8 +99,8 @@ static_function void PickMode(KZPlayer *player, i64, i64 id)
 static_function void GetStyleChoices(KZPlayer *player, i64, std::vector<KZChoice> &out)
 {
 	const CUtlString current = g_pKZStyleManager->GetStylesString(player);
-	const CUtlVector<KZStyleManager::StylePluginInfo> &styles = KZStyleManager::GetStyles();
-	FOR_EACH_VEC(styles, i)
+	const std::vector<KZStyleManager::StylePluginInfo> &styles = KZStyleManager::GetStyles();
+	for (i32 i = 0; i < (i32)styles.size(); i++)
 	{
 		KZChoice choice {styles[i].longName, i, NULL};
 		choice.selected = V_stristr(current.Get(), styles[i].longName) != NULL;
@@ -110,8 +110,8 @@ static_function void GetStyleChoices(KZPlayer *player, i64, std::vector<KZChoice
 
 static_function void PickStyle(KZPlayer *player, i64, i64 id)
 {
-	const CUtlVector<KZStyleManager::StylePluginInfo> &styles = KZStyleManager::GetStyles();
-	if (id >= 0 && id < styles.Count())
+	const std::vector<KZStyleManager::StylePluginInfo> &styles = KZStyleManager::GetStyles();
+	if (id >= 0 && id < (i32)styles.size())
 	{
 		g_pKZStyleManager->ToggleStyle(player, styles[id].longName);
 	}

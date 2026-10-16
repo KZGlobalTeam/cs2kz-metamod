@@ -183,7 +183,7 @@ SCMD(kz_globalcheck, SCFL_GLOBAL | SCFL_MAP | SCFL_PLAYER)
 			{
 				bool allValid = true;
 
-				FOR_EACH_VEC(player->styleServices, i)
+				for (i32 i = 0; i < (i32)player->styleServices.size(); i++)
 				{
 					bool isValid = false;
 

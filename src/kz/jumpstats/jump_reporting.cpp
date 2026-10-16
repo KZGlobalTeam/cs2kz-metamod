@@ -401,7 +401,7 @@ void KZJumpstatsService::PrintJumpToConsole(KZPlayer *target, Jump *jump, bool b
 	);
 	// clang-format on
 	std::string modeStyleNames = jump->GetJumpPlayer()->modeService->GetModeShortName();
-	FOR_EACH_VEC(jump->GetJumpPlayer()->styleServices, i)
+	for (i32 i = 0; i < (i32)jump->GetJumpPlayer()->styleServices.size(); i++)
 	{
 		modeStyleNames += " +";
 		modeStyleNames += jump->GetJumpPlayer()->styleServices[i]->GetStyleShortName();
@@ -471,7 +471,7 @@ void KZJumpstatsService::PrintJumpToConsole(KZPlayer *target, Jump *jump, bool b
 	}
 	utils::Table<KZ_ARRAYSIZE(columnKeys)> table("", headers);
 	
-	FOR_EACH_VEC(jump->strafes, i)
+	for (i32 i = 0; i < (i32)jump->strafes.size(); i++)
 	{
 		char strafeNumberString[5];
 		char syncString[16], gainString[16], lossString[16], externalGainString[16], externalLossString[16], maxString[16], durationString[16];
@@ -526,7 +526,7 @@ void KZJumpstatsService::PrintJumpToConsole(KZPlayer *target, Jump *jump, bool b
 	}
 	// clang-format on
 
-	if (jump->strafes.Count() > 0)
+	if (!jump->strafes.empty())
 	{
 		target->PrintConsole(false, false, table.GetHeader());
 		for (u32 i = 0; i < table.GetNumEntries(); i++)

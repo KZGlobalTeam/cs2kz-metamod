@@ -84,7 +84,7 @@ bool KZTriggerService::InAntiPauseArea()
 
 bool KZTriggerService::InBhopTriggers()
 {
-	FOR_EACH_VEC(this->triggerTrackers, i)
+	for (i32 i = 0; i < (i32)this->triggerTrackers.size(); i++)
 	{
 		bool justTouched = g_pKZUtils->GetServerGlobals()->curtime - this->triggerTrackers[i].startTouchTime < 0.15f;
 		if (justTouched && this->triggerTrackers[i].isPossibleLegacyBhopTrigger)

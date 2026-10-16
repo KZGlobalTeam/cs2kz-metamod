@@ -514,13 +514,13 @@ public:
 	virtual int GetStyleCount(int slot) override
 	{
 		KZPlayer *player = ResolveSlot(slot);
-		return player ? player->styleServices.Count() : 0;
+		return player ? (i32)player->styleServices.size() : 0;
 	}
 
 	virtual bool GetStyle(int slot, int index, KZStyleInfo *out) override
 	{
 		KZPlayer *player = ResolveSlot(slot);
-		if (!player || !out || index < 0 || index >= player->styleServices.Count())
+		if (!player || !out || index < 0 || index >= (i32)player->styleServices.size())
 		{
 			return false;
 		}

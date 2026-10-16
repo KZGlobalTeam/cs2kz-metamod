@@ -246,16 +246,13 @@ public:
 		m_bHitTrigger = true;
 	}
 
-	CUtlVector<CEntityHandle> hitTriggerHandles;
+	std::vector<CEntityHandle> hitTriggerHandles;
 
-	virtual ~CTraceFilterHitAllTriggers()
-	{
-		hitTriggerHandles.Purge();
-	}
+	virtual ~CTraceFilterHitAllTriggers() = default;
 
 	virtual bool ShouldHitEntity(CEntityInstance *other) override
 	{
-		hitTriggerHandles.AddToTail(other->GetRefEHandle());
+		hitTriggerHandles.push_back(other->GetRefEHandle());
 		return false;
 	}
 };

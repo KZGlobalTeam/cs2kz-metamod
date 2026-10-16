@@ -125,7 +125,7 @@ void KZClassicModeService::Reset()
 	this->forcedUnduck = {};
 	this->postProcessMovementZSpeed = {};
 
-	this->angleHistory.RemoveAll();
+	this->angleHistory.clear();
 	this->leftPreRatio = {};
 	this->rightPreRatio = {};
 	this->bonusSpeed = {};
@@ -136,7 +136,7 @@ void KZClassicModeService::Reset()
 	this->stuckTraceCount = {};
 
 	this->airMoving = {};
-	this->tpmTriggerFixOrigins.RemoveAll();
+	this->tpmTriggerFixOrigins.clear();
 }
 
 void KZClassicModeService::Cleanup()
@@ -516,22 +516,22 @@ void KZClassicModeService::UpdateAngleHistory()
 {
 	CMoveData *mv = this->player->currentMoveData;
 	u32 oldEntries = 0;
-	FOR_EACH_VEC(this->angleHistory, i)
+	for (const AngleHistory &entry : this->angleHistory)
 	{
-		if (this->angleHistory[i].when + PS_TURN_RATE_WINDOW < g_pKZUtils->GetGlobals()->curtime)
+		if (entry.when + PS_TURN_RATE_WINDOW < g_pKZUtils->GetGlobals()->curtime)
 		{
 			oldEntries++;
 			continue;
 		}
 		break;
 	}
-	this->angleHistory.RemoveMultipleFromHead(oldEntries);
+	this->angleHistory.erase(this->angleHistory.begin(), this->angleHistory.begin() + oldEntries);
 	if ((this->player->GetPlayerPawn()->m_fFlags & FL_ONGROUND) == 0)
 	{
 		return;
 	}
 
-	AngleHistory *angHist = this->angleHistory.AddToTailGetPtr();
+	AngleHistory *angHist = &this->angleHistory.emplace_back();
 	angHist->when = g_pKZUtils->GetGlobals()->curtime;
 	angHist->duration = g_pKZUtils->GetGlobals()->frametime;
 
@@ -592,10 +592,10 @@ void KZClassicModeService::CalcPrestrafe()
 {
 	f32 totalDuration = 0;
 	f32 sumWeightedAngles = 0;
-	FOR_EACH_VEC(this->angleHistory, i)
+	for (const AngleHistory &entry : this->angleHistory)
 	{
-		sumWeightedAngles += this->angleHistory[i].rate * this->angleHistory[i].duration;
-		totalDuration += this->angleHistory[i].duration;
+		sumWeightedAngles += entry.rate * entry.duration;
+		totalDuration += entry.duration;
 	}
 	f32 averageRate;
 	if (totalDuration == 0)
@@ -741,8 +741,8 @@ void KZClassicModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t *pFirstTr
 	// The rest of the path is added by FixTryPlayerMoveTrace.
 	Vector origin;
 	this->player->GetOrigin(&origin);
-	this->tpmTriggerFixOrigins.RemoveAll();
-	this->tpmTriggerFixOrigins.AddToTail(origin);
+	this->tpmTriggerFixOrigins.clear();
+	this->tpmTriggerFixOrigins.push_back(origin);
 
 	// WalkMove does the first trace before calling TryPlayerMove, so we need to fix that one here.
 	// TryPlayerMove only uses it if it ends where its own first trace would end.
@@ -767,13 +767,13 @@ void KZClassicModeService::OnTryPlayerMovePost(Vector *pFirstDest, trace_t *pFir
 	this->inTryPlayerMove = false;
 	if (this->airMoving)
 	{
-		if (this->tpmTriggerFixOrigins.Count() > 1)
+		if (this->tpmTriggerFixOrigins.size() > 1)
 		{
 			bbox_t bounds;
 			// We need to shrink the bounds a bit to prevent touching triggers that we shouldn't be touching when doing triggerfix.
 			bbox_t offset = {{0.03125f, 0.03125f, 0.03125f}, {-0.03125f, -0.03125f, -0.03125f}};
 			this->player->GetBBoxBounds(&bounds, &offset);
-			for (int i = 0; i < this->tpmTriggerFixOrigins.Count() - 1; i++)
+			for (int i = 0; i < (i32)this->tpmTriggerFixOrigins.size() - 1; i++)
 			{
 				this->player->TouchTriggersAlongPath(this->tpmTriggerFixOrigins[i], this->tpmTriggerFixOrigins[i + 1], bounds);
 			}
@@ -892,7 +892,7 @@ void KZClassicModeService::FixTryPlayerMoveTrace(const Ray_t &ray, const Vector 
 		}
 	}
 	// Triggerfix related
-	this->tpmTriggerFixOrigins.AddToTail(pm->m_vEndPos);
+	this->tpmTriggerFixOrigins.push_back(pm->m_vEndPos);
 }
 
 // Sometimes the game thinks the player is on standable ground while they are actually on a steep slope right below a wall.

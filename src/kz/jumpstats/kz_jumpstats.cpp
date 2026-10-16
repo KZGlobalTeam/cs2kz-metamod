@@ -11,6 +11,7 @@
 #include "kz/trigger/kz_trigger.h"
 #include "kz/recording/kz_recording.h"
 #include "kz/replays/kz_replaysystem.h"
+#include <algorithm>
 #include "tier0/memdbgon.h"
 
 // clang-format off
@@ -186,38 +187,37 @@ void Strafe::UpdateCollisionVelocityChange(f32 delta)
 
 void Strafe::End()
 {
-	FOR_EACH_VEC(this->aaCalls, i)
+	for (AACall &call : this->aaCalls)
 	{
-		this->duration += this->aaCalls[i].duration;
+		this->duration += call.duration;
 		// Calculate BA/DA/OL
-		if (this->aaCalls[i].wishspeed == 0)
+		if (call.wishspeed == 0)
 		{
-			if ((CInButtonState::IsButtonPressed(this->aaCalls[i].buttons, IN_FORWARD, true)
-				 && CInButtonState::IsButtonPressed(this->aaCalls[i].buttons, IN_BACK, true))
-				|| (CInButtonState::IsButtonPressed(this->aaCalls[i].buttons, IN_MOVELEFT, true)
-					&& CInButtonState::IsButtonPressed(this->aaCalls[i].buttons, IN_MOVERIGHT, true)))
+			if ((CInButtonState::IsButtonPressed(call.buttons, IN_FORWARD, true) && CInButtonState::IsButtonPressed(call.buttons, IN_BACK, true))
+				|| (CInButtonState::IsButtonPressed(call.buttons, IN_MOVELEFT, true)
+					&& CInButtonState::IsButtonPressed(call.buttons, IN_MOVERIGHT, true)))
 			{
-				this->overlap += this->aaCalls[i].duration;
+				this->overlap += call.duration;
 			}
 			else
 			{
-				this->deadAir += this->aaCalls[i].duration;
+				this->deadAir += call.duration;
 			}
 		}
-		else if ((this->aaCalls[i].velocityPost - this->aaCalls[i].velocityPre).Length2D() <= JS_EPSILON)
+		else if ((call.velocityPost - call.velocityPre).Length2D() <= JS_EPSILON)
 		{
 			// This gain could just be from quantized float stuff.
-			this->badAngles += this->aaCalls[i].duration;
+			this->badAngles += call.duration;
 		}
 		// Calculate sync.
-		else if (this->aaCalls[i].velocityPost.Length2D() - this->aaCalls[i].velocityPre.Length2D() > JS_EPSILON)
+		else if (call.velocityPost.Length2D() - call.velocityPre.Length2D() > JS_EPSILON)
 		{
-			this->syncDuration += this->aaCalls[i].duration;
+			this->syncDuration += call.duration;
 		}
 
 		// Gain/loss.
-		this->maxGain += this->aaCalls[i].CalcIdealGain();
-		f32 speedDiff = this->aaCalls[i].velocityPost.Length2D() - this->aaCalls[i].velocityPre.Length2D();
+		this->maxGain += call.CalcIdealGain();
+		f32 speedDiff = call.velocityPost.Length2D() - call.velocityPre.Length2D();
 		if (speedDiff > 0)
 		{
 			this->airGain += speedDiff;
@@ -226,7 +226,7 @@ void Strafe::End()
 		{
 			this->airLoss += speedDiff;
 		}
-		f32 externalSpeedDiff = this->aaCalls[i].externalSpeedDiff;
+		f32 externalSpeedDiff = call.externalSpeedDiff;
 		if (externalSpeedDiff > 0)
 		{
 			this->externalGain += externalSpeedDiff;
@@ -235,7 +235,7 @@ void Strafe::End()
 		{
 			this->externalLoss += externalSpeedDiff;
 		}
-		this->width += fabs(utils::GetAngleDifference(this->aaCalls[i].currentYaw, this->aaCalls[i].prevYaw, 180.0f));
+		this->width += fabs(utils::GetAngleDifference(call.currentYaw, call.prevYaw, 180.0f));
 	}
 	this->CalcAngleRatioStats();
 }
@@ -245,36 +245,36 @@ bool Strafe::CalcAngleRatioStats()
 	this->arStats.available = false;
 	f32 totalDuration = 0.0f;
 	f32 totalRatios = 0.0f;
-	CUtlVector<f32> ratios;
+	std::vector<f32> ratios;
 
 	QAngle angles, velAngles;
-	FOR_EACH_VEC(this->aaCalls, i)
+	for (AACall &aaCall : this->aaCalls)
 	{
-		if (this->aaCalls[i].velocityPre.Length2D() == 0)
+		if (aaCall.velocityPre.Length2D() == 0)
 		{
 			// Any angle should be a good angle here.
 			// ratio += 0;
 			continue;
 		}
-		VectorAngles(this->aaCalls[i].velocityPre, velAngles);
+		VectorAngles(aaCall.velocityPre, velAngles);
 
 		// If no attempt to gain speed was made, use the angle of the last call as a reference,
 		// and add yaw relative to last tick's yaw.
 		// If the velocity is 0 as well, then every angle is a perfect angle.
-		if (this->aaCalls[i].wishspeed != 0)
+		if (aaCall.wishspeed != 0)
 		{
-			VectorAngles(this->aaCalls[i].wishdir, angles);
+			VectorAngles(aaCall.wishdir, angles);
 		}
 		else
 		{
-			angles.y = this->aaCalls[i].prevYaw + utils::GetAngleDifference(this->aaCalls[i].currentYaw, this->aaCalls[i].prevYaw, 180.0f);
+			angles.y = aaCall.prevYaw + utils::GetAngleDifference(aaCall.currentYaw, aaCall.prevYaw, 180.0f);
 		}
 
 		angles -= velAngles;
 		// Get the minimum, ideal, and max yaw for gain.
-		f32 minYaw = utils::NormalizeDeg(this->aaCalls[i].CalcMinYaw());
-		f32 idealYaw = utils::NormalizeDeg(this->aaCalls[i].CalcIdealYaw());
-		f32 maxYaw = utils::NormalizeDeg(this->aaCalls[i].CalcMaxYaw());
+		f32 minYaw = utils::NormalizeDeg(aaCall.CalcMinYaw());
+		f32 idealYaw = utils::NormalizeDeg(aaCall.CalcIdealYaw());
+		f32 maxYaw = utils::NormalizeDeg(aaCall.CalcMaxYaw());
 
 		angles.y = utils::NormalizeDeg(angles.y);
 
@@ -289,7 +289,7 @@ bool Strafe::CalcAngleRatioStats()
 		// It is possible for the player to gain speed here, by pressing the opposite keys
 		// while still turning in the same direction, which results in actual gain...
 		// Usually this happens at the end of a strafe.
-		if (angles.y < 0 && this->aaCalls[i].velocityPost.Length2D() > this->aaCalls[i].velocityPre.Length2D())
+		if (angles.y < 0 && aaCall.velocityPost.Length2D() > aaCall.velocityPre.Length2D())
 		{
 			angles.y = -angles.y;
 		}
@@ -302,55 +302,55 @@ bool Strafe::CalcAngleRatioStats()
 		//	utils::GetAngleDifference(angles.y, minYaw, 180.0),
 		//	utils::GetAngleDifference(idealYaw, minYaw, 180.0),
 		//	utils::GetAngleDifference(maxYaw, minYaw, 180.0),
-		//	this->aaCalls[i].velocityPre.Length2D(), this->aaCalls[i].velocityPost.Length2D(),
-		//	this->aaCalls[i].velocityPre.x, this->aaCalls[i].velocityPre.y,
-		//	this->aaCalls[i].wishspeed,
-		//	this->aaCalls[i].wishdir.x,
-		//	this->aaCalls[i].wishdir.y,
-		//	this->aaCalls[i].wishdir.z,
-		//	this->aaCalls[i].accel,
-		//	this->aaCalls[i].duration * ENGINE_FIXED_TICK_RATE);
+		//	aaCall.velocityPre.Length2D(), aaCall.velocityPost.Length2D(),
+		//	aaCall.velocityPre.x, aaCall.velocityPre.y,
+		//	aaCall.wishspeed,
+		//	aaCall.wishdir.x,
+		//	aaCall.wishdir.y,
+		//	aaCall.wishdir.z,
+		//	aaCall.accel,
+		//	aaCall.duration * ENGINE_FIXED_TICK_RATE);
 		if (angles.y > maxYaw + 20.0f || angles.y < minYaw - 20.0f)
 		{
 			continue;
 		}
-		f32 gainRatio = (this->aaCalls[i].velocityPost.Length2D() - this->aaCalls[i].velocityPre.Length2D()) / this->aaCalls[i].CalcIdealGain();
-		f32 fraction = this->aaCalls[i].duration * ENGINE_FIXED_TICK_RATE;
+		f32 gainRatio = (aaCall.velocityPost.Length2D() - aaCall.velocityPre.Length2D()) / aaCall.CalcIdealGain();
+		f32 fraction = aaCall.duration * ENGINE_FIXED_TICK_RATE;
 		if (angles.y < minYaw)
 		{
 			totalRatios += -1 * fraction;
 			totalDuration += fraction;
-			ratios.AddToTail(-1 * fraction);
-			// utils::PrintConsoleAll("No Gain: GR = %f (%f / %f)", gainRatio, this->aaCalls[i].velocityPost.Length2D()
-			// - this->aaCalls[i].velocityPre.Length2D(), this->aaCalls[i].CalcIdealGain());
+			ratios.push_back(-1 * fraction);
+			// utils::PrintConsoleAll("No Gain: GR = %f (%f / %f)", gainRatio, aaCall.velocityPost.Length2D()
+			// - aaCall.velocityPre.Length2D(), aaCall.CalcIdealGain());
 			continue;
 		}
 		else if (angles.y < idealYaw)
 		{
 			totalRatios += (gainRatio - 1) * fraction;
 			totalDuration += fraction;
-			ratios.AddToTail((gainRatio - 1) * fraction);
+			ratios.push_back((gainRatio - 1) * fraction);
 			// utils::PrintConsoleAll("Slow Gain: GR = %f (%f / %f)", gainRatio,
-			// this->aaCalls[i].velocityPost.Length2D() - this->aaCalls[i].velocityPre.Length2D(),
-			// this->aaCalls[i].CalcIdealGain());
+			// aaCall.velocityPost.Length2D() - aaCall.velocityPre.Length2D(),
+			// aaCall.CalcIdealGain());
 		}
 		else if (angles.y < maxYaw)
 		{
 			totalRatios += (1 - gainRatio) * fraction;
 			totalDuration += fraction;
-			ratios.AddToTail((1 - gainRatio) * fraction);
+			ratios.push_back((1 - gainRatio) * fraction);
 			// utils::PrintConsoleAll("Fast Gain: GR = %f (%f / %f)", gainRatio,
-			// this->aaCalls[i].velocityPost.Length2D() - this->aaCalls[i].velocityPre.Length2D(),
-			// this->aaCalls[i].CalcIdealGain());
+			// aaCall.velocityPost.Length2D() - aaCall.velocityPre.Length2D(),
+			// aaCall.CalcIdealGain());
 		}
 		else
 		{
 			totalRatios += 1.0f;
 			totalDuration += fraction;
-			ratios.AddToTail(1.0f);
+			ratios.push_back(1.0f);
 			// utils::PrintConsoleAll("TooFast Gain: GR = %f (%f / %f)", gainRatio,
-			// this->aaCalls[i].velocityPost.Length2D() - this->aaCalls[i].velocityPre.Length2D(),
-			// this->aaCalls[i].CalcIdealGain());
+			// aaCall.velocityPost.Length2D() - aaCall.velocityPre.Length2D(),
+			// aaCall.CalcIdealGain());
 		}
 	}
 
@@ -359,11 +359,11 @@ bool Strafe::CalcAngleRatioStats()
 	{
 		return false;
 	}
-	ratios.Sort(this->SortFloat);
+	std::sort(ratios.begin(), ratios.end());
 	this->arStats.available = true;
 	this->arStats.average = totalRatios / totalDuration;
-	this->arStats.median = ratios[ratios.Count() / 2];
-	this->arStats.max = ratios[ratios.Count() - 1];
+	this->arStats.median = ratios[(i32)ratios.size() / 2];
+	this->arStats.max = ratios[(i32)ratios.size() - 1];
 	return true;
 }
 
@@ -379,7 +379,7 @@ void Jump::Init()
 	this->jumpType = this->player->jumpstatsService->DetermineJumpType();
 	this->originalJumpType = this->jumpType;
 
-	this->valid = this->GetJumpPlayer()->styleServices.Count() == 0;
+	this->valid = this->GetJumpPlayer()->styleServices.empty();
 
 	// Block / failstat / edge fields
 	this->block = 0.0f;
@@ -427,7 +427,7 @@ void Jump::UpdateAACallPost(Vector wishdir, f32 wishspeed, f32 accel)
 {
 	// Use the latest parameters, just in case they changed.
 	Strafe *strafe = this->GetCurrentStrafe();
-	AACall *call = &strafe->aaCalls.Tail();
+	AACall *call = &strafe->aaCalls.back();
 	QAngle currentAngle;
 	this->player->GetAngles(&currentAngle);
 	call->startFraction = this->player->currentMoveData->m_flSubtickStartFraction;
@@ -473,7 +473,7 @@ void Jump::Update()
 	this->currentMaxSpeed = MAX(this->player->currentMoveData->m_vecVelocity.Length2D(), this->currentMaxSpeed);
 	this->currentMaxHeight = MAX(this->player->currentMoveData->m_vecAbsOrigin.z - this->adjustedTakeoffOrigin.z, this->currentMaxHeight);
 
-	this->valid = this->valid && this->GetJumpPlayer()->styleServices.Count() == 0;
+	this->valid = this->valid && this->GetJumpPlayer()->styleServices.empty();
 
 	this->RecordPose();
 	this->UpdateFailstat();
@@ -482,10 +482,10 @@ void Jump::Update()
 void Jump::End()
 {
 	this->Update();
-	if (this->strafes.Count() > 0)
+	if (!this->strafes.empty())
 	{
-		this->strafes.Tail().End();
-		this->CacheEndedStrafePoseTotals(this->strafes.Tail());
+		this->strafes.back().End();
+		this->CacheEndedStrafePoseTotals(this->strafes.back());
 	}
 	this->landingOrigin = this->player->landingOrigin;
 	this->adjustedLandingOrigin = this->player->landingOriginActual;
@@ -503,30 +503,30 @@ void Jump::End()
 
 	f32 gain = 0.0f;
 	f32 maxGain = 0.0f;
-	FOR_EACH_VEC(this->strafes, i)
+	for (Strafe &strafe : this->strafes)
 	{
-		FOR_EACH_VEC(this->strafes[i].aaCalls, j)
+		for (const AACall &call : strafe.aaCalls)
 		{
-			if (this->strafes[i].aaCalls[j].ducking)
+			if (call.ducking)
 			{
-				this->duckDuration += this->strafes[i].aaCalls[j].duration;
-				this->duckEndDuration += this->strafes[i].aaCalls[j].duration;
+				this->duckDuration += call.duration;
+				this->duckEndDuration += call.duration;
 			}
 			else
 			{
 				this->duckEndDuration = 0.0f;
 			}
 		}
-		this->width += this->strafes[i].GetWidth();
-		this->overlap += this->strafes[i].GetOverlapDuration();
-		this->deadAir += this->strafes[i].GetDeadAirDuration();
-		this->badAngles += this->strafes[i].GetBadAngleDuration();
-		this->sync += this->strafes[i].GetSyncDuration();
-		jumpDuration += this->strafes[i].GetStrafeDuration();
-		gain += this->strafes[i].GetGain();
-		maxGain += this->strafes[i].GetMaxGain();
+		this->width += strafe.GetWidth();
+		this->overlap += strafe.GetOverlapDuration();
+		this->deadAir += strafe.GetDeadAirDuration();
+		this->badAngles += strafe.GetBadAngleDuration();
+		this->sync += strafe.GetSyncDuration();
+		jumpDuration += strafe.GetStrafeDuration();
+		gain += strafe.GetGain();
+		maxGain += strafe.GetMaxGain();
 	}
-	this->width /= this->strafes.Count();
+	this->width /= this->strafes.size();
 	this->overlap /= jumpDuration;
 	this->deadAir /= jumpDuration;
 	this->badAngles /= jumpDuration;
@@ -639,29 +639,29 @@ void Jump::End()
 Strafe *Jump::GetCurrentStrafe()
 {
 	// Always start with 1 strafe.
-	if (this->strafes.Count() == 0)
+	if (this->strafes.empty())
 	{
-		int index = this->strafes.AddToTail({this});
-		this->strafes[index].turnstate = this->player->GetTurning();
+		this->strafes.push_back({this});
+		this->strafes.back().turnstate = this->player->GetTurning();
 	}
 	// If the player isn't turning, update the turn state until it changes.
-	else if (!this->strafes.Tail().turnstate)
+	else if (!this->strafes.back().turnstate)
 	{
-		this->strafes.Tail().turnstate = this->player->GetTurning();
+		this->strafes.back().turnstate = this->player->GetTurning();
 	}
 	// Otherwise, if the strafe is in opposite direction, we add a new strafe.
-	else if (this->strafes.Tail().turnstate == -this->player->GetTurning())
+	else if (this->strafes.back().turnstate == -this->player->GetTurning())
 	{
-		this->strafes.Tail().End();
-		this->CacheEndedStrafePoseTotals(this->strafes.Tail());
+		this->strafes.back().End();
+		this->CacheEndedStrafePoseTotals(this->strafes.back());
 		// Finish the previous strafe before adding a new strafe.
 		Strafe strafe = Strafe(this);
 		strafe.turnstate = this->player->GetTurning();
-		this->strafes.AddToTail(strafe);
+		this->strafes.push_back(strafe);
 	}
 	// Turn state didn't change, it's the same strafe. No need to do anything.
 
-	return &this->strafes.Tail();
+	return &this->strafes.back();
 }
 
 void Jump::CacheEndedStrafePoseTotals(Strafe &strafe)
@@ -762,7 +762,7 @@ f32 Jump::GetSignedDeviation()
 
 JumpType KZJumpstatsService::DetermineJumpType()
 {
-	if (this->jumps.Count() <= 1 || this->player->JustTeleported() || this->player->triggerService->ShouldDisableJumpstats())
+	if (this->jumps.size() <= 1 || this->player->JustTeleported() || this->player->triggerService->ShouldDisableJumpstats())
 	{
 		return JumpType_Invalid;
 	}
@@ -803,9 +803,9 @@ JumpType KZJumpstatsService::DetermineJumpType()
 	{
 		return JumpType_Fall;
 	}
-	if (this->jumps.Count() >= 2)
+	if (this->jumps.size() >= 2)
 	{
-		Jump &previousJump = this->jumps[this->jumps.Count() - 2];
+		Jump &previousJump = this->jumps[(i32)this->jumps.size() - 2];
 		if (this->player->duckBugged)
 		{
 			if (previousJump.IsValid() && previousJump.GetOffset() < JS_EPSILON && previousJump.GetJumpType() == JumpType_LongJump)
@@ -856,11 +856,11 @@ JumpType KZJumpstatsService::DetermineJumpType()
 
 f32 KZJumpstatsService::GetLastJumpRelease()
 {
-	if (this->jumps.Count() <= 2)
+	if (this->jumps.size() <= 2)
 	{
 		return 0.0f;
 	}
-	Jump &previousJump = this->jumps[this->jumps.Count() - 2];
+	Jump &previousJump = this->jumps[(i32)this->jumps.size() - 2];
 	return previousJump.release;
 }
 
@@ -871,7 +871,7 @@ void KZJumpstatsService::Init()
 
 void KZJumpstatsService::Reset()
 {
-	this->jumps.Purge();
+	this->jumps.clear();
 	this->lastJumpButtonTime = {};
 	this->lastNoclipTime = {};
 	this->lastDuckbugTime = {};
@@ -887,7 +887,7 @@ void KZJumpstatsService::OnProcessMovement()
 {
 	// Always ensure that the player has at least an ongoing jump.
 	// This is mostly to prevent crash, it's not a valid jump.
-	if (this->jumps.Count() == 0)
+	if (this->jumps.empty())
 	{
 		this->AddJump();
 		this->InvalidateJumpstats("First jump");
@@ -932,11 +932,11 @@ bool KZJumpstatsService::HitDuckbugRecently()
 
 bool KZJumpstatsService::ValidWeirdJumpDropDistance()
 {
-	if (this->jumps.Count() <= 2)
+	if (this->jumps.size() <= 2)
 	{
 		return false;
 	}
-	Jump &previousJump = this->jumps[this->jumps.Count() - 2];
+	Jump &previousJump = this->jumps[(i32)this->jumps.size() - 2];
 	return previousJump.GetOffset() > -1 * JS_MAX_WEIRDJUMP_FALL_OFFSET;
 }
 
@@ -962,8 +962,8 @@ void KZJumpstatsService::OnAirAccelerate()
 	// moveDataPost is still the movedata from last tick.
 	call.externalSpeedDiff = call.velocityPre.Length2D() - this->player->moveDataPost.m_vecVelocity.Length2D();
 	call.prevYaw = this->player->oldAngles.y;
-	Strafe *strafe = this->jumps.Tail().GetCurrentStrafe();
-	strafe->aaCalls.AddToTail(call);
+	Strafe *strafe = this->jumps.back().GetCurrentStrafe();
+	strafe->aaCalls.push_back(call);
 }
 
 void KZJumpstatsService::OnAirAcceleratePost(Vector wishdir, f32 wishspeed, f32 accel)
@@ -976,7 +976,7 @@ void KZJumpstatsService::OnAirAcceleratePost(Vector wishdir, f32 wishspeed, f32 
 	{
 		return;
 	}
-	this->jumps.Tail().UpdateAACallPost(wishdir, wishspeed, accel);
+	this->jumps.back().UpdateAACallPost(wishdir, wishspeed, accel);
 }
 
 void KZJumpstatsService::AddJump()
@@ -991,8 +991,8 @@ void KZJumpstatsService::AddJump()
 	}
 	// Clear the shared pose buffer for the new jump before its failstat tracking begins.
 	this->poseHistory.Advance(this->poseHistory.GetReadAvailable());
-	this->jumps.AddToTail({this->player});
-	this->jumps.Tail().Init();
+	this->jumps.push_back({this->player});
+	this->jumps.back().Init();
 }
 
 void KZJumpstatsService::UpdateJump()
@@ -1001,9 +1001,9 @@ void KZJumpstatsService::UpdateJump()
 	{
 		return;
 	}
-	if (this->jumps.Count() > 0)
+	if (!this->jumps.empty())
 	{
-		this->jumps.Tail().Update();
+		this->jumps.back().Update();
 	}
 	this->DetectInvalidCollisions();
 	this->DetectInvalidGains();
@@ -1016,11 +1016,11 @@ void KZJumpstatsService::EndJump()
 	{
 		return;
 	}
-	if (this->jumps.Count() <= 0)
+	if (this->jumps.empty())
 	{
 		return;
 	}
-	Jump *jump = &this->jumps.Tail();
+	Jump *jump = &this->jumps.back();
 
 	// Prevent stats being calculated twice.
 	if (jump->AlreadyEnded())
@@ -1043,12 +1043,12 @@ void KZJumpstatsService::HandleTeleport()
 	{
 		return;
 	}
-	if (this->jumps.Count() <= 0)
+	if (this->jumps.empty())
 	{
 		return;
 	}
 
-	Jump *jump = &this->jumps.Tail();
+	Jump *jump = &this->jumps.back();
 	if (jump->AlreadyEnded())
 	{
 		return;
@@ -1071,9 +1071,9 @@ void KZJumpstatsService::HandleTeleport()
 
 void KZJumpstatsService::InvalidateJumpstats(const char *reason)
 {
-	if (this->jumps.Count() > 0 && !this->jumps.Tail().AlreadyEnded())
+	if (!this->jumps.empty() && !this->jumps.back().AlreadyEnded())
 	{
-		this->jumps.Tail().Invalidate(reason);
+		this->jumps.back().Invalidate(reason);
 	}
 }
 
@@ -1105,12 +1105,12 @@ void KZJumpstatsService::OnTryPlayerMove()
 
 void KZJumpstatsService::OnTryPlayerMovePost()
 {
-	if (this->jumps.Count() == 0 || this->jumps.Tail().strafes.Count() == 0)
+	if (this->jumps.empty() || this->jumps.back().strafes.empty())
 	{
 		return;
 	}
 	f32 velocity = this->player->currentMoveData->m_vecVelocity.Length2D() - this->tpmVelocity.Length2D();
-	this->jumps.Tail().strafes.Tail().UpdateCollisionVelocityChange(velocity);
+	this->jumps.back().strafes.back().UpdateCollisionVelocityChange(velocity);
 	this->DetectEdgebug();
 
 	FOR_EACH_VEC(this->player->currentMoveData->m_TouchList, i)

@@ -21,9 +21,9 @@ static_function SCMD_CALLBACK(Command_KzModeShort);
 static_global KZModeManager modeManager;
 KZModeManager *g_pKZModeManager = &modeManager;
 
-CUtlVector<KZModeManager::ModePluginInfo> modeInfos;
+std::vector<KZModeManager::ModePluginInfo> modeInfos;
 
-const CUtlVector<KZModeManager::ModePluginInfo> &KZModeManager::GetModes()
+const std::vector<KZModeManager::ModePluginInfo> &KZModeManager::GetModes()
 {
 	return modeInfos;
 }
@@ -101,7 +101,7 @@ void KZ::mode::LoadModePlugins()
 void KZ::mode::UpdateModeDatabaseID(CUtlString name, i32 id, CUtlString shortName)
 {
 	// Check if the mode already exists in the list, if yes, we update it.
-	FOR_EACH_VEC(modeInfos, i)
+	for (i32 i = 0; i < (i32)modeInfos.size(); i++)
 	{
 		if (!V_stricmp(modeInfos[i].longModeName, name))
 		{
@@ -114,7 +114,7 @@ void KZ::mode::UpdateModeDatabaseID(CUtlString name, i32 id, CUtlString shortNam
 		}
 	}
 	// If the code reaches here, that means the mode is not in the list yet.
-	modeInfos.AddToTail({-1, name.Get(), shortName.Get()});
+	modeInfos.push_back({-1, name.Get(), shortName.Get()});
 }
 
 void KZ::mode::InitModeService(KZPlayer *player)
@@ -164,7 +164,7 @@ bool KZModeManager::RegisterMode(PluginId id, const char *shortModeName, const c
 	}
 	// Update the info list if already exists
 	ModePluginInfo *info = nullptr;
-	FOR_EACH_VEC(modeInfos, i)
+	for (i32 i = 0; i < (i32)modeInfos.size(); i++)
 	{
 		if (!V_stricmp(modeInfos[i].shortModeName, shortModeName) || !V_stricmp(modeInfos[i].longModeName, longModeName))
 		{
@@ -186,7 +186,7 @@ bool KZModeManager::RegisterMode(PluginId id, const char *shortModeName, const c
 	// Add to the list otherwise, and update the database for ID.
 	if (!info)
 	{
-		info = modeInfos.AddToTailGetPtr();
+		info = &modeInfos.emplace_back();
 		// If there is already information about this mode while the ID is -1, that means it has to come from the database, so no need to update it.
 		KZDatabaseService::InsertAndUpdateModeIDs(longModeName, shortModeName);
 	}
@@ -209,7 +209,7 @@ void KZModeManager::UnregisterMode(PluginId id)
 		return;
 	}
 
-	FOR_EACH_VEC(modeInfos, modeIdx)
+	for (i32 modeIdx = 0; modeIdx < (i32)modeInfos.size(); modeIdx++)
 	{
 		if (id == modeInfos[modeIdx].id)
 		{
@@ -251,7 +251,7 @@ bool KZModeManager::SwitchToMode(KZPlayer *player, const char *modeName, bool si
 	{
 		player->languageService->PrintChat(true, false, "Mode Command Usage");
 		player->languageService->PrintConsole(false, false, "Possible & Current Modes", player->modeService->GetModeName());
-		FOR_EACH_VEC(modeInfos, i)
+		for (i32 i = 0; i < (i32)modeInfos.size(); i++)
 		{
 			if (modeInfos[i].id < 0)
 			{
@@ -282,7 +282,7 @@ bool KZModeManager::SwitchToMode(KZPlayer *player, const char *modeName, bool si
 
 	ModeServiceFactory factory = nullptr;
 
-	FOR_EACH_VEC(modeInfos, i)
+	for (i32 i = 0; i < (i32)modeInfos.size(); i++)
 	{
 		if (V_stricmp(modeInfos[i].shortModeName, modeName) == 0 || V_stricmp(modeInfos[i].longModeName, modeName) == 0)
 		{
@@ -333,7 +333,7 @@ void KZModeManager::Cleanup()
 		return;
 	}
 	char error[256];
-	FOR_EACH_VEC(modeInfos, i)
+	for (i32 i = 0; i < (i32)modeInfos.size(); i++)
 	{
 		if (modeInfos[i].id == g_PLID)
 		{
@@ -390,7 +390,7 @@ KZModeManager::ModePluginInfo KZ::mode::GetModeInfo(KZModeService *mode)
 		KZ_LOG_WARN(LogChannel::Mode, "Warning: Getting mode info from a nullptr!\n");
 		return emptyInfo;
 	}
-	FOR_EACH_VEC(modeInfos, i)
+	for (i32 i = 0; i < (i32)modeInfos.size(); i++)
 	{
 		if (!V_stricmp(mode->GetModeName(), modeInfos[i].longModeName))
 		{
@@ -424,7 +424,7 @@ KZModeManager::ModePluginInfo KZ::mode::GetModeInfo(CUtlString modeName)
 		KZ_LOG_WARN(LogChannel::Mode, "Warning: Getting mode info from an empty string!\n");
 		return emptyInfo;
 	}
-	FOR_EACH_VEC(modeInfos, i)
+	for (i32 i = 0; i < (i32)modeInfos.size(); i++)
 	{
 		if (modeName.IsEqual_FastCaseInsensitive(modeInfos[i].shortModeName) || modeName.IsEqual_FastCaseInsensitive(modeInfos[i].longModeName))
 		{
@@ -436,7 +436,7 @@ KZModeManager::ModePluginInfo KZ::mode::GetModeInfo(CUtlString modeName)
 
 KZModeManager::ModePluginInfo KZ::mode::GetModeInfoFromDatabaseID(i32 id)
 {
-	FOR_EACH_VEC(modeInfos, i)
+	for (i32 i = 0; i < (i32)modeInfos.size(); i++)
 	{
 		if (modeInfos[i].databaseID == id)
 		{
@@ -448,7 +448,7 @@ KZModeManager::ModePluginInfo KZ::mode::GetModeInfoFromDatabaseID(i32 id)
 
 void KZDatabaseServiceEventListener_Modes::OnDatabaseSetup()
 {
-	FOR_EACH_VEC(modeInfos, i)
+	for (i32 i = 0; i < (i32)modeInfos.size(); i++)
 	{
 		if (modeInfos[i].databaseID == -1)
 		{

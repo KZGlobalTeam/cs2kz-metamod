@@ -84,7 +84,7 @@ void KZCheckpointService::ResetCheckpoints(bool playSound, bool resetTeleports)
 		this->holdingStill = false;
 		this->teleportTime = 0.0f;
 	}
-	this->checkpoints.Purge();
+	this->checkpoints.clear();
 	this->player->recordingService->OnCheckpointReset();
 }
 
@@ -147,9 +147,9 @@ void KZCheckpointService::SetCheckpoint()
 		cp.onLadder = pawn->m_MoveType() == MOVETYPE_LADDER;
 	}
 	cp.groundEnt = pawn->m_hGroundEntity();
-	this->checkpoints.AddToTail(cp);
+	this->checkpoints.push_back(cp);
 	// newest checkpoints aren't deleted after using prev cp.
-	this->currentCpIndex = this->checkpoints.Count() - 1;
+	this->currentCpIndex = (i32)this->checkpoints.size() - 1;
 	this->player->recordingService->OnCheckpointSave(this->currentCpIndex + 1, cp.origin);
 	if (showAreaWarning)
 	{
@@ -170,7 +170,7 @@ void KZCheckpointService::UndoTeleport()
 		return;
 	}
 
-	if (this->checkpoints.Count() <= 0 || this->undoTeleportData.origin.IsZero() || this->tpCount <= 0)
+	if (this->checkpoints.empty() || this->undoTeleportData.origin.IsZero() || this->tpCount <= 0)
 	{
 		this->player->languageService->PrintChat(true, false, "Can't Undo (No Teleports)");
 		this->PlayTeleportErrorSound();
@@ -200,13 +200,13 @@ void KZCheckpointService::UndoTeleport()
 
 void KZCheckpointService::DoTeleport(i32 index)
 {
-	if (this->checkpoints.Count() <= 0)
+	if (this->checkpoints.empty())
 	{
 		this->player->languageService->PrintChat(true, false, "Can't Teleport (No Checkpoints)");
 		this->PlayTeleportErrorSound();
 		return;
 	}
-	index = Clamp(index, 0, this->checkpoints.Count() - 1);
+	index = Clamp(index, 0, (i32)this->checkpoints.size() - 1);
 	if (!this->player->racingService->CanTeleport())
 	{
 		this->player->languageService->PrintChat(true, false, "Can't Teleport (Limit Reached)");
@@ -335,7 +335,7 @@ void KZCheckpointService::TpToCheckpoint()
 
 void KZCheckpointService::TpToPrevCp()
 {
-	if (this->checkpoints.Count() <= 0)
+	if (this->checkpoints.empty())
 	{
 		this->player->languageService->PrintChat(true, false, "Can't Teleport (No Checkpoints)");
 		this->PlayTeleportErrorSound();
@@ -347,13 +347,13 @@ void KZCheckpointService::TpToPrevCp()
 
 void KZCheckpointService::TpToNextCp()
 {
-	if (this->checkpoints.Count() <= 0)
+	if (this->checkpoints.empty())
 	{
 		this->player->languageService->PrintChat(true, false, "Can't Teleport (No Checkpoints)");
 		this->PlayTeleportErrorSound();
 		return;
 	}
-	this->currentCpIndex = MIN(this->currentCpIndex + 1, this->checkpoints.Count() - 1);
+	this->currentCpIndex = MIN(this->currentCpIndex + 1, (i32)this->checkpoints.size() - 1);
 	DoTeleport(this->currentCpIndex);
 }
 

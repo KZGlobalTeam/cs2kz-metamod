@@ -69,7 +69,7 @@ private:
 	static i32 currentMapID;
 
 private:
-	static CUtlVector<KZDatabaseServiceEventListener *> eventListeners;
+	static std::vector<KZDatabaseServiceEventListener *> eventListeners;
 
 public:
 	static KZ::Database::DatabaseType GetDatabaseType()
@@ -114,7 +114,7 @@ public:
 
 	// Course
 	static bool AreCoursesSetUp();
-	static void SetupCourses(CUtlVector<KZCourseDescriptor *> &courses);
+	static void SetupCourses(std::vector<KZCourseDescriptor *> &courses);
 	static void FindFirstCourseByMapName(CUtlString mapName, TransactionSuccessCallbackFunc onSuccess, TransactionFailureCallbackFunc onFailure);
 
 	// Client/Player

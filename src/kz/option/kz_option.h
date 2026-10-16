@@ -7,6 +7,7 @@
 #include "keyvalues3.h"
 #include "utils/eventlisteners.h"
 
+#include <algorithm>
 #include <ctime>
 
 // Written into the set whenever it is saved, so the most recently written copy can be identified.
@@ -71,9 +72,9 @@ private:
 
 	void MarkUserSet(const char *optionName)
 	{
-		if (userSetPrefs.Find(optionName) == userSetPrefs.InvalidIndex())
+		if (std::find(userSetPrefs.begin(), userSetPrefs.end(), optionName) == userSetPrefs.end())
 		{
-			userSetPrefs.AddToTail(optionName);
+			userSetPrefs.push_back(optionName);
 		}
 		time_t now = 0;
 		time(&now);
@@ -81,7 +82,7 @@ private:
 	}
 
 	KeyValues3 prefKV = KeyValues3(KV3_TYPEEX_TABLE, KV3_SUBTYPE_UNSPECIFIED);
-	CUtlVector<CUtlString> userSetPrefs; // Track user-modified preferences
+	std::vector<CUtlString> userSetPrefs; // Track user-modified preferences
 
 public:
 	void Reset()
@@ -93,7 +94,7 @@ public:
 		globalLoaded = false;
 		modifiedAt = 0;
 		prefKV.SetToEmptyTable();
-		userSetPrefs.Purge();
+		userSetPrefs.clear();
 	}
 
 	// Saving replaces the whole stored set, so it is only safe once this session has read that set. Before then prefKV

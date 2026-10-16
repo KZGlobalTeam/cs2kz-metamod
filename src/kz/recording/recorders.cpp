@@ -47,7 +47,7 @@ JumpRecorder::JumpRecorder(Jump *jump) : Recorder(jump->player, 5.0f, RP_JUMPSTA
 	jumpProto->set_jump_type(jump->jumpType);
 	jumpProto->set_distance(jump->GetDistance());
 	jumpProto->set_block_distance(-1);
-	jumpProto->set_num_strafes(jump->strafes.Count());
+	jumpProto->set_num_strafes((i32)jump->strafes.size());
 	jumpProto->set_air_time(jump->airtime);
 	jumpProto->set_pre(jump->GetTakeoffSpeed());
 	jumpProto->set_max(jump->GetMaxSpeed());
@@ -64,7 +64,7 @@ RunRecorder::RunRecorder(KZPlayer *player) : Recorder(player, 5.0f, RP_RUN, true
 	runProto->mutable_mode()->set_name(modeInfo.longModeName.Get());
 	runProto->mutable_mode()->set_short_name(modeInfo.shortModeName.Get());
 	runProto->mutable_mode()->set_md5(modeInfo.md5);
-	FOR_EACH_VEC(player->styleServices, i)
+	for (i32 i = 0; i < (i32)player->styleServices.size(); i++)
 	{
 		auto styleInfo = KZ::style::GetStyleInfo(player->styleServices[i]);
 		auto *styleMsg = runProto->add_styles();

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <array>
 #include "kz/kz.h"
 #include "../checkpoint/kz_checkpoint.h"
 #include "kz/mappingapi/kz_mappingapi.h"
@@ -44,20 +45,14 @@ struct PBData
 	{
 		overall.pbTime = {};
 		overall.holder.clear();
-		overall.pbSplitZoneTimes.SetCount(KZ_MAX_SPLIT_ZONES);
-		overall.pbSplitZoneTimes.FillWithValue(-1.0);
-		overall.pbCpZoneTimes.SetCount(KZ_MAX_CHECKPOINT_ZONES);
-		overall.pbCpZoneTimes.FillWithValue(-1.0);
-		overall.pbStageZoneTimes.SetCount(KZ_MAX_STAGE_ZONES);
-		overall.pbStageZoneTimes.FillWithValue(-1.0);
+		overall.pbSplitZoneTimes.fill(-1.0);
+		overall.pbCpZoneTimes.fill(-1.0);
+		overall.pbStageZoneTimes.fill(-1.0);
 		pro.pbTime = {};
 		pro.holder.clear();
-		pro.pbSplitZoneTimes.SetCount(KZ_MAX_SPLIT_ZONES);
-		pro.pbSplitZoneTimes.FillWithValue(-1.0);
-		pro.pbCpZoneTimes.SetCount(KZ_MAX_CHECKPOINT_ZONES);
-		pro.pbCpZoneTimes.FillWithValue(-1.0);
-		pro.pbStageZoneTimes.SetCount(KZ_MAX_STAGE_ZONES);
-		pro.pbStageZoneTimes.FillWithValue(-1.0);
+		pro.pbSplitZoneTimes.fill(-1.0);
+		pro.pbCpZoneTimes.fill(-1.0);
+		pro.pbStageZoneTimes.fill(-1.0);
 	}
 
 	struct
@@ -65,9 +60,9 @@ struct PBData
 		f64 pbTime {};
 		f64 points {};
 		std::string holder {}; // the record holder's name; empty for a personal best
-		CUtlVectorFixed<f64, KZ_MAX_SPLIT_ZONES> pbSplitZoneTimes;
-		CUtlVectorFixed<f64, KZ_MAX_CHECKPOINT_ZONES> pbCpZoneTimes;
-		CUtlVectorFixed<f64, KZ_MAX_STAGE_ZONES> pbStageZoneTimes;
+		std::array<f64, KZ_MAX_SPLIT_ZONES> pbSplitZoneTimes;
+		std::array<f64, KZ_MAX_CHECKPOINT_ZONES> pbCpZoneTimes;
+		std::array<f64, KZ_MAX_STAGE_ZONES> pbStageZoneTimes;
 	} overall, pro;
 };
 
@@ -153,14 +148,14 @@ private:
 	bool validTime {};
 
 	u32 lastSplit {};
-	CUtlVectorFixed<f64, KZ_MAX_SPLIT_ZONES> splitZoneTimes {};
+	std::vector<f64> splitZoneTimes;
 
 	u32 lastCheckpoint {};
 	i32 reachedCheckpoints {};
-	CUtlVectorFixed<f64, KZ_MAX_CHECKPOINT_ZONES> cpZoneTimes {};
+	std::vector<f64> cpZoneTimes;
 
 	i32 currentStage {};
-	CUtlVectorFixed<f64, KZ_MAX_STAGE_ZONES> stageZoneTimes {};
+	std::vector<f64> stageZoneTimes;
 
 	// PB cache per mode and per course.
 	std::unordered_map<PBDataKey, PBData> localPBCache;
@@ -284,9 +279,9 @@ public:
 	i32 GetReachedSplits()
 	{
 		i32 count = 0;
-		FOR_EACH_VEC(splitZoneTimes, i)
+		for (f64 zoneTime : splitZoneTimes)
 		{
-			count += timerRunning && splitZoneTimes[i] >= 0 ? 1 : 0;
+			count += timerRunning && zoneTime >= 0 ? 1 : 0;
 		}
 		return count;
 	}

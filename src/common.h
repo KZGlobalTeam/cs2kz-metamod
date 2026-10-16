@@ -56,8 +56,14 @@ typedef double f64;
 #define WATER_FIX
 
 // Common macro for service event listeners in different parts of the project.
-#define CALL_FORWARD(listeners, func, ...)                FOR_EACH_VEC(listeners, i) listeners[i]->func(__VA_ARGS__);
-#define CALL_FORWARD_BOOL(retValue, listeners, func, ...) FOR_EACH_VEC(listeners, i) retValue &= listeners[i]->func(__VA_ARGS__)
+#define CALL_FORWARD(listeners, func, ...) \
+	for (size_t i = 0; i < (listeners).size(); i++) \
+		(listeners)[i]->func(__VA_ARGS__);
+#define CALL_FORWARD_BOOL(retValue, listeners, func, ...) \
+	for (size_t i = 0; i < (listeners).size(); i++) \
+	{ \
+		retValue &= (listeners)[i]->func(__VA_ARGS__); \
+	}
 
 // str*cmp considered harmful.
 //  Macros to make sure you don't mess up checking if strings are equal.

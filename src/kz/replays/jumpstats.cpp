@@ -9,7 +9,7 @@ void RpJumpStats::FromJump(RpJumpStats &stats, Jump *jump)
 {
 	// Overall stats
 	stats.overall.serverTick = jump->serverTick;
-	if (jump->IsValid() && jump->player->styleServices.Count() == 0)
+	if (jump->IsValid() && jump->player->styleServices.empty())
 	{
 		stats.overall.distanceTier = jump->player->modeService->GetDistanceTier(jump->GetJumpType(), jump->GetDistance());
 	}
@@ -42,7 +42,7 @@ void RpJumpStats::FromJump(RpJumpStats &stats, Jump *jump)
 	V_strncpy(stats.overall.invalidateReason, jump->invalidateReason, sizeof(stats.overall.invalidateReason));
 
 	// Strafe stats
-	for (int i = 0; i < jump->strafes.Count(); i++)
+	for (int i = 0; i < (i32)jump->strafes.size(); i++)
 	{
 		Strafe &s = jump->strafes[i];
 		RpJumpStats::StrafeData strafe;
@@ -68,7 +68,7 @@ void RpJumpStats::FromJump(RpJumpStats &stats, Jump *jump)
 		stats.strafes.push_back(strafe);
 
 		// AACall stats
-		for (int j = 0; j < s.aaCalls.Count(); j++)
+		for (int j = 0; j < (i32)s.aaCalls.size(); j++)
 		{
 			AACall &a = s.aaCalls[j];
 			RpJumpStats::AAData aa;
@@ -132,12 +132,12 @@ void RpJumpStats::ToJump(Jump &out, RpJumpStats *js)
 	V_strncpy(out.invalidateReason, js->overall.invalidateReason, sizeof(out.invalidateReason));
 
 	// Clear existing strafes just in case
-	out.strafes.RemoveAll();
+	out.strafes.clear();
 
 	// Recreate strafes from replay data
 	for (size_t i = 0; i < js->strafes.size(); i++)
 	{
-		Strafe *strafe = out.strafes.AddToTailGetPtr();
+		Strafe *strafe = &out.strafes.emplace_back();
 		const RpJumpStats::StrafeData &strafeData = js->strafes[i];
 		strafe->duration = strafeData.duration;
 		strafe->badAngles = strafeData.badAngles;
@@ -163,7 +163,7 @@ void RpJumpStats::ToJump(Jump &out, RpJumpStats *js)
 			const RpJumpStats::AAData &aaData = js->aaCalls[j];
 			if (aaData.strafeIndex == i)
 			{
-				AACall *aa = strafe->aaCalls.AddToTailGetPtr();
+				AACall *aa = &strafe->aaCalls.emplace_back();
 				aa->externalSpeedDiff = aaData.externalSpeedDiff;
 				aa->prevYaw = aaData.prevYaw;
 				aa->currentYaw = aaData.currentYaw;
@@ -201,7 +201,7 @@ void RpJumpStats::ToJump(Jump &out, RpJumpStats *js)
 	f32 gain = 0.0f;
 	f32 maxGain = 0.0f;
 
-	for (int i = 0; i < out.strafes.Count(); i++)
+	for (int i = 0; i < (i32)out.strafes.size(); i++)
 	{
 		out.deadAir += out.strafes[i].GetDeadAirDuration();
 		out.overlap += out.strafes[i].GetOverlapDuration();
@@ -213,9 +213,9 @@ void RpJumpStats::ToJump(Jump &out, RpJumpStats *js)
 		maxGain += out.strafes[i].GetMaxGain();
 	}
 
-	if (out.strafes.Count() > 0)
+	if (!out.strafes.empty())
 	{
-		out.width /= out.strafes.Count();
+		out.width /= out.strafes.size();
 	}
 	if (jumpDuration > 0.0f)
 	{

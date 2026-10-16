@@ -55,7 +55,7 @@ void KZVanillaModeService::Init()
 void KZVanillaModeService::Reset()
 {
 	this->airMoving = {};
-	this->tpmTriggerFixOrigins.RemoveAll();
+	this->tpmTriggerFixOrigins.clear();
 }
 
 // 1:1 with CS2.
@@ -76,7 +76,7 @@ void KZVanillaModeService::OnDuckPost()
 
 void KZVanillaModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t *pFirstTrace, bool *bIsSurfing)
 {
-	this->tpmTriggerFixOrigins.RemoveAll();
+	this->tpmTriggerFixOrigins.clear();
 
 	Vector origin = this->player->currentMoveData->m_vecAbsOrigin;
 	Vector velocity = this->player->currentMoveData->m_vecVelocity;
@@ -206,7 +206,7 @@ void KZVanillaModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t *pFirstTr
 		allFraction += pm.m_flFraction;
 
 		// Triggerfix related
-		this->tpmTriggerFixOrigins.AddToTail(pm.m_vEndPos);
+		this->tpmTriggerFixOrigins.push_back(pm.m_vEndPos);
 
 		if (pm.m_flFraction == 1.0f)
 		{
@@ -357,13 +357,13 @@ void KZVanillaModeService::OnTryPlayerMovePost(Vector *pFirstDest, trace_t *pFir
 {
 	if (this->airMoving)
 	{
-		if (this->tpmTriggerFixOrigins.Count() > 1)
+		if (this->tpmTriggerFixOrigins.size() > 1)
 		{
 			bbox_t bounds;
 			// We need to shrink the bounds a bit to prevent touching triggers that we shouldn't be touching when doing triggerfix.
 			bbox_t offset = {{0.03125f, 0.03125f, 0.03125f}, {-0.03125f, -0.03125f, -0.03125f}};
 			this->player->GetBBoxBounds(&bounds, &offset);
-			for (int i = 0; i < this->tpmTriggerFixOrigins.Count() - 1; i++)
+			for (int i = 0; i < (i32)this->tpmTriggerFixOrigins.size() - 1; i++)
 			{
 				this->player->TouchTriggersAlongPath(this->tpmTriggerFixOrigins[i], this->tpmTriggerFixOrigins[i + 1], bounds);
 			}

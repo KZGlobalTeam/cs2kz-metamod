@@ -37,7 +37,7 @@ struct PBRequest : public BaseRequest
 	virtual void Init(u64 features, const CCommand *args, bool queryLocal, bool queryGlobal) override
 	{
 		BaseRequest::Init(features, args, queryLocal, queryGlobal);
-		if (this->styleList.Count() > 0)
+		if (!this->styleList.empty())
 		{
 			this->queryLocalRanking = false;
 		}
@@ -119,9 +119,9 @@ struct PBRequest : public BaseRequest
 		params.course = std::string_view(this->courseName.Get(), this->courseName.Length());
 		params.mode = this->apiMode;
 
-		FOR_EACH_VEC(styleList, i)
+		for (const CUtlString &style : styleList)
 		{
-			params.styles.emplace_back(styleList[i].Get(), styleList[i].Length());
+			params.styles.emplace_back(style.Get(), style.Length());
 		}
 
 		KZGlobalService::MessageCallback<KZ::api::messages::PersonalBest> callback(PBRequest::OnPBQueried, this->uid);
@@ -188,10 +188,10 @@ struct PBRequest : public BaseRequest
 
 		CUtlString combinedModeStyleText;
 		combinedModeStyleText.Format("{purple}%s{grey}", modeName.Get());
-		FOR_EACH_VEC(styleList, i)
+		for (const CUtlString &style : styleList)
 		{
 			combinedModeStyleText += " +{grey2}";
-			combinedModeStyleText.Append(styleList[i].Get());
+			combinedModeStyleText.Append(style.Get());
 			combinedModeStyleText += "{grey}";
 		}
 

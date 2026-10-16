@@ -93,30 +93,30 @@ void KZUtils::AddTimer(CTimerBase *timer, bool preserveMapChange)
 {
 	if (preserveMapChange)
 	{
-		g_PersistentTimers.AddToTail(timer);
+		g_PersistentTimers.push_back(timer);
 	}
 	else
 	{
-		g_NonPersistentTimers.AddToTail(timer);
+		g_NonPersistentTimers.push_back(timer);
 	}
 }
 
 void KZUtils::RemoveTimer(CTimerBase *timer)
 {
-	FOR_EACH_VEC(g_PersistentTimers, i)
+	for (i32 i = 0; i < (i32)g_PersistentTimers.size(); i++)
 	{
-		if (g_PersistentTimers.Element(i) == timer)
+		if (g_PersistentTimers[i] == timer)
 		{
-			g_PersistentTimers.Remove(i);
+			g_PersistentTimers.erase(g_PersistentTimers.begin() + i);
 			delete timer;
 			return;
 		}
 	}
-	FOR_EACH_VEC(g_NonPersistentTimers, i)
+	for (i32 i = 0; i < (i32)g_NonPersistentTimers.size(); i++)
 	{
-		if (g_NonPersistentTimers.Element(i) == timer)
+		if (g_NonPersistentTimers[i] == timer)
 		{
-			g_NonPersistentTimers.Remove(i);
+			g_NonPersistentTimers.erase(g_NonPersistentTimers.begin() + i);
 			delete timer;
 			return;
 		}

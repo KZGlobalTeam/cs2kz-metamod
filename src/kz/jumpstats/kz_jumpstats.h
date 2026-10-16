@@ -184,7 +184,7 @@ public:
 	Strafe(Jump *jump) : jump(jump) {}
 
 	Jump *jump;
-	CCopyableUtlVector<AACall> aaCalls;
+	std::vector<AACall> aaCalls;
 	TurnState turnstate;
 
 	f32 duration {};
@@ -276,11 +276,6 @@ public:
 	// Closer to 1 if it passes the optimal value.
 	// Note: if the player jumps in place, no velocity and no attempt to move at all, any angle will be "perfect".
 	// Returns false if there is no available stats.
-	static int SortFloat(const f32 *a, const f32 *b)
-	{
-		return *a > *b;
-	}
-
 	struct AngleRatioStats
 	{
 		bool available;
@@ -334,7 +329,7 @@ public:
 
 	f32 release;
 
-	CCopyableUtlVector<Strafe> strafes;
+	std::vector<Strafe> strafes;
 	f32 touchDuration {};
 	char invalidateReason[256] {};
 	bool trackingRelease = true;
@@ -440,7 +435,7 @@ public:
 		{
 			return this->failstatStrafeCount;
 		}
-		return this->strafes.Count();
+		return (i32)this->strafes.size();
 	}
 
 	f32 GetSync()
@@ -572,7 +567,6 @@ class KZJumpstatsService : public KZBaseService
 public:
 	KZJumpstatsService(KZPlayer *player) : KZBaseService(player)
 	{
-		this->jumps = CUtlVector<Jump>(1, 0);
 		this->tpmVelocity = Vector(0, 0, 0);
 	}
 
@@ -580,7 +574,7 @@ public:
 	static void RegisterMenu();
 
 	// Jumpstats
-	CUtlVector<Jump> jumps;
+	std::vector<Jump> jumps;
 	// One pose per subtick movement of the current jump, consumed by the tail jump's failstat tracking.
 	CFIFOCircularBuffer<JumpPose, JS_FAILSTATS_MAX_TRACKED_TICKS> poseHistory;
 	f32 lastJumpButtonTime {};

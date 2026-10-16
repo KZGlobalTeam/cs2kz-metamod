@@ -1,6 +1,6 @@
 #pragma once
 #include "common.h"
-#include "utlvector.h"
+#include <vector>
 
 namespace utils
 {
@@ -84,7 +84,7 @@ namespace utils
 		};
 
 		CUtlString title;
-		CUtlVector<TableEntry> entries;
+		std::vector<TableEntry> entries;
 		CUtlString headers[columnCount];
 		u32 columnLengths[columnCount];
 
@@ -95,9 +95,9 @@ namespace utils
 			{
 				return false;
 			}
-			if (row >= (u32)entries.Count())
+			if (row >= (u32)entries.size())
 			{
-				entries.SetCountNonDestructively(row + 1);
+				entries.resize(row + 1);
 			}
 			entries[row].data[column] = value;
 			entries[row].data[column].Append("ᅟ"); // Add a space to reset the "font" to monospace
@@ -114,9 +114,9 @@ namespace utils
 		void SetRow(u32 row, const Args &...args)
 		{
 			static_assert(sizeof...(args) == N, "Number of arguments must match the column count");
-			if (row >= (u32)entries.Count())
+			if (row >= (u32)entries.size())
 			{
-				entries.SetCountNonDestructively(row + 1);
+				entries.resize(row + 1);
 			}
 			entries[row] = {args...};
 			for (u32 i = 0; i < columnCount; i++)
@@ -171,7 +171,7 @@ namespace utils
 
 		CUtlString GetLine(u32 row)
 		{
-			if (row >= (u32)entries.Count())
+			if (row >= (u32)entries.size())
 			{
 				return "";
 			}
@@ -207,7 +207,7 @@ namespace utils
 
 		u32 GetNumEntries()
 		{
-			return entries.Count();
+			return (i32)entries.size();
 		}
 	};
 

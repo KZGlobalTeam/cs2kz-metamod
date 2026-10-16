@@ -190,7 +190,7 @@ public:
 	KZSpecService *specService {};
 	KZGotoService *gotoService {};
 	KZProfileService *profileService {};
-	CUtlVector<KZStyleService *> styleServices {};
+	std::vector<KZStyleService *> styleServices {};
 	KZTelemetryService *telemetryService {};
 	KZTimerService *timerService {};
 	KZTipService *tipService {};

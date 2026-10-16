@@ -9,10 +9,11 @@
 #include "kz/timer/kz_timer.h"
 #include "kz/noclip/kz_noclip.h"
 #include "sdk/navphysicsinterface.h"
+#include <algorithm>
 
 void KZTriggerService::Reset()
 {
-	this->triggerTrackers.RemoveAll();
+	this->triggerTrackers.clear();
 	this->modifiers = {};
 	this->lastModifiers = {};
 	this->antiBhopActive = {};
@@ -20,14 +21,14 @@ void KZTriggerService::Reset()
 	this->lastTouchedSingleBhop = {};
 	this->bhopTouchCount = {};
 	this->lastTouchedSequentialBhops = {};
-	this->pushEvents.RemoveAll();
+	this->pushEvents.clear();
 	this->slideApplied = {};
 	this->antiBhopApplied = {};
 }
 
 void KZTriggerService::OnPhysicsSimulate()
 {
-	FOR_EACH_VEC(this->triggerTrackers, i)
+	for (i32 i = 0; i < (i32)this->triggerTrackers.size(); i++)
 	{
 		CEntityHandle handle = this->triggerTrackers[i].triggerHandle;
 		CBaseTrigger *trigger = dynamic_cast<CBaseTrigger *>(GameEntitySystem()->GetEntityInstance(handle));
@@ -40,7 +41,7 @@ void KZTriggerService::OnPhysicsSimulate()
 				this->OnMappingApiTriggerEndTouchPost(this->triggerTrackers[i]);
 			}
 
-			this->triggerTrackers.Remove(i);
+			this->triggerTrackers.erase(this->triggerTrackers.begin() + i);
 			i--;
 			continue;
 		}
@@ -113,7 +114,7 @@ void KZTriggerService::OnProcessMovementPost()
 
 void KZTriggerService::OnStopTouchGround()
 {
-	FOR_EACH_VEC(this->triggerTrackers, i)
+	for (i32 i = 0; i < (i32)this->triggerTrackers.size(); i++)
 	{
 		TriggerTouchTracker tracker = this->triggerTrackers[i];
 		CBaseTrigger *trigger = dynamic_cast<CBaseTrigger *>(GameEntitySystem()->GetEntityInstance(tracker.triggerHandle));
@@ -149,11 +150,11 @@ void KZTriggerService::OnStopTouchGround()
 
 void KZTriggerService::OnTeleport()
 {
-	FOR_EACH_VEC_BACK(this->pushEvents, i)
+	for (i32 i = (i32)this->pushEvents.size() - 1; i >= 0; i--)
 	{
 		if (this->pushEvents[i].source->push.cancelOnTeleport)
 		{
-			this->pushEvents.Remove(i);
+			this->pushEvents.erase(this->pushEvents.begin() + i);
 		}
 	}
 }
@@ -168,9 +169,8 @@ void KZTriggerService::TouchTriggersAlongPath(const Vector &start, const Vector 
 	trace_t tr;
 	Ray_t ray(bounds.mins, bounds.maxs);
 	INavPhysicsInterface::TraceShape(ray, start, end, &filter, &tr);
-	FOR_EACH_VEC(filter.hitTriggerHandles, i)
+	for (CEntityHandle handle : filter.hitTriggerHandles)
 	{
-		CEntityHandle handle = filter.hitTriggerHandles[i];
 		CBaseTrigger *trigger = dynamic_cast<CBaseTrigger *>(GameEntitySystem()->GetEntityInstance(handle));
 		if (!trigger || !KZTriggerService::IsValidTrigger(trigger))
 		{
@@ -209,7 +209,7 @@ void KZTriggerService::UpdateTriggerTouchList()
 	trace_t tr;
 	INavPhysicsInterface::TraceShape(Ray_t(bounds.mins, bounds.maxs), origin, origin, &filter, &tr);
 
-	FOR_EACH_VEC_BACK(this->triggerTrackers, i)
+	for (i32 i = (i32)this->triggerTrackers.size() - 1; i >= 0; i--)
 	{
 		CEntityHandle handle = this->triggerTrackers[i].triggerHandle;
 		CBaseTrigger *trigger = dynamic_cast<CBaseTrigger *>(GameEntitySystem()->GetEntityInstance(handle));
@@ -222,10 +222,10 @@ void KZTriggerService::UpdateTriggerTouchList()
 				this->OnMappingApiTriggerEndTouchPost(this->triggerTrackers[i]);
 			}
 
-			this->triggerTrackers.Remove(i);
+			this->triggerTrackers.erase(this->triggerTrackers.begin() + i);
 			continue;
 		}
-		if (!filter.hitTriggerHandles.HasElement(handle))
+		if (std::find(filter.hitTriggerHandles.begin(), filter.hitTriggerHandles.end(), handle) == filter.hitTriggerHandles.end())
 		{
 			this->EndTouch(trigger);
 		}
@@ -234,9 +234,8 @@ void KZTriggerService::UpdateTriggerTouchList()
 	// Reset antibhop state, we will re-evaluate it again inside touch events.
 	this->antiBhopActive = false;
 
-	FOR_EACH_VEC(filter.hitTriggerHandles, i)
+	for (CEntityHandle handle : filter.hitTriggerHandles)
 	{
-		CEntityHandle handle = filter.hitTriggerHandles[i];
 		CBaseTrigger *trigger = dynamic_cast<CBaseTrigger *>(GameEntitySystem()->GetEntityInstance(handle));
 		if (!trigger || !KZTriggerService::IsValidTrigger(trigger))
 		{
@@ -258,7 +257,7 @@ void KZTriggerService::UpdateTriggerTouchList()
 
 void KZTriggerService::EndTouchAll()
 {
-	FOR_EACH_VEC(this->triggerTrackers, i)
+	for (i32 i = 0; i < (i32)this->triggerTrackers.size(); i++)
 	{
 		CEntityHandle handle = this->triggerTrackers[i].triggerHandle;
 		CBaseTrigger *trigger = dynamic_cast<CBaseTrigger *>(GameEntitySystem()->GetEntityInstance(handle));
@@ -271,7 +270,7 @@ void KZTriggerService::EndTouchAll()
 				this->OnMappingApiTriggerEndTouchPost(this->triggerTrackers[i]);
 			}
 
-			this->triggerTrackers.Remove(i);
+			this->triggerTrackers.erase(this->triggerTrackers.begin() + i);
 			i--;
 			continue;
 		}
@@ -313,7 +312,7 @@ bool KZTriggerService::IsPossibleLegacyBhopTrigger(CTriggerMultiple *trigger)
 
 void KZTriggerService::TouchAll()
 {
-	FOR_EACH_VEC(this->triggerTrackers, i)
+	for (i32 i = 0; i < (i32)this->triggerTrackers.size(); i++)
 	{
 		CEntityHandle handle = this->triggerTrackers[i].triggerHandle;
 		CBaseTrigger *trigger = dynamic_cast<CBaseTrigger *>(GameEntitySystem()->GetEntityInstance(handle));
@@ -326,7 +325,7 @@ void KZTriggerService::TouchAll()
 				this->OnMappingApiTriggerEndTouchPost(this->triggerTrackers[i]);
 			}
 
-			this->triggerTrackers.Remove(i);
+			this->triggerTrackers.erase(this->triggerTrackers.begin() + i);
 			i--;
 			continue;
 		}
@@ -371,7 +370,7 @@ KZTriggerService::TriggerTouchTracker *KZTriggerService::GetTriggerTracker(CBase
 		return nullptr;
 	}
 	CEntityHandle handle = trigger->GetRefEHandle();
-	FOR_EACH_VEC(triggerTrackers, i)
+	for (i32 i = 0; i < (i32)triggerTrackers.size(); i++)
 	{
 		TriggerTouchTracker &tracker = triggerTrackers[i];
 		if (tracker.triggerHandle == handle)
@@ -407,7 +406,7 @@ void KZTriggerService::StartTouch(CBaseTrigger *trigger)
 	// New interaction!
 	if (!tracker)
 	{
-		tracker = triggerTrackers.AddToTailGetPtr();
+		tracker = &triggerTrackers.emplace_back();
 		tracker->triggerHandle = trigger->GetRefEHandle();
 		tracker->startTouchTime = g_pKZUtils->GetServerGlobals()->curtime;
 		tracker->isPossibleLegacyBhopTrigger = V_stricmp(trigger->GetClassname(), "trigger_multiple") == 0
@@ -502,7 +501,11 @@ void KZTriggerService::EndTouch(CBaseTrigger *trigger)
 		hooks::CallOriginalEndTouch(pawn, trigger);
 		this->UpdatePlayerPostTouch();
 		this->OnTriggerEndTouchPost(trigger, *tracker);
-		this->triggerTrackers.FindAndRemove(*tracker);
+		auto it = std::find(this->triggerTrackers.begin(), this->triggerTrackers.end(), *tracker);
+		if (it != this->triggerTrackers.end())
+		{
+			this->triggerTrackers.erase(it);
+		}
 	}
 }
 

@@ -13,13 +13,12 @@ bool KZDatabaseService::AreCoursesSetUp()
 	return coursesSetUp;
 }
 
-void KZDatabaseService::SetupCourses(CUtlVector<KZCourseDescriptor *> &courses)
+void KZDatabaseService::SetupCourses(std::vector<KZCourseDescriptor *> &courses)
 {
 	char query[2048];
 	Transaction txn;
-	FOR_EACH_VEC(courses, i)
+	for (KZCourseDescriptor *course : courses)
 	{
-		KZCourseDescriptor *course = courses[i];
 		std::string cleanCourseName = KZDatabaseService::GetDatabaseConnection()->Escape(course->GetName());
 		switch (databaseType)
 		{
