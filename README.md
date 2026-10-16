@@ -81,9 +81,9 @@ Automated translation linter reports for cs2kz-metamod.
 
 ## Last Updated
 
-- **Commit:** [`ad2b1d7`](https://github.com/KZGlobalTeam/cs2kz-metamod/commit/ad2b1d7023af8a6398a6a63ee7a4001df9469eaf)
-- **Time:** 2026-10-16 13:16:02 UTC
-- **Message:** Add replay control UI, limit mapping API zone count to 64
+- **Commit:** [`32ab6f0`](https://github.com/KZGlobalTeam/cs2kz-metamod/commit/32ab6f01a5b6f5efc3613c70e65d7699311b438f)
+- **Time:** 2026-10-16 13:16:53 UTC
+- **Message:** Fixed several typos in the Traditional Chinese (zho) translations. (#660)
 
 ---
 
