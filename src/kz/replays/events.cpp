@@ -376,24 +376,6 @@ namespace KZ::replaysystem::events
 			RpEvent *event = &replay->events[i];
 			if (event->serverTick > targetServerTick)
 			{
-				// If we're in a pause that extends past our target, add partial pause time
-				if (inPause && inActiveTimerRun && replay->startTime > 0.0f)
-				{
-					// Find tick data indices
-					u32 pauseStartTickIndex = 0;
-					for (u32 j = 0; j < replay->tickCount; j++)
-					{
-						if (replay->tickData[j].serverTick >= pauseStartTick)
-						{
-							pauseStartTickIndex = j;
-							break;
-						}
-					}
-
-					TickData *pauseStartTickData = &replay->tickData[pauseStartTickIndex];
-					TickData *targetTickData = &replay->tickData[targetTick];
-					totalPauseTime += (targetTickData->gameTime - pauseStartTickData->gameTime);
-				}
 				break;
 			}
 
@@ -532,6 +514,25 @@ namespace KZ::replaysystem::events
 			{
 				replay->currentEvent = i + 1;
 			}
+		}
+
+		// A pause still going at the target, including one that never resumes. The target tick's events have run, so it
+		// counts as played, and playback adds a tick for every played tick of a pause, the target included.
+		if (inPause && inActiveTimerRun && replay->startTime > 0.0f)
+		{
+			u32 pauseStartTickIndex = 0;
+			for (u32 j = 0; j < replay->tickCount; j++)
+			{
+				if (replay->tickData[j].serverTick >= pauseStartTick)
+				{
+					pauseStartTickIndex = j;
+					break;
+				}
+			}
+
+			TickData *pauseStartTickData = &replay->tickData[pauseStartTickIndex];
+			TickData *targetTickData = &replay->tickData[targetTick];
+			totalPauseTime += (targetTickData->gameTime - pauseStartTickData->gameTime) + ENGINE_FIXED_TICK_INTERVAL;
 		}
 
 		// Apply pause time adjustment to startTime if we have an active timer
