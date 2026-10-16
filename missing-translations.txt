@@ -8,12 +8,12 @@ SUMMARY
 Total languages: 15
 Total phrases: 1091
 Phrases with missing translations: 1091
-Total missing translation entries: 7696
+Total missing translation entries: 7586
 
 LANGUAGE COVERAGE (Phrases)
 ----------------------------------------------------------------------
 
-  chi (schinese)       [█████████████████░░░]  87.5% (955/1091)
+  chi (schinese)       [██████████████████░░]  92.7% (1011/1091)
   de (german)          [█████████░░░░░░░░░░░]  47.5% (518/1091)
   en (english)         [████████████████████] 100.0% (1091/1091)
   es (spanish)         [████████░░░░░░░░░░░░]  44.4% (484/1091)
@@ -27,7 +27,7 @@ LANGUAGE COVERAGE (Phrases)
   sv (swedish)         [███████░░░░░░░░░░░░░]  35.9% (392/1091)
   tr (turkish)         [████░░░░░░░░░░░░░░░░]  24.0% (262/1091)
   ua (ukrainian)       [██████████████████░░]  91.2% (995/1091)
-  zho (tchinese)       [██████████████████░░]  93.0% (1015/1091)
+  zho (tchinese)       [███████████████████░]  98.0% (1069/1091)
 
 Global languages (15): chi, de, en, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
 
@@ -257,301 +257,301 @@ cs2kz-commands.phrases.txt
   Line 697: "Command Description - kz_jstier"
     Missing (5): fi, it, lv, nl, tr
   Line 710: "Command Description - kz_jstierhud"
-    Missing (11): chi, de, es, fi, it, ko, lv, nl, pl, sv, tr
-  Line 717: "Command Description - kz_jstierconsole"
+    Missing (10): de, es, fi, it, ko, lv, nl, pl, sv, tr
+  Line 718: "Command Description - kz_jstierconsole"
     Missing (5): fi, it, lv, nl, tr
-  Line 730: "Command Description - kz_jsbroadcastsound"
+  Line 731: "Command Description - kz_jsbroadcastsound"
     Missing (5): fi, it, lv, nl, tr
-  Line 743: "Command Description - kz_jsbroadcastconsole"
+  Line 744: "Command Description - kz_jsbroadcastconsole"
     Missing (6): fi, it, lv, nl, sv, tr
-  Line 755: "Command Description - kz_jsextend"
+  Line 756: "Command Description - kz_jsextend"
     Missing (5): fi, it, lv, nl, tr
-  Line 768: "Command Description - kz_jsvolume"
+  Line 769: "Command Description - kz_jsvolume"
     Missing (5): fi, it, lv, nl, tr
-  Line 781: "Command Description - kz_mode"
+  Line 782: "Command Description - kz_mode"
     Missing (1): nl
-  Line 798: "Command Description - kz_noclip"
+  Line 799: "Command Description - kz_noclip"
     Missing (1): nl
-  Line 815: "Command Description - kz_nc"
+  Line 816: "Command Description - kz_nc"
     Missing (1): nl
-  Line 832: "Command Description - noclip"
+  Line 833: "Command Description - noclip"
     Missing (1): nl
-  Line 849: "Command Description - kz_spec"
+  Line 850: "Command Description - kz_spec"
     Missing (1): nl
-  Line 866: "Command Description - kz_specs"
+  Line 867: "Command Description - kz_specs"
     Missing (5): fi, it, lv, nl, tr
-  Line 879: "Command Description - kz_goto"
+  Line 880: "Command Description - kz_goto"
     Missing (1): nl
-  Line 896: "Command Description - kz_style"
+  Line 897: "Command Description - kz_style"
     Missing (1): nl
-  Line 913: "Command Description - kz_addstyle"
+  Line 914: "Command Description - kz_addstyle"
     Missing (1): nl
-  Line 930: "Command Description - kz_removestyle"
+  Line 931: "Command Description - kz_removestyle"
     Missing (1): nl
-  Line 947: "Command Description - kz_togglestyle"
+  Line 948: "Command Description - kz_togglestyle"
     Missing (1): nl
-  Line 964: "Command Description - kz_clearstyles"
+  Line 965: "Command Description - kz_clearstyles"
     Missing (1): nl
-  Line 981: "Command Description - kz_stop"
+  Line 982: "Command Description - kz_stop"
     Missing (1): nl
-  Line 998: "Command Description - kz_pause"
+  Line 999: "Command Description - kz_pause"
     Missing (1): nl
-  Line 1015: "Command Description - kz_tips"
+  Line 1016: "Command Description - kz_tips"
     Missing (1): nl
-  Line 1032: "Command Description - kz_hidelegs"
+  Line 1033: "Command Description - kz_hidelegs"
     Missing (1): nl
-  Line 1049: "Command Description - kz_hide"
+  Line 1050: "Command Description - kz_hide"
     Missing (1): nl
-  Line 1066: "Command Description - kz_restart"
+  Line 1067: "Command Description - kz_restart"
     Missing (1): nl
-  Line 1083: "Command Description - kz_r"
+  Line 1084: "Command Description - kz_r"
     Missing (1): nl
-  Line 1100: "Command Description - kz_lj"
+  Line 1101: "Command Description - kz_lj"
     Missing (4): fi, it, nl, tr
-  Line 1114: "Command Description - kz_ljarea"
+  Line 1115: "Command Description - kz_ljarea"
     Missing (4): fi, it, nl, tr
-  Line 1128: "Command Description - kz_jsarea"
+  Line 1129: "Command Description - kz_jsarea"
     Missing (4): fi, it, nl, tr
-  Line 1142: "Command Description - kz_end"
+  Line 1143: "Command Description - kz_end"
     Missing (4): fi, it, nl, tr
-  Line 1156: "Command Description - kz_hideweapon"
+  Line 1157: "Command Description - kz_hideweapon"
     Missing (1): nl
-  Line 1173: "Command Description - kz_help"
+  Line 1174: "Command Description - kz_help"
     Missing (1): nl
-  Line 1190: "Command Description - kz_language"
+  Line 1191: "Command Description - kz_language"
     Missing (1): nl
-  Line 1207: "Command Description - kz_vnl"
+  Line 1208: "Command Description - kz_vnl"
     Missing (1): nl
-  Line 1224: "Command Description - kz_ckz"
+  Line 1225: "Command Description - kz_ckz"
     Missing (1): nl
-  Line 1241: "Command Description - kz_pb"
+  Line 1242: "Command Description - kz_pb"
     Missing (1): nl
-  Line 1258: "Command Description - kz_wr"
+  Line 1259: "Command Description - kz_wr"
     Missing (1): nl
-  Line 1275: "Command Description - kz_sr"
+  Line 1276: "Command Description - kz_sr"
     Missing (1): nl
-  Line 1292: "Command Description - kz_ctop"
+  Line 1293: "Command Description - kz_ctop"
     Missing (2): fi, nl
-  Line 1308: "Command Description - kz_coursetop"
+  Line 1309: "Command Description - kz_coursetop"
     Missing (2): fi, nl
-  Line 1324: "Command Description - kz_maptop"
+  Line 1325: "Command Description - kz_maptop"
     Missing (2): fi, nl
-  Line 1340: "Command Description - kz_gctop"
+  Line 1341: "Command Description - kz_gctop"
     Missing (2): fi, nl
-  Line 1356: "Command Description - kz_gcoursetop"
+  Line 1357: "Command Description - kz_gcoursetop"
     Missing (2): fi, nl
-  Line 1372: "Command Description - kz_gmaptop"
+  Line 1373: "Command Description - kz_gmaptop"
     Missing (2): fi, nl
-  Line 1388: "Command Description - kz_sctop"
+  Line 1389: "Command Description - kz_sctop"
     Missing (2): fi, nl
-  Line 1404: "Command Description - kz_scoursetop"
+  Line 1405: "Command Description - kz_scoursetop"
     Missing (2): fi, nl
-  Line 1420: "Command Description - kz_smaptop"
+  Line 1421: "Command Description - kz_smaptop"
     Missing (2): fi, nl
-  Line 1436: "Command Description - kz_comparelevel"
+  Line 1437: "Command Description - kz_comparelevel"
     Missing (4): fi, it, nl, tr
-  Line 1450: "Command Description - kz_playercheck"
+  Line 1451: "Command Description - kz_playercheck"
     Missing (3): fi, it, nl
-  Line 1465: "Command Description - kz_pc"
+  Line 1466: "Command Description - kz_pc"
     Missing (3): fi, it, nl
-  Line 1480: "Command Description - kz_course"
+  Line 1481: "Command Description - kz_course"
     Missing (6): fi, it, lv, nl, sv, tr
-  Line 1492: "Command Description - kz_courses"
+  Line 1493: "Command Description - kz_courses"
     Missing (3): fi, it, nl
-  Line 1507: "Command Description - kz_spb"
+  Line 1508: "Command Description - kz_spb"
     Missing (4): fi, it, nl, tr
-  Line 1521: "Command Description - kz_gpb"
+  Line 1522: "Command Description - kz_gpb"
     Missing (4): fi, it, nl, tr
-  Line 1535: "Command Description - kz_globalcheck"
+  Line 1536: "Command Description - kz_globalcheck"
     Missing (4): fi, it, nl, tr
-  Line 1549: "Command Description - kz_gc"
+  Line 1550: "Command Description - kz_gc"
     Missing (4): fi, it, nl, tr
-  Line 1563: "Command Description - kz_beam"
+  Line 1564: "Command Description - kz_beam"
     Missing (5): fi, it, lv, nl, tr
-  Line 1576: "Command Description - kz_beamoffset"
+  Line 1577: "Command Description - kz_beamoffset"
     Missing (5): fi, it, lv, nl, tr
-  Line 1589: "Command Description - kz_measure"
+  Line 1590: "Command Description - kz_measure"
     Missing (5): fi, it, lv, nl, tr
-  Line 1602: "Command Description - kz_measurestart"
+  Line 1603: "Command Description - kz_measurestart"
     Missing (5): fi, it, lv, nl, tr
-  Line 1615: "Command Description - kz_measureend"
+  Line 1616: "Command Description - kz_measureend"
     Missing (5): fi, it, lv, nl, tr
-  Line 1628: "Command Description - kz_ztopwatch"
+  Line 1629: "Command Description - kz_ztopwatch"
     Missing (9): de, es, fi, it, lv, nl, pl, sv, tr
-  Line 1637: "Command Description - kz_measureblock"
+  Line 1638: "Command Description - kz_measureblock"
     Missing (5): fi, it, lv, nl, tr
-  Line 1650: "Command Description - kz_paint"
+  Line 1651: "Command Description - kz_paint"
     Missing (8): de, fi, it, lv, nl, pl, sv, tr
-  Line 1660: "Command Description - kz_paintcolor"
+  Line 1661: "Command Description - kz_paintcolor"
     Missing (8): de, fi, it, lv, nl, pl, sv, tr
-  Line 1670: "Command Description - kz_paintsize"
+  Line 1671: "Command Description - kz_paintsize"
     Missing (8): de, fi, it, lv, nl, pl, sv, tr
-  Line 1680: "Command Description - kz_togglepaint"
+  Line 1681: "Command Description - kz_togglepaint"
     Missing (8): de, fi, it, lv, nl, pl, sv, tr
-  Line 1690: "Command Description - kz_showpaint"
+  Line 1691: "Command Description - kz_showpaint"
     Missing (8): de, fi, it, lv, nl, pl, sv, tr
-  Line 1700: "Command Description - kz_cleardecals"
+  Line 1701: "Command Description - kz_cleardecals"
     Missing (8): de, fi, it, lv, nl, pl, sv, tr
-  Line 1710: "Command Description - kz_timerstopsound"
+  Line 1711: "Command Description - kz_timerstopsound"
     Missing (5): fi, it, lv, nl, tr
-  Line 1723: "Command Description - kz_autohideweapon"
+  Line 1724: "Command Description - kz_autohideweapon"
     Missing (5): fi, it, lv, nl, tr
-  Line 1736: "Command Description - kz_pistol"
+  Line 1737: "Command Description - kz_pistol"
     Missing (5): fi, it, lv, nl, tr
-  Line 1749: "Command Description - kz_rpsave"
+  Line 1750: "Command Description - kz_rpsave"
     Missing (6): fi, it, lv, nl, sv, tr
-  Line 1761: "Command Description - kz_replay"
+  Line 1762: "Command Description - kz_replay"
     Missing (8): de, fi, it, lv, nl, pl, sv, tr
-  Line 1771: "Command Description - kz_replays"
+  Line 1772: "Command Description - kz_replays"
     Missing (6): fi, it, lv, nl, sv, tr
-  Line 1783: "Command Description - kz_rpgoto"
+  Line 1784: "Command Description - kz_rpgoto"
     Missing (6): fi, it, lv, nl, sv, tr
-  Line 1795: "Command Description - kz_rpgototick"
+  Line 1796: "Command Description - kz_rpgototick"
     Missing (6): fi, it, lv, nl, sv, tr
-  Line 1807: "Command Description - kz_rpinfo"
+  Line 1808: "Command Description - kz_rpinfo"
     Missing (6): fi, it, lv, nl, sv, tr
-  Line 1819: "Command Description - kz_rppause"
+  Line 1820: "Command Description - kz_rppause"
     Missing (6): fi, it, lv, nl, sv, tr
-  Line 1831: "Command Description - kz_rptimescale"
+  Line 1832: "Command Description - kz_rptimescale"
+    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 1838: "Command Description - kz_rploadprogress"
+    Missing (6): fi, it, lv, nl, sv, tr
+  Line 1850: "Command Description - kz_rpcancelload"
+    Missing (6): fi, it, lv, nl, sv, tr
+  Line 1862: "Command Description - kz_recordvolume"
+    Missing (6): fi, it, lv, nl, sv, tr
+  Line 1874: "Command Description - kz_cpmessage"
+    Missing (6): fi, it, lv, nl, sv, tr
+  Line 1886: "Command Description - kz_rphidelegs"
+    Missing (6): fi, it, lv, nl, sv, tr
+  Line 1898: "Command Description - kz_rpcontrols"
     Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 1835: "Command Description - kz_rploadprogress"
-    Missing (6): fi, it, lv, nl, sv, tr
-  Line 1847: "Command Description - kz_rpcancelload"
-    Missing (6): fi, it, lv, nl, sv, tr
-  Line 1859: "Command Description - kz_recordvolume"
-    Missing (6): fi, it, lv, nl, sv, tr
-  Line 1871: "Command Description - kz_cpmessage"
-    Missing (6): fi, it, lv, nl, sv, tr
-  Line 1883: "Command Description - kz_rphidelegs"
-    Missing (6): fi, it, lv, nl, sv, tr
-  Line 1895: "Command Description - kz_rpcontrols"
-    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 1899: "Command Description - kz_accept"
+  Line 1902: "Command Description - kz_accept"
     Missing (7): de, fi, it, lv, nl, sv, tr
-  Line 1910: "Command Description - kz_surrender"
+  Line 1913: "Command Description - kz_surrender"
     Missing (7): de, fi, it, lv, nl, sv, tr
-  Line 1921: "Command Description - kz_mapinfo"
+  Line 1924: "Command Description - kz_mapinfo"
     Missing (8): de, fi, it, lv, nl, pl, sv, tr
-  Line 1931: "Command Description - kz_tier"
+  Line 1934: "Command Description - kz_tier"
     Missing (8): de, fi, it, lv, nl, pl, sv, tr
-  Line 1941: "Command Description - kz_modernperfstats"
+  Line 1944: "Command Description - kz_modernperfstats"
     Missing (8): de, fi, it, lv, nl, pl, sv, tr
-  Line 1951: "Command Description - kz_legacyperfstats"
+  Line 1954: "Command Description - kz_legacyperfstats"
     Missing (8): de, fi, it, lv, nl, pl, sv, tr
-  Line 1961: "Command Description - kz_resetperfstats"
+  Line 1964: "Command Description - kz_resetperfstats"
     Missing (8): de, fi, it, lv, nl, pl, sv, tr
-  Line 1971: "Command Description - kz_fov"
+  Line 1974: "Command Description - kz_fov"
     Missing (8): de, fi, it, lv, nl, pl, sv, tr
-  Line 1981: "Command Description - kz_mhud"
+  Line 1984: "Command Description - kz_mhud"
     Missing (9): de, es, fi, it, lv, nl, pl, sv, tr
-  Line 1990: "Command Description - kz_hudedit"
-    Missing (11): chi, de, es, fi, it, ko, lv, nl, pl, sv, tr
-  Line 1997: "Command Description - kz_exportprefs"
-    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2001: "Command Description - kz_mapoverlay"
-    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2005: "Command Description - kz_options"
-    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2009: "Command Description - kz_safeguard"
-    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2013: "Command Description - kz_pro"
-    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2017: "Command Usage - kz_beam"
-    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2021: "Command Usage - kz_beamoffset"
-    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2025: "Command Usage - kz_fov"
-    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2029: "Command Usage - kz_goto"
-    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2033: "Command Usage - kz_help"
-    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2037: "Command Usage - kz_panel"
-    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2041: "Command Usage - kz_jstier"
-    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2045: "Command Usage - kz_jstierhud"
-    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2049: "Command Usage - kz_jstierconsole"
-    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2053: "Command Usage - kz_jssound"
-    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2057: "Command Usage - kz_jsbroadcast"
-    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2061: "Command Usage - kz_jsbroadcastconsole"
-    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2065: "Command Usage - kz_jsbroadcastsound"
-    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2069: "Command Usage - kz_jsvolume"
-    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2073: "Command Usage - kz_language"
-    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2077: "Command Usage - kz_course"
-    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2081: "Command Usage - kz_tier"
-    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2085: "Command Usage - kz_end"
-    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2089: "Command Usage - kz_restart"
-    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2093: "Command Usage - kz_playercheck"
-    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2097: "Command Usage - kz_mode"
-    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2101: "Command Usage - kz_paintcolor"
-    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2105: "Command Usage - kz_paintsize"
-    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2109: "Command Usage - kz_pistol"
-    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2113: "Command Usage - kz_rpsave"
-    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2117: "Command Usage - kz_replay"
-    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2121: "Command Usage - kz_rpgoto"
-    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2125: "Command Usage - kz_rpgototick"
-    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2129: "Command Usage - kz_rptimescale"
-    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2133: "Command Usage - kz_replays"
-    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2137: "Command Usage - kz_spec"
-    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2141: "Command Usage - kz_style"
-    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2145: "Command Usage - kz_togglestyle"
-    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2149: "Command Usage - kz_addstyle"
-    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2153: "Command Usage - kz_removestyle"
-    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2157: "Command Usage - kz_modernperfstats"
-    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2161: "Command Usage - kz_legacyperfstats"
-    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2165: "Command Usage - kz_comparelevel"
-    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2169: "Command Usage - kz_recordvolume"
-    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2173: "Command Usage - kz_ctop"
-    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2177: "Command Usage - kz_gctop"
-    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2181: "Command Usage - kz_sctop"
-    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2185: "Command Usage - kz_pb"
-    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2189: "Command Usage - kz_spb"
-    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2193: "Command Usage - kz_gpb"
-    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2197: "Command Usage - kz_wr"
-    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2201: "Command Usage - kz_sr"
-    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 2205: "Command Usage - kz_ztopwatch"
-    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 1993: "Command Description - kz_hudedit"
+    Missing (10): de, es, fi, it, ko, lv, nl, pl, sv, tr
+  Line 2001: "Command Description - kz_exportprefs"
+    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 2007: "Command Description - kz_mapoverlay"
+    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 2013: "Command Description - kz_options"
+    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 2019: "Command Description - kz_safeguard"
+    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 2025: "Command Description - kz_pro"
+    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 2031: "Command Usage - kz_beam"
+    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 2037: "Command Usage - kz_beamoffset"
+    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 2043: "Command Usage - kz_fov"
+    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 2049: "Command Usage - kz_goto"
+    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 2055: "Command Usage - kz_help"
+    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 2061: "Command Usage - kz_panel"
+    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 2067: "Command Usage - kz_jstier"
+    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 2073: "Command Usage - kz_jstierhud"
+    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 2079: "Command Usage - kz_jstierconsole"
+    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 2085: "Command Usage - kz_jssound"
+    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 2091: "Command Usage - kz_jsbroadcast"
+    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 2097: "Command Usage - kz_jsbroadcastconsole"
+    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 2103: "Command Usage - kz_jsbroadcastsound"
+    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 2109: "Command Usage - kz_jsvolume"
+    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 2115: "Command Usage - kz_language"
+    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 2121: "Command Usage - kz_course"
+    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 2127: "Command Usage - kz_tier"
+    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 2133: "Command Usage - kz_end"
+    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 2139: "Command Usage - kz_restart"
+    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 2145: "Command Usage - kz_playercheck"
+    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 2151: "Command Usage - kz_mode"
+    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 2157: "Command Usage - kz_paintcolor"
+    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 2163: "Command Usage - kz_paintsize"
+    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 2169: "Command Usage - kz_pistol"
+    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 2175: "Command Usage - kz_rpsave"
+    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 2181: "Command Usage - kz_replay"
+    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 2187: "Command Usage - kz_rpgoto"
+    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 2193: "Command Usage - kz_rpgototick"
+    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 2199: "Command Usage - kz_rptimescale"
+    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 2205: "Command Usage - kz_replays"
+    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 2211: "Command Usage - kz_spec"
+    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 2217: "Command Usage - kz_style"
+    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 2223: "Command Usage - kz_togglestyle"
+    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 2229: "Command Usage - kz_addstyle"
+    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 2235: "Command Usage - kz_removestyle"
+    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 2241: "Command Usage - kz_modernperfstats"
+    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 2247: "Command Usage - kz_legacyperfstats"
+    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 2253: "Command Usage - kz_comparelevel"
+    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 2259: "Command Usage - kz_recordvolume"
+    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 2265: "Command Usage - kz_ctop"
+    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 2271: "Command Usage - kz_gctop"
+    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 2277: "Command Usage - kz_sctop"
+    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 2283: "Command Usage - kz_pb"
+    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 2289: "Command Usage - kz_spb"
+    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 2295: "Command Usage - kz_gpb"
+    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 2301: "Command Usage - kz_wr"
+    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 2307: "Command Usage - kz_sr"
+    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 2313: "Command Usage - kz_ztopwatch"
+    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
 
 cs2kz-common.phrases.txt
 ----------------------------------------------------------------------
