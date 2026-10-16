@@ -11,7 +11,7 @@ Automated translation linter reports for cs2kz-metamod.
 | **Total Languages** | 15 |
 | **Total Phrases** | 1091 |
 | **Phrases Missing Translations** | 1091 |
-| **Total Missing Entries** | 7586 |
+| **Total Missing Entries** | 7508 |
 | **Menu Files** | 11 |
 
 ## Language Coverage (Phrases)
@@ -30,7 +30,7 @@ Automated translation linter reports for cs2kz-metamod.
   ru (russian)         [██████████████████░░]  91.1% (994/1091)
   sv (swedish)         [███████░░░░░░░░░░░░░]  35.9% (392/1091)
   tr (turkish)         [████░░░░░░░░░░░░░░░░]  24.0% (262/1091)
-  ua (ukrainian)       [██████████████████░░]  91.2% (995/1091)
+  ua (ukrainian)       [███████████████████░]  98.4% (1073/1091)
   zho (tchinese)       [███████████████████░]  98.0% (1069/1091)
 ```
 
@@ -81,9 +81,9 @@ Automated translation linter reports for cs2kz-metamod.
 
 ## Last Updated
 
-- **Commit:** [`074771d`](https://github.com/KZGlobalTeam/cs2kz-metamod/commit/074771d6e7f69c266594b4da2e7244dabd3462c1)
-- **Time:** 2026-10-16 13:17:57 UTC
-- **Message:** Update Simplified and Traditional Chinese command translations (#662)
+- **Commit:** [`13b4584`](https://github.com/KZGlobalTeam/cs2kz-metamod/commit/13b4584f55e771c0c7e0dc26dd2d6e6046168c39)
+- **Time:** 2026-10-16 13:28:22 UTC
+- **Message:** Ukrainian translations (#663)
 
 ---
 

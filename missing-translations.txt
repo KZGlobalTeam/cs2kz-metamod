@@ -8,7 +8,7 @@ SUMMARY
 Total languages: 15
 Total phrases: 1091
 Phrases with missing translations: 1091
-Total missing translation entries: 7586
+Total missing translation entries: 7508
 
 LANGUAGE COVERAGE (Phrases)
 ----------------------------------------------------------------------
@@ -26,7 +26,7 @@ LANGUAGE COVERAGE (Phrases)
   ru (russian)         [██████████████████░░]  91.1% (994/1091)
   sv (swedish)         [███████░░░░░░░░░░░░░]  35.9% (392/1091)
   tr (turkish)         [████░░░░░░░░░░░░░░░░]  24.0% (262/1091)
-  ua (ukrainian)       [██████████████████░░]  91.2% (995/1091)
+  ua (ukrainian)       [███████████████████░]  98.4% (1073/1091)
   zho (tchinese)       [███████████████████░]  98.0% (1069/1091)
 
 Global languages (15): chi, de, en, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
@@ -413,145 +413,145 @@ cs2kz-commands.phrases.txt
   Line 1820: "Command Description - kz_rppause"
     Missing (6): fi, it, lv, nl, sv, tr
   Line 1832: "Command Description - kz_rptimescale"
-    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
-  Line 1838: "Command Description - kz_rploadprogress"
+    Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
+  Line 1839: "Command Description - kz_rploadprogress"
     Missing (6): fi, it, lv, nl, sv, tr
-  Line 1850: "Command Description - kz_rpcancelload"
+  Line 1851: "Command Description - kz_rpcancelload"
     Missing (6): fi, it, lv, nl, sv, tr
-  Line 1862: "Command Description - kz_recordvolume"
+  Line 1863: "Command Description - kz_recordvolume"
     Missing (6): fi, it, lv, nl, sv, tr
-  Line 1874: "Command Description - kz_cpmessage"
+  Line 1875: "Command Description - kz_cpmessage"
     Missing (6): fi, it, lv, nl, sv, tr
-  Line 1886: "Command Description - kz_rphidelegs"
+  Line 1887: "Command Description - kz_rphidelegs"
     Missing (6): fi, it, lv, nl, sv, tr
-  Line 1898: "Command Description - kz_rpcontrols"
+  Line 1899: "Command Description - kz_rpcontrols"
     Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 1902: "Command Description - kz_accept"
+  Line 1903: "Command Description - kz_accept"
     Missing (7): de, fi, it, lv, nl, sv, tr
-  Line 1913: "Command Description - kz_surrender"
+  Line 1914: "Command Description - kz_surrender"
     Missing (7): de, fi, it, lv, nl, sv, tr
-  Line 1924: "Command Description - kz_mapinfo"
+  Line 1925: "Command Description - kz_mapinfo"
     Missing (8): de, fi, it, lv, nl, pl, sv, tr
-  Line 1934: "Command Description - kz_tier"
+  Line 1935: "Command Description - kz_tier"
     Missing (8): de, fi, it, lv, nl, pl, sv, tr
-  Line 1944: "Command Description - kz_modernperfstats"
+  Line 1945: "Command Description - kz_modernperfstats"
     Missing (8): de, fi, it, lv, nl, pl, sv, tr
-  Line 1954: "Command Description - kz_legacyperfstats"
+  Line 1955: "Command Description - kz_legacyperfstats"
     Missing (8): de, fi, it, lv, nl, pl, sv, tr
-  Line 1964: "Command Description - kz_resetperfstats"
+  Line 1965: "Command Description - kz_resetperfstats"
     Missing (8): de, fi, it, lv, nl, pl, sv, tr
-  Line 1974: "Command Description - kz_fov"
+  Line 1975: "Command Description - kz_fov"
     Missing (8): de, fi, it, lv, nl, pl, sv, tr
-  Line 1984: "Command Description - kz_mhud"
+  Line 1985: "Command Description - kz_mhud"
     Missing (9): de, es, fi, it, lv, nl, pl, sv, tr
-  Line 1993: "Command Description - kz_hudedit"
+  Line 1994: "Command Description - kz_hudedit"
     Missing (10): de, es, fi, it, ko, lv, nl, pl, sv, tr
-  Line 2001: "Command Description - kz_exportprefs"
-    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
-  Line 2007: "Command Description - kz_mapoverlay"
-    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
-  Line 2013: "Command Description - kz_options"
-    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
-  Line 2019: "Command Description - kz_safeguard"
-    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
-  Line 2025: "Command Description - kz_pro"
-    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
-  Line 2031: "Command Usage - kz_beam"
-    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
-  Line 2037: "Command Usage - kz_beamoffset"
-    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
-  Line 2043: "Command Usage - kz_fov"
-    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
-  Line 2049: "Command Usage - kz_goto"
-    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
-  Line 2055: "Command Usage - kz_help"
-    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
-  Line 2061: "Command Usage - kz_panel"
-    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
-  Line 2067: "Command Usage - kz_jstier"
-    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
-  Line 2073: "Command Usage - kz_jstierhud"
-    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
-  Line 2079: "Command Usage - kz_jstierconsole"
-    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
-  Line 2085: "Command Usage - kz_jssound"
-    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
-  Line 2091: "Command Usage - kz_jsbroadcast"
-    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
-  Line 2097: "Command Usage - kz_jsbroadcastconsole"
-    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
-  Line 2103: "Command Usage - kz_jsbroadcastsound"
-    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
-  Line 2109: "Command Usage - kz_jsvolume"
-    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
-  Line 2115: "Command Usage - kz_language"
-    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
-  Line 2121: "Command Usage - kz_course"
-    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
-  Line 2127: "Command Usage - kz_tier"
-    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
-  Line 2133: "Command Usage - kz_end"
-    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
-  Line 2139: "Command Usage - kz_restart"
-    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
-  Line 2145: "Command Usage - kz_playercheck"
-    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
-  Line 2151: "Command Usage - kz_mode"
-    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
-  Line 2157: "Command Usage - kz_paintcolor"
-    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
-  Line 2163: "Command Usage - kz_paintsize"
-    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
-  Line 2169: "Command Usage - kz_pistol"
-    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
-  Line 2175: "Command Usage - kz_rpsave"
-    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
-  Line 2181: "Command Usage - kz_replay"
-    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
-  Line 2187: "Command Usage - kz_rpgoto"
-    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
-  Line 2193: "Command Usage - kz_rpgototick"
-    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
-  Line 2199: "Command Usage - kz_rptimescale"
-    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
-  Line 2205: "Command Usage - kz_replays"
-    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
-  Line 2211: "Command Usage - kz_spec"
-    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
-  Line 2217: "Command Usage - kz_style"
-    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
-  Line 2223: "Command Usage - kz_togglestyle"
-    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
-  Line 2229: "Command Usage - kz_addstyle"
-    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
-  Line 2235: "Command Usage - kz_removestyle"
-    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
-  Line 2241: "Command Usage - kz_modernperfstats"
-    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
-  Line 2247: "Command Usage - kz_legacyperfstats"
-    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
-  Line 2253: "Command Usage - kz_comparelevel"
-    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
-  Line 2259: "Command Usage - kz_recordvolume"
-    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
-  Line 2265: "Command Usage - kz_ctop"
-    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
-  Line 2271: "Command Usage - kz_gctop"
-    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
-  Line 2277: "Command Usage - kz_sctop"
-    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
-  Line 2283: "Command Usage - kz_pb"
-    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
-  Line 2289: "Command Usage - kz_spb"
-    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
-  Line 2295: "Command Usage - kz_gpb"
-    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
-  Line 2301: "Command Usage - kz_wr"
-    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
-  Line 2307: "Command Usage - kz_sr"
-    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
-  Line 2313: "Command Usage - kz_ztopwatch"
-    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+  Line 2002: "Command Description - kz_exportprefs"
+    Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
+  Line 2009: "Command Description - kz_mapoverlay"
+    Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
+  Line 2016: "Command Description - kz_options"
+    Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
+  Line 2023: "Command Description - kz_safeguard"
+    Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
+  Line 2030: "Command Description - kz_pro"
+    Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
+  Line 2037: "Command Usage - kz_beam"
+    Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
+  Line 2044: "Command Usage - kz_beamoffset"
+    Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
+  Line 2051: "Command Usage - kz_fov"
+    Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
+  Line 2058: "Command Usage - kz_goto"
+    Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
+  Line 2065: "Command Usage - kz_help"
+    Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
+  Line 2072: "Command Usage - kz_panel"
+    Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
+  Line 2079: "Command Usage - kz_jstier"
+    Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
+  Line 2086: "Command Usage - kz_jstierhud"
+    Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
+  Line 2093: "Command Usage - kz_jstierconsole"
+    Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
+  Line 2100: "Command Usage - kz_jssound"
+    Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
+  Line 2107: "Command Usage - kz_jsbroadcast"
+    Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
+  Line 2114: "Command Usage - kz_jsbroadcastconsole"
+    Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
+  Line 2121: "Command Usage - kz_jsbroadcastsound"
+    Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
+  Line 2128: "Command Usage - kz_jsvolume"
+    Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
+  Line 2135: "Command Usage - kz_language"
+    Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
+  Line 2142: "Command Usage - kz_course"
+    Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
+  Line 2149: "Command Usage - kz_tier"
+    Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
+  Line 2156: "Command Usage - kz_end"
+    Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
+  Line 2163: "Command Usage - kz_restart"
+    Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
+  Line 2170: "Command Usage - kz_playercheck"
+    Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
+  Line 2177: "Command Usage - kz_mode"
+    Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
+  Line 2184: "Command Usage - kz_paintcolor"
+    Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
+  Line 2191: "Command Usage - kz_paintsize"
+    Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
+  Line 2198: "Command Usage - kz_pistol"
+    Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
+  Line 2205: "Command Usage - kz_rpsave"
+    Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
+  Line 2212: "Command Usage - kz_replay"
+    Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
+  Line 2219: "Command Usage - kz_rpgoto"
+    Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
+  Line 2226: "Command Usage - kz_rpgototick"
+    Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
+  Line 2233: "Command Usage - kz_rptimescale"
+    Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
+  Line 2240: "Command Usage - kz_replays"
+    Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
+  Line 2247: "Command Usage - kz_spec"
+    Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
+  Line 2254: "Command Usage - kz_style"
+    Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
+  Line 2261: "Command Usage - kz_togglestyle"
+    Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
+  Line 2268: "Command Usage - kz_addstyle"
+    Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
+  Line 2275: "Command Usage - kz_removestyle"
+    Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
+  Line 2282: "Command Usage - kz_modernperfstats"
+    Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
+  Line 2289: "Command Usage - kz_legacyperfstats"
+    Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
+  Line 2296: "Command Usage - kz_comparelevel"
+    Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
+  Line 2303: "Command Usage - kz_recordvolume"
+    Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
+  Line 2310: "Command Usage - kz_ctop"
+    Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
+  Line 2317: "Command Usage - kz_gctop"
+    Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
+  Line 2324: "Command Usage - kz_sctop"
+    Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
+  Line 2331: "Command Usage - kz_pb"
+    Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
+  Line 2338: "Command Usage - kz_spb"
+    Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
+  Line 2345: "Command Usage - kz_gpb"
+    Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
+  Line 2352: "Command Usage - kz_wr"
+    Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
+  Line 2359: "Command Usage - kz_sr"
+    Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
+  Line 2366: "Command Usage - kz_ztopwatch"
+    Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
 
 cs2kz-common.phrases.txt
 ----------------------------------------------------------------------
@@ -652,45 +652,45 @@ cs2kz-goto.phrases.txt
 cs2kz-help.phrases.txt
 ----------------------------------------------------------------------
   Line 4: "Help - Title"
-    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
-  Line 10: "Help - Hint"
-    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
-  Line 16: "Help - Usage"
-    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
-  Line 23: "Help - Category - Checkpoint"
-    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
-  Line 29: "Help - Category - Record"
-    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
-  Line 35: "Help - Category - Jumpstats"
-    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
-  Line 41: "Help - Category - Measure"
-    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
-  Line 47: "Help - Category - ModeStyle"
-    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
-  Line 53: "Help - Category - Preference"
-    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
-  Line 59: "Help - Category - Racing"
-    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
-  Line 65: "Help - Category - Replay"
-    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
-  Line 71: "Help - Category - Saveloc"
-    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
-  Line 77: "Help - Category - Spec"
-    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
-  Line 83: "Help - Category - Status"
-    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
-  Line 89: "Help - Category - Timer"
-    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
-  Line 95: "Help - Category - Player"
-    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
-  Line 101: "Help - Category - Global"
-    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
-  Line 107: "Help - Category - Misc"
-    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
-  Line 113: "Help - Category - Map"
-    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
-  Line 119: "Help - Category - HUD"
-    Missing (12): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua
+    Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
+  Line 11: "Help - Hint"
+    Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
+  Line 18: "Help - Usage"
+    Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
+  Line 26: "Help - Category - Checkpoint"
+    Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
+  Line 33: "Help - Category - Record"
+    Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
+  Line 40: "Help - Category - Jumpstats"
+    Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
+  Line 47: "Help - Category - Measure"
+    Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
+  Line 54: "Help - Category - ModeStyle"
+    Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
+  Line 61: "Help - Category - Preference"
+    Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
+  Line 68: "Help - Category - Racing"
+    Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
+  Line 75: "Help - Category - Replay"
+    Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
+  Line 82: "Help - Category - Saveloc"
+    Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
+  Line 89: "Help - Category - Spec"
+    Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
+  Line 96: "Help - Category - Status"
+    Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
+  Line 103: "Help - Category - Timer"
+    Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
+  Line 110: "Help - Category - Player"
+    Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
+  Line 117: "Help - Category - Global"
+    Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
+  Line 124: "Help - Category - Misc"
+    Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
+  Line 131: "Help - Category - Map"
+    Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
+  Line 138: "Help - Category - HUD"
+    Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
 
 cs2kz-hud.phrases.txt
 ----------------------------------------------------------------------
@@ -1752,166 +1752,166 @@ cs2kz-replays.phrases.txt
   Line 287: "Replay - Resumed"
     Missing (7): es, fi, it, lv, nl, sv, tr
   Line 298: "Replay - Timescale Set"
-    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 303: "Replay - Current Timescale"
-    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 308: "Replay - Usage Timescale"
-    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 312: "Replay - Invalid Timescale"
-    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 317: "Replay - Loading"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, zho
+  Line 304: "Replay - Current Timescale"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, zho
+  Line 310: "Replay - Usage Timescale"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, zho
+  Line 315: "Replay - Invalid Timescale"
+    Missing (13): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, zho
+  Line 321: "Replay - Loading"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 328: "Replay - Loading Already"
+  Line 332: "Replay - Loading Already"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 339: "Replay - Invalid UUID"
+  Line 343: "Replay - Invalid UUID"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 350: "Replay - Multiple Matches"
+  Line 354: "Replay - Multiple Matches"
     Missing (9): de, es, fi, it, lv, nl, pl, sv, tr
-  Line 360: "Replay - Loaded Successfully"
+  Line 364: "Replay - Loaded Successfully"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 371: "Replay - No Loading Progress"
+  Line 375: "Replay - No Loading Progress"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 382: "Replay - Loading Progress"
+  Line 386: "Replay - Loading Progress"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 394: "Replay - Loading Completed"
+  Line 398: "Replay - Loading Completed"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 405: "Replay - Loading Cancelled"
+  Line 409: "Replay - Loading Cancelled"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 416: "Replay - Usage Command"
+  Line 420: "Replay - Usage Command"
     Missing (9): de, es, fi, it, lv, nl, pl, sv, tr
-  Line 425: "Replay - Load Cancelled"
+  Line 429: "Replay - Load Cancelled"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 436: "Replay - Invalid File Format"
+  Line 440: "Replay - Invalid File Format"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 447: "Replay - Manual Replay Failed"
+  Line 451: "Replay - Manual Replay Failed"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 458: "Replay - Invalid Manual Replay Duration"
+  Line 462: "Replay - Invalid Manual Replay Duration"
     Missing (10): de, es, fi, it, ko, lv, nl, pl, sv, tr
-  Line 466: "Replay - Manual Replay Saved"
+  Line 470: "Replay - Manual Replay Saved"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 478: "Replay - Manual Replay Saved (Console)"
+  Line 482: "Replay - Manual Replay Saved (Console)"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 490: "Replay - Run Replay Failed"
+  Line 494: "Replay - Run Replay Failed"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 501: "Replay - Run Replay Saved"
+  Line 505: "Replay - Run Replay Saved"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 513: "Replay - Run Replay Saved (Console)"
+  Line 517: "Replay - Run Replay Saved (Console)"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 525: "Replay - Wrong Map"
+  Line 529: "Replay - Wrong Map"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 537: "Replay - Unknown Mode"
+  Line 541: "Replay - Unknown Mode"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 549: "Replay - Unknown Style"
+  Line 553: "Replay - Unknown Style"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 561: "Replay List - Check Console"
+  Line 565: "Replay List - Check Console"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 572: "Replay List - Usage Title"
+  Line 576: "Replay List - Usage Title"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 584: "Replay List - Usage General Options"
+  Line 588: "Replay List - Usage General Options"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 601: "Replay List - Usage Type Options"
+  Line 605: "Replay List - Usage Type Options"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 616: "Replay List - No Matching Replays"
+  Line 620: "Replay List - No Matching Replays"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 627: "Cheater Replays - Table Name"
+  Line 631: "Cheater Replays - Table Name"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 638: "Run Replays - Table Name"
+  Line 642: "Run Replays - Table Name"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 649: "Jump Replays - Table Name"
+  Line 653: "Jump Replays - Table Name"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 660: "Manual Replays - Table Name"
+  Line 664: "Manual Replays - Table Name"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 671: "Replay Table Header - Player"
+  Line 675: "Replay Table Header - Player"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 682: "Replay Table Header - Map"
+  Line 686: "Replay Table Header - Map"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 693: "Replay Table Header - Reason"
+  Line 697: "Replay Table Header - Reason"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 704: "Replay Table Header - SteamID"
+  Line 708: "Replay Table Header - SteamID"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 715: "Replay Table Header - UUID"
+  Line 719: "Replay Table Header - UUID"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 726: "Replay Table Header - Course"
+  Line 730: "Replay Table Header - Course"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 737: "Replay Table Header - Mode"
+  Line 741: "Replay Table Header - Mode"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 748: "Replay Table Header - Styles"
+  Line 752: "Replay Table Header - Styles"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 759: "Replay Table Header - Time"
+  Line 763: "Replay Table Header - Time"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 770: "Replay Table Header - Teleports"
+  Line 774: "Replay Table Header - Teleports"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 781: "Replay Table Header - Jump Type"
+  Line 785: "Replay Table Header - Jump Type"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 792: "Replay Table Header - Distance"
+  Line 796: "Replay Table Header - Distance"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 803: "Replay Table Header - Block"
+  Line 807: "Replay Table Header - Block"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 814: "Replay Table Header - Strafes"
+  Line 818: "Replay Table Header - Strafes"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 825: "Replay Table Header - Saved By"
+  Line 829: "Replay Table Header - Saved By"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 836: "Replay - Not Found"
+  Line 840: "Replay - Not Found"
     Missing (9): de, es, fi, it, lv, nl, pl, sv, tr
-  Line 845: "Replay - No Course"
+  Line 849: "Replay - No Course"
     Missing (9): de, es, fi, it, lv, nl, pl, sv, tr
-  Line 854: "Replay - Invalid Mode Arg"
+  Line 858: "Replay - Invalid Mode Arg"
     Missing (9): de, es, fi, it, lv, nl, pl, sv, tr
-  Line 863: "Replay - SR Not Found"
+  Line 867: "Replay - SR Not Found"
     Missing (9): de, es, fi, it, lv, nl, pl, sv, tr
-  Line 872: "Replay - SPB Not Found"
+  Line 876: "Replay - SPB Not Found"
     Missing (9): de, es, fi, it, lv, nl, pl, sv, tr
-  Line 881: "Replay - Global Mode Only"
+  Line 885: "Replay - Global Mode Only"
     Missing (9): de, es, fi, it, lv, nl, pl, sv, tr
-  Line 890: "Replay - API Not Available"
+  Line 894: "Replay - API Not Available"
     Missing (9): de, es, fi, it, lv, nl, pl, sv, tr
-  Line 899: "Replay - Querying WR"
+  Line 903: "Replay - Querying WR"
     Missing (9): de, es, fi, it, lv, nl, pl, sv, tr
-  Line 908: "Replay - WR Not Found"
+  Line 912: "Replay - WR Not Found"
     Missing (9): de, es, fi, it, lv, nl, pl, sv, tr
-  Line 917: "Replay - Querying GPB"
+  Line 921: "Replay - Querying GPB"
     Missing (9): de, es, fi, it, lv, nl, pl, sv, tr
-  Line 926: "Replay - GPB Not Found"
+  Line 930: "Replay - GPB Not Found"
     Missing (9): de, es, fi, it, lv, nl, pl, sv, tr
-  Line 935: "Replay Request - Sending"
+  Line 939: "Replay Request - Sending"
     Missing (9): de, es, fi, it, lv, nl, pl, sv, tr
-  Line 945: "Replay Request - Already Requested"
+  Line 949: "Replay Request - Already Requested"
     Missing (9): de, es, fi, it, lv, nl, pl, sv, tr
-  Line 955: "Replay Request - Error"
+  Line 959: "Replay Request - Error"
     Missing (9): de, es, fi, it, lv, nl, pl, sv, tr
-  Line 964: "Replay Controls - Not Watching"
+  Line 968: "Replay Controls - Not Watching"
     Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 968: "Replay Controls - Show Cursor"
+  Line 972: "Replay Controls - Show Cursor"
     Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 972: "Replay Controls - Hide Cursor"
+  Line 976: "Replay Controls - Hide Cursor"
     Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 976: "Replay Controls - Skip Breather"
+  Line 980: "Replay Controls - Skip Breather"
     Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 980: "Replay Controls - Skip Pause"
+  Line 984: "Replay Controls - Skip Pause"
     Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 984: "Replay Controls - Tick"
+  Line 988: "Replay Controls - Tick"
     Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 988: "Replay Controls - Previous Tick"
+  Line 992: "Replay Controls - Previous Tick"
     Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 992: "Replay Controls - Next Tick"
+  Line 996: "Replay Controls - Next Tick"
     Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 996: "Replay Controls - Split"
+  Line 1000: "Replay Controls - Split"
     Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 1001: "Replay Controls - Checkpoint"
+  Line 1005: "Replay Controls - Checkpoint"
     Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 1006: "Replay Controls - Stage"
+  Line 1010: "Replay Controls - Stage"
     Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 1011: "Replay Controls - Zone Split"
+  Line 1015: "Replay Controls - Zone Split"
     Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 1015: "Replay Controls - Zone Checkpoint"
+  Line 1019: "Replay Controls - Zone Checkpoint"
     Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 1019: "Replay Controls - Zone Stage"
+  Line 1023: "Replay Controls - Zone Stage"
     Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 1023: "Replay Controls - Zone Teleport"
+  Line 1027: "Replay Controls - Zone Teleport"
     Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 1027: "Replay Controls - Time"
+  Line 1031: "Replay Controls - Time"
     Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 1031: "Replay Controls - Hide Controls"
+  Line 1035: "Replay Controls - Hide Controls"
     Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
 
 cs2kz-spec.phrases.txt
