@@ -12,15 +12,13 @@
 #include "sdk/usercmd.h"
 
 #include "steam/steam_gameserver.h"
-#include "filesystem.h"
+#include "filesystem/ifilesystem.h"
 #include "vprof.h"
 
 #include <set>
 
 CConVar<i32> kz_replay_recording_min_jump_tier("kz_replay_recording_min_jump_tier", FCVAR_CHEAT, "Minimum jump tier to record for jumpstat replays",
 											   DistanceTier_Wrecker, true, DistanceTier_Meh, true, DistanceTier_Wrecker);
-
-extern CSteamGameServerAPIContext g_steamAPI;
 
 ReplayFileWriter *KZRecordingService::fileWriter = nullptr;
 
@@ -59,8 +57,7 @@ void Recorder::Init(ReplayHeader &hdr, KZPlayer *player, ReplayType type)
 	time_t unixTime = 0;
 	time(&unixTime);
 	hdr.set_timestamp((u64)unixTime);
-	hdr.set_server_ip(CommandLine()->HasParm("-dedicated") && g_steamAPI.SteamGameServer() ? g_steamAPI.SteamGameServer()->GetPublicIP().m_unIPv4
-																						   : 0);
+	hdr.set_server_ip(CommandLine()->HasParm("-dedicated") && SteamGameServer() ? SteamGameServer()->GetPublicIP().m_unIPv4 : 0);
 
 	// Player info
 	auto *playerMsg = hdr.mutable_player();

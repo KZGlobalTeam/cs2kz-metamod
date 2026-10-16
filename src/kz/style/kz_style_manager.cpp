@@ -1,6 +1,6 @@
 #include "kz_style.h"
 
-#include "filesystem.h"
+#include "filesystem/ifilesystem.h"
 
 #include "utils/utils.h"
 #include "interfaces/interfaces.h"

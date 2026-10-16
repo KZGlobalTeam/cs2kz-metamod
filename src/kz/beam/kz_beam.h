@@ -1,6 +1,6 @@
 #pragma once
 #include "kz/kz.h"
-#include "tier1/circularbuffer.h"
+#include "tier0/circularbuffer.h"
 
 class KZBeamService : public KZBaseService
 {

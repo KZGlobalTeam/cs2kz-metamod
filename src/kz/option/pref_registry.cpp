@@ -1,7 +1,7 @@
 #include "kz/option/pref_registry.h"
 #include "kz/option/kz_option.h"
 
-#include "tier1/strtools.h"
+#include "tier0/tier0_strtools.h"
 
 #include <cmath>
 

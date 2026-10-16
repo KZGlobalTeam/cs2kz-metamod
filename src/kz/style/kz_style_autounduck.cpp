@@ -153,11 +153,6 @@ bool KZAutoUnduckStylePlugin::Unpause(char *error, size_t maxlen)
 	return true;
 }
 
-CGameEntitySystem *GameEntitySystem()
-{
-	return g_pKZUtils->GetGameEntitySystem();
-}
-
 void KZAutoUnduckStyleService::OnProcessMovement()
 {
 	this->UpdateDuckTime();

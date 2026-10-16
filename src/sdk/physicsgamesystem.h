@@ -1,10 +1,11 @@
 #pragma once
 #include "gametrace.h"
-#include "tier1/utlmap.h"
+#include "tier0/utlmap.h"
 #include "mathlib/transform.h"
-#include "tier1/utlvector.h"
-#include "tier1/utlleanvector.h"
-#include "tier1/utlstring.h"
+#include "tier0/utlvector.h"
+#include "tier0/utlvectorultraconservative.h"
+#include "tier0/utlleanvector.h"
+#include "tier0/utlstring.h"
 
 typedef CUtlVector<Vector> CUtlVectorSIMDPaddedVector;
 

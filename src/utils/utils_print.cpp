@@ -1,6 +1,6 @@
 #include "usermessages.pb.h"
 #include "public/networksystem/inetworkmessages.h"
-#include "igameeventsystem.h"
+#include "engine2/igameeventsystem.h"
 #include "sdk/entity/cbaseplayercontroller.h"
 #include "sdk/recipientfilters.h"
 #include "utils.h"

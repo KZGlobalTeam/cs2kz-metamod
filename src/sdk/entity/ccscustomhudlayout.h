@@ -1,6 +1,6 @@
 #pragma once
 #include "cbaseentity.h"
-#include "tier1/utlstring.h"
+#include "tier0/utlstring.h"
 #ifndef IDA_IGNORE
 
 // Panel ids, class names and dialog variable names are interned into the layout's networked string

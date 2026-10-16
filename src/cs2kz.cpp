@@ -3,8 +3,8 @@
 #include "entity2/entitysystem.h"
 #include "steam/steam_gameserver.h"
 
-#include "sdk/cgameresourceserviceserver.h"
 #include "utils/utils.h"
+#include "utils/addresses.h"
 #include "utils/hooks.h"
 #include "utils/gameconfig.h"
 #include "utils/async_file_io.h"
@@ -48,7 +48,6 @@ KZPlugin g_KZPlugin;
 
 IMultiAddonManager *g_pMultiAddonManager;
 ICS2Menus *g_pMenus;
-CSteamGameServerAPIContext g_steamAPI;
 
 PLUGIN_EXPOSE(KZPlugin, g_KZPlugin);
 
@@ -114,7 +113,6 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 	KZAnticheatService::Init();
 	if (late)
 	{
-		g_steamAPI.Init();
 		g_pKZPlayerManager->OnLateLoad();
 		// We need to reset the map for mapping api to properly load in.
 		utils::ResetMap();
@@ -263,9 +261,4 @@ void KZPlugin::UpdateSelfMD5()
 	const char *path;
 	pluginManager->Query(g_PLID, &path, nullptr, nullptr);
 	g_pKZUtils->GetFileMD5(path, this->md5, sizeof(this->md5));
-}
-
-CGameEntitySystem *GameEntitySystem()
-{
-	return interfaces::pGameResourceServiceServer->GetGameEntitySystem();
 }

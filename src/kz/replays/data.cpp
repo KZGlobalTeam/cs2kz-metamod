@@ -1,6 +1,6 @@
 #include "cs2kz.h"
 #include "data.h"
-#include "filesystem.h"
+#include "filesystem/ifilesystem.h"
 #include "utils/utils.h"
 #include "utils/uuid.h"
 #include "compression.h"

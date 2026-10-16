@@ -3,7 +3,7 @@
 #include "kz/option/menu/tables.h"
 #include "sdk/entity/ccscustomhudlayout.h"
 #include "sdk/datatypes.h"
-#include "checktransmitinfo.h"
+#include "engine2/isource2server.h"
 #include "entitykeyvalues.h"
 #include "utils/utils.h"
 #include "cs2kz.h"
@@ -123,7 +123,6 @@ namespace KZ::ui
 			i32 ownerSlot;
 		};
 
-		static_persist const i32 offset = g_pGameConfig->GetOffset("QuietPlayerSlot");
 		static_persist std::vector<Owned> owned;
 		owned.clear();
 		for (PlayerLayout *playerLayout : GetPlayerLayouts())
@@ -139,13 +138,13 @@ namespace KZ::ui
 		}
 		for (i32 i = 0; i < infoCount; i++)
 		{
-			TransmitInfo *info = reinterpret_cast<TransmitInfo *>(pInfo[i]);
-			const i32 recipient = *reinterpret_cast<int *>(reinterpret_cast<uintptr_t>(info) + offset);
+			CCheckTransmitInfo *info = pInfo[i];
+			const i32 recipient = info->m_nPlayerSlot.Get();
 			for (const Owned &entry : owned)
 			{
 				if (entry.ownerSlot != recipient)
 				{
-					info->m_pTransmitEdict->Clear(entry.entIndex);
+					info->m_pTransmitEntity->Clear(entry.entIndex);
 				}
 			}
 		}

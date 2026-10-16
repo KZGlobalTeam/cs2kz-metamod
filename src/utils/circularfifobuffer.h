@@ -4,7 +4,7 @@
 #include <memory>
 #include <algorithm>
 #include <cstring>
-#include "filesystem.h"
+#include "filesystem/ifilesystem.h"
 #include "vprof.h"
 
 template<typename T, size_t SIZE>

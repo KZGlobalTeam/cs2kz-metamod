@@ -12,7 +12,7 @@
 #include "utils/async_file_io.h"
 #include "utils/http.h"
 #include "utils/utils.h"
-#include "filesystem.h"
+#include "filesystem/ifilesystem.h"
 
 using namespace KZ::replaysystem;
 

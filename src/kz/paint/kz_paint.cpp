@@ -7,7 +7,7 @@
 #include "utils/utils.h"
 #include "sdk/tracefilter.h"
 #include "sdk/navphysicsinterface.h"
-#include "sdk/cglobalsymbol.h"
+#include "tier0/globalsymbol.h"
 #include "sdk/recipientfilters.h"
 
 void KZPaintService::Init()

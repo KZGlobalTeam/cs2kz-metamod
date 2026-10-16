@@ -5,7 +5,8 @@
 #include "smartptr.h"
 #include "utldelegate.h"
 #include "entityinstance.h"
-#include "schemasystem/schematypes.h"
+#include "schemasystem/schemasystem.h"
+#include "networksystem/networkvar.h"
 #undef schema
 class CBasePlayerController;
 
@@ -13,21 +14,6 @@ struct SchemaKey
 {
 	uint32 offset;
 	bool networked;
-};
-
-struct CNetworkVarChainer : public CSmartPtr<CEntityInstance>
-{
-	struct ChainUpdateEntry_t
-	{
-		CUtlDelegate<void(const CNetworkVarChainer &)> updateDelegate;
-		const char *pszFieldName;
-		uint32 nOwnerOffset;
-	};
-
-	CUtlVector<ChainUpdateEntry_t> m_ChainUpdates;
-	ChangeAccessorFieldPathIndex_t m_PathIndex;
-	// If true, the entity instance will have its NetworkStateChanged called when the value changes.
-	bool m_bNetworkingEnabled;
 };
 
 void EntityNetworkStateChanged(uintptr_t pEntity, uint nOffset);

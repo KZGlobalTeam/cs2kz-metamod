@@ -49,7 +49,8 @@ static_global std::string GetDefaultMapName()
 	}
 }
 
-static_global void OnCvarChanged(ConVarRefAbstract *ref, CSplitScreenSlot nSlot, const char *pNewValue, const char *pOldValue, void *__unk01)
+static_global void OnCvarChanged(ConVarRefAbstract *ref, CSplitScreenSlot nSlot, const char *pNewValue, const char *pOldValue,
+								 ConVarUserInfoSet_t *__unk01)
 {
 	assert(mp_timelimit.IsValidRef() && mp_timelimit.IsConVarDataAvailable());
 	assert(mp_roundtime.IsValidRef() && mp_roundtime.IsConVarDataAvailable());

@@ -1,6 +1,7 @@
 #include "player.h"
 #include "utils/utils.h"
-#include "iserver.h"
+#include "engine2/inetworkgameserver.h"
+#include "engine2/inetworkserverservice.h"
 
 Player *PlayerManager::ToPlayer(CPlayerPawnComponent *component)
 {

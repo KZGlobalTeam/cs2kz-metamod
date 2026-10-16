@@ -1,7 +1,7 @@
 #pragma once
 #include "common.h"
 #include "steam/isteamuser.h"
-#include "sdk/serversideclient.h"
+#include "engine2/serversideclient.h"
 #include "sdk/datatypes.h"
 #include "sdk/services.h"
 #include "sdk/entity/ccsplayercontroller.h"
@@ -63,7 +63,7 @@ public:
 
 	bool IsInGame()
 	{
-		return GetClient() ? GetClient()->IsInGame() : false;
+		return GetClient() ? GetClient()->IsActive() : false;
 	}
 
 	bool IsFakeClient()

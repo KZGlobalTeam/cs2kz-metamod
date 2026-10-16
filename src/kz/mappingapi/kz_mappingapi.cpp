@@ -15,7 +15,8 @@
 #include "kz/language/kz_language.h"
 #include "utils/simplecmds.h"
 #include "utils/tables.h"
-#include "UtlSortVector.h"
+#include "tier0/utlsortvector.h"
+#include <memory>
 
 #include "tier0/memdbgon.h"
 
@@ -514,7 +515,9 @@ static_function void Mapi_OnInfoTeleportDestinationSpawn(const EntitySpawnInfo_t
 
 void KZ::mapapi::Init()
 {
-	g_mappingApi = {};
+	// Not `= {}`: moving a CUtlVectorFixed doesn't compile in s2sdk (its fixed memory has no Swap).
+	std::destroy_at(&g_mappingApi);
+	new (&g_mappingApi) decltype(g_mappingApi)();
 
 	g_errorTimer = g_errorTimer ? g_errorTimer : StartTimer(Mapi_PrintErrors, true);
 }

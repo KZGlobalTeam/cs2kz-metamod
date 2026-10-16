@@ -8,13 +8,16 @@
 #include "utils/ctimer.h"
 
 #include "entityclass.h"
-#include "gamesystems/spawngroup_manager.h"
+#include "spawngroupmgrgamesystem.h"
 #include "steam/steam_gameserver.h"
-#include "bufferstring.h"
-#include "igameeventsystem.h"
+#include "tier0/buffer_string.h"
+#include "engine2/igameeventsystem.h"
+#include "engine2/gamesessionconfiguration.h"
+#include "engine2/inetworkserverservice.h"
+#include "engine2/networkgameserverbase.h"
 #include "igamesystem.h"
 #include "entityclass.h"
-#include "gamesystems/spawngroup_manager.h"
+#include "spawngroupmgrgamesystem.h"
 #include "utils/simplecmds.h"
 #include "utils/gamesystem.h"
 #include "utils/async_file_io.h"
@@ -62,12 +65,7 @@
 
 #include "memdbgon.h"
 
-extern CSteamGameServerAPIContext g_steamAPI;
 extern CGameConfig *g_pGameConfig;
-
-class GameSessionConfiguration_t
-{
-};
 
 class EntListener : public IEntityListener
 {
@@ -258,7 +256,6 @@ static KHook::Virtual<ISource2Server, void, bool, bool, bool> gameFrameHook(Game
 static KHook::Return<void> GameServerSteamAPIActivatedPre(ISource2Server *pThis)
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
-	g_steamAPI.Init();
 	g_pKZPlayerManager->OnSteamAPIActivated();
 	return {KHook::Action::Ignore};
 }
