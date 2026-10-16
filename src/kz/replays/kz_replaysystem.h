@@ -1,6 +1,4 @@
-
-#ifndef KZ_REPLAYSYSTEM_H
-#define KZ_REPLAYSYSTEM_H
+#pragma once
 #include "sdk/datatypes.h"
 
 class KZPlayer;
@@ -10,6 +8,7 @@ class CUserCmd;
 class CBasePlayerWeapon;
 struct EconInfo;
 class CBaseTrigger;
+struct KZCourseDescriptor;
 
 namespace KZ::replaysystem
 {
@@ -33,6 +32,9 @@ namespace KZ::replaysystem
 	bool OnPlayerRunCommandPre(KZPlayer *player, PlayerCommand *command);
 	bool IsReplayBot(KZPlayer *player);
 	bool CanTouchTrigger(KZPlayer *player, CBaseTrigger *trigger);
+	// The playback controls shown to players watching the replay bot.
+	void UpdateControls(KZPlayer *player);
+	void OnProcessUsercmds(KZPlayer *player, PlayerCommand *cmds, i32 numCmds);
 
 	namespace item
 	{
@@ -45,6 +47,25 @@ namespace KZ::replaysystem
 		void ApplyModelAttributesToPawn(CCSPlayerPawn *pawn, const EconInfo &info, const char *modelName);
 	} // namespace item
 
+	struct RunStatus
+	{
+		// False for replays that never have a timer.
+		bool timed;
+		// The course of the last timer start, null before the first one.
+		const KZCourseDescriptor *course;
+		bool running;
+		i32 stages;
+		i32 checkpoints;
+		i32 splits;
+		// The recorded run's time when this is a run replay of that course, 0 otherwise.
+		f64 runTime;
+		bool runPro;
+	};
+
+	RunStatus GetRunStatus();
+	// The name of the player the replay was recorded from.
+	const char *GetPlayerName();
+
 	i32 GetCurrentCpIndex();
 	i32 GetCheckpointCount();
 	i32 GetTeleportCount();
@@ -56,5 +77,3 @@ namespace KZ::replaysystem
 	void InitWatcher();
 	void CleanupWatcher();
 } // namespace KZ::replaysystem
-
-#endif // KZ_REPLAYSYSTEM_H

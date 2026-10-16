@@ -8,6 +8,7 @@
 #include "kz/replays/data.h"
 #include "kz/replays/bot.h"
 #include "kz/replays/playback.h"
+#include "kz/replays/controls.h"
 #include "utils/async_file_io.h"
 #include "utils/http.h"
 #include "utils/utils.h"
@@ -164,6 +165,7 @@ void KZGlobalService::ReplayManager::OnReplayRequestSuccess(const std::vector<ch
 			playback::StartReplay();
 			playback::InitializeWeapons();
 			bot::SpectateBot(player);
+			player->uiService->GetWindow<controls::ControlsWindow>()->OpenCursorForReplay();
 		}),
 		data::LoadFailureCallback([userID](const char *error)
 		{

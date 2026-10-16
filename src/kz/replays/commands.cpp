@@ -14,6 +14,7 @@
 #include "bot.h"
 #include "events.h"
 #include "playback.h"
+#include "controls.h"
 #include "watcher.h"
 #include "utils/uuid.h"
 #include "utils/simplecmds.h"
@@ -153,6 +154,7 @@ namespace KZ::replaysystem::commands
 				playback::StartReplay();
 				playback::InitializeWeapons();
 				bot::SpectateBot(player);
+				player->uiService->GetWindow<controls::ControlsWindow>()->OpenCursorForReplay();
 			}),
 			// Failure callback (runs on main thread via ProcessAsyncLoadCompletion)
 			data::LoadFailureCallback([playerUserID](const char* error) {

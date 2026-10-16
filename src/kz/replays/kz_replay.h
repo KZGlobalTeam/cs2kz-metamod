@@ -1,5 +1,4 @@
-#ifndef KZ_REPLAY_H
-#define KZ_REPLAY_H
+#pragma once
 
 #include "common.h"
 #include "sdk/entity/cbaseplayerweapon.h"
@@ -332,5 +331,3 @@ struct CmdData
 
 // Unified protobuf header type
 using ReplayHeader = cs2kz::replay::ReplayHeader;
-
-#endif // KZ_REPLAY_H

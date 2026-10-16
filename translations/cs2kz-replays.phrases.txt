@@ -965,4 +965,75 @@
 		"ua"		"{darkred}Не вдалося завантажити повтор."
 		"ko"		"{darkred}리플레이 다운로드에 실패했습니다."
 	}
+	"Replay Controls - Not Watching"
+	{
+		"en"		"{grey}Spectate the replay bot in first or third person to use the replay controls."
+	}
+	"Replay Controls - Show Cursor"
+	{
+		"en"		"Show cursor"
+	}
+	"Replay Controls - Hide Cursor"
+	{
+		"en"		"Hide cursor"
+	}
+	"Replay Controls - Skip Breather"
+	{
+		"en"		"Skip breather"
+	}
+	"Replay Controls - Skip Pause"
+	{
+		"en"		"Skip pause"
+	}
+	"Replay Controls - Tick"
+	{
+		"en"		"Tick"
+	}
+	"Replay Controls - Previous Tick"
+	{
+		"en"		"-1t"
+	}
+	"Replay Controls - Next Tick"
+	{
+		"en"		"+1t"
+	}
+	"Replay Controls - Split"
+	{
+		"#format"	"index:d,time:s"
+		"en"		"Split {index}  {time}"
+	}
+	"Replay Controls - Checkpoint"
+	{
+		"#format"	"index:d,time:s"
+		"en"		"Checkpoint {index}  {time}"
+	}
+	"Replay Controls - Stage"
+	{
+		"#format"	"index:d,time:s"
+		"en"		"Stage {index}  {time}"
+	}
+	"Replay Controls - Zone Split"
+	{
+		"en"		"Split"
+	}
+	"Replay Controls - Zone Checkpoint"
+	{
+		"en"		"Checkpoint"
+	}
+	"Replay Controls - Zone Stage"
+	{
+		"en"		"Stage"
+	}
+	"Replay Controls - Zone Teleport"
+	{
+		"en"		"Teleport"
+	}
+	"Replay Controls - Time"
+	{
+		"en"		"Time"
+	}
+	"Replay Controls - Hide Controls"
+	{
+		"en"		"Hide controls"
+	}
 }

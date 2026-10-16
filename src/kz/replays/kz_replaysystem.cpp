@@ -6,13 +6,15 @@
 #include "playback.h"
 #include "events.h"
 #include "commands.h"
+#include "controls.h"
 
 namespace KZ::replaysystem
 {
 
 	void Init()
 	{
-		KZ::replaysystem::item::InitItemAttributes();
+		item::InitItemAttributes();
+		controls::Init();
 	}
 
 	void Cleanup()
@@ -113,6 +115,95 @@ namespace KZ::replaysystem
 		}
 
 		return true;
+	}
+
+	void UpdateControls(KZPlayer *player)
+	{
+		if (!player->IsFakeClient())
+		{
+			player->uiService->GetWindow<controls::ControlsWindow>()->Update();
+		}
+	}
+
+	void OnProcessUsercmds(KZPlayer *player, PlayerCommand *cmds, i32 numCmds)
+	{
+		if (!player->IsFakeClient())
+		{
+			player->uiService->GetWindow<controls::ControlsWindow>()->OnProcessUsercmds(cmds, numCmds);
+		}
+	}
+
+	RunStatus GetRunStatus()
+	{
+		RunStatus out {};
+		auto replay = data::GetCurrentReplay();
+		const ReplayType type = static_cast<ReplayType>(replay->header.type());
+		if (!replay->playingReplay || type == ReplayType::RP_JUMPSTATS)
+		{
+			return out;
+		}
+		out.timed = true;
+		for (u32 i = 0; i < replay->currentEvent && i < replay->numEvents; i++)
+		{
+			const RpEvent &event = replay->events[i];
+			if (event.type != RPEVENT_TIMER_EVENT)
+			{
+				continue;
+			}
+			switch (event.data.timer.type)
+			{
+				case RpEvent::RpEventData::TimerEvent::TIMER_START:
+				{
+					out.course = KZ::course::GetCourseByCourseID(event.data.timer.index);
+					out.running = out.course != nullptr;
+					out.stages = out.checkpoints = out.splits = 0;
+					break;
+				}
+				case RpEvent::RpEventData::TimerEvent::TIMER_END:
+				case RpEvent::RpEventData::TimerEvent::TIMER_STOP:
+				{
+					out.running = false;
+					break;
+				}
+				// The recorder only writes a zone the first time the run reaches it.
+				case RpEvent::RpEventData::TimerEvent::TIMER_SPLIT:
+				{
+					out.splits++;
+					break;
+				}
+				case RpEvent::RpEventData::TimerEvent::TIMER_CPZ:
+				{
+					out.checkpoints++;
+					break;
+				}
+				case RpEvent::RpEventData::TimerEvent::TIMER_STAGE:
+				{
+					out.stages++;
+					break;
+				}
+				default:
+				{
+					break;
+				}
+			}
+		}
+		// Like a live timer, a run that is not going has reached nothing.
+		if (!out.running)
+		{
+			out.stages = out.checkpoints = out.splits = 0;
+		}
+		if (type == ReplayType::RP_RUN && replay->header.has_run() && out.course
+			&& KZ_STREQI(replay->header.run().course_name().c_str(), out.course->GetName().Get()))
+		{
+			out.runTime = replay->header.run().time();
+			out.runPro = replay->header.run().num_teleports() == 0;
+		}
+		return out;
+	}
+
+	const char *GetPlayerName()
+	{
+		return data::GetCurrentReplay()->header.player().name().c_str();
 	}
 
 	i32 GetCurrentCpIndex()

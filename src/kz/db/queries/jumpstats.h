@@ -1,3 +1,4 @@
+#pragma once
 // =====[ JUMPSTATS ]=====
 
 constexpr char sqlite_jumpstats_create[] = R"(

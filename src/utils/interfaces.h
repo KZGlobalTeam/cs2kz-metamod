@@ -147,7 +147,7 @@ public:
 	DecalTrace_t *const DecalTrace;
 
 	virtual CGameConfig *GetGameConfig();
-	virtual const CGlobalVars *GetServerGlobals();
+	virtual const CGlobalVars *GetServerGlobals(bool unmodified = false);
 	virtual CGlobalVars *GetGlobals();
 
 	virtual CBaseEntity *FindEntityByClassname(CEntityInstance *start, const char *name);

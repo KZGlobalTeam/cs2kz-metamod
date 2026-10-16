@@ -1,3 +1,4 @@
+#pragma once
 // =====[ TIMES ]=====
 
 constexpr char sqlite_times_create[] = R"(

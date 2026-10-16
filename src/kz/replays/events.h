@@ -1,5 +1,4 @@
-#ifndef KZ_REPLAYEVENTS_H
-#define KZ_REPLAYEVENTS_H
+#pragma once
 
 #include "sdk/datatypes.h"
 #include "kz_replay.h"
@@ -22,5 +21,3 @@ namespace KZ::replaysystem::events
 	void HandleStyleChangeEvent(KZPlayer &player, const RpEvent *event);
 	void HandleTeleportEvent(KZPlayer &player, const RpEvent *event);
 } // namespace KZ::replaysystem::events
-
-#endif // KZ_REPLAYEVENTS_H

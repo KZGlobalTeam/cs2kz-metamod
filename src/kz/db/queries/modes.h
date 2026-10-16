@@ -1,3 +1,4 @@
+#pragma once
 // =====[ MODES ]=====
 
 constexpr char mysql_modes_create[] = R"(

@@ -1,3 +1,4 @@
+#pragma once
 // =====[ STYLES ]=====
 
 constexpr char mysql_styles_create[] = R"(

@@ -1,0 +1,458 @@
+@import url("file://{resources}/styles/custom_game/cs2kz/palette.css");
+@import url("file://{resources}/styles/custom_game/cs2kz/fonts.css");
+@import url("file://{resources}/styles/custom_game/cs2kz/replay-bar.css");
+
+.root,
+#rp_root {
+	width: 100%;
+	height: 100%;
+}
+
+.hidden {
+	visibility: collapse;
+}
+
+.rp-box {
+	horizontal-align: center;
+	vertical-align: bottom;
+	flow-children: down;
+	/* The bar's 960 plus the padding. */
+	width: 988px;
+	/* Low enough that the top clears the MHUD timer at its default spot. */
+	margin-bottom: -6px;
+	padding: 6px 14px 9px 14px;
+	overflow: noclip noclip;
+
+	/* Same as jumpstats panel. */
+	background-color: #000000b8;
+	background-image: url("s2r://panorama/images/backgrounds/bluedots_large_png.vtex");
+	background-size: 360px 360px;
+	background-img-opacity: 0.015;
+	world-blur: gaussian(1, 1, 1);
+	border-radius: 4px;
+}
+
+/* Times on the left, the player's name centred on the first line, speeds on the right. */
+.rp-info {
+	width: 960px;
+	height: 36px;
+}
+
+.rp-info-times {
+	height: 100%;
+	flow-children: right;
+}
+
+/* Titles and values in two columns, so a value that changes width never moves the line below it. */
+.rp-info-titles,
+.rp-info-values {
+	height: 100%;
+	flow-children: down;
+}
+
+.rp-info-titles {
+	margin-right: 8px;
+}
+
+/* The spectated player's name on the game's player card (.HudSpecplayer__player-name), without its team colour wash.
+   Narrow enough to stay clear of the times and the speeds. */
+.rp-player {
+	max-width: 360px;
+	height: 21px;
+	horizontal-align: center;
+	font-size: 20px;
+	font-weight: bold;
+	color: #ffffffc0;
+	white-space: nowrap;
+	text-overflow: shrink min(14px) ellipsis;
+}
+
+/* Matches the jumpstats panel's row labels. */
+.rp-info-title {
+	height: 18px;
+	font-size: 14px;
+	font-weight: medium;
+	color: #c5cad0;
+	text-transform: uppercase;
+}
+
+.rp-info-value {
+	height: 18px;
+	font-size: 15px;
+	font-weight: bold;
+}
+
+.rp-speeds {
+	height: 100%;
+	horizontal-align: right;
+	flow-children: right;
+}
+
+/* Kept in step with KZ_REPLAY_CONTROLS_BAR_WIDTH. Couldn't manage to make it work with percentages. */
+.rp-bar {
+	width: 960px;
+	height: 32px;
+	margin-top: 2px;
+	overflow: noclip noclip;
+}
+
+.rp-track {
+	width: 960px;
+	height: 6px;
+	vertical-align: center;
+	border-radius: 3px;
+	background-color: #ffffff26;
+}
+
+.rp-fill {
+	width: 960px;
+	height: 100%;
+	flow-children: right;
+}
+
+.rp-fill-part {
+	height: 100%;
+	background-color: #ffffffb3;
+}
+
+/* A spacer as wide as the marker's position goes first, sized like the fill. */
+.rp-marker-row {
+	width: 960px;
+	height: 100%;
+	flow-children: right;
+	overflow: noclip noclip;
+}
+
+/* Markers are centred on their position. */
+.rp-pct {
+	width: 16px;
+	height: 100%;
+	margin-left: -8px;
+}
+
+.rp-pct-line {
+	width: 2px;
+	height: 14px;
+	horizontal-align: center;
+	vertical-align: center;
+	background-color: #ffffff66;
+	transition-property: height, background-color;
+	transition-duration: 0.05s;
+}
+
+.rp-pct:hover .rp-pct-line {
+	height: 24px;
+	background-color: #ffffffff;
+}
+
+.rp-zone {
+	width: 14px;
+	height: 100%;
+	margin-left: -7px;
+	overflow: noclip noclip;
+}
+
+.rp-zone-dot {
+	width: 8px;
+	height: 8px;
+	horizontal-align: center;
+	vertical-align: center;
+	transform: rotateZ(45deg);
+	border: 1px solid #000000b3;
+	transition-property: width, height;
+	transition-duration: 0.05s;
+}
+
+.rp-zone:hover .rp-zone-dot {
+	width: 11px;
+	height: 11px;
+}
+
+.zone-split .rp-zone-dot {
+	background-color: #f2c94c;
+}
+
+.zone-checkpoint .rp-zone-dot {
+	background-color: #56ccf2;
+}
+
+.zone-stage .rp-zone-dot {
+	background-color: #bb6bd9;
+}
+
+/*
+	This has to overlap the marker by at least a pixel.
+	Panorama does not paint a child that lies wholly outside its parent, noclip or not. 
+*/
+.rp-zone-label {
+	opacity: 0;
+	width: 240px;
+	horizontal-align: center;
+	margin-top: -12px;
+	text-align: center;
+	white-space: nowrap;
+	font-size: 13px;
+	text-shadow: 0px 0px 3px 2 #000000ff;
+}
+
+.rp-zone:hover .rp-zone-label {
+	opacity: 1;
+}
+
+.rp-controls {
+	width: 960px;
+	height: 30px;
+	margin-top: 3px;
+}
+
+.rp-transport {
+	height: 100%;
+	horizontal-align: center;
+	flow-children: right;
+}
+
+/* Equal halves either side of the play button so the play button is centered. */
+.rp-transport-side {
+	width: 250px;
+	height: 100%;
+}
+
+.rp-transport-half {
+	height: 100%;
+	flow-children: right;
+}
+
+.rp-transport-left {
+	horizontal-align: right;
+}
+
+.rp-btn {
+	height: 26px;
+	padding: 0px 6px;
+	margin: 0px 2px;
+	vertical-align: center;
+	border-radius: 3px;
+	background-color: #ffffff1a;
+	transition-property: background-color;
+	transition-duration: 0.05s;
+}
+
+/* The menu's step buttons. */
+.rp-btn:hover {
+	background-color: #ffffff40;
+}
+
+.rp-btn.selected {
+	background-color: #ffffff4d;
+}
+
+.rp-btn.disabled:hover {
+	background-color: #ffffff1a;
+}
+
+.rp-btn.disabled .rp-btn-label {
+	opacity: 0.35;
+}
+
+.rp-btn-label {
+	horizontal-align: center;
+	vertical-align: center;
+	font-size: 14px;
+	/* The default text is off center by 1px. If you see transform: translateY(1px);, it's most likely because of it. */
+	transform: translateY(1px);
+	text-align: center;
+}
+
+/* The run's start and end. */
+.rp-run-mark {
+	width: 16px;
+	height: 14px;
+	margin-left: -8px;
+	vertical-align: center;
+	overflow: noclip noclip;
+}
+
+.rp-clock,
+.rp-flag {
+	img-shadow: 0px 0px 1px 4 #000000cc;
+}
+
+.rp-clock {
+	width: 12px;
+	height: 12px;
+	horizontal-align: center;
+	vertical-align: center;
+	transition-property: width, height;
+	transition-duration: 0.05s;
+}
+
+.rp-flag {
+	width: 15px;
+	height: 14px;
+	margin-left: 6px;
+	vertical-align: center;
+	transition-property: width, height, margin-left;
+	transition-duration: 0.05s;
+}
+
+.rp-run-mark:hover .rp-clock {
+	width: 16px;
+	height: 16px;
+}
+
+.rp-run-mark:hover .rp-flag {
+	width: 19px;
+	height: 18px;
+	margin-left: 5px;
+}
+
+/* Previous and next split, checkpoint, stage and teleport. Zones show their marker's diamond; teleports have no marker. */
+.rp-bottom {
+	width: 960px;
+	height: 28px;
+	margin-top: 4px;
+}
+
+.rp-zone-jumps {
+	height: 100%;
+	horizontal-align: center;
+	flow-children: right;
+}
+
+.rp-zone-jump {
+	height: 100%;
+	margin: 0px 12px;
+	flow-children: right;
+}
+
+.rp-zone-jump .rp-zone-dot {
+	margin: 0px 6px 0px 8px;
+}
+
+.zone-teleport .rp-jump-label {
+	margin-left: 8px;
+}
+
+.rp-jump-label {
+	vertical-align: center;
+	transform: translateY(1px);
+	margin-right: 6px;
+	font-size: 14px;
+	font-weight: medium;
+	color: #c5cad0;
+	text-transform: uppercase;
+}
+
+.rp-breather,
+.rp-skip-pause {
+	horizontal-align: left;
+}
+
+.rp-play {
+	width: 40px;
+	height: 30px;
+	margin: 0px 6px;
+	border-radius: 3px;
+	background-color: #ffffff26;
+	transition-property: background-color;
+	transition-duration: 0.05s;
+}
+
+.rp-play:hover {
+	background-color: #ffffff4d;
+}
+
+.rp-play-icon {
+	width: 18px;
+	height: 18px;
+	horizontal-align: center;
+	vertical-align: center;
+	background-image: url("s2r://panorama/images/icons/ui/pause.vsvg");
+	background-size: 18px 18px;
+	background-repeat: no-repeat;
+	background-position: 50% 50%;
+}
+
+.paused .rp-play-icon {
+	background-image: url("s2r://panorama/images/icons/ui/play.vsvg");
+}
+
+/* The buttons at either end of the controls share a width, with their content centred in it. */
+.rp-side-btn {
+	width: 120px;
+	height: 26px;
+	vertical-align: center;
+	border-radius: 3px;
+	background-color: #ffffff1a;
+	transition-property: background-color;
+	transition-duration: 0.05s;
+}
+
+.rp-side-btn:hover {
+	background-color: #ffffff40;
+}
+
+.rp-side-btn.disabled:hover {
+	background-color: #ffffff1a;
+}
+
+.rp-side-btn.disabled .rp-side-btn-label {
+	opacity: 0.35;
+}
+
+.rp-side-btn-inner {
+	height: 100%;
+	horizontal-align: center;
+	flow-children: right;
+}
+
+.rp-cursor,
+.rp-visibility {
+	horizontal-align: right;
+}
+
+/* The HUD edit bar's key chips, with the border on a panel of its own so the label centres inside it. */
+.rp-key {
+	height: 18px;
+	margin-right: 7px;
+	padding: 0px 5px;
+	vertical-align: center;
+	border: 1px solid #ffffff90;
+	border-radius: 3px;
+}
+
+.rp-key-label {
+	horizontal-align: center;
+	vertical-align: center;
+	text-align: center;
+	transform: translateY(1px);
+	font-size: 12px;
+	font-weight: bold;
+	color: #ffffffff;
+	text-transform: uppercase;
+}
+
+.rp-side-btn-label {
+	vertical-align: center;
+	transform: translateY(1px);
+	font-size: 14px;
+	color: #ffffffe0;
+}
+
+.snd .rp-btn:not(.disabled):hover,
+.snd .rp-side-btn:not(.disabled):hover,
+.snd .rp-play:hover,
+.snd .rp-pct:hover,
+.snd .rp-zone:hover,
+.snd .rp-run-mark:hover {
+	sound: "UIPanorama.generic_button_rollover";
+}
+
+.snd .rp-btn:not(.disabled):active,
+.snd .rp-play:active,
+.snd .rp-pct:active,
+.snd .rp-zone:active,
+.snd .rp-run-mark:active,
+.snd .rp-side-btn:not(.disabled):active {
+	sound: "UIPanorama.generic_button_press";
+}

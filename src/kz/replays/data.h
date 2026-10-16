@@ -1,5 +1,4 @@
-#ifndef KZ_REPLAYDATA_H
-#define KZ_REPLAYDATA_H
+#pragma once
 
 #include "sdk/datatypes.h"
 #include "kz_replay.h"
@@ -55,6 +54,8 @@ namespace KZ::replaysystem::data
 		f32 tickProgress;
 		// Replay ticks left to simulate this server tick.
 		u32 pendingTicks;
+		// Replay ticks to play on the next server tick even while paused.
+		u32 stepTicks;
 		// Set on server ticks that simulate nothing and only move the bot between two replay ticks.
 		bool holdingTick;
 		bool hasLastMoveData;
@@ -120,5 +121,3 @@ namespace KZ::replaysystem::data
 	bool GetPaused();
 	const char *GetCourseName();
 } // namespace KZ::replaysystem::data
-
-#endif // KZ_REPLAYDATA_H

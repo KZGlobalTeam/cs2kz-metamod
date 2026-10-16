@@ -1,8 +1,7 @@
 /* date = October 12th 2023 8:02 pm */
 // This only creates client commands. If you want to create server-only commands, use CON_COMMAND_* macros instead.
 // Note: Commands register through this system will have higher priority over console commands.
-#ifndef SIMPLECMDS_H
-#define SIMPLECMDS_H
+#pragma once
 
 #include <string>
 #include <vector>
@@ -88,5 +87,3 @@ public:
 	static_function SCMD_CALLBACK(name##_callback)
 
 #define SCMD_LINK(name, linkedName) static_global SCmdLink name##_reg(#name, #linkedName);
-
-#endif // SIMPLECMDS_H

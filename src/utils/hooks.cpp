@@ -240,6 +240,7 @@ static KHook::Return<void> GameFramePre(ISource2Server *pThis, bool simulating, 
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
 	g_KZPlugin.serverGlobals = *(g_pKZUtils->GetGlobals());
+	g_KZPlugin.unmodifiedServerGlobals = g_KZPlugin.serverGlobals;
 	g_pKZPlayerManager->PerformAuthChecks();
 	RunSubmission::CheckAll();
 	KZAnticheatService::CleanupInfractions();

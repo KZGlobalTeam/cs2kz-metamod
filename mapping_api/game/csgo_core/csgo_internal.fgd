@@ -45,13 +45,13 @@
 	timer_zone_course_descriptor(target_destination) {group="KZ | Zone" enabled={variable="timer_trigger_type" values=["5", "6", "7", "8", "9"]}} : "Course Descriptor" : : "info_target_server_only entity that describes this course. Every zone trigger must be associated with a course. Maximum length is 127 characters."
 
 	// KZ Split Zone
-	timer_zone_split_number(integer) {group="KZ | Zone" min="1" enabled={variable="timer_trigger_type" value="7"}} : "Split Number" : 1 : "Split number. Split numbers must be sequential, starting from 1."
+	timer_zone_split_number(integer) {group="KZ | Zone" min="1" max="64" enabled={variable="timer_trigger_type" value="7"}} : "Split Number" : 1 : "Split number. Split numbers must be sequential, starting from 1, up to 64. Replays only mark the first 64 split, checkpoint and stage zones of a course combined."
 
 	// KZ Checkpoint Zone
-	timer_zone_checkpoint_number(integer) {group="KZ | Zone" min="1" enabled={variable="timer_trigger_type" value="8"}} : "Checkpoint Number" : 1 : "Checkpoint number. Checkpoint numbers must be sequential, starting from 1."
+	timer_zone_checkpoint_number(integer) {group="KZ | Zone" min="1" max="64" enabled={variable="timer_trigger_type" value="8"}} : "Checkpoint Number" : 1 : "Checkpoint number. Checkpoint numbers must be sequential, starting from 1, up to 64. Replays only mark the first 64 split, checkpoint and stage zones of a course combined."
 
 	// KZ Stage Zone
-	timer_zone_stage_number(integer) {group="KZ | Zone" min="1" enabled={variable="timer_trigger_type" value="9"}} : "Stage Number" : 1 : "Stage number. Stage numbers must be sequential, starting from 1."
+	timer_zone_stage_number(integer) {group="KZ | Zone" min="1" max="64" enabled={variable="timer_trigger_type" value="9"}} : "Stage Number" : 1 : "Stage number. Stage numbers must be sequential, starting from 1, up to 64. Replays only mark the first 64 split, checkpoint and stage zones of a course combined."
 
 	// KZ Teleport
 	timer_teleport_destination(target_destination) {group="KZ | Teleport" enabled={variable="timer_trigger_type" values=["10", "11", "12", "13"]}} : "Destination" : : "The entity to which the player should be teleported. Using special targetnames starting with ! won't work. (!activator, !player etc) Maximum length is 127 characters."

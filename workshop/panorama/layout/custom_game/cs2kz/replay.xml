@@ -1,0 +1,826 @@
+<root>
+  <styles>
+    <include src="file://{resources}/styles/custom_game/cs2kz/replay.css" />
+  </styles>
+  <Panel class="root" hittest="false">
+    <Panel id="rp_root" class="hidden" hittest="false">
+      <Panel class="rp-box" hittest="false">
+        <Panel class="rp-info" hittest="false">
+          <Panel class="rp-info-times" hittest="false">
+            <Panel class="rp-info-titles" hittest="false">
+              <Label id="rp_time_title" class="rp-info-title" text="{s:rptimename}" hittest="false" />
+              <Label id="rp_tick_title" class="rp-info-title" text="{s:rptickname}" hittest="false" />
+            </Panel>
+            <Panel class="rp-info-values" hittest="false">
+              <Label id="rp_time" class="rp-info-value" text="{s:rptime}" hittest="false" />
+              <Label id="rp_tick" class="rp-info-value" text="{s:rptick}" hittest="false" />
+            </Panel>
+          </Panel>
+          <Label id="rp_player" class="rp-player" text="{s:rpplayer}" hittest="false" />
+          <Panel class="rp-speeds" hittest="false">
+            <Button id="rp_speed0" class="rp-btn">
+              <Label id="rp_speed0_label" class="rp-btn-label" text="{s:rps0}" hittest="false" />
+            </Button>
+            <Button id="rp_speed1" class="rp-btn">
+              <Label id="rp_speed1_label" class="rp-btn-label" text="{s:rps1}" hittest="false" />
+            </Button>
+            <Button id="rp_speed2" class="rp-btn">
+              <Label id="rp_speed2_label" class="rp-btn-label" text="{s:rps2}" hittest="false" />
+            </Button>
+            <Button id="rp_speed3" class="rp-btn">
+              <Label id="rp_speed3_label" class="rp-btn-label" text="{s:rps3}" hittest="false" />
+            </Button>
+            <Button id="rp_speed4" class="rp-btn">
+              <Label id="rp_speed4_label" class="rp-btn-label" text="{s:rps4}" hittest="false" />
+            </Button>
+            <Button id="rp_speed5" class="rp-btn">
+              <Label id="rp_speed5_label" class="rp-btn-label" text="{s:rps5}" hittest="false" />
+            </Button>
+          </Panel>
+        </Panel>
+        <Panel class="rp-bar" hittest="false">
+          <Panel class="rp-track" hittest="false">
+            <Panel class="rp-fill" hittest="false">
+              <Panel id="rp_fill" class="rp-fill-part" hittest="false" />
+              <Panel id="rp_fill_fine" class="rp-fill-part" hittest="false" />
+            </Panel>
+          </Panel>
+          <Panel class="rp-marker-row" hittest="false">
+            <Panel class="rp-w--0" hittest="false" />
+            <Panel class="rp-fw--0" hittest="false" />
+            <Button id="rp_pct0" class="rp-pct">
+              <Panel class="rp-pct-line" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel class="rp-marker-row" hittest="false">
+            <Panel class="rp-w--4" hittest="false" />
+            <Panel class="rp-fw--8" hittest="false" />
+            <Button id="rp_pct1" class="rp-pct">
+              <Panel class="rp-pct-line" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel class="rp-marker-row" hittest="false">
+            <Panel class="rp-w--9" hittest="false" />
+            <Panel class="rp-fw--6" hittest="false" />
+            <Button id="rp_pct2" class="rp-pct">
+              <Panel class="rp-pct-line" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel class="rp-marker-row" hittest="false">
+            <Panel class="rp-w--14" hittest="false" />
+            <Panel class="rp-fw--4" hittest="false" />
+            <Button id="rp_pct3" class="rp-pct">
+              <Panel class="rp-pct-line" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel class="rp-marker-row" hittest="false">
+            <Panel class="rp-w--19" hittest="false" />
+            <Panel class="rp-fw--2" hittest="false" />
+            <Button id="rp_pct4" class="rp-pct">
+              <Panel class="rp-pct-line" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel class="rp-marker-row" hittest="false">
+            <Panel class="rp-w--24" hittest="false" />
+            <Panel class="rp-fw--0" hittest="false" />
+            <Button id="rp_pct5" class="rp-pct">
+              <Panel class="rp-pct-line" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel class="rp-marker-row" hittest="false">
+            <Panel class="rp-w--28" hittest="false" />
+            <Panel class="rp-fw--8" hittest="false" />
+            <Button id="rp_pct6" class="rp-pct">
+              <Panel class="rp-pct-line" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel class="rp-marker-row" hittest="false">
+            <Panel class="rp-w--33" hittest="false" />
+            <Panel class="rp-fw--6" hittest="false" />
+            <Button id="rp_pct7" class="rp-pct">
+              <Panel class="rp-pct-line" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel class="rp-marker-row" hittest="false">
+            <Panel class="rp-w--38" hittest="false" />
+            <Panel class="rp-fw--4" hittest="false" />
+            <Button id="rp_pct8" class="rp-pct">
+              <Panel class="rp-pct-line" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel class="rp-marker-row" hittest="false">
+            <Panel class="rp-w--43" hittest="false" />
+            <Panel class="rp-fw--2" hittest="false" />
+            <Button id="rp_pct9" class="rp-pct">
+              <Panel class="rp-pct-line" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel class="rp-marker-row" hittest="false">
+            <Panel class="rp-w--48" hittest="false" />
+            <Panel class="rp-fw--0" hittest="false" />
+            <Button id="rp_pct10" class="rp-pct">
+              <Panel class="rp-pct-line" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel class="rp-marker-row" hittest="false">
+            <Panel class="rp-w--52" hittest="false" />
+            <Panel class="rp-fw--8" hittest="false" />
+            <Button id="rp_pct11" class="rp-pct">
+              <Panel class="rp-pct-line" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel class="rp-marker-row" hittest="false">
+            <Panel class="rp-w--57" hittest="false" />
+            <Panel class="rp-fw--6" hittest="false" />
+            <Button id="rp_pct12" class="rp-pct">
+              <Panel class="rp-pct-line" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel class="rp-marker-row" hittest="false">
+            <Panel class="rp-w--62" hittest="false" />
+            <Panel class="rp-fw--4" hittest="false" />
+            <Button id="rp_pct13" class="rp-pct">
+              <Panel class="rp-pct-line" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel class="rp-marker-row" hittest="false">
+            <Panel class="rp-w--67" hittest="false" />
+            <Panel class="rp-fw--2" hittest="false" />
+            <Button id="rp_pct14" class="rp-pct">
+              <Panel class="rp-pct-line" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel class="rp-marker-row" hittest="false">
+            <Panel class="rp-w--72" hittest="false" />
+            <Panel class="rp-fw--0" hittest="false" />
+            <Button id="rp_pct15" class="rp-pct">
+              <Panel class="rp-pct-line" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel class="rp-marker-row" hittest="false">
+            <Panel class="rp-w--76" hittest="false" />
+            <Panel class="rp-fw--8" hittest="false" />
+            <Button id="rp_pct16" class="rp-pct">
+              <Panel class="rp-pct-line" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel class="rp-marker-row" hittest="false">
+            <Panel class="rp-w--81" hittest="false" />
+            <Panel class="rp-fw--6" hittest="false" />
+            <Button id="rp_pct17" class="rp-pct">
+              <Panel class="rp-pct-line" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel class="rp-marker-row" hittest="false">
+            <Panel class="rp-w--86" hittest="false" />
+            <Panel class="rp-fw--4" hittest="false" />
+            <Button id="rp_pct18" class="rp-pct">
+              <Panel class="rp-pct-line" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel class="rp-marker-row" hittest="false">
+            <Panel class="rp-w--91" hittest="false" />
+            <Panel class="rp-fw--2" hittest="false" />
+            <Button id="rp_pct19" class="rp-pct">
+              <Panel class="rp-pct-line" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel id="rp_zone_pos0" class="rp-marker-row hidden" hittest="false">
+            <Panel id="rp_zone_at0" hittest="false" />
+            <Panel id="rp_zone_fine0" hittest="false" />
+            <Button id="rp_zone0" class="rp-zone">
+              <Panel class="rp-zone-dot" hittest="false" />
+              <Label id="rp_zone_label0" class="rp-zone-label" text="{s:rz0}" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel id="rp_zone_pos1" class="rp-marker-row hidden" hittest="false">
+            <Panel id="rp_zone_at1" hittest="false" />
+            <Panel id="rp_zone_fine1" hittest="false" />
+            <Button id="rp_zone1" class="rp-zone">
+              <Panel class="rp-zone-dot" hittest="false" />
+              <Label id="rp_zone_label1" class="rp-zone-label" text="{s:rz1}" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel id="rp_zone_pos2" class="rp-marker-row hidden" hittest="false">
+            <Panel id="rp_zone_at2" hittest="false" />
+            <Panel id="rp_zone_fine2" hittest="false" />
+            <Button id="rp_zone2" class="rp-zone">
+              <Panel class="rp-zone-dot" hittest="false" />
+              <Label id="rp_zone_label2" class="rp-zone-label" text="{s:rz2}" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel id="rp_zone_pos3" class="rp-marker-row hidden" hittest="false">
+            <Panel id="rp_zone_at3" hittest="false" />
+            <Panel id="rp_zone_fine3" hittest="false" />
+            <Button id="rp_zone3" class="rp-zone">
+              <Panel class="rp-zone-dot" hittest="false" />
+              <Label id="rp_zone_label3" class="rp-zone-label" text="{s:rz3}" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel id="rp_zone_pos4" class="rp-marker-row hidden" hittest="false">
+            <Panel id="rp_zone_at4" hittest="false" />
+            <Panel id="rp_zone_fine4" hittest="false" />
+            <Button id="rp_zone4" class="rp-zone">
+              <Panel class="rp-zone-dot" hittest="false" />
+              <Label id="rp_zone_label4" class="rp-zone-label" text="{s:rz4}" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel id="rp_zone_pos5" class="rp-marker-row hidden" hittest="false">
+            <Panel id="rp_zone_at5" hittest="false" />
+            <Panel id="rp_zone_fine5" hittest="false" />
+            <Button id="rp_zone5" class="rp-zone">
+              <Panel class="rp-zone-dot" hittest="false" />
+              <Label id="rp_zone_label5" class="rp-zone-label" text="{s:rz5}" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel id="rp_zone_pos6" class="rp-marker-row hidden" hittest="false">
+            <Panel id="rp_zone_at6" hittest="false" />
+            <Panel id="rp_zone_fine6" hittest="false" />
+            <Button id="rp_zone6" class="rp-zone">
+              <Panel class="rp-zone-dot" hittest="false" />
+              <Label id="rp_zone_label6" class="rp-zone-label" text="{s:rz6}" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel id="rp_zone_pos7" class="rp-marker-row hidden" hittest="false">
+            <Panel id="rp_zone_at7" hittest="false" />
+            <Panel id="rp_zone_fine7" hittest="false" />
+            <Button id="rp_zone7" class="rp-zone">
+              <Panel class="rp-zone-dot" hittest="false" />
+              <Label id="rp_zone_label7" class="rp-zone-label" text="{s:rz7}" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel id="rp_zone_pos8" class="rp-marker-row hidden" hittest="false">
+            <Panel id="rp_zone_at8" hittest="false" />
+            <Panel id="rp_zone_fine8" hittest="false" />
+            <Button id="rp_zone8" class="rp-zone">
+              <Panel class="rp-zone-dot" hittest="false" />
+              <Label id="rp_zone_label8" class="rp-zone-label" text="{s:rz8}" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel id="rp_zone_pos9" class="rp-marker-row hidden" hittest="false">
+            <Panel id="rp_zone_at9" hittest="false" />
+            <Panel id="rp_zone_fine9" hittest="false" />
+            <Button id="rp_zone9" class="rp-zone">
+              <Panel class="rp-zone-dot" hittest="false" />
+              <Label id="rp_zone_label9" class="rp-zone-label" text="{s:rz9}" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel id="rp_zone_pos10" class="rp-marker-row hidden" hittest="false">
+            <Panel id="rp_zone_at10" hittest="false" />
+            <Panel id="rp_zone_fine10" hittest="false" />
+            <Button id="rp_zone10" class="rp-zone">
+              <Panel class="rp-zone-dot" hittest="false" />
+              <Label id="rp_zone_label10" class="rp-zone-label" text="{s:rz10}" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel id="rp_zone_pos11" class="rp-marker-row hidden" hittest="false">
+            <Panel id="rp_zone_at11" hittest="false" />
+            <Panel id="rp_zone_fine11" hittest="false" />
+            <Button id="rp_zone11" class="rp-zone">
+              <Panel class="rp-zone-dot" hittest="false" />
+              <Label id="rp_zone_label11" class="rp-zone-label" text="{s:rz11}" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel id="rp_zone_pos12" class="rp-marker-row hidden" hittest="false">
+            <Panel id="rp_zone_at12" hittest="false" />
+            <Panel id="rp_zone_fine12" hittest="false" />
+            <Button id="rp_zone12" class="rp-zone">
+              <Panel class="rp-zone-dot" hittest="false" />
+              <Label id="rp_zone_label12" class="rp-zone-label" text="{s:rz12}" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel id="rp_zone_pos13" class="rp-marker-row hidden" hittest="false">
+            <Panel id="rp_zone_at13" hittest="false" />
+            <Panel id="rp_zone_fine13" hittest="false" />
+            <Button id="rp_zone13" class="rp-zone">
+              <Panel class="rp-zone-dot" hittest="false" />
+              <Label id="rp_zone_label13" class="rp-zone-label" text="{s:rz13}" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel id="rp_zone_pos14" class="rp-marker-row hidden" hittest="false">
+            <Panel id="rp_zone_at14" hittest="false" />
+            <Panel id="rp_zone_fine14" hittest="false" />
+            <Button id="rp_zone14" class="rp-zone">
+              <Panel class="rp-zone-dot" hittest="false" />
+              <Label id="rp_zone_label14" class="rp-zone-label" text="{s:rz14}" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel id="rp_zone_pos15" class="rp-marker-row hidden" hittest="false">
+            <Panel id="rp_zone_at15" hittest="false" />
+            <Panel id="rp_zone_fine15" hittest="false" />
+            <Button id="rp_zone15" class="rp-zone">
+              <Panel class="rp-zone-dot" hittest="false" />
+              <Label id="rp_zone_label15" class="rp-zone-label" text="{s:rz15}" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel id="rp_zone_pos16" class="rp-marker-row hidden" hittest="false">
+            <Panel id="rp_zone_at16" hittest="false" />
+            <Panel id="rp_zone_fine16" hittest="false" />
+            <Button id="rp_zone16" class="rp-zone">
+              <Panel class="rp-zone-dot" hittest="false" />
+              <Label id="rp_zone_label16" class="rp-zone-label" text="{s:rz16}" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel id="rp_zone_pos17" class="rp-marker-row hidden" hittest="false">
+            <Panel id="rp_zone_at17" hittest="false" />
+            <Panel id="rp_zone_fine17" hittest="false" />
+            <Button id="rp_zone17" class="rp-zone">
+              <Panel class="rp-zone-dot" hittest="false" />
+              <Label id="rp_zone_label17" class="rp-zone-label" text="{s:rz17}" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel id="rp_zone_pos18" class="rp-marker-row hidden" hittest="false">
+            <Panel id="rp_zone_at18" hittest="false" />
+            <Panel id="rp_zone_fine18" hittest="false" />
+            <Button id="rp_zone18" class="rp-zone">
+              <Panel class="rp-zone-dot" hittest="false" />
+              <Label id="rp_zone_label18" class="rp-zone-label" text="{s:rz18}" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel id="rp_zone_pos19" class="rp-marker-row hidden" hittest="false">
+            <Panel id="rp_zone_at19" hittest="false" />
+            <Panel id="rp_zone_fine19" hittest="false" />
+            <Button id="rp_zone19" class="rp-zone">
+              <Panel class="rp-zone-dot" hittest="false" />
+              <Label id="rp_zone_label19" class="rp-zone-label" text="{s:rz19}" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel id="rp_zone_pos20" class="rp-marker-row hidden" hittest="false">
+            <Panel id="rp_zone_at20" hittest="false" />
+            <Panel id="rp_zone_fine20" hittest="false" />
+            <Button id="rp_zone20" class="rp-zone">
+              <Panel class="rp-zone-dot" hittest="false" />
+              <Label id="rp_zone_label20" class="rp-zone-label" text="{s:rz20}" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel id="rp_zone_pos21" class="rp-marker-row hidden" hittest="false">
+            <Panel id="rp_zone_at21" hittest="false" />
+            <Panel id="rp_zone_fine21" hittest="false" />
+            <Button id="rp_zone21" class="rp-zone">
+              <Panel class="rp-zone-dot" hittest="false" />
+              <Label id="rp_zone_label21" class="rp-zone-label" text="{s:rz21}" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel id="rp_zone_pos22" class="rp-marker-row hidden" hittest="false">
+            <Panel id="rp_zone_at22" hittest="false" />
+            <Panel id="rp_zone_fine22" hittest="false" />
+            <Button id="rp_zone22" class="rp-zone">
+              <Panel class="rp-zone-dot" hittest="false" />
+              <Label id="rp_zone_label22" class="rp-zone-label" text="{s:rz22}" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel id="rp_zone_pos23" class="rp-marker-row hidden" hittest="false">
+            <Panel id="rp_zone_at23" hittest="false" />
+            <Panel id="rp_zone_fine23" hittest="false" />
+            <Button id="rp_zone23" class="rp-zone">
+              <Panel class="rp-zone-dot" hittest="false" />
+              <Label id="rp_zone_label23" class="rp-zone-label" text="{s:rz23}" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel id="rp_zone_pos24" class="rp-marker-row hidden" hittest="false">
+            <Panel id="rp_zone_at24" hittest="false" />
+            <Panel id="rp_zone_fine24" hittest="false" />
+            <Button id="rp_zone24" class="rp-zone">
+              <Panel class="rp-zone-dot" hittest="false" />
+              <Label id="rp_zone_label24" class="rp-zone-label" text="{s:rz24}" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel id="rp_zone_pos25" class="rp-marker-row hidden" hittest="false">
+            <Panel id="rp_zone_at25" hittest="false" />
+            <Panel id="rp_zone_fine25" hittest="false" />
+            <Button id="rp_zone25" class="rp-zone">
+              <Panel class="rp-zone-dot" hittest="false" />
+              <Label id="rp_zone_label25" class="rp-zone-label" text="{s:rz25}" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel id="rp_zone_pos26" class="rp-marker-row hidden" hittest="false">
+            <Panel id="rp_zone_at26" hittest="false" />
+            <Panel id="rp_zone_fine26" hittest="false" />
+            <Button id="rp_zone26" class="rp-zone">
+              <Panel class="rp-zone-dot" hittest="false" />
+              <Label id="rp_zone_label26" class="rp-zone-label" text="{s:rz26}" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel id="rp_zone_pos27" class="rp-marker-row hidden" hittest="false">
+            <Panel id="rp_zone_at27" hittest="false" />
+            <Panel id="rp_zone_fine27" hittest="false" />
+            <Button id="rp_zone27" class="rp-zone">
+              <Panel class="rp-zone-dot" hittest="false" />
+              <Label id="rp_zone_label27" class="rp-zone-label" text="{s:rz27}" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel id="rp_zone_pos28" class="rp-marker-row hidden" hittest="false">
+            <Panel id="rp_zone_at28" hittest="false" />
+            <Panel id="rp_zone_fine28" hittest="false" />
+            <Button id="rp_zone28" class="rp-zone">
+              <Panel class="rp-zone-dot" hittest="false" />
+              <Label id="rp_zone_label28" class="rp-zone-label" text="{s:rz28}" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel id="rp_zone_pos29" class="rp-marker-row hidden" hittest="false">
+            <Panel id="rp_zone_at29" hittest="false" />
+            <Panel id="rp_zone_fine29" hittest="false" />
+            <Button id="rp_zone29" class="rp-zone">
+              <Panel class="rp-zone-dot" hittest="false" />
+              <Label id="rp_zone_label29" class="rp-zone-label" text="{s:rz29}" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel id="rp_zone_pos30" class="rp-marker-row hidden" hittest="false">
+            <Panel id="rp_zone_at30" hittest="false" />
+            <Panel id="rp_zone_fine30" hittest="false" />
+            <Button id="rp_zone30" class="rp-zone">
+              <Panel class="rp-zone-dot" hittest="false" />
+              <Label id="rp_zone_label30" class="rp-zone-label" text="{s:rz30}" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel id="rp_zone_pos31" class="rp-marker-row hidden" hittest="false">
+            <Panel id="rp_zone_at31" hittest="false" />
+            <Panel id="rp_zone_fine31" hittest="false" />
+            <Button id="rp_zone31" class="rp-zone">
+              <Panel class="rp-zone-dot" hittest="false" />
+              <Label id="rp_zone_label31" class="rp-zone-label" text="{s:rz31}" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel id="rp_zone_pos32" class="rp-marker-row hidden" hittest="false">
+            <Panel id="rp_zone_at32" hittest="false" />
+            <Panel id="rp_zone_fine32" hittest="false" />
+            <Button id="rp_zone32" class="rp-zone">
+              <Panel class="rp-zone-dot" hittest="false" />
+              <Label id="rp_zone_label32" class="rp-zone-label" text="{s:rz32}" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel id="rp_zone_pos33" class="rp-marker-row hidden" hittest="false">
+            <Panel id="rp_zone_at33" hittest="false" />
+            <Panel id="rp_zone_fine33" hittest="false" />
+            <Button id="rp_zone33" class="rp-zone">
+              <Panel class="rp-zone-dot" hittest="false" />
+              <Label id="rp_zone_label33" class="rp-zone-label" text="{s:rz33}" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel id="rp_zone_pos34" class="rp-marker-row hidden" hittest="false">
+            <Panel id="rp_zone_at34" hittest="false" />
+            <Panel id="rp_zone_fine34" hittest="false" />
+            <Button id="rp_zone34" class="rp-zone">
+              <Panel class="rp-zone-dot" hittest="false" />
+              <Label id="rp_zone_label34" class="rp-zone-label" text="{s:rz34}" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel id="rp_zone_pos35" class="rp-marker-row hidden" hittest="false">
+            <Panel id="rp_zone_at35" hittest="false" />
+            <Panel id="rp_zone_fine35" hittest="false" />
+            <Button id="rp_zone35" class="rp-zone">
+              <Panel class="rp-zone-dot" hittest="false" />
+              <Label id="rp_zone_label35" class="rp-zone-label" text="{s:rz35}" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel id="rp_zone_pos36" class="rp-marker-row hidden" hittest="false">
+            <Panel id="rp_zone_at36" hittest="false" />
+            <Panel id="rp_zone_fine36" hittest="false" />
+            <Button id="rp_zone36" class="rp-zone">
+              <Panel class="rp-zone-dot" hittest="false" />
+              <Label id="rp_zone_label36" class="rp-zone-label" text="{s:rz36}" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel id="rp_zone_pos37" class="rp-marker-row hidden" hittest="false">
+            <Panel id="rp_zone_at37" hittest="false" />
+            <Panel id="rp_zone_fine37" hittest="false" />
+            <Button id="rp_zone37" class="rp-zone">
+              <Panel class="rp-zone-dot" hittest="false" />
+              <Label id="rp_zone_label37" class="rp-zone-label" text="{s:rz37}" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel id="rp_zone_pos38" class="rp-marker-row hidden" hittest="false">
+            <Panel id="rp_zone_at38" hittest="false" />
+            <Panel id="rp_zone_fine38" hittest="false" />
+            <Button id="rp_zone38" class="rp-zone">
+              <Panel class="rp-zone-dot" hittest="false" />
+              <Label id="rp_zone_label38" class="rp-zone-label" text="{s:rz38}" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel id="rp_zone_pos39" class="rp-marker-row hidden" hittest="false">
+            <Panel id="rp_zone_at39" hittest="false" />
+            <Panel id="rp_zone_fine39" hittest="false" />
+            <Button id="rp_zone39" class="rp-zone">
+              <Panel class="rp-zone-dot" hittest="false" />
+              <Label id="rp_zone_label39" class="rp-zone-label" text="{s:rz39}" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel id="rp_zone_pos40" class="rp-marker-row hidden" hittest="false">
+            <Panel id="rp_zone_at40" hittest="false" />
+            <Panel id="rp_zone_fine40" hittest="false" />
+            <Button id="rp_zone40" class="rp-zone">
+              <Panel class="rp-zone-dot" hittest="false" />
+              <Label id="rp_zone_label40" class="rp-zone-label" text="{s:rz40}" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel id="rp_zone_pos41" class="rp-marker-row hidden" hittest="false">
+            <Panel id="rp_zone_at41" hittest="false" />
+            <Panel id="rp_zone_fine41" hittest="false" />
+            <Button id="rp_zone41" class="rp-zone">
+              <Panel class="rp-zone-dot" hittest="false" />
+              <Label id="rp_zone_label41" class="rp-zone-label" text="{s:rz41}" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel id="rp_zone_pos42" class="rp-marker-row hidden" hittest="false">
+            <Panel id="rp_zone_at42" hittest="false" />
+            <Panel id="rp_zone_fine42" hittest="false" />
+            <Button id="rp_zone42" class="rp-zone">
+              <Panel class="rp-zone-dot" hittest="false" />
+              <Label id="rp_zone_label42" class="rp-zone-label" text="{s:rz42}" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel id="rp_zone_pos43" class="rp-marker-row hidden" hittest="false">
+            <Panel id="rp_zone_at43" hittest="false" />
+            <Panel id="rp_zone_fine43" hittest="false" />
+            <Button id="rp_zone43" class="rp-zone">
+              <Panel class="rp-zone-dot" hittest="false" />
+              <Label id="rp_zone_label43" class="rp-zone-label" text="{s:rz43}" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel id="rp_zone_pos44" class="rp-marker-row hidden" hittest="false">
+            <Panel id="rp_zone_at44" hittest="false" />
+            <Panel id="rp_zone_fine44" hittest="false" />
+            <Button id="rp_zone44" class="rp-zone">
+              <Panel class="rp-zone-dot" hittest="false" />
+              <Label id="rp_zone_label44" class="rp-zone-label" text="{s:rz44}" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel id="rp_zone_pos45" class="rp-marker-row hidden" hittest="false">
+            <Panel id="rp_zone_at45" hittest="false" />
+            <Panel id="rp_zone_fine45" hittest="false" />
+            <Button id="rp_zone45" class="rp-zone">
+              <Panel class="rp-zone-dot" hittest="false" />
+              <Label id="rp_zone_label45" class="rp-zone-label" text="{s:rz45}" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel id="rp_zone_pos46" class="rp-marker-row hidden" hittest="false">
+            <Panel id="rp_zone_at46" hittest="false" />
+            <Panel id="rp_zone_fine46" hittest="false" />
+            <Button id="rp_zone46" class="rp-zone">
+              <Panel class="rp-zone-dot" hittest="false" />
+              <Label id="rp_zone_label46" class="rp-zone-label" text="{s:rz46}" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel id="rp_zone_pos47" class="rp-marker-row hidden" hittest="false">
+            <Panel id="rp_zone_at47" hittest="false" />
+            <Panel id="rp_zone_fine47" hittest="false" />
+            <Button id="rp_zone47" class="rp-zone">
+              <Panel class="rp-zone-dot" hittest="false" />
+              <Label id="rp_zone_label47" class="rp-zone-label" text="{s:rz47}" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel id="rp_zone_pos48" class="rp-marker-row hidden" hittest="false">
+            <Panel id="rp_zone_at48" hittest="false" />
+            <Panel id="rp_zone_fine48" hittest="false" />
+            <Button id="rp_zone48" class="rp-zone">
+              <Panel class="rp-zone-dot" hittest="false" />
+              <Label id="rp_zone_label48" class="rp-zone-label" text="{s:rz48}" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel id="rp_zone_pos49" class="rp-marker-row hidden" hittest="false">
+            <Panel id="rp_zone_at49" hittest="false" />
+            <Panel id="rp_zone_fine49" hittest="false" />
+            <Button id="rp_zone49" class="rp-zone">
+              <Panel class="rp-zone-dot" hittest="false" />
+              <Label id="rp_zone_label49" class="rp-zone-label" text="{s:rz49}" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel id="rp_zone_pos50" class="rp-marker-row hidden" hittest="false">
+            <Panel id="rp_zone_at50" hittest="false" />
+            <Panel id="rp_zone_fine50" hittest="false" />
+            <Button id="rp_zone50" class="rp-zone">
+              <Panel class="rp-zone-dot" hittest="false" />
+              <Label id="rp_zone_label50" class="rp-zone-label" text="{s:rz50}" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel id="rp_zone_pos51" class="rp-marker-row hidden" hittest="false">
+            <Panel id="rp_zone_at51" hittest="false" />
+            <Panel id="rp_zone_fine51" hittest="false" />
+            <Button id="rp_zone51" class="rp-zone">
+              <Panel class="rp-zone-dot" hittest="false" />
+              <Label id="rp_zone_label51" class="rp-zone-label" text="{s:rz51}" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel id="rp_zone_pos52" class="rp-marker-row hidden" hittest="false">
+            <Panel id="rp_zone_at52" hittest="false" />
+            <Panel id="rp_zone_fine52" hittest="false" />
+            <Button id="rp_zone52" class="rp-zone">
+              <Panel class="rp-zone-dot" hittest="false" />
+              <Label id="rp_zone_label52" class="rp-zone-label" text="{s:rz52}" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel id="rp_zone_pos53" class="rp-marker-row hidden" hittest="false">
+            <Panel id="rp_zone_at53" hittest="false" />
+            <Panel id="rp_zone_fine53" hittest="false" />
+            <Button id="rp_zone53" class="rp-zone">
+              <Panel class="rp-zone-dot" hittest="false" />
+              <Label id="rp_zone_label53" class="rp-zone-label" text="{s:rz53}" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel id="rp_zone_pos54" class="rp-marker-row hidden" hittest="false">
+            <Panel id="rp_zone_at54" hittest="false" />
+            <Panel id="rp_zone_fine54" hittest="false" />
+            <Button id="rp_zone54" class="rp-zone">
+              <Panel class="rp-zone-dot" hittest="false" />
+              <Label id="rp_zone_label54" class="rp-zone-label" text="{s:rz54}" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel id="rp_zone_pos55" class="rp-marker-row hidden" hittest="false">
+            <Panel id="rp_zone_at55" hittest="false" />
+            <Panel id="rp_zone_fine55" hittest="false" />
+            <Button id="rp_zone55" class="rp-zone">
+              <Panel class="rp-zone-dot" hittest="false" />
+              <Label id="rp_zone_label55" class="rp-zone-label" text="{s:rz55}" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel id="rp_zone_pos56" class="rp-marker-row hidden" hittest="false">
+            <Panel id="rp_zone_at56" hittest="false" />
+            <Panel id="rp_zone_fine56" hittest="false" />
+            <Button id="rp_zone56" class="rp-zone">
+              <Panel class="rp-zone-dot" hittest="false" />
+              <Label id="rp_zone_label56" class="rp-zone-label" text="{s:rz56}" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel id="rp_zone_pos57" class="rp-marker-row hidden" hittest="false">
+            <Panel id="rp_zone_at57" hittest="false" />
+            <Panel id="rp_zone_fine57" hittest="false" />
+            <Button id="rp_zone57" class="rp-zone">
+              <Panel class="rp-zone-dot" hittest="false" />
+              <Label id="rp_zone_label57" class="rp-zone-label" text="{s:rz57}" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel id="rp_zone_pos58" class="rp-marker-row hidden" hittest="false">
+            <Panel id="rp_zone_at58" hittest="false" />
+            <Panel id="rp_zone_fine58" hittest="false" />
+            <Button id="rp_zone58" class="rp-zone">
+              <Panel class="rp-zone-dot" hittest="false" />
+              <Label id="rp_zone_label58" class="rp-zone-label" text="{s:rz58}" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel id="rp_zone_pos59" class="rp-marker-row hidden" hittest="false">
+            <Panel id="rp_zone_at59" hittest="false" />
+            <Panel id="rp_zone_fine59" hittest="false" />
+            <Button id="rp_zone59" class="rp-zone">
+              <Panel class="rp-zone-dot" hittest="false" />
+              <Label id="rp_zone_label59" class="rp-zone-label" text="{s:rz59}" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel id="rp_zone_pos60" class="rp-marker-row hidden" hittest="false">
+            <Panel id="rp_zone_at60" hittest="false" />
+            <Panel id="rp_zone_fine60" hittest="false" />
+            <Button id="rp_zone60" class="rp-zone">
+              <Panel class="rp-zone-dot" hittest="false" />
+              <Label id="rp_zone_label60" class="rp-zone-label" text="{s:rz60}" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel id="rp_zone_pos61" class="rp-marker-row hidden" hittest="false">
+            <Panel id="rp_zone_at61" hittest="false" />
+            <Panel id="rp_zone_fine61" hittest="false" />
+            <Button id="rp_zone61" class="rp-zone">
+              <Panel class="rp-zone-dot" hittest="false" />
+              <Label id="rp_zone_label61" class="rp-zone-label" text="{s:rz61}" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel id="rp_zone_pos62" class="rp-marker-row hidden" hittest="false">
+            <Panel id="rp_zone_at62" hittest="false" />
+            <Panel id="rp_zone_fine62" hittest="false" />
+            <Button id="rp_zone62" class="rp-zone">
+              <Panel class="rp-zone-dot" hittest="false" />
+              <Label id="rp_zone_label62" class="rp-zone-label" text="{s:rz62}" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel id="rp_zone_pos63" class="rp-marker-row hidden" hittest="false">
+            <Panel id="rp_zone_at63" hittest="false" />
+            <Panel id="rp_zone_fine63" hittest="false" />
+            <Button id="rp_zone63" class="rp-zone">
+              <Panel class="rp-zone-dot" hittest="false" />
+              <Label id="rp_zone_label63" class="rp-zone-label" text="{s:rz63}" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel id="rp_start_pos" class="rp-marker-row hidden" hittest="false">
+            <Panel id="rp_start_at" hittest="false" />
+            <Panel id="rp_start_fine" hittest="false" />
+            <Button id="rp_start" class="rp-run-mark">
+              <Image class="rp-clock" src="s2r://panorama/images/icons/ui/clock.vsvg" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel id="rp_end_pos" class="rp-marker-row hidden" hittest="false">
+            <Panel id="rp_end_at" hittest="false" />
+            <Panel id="rp_end_fine" hittest="false" />
+            <Button id="rp_end" class="rp-run-mark">
+              <Image class="rp-flag" src="s2r://panorama/images/custom_game/cs2kz/flag.vsvg" hittest="false" />
+            </Button>
+          </Panel>
+        </Panel>
+        <Panel class="rp-controls" hittest="false">
+          <Button id="rp_breather" class="rp-side-btn rp-breather hidden">
+            <Panel class="rp-side-btn-inner" hittest="false">
+              <Label id="rp_breather_label" class="rp-side-btn-label" text="{s:rpbreather}" hittest="false" />
+            </Panel>
+          </Button>
+          <Panel class="rp-transport" hittest="false">
+            <Panel class="rp-transport-side" hittest="false">
+              <Panel class="rp-transport-half rp-transport-left" hittest="false">
+                <Button id="rp_back300" class="rp-btn">
+                  <Label id="rp_back300_label" class="rp-btn-label" text="{s:rpback300}" hittest="false" />
+                </Button>
+                <Button id="rp_back60" class="rp-btn">
+                  <Label id="rp_back60_label" class="rp-btn-label" text="{s:rpback60}" hittest="false" />
+                </Button>
+                <Button id="rp_back5" class="rp-btn">
+                  <Label id="rp_back5_label" class="rp-btn-label" text="{s:rpback5}" hittest="false" />
+                </Button>
+                <Button id="rp_tick_back" class="rp-btn">
+                  <Label id="rp_tick_back_label" class="rp-btn-label" text="{s:rpprevtick}" hittest="false" />
+                </Button>
+              </Panel>
+            </Panel>
+            <Button id="rp_play" class="rp-play">
+              <Panel class="rp-play-icon" hittest="false" />
+            </Button>
+            <Panel class="rp-transport-side" hittest="false">
+              <Panel class="rp-transport-half" hittest="false">
+                <Button id="rp_tick_next" class="rp-btn">
+                  <Label id="rp_tick_next_label" class="rp-btn-label" text="{s:rpnexttick}" hittest="false" />
+                </Button>
+                <Button id="rp_next5" class="rp-btn">
+                  <Label id="rp_next5_label" class="rp-btn-label" text="{s:rpnext5}" hittest="false" />
+                </Button>
+                <Button id="rp_next60" class="rp-btn">
+                  <Label id="rp_next60_label" class="rp-btn-label" text="{s:rpnext60}" hittest="false" />
+                </Button>
+                <Button id="rp_next300" class="rp-btn">
+                  <Label id="rp_next300_label" class="rp-btn-label" text="{s:rpnext300}" hittest="false" />
+                </Button>
+              </Panel>
+            </Panel>
+          </Panel>
+          <Button id="rp_cursor" class="rp-side-btn rp-cursor">
+            <Panel class="rp-side-btn-inner" hittest="false">
+              <Panel class="rp-key" hittest="false">
+                <Label id="rp_cursor_key" class="rp-key-label" text="{g:csgo_key:rpkey}" hittest="false" />
+              </Panel>
+              <Label id="rp_cursor_label" class="rp-side-btn-label" text="{s:rpcursor}" hittest="false" />
+            </Panel>
+          </Button>
+        </Panel>
+        <Panel class="rp-bottom" hittest="false">
+          <Button id="rp_skip_pause" class="rp-side-btn rp-skip-pause hidden">
+            <Panel class="rp-side-btn-inner" hittest="false">
+              <Label id="rp_skip_pause_label" class="rp-side-btn-label" text="{s:rpskippause}" hittest="false" />
+            </Panel>
+          </Button>
+          <Panel id="rp_zone_jumps" class="rp-zone-jumps hidden" hittest="false">
+            <Panel id="rp_jump_split" class="rp-zone-jump zone-split hidden" hittest="false">
+              <Button id="rp_prev_split" class="rp-btn">
+                <Label id="rp_prev_split_label" class="rp-btn-label" text="{s:rpprevsplit}" hittest="false" />
+              </Button>
+              <Panel class="rp-zone-dot" hittest="false" />
+              <Label id="rp_split_label" class="rp-jump-label" text="{s:rpsplit}" hittest="false" />
+              <Button id="rp_next_split" class="rp-btn">
+                <Label id="rp_next_split_label" class="rp-btn-label" text="{s:rpnextsplit}" hittest="false" />
+              </Button>
+            </Panel>
+            <Panel id="rp_jump_cp" class="rp-zone-jump zone-checkpoint hidden" hittest="false">
+              <Button id="rp_prev_cp" class="rp-btn">
+                <Label id="rp_prev_cp_label" class="rp-btn-label" text="{s:rpprevcp}" hittest="false" />
+              </Button>
+              <Panel class="rp-zone-dot" hittest="false" />
+              <Label id="rp_cp_label" class="rp-jump-label" text="{s:rpcp}" hittest="false" />
+              <Button id="rp_next_cp" class="rp-btn">
+                <Label id="rp_next_cp_label" class="rp-btn-label" text="{s:rpnextcp}" hittest="false" />
+              </Button>
+            </Panel>
+            <Panel id="rp_jump_stage" class="rp-zone-jump zone-stage hidden" hittest="false">
+              <Button id="rp_prev_stage" class="rp-btn">
+                <Label id="rp_prev_stage_label" class="rp-btn-label" text="{s:rpprevstage}" hittest="false" />
+              </Button>
+              <Panel class="rp-zone-dot" hittest="false" />
+              <Label id="rp_stage_label" class="rp-jump-label" text="{s:rpstage}" hittest="false" />
+              <Button id="rp_next_stage" class="rp-btn">
+                <Label id="rp_next_stage_label" class="rp-btn-label" text="{s:rpnextstage}" hittest="false" />
+              </Button>
+            </Panel>
+            <Panel id="rp_jump_tp" class="rp-zone-jump zone-teleport hidden" hittest="false">
+              <Button id="rp_prev_tp" class="rp-btn">
+                <Label id="rp_prev_tp_label" class="rp-btn-label" text="{s:rpprevtp}" hittest="false" />
+              </Button>
+              <Label id="rp_tp_label" class="rp-jump-label" text="{s:rptp}" hittest="false" />
+              <Button id="rp_next_tp" class="rp-btn">
+                <Label id="rp_next_tp_label" class="rp-btn-label" text="{s:rpnexttp}" hittest="false" />
+              </Button>
+            </Panel>
+          </Panel>
+          <Button id="rp_visibility" class="rp-side-btn rp-visibility">
+            <Panel class="rp-side-btn-inner" hittest="false">
+              <Panel class="rp-key" hittest="false">
+                <Label id="rp_visibility_key" class="rp-key-label" text="{g:csgo_key:rpvkey}" hittest="false" />
+              </Panel>
+              <Label id="rp_visibility_label" class="rp-side-btn-label" text="{s:rpvisibility}" hittest="false" />
+            </Panel>
+          </Button>
+        </Panel>
+      </Panel>
+    </Panel>
+  </Panel>
+</root>

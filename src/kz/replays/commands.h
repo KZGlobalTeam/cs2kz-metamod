@@ -1,5 +1,4 @@
-#ifndef KZ_REPLAYCOMMANDS_H
-#define KZ_REPLAYCOMMANDS_H
+#pragma once
 
 #include "sdk/datatypes.h"
 
@@ -37,5 +36,3 @@ namespace KZ::replaysystem::commands
 	void ToggleLegsVisibility(KZPlayer *player);
 	void LoadReplayForRecord(KZPlayer *player, RecordType type, const char *courseArg, const char *modeArg);
 } // namespace KZ::replaysystem::commands
-
-#endif // KZ_REPLAYCOMMANDS_H
