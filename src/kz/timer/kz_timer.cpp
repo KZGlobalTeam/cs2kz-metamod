@@ -326,7 +326,7 @@ bool KZTimerService::TimerStart(const KZCourseDescriptor *courseDesc, bool playS
 	{
 		for (KZPlayer *spec = player->specService->GetNextSpectator(NULL); spec != NULL; spec = player->specService->GetNextSpectator(spec))
 		{
-			player->timerService->PlayTimerStartSound();
+			spec->timerService->PlayTimerStartSound();
 		}
 		this->PlayTimerStartSound();
 	}
@@ -370,7 +370,7 @@ bool KZTimerService::TimerEnd(const KZCourseDescriptor *courseDesc)
 	{
 		for (KZPlayer *spec = player->specService->GetNextSpectator(NULL); spec != NULL; spec = player->specService->GetNextSpectator(spec))
 		{
-			player->timerService->PlayTimerFalseEndSound();
+			spec->timerService->PlayTimerFalseEndSound();
 		}
 		this->PlayTimerFalseEndSound();
 		this->lastFalseEndTime = g_pKZUtils->GetServerGlobals()->curtime;
@@ -419,7 +419,7 @@ bool KZTimerService::TimerEnd(const KZCourseDescriptor *courseDesc)
 
 	for (KZPlayer *spec = player->specService->GetNextSpectator(NULL); spec != NULL; spec = player->specService->GetNextSpectator(spec))
 	{
-		player->timerService->PlayTimerEndSound();
+		spec->timerService->PlayTimerEndSound();
 	}
 	this->PlayTimerEndSound();
 
@@ -488,10 +488,10 @@ void KZTimerService::InvalidateJump()
 
 void KZTimerService::PlayTimerStartSound()
 {
-	if (g_pKZUtils->GetServerGlobals()->curtime - this->lastStartSoundTime > KZ_TIMER_SOUND_COOLDOWN)
+	if (g_pKZUtils->GetServerGlobals(true)->curtime - this->lastStartSoundTime > KZ_TIMER_SOUND_COOLDOWN)
 	{
 		utils::PlaySoundToClient(this->player->GetPlayerSlot(), KZ_TIMER_SND_START);
-		this->lastStartSoundTime = g_pKZUtils->GetServerGlobals()->curtime;
+		this->lastStartSoundTime = g_pKZUtils->GetServerGlobals(true)->curtime;
 	}
 }
 
@@ -554,10 +554,10 @@ void KZTimerService::PlayTimerStopSound()
 
 void KZTimerService::PlayMissedTimeSound()
 {
-	if (g_pKZUtils->GetServerGlobals()->curtime - this->lastMissedTimeSoundTime > KZ_TIMER_SOUND_COOLDOWN)
+	if (g_pKZUtils->GetServerGlobals(true)->curtime - this->lastMissedTimeSoundTime > KZ_TIMER_SOUND_COOLDOWN)
 	{
 		utils::PlaySoundToClient(this->player->GetPlayerSlot(), KZ_TIMER_SND_MISSED_TIME);
-		this->lastMissedTimeSoundTime = g_pKZUtils->GetServerGlobals()->curtime;
+		this->lastMissedTimeSoundTime = g_pKZUtils->GetServerGlobals(true)->curtime;
 	}
 }
 
