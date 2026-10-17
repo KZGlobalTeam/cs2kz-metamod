@@ -5,7 +5,6 @@
 #include "networksystem/inetchannel.h"
 #include "sdk/entity/cbaseentity.h"
 #include "engine2/serversideclient.h"
-#include "interfaces/interfaces.h"
 #include "engine2/inetworkgameserver.h"
 
 class CRecipientFilter : public IRecipientFilter
