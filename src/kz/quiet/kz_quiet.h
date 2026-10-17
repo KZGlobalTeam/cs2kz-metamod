@@ -1,6 +1,6 @@
 #pragma once
 #include "kz/kz.h"
-#include "iserver.h"
+#include "engine2/inetworkgameserver.h"
 #include "networksystem/inetworkserializer.h"
 
 namespace KZ::quiet

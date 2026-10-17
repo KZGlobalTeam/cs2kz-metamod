@@ -1,13 +1,14 @@
 #include "utils.h"
 #include "gameconfig.h"
-#include "iserver.h"
+#include "engine2/inetworkserverservice.h"
+#include "engine2/networkgameserverbase.h"
 #include "interfaces.h"
 #include "cs2kz.h"
 #include "ctimer.h"
 #include "keyvalues3.h"
-#include <filesystem.h>
+#include <filesystem/ifilesystem.h>
 #include "checksum_md5.h"
-#include "sdk/serversideclient.h"
+#include "engine2/serversideclient.h"
 #include "sdk/gamerules.h"
 
 #include "memdbgon.h"

@@ -3,7 +3,7 @@
 #include "kz/mappingapi/kz_mappingapi.h"
 #include "kz/global/api.h"
 #include "../jumpstats/kz_jumpstats.h"
-#include "UtlStringMap.h"
+#include "tier0/utlstringmap.h"
 
 #define KZ_MODE_MANAGER_INTERFACE "KZModeManagerInterface"
 

@@ -1,7 +1,7 @@
 #include "kz_mode.h"
 #include "kz_mode_vnl.h"
 
-#include "filesystem.h"
+#include "filesystem/ifilesystem.h"
 
 #include "utils/utils.h"
 #include "interfaces/interfaces.h"

@@ -40,13 +40,10 @@ void KZ::quiet::OnCheckTransmit(CCheckTransmitInfo **pInfo, int infoCount)
 {
 	for (int i = 0; i < infoCount; i++)
 	{
-		// Cast it to our own TransmitInfo struct because CCheckTransmitInfo isn't correct.
-		TransmitInfo *pTransmitInfo = reinterpret_cast<TransmitInfo *>(pInfo[i]);
+		CCheckTransmitInfo *pTransmitInfo = pInfo[i];
 
 		// Find out who this info will be sent to.
-		static_persist const int offset = g_pGameConfig->GetOffset("QuietPlayerSlot");
-		uintptr_t targetAddr = reinterpret_cast<uintptr_t>(pTransmitInfo) + offset;
-		CPlayerSlot targetSlot = CPlayerSlot(*reinterpret_cast<int *>(targetAddr));
+		CPlayerSlot targetSlot = pTransmitInfo->m_nPlayerSlot;
 		KZPlayer *targetPlayer = g_pKZPlayerManager->ToPlayer(targetSlot);
 		// Make sure the target isn't CSTV.
 		CCSPlayerController *targetController = targetPlayer->GetController();
@@ -92,7 +89,7 @@ void KZ::quiet::OnCheckTransmit(CCheckTransmitInfo **pInfo, int infoCount)
 				continue;
 			}
 
-			pTransmitInfo->m_pTransmitEdict->Clear(particleSystem->GetEntityIndex().Get());
+			pTransmitInfo->m_pTransmitEntity->Clear(particleSystem->GetEntityIndex().Get());
 		}
 
 		EntityInstanceByClassIter_t iter(NULL, "player");
@@ -103,14 +100,14 @@ void KZ::quiet::OnCheckTransmit(CCheckTransmitInfo **pInfo, int infoCount)
 		// clang-format on
 		{
 			// Bit is not even set, don't bother.
-			if (!pTransmitInfo->m_pTransmitEdict->IsBitSet(pawn->entindex()))
+			if (!pTransmitInfo->m_pTransmitEntity->IsBitSet(pawn->entindex()))
 			{
 				continue;
 			}
 			// Do not transmit a pawn without any controller to prevent crashes.
 			if (!pawn->m_hController().IsValid())
 			{
-				pTransmitInfo->m_pTransmitEdict->Clear(pawn->entindex());
+				pTransmitInfo->m_pTransmitEntity->Clear(pawn->entindex());
 				continue;
 			}
 			// Respawn must be enabled or !hide will cause client crash.
@@ -118,7 +115,7 @@ void KZ::quiet::OnCheckTransmit(CCheckTransmitInfo **pInfo, int infoCount)
 			// Never send dead players to prevent crashes.
 			if (pawn->m_lifeState() != LIFE_ALIVE)
 			{
-				pTransmitInfo->m_pTransmitEdict->Clear(pawn->entindex());
+				pTransmitInfo->m_pTransmitEntity->Clear(pawn->entindex());
 				continue;
 			}
 #endif
@@ -131,12 +128,12 @@ void KZ::quiet::OnCheckTransmit(CCheckTransmitInfo **pInfo, int infoCount)
 			// The controller handle can be stale, treat the pawn as if it had no controller.
 			if (!otherPlayer)
 			{
-				pTransmitInfo->m_pTransmitEdict->Clear(pawn->entindex());
+				pTransmitInfo->m_pTransmitEntity->Clear(pawn->entindex());
 				continue;
 			}
 			if (targetPlayer->quietService->ShouldHideIndex(otherPlayer->index))
 			{
-				pTransmitInfo->m_pTransmitEdict->Clear(pawn->entindex());
+				pTransmitInfo->m_pTransmitEntity->Clear(pawn->entindex());
 			}
 		}
 	}
@@ -329,7 +326,7 @@ void KZQuietService::SendFullUpdate()
 {
 	if (CServerSideClient *client = g_pKZUtils->GetClientBySlot(this->player->GetPlayerSlot()))
 	{
-		client->ForceFullUpdate();
+		client->m_nDeltaTick = -1;
 	}
 	// Keep the player's angles the same.
 	QAngle angles;

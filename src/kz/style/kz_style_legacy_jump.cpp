@@ -76,11 +76,6 @@ bool KZLegacyJumpStylePlugin::Unpause(char *error, size_t maxlen)
 	return true;
 }
 
-CGameEntitySystem *GameEntitySystem()
-{
-	return g_pKZUtils->GetGameEntitySystem();
-}
-
 void KZLegacyJumpStyleService::Init()
 {
 	g_pKZUtils->SendConVarValue(this->player->GetPlayerSlot(), sv_legacy_jump, "true");

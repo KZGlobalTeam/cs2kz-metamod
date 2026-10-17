@@ -5,7 +5,7 @@
 #include "kz/language/kz_language.h"
 #include "kz/option/kz_option.h"
 #include "kz/timer/kz_timer.h"
-#include "filesystem.h"
+#include "filesystem/ifilesystem.h"
 #include "utils/tables.h"
 
 static const char *ARCHIVE_INDEX_PATH = KZ_REPLAY_PATH "/archive_index.txt";

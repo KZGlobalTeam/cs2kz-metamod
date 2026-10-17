@@ -3,7 +3,7 @@
 #include "sdk/entity/cbaseplayerweapon.h"
 #include "sdk/cskeletoninstance.h"
 #include "sdk/entity/ccsplayerpawn.h"
-#include "filesystem.h"
+#include "filesystem/ifilesystem.h"
 
 extern CConVar<bool> kz_replay_playback_skins_enable;
 

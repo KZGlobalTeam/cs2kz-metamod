@@ -2,7 +2,7 @@
 #include "utils/interfaces.h"
 #include "sdk/recipientfilters.h"
 
-#include <igameeventsystem.h>
+#include <engine2/igameeventsystem.h>
 #include <networksystem/inetworkmessages.h>
 #include <unordered_map>
 

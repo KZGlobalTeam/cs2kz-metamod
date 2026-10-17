@@ -1,7 +1,7 @@
 ﻿#include "kz_replay.h"
 #include "compression.h"
 #include "parsing.h"
-#include "filesystem.h"
+#include "filesystem/ifilesystem.h"
 #include "vendor/zstd/lib/zstd.h"
 
 using namespace KZ::replaysystem::compression;

@@ -8,17 +8,15 @@
 #include "utils/ctimer.h"
 
 #include "entityclass.h"
-#include "gamesystems/spawngroup_manager.h"
+#include "spawngroupmgrgamesystem.h"
 #include "steam/steam_gameserver.h"
-#include "bufferstring.h"
-#include "igameeventsystem.h"
+#include "tier0/buffer_string.h"
+#include "engine2/igameeventsystem.h"
+#include "engine2/gamesessionconfiguration.h"
+#include "engine2/inetworkserverservice.h"
+#include "engine2/networkgameserverbase.h"
 #include "igamesystem.h"
-#include "entityclass.h"
-#include "gamesystems/spawngroup_manager.h"
-#include "utils/simplecmds.h"
-#include "utils/gamesystem.h"
 #include "utils/async_file_io.h"
-#include "steam/steam_gameserver.h"
 
 #include "sdk/steamnetworkingsockets.h"
 
@@ -40,13 +38,11 @@
 #include "kz/db/kz_db.h"
 #include "kz/mappingapi/kz_mappingapi.h"
 #include "kz/global/kz_global.h"
-#include "kz/hud/kz_hud.h"
 #include "kz/profile/kz_profile.h"
 #include "kz/pistol/kz_pistol.h"
 #include "kz/recording/kz_recording.h"
 #include "kz/replays/kz_replaysystem.h"
 #include "kz/racing/kz_racing.h"
-#include "utils/utils.h"
 #include "utils/cvarquery.h"
 #include "sdk/entity/cbasetrigger.h"
 #include "cstrike15_usermessages.pb.h"
@@ -62,12 +58,7 @@
 
 #include "memdbgon.h"
 
-extern CSteamGameServerAPIContext g_steamAPI;
 extern CGameConfig *g_pGameConfig;
-
-class GameSessionConfiguration_t
-{
-};
 
 class EntListener : public IEntityListener
 {
@@ -258,7 +249,6 @@ static KHook::Virtual<ISource2Server, void, bool, bool, bool> gameFrameHook(Game
 static KHook::Return<void> GameServerSteamAPIActivatedPre(ISource2Server *pThis)
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
-	g_steamAPI.Init();
 	g_pKZPlayerManager->OnSteamAPIActivated();
 	return {KHook::Action::Ignore};
 }

@@ -15,10 +15,10 @@
 #include "networkbasetypes.pb.h"
 
 #include "convar.h"
-#include "igameeventsystem.h"
+#include "engine2/igameeventsystem.h"
 #include "gametrace.h"
 #include "bspflags.h"
-#include "filesystem.h"
+#include "filesystem/ifilesystem.h"
 #include "interfaces/interfaces.h"
 #include "networksystem/inetworkmessages.h"
 #include "steam/steam_gameserver.h"
@@ -38,7 +38,6 @@
 
 CGameConfig *g_pGameConfig = NULL;
 KZUtils *g_pKZUtils = NULL;
-extern CSteamGameServerAPIContext g_steamAPI;
 
 #define SERVER_VERSION_KEY "ServerVersion="
 static_global u32 serverVersion;
@@ -720,11 +719,11 @@ bool utils::IsServerSecure()
 	{
 		return false;
 	}
-	if (!g_steamAPI.SteamGameServer())
+	if (!SteamGameServer())
 	{
 		return !(CommandLine()->HasParm("-insecure") || CommandLine()->HasParm("-tools"));
 	}
-	return g_steamAPI.SteamGameServer()->BSecure();
+	return SteamGameServer()->BSecure();
 }
 
 void utils::UpdateServerVersion()

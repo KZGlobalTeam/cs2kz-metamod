@@ -3,7 +3,7 @@
 #include <functional>
 #include <tuple>
 #include "utils/utils.h"
-#include "../../hl2sdk-cs2/public/tier1/utlvector.h"
+#include "tier0/utlvector.h"
 #include "interfaces.h"
 
 /*

@@ -4,7 +4,7 @@
 #include "schemasystem/schemasystem.h"
 #include "utils/interfaces.h"
 // #include <unordered_map>
-#include "tier1/utlmap.h"
+#include "tier0/utlmap.h"
 #include "plat.h"
 #include "sdk/entity/cbaseentity.h"
 #include "entity2/entityclass.h"

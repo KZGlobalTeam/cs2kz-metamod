@@ -3,6 +3,7 @@
 #include <string_view>
 
 #include "common.h"
+#include "engine2/gameshareddefs.h"
 #include "version_gen.h"
 
 class KZPlugin;
