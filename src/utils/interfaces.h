@@ -12,10 +12,7 @@ class CGameConfig;
 class CTraceFilter;
 class CCSPlayerController;
 class CSchemaSystem;
-class IVEngineServer2;
-class ISource2Server;
 class IGameEventManager2;
-class IGameEventSystem;
 class CBasePlayerPawn;
 class CCSPlayerPawn;
 class CBaseEntity;
@@ -24,7 +21,6 @@ class IGameEventListener2;
 class CTimerBase;
 class CServerSideClient;
 class CCSGameRules;
-class BotProfile;
 
 // temporary botprofile classes
 #include "utllinkedlist.h"

@@ -1,6 +1,5 @@
 #include "utils.h"
 #include "gameconfig.h"
-#include "engine2/inetworkgameserver.h"
 #include "engine2/inetworkserverservice.h"
 #include "engine2/networkgameserverbase.h"
 #include "interfaces.h"
