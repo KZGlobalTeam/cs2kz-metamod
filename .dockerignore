@@ -15,13 +15,6 @@ build*/
 *.md
 
 # Vendor
-vendor/mm-cs2menus/hl2sdk-cs2/
-vendor/mm-cs2menus/metamod-source/
-vendor/mm-cs2menus/examples/
-vendor/mm-cs2menus/bridges/
-vendor/mm-cs2menus/Dockerfile
-vendor/mm-cs2menus/docker-compose.yml
-vendor/mm-cs2menus/vendor/
 vendor/sql_mm/vendor/
 
 vendor/mbedtls/tests/

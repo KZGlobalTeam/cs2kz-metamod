@@ -41,7 +41,7 @@
 
 #include <vendor/MultiAddonManager/public/imultiaddonmanager.h>
 #include <vendor/ixwebsocket/ixwebsocket/IXNetSystem.h>
-#include <vendor/mm-cs2menus/src/public/ics2menus.h>
+#include <vendor/mm-utils/interfaces/cs2menus/ics2menus.h>
 
 #include "tier0/memdbgon.h"
 KZPlugin g_KZPlugin;

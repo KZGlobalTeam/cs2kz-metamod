@@ -9,7 +9,7 @@
 #include "kz/option/menu/tables.h"
 #include "kz/replays/kz_replaysystem.h"
 
-#include <vendor/mm-cs2menus/src/public/ics2menus.h>
+#include <vendor/mm-utils/interfaces/cs2menus/ics2menus.h>
 extern ICS2Menus *g_pMenus;
 
 #include "tier0/memdbgon.h"

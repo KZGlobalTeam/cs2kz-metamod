@@ -5,7 +5,7 @@
 #include <algorithm>
 #include <iterator>
 
-#include <vendor/mm-cs2menus/src/public/ics2menus.h>
+#include <vendor/mm-utils/interfaces/cs2menus/ics2menus.h>
 extern ICS2Menus *g_pMenus;
 
 #include "tier0/memdbgon.h"
