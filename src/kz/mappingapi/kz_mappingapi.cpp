@@ -16,6 +16,7 @@
 #include "utils/simplecmds.h"
 #include "utils/tables.h"
 #include <algorithm>
+#include <array>
 
 #include "tier0/memdbgon.h"
 
@@ -32,12 +33,14 @@ enum
 
 static_global struct
 {
-	std::vector<KZCourseDescriptor> courseDescriptors;
+	std::array<KZCourseDescriptor, KZ_MAX_COURSE_COUNT> courseDescriptors;
+	i32 courseDescriptorCount;
 	i32 mapApiVersion;
 	bool apiVersionLoaded;
 	bool fatalFailure;
 
-	std::vector<KzTrigger> triggers;
+	std::array<KzTrigger, KZ_MAX_TRIGGER_COUNT> triggers;
+	i32 triggerCount;
 	bool roundIsStarting;
 	i32 errorFlags;
 	i32 errorCount;
@@ -120,11 +123,11 @@ static_function f64 Mapi_PrintErrors()
 {
 	if (g_mappingApi.errorFlags & MAPI_ERR_TOO_MANY_TRIGGERS)
 	{
-		utils::CPrintChatAll("%sToo many Mapping API triggers! Maximum is %i!", g_errorPrefix, (i32)g_mappingApi.triggers.size());
+		utils::CPrintChatAll("%sToo many Mapping API triggers! Maximum is %i!", g_errorPrefix, g_mappingApi.triggerCount);
 	}
 	if (g_mappingApi.errorFlags & MAPI_ERR_TOO_MANY_COURSES)
 	{
-		utils::CPrintChatAll("%sToo many Courses! Maximum is %i!", g_errorPrefix, (i32)g_mappingApi.courseDescriptors.size());
+		utils::CPrintChatAll("%sToo many Courses! Maximum is %i!", g_errorPrefix, g_mappingApi.courseDescriptorCount);
 	}
 	for (i32 i = 0; i < g_mappingApi.errorCount; i++)
 	{
@@ -139,7 +142,7 @@ static_function bool Mapi_CreateCourse(i32 courseNumber = 1, const char *courseN
 {
 	// Make sure we don't exceed this ridiculous value.
 	// If we do, it is most likely that something went wrong, or it is caused by the mapper.
-	if ((i32)g_mappingApi.courseDescriptors.size() >= KZ_MAX_COURSE_COUNT)
+	if (g_mappingApi.courseDescriptorCount >= KZ_MAX_COURSE_COUNT)
 	{
 		assert(0);
 		Mapi_Error("Failed to register course name '%s' (hammerId %i): Too many courses!", courseName, hammerId);
@@ -147,7 +150,7 @@ static_function bool Mapi_CreateCourse(i32 courseNumber = 1, const char *courseN
 	}
 
 	auto &currentCourses = g_mappingApi.courseDescriptors;
-	for (i32 i = 0; i < (i32)currentCourses.size(); i++)
+	for (i32 i = 0; i < g_mappingApi.courseDescriptorCount; i++)
 	{
 		if (currentCourses[i].hammerId == hammerId)
 		{
@@ -161,9 +164,10 @@ static_function bool Mapi_CreateCourse(i32 courseNumber = 1, const char *courseN
 		}
 	}
 
-	g_mappingApi.courseDescriptors.push_back(
-		{hammerId, targetName, disableCheckpoints, (u32)g_mappingApi.courseDescriptors.size() + 1, courseNumber, courseName});
-	InsertSortedCourse(&g_mappingApi.courseDescriptors.back());
+	KZCourseDescriptor &course = g_mappingApi.courseDescriptors[g_mappingApi.courseDescriptorCount];
+	course = {hammerId, targetName, disableCheckpoints, (u32)g_mappingApi.courseDescriptorCount + 1, courseNumber, courseName};
+	g_mappingApi.courseDescriptorCount++;
+	InsertSortedCourse(&course);
 	return true;
 }
 
@@ -370,13 +374,13 @@ static_function void Mapi_OnTriggerMultipleSpawn(const EntitySpawnInfo_t *info)
 		break;
 	}
 
-	if ((i32)g_mappingApi.triggers.size() >= KZ_MAX_TRIGGER_COUNT)
+	if (g_mappingApi.triggerCount >= KZ_MAX_TRIGGER_COUNT)
 	{
 		g_mappingApi.errorFlags |= MAPI_ERR_TOO_MANY_TRIGGERS;
 		return;
 	}
 
-	g_mappingApi.triggers.push_back(trigger);
+	g_mappingApi.triggers[g_mappingApi.triggerCount++] = trigger;
 }
 
 static_function void Mapi_OnInfoTargetSpawn(const CEntityKeyValues *ekv)
@@ -435,11 +439,11 @@ static_function KzTrigger *Mapi_FindKzTrigger(CBaseTrigger *trigger)
 		return nullptr;
 	}
 
-	for (KzTrigger &trigger : g_mappingApi.triggers)
+	for (i32 i = 0; i < g_mappingApi.triggerCount; i++)
 	{
-		if (triggerHandle == trigger.entity)
+		if (triggerHandle == g_mappingApi.triggers[i].entity)
 		{
-			return &trigger;
+			return &g_mappingApi.triggers[i];
 		}
 	}
 
@@ -454,11 +458,11 @@ static_function KZCourseDescriptor *Mapi_FindCourse(const char *targetname)
 		return result;
 	}
 
-	for (KZCourseDescriptor &course : g_mappingApi.courseDescriptors)
+	for (i32 i = 0; i < g_mappingApi.courseDescriptorCount; i++)
 	{
-		if (KZ_STREQI(course.entityTargetname, targetname))
+		if (KZ_STREQI(g_mappingApi.courseDescriptors[i].entityTargetname, targetname))
 		{
-			result = &course;
+			result = &g_mappingApi.courseDescriptors[i];
 			break;
 		}
 	}
@@ -513,16 +517,7 @@ static_function void Mapi_OnInfoTeleportDestinationSpawn(const EntitySpawnInfo_t
 
 void KZ::mapapi::Init()
 {
-	// Sorted courses and players' trigger trackers point into these, so their storage is kept across resets and never reallocates.
-	auto courseDescriptors = std::move(g_mappingApi.courseDescriptors);
-	auto triggers = std::move(g_mappingApi.triggers);
 	g_mappingApi = {};
-	g_mappingApi.courseDescriptors = std::move(courseDescriptors);
-	g_mappingApi.triggers = std::move(triggers);
-	g_mappingApi.courseDescriptors.clear();
-	g_mappingApi.triggers.clear();
-	g_mappingApi.courseDescriptors.reserve(KZ_MAX_COURSE_COUNT);
-	g_mappingApi.triggers.reserve(KZ_MAX_TRIGGER_COUNT);
 
 	g_errorTimer = g_errorTimer ? g_errorTimer : StartTimer(Mapi_PrintErrors, true);
 }
@@ -650,21 +645,21 @@ void KZ::mapapi::OnSpawn(int count, const EntitySpawnInfo_t *info)
 
 	if (g_mappingApi.fatalFailure)
 	{
-		g_mappingApi.triggers.clear();
-		g_mappingApi.courseDescriptors.clear();
+		g_mappingApi.triggerCount = 0;
+		g_mappingApi.courseDescriptorCount = 0;
 	}
 }
 
 void KZ::mapapi::OnRoundPreStart()
 {
-	g_mappingApi.triggers.clear();
+	g_mappingApi.triggerCount = 0;
 	g_mappingApi.roundIsStarting = true;
 }
 
 void KZ::mapapi::OnRoundStart()
 {
 	g_mappingApi.roundIsStarting = false;
-	for (i32 courseInd = 0; courseInd < (i32)g_mappingApi.courseDescriptors.size(); courseInd++)
+	for (i32 courseInd = 0; courseInd < g_mappingApi.courseDescriptorCount; courseInd++)
 	{
 		// Find the number of split/checkpoint/stage zones that a course has
 		//  and make sure that they are unique, start from 1 and are consecutive.
@@ -682,7 +677,7 @@ void KZ::mapapi::OnRoundStart()
 		i32 cpCount = 0;
 		i32 stageCount = 0;
 		KZCourseDescriptor *courseDescriptor = &g_mappingApi.courseDescriptors[courseInd];
-		for (i32 i = 0; i < (i32)g_mappingApi.triggers.size(); i++)
+		for (i32 i = 0; i < g_mappingApi.triggerCount; i++)
 		{
 			KzTrigger *trigger = &g_mappingApi.triggers[i];
 			if (!KZ::mapapi::IsTimerTrigger(trigger->type))
@@ -759,8 +754,7 @@ void KZ::mapapi::OnRoundStart()
 
 		if (invalid)
 		{
-			g_mappingApi.courseDescriptors[courseInd] = std::move(g_mappingApi.courseDescriptors.back());
-			g_mappingApi.courseDescriptors.pop_back();
+			g_mappingApi.courseDescriptors[courseInd] = g_mappingApi.courseDescriptors[--g_mappingApi.courseDescriptorCount];
 			courseInd--;
 			continue;
 		}
@@ -777,9 +771,9 @@ void KZ::mapapi::OnRoundStart()
 
 	// FastRemove moves elements around, so the sorted pointers have to be rebuilt.
 	g_sortedCourses.clear();
-	for (KZCourseDescriptor &course : g_mappingApi.courseDescriptors)
+	for (i32 courseInd = 0; courseInd < g_mappingApi.courseDescriptorCount; courseInd++)
 	{
-		InsertSortedCourse(&course);
+		InsertSortedCourse(&g_mappingApi.courseDescriptors[courseInd]);
 	}
 }
 
@@ -864,7 +858,7 @@ void KZ::course::ClearCourses()
 
 u32 KZ::course::GetCourseCount()
 {
-	return (i32)g_sortedCourses.size();
+	return g_sortedCourses.size();
 }
 
 const KZCourseDescriptor *KZ::course::GetCourseByCourseID(i32 id)
@@ -1047,7 +1041,7 @@ static_function void PrintCoursesWithMap(KZPlayer *player, const std::vector<KZ:
 		headers[col] = player->languageService->PrepareMessage(columnKeysWithAPI[col]).c_str();
 	}
 	utils::Table<KZ_ARRAYSIZE(columnKeysWithAPI)> table(player->languageService->PrepareMessage(COURSE_TABLE_NAME).c_str(), headers);
-	for (i32 i = 0; i < (i32)g_sortedCourses.size(); i++)
+	for (size_t i = 0; i < g_sortedCourses.size(); i++)
 	{
 		KZCourseDescriptor *course = g_sortedCourses[i];
 		const KZ::api::Map::Course *apiCourse = nullptr;
@@ -1113,7 +1107,7 @@ static_function void PrintCoursesWithoutMap(KZPlayer *player)
 		headers[col] = player->languageService->PrepareMessage(columnKeysWithoutAPI[col]).c_str();
 	}
 	utils::Table<KZ_ARRAYSIZE(columnKeysWithoutAPI)> table(player->languageService->PrepareMessage(COURSE_TABLE_NAME).c_str(), headers);
-	for (i32 i = 0; i < (i32)g_sortedCourses.size(); i++)
+	for (size_t i = 0; i < g_sortedCourses.size(); i++)
 	{
 		KZCourseDescriptor *course = g_sortedCourses[i];
 		// clang-format off

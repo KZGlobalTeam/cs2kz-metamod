@@ -514,7 +514,7 @@ public:
 	virtual int GetStyleCount(int slot) override
 	{
 		KZPlayer *player = ResolveSlot(slot);
-		return player ? (i32)player->styleServices.size() : 0;
+		return player ? player->styleServices.size() : 0;
 	}
 
 	virtual bool GetStyle(int slot, int index, KZStyleInfo *out) override

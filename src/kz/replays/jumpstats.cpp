@@ -42,7 +42,7 @@ void RpJumpStats::FromJump(RpJumpStats &stats, Jump *jump)
 	V_strncpy(stats.overall.invalidateReason, jump->invalidateReason, sizeof(stats.overall.invalidateReason));
 
 	// Strafe stats
-	for (int i = 0; i < (i32)jump->strafes.size(); i++)
+	for (size_t i = 0; i < jump->strafes.size(); i++)
 	{
 		Strafe &s = jump->strafes[i];
 		RpJumpStats::StrafeData strafe;
@@ -68,7 +68,7 @@ void RpJumpStats::FromJump(RpJumpStats &stats, Jump *jump)
 		stats.strafes.push_back(strafe);
 
 		// AACall stats
-		for (int j = 0; j < (i32)s.aaCalls.size(); j++)
+		for (size_t j = 0; j < s.aaCalls.size(); j++)
 		{
 			AACall &a = s.aaCalls[j];
 			RpJumpStats::AAData aa;
@@ -201,7 +201,7 @@ void RpJumpStats::ToJump(Jump &out, RpJumpStats *js)
 	f32 gain = 0.0f;
 	f32 maxGain = 0.0f;
 
-	for (int i = 0; i < (i32)out.strafes.size(); i++)
+	for (size_t i = 0; i < out.strafes.size(); i++)
 	{
 		out.deadAir += out.strafes[i].GetDeadAirDuration();
 		out.overlap += out.strafes[i].GetOverlapDuration();

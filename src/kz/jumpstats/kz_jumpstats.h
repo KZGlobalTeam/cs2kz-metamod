@@ -435,7 +435,7 @@ public:
 		{
 			return this->failstatStrafeCount;
 		}
-		return (i32)this->strafes.size();
+		return this->strafes.size();
 	}
 
 	f32 GetSync()

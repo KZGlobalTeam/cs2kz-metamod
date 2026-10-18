@@ -394,7 +394,7 @@ void BaseRequest::SetupStyles(CUtlString styleNames)
 	if (styleNames.IsEmpty())
 	{
 		this->localStyleIDs = 0;
-		for (i32 i = 0; i < (i32)callingPlayer->styleServices.size(); i++)
+		for (size_t i = 0; i < callingPlayer->styleServices.size(); i++)
 		{
 			KZStyleManager::StylePluginInfo info = KZ::style::GetStyleInfo(callingPlayer->styleServices[i]);
 			if (info.databaseID < 0)

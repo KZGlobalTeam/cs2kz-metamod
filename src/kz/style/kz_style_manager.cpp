@@ -85,7 +85,7 @@ void KZ::style::LoadStylePlugins()
 
 void KZ::style::UpdateStyleDatabaseID(CUtlString name, i32 id)
 {
-	for (i32 i = 0; i < (i32)styleInfos.size(); i++)
+	for (size_t i = 0; i < styleInfos.size(); i++)
 	{
 		if (!V_stricmp(styleInfos[i].longName, name))
 		{
@@ -103,7 +103,7 @@ KZStyleManager::StylePluginInfo KZ::style::GetStyleInfo(KZStyleService *style)
 		KZ_LOG_WARN(LogChannel::Style, "Warning: Getting style info from a nullptr!\n");
 		return emptyInfo;
 	}
-	for (i32 i = 0; i < (i32)styleInfos.size(); i++)
+	for (size_t i = 0; i < styleInfos.size(); i++)
 	{
 		if (!V_stricmp(style->GetStyleName(), styleInfos[i].longName))
 		{
@@ -121,7 +121,7 @@ KZStyleManager::StylePluginInfo KZ::style::GetStyleInfo(CUtlString styleName)
 		KZ_LOG_WARN(LogChannel::Style, "Warning: Getting style info from an empty string!\n");
 		return emptyInfo;
 	}
-	for (i32 i = 0; i < (i32)styleInfos.size(); i++)
+	for (size_t i = 0; i < styleInfos.size(); i++)
 	{
 		if (styleName.IsEqual_FastCaseInsensitive(styleInfos[i].shortName) || styleName.IsEqual_FastCaseInsensitive(styleInfos[i].longName))
 		{
@@ -142,7 +142,7 @@ bool KZStyleManager::RegisterStyle(PluginId id, const char *shortName, const cha
 		return false;
 	}
 	StylePluginInfo *info = nullptr;
-	for (i32 i = 0; i < (i32)styleInfos.size(); i++)
+	for (size_t i = 0; i < styleInfos.size(); i++)
 	{
 		if (!V_stricmp(styleInfos[i].shortName, shortName) || !V_stricmp(styleInfos[i].longName, longName))
 		{
@@ -179,14 +179,14 @@ bool KZStyleManager::RegisterStyle(PluginId id, const char *shortName, const cha
 
 void KZStyleManager::UnregisterStyle(PluginId id)
 {
-	for (i32 styleIdx = 0; styleIdx < (i32)styleInfos.size(); styleIdx++)
+	for (size_t styleIdx = 0; styleIdx < styleInfos.size(); styleIdx++)
 	{
 		if (styleInfos[styleIdx].id == id)
 		{
 			for (u32 slot = 0; slot < MAXPLAYERS + 1; slot++)
 			{
 				KZPlayer *player = g_pKZPlayerManager->ToPlayer(slot);
-				for (i32 svcIdx = 0; svcIdx < (i32)player->styleServices.size(); svcIdx++)
+				for (size_t svcIdx = 0; svcIdx < player->styleServices.size(); svcIdx++)
 				{
 					if (!V_stricmp(player->styleServices[svcIdx]->GetStyleName(), styleInfos[styleIdx].longName)
 						|| !V_stricmp(player->styleServices[svcIdx]->GetStyleShortName(), styleInfos[styleIdx].shortName))
@@ -214,7 +214,7 @@ void KZStyleManager::Cleanup()
 		return;
 	}
 	char error[256];
-	for (i32 i = 0; i < (i32)styleInfos.size(); i++)
+	for (size_t i = 0; i < styleInfos.size(); i++)
 	{
 		if (styleInfos[i].id <= 0)
 		{
@@ -241,7 +241,7 @@ void KZStyleManager::AddStyle(KZPlayer *player, const char *styleName, bool sile
 		return;
 	}
 
-	for (i32 i = 0; i < (i32)player->styleServices.size(); i++)
+	for (size_t i = 0; i < player->styleServices.size(); i++)
 	{
 		if (!V_stricmp(player->styleServices[i]->GetStyleName(), styleName) || !V_stricmp(player->styleServices[i]->GetStyleShortName(), styleName))
 		{
@@ -252,7 +252,7 @@ void KZStyleManager::AddStyle(KZPlayer *player, const char *styleName, bool sile
 
 	StylePluginInfo info;
 
-	for (i32 i = 0; i < (i32)styleInfos.size(); i++)
+	for (size_t i = 0; i < styleInfos.size(); i++)
 	{
 		if (V_stricmp(styleInfos[i].shortName, styleName) == 0 || V_stricmp(styleInfos[i].longName, styleName) == 0)
 		{
@@ -269,7 +269,7 @@ void KZStyleManager::AddStyle(KZPlayer *player, const char *styleName, bool sile
 		return;
 	}
 
-	for (i32 i = 0; i < (i32)player->styleServices.size(); i++)
+	for (size_t i = 0; i < player->styleServices.size(); i++)
 	{
 		// clang-format off
 		if (HasStyle(info.incompatibleStyles, player->styleServices[i]->GetStyleName())
@@ -310,7 +310,7 @@ void KZStyleManager::RemoveStyle(KZPlayer *player, const char *styleName, bool s
 		return;
 	}
 
-	for (i32 i = 0; i < (i32)player->styleServices.size(); i++)
+	for (size_t i = 0; i < player->styleServices.size(); i++)
 	{
 		auto style = player->styleServices[i];
 		if (!V_stricmp(style->GetStyleName(), styleName) || !V_stricmp(style->GetStyleShortName(), styleName))
@@ -353,7 +353,7 @@ void KZStyleManager::ToggleStyle(KZPlayer *player, const char *styleName, bool s
 	}
 
 	// Try to remove styles first
-	for (i32 i = 0; i < (i32)player->styleServices.size(); i++)
+	for (size_t i = 0; i < player->styleServices.size(); i++)
 	{
 		auto style = player->styleServices[i];
 		if (!V_stricmp(style->GetStyleName(), styleName) || !V_stricmp(style->GetStyleShortName(), styleName))
@@ -374,7 +374,7 @@ void KZStyleManager::ToggleStyle(KZPlayer *player, const char *styleName, bool s
 	}
 	StylePluginInfo info;
 
-	for (i32 i = 0; i < (i32)styleInfos.size(); i++)
+	for (size_t i = 0; i < styleInfos.size(); i++)
 	{
 		if (V_stricmp(styleInfos[i].shortName, styleName) == 0 || V_stricmp(styleInfos[i].longName, styleName) == 0)
 		{
@@ -391,7 +391,7 @@ void KZStyleManager::ToggleStyle(KZPlayer *player, const char *styleName, bool s
 		return;
 	}
 
-	for (i32 i = 0; i < (i32)player->styleServices.size(); i++)
+	for (size_t i = 0; i < player->styleServices.size(); i++)
 	{
 		// clang-format off
 		if (HasStyle(info.incompatibleStyles, player->styleServices[i]->GetStyleName())
@@ -421,7 +421,7 @@ void KZStyleManager::ToggleStyle(KZPlayer *player, const char *styleName, bool s
 
 void KZStyleManager::ClearStyles(KZPlayer *player, bool silent, bool updatePreference)
 {
-	for (i32 i = 0; i < (i32)player->styleServices.size(); i++)
+	for (size_t i = 0; i < player->styleServices.size(); i++)
 	{
 		player->styleServices[i]->Cleanup();
 	}
@@ -445,7 +445,7 @@ void KZStyleManager::ClearStyles(KZPlayer *player, bool silent, bool updatePrefe
 void KZStyleManager::RefreshStyles(KZPlayer *player, bool updatePreference)
 {
 	std::vector<StylePluginInfo> styles;
-	for (i32 i = 0; i < (i32)player->styleServices.size(); i++)
+	for (size_t i = 0; i < player->styleServices.size(); i++)
 	{
 		styles.push_back(KZ::style::GetStyleInfo(player->styleServices[i]->GetStyleName()));
 	}
@@ -459,7 +459,7 @@ void KZStyleManager::RefreshStyles(KZPlayer *player, bool updatePreference)
 CUtlString KZStyleManager::GetStylesString(KZPlayer *player)
 {
 	CUtlString result;
-	for (i32 i = 0; i < (i32)player->styleServices.size(); i++)
+	for (size_t i = 0; i < player->styleServices.size(); i++)
 	{
 		result.Append(player->styleServices[i]->GetStyleName());
 		result.Append(",");
@@ -471,10 +471,10 @@ CUtlString KZStyleManager::GetStylesString(KZPlayer *player)
 void KZStyleManager::PrintActiveStyles(KZPlayer *player)
 {
 	std::string styles = "";
-	for (i32 i = 0; i < (i32)player->styleServices.size(); i++)
+	for (size_t i = 0; i < player->styleServices.size(); i++)
 	{
 		styles += player->styleServices[i]->GetStyleName();
-		if (i != (i32)player->styleServices.size() - 1)
+		if (i != player->styleServices.size() - 1)
 		{
 			styles += ", ";
 		}
@@ -485,7 +485,7 @@ void KZStyleManager::PrintActiveStyles(KZPlayer *player)
 void KZStyleManager::PrintAllStyles(KZPlayer *player)
 {
 	player->languageService->PrintConsole(false, false, "Possible Styles");
-	for (i32 i = 0; i < (i32)styleInfos.size(); i++)
+	for (size_t i = 0; i < styleInfos.size(); i++)
 	{
 		if (styleInfos[i].id < 0)
 		{
@@ -503,7 +503,7 @@ void KZStyleManager::PrintAllStyles(KZPlayer *player)
 
 void KZDatabaseServiceEventListener_Styles::OnDatabaseSetup()
 {
-	for (i32 i = 0; i < (i32)styleInfos.size(); i++)
+	for (size_t i = 0; i < styleInfos.size(); i++)
 	{
 		if (styleInfos[i].databaseID == -1)
 		{

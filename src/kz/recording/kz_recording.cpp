@@ -372,7 +372,7 @@ void KZRecordingService::CheckModeStyles()
 	bool refreshStyles = this->player->styleServices.size() != this->lastKnownStyles.size();
 	if (!refreshStyles)
 	{
-		for (i32 i = 0; i < (i32)this->player->styleServices.size(); i++)
+		for (size_t i = 0; i < this->player->styleServices.size(); i++)
 		{
 			if (!KZ_STREQI(this->lastKnownStyles[i].shortName, KZ::style::GetStyleInfo(this->player->styleServices[i]).shortName)
 				|| !KZ_STREQI(this->lastKnownStyles[i].md5, KZ::style::GetStyleInfo(this->player->styleServices[i]).md5))
@@ -385,7 +385,7 @@ void KZRecordingService::CheckModeStyles()
 	if (refreshStyles)
 	{
 		this->lastKnownStyles.clear();
-		for (i32 i = 0; i < (i32)this->player->styleServices.size(); i++)
+		for (size_t i = 0; i < this->player->styleServices.size(); i++)
 		{
 			auto styleService = this->player->styleServices[i];
 			auto styleInfo = KZ::style::GetStyleInfo(styleService);
@@ -421,7 +421,7 @@ void KZRecordingService::CheckModeStyles()
 	{
 		this->circularRecording->earliestStyles = std::vector<RpModeStyleInfo>();
 
-		for (i32 i = 0; i < (i32)this->player->styleServices.size(); i++)
+		for (size_t i = 0; i < this->player->styleServices.size(); i++)
 		{
 			auto styleService = this->player->styleServices[i];
 			auto styleInfo = KZ::style::GetStyleInfo(styleService);

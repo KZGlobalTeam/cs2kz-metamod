@@ -121,7 +121,7 @@ RunSubmission::RunSubmission(KZPlayer *player)
 	}
 
 	// Setup styles
-	for (i32 i = 0; i < (i32)player->styleServices.size(); i++)
+	for (size_t i = 0; i < player->styleServices.size(); i++)
 	{
 		auto style = KZ::style::GetStyleInfo(player->styleServices[i]);
 		this->styles.push_back({player->styleServices[i]->GetStyleShortName(), style.md5});

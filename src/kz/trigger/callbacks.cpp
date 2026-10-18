@@ -17,7 +17,7 @@
 bool KZTriggerService::OnTriggerStartTouchPre(CBaseTrigger *trigger)
 {
 	bool retValue = this->player->modeService->OnTriggerStartTouch(trigger);
-	for (i32 i = 0; i < (i32)this->player->styleServices.size(); i++)
+	for (size_t i = 0; i < this->player->styleServices.size(); i++)
 	{
 		retValue &= this->player->styleServices[i]->OnTriggerStartTouch(trigger);
 	}
@@ -28,7 +28,7 @@ bool KZTriggerService::OnTriggerStartTouchPre(CBaseTrigger *trigger)
 bool KZTriggerService::OnTriggerTouchPre(CBaseTrigger *trigger, TriggerTouchTracker tracker)
 {
 	bool retValue = this->player->modeService->OnTriggerTouch(trigger);
-	for (i32 i = 0; i < (i32)this->player->styleServices.size(); i++)
+	for (size_t i = 0; i < this->player->styleServices.size(); i++)
 	{
 		retValue &= this->player->styleServices[i]->OnTriggerTouch(trigger);
 	}
@@ -39,7 +39,7 @@ bool KZTriggerService::OnTriggerTouchPre(CBaseTrigger *trigger, TriggerTouchTrac
 bool KZTriggerService::OnTriggerEndTouchPre(CBaseTrigger *trigger, TriggerTouchTracker tracker)
 {
 	bool retValue = this->player->modeService->OnTriggerEndTouch(trigger);
-	for (i32 i = 0; i < (i32)this->player->styleServices.size(); i++)
+	for (size_t i = 0; i < this->player->styleServices.size(); i++)
 	{
 		retValue &= this->player->styleServices[i]->OnTriggerEndTouch(trigger);
 	}
@@ -144,7 +144,7 @@ void KZTriggerService::ApplyPushes()
 		return;
 	}
 	bool useBaseVelocity = this->player->GetPlayerPawn()->m_fFlags & FL_ONGROUND && this->player->processingMovement;
-	for (i32 i = 0; i < (i32)this->pushEvents.size(); i++)
+	for (size_t i = 0; i < this->pushEvents.size(); i++)
 	{
 		if (curtime - frametime >= this->pushEvents[i].pushTime || curtime < this->pushEvents[i].pushTime || this->pushEvents[i].applied)
 		{

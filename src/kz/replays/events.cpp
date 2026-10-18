@@ -135,7 +135,7 @@ namespace KZ::replaysystem::events
 
 				CUtlString combinedModeStyleText;
 				combinedModeStyleText.Format("{purple}%s{grey}", player.modeService->GetModeShortName());
-				for (i32 i = 0; i < (i32)player.styleServices.size(); i++)
+				for (size_t i = 0; i < player.styleServices.size(); i++)
 				{
 					KZStyleService *style = player.styleServices[i];
 					combinedModeStyleText += " +{grey2}";

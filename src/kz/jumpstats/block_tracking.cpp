@@ -15,7 +15,7 @@ static_function i32 GetTotalAACallCount(const Jump &jump)
 	i32 totalCalls = 0;
 	for (const Strafe &strafe : jump.strafes)
 	{
-		totalCalls += (i32)strafe.aaCalls.size();
+		totalCalls += strafe.aaCalls.size();
 	}
 	return totalCalls;
 }
@@ -395,7 +395,7 @@ void Jump::UpdateFailstat()
 		}
 		this->failstatSync = totalDuration > 0.0f ? syncDuration / totalDuration : 0.0f;
 		this->failstatBadAngles = totalDuration > 0.0f ? baDuration / totalDuration : 0.0f;
-		this->failstatStrafeCount = (i32)this->strafes.size();
+		this->failstatStrafeCount = this->strafes.size();
 		this->failstatTotalDistance = this->totalDistance;
 		this->failstatGraphCallCount = Min(GetTotalAACallCount(*this), JS_CONSOLE_GRAPH_MAX_FRAMES);
 		this->failstatValid = true;

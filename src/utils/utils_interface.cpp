@@ -103,7 +103,7 @@ void KZUtils::AddTimer(CTimerBase *timer, bool preserveMapChange)
 
 void KZUtils::RemoveTimer(CTimerBase *timer)
 {
-	for (i32 i = 0; i < (i32)g_PersistentTimers.size(); i++)
+	for (size_t i = 0; i < g_PersistentTimers.size(); i++)
 	{
 		if (g_PersistentTimers[i] == timer)
 		{
@@ -112,7 +112,7 @@ void KZUtils::RemoveTimer(CTimerBase *timer)
 			return;
 		}
 	}
-	for (i32 i = 0; i < (i32)g_NonPersistentTimers.size(); i++)
+	for (size_t i = 0; i < g_NonPersistentTimers.size(); i++)
 	{
 		if (g_NonPersistentTimers[i] == timer)
 		{

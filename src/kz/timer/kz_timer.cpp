@@ -243,7 +243,7 @@ bool KZTimerService::TimerStart(const KZCourseDescriptor *courseDesc, bool playS
 	}
 
 	bool allowStart = true;
-	for (i32 i = 0; i < (i32)eventListeners.size(); i++)
+	for (size_t i = 0; i < eventListeners.size(); i++)
 	{
 		allowStart &= eventListeners[i]->OnTimerStart(this->player, courseDesc->guid);
 	}
@@ -343,7 +343,7 @@ bool KZTimerService::TimerStart(const KZCourseDescriptor *courseDesc, bool playS
 		this->player->languageService->PrintChat(true, false, "No Prime Warning");
 	}
 
-	for (i32 i = 0; i < (i32)eventListeners.size(); i++)
+	for (size_t i = 0; i < eventListeners.size(); i++)
 	{
 		eventListeners[i]->OnTimerStartPost(this->player, courseDesc->guid);
 	}
@@ -406,7 +406,7 @@ bool KZTimerService::TimerEnd(const KZCourseDescriptor *courseDesc)
 	u32 teleportsUsed = this->player->checkpointService->GetTeleportCount();
 
 	bool allowEnd = true;
-	for (i32 i = 0; i < (i32)eventListeners.size(); i++)
+	for (size_t i = 0; i < eventListeners.size(); i++)
 	{
 		allowEnd &= eventListeners[i]->OnTimerEnd(this->player, this->currentCourseGUID, time, teleportsUsed);
 	}
@@ -426,7 +426,7 @@ bool KZTimerService::TimerEnd(const KZCourseDescriptor *courseDesc)
 	}
 	this->PlayTimerEndSound();
 
-	for (i32 i = 0; i < (i32)eventListeners.size(); i++)
+	for (size_t i = 0; i < eventListeners.size(); i++)
 	{
 		eventListeners[i]->OnTimerEndPost(this->player, this->currentCourseGUID, time, teleportsUsed);
 	}
@@ -459,7 +459,7 @@ bool KZTimerService::TimerStop(bool playSound)
 		this->PlayTimerStopSound();
 	}
 
-	for (i32 i = 0; i < (i32)eventListeners.size(); i++)
+	for (size_t i = 0; i < eventListeners.size(); i++)
 	{
 		eventListeners[i]->OnTimerStopped(this->player, this->currentCourseGUID);
 	}
@@ -506,7 +506,7 @@ void KZTimerService::InvalidateRun()
 	}
 	this->validTime = false;
 
-	for (i32 i = 0; i < (i32)eventListeners.size(); i++)
+	for (size_t i = 0; i < eventListeners.size(); i++)
 	{
 		eventListeners[i]->OnTimerInvalidated(this->player);
 	}
@@ -578,7 +578,7 @@ void KZTimerService::Pause()
 	}
 
 	bool allowPause = true;
-	for (i32 i = 0; i < (i32)eventListeners.size(); i++)
+	for (size_t i = 0; i < eventListeners.size(); i++)
 	{
 		allowPause &= eventListeners[i]->OnPause(this->player);
 	}
@@ -605,7 +605,7 @@ void KZTimerService::Pause()
 		this->lastPauseTime = g_pKZUtils->GetServerGlobals()->curtime;
 	}
 
-	for (i32 i = 0; i < (i32)eventListeners.size(); i++)
+	for (size_t i = 0; i < eventListeners.size(); i++)
 	{
 		eventListeners[i]->OnPausePost(this->player);
 	}
@@ -685,7 +685,7 @@ void KZTimerService::Resume(bool force)
 	}
 
 	bool allowResume = true;
-	for (i32 i = 0; i < (i32)eventListeners.size(); i++)
+	for (size_t i = 0; i < eventListeners.size(); i++)
 	{
 		allowResume &= eventListeners[i]->OnResume(this->player);
 	}
@@ -720,7 +720,7 @@ void KZTimerService::Resume(bool force)
 	this->player->GetMoveServices()->m_flLastDuckTime = this->lastDuckTimeValue;
 	this->player->GetMoveServices()->m_ModernJump().m_nLastLandedTick = this->lastLandedTickValue;
 
-	for (i32 i = 0; i < (i32)eventListeners.size(); i++)
+	for (size_t i = 0; i < eventListeners.size(); i++)
 	{
 		eventListeners[i]->OnResumePost(this->player);
 	}
@@ -953,7 +953,7 @@ void KZTimerService::OnChangeMoveType(MoveType_t oldMoveType)
 		this->lastResumeTime = g_pKZUtils->GetServerGlobals()->curtime;
 	}
 
-	for (i32 i = 0; i < (i32)eventListeners.size(); i++)
+	for (size_t i = 0; i < eventListeners.size(); i++)
 	{
 		eventListeners[i]->OnResumePost(this->player);
 	}
@@ -988,7 +988,7 @@ void KZTimerService::OnPlayerSpawn()
 	this->player->GetMoveServices()->m_flLastDuckTime = this->lastDuckTimeValue;
 	this->player->GetMoveServices()->m_ModernJump().m_nLastLandedTick = this->lastLandedTickValue;
 
-	for (i32 i = 0; i < (i32)eventListeners.size(); i++)
+	for (size_t i = 0; i < eventListeners.size(); i++)
 	{
 		eventListeners[i]->OnResumePost(this->player);
 	}
@@ -1005,7 +1005,7 @@ void KZTimerService::OnPlayerJoinTeam(i32 team)
 			this->lastPauseTime = g_pKZUtils->GetServerGlobals()->curtime;
 		}
 
-		for (i32 i = 0; i < (i32)eventListeners.size(); i++)
+		for (size_t i = 0; i < eventListeners.size(); i++)
 		{
 			eventListeners[i]->OnPausePost(this->player);
 		}

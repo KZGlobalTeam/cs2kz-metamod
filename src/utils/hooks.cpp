@@ -1239,17 +1239,17 @@ static KHook::Return<void> TryPlayerMovePre(CCSPlayer_MovementServices *ms, CMov
 	g_traceShapeEnabled = true;
 	player->OnTryPlayerMove(pFirstDest, pFirstTrace, bIsSurfing);
 	Vector oldVelocity = mv->m_vecVelocity;
-	i32 count = (i32)traceHistory.size();
+	size_t count = traceHistory.size();
 	TryPlayerMove.CallOriginal(ms, mv, pFirstDest, pFirstTrace, bIsSurfing);
-	if ((i32)traceHistory.size() != count)
+	if (traceHistory.size() != count)
 	{
-		for (i32 i = 0; i + count < (i32)traceHistory.size(); i++)
+		for (size_t i = 0; i + count < traceHistory.size(); i++)
 		{
 			if (traceHistory[i].end != traceHistory[i + count].end)
 			{
 				META_CONPRINTF("Trace not matching! Previous traces (initial error %f, initial velocity %s):\n", initialError,
 							   VecToString(initialVelocity));
-				for (i32 j = 0; j <= i; j++)
+				for (size_t j = 0; j <= i; j++)
 				{
 					META_CONPRINTF("Pred %f %f %f -> %f %f %f, error %f, velocity %s ", traceHistory[j].start.x, traceHistory[j].start.y,
 								   traceHistory[j].start.z, traceHistory[j].end.x, traceHistory[j].end.y, traceHistory[j].end.z,

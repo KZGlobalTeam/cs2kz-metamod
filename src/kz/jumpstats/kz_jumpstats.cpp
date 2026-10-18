@@ -362,8 +362,8 @@ bool Strafe::CalcAngleRatioStats()
 	std::sort(ratios.begin(), ratios.end());
 	this->arStats.available = true;
 	this->arStats.average = totalRatios / totalDuration;
-	this->arStats.median = ratios[(i32)ratios.size() / 2];
-	this->arStats.max = ratios[(i32)ratios.size() - 1];
+	this->arStats.median = ratios[ratios.size() / 2];
+	this->arStats.max = ratios.back();
 	return true;
 }
 
@@ -805,7 +805,7 @@ JumpType KZJumpstatsService::DetermineJumpType()
 	}
 	if (this->jumps.size() >= 2)
 	{
-		Jump &previousJump = this->jumps[(i32)this->jumps.size() - 2];
+		Jump &previousJump = this->jumps[this->jumps.size() - 2];
 		if (this->player->duckBugged)
 		{
 			if (previousJump.IsValid() && previousJump.GetOffset() < JS_EPSILON && previousJump.GetJumpType() == JumpType_LongJump)
@@ -860,7 +860,7 @@ f32 KZJumpstatsService::GetLastJumpRelease()
 	{
 		return 0.0f;
 	}
-	Jump &previousJump = this->jumps[(i32)this->jumps.size() - 2];
+	Jump &previousJump = this->jumps[this->jumps.size() - 2];
 	return previousJump.release;
 }
 
@@ -936,7 +936,7 @@ bool KZJumpstatsService::ValidWeirdJumpDropDistance()
 	{
 		return false;
 	}
-	Jump &previousJump = this->jumps[(i32)this->jumps.size() - 2];
+	Jump &previousJump = this->jumps[this->jumps.size() - 2];
 	return previousJump.GetOffset() > -1 * JS_MAX_WEIRDJUMP_FALL_OFFSET;
 }
 

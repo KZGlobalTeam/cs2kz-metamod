@@ -401,7 +401,7 @@ void KZJumpstatsService::PrintJumpToConsole(KZPlayer *target, Jump *jump, bool b
 	);
 	// clang-format on
 	std::string modeStyleNames = jump->GetJumpPlayer()->modeService->GetModeShortName();
-	for (i32 i = 0; i < (i32)jump->GetJumpPlayer()->styleServices.size(); i++)
+	for (size_t i = 0; i < jump->GetJumpPlayer()->styleServices.size(); i++)
 	{
 		modeStyleNames += " +";
 		modeStyleNames += jump->GetJumpPlayer()->styleServices[i]->GetStyleShortName();

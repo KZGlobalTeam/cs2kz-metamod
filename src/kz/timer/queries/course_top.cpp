@@ -278,7 +278,7 @@ struct CourseTopRequest : public BaseRequest
 		}
 		utils::Table<KZ_ARRAYSIZE(columnKeysGlobal)> table(
 			player->languageService->PrepareMessage(COURSE_TOP_TABLE_KEY_GLOBAL, mapName.Get(), courseName.Get(), modeName.Get()).c_str(), headers);
-		for (i32 i = 0; i < (i32)wrData.overallData.size(); i++)
+		for (size_t i = 0; i < wrData.overallData.size(); i++)
 		{
 			rank.Format("%llu", this->offset + i + 1);
 			RunStats stats = wrData.overallData[i];
@@ -304,7 +304,7 @@ struct CourseTopRequest : public BaseRequest
 		utils::Table<KZ_ARRAYSIZE(columnKeysGlobalPro)> tablePro(
 			player->languageService->PrepareMessage(COURSE_TOP_PRO_TABLE_KEY_GLOBAL, mapName.Get(), courseName.Get(), modeName.Get()).c_str(),
 			headersPro);
-		for (i32 i = 0; i < (i32)wrData.proData.size(); i++)
+		for (size_t i = 0; i < wrData.proData.size(); i++)
 		{
 			rank.Format("%llu", this->offset + i + 1);
 			RunStats stats = wrData.proData[i];
@@ -333,7 +333,7 @@ struct CourseTopRequest : public BaseRequest
 		}
 		utils::Table<KZ_ARRAYSIZE(columnKeysLocal)> table(
 			player->languageService->PrepareMessage(COURSE_TOP_TABLE_KEY, mapName.Get(), courseName.Get(), modeName.Get()).c_str(), headers);
-		for (i32 i = 0; i < (i32)srData.overallData.size(); i++)
+		for (size_t i = 0; i < srData.overallData.size(); i++)
 		{
 			rank.Format("%llu", this->offset + i + 1);
 			RunStats stats = srData.overallData[i];
@@ -356,7 +356,7 @@ struct CourseTopRequest : public BaseRequest
 		}
 		utils::Table<KZ_ARRAYSIZE(columnKeysLocalPro)> tablePro(
 			player->languageService->PrepareMessage(COURSE_TOP_PRO_TABLE_KEY, mapName.Get(), courseName.Get(), modeName.Get()).c_str(), headersPro);
-		for (i32 i = 0; i < (i32)srData.proData.size(); i++)
+		for (size_t i = 0; i < srData.proData.size(); i++)
 		{
 			rank.Format("%llu", this->offset + i + 1);
 			RunStats stats = srData.proData[i];

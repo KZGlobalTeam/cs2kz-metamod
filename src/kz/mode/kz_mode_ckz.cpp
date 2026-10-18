@@ -773,7 +773,7 @@ void KZClassicModeService::OnTryPlayerMovePost(Vector *pFirstDest, trace_t *pFir
 			// We need to shrink the bounds a bit to prevent touching triggers that we shouldn't be touching when doing triggerfix.
 			bbox_t offset = {{0.03125f, 0.03125f, 0.03125f}, {-0.03125f, -0.03125f, -0.03125f}};
 			this->player->GetBBoxBounds(&bounds, &offset);
-			for (int i = 0; i < (i32)this->tpmTriggerFixOrigins.size() - 1; i++)
+			for (size_t i = 0; i < this->tpmTriggerFixOrigins.size() - 1; i++)
 			{
 				this->player->TouchTriggersAlongPath(this->tpmTriggerFixOrigins[i], this->tpmTriggerFixOrigins[i + 1], bounds);
 			}

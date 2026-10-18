@@ -149,7 +149,7 @@ void KZCheckpointService::SetCheckpoint()
 	cp.groundEnt = pawn->m_hGroundEntity();
 	this->checkpoints.push_back(cp);
 	// newest checkpoints aren't deleted after using prev cp.
-	this->currentCpIndex = (i32)this->checkpoints.size() - 1;
+	this->currentCpIndex = this->checkpoints.size() - 1;
 	this->player->recordingService->OnCheckpointSave(this->currentCpIndex + 1, cp.origin);
 	if (showAreaWarning)
 	{

@@ -101,7 +101,7 @@ void KZ::mode::LoadModePlugins()
 void KZ::mode::UpdateModeDatabaseID(CUtlString name, i32 id, CUtlString shortName)
 {
 	// Check if the mode already exists in the list, if yes, we update it.
-	for (i32 i = 0; i < (i32)modeInfos.size(); i++)
+	for (size_t i = 0; i < modeInfos.size(); i++)
 	{
 		if (!V_stricmp(modeInfos[i].longModeName, name))
 		{
@@ -164,7 +164,7 @@ bool KZModeManager::RegisterMode(PluginId id, const char *shortModeName, const c
 	}
 	// Update the info list if already exists
 	ModePluginInfo *info = nullptr;
-	for (i32 i = 0; i < (i32)modeInfos.size(); i++)
+	for (size_t i = 0; i < modeInfos.size(); i++)
 	{
 		if (!V_stricmp(modeInfos[i].shortModeName, shortModeName) || !V_stricmp(modeInfos[i].longModeName, longModeName))
 		{
@@ -209,7 +209,7 @@ void KZModeManager::UnregisterMode(PluginId id)
 		return;
 	}
 
-	for (i32 modeIdx = 0; modeIdx < (i32)modeInfos.size(); modeIdx++)
+	for (size_t modeIdx = 0; modeIdx < modeInfos.size(); modeIdx++)
 	{
 		if (id == modeInfos[modeIdx].id)
 		{
@@ -251,7 +251,7 @@ bool KZModeManager::SwitchToMode(KZPlayer *player, const char *modeName, bool si
 	{
 		player->languageService->PrintChat(true, false, "Mode Command Usage");
 		player->languageService->PrintConsole(false, false, "Possible & Current Modes", player->modeService->GetModeName());
-		for (i32 i = 0; i < (i32)modeInfos.size(); i++)
+		for (size_t i = 0; i < modeInfos.size(); i++)
 		{
 			if (modeInfos[i].id < 0)
 			{
@@ -282,7 +282,7 @@ bool KZModeManager::SwitchToMode(KZPlayer *player, const char *modeName, bool si
 
 	ModeServiceFactory factory = nullptr;
 
-	for (i32 i = 0; i < (i32)modeInfos.size(); i++)
+	for (size_t i = 0; i < modeInfos.size(); i++)
 	{
 		if (V_stricmp(modeInfos[i].shortModeName, modeName) == 0 || V_stricmp(modeInfos[i].longModeName, modeName) == 0)
 		{
@@ -333,7 +333,7 @@ void KZModeManager::Cleanup()
 		return;
 	}
 	char error[256];
-	for (i32 i = 0; i < (i32)modeInfos.size(); i++)
+	for (size_t i = 0; i < modeInfos.size(); i++)
 	{
 		if (modeInfos[i].id == g_PLID)
 		{
@@ -390,7 +390,7 @@ KZModeManager::ModePluginInfo KZ::mode::GetModeInfo(KZModeService *mode)
 		KZ_LOG_WARN(LogChannel::Mode, "Warning: Getting mode info from a nullptr!\n");
 		return emptyInfo;
 	}
-	for (i32 i = 0; i < (i32)modeInfos.size(); i++)
+	for (size_t i = 0; i < modeInfos.size(); i++)
 	{
 		if (!V_stricmp(mode->GetModeName(), modeInfos[i].longModeName))
 		{
@@ -424,7 +424,7 @@ KZModeManager::ModePluginInfo KZ::mode::GetModeInfo(CUtlString modeName)
 		KZ_LOG_WARN(LogChannel::Mode, "Warning: Getting mode info from an empty string!\n");
 		return emptyInfo;
 	}
-	for (i32 i = 0; i < (i32)modeInfos.size(); i++)
+	for (size_t i = 0; i < modeInfos.size(); i++)
 	{
 		if (modeName.IsEqual_FastCaseInsensitive(modeInfos[i].shortModeName) || modeName.IsEqual_FastCaseInsensitive(modeInfos[i].longModeName))
 		{
@@ -436,7 +436,7 @@ KZModeManager::ModePluginInfo KZ::mode::GetModeInfo(CUtlString modeName)
 
 KZModeManager::ModePluginInfo KZ::mode::GetModeInfoFromDatabaseID(i32 id)
 {
-	for (i32 i = 0; i < (i32)modeInfos.size(); i++)
+	for (size_t i = 0; i < modeInfos.size(); i++)
 	{
 		if (modeInfos[i].databaseID == id)
 		{
@@ -448,7 +448,7 @@ KZModeManager::ModePluginInfo KZ::mode::GetModeInfoFromDatabaseID(i32 id)
 
 void KZDatabaseServiceEventListener_Modes::OnDatabaseSetup()
 {
-	for (i32 i = 0; i < (i32)modeInfos.size(); i++)
+	for (size_t i = 0; i < modeInfos.size(); i++)
 	{
 		if (modeInfos[i].databaseID == -1)
 		{

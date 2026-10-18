@@ -84,7 +84,7 @@ public:
 
 	i32 GetCheckpointCount()
 	{
-		return (i32)this->checkpoints.size();
+		return this->checkpoints.size();
 	}
 
 	void SetStartPosition();

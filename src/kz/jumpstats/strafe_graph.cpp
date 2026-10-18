@@ -45,7 +45,7 @@ static_function i32 GetTotalAACallCount(const Jump &jump)
 	i32 totalCalls = 0;
 	for (const Strafe &strafe : jump.strafes)
 	{
-		totalCalls += (i32)strafe.aaCalls.size();
+		totalCalls += strafe.aaCalls.size();
 	}
 	return totalCalls;
 }

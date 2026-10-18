@@ -306,21 +306,21 @@ SCMD(kz_specs, SCFL_SPEC)
 	else
 	{
 		CUtlString spectatorListString;
-		for (i32 i = 0; i < (i32)spectatorList.size(); i++)
+		for (size_t i = 0; i < spectatorList.size(); i++)
 		{
 			spectatorListString += spectatorList[i];
-			if (i != (i32)spectatorList.size() - 1)
+			if (i != spectatorList.size() - 1)
 			{
 				spectatorListString += ", ";
 			}
 		}
 		if (targetPlayer == player)
 		{
-			player->languageService->PrintChat(true, false, "Spectator List", (i32)spectatorList.size(), spectatorListString.Get());
+			player->languageService->PrintChat(true, false, "Spectator List", spectatorList.size(), spectatorListString.Get());
 		}
 		else
 		{
-			player->languageService->PrintChat(true, false, "Target Spectator List", targetPlayer->GetName(), (i32)spectatorList.size(),
+			player->languageService->PrintChat(true, false, "Target Spectator List", targetPlayer->GetName(), spectatorList.size(),
 											   spectatorListString.Get());
 		}
 	}

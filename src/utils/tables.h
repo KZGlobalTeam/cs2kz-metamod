@@ -95,7 +95,7 @@ namespace utils
 			{
 				return false;
 			}
-			if (row >= (u32)entries.size())
+			if (row >= entries.size())
 			{
 				entries.resize(row + 1);
 			}
@@ -114,7 +114,7 @@ namespace utils
 		void SetRow(u32 row, const Args &...args)
 		{
 			static_assert(sizeof...(args) == N, "Number of arguments must match the column count");
-			if (row >= (u32)entries.size())
+			if (row >= entries.size())
 			{
 				entries.resize(row + 1);
 			}
@@ -171,7 +171,7 @@ namespace utils
 
 		CUtlString GetLine(u32 row)
 		{
-			if (row >= (u32)entries.size())
+			if (row >= entries.size())
 			{
 				return "";
 			}
@@ -207,7 +207,7 @@ namespace utils
 
 		u32 GetNumEntries()
 		{
-			return (i32)entries.size();
+			return entries.size();
 		}
 	};
 

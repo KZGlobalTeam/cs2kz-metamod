@@ -28,7 +28,7 @@ void KZTriggerService::Reset()
 
 void KZTriggerService::OnPhysicsSimulate()
 {
-	for (i32 i = 0; i < (i32)this->triggerTrackers.size(); i++)
+	for (size_t i = 0; i < this->triggerTrackers.size(); i++)
 	{
 		CEntityHandle handle = this->triggerTrackers[i].triggerHandle;
 		CBaseTrigger *trigger = dynamic_cast<CBaseTrigger *>(GameEntitySystem()->GetEntityInstance(handle));
@@ -114,7 +114,7 @@ void KZTriggerService::OnProcessMovementPost()
 
 void KZTriggerService::OnStopTouchGround()
 {
-	for (i32 i = 0; i < (i32)this->triggerTrackers.size(); i++)
+	for (size_t i = 0; i < this->triggerTrackers.size(); i++)
 	{
 		TriggerTouchTracker tracker = this->triggerTrackers[i];
 		CBaseTrigger *trigger = dynamic_cast<CBaseTrigger *>(GameEntitySystem()->GetEntityInstance(tracker.triggerHandle));
@@ -257,7 +257,7 @@ void KZTriggerService::UpdateTriggerTouchList()
 
 void KZTriggerService::EndTouchAll()
 {
-	for (i32 i = 0; i < (i32)this->triggerTrackers.size(); i++)
+	for (size_t i = 0; i < this->triggerTrackers.size(); i++)
 	{
 		CEntityHandle handle = this->triggerTrackers[i].triggerHandle;
 		CBaseTrigger *trigger = dynamic_cast<CBaseTrigger *>(GameEntitySystem()->GetEntityInstance(handle));
@@ -312,7 +312,7 @@ bool KZTriggerService::IsPossibleLegacyBhopTrigger(CTriggerMultiple *trigger)
 
 void KZTriggerService::TouchAll()
 {
-	for (i32 i = 0; i < (i32)this->triggerTrackers.size(); i++)
+	for (size_t i = 0; i < this->triggerTrackers.size(); i++)
 	{
 		CEntityHandle handle = this->triggerTrackers[i].triggerHandle;
 		CBaseTrigger *trigger = dynamic_cast<CBaseTrigger *>(GameEntitySystem()->GetEntityInstance(handle));
@@ -370,7 +370,7 @@ KZTriggerService::TriggerTouchTracker *KZTriggerService::GetTriggerTracker(CBase
 		return nullptr;
 	}
 	CEntityHandle handle = trigger->GetRefEHandle();
-	for (i32 i = 0; i < (i32)triggerTrackers.size(); i++)
+	for (size_t i = 0; i < triggerTrackers.size(); i++)
 	{
 		TriggerTouchTracker &tracker = triggerTrackers[i];
 		if (tracker.triggerHandle == handle)
