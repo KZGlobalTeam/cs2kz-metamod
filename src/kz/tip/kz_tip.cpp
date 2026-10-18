@@ -7,7 +7,7 @@
 #include <vendor/MultiAddonManager/public/imultiaddonmanager.h>
 
 static_global KeyValues *pTipKeyValues;
-static_global CUtlVector<const char *> tipNames;
+static_global std::vector<const char *> tipNames;
 static_global f64 tipInterval;
 static_global i32 nextTipIndex;
 static_global CTimer<> *tipTimer;
@@ -72,7 +72,7 @@ void KZTipService::LoadTips()
 
 	FOR_EACH_SUBKEY(pTipKeyValues, it)
 	{
-		tipNames.AddToTail(it->GetName());
+		tipNames.push_back(it->GetName());
 	}
 
 	tipInterval = KZOptionService::GetOptionFloat("tipInterval", KZ_DEFAULT_TIP_INTERVAL);
@@ -81,10 +81,10 @@ void KZTipService::LoadTips()
 
 void KZTipService::ShuffleTips()
 {
-	for (int i = tipNames.Count() - 1; i > 0; --i)
+	for (size_t i = tipNames.size(); i > 1; i--)
 	{
-		int j = RandomInt(0, i);
-		V_swap(tipNames.Element(i), tipNames.Element(j));
+		int j = RandomInt(0, i - 1);
+		V_swap(tipNames[i - 1], tipNames[j]);
 	}
 }
 
@@ -98,7 +98,7 @@ SCMD(kz_tips, SCFL_MISC)
 f64 KZTipService::PrintTips()
 {
 	// No tip translation files loaded, nothing to print.
-	if (tipNames.Count() == 0)
+	if (tipNames.empty())
 	{
 		return tipInterval;
 	}
@@ -110,7 +110,7 @@ f64 KZTipService::PrintTips()
 			player->tipService->PrintTip();
 		}
 	}
-	nextTipIndex = (nextTipIndex + 1) % tipNames.Count();
+	nextTipIndex = (nextTipIndex + 1) % tipNames.size();
 	return tipInterval;
 }
 

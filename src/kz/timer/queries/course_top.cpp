@@ -104,8 +104,8 @@ struct CourseTopRequest : public BaseRequest
 
 	struct CourseTopData
 	{
-		CUtlVector<RunStats> overallData;
-		CUtlVector<RunStats> proData;
+		std::vector<RunStats> overallData;
+		std::vector<RunStats> proData;
 	} srData, wrData;
 
 	virtual void PrintInstructions() override
@@ -154,7 +154,7 @@ struct CourseTopRequest : public BaseRequest
 				{
 					while (result->FetchRow())
 					{
-						req->srData.overallData.AddToTail(
+						req->srData.overallData.push_back(
 							{result->GetString(0), result->GetString(2), (u64)result->GetInt64(4), result->GetFloat(3), (u64)result->GetInt64(1)});
 					}
 				}
@@ -163,7 +163,7 @@ struct CourseTopRequest : public BaseRequest
 				{
 					while (result->FetchRow())
 					{
-						req->srData.proData.AddToTail({result->GetString(0), result->GetString(2), 0, result->GetFloat(3), (u64)result->GetInt64(1)});
+						req->srData.proData.push_back({result->GetString(0), result->GetString(2), 0, result->GetFloat(3), (u64)result->GetInt64(1)});
 					}
 				}
 			};
@@ -229,14 +229,14 @@ struct CourseTopRequest : public BaseRequest
 		{
 			CUtlString id;
 			id.Format("%s", record.id.c_str());
-			req->wrData.overallData.AddToTail(
+			req->wrData.overallData.push_back(
 				{id, record.player.name.c_str(), record.teleports, record.time, record.player.id, (u64)floor(record.nubPoints)});
 		}
 		for (const auto &record : ctop.pro)
 		{
 			CUtlString id;
 			id.Format("%s", record.id.c_str());
-			req->wrData.proData.AddToTail({id, record.player.name.c_str(), 0, record.time, record.player.id, (u64)floor(record.proPoints)});
+			req->wrData.proData.push_back({id, record.player.name.c_str(), 0, record.time, record.player.id, (u64)floor(record.proPoints)});
 		}
 	}
 
@@ -278,7 +278,7 @@ struct CourseTopRequest : public BaseRequest
 		}
 		utils::Table<KZ_ARRAYSIZE(columnKeysGlobal)> table(
 			player->languageService->PrepareMessage(COURSE_TOP_TABLE_KEY_GLOBAL, mapName.Get(), courseName.Get(), modeName.Get()).c_str(), headers);
-		FOR_EACH_VEC(wrData.overallData, i)
+		for (size_t i = 0; i < wrData.overallData.size(); i++)
 		{
 			rank.Format("%llu", this->offset + i + 1);
 			RunStats stats = wrData.overallData[i];
@@ -304,7 +304,7 @@ struct CourseTopRequest : public BaseRequest
 		utils::Table<KZ_ARRAYSIZE(columnKeysGlobalPro)> tablePro(
 			player->languageService->PrepareMessage(COURSE_TOP_PRO_TABLE_KEY_GLOBAL, mapName.Get(), courseName.Get(), modeName.Get()).c_str(),
 			headersPro);
-		FOR_EACH_VEC(wrData.proData, i)
+		for (size_t i = 0; i < wrData.proData.size(); i++)
 		{
 			rank.Format("%llu", this->offset + i + 1);
 			RunStats stats = wrData.proData[i];
@@ -333,7 +333,7 @@ struct CourseTopRequest : public BaseRequest
 		}
 		utils::Table<KZ_ARRAYSIZE(columnKeysLocal)> table(
 			player->languageService->PrepareMessage(COURSE_TOP_TABLE_KEY, mapName.Get(), courseName.Get(), modeName.Get()).c_str(), headers);
-		FOR_EACH_VEC(srData.overallData, i)
+		for (size_t i = 0; i < srData.overallData.size(); i++)
 		{
 			rank.Format("%llu", this->offset + i + 1);
 			RunStats stats = srData.overallData[i];
@@ -356,7 +356,7 @@ struct CourseTopRequest : public BaseRequest
 		}
 		utils::Table<KZ_ARRAYSIZE(columnKeysLocalPro)> tablePro(
 			player->languageService->PrepareMessage(COURSE_TOP_PRO_TABLE_KEY, mapName.Get(), courseName.Get(), modeName.Get()).c_str(), headersPro);
-		FOR_EACH_VEC(srData.proData, i)
+		for (size_t i = 0; i < srData.proData.size(); i++)
 		{
 			rank.Format("%llu", this->offset + i + 1);
 			RunStats stats = srData.proData[i];

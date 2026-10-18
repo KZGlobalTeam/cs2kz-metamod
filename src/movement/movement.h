@@ -36,7 +36,7 @@ struct TraceHistory
 	Vector velocity;
 };
 
-extern CUtlVector<TraceHistory> traceHistory;
+extern std::vector<TraceHistory> traceHistory;
 #endif
 
 namespace movement

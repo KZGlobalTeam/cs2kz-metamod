@@ -331,8 +331,8 @@ void KZHUDService::UpdateIndicatorElements(CCSCustomHudLayout *layout, const Spe
 void KZHUDService::UpdateReleaseElement(CCSCustomHudLayout *layout, KZPlayer *source, const SpeedInfo &info, bool force)
 {
 	const MHUDPrefs &prefs = this->GetPrefs();
-	CUtlVector<Jump> &jumps = source->jumpstatsService->jumps;
-	Jump *jump = jumps.Count() > 0 ? &jumps.Tail() : NULL;
+	std::vector<Jump> &jumps = source->jumpstatsService->jumps;
+	Jump *jump = !jumps.empty() ? &jumps.back() : NULL;
 	// Same jumps as the chat. The takeoff's type is used, because the reported one reads a preference.
 	const JumpType type = jump ? jump->originalJumpType : JumpType_Invalid;
 	const bool known = jump && (!jump->trackingRelease || jump->AlreadyEnded());

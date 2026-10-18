@@ -7,6 +7,7 @@
 #include "kz/timer/kz_timer.h"
 #include "kz/language/kz_language.h"
 #include "kz/replays/kz_replaysystem.h"
+#include <algorithm>
 
 /*
 	Note: Whether touching is allowed is set determined by the mode, while Mapping API effects will be applied after touching events.
@@ -16,7 +17,7 @@
 bool KZTriggerService::OnTriggerStartTouchPre(CBaseTrigger *trigger)
 {
 	bool retValue = this->player->modeService->OnTriggerStartTouch(trigger);
-	FOR_EACH_VEC(this->player->styleServices, i)
+	for (size_t i = 0; i < this->player->styleServices.size(); i++)
 	{
 		retValue &= this->player->styleServices[i]->OnTriggerStartTouch(trigger);
 	}
@@ -27,7 +28,7 @@ bool KZTriggerService::OnTriggerStartTouchPre(CBaseTrigger *trigger)
 bool KZTriggerService::OnTriggerTouchPre(CBaseTrigger *trigger, TriggerTouchTracker tracker)
 {
 	bool retValue = this->player->modeService->OnTriggerTouch(trigger);
-	FOR_EACH_VEC(this->player->styleServices, i)
+	for (size_t i = 0; i < this->player->styleServices.size(); i++)
 	{
 		retValue &= this->player->styleServices[i]->OnTriggerTouch(trigger);
 	}
@@ -38,7 +39,7 @@ bool KZTriggerService::OnTriggerTouchPre(CBaseTrigger *trigger, TriggerTouchTrac
 bool KZTriggerService::OnTriggerEndTouchPre(CBaseTrigger *trigger, TriggerTouchTracker tracker)
 {
 	bool retValue = this->player->modeService->OnTriggerEndTouch(trigger);
-	FOR_EACH_VEC(this->player->styleServices, i)
+	for (size_t i = 0; i < this->player->styleServices.size(); i++)
 	{
 		retValue &= this->player->styleServices[i]->OnTriggerEndTouch(trigger);
 	}
@@ -99,9 +100,9 @@ void KZTriggerService::AddPushEvent(const KzTrigger *trigger)
 {
 	f32 curtime = g_pKZUtils->GetGlobals()->curtime;
 	PushEvent event {trigger, curtime + trigger->push.delay};
-	if (this->pushEvents.Find(event) == -1)
+	if (std::find(this->pushEvents.begin(), this->pushEvents.end(), event) == this->pushEvents.end())
 	{
-		this->pushEvents.AddToTail(event);
+		this->pushEvents.push_back(event);
 	}
 }
 
@@ -114,7 +115,7 @@ void KZTriggerService::CleanupPushEvents()
 		return;
 	}
 	f32 curtime = g_pKZUtils->GetGlobals()->curtime;
-	FOR_EACH_VEC_BACK(this->pushEvents, i)
+	for (size_t i = this->pushEvents.size(); i-- > 0;)
 	{
 		if (!this->pushEvents[i].applied)
 		{
@@ -122,7 +123,7 @@ void KZTriggerService::CleanupPushEvents()
 		}
 		if (curtime - frametime >= this->pushEvents[i].pushTime + this->pushEvents[i].source->push.cooldown)
 		{
-			this->pushEvents.Remove(i);
+			this->pushEvents.erase(this->pushEvents.begin() + i);
 		}
 	}
 }
@@ -138,12 +139,12 @@ void KZTriggerService::ApplyPushes()
 	f32 curtime = g_pKZUtils->GetGlobals()->curtime;
 	bool setSpeed[3] {};
 
-	if (this->pushEvents.Count() == 0)
+	if (this->pushEvents.empty())
 	{
 		return;
 	}
 	bool useBaseVelocity = this->player->GetPlayerPawn()->m_fFlags & FL_ONGROUND && this->player->processingMovement;
-	FOR_EACH_VEC(this->pushEvents, i)
+	for (size_t i = 0; i < this->pushEvents.size(); i++)
 	{
 		if (curtime - frametime >= this->pushEvents[i].pushTime || curtime < this->pushEvents[i].pushTime || this->pushEvents[i].applied)
 		{

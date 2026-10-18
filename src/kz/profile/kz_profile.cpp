@@ -130,7 +130,7 @@ void KZProfileService::RequestRating()
 		KZ_LOG_DEBUG(LogChannel::Profile, "Player %s has invalid SteamID, cannot request rating.\n", this->player->GetName());
 		return;
 	}
-	if (this->player->styleServices.Count() > 0)
+	if (!this->player->styleServices.empty())
 	{
 		KZ_LOG_DEBUG(LogChannel::Profile, "Player %s has styles enabled, skipping rating request.\n", this->player->GetName());
 		return;
@@ -199,7 +199,7 @@ bool KZProfileService::CanDisplayRank()
 		return false;
 	}
 	// No rating if styles are enabled.
-	if (this->player->styleServices.Count() > 0)
+	if (!this->player->styleServices.empty())
 	{
 		return false;
 	}
@@ -260,7 +260,7 @@ void KZProfileService::UpdateClantag()
 	else
 	{
 		V_snprintf(this->clanTag, sizeof(this->clanTag), "%s%s", this->player->modeService->GetModeShortName(),
-				   this->player->styleServices.Count() > 0 ? "*" : "");
+				   !this->player->styleServices.empty() ? "*" : "");
 	}
 
 	if (this->clanTag[0] == '\0')
@@ -325,6 +325,6 @@ std::string KZProfileService::GetPrefix(bool colors)
 	else
 	{
 		return std::string(colors ? "{default}[" : "[") + this->player->modeService->GetModeShortName()
-			   + (this->player->styleServices.Count() > 0 ? "*" : "") + (colors ? "]{default}" : "]");
+			   + (!this->player->styleServices.empty() ? "*" : "") + (colors ? "]{default}" : "]");
 	}
 }

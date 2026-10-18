@@ -40,7 +40,7 @@ void KZAnticheatService::OnJumpFinish(Jump *jump)
 	{
 		return;
 	}
-	if (this->player->styleServices.Count() > 0)
+	if (!this->player->styleServices.empty())
 	{
 		// Styles can modify player's strafes in unpredictable ways, so skip detection for styled players.
 		return;
@@ -58,20 +58,20 @@ void KZAnticheatService::OnJumpFinish(Jump *jump)
 	{
 		this->recentJumpStatuses.push_back(JumpStatus::Normal);
 	}
-	else if (jump->strafes.Count() / jump->airtime > MAX_STRAFES_PER_SECOND_THRESHOLD)
+	else if (jump->strafes.size() / jump->airtime > MAX_STRAFES_PER_SECOND_THRESHOLD)
 	{
 		this->recentJumpStatuses.push_back(JumpStatus::VeryHighStrafeCount);
 	}
-	else if (jump->strafes.Count() / jump->airtime > BASE_STRAFES_PER_SECOND_THRESHOLD)
+	else if (jump->strafes.size() / jump->airtime > BASE_STRAFES_PER_SECOND_THRESHOLD)
 	{
 		this->recentJumpStatuses.push_back(JumpStatus::HighStrafeCount);
 	}
 	else
 	{
 		i32 numEffectiveStrafes = 0;
-		FOR_EACH_VEC(jump->strafes, i)
+		for (const Strafe &strafe : jump->strafes)
 		{
-			if (jump->strafes[i].duration >= MIN_STRAFE_DURATION)
+			if (strafe.duration >= MIN_STRAFE_DURATION)
 			{
 				numEffectiveStrafes++;
 			}

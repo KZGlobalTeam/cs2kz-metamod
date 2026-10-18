@@ -394,7 +394,7 @@ void BaseRequest::SetupStyles(CUtlString styleNames)
 	if (styleNames.IsEmpty())
 	{
 		this->localStyleIDs = 0;
-		FOR_EACH_VEC(callingPlayer->styleServices, i)
+		for (size_t i = 0; i < callingPlayer->styleServices.size(); i++)
 		{
 			KZStyleManager::StylePluginInfo info = KZ::style::GetStyleInfo(callingPlayer->styleServices[i]);
 			if (info.databaseID < 0)
@@ -405,7 +405,7 @@ void BaseRequest::SetupStyles(CUtlString styleNames)
 			{
 				this->localStyleIDs |= (1ull << info.databaseID);
 			}
-			styleList.AddToTail(info.shortName);
+			styleList.push_back(info.shortName);
 		}
 	}
 	else if (styleNames.IsEqual_FastCaseInsensitive("none"))
@@ -427,7 +427,7 @@ void BaseRequest::SetupStyles(CUtlString styleNames)
 			{
 				this->localStyleIDs |= (1ull << info.databaseID);
 			}
-			styleList.AddToTail(info.id != -2 ? info.shortName : stylesSplit[i]);
+			styleList.push_back(info.id != -2 ? info.shortName : stylesSplit[i]);
 		}
 	}
 };

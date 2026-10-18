@@ -15,6 +15,7 @@
 #include "utils/utils.h"
 #include "utils/simplecmds.h"
 #include "vendor/sql_mm/src/public/sql_mm.h"
+#include <algorithm>
 
 // clang-format off
 constexpr const char *diffTextKeys[KZTimerService::CompareType::COMPARETYPE_COUNT] = {
@@ -85,21 +86,27 @@ static_global class KZOptionServiceEventListener_Timer : public KZOptionServiceE
 std::unordered_map<PBDataKey, PBData> KZTimerService::srCache;
 std::unordered_map<PBDataKey, PBData> KZTimerService::wrCache;
 
-static_global CUtlVector<KZTimerServiceEventListener *> eventListeners;
+static_global std::vector<KZTimerServiceEventListener *> eventListeners;
 
 bool KZTimerService::RegisterEventListener(KZTimerServiceEventListener *eventListener)
 {
-	if (eventListeners.Find(eventListener) >= 0)
+	if (std::find(eventListeners.begin(), eventListeners.end(), eventListener) != eventListeners.end())
 	{
 		return false;
 	}
-	eventListeners.AddToTail(eventListener);
+	eventListeners.push_back(eventListener);
 	return true;
 }
 
 bool KZTimerService::UnregisterEventListener(KZTimerServiceEventListener *eventListener)
 {
-	return eventListeners.FindAndRemove(eventListener);
+	auto it = std::find(eventListeners.begin(), eventListeners.end(), eventListener);
+	if (it == eventListeners.end())
+	{
+		return false;
+	}
+	eventListeners.erase(it);
+	return true;
 }
 
 void KZTimerService::DispatchRunSubmitted(const RunSubmission &submission)
@@ -236,7 +243,7 @@ bool KZTimerService::TimerStart(const KZCourseDescriptor *courseDesc, bool playS
 	}
 
 	bool allowStart = true;
-	FOR_EACH_VEC(eventListeners, i)
+	for (size_t i = 0; i < eventListeners.size(); i++)
 	{
 		allowStart &= eventListeners[i]->OnTimerStart(this->player, courseDesc->guid);
 	}
@@ -258,13 +265,9 @@ bool KZTimerService::TimerStart(const KZCourseDescriptor *courseDesc, bool playS
 	this->lastSplit = 0;
 
 	f64 invalidTime = -1;
-	this->splitZoneTimes.SetSize(courseDesc->splitCount);
-	this->cpZoneTimes.SetSize(courseDesc->checkpointCount);
-	this->stageZoneTimes.SetSize(courseDesc->stageCount);
-
-	this->splitZoneTimes.FillWithValue(invalidTime);
-	this->cpZoneTimes.FillWithValue(invalidTime);
-	this->stageZoneTimes.FillWithValue(invalidTime);
+	this->splitZoneTimes.assign(courseDesc->splitCount, invalidTime);
+	this->cpZoneTimes.assign(courseDesc->checkpointCount, invalidTime);
+	this->stageZoneTimes.assign(courseDesc->stageCount, invalidTime);
 
 	// Print course change message if needed
 	if (this->currentCourseGUID != courseDesc->guid)
@@ -283,7 +286,7 @@ bool KZTimerService::TimerStart(const KZCourseDescriptor *courseDesc, bool playS
 					}
 					mapApproved = true;
 					// Styled runs are never ranked.
-					if (this->player->styleServices.Count() > 0)
+					if (!this->player->styleServices.empty())
 					{
 						return;
 					}
@@ -340,7 +343,7 @@ bool KZTimerService::TimerStart(const KZCourseDescriptor *courseDesc, bool playS
 		this->player->languageService->PrintChat(true, false, "No Prime Warning");
 	}
 
-	FOR_EACH_VEC(eventListeners, i)
+	for (size_t i = 0; i < eventListeners.size(); i++)
 	{
 		eventListeners[i]->OnTimerStartPost(this->player, courseDesc->guid);
 	}
@@ -403,7 +406,7 @@ bool KZTimerService::TimerEnd(const KZCourseDescriptor *courseDesc)
 	u32 teleportsUsed = this->player->checkpointService->GetTeleportCount();
 
 	bool allowEnd = true;
-	FOR_EACH_VEC(eventListeners, i)
+	for (size_t i = 0; i < eventListeners.size(); i++)
 	{
 		allowEnd &= eventListeners[i]->OnTimerEnd(this->player, this->currentCourseGUID, time, teleportsUsed);
 	}
@@ -423,7 +426,7 @@ bool KZTimerService::TimerEnd(const KZCourseDescriptor *courseDesc)
 	}
 	this->PlayTimerEndSound();
 
-	FOR_EACH_VEC(eventListeners, i)
+	for (size_t i = 0; i < eventListeners.size(); i++)
 	{
 		eventListeners[i]->OnTimerEndPost(this->player, this->currentCourseGUID, time, teleportsUsed);
 	}
@@ -456,7 +459,7 @@ bool KZTimerService::TimerStop(bool playSound)
 		this->PlayTimerStopSound();
 	}
 
-	FOR_EACH_VEC(eventListeners, i)
+	for (size_t i = 0; i < eventListeners.size(); i++)
 	{
 		eventListeners[i]->OnTimerStopped(this->player, this->currentCourseGUID);
 	}
@@ -503,7 +506,7 @@ void KZTimerService::InvalidateRun()
 	}
 	this->validTime = false;
 
-	FOR_EACH_VEC(eventListeners, i)
+	for (size_t i = 0; i < eventListeners.size(); i++)
 	{
 		eventListeners[i]->OnTimerInvalidated(this->player);
 	}
@@ -575,7 +578,7 @@ void KZTimerService::Pause()
 	}
 
 	bool allowPause = true;
-	FOR_EACH_VEC(eventListeners, i)
+	for (size_t i = 0; i < eventListeners.size(); i++)
 	{
 		allowPause &= eventListeners[i]->OnPause(this->player);
 	}
@@ -602,7 +605,7 @@ void KZTimerService::Pause()
 		this->lastPauseTime = g_pKZUtils->GetServerGlobals()->curtime;
 	}
 
-	FOR_EACH_VEC(eventListeners, i)
+	for (size_t i = 0; i < eventListeners.size(); i++)
 	{
 		eventListeners[i]->OnPausePost(this->player);
 	}
@@ -682,7 +685,7 @@ void KZTimerService::Resume(bool force)
 	}
 
 	bool allowResume = true;
-	FOR_EACH_VEC(eventListeners, i)
+	for (size_t i = 0; i < eventListeners.size(); i++)
 	{
 		allowResume &= eventListeners[i]->OnResume(this->player);
 	}
@@ -717,7 +720,7 @@ void KZTimerService::Resume(bool force)
 	this->player->GetMoveServices()->m_flLastDuckTime = this->lastDuckTimeValue;
 	this->player->GetMoveServices()->m_ModernJump().m_nLastLandedTick = this->lastLandedTickValue;
 
-	FOR_EACH_VEC(eventListeners, i)
+	for (size_t i = 0; i < eventListeners.size(); i++)
 	{
 		eventListeners[i]->OnResumePost(this->player);
 	}
@@ -950,7 +953,7 @@ void KZTimerService::OnChangeMoveType(MoveType_t oldMoveType)
 		this->lastResumeTime = g_pKZUtils->GetServerGlobals()->curtime;
 	}
 
-	FOR_EACH_VEC(eventListeners, i)
+	for (size_t i = 0; i < eventListeners.size(); i++)
 	{
 		eventListeners[i]->OnResumePost(this->player);
 	}
@@ -985,7 +988,7 @@ void KZTimerService::OnPlayerSpawn()
 	this->player->GetMoveServices()->m_flLastDuckTime = this->lastDuckTimeValue;
 	this->player->GetMoveServices()->m_ModernJump().m_nLastLandedTick = this->lastLandedTickValue;
 
-	FOR_EACH_VEC(eventListeners, i)
+	for (size_t i = 0; i < eventListeners.size(); i++)
 	{
 		eventListeners[i]->OnResumePost(this->player);
 	}
@@ -1002,7 +1005,7 @@ void KZTimerService::OnPlayerJoinTeam(i32 team)
 			this->lastPauseTime = g_pKZUtils->GetServerGlobals()->curtime;
 		}
 
-		FOR_EACH_VEC(eventListeners, i)
+		for (size_t i = 0; i < eventListeners.size(); i++)
 		{
 			eventListeners[i]->OnPausePost(this->player);
 		}
@@ -1456,7 +1459,7 @@ void KZTimerService::CheckMissedTime()
 		return;
 	}
 	// No comparison available for styled runs.
-	if (this->player->styleServices.Count() > 0)
+	if (!this->player->styleServices.empty())
 	{
 		return;
 	}
@@ -1510,7 +1513,7 @@ void KZTimerService::ShowSplitText(u32 currentSplit)
 		return;
 	}
 	// No comparison available for styled runs.
-	if (this->player->styleServices.Count() > 0)
+	if (!this->player->styleServices.empty())
 	{
 		return;
 	}
@@ -1565,7 +1568,7 @@ void KZTimerService::ShowCheckpointText(u32 currentCheckpoint)
 		return;
 	}
 	// No comparison available for styled runs.
-	if (this->player->styleServices.Count() > 0)
+	if (!this->player->styleServices.empty())
 	{
 		return;
 	}
@@ -1621,7 +1624,7 @@ void KZTimerService::ShowStageText()
 		return;
 	}
 	// No comparison available for styled runs.
-	if (this->player->styleServices.Count() > 0)
+	if (!this->player->styleServices.empty())
 	{
 		return;
 	}
@@ -1708,26 +1711,26 @@ CUtlString KZTimerService::GetCurrentRunMetadata()
 	KeyValues3 *splitZoneTimesKV = kv.FindOrCreateMember("splitZoneTimes");
 
 	splitZoneTimesKV->SetToEmptyArray();
-	FOR_EACH_VEC(this->splitZoneTimes, i)
+	for (f64 zoneTime : this->splitZoneTimes)
 	{
 		KeyValues3 *time = splitZoneTimesKV->ArrayAddElementToTail();
-		time->SetDouble(this->splitZoneTimes[i]);
+		time->SetDouble(zoneTime);
 	}
 
 	KeyValues3 *cpZoneTimesKV = kv.FindOrCreateMember("cpZoneTimes");
 	cpZoneTimesKV->SetToEmptyArray();
-	FOR_EACH_VEC(this->cpZoneTimes, i)
+	for (f64 zoneTime : this->cpZoneTimes)
 	{
 		KeyValues3 *time = cpZoneTimesKV->ArrayAddElementToTail();
-		time->SetDouble(this->cpZoneTimes[i]);
+		time->SetDouble(zoneTime);
 	}
 
 	KeyValues3 *stageZoneTimesKV = kv.FindOrCreateMember("stageZoneTimes");
 	stageZoneTimesKV->SetToEmptyArray();
-	FOR_EACH_VEC(this->stageZoneTimes, i)
+	for (f64 zoneTime : this->stageZoneTimes)
 	{
 		KeyValues3 *time = stageZoneTimesKV->ArrayAddElementToTail();
-		time->SetDouble(this->stageZoneTimes[i]);
+		time->SetDouble(zoneTime);
 	}
 
 	CUtlString result, error;

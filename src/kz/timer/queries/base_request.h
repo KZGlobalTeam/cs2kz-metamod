@@ -131,7 +131,7 @@ protected:
 	KZ::api::Mode apiMode;
 
 	u64 localStyleIDs;
-	CUtlVector<CUtlString> styleList;
+	std::vector<CUtlString> styleList;
 
 public:
 	void SetupCourse(CUtlString courseName);

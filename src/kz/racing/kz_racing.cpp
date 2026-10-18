@@ -299,7 +299,7 @@ bool KZRacingService::OnTimerStart(u32 courseGUID)
 		return false;
 	}
 	// Styles are not supported.
-	if (this->player->styleServices.Count() > 0)
+	if (!this->player->styleServices.empty())
 	{
 		return false;
 	}

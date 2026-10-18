@@ -264,7 +264,7 @@ void KZRecordingService::OnJumpFinish(Jump *jump)
 	}
 	this->lastJumpUUID = UUID_t(true);
 	// If the player has a style, ignore it.
-	if (this->player->styleServices.Count() > 0)
+	if (!this->player->styleServices.empty())
 	{
 		return;
 	}

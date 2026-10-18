@@ -187,12 +187,12 @@ bool KZSpecService::CanSpectate()
 	return !this->player->IsAlive() || this->player->timerService->GetPaused() || this->player->timerService->CanPause();
 }
 
-void KZSpecService::GetSpectatorList(CUtlVector<CUtlString> &spectatorList)
+void KZSpecService::GetSpectatorList(std::vector<CUtlString> &spectatorList)
 {
 	KZPlayer *spectator = this->player->specService->GetNextSpectator(nullptr);
 	while (spectator)
 	{
-		spectatorList.AddToTail(spectator->GetName());
+		spectatorList.push_back(spectator->GetName());
 		spectator = this->player->specService->GetNextSpectator(spectator);
 	}
 }
@@ -290,9 +290,9 @@ SCMD(kz_specs, SCFL_SPEC)
 		player->languageService->PrintChat(true, false, "Spectator List (None)");
 		return true;
 	}
-	CUtlVector<CUtlString> spectatorList;
+	std::vector<CUtlString> spectatorList;
 	targetPlayer->specService->GetSpectatorList(spectatorList);
-	if (spectatorList.Count() == 0)
+	if (spectatorList.empty())
 	{
 		if (targetPlayer == player)
 		{
@@ -306,21 +306,21 @@ SCMD(kz_specs, SCFL_SPEC)
 	else
 	{
 		CUtlString spectatorListString;
-		for (i32 i = 0; i < spectatorList.Count(); i++)
+		for (size_t i = 0; i < spectatorList.size(); i++)
 		{
 			spectatorListString += spectatorList[i];
-			if (i != spectatorList.Count() - 1)
+			if (i != spectatorList.size() - 1)
 			{
 				spectatorListString += ", ";
 			}
 		}
 		if (targetPlayer == player)
 		{
-			player->languageService->PrintChat(true, false, "Spectator List", spectatorList.Count(), spectatorListString.Get());
+			player->languageService->PrintChat(true, false, "Spectator List", spectatorList.size(), spectatorListString.Get());
 		}
 		else
 		{
-			player->languageService->PrintChat(true, false, "Target Spectator List", targetPlayer->GetName(), spectatorList.Count(),
+			player->languageService->PrintChat(true, false, "Target Spectator List", targetPlayer->GetName(), spectatorList.size(),
 											   spectatorListString.Get());
 		}
 	}

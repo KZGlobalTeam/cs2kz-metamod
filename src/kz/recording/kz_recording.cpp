@@ -369,10 +369,10 @@ void KZRecordingService::CheckModeStyles()
 		this->InsertModeChangeEvent(currentModeInfo.longModeName.Get(), currentModeInfo.md5);
 		KZ_LOG_DEBUG(LogChannel::Recording, "Mode change event: %s\n", currentModeInfo.longModeName.Get());
 	}
-	bool refreshStyles = this->player->styleServices.Count() != this->lastKnownStyles.size();
+	bool refreshStyles = this->player->styleServices.size() != this->lastKnownStyles.size();
 	if (!refreshStyles)
 	{
-		for (i32 i = 0; i < this->player->styleServices.Count(); i++)
+		for (size_t i = 0; i < this->player->styleServices.size(); i++)
 		{
 			if (!KZ_STREQI(this->lastKnownStyles[i].shortName, KZ::style::GetStyleInfo(this->player->styleServices[i]).shortName)
 				|| !KZ_STREQI(this->lastKnownStyles[i].md5, KZ::style::GetStyleInfo(this->player->styleServices[i]).md5))
@@ -385,7 +385,7 @@ void KZRecordingService::CheckModeStyles()
 	if (refreshStyles)
 	{
 		this->lastKnownStyles.clear();
-		FOR_EACH_VEC(this->player->styleServices, i)
+		for (size_t i = 0; i < this->player->styleServices.size(); i++)
 		{
 			auto styleService = this->player->styleServices[i];
 			auto styleInfo = KZ::style::GetStyleInfo(styleService);
@@ -421,7 +421,7 @@ void KZRecordingService::CheckModeStyles()
 	{
 		this->circularRecording->earliestStyles = std::vector<RpModeStyleInfo>();
 
-		FOR_EACH_VEC(this->player->styleServices, i)
+		for (size_t i = 0; i < this->player->styleServices.size(); i++)
 		{
 			auto styleService = this->player->styleServices[i];
 			auto styleInfo = KZ::style::GetStyleInfo(styleService);

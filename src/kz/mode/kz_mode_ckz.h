@@ -156,7 +156,7 @@ class KZClassicModeService : public KZModeService
 		f32 duration;
 	};
 
-	CUtlVector<AngleHistory> angleHistory;
+	std::vector<AngleHistory> angleHistory;
 	f32 leftPreRatio {};
 	f32 rightPreRatio {};
 	f32 bonusSpeed {};
@@ -176,7 +176,7 @@ class KZClassicModeService : public KZModeService
 
 	// Keep track of TryPlayerMove path for triggerfixing.
 	bool airMoving {};
-	CUtlVector<Vector> tpmTriggerFixOrigins;
+	std::vector<Vector> tpmTriggerFixOrigins;
 
 	// Hijack friction to add one more subtick split.
 	// Friction split can only be applied when the player is *off* the ground, as it's only unused in the air.

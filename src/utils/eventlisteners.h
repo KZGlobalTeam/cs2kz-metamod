@@ -1,10 +1,11 @@
 #pragma once
-#include "utlvector.h"
+#include <algorithm>
+#include <vector>
 
 #define DECLARE_CLASS_EVENT_LISTENER(listener) \
 \
 private: \
-	static CUtlVector<listener *> eventListeners; \
+	static std::vector<listener *> eventListeners; \
 \
 public: \
 	static bool RegisterEventListener(listener *eventListener); \
@@ -12,18 +13,24 @@ public: \
 
 // clang-format off
 #define IMPLEMENT_CLASS_EVENT_LISTENER(class, listener) \
-	CUtlVector<listener *> class::eventListeners; \
+	std::vector<listener *> class::eventListeners; \
 	bool class::RegisterEventListener(listener *eventListener) \
 	{ \
-		if (eventListeners.Find(eventListener) >= 0) \
+		if (std::find(eventListeners.begin(), eventListeners.end(), eventListener) != eventListeners.end()) \
 		{ \
 			return false; \
 		} \
-		eventListeners.AddToTail(eventListener); \
+		eventListeners.push_back(eventListener); \
 		return true; \
 	} \
 	bool class::UnregisterEventListener(listener *eventListener) \
 	{ \
-		return eventListeners.FindAndRemove(eventListener); \
+		auto it = std::find(eventListeners.begin(), eventListeners.end(), eventListener); \
+		if (it == eventListeners.end()) \
+		{ \
+			return false; \
+		} \
+		eventListeners.erase(it); \
+		return true; \
 	}
 // clang-format on

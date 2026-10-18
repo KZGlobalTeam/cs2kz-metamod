@@ -4,10 +4,7 @@
 class KZCheckpointService : public KZBaseService
 {
 public:
-	KZCheckpointService(KZPlayer *player) : KZBaseService(player)
-	{
-		this->checkpoints = CUtlVector<Checkpoint>(1, 0);
-	}
+	KZCheckpointService(KZPlayer *player) : KZBaseService(player) {}
 
 	static void Init();
 	static void RegisterMenu();
@@ -45,7 +42,7 @@ private:
 	u32 tpCount {};
 	bool holdingStill {};
 	f32 teleportTime {};
-	CUtlVector<Checkpoint> checkpoints;
+	std::vector<Checkpoint> checkpoints;
 	UndoTeleportData undoTeleportData;
 
 	bool hasCustomStartPosition {};
@@ -75,7 +72,7 @@ public:
 
 	i32 GetCurrentCpIndex()
 	{
-		if (this->checkpoints.Count() > 0)
+		if (!this->checkpoints.empty())
 		{
 			return this->currentCpIndex + 1;
 		}
@@ -87,7 +84,7 @@ public:
 
 	i32 GetCheckpointCount()
 	{
-		return this->checkpoints.Count();
+		return this->checkpoints.size();
 	}
 
 	void SetStartPosition();

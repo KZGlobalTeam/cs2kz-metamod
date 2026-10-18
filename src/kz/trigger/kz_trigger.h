@@ -83,7 +83,7 @@ public:
 
 private:
 	// Touchlist related functions.
-	CUtlVector<TriggerTouchTracker> triggerTrackers;
+	std::vector<TriggerTouchTracker> triggerTrackers;
 	Vector preTouchOrigin;
 	Vector preTouchVelocity;
 
@@ -150,7 +150,7 @@ private:
 	void ApplyForcedUnduck();
 	void CancelForcedUnduck();
 
-	CUtlVector<PushEvent> pushEvents;
+	std::vector<PushEvent> pushEvents;
 	void AddPushEvent(const KzTrigger *trigger);
 	void CleanupPushEvents();
 	void ApplyPushes();

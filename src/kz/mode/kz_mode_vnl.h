@@ -55,7 +55,7 @@ class KZVanillaModeService : public KZModeService
 
 	// Keep track of TryPlayerMove path for triggerfixing.
 	bool airMoving {};
-	CUtlVector<Vector> tpmTriggerFixOrigins;
+	std::vector<Vector> tpmTriggerFixOrigins;
 
 public:
 	virtual void Init() override;

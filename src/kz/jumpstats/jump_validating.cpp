@@ -19,7 +19,7 @@ void KZJumpstatsService::DetectNoclip()
 
 void KZJumpstatsService::DetectEdgebug()
 {
-	if (this->jumps.Count() == 0 || !this->jumps.Tail().IsValid())
+	if (this->jumps.empty() || !this->jumps.back().IsValid())
 	{
 		return;
 	}
@@ -34,22 +34,22 @@ void KZJumpstatsService::DetectEdgebug()
 
 void KZJumpstatsService::DetectInvalidCollisions()
 {
-	if (this->jumps.Count() == 0 || !this->jumps.Tail().IsValid())
+	if (this->jumps.empty() || !this->jumps.back().IsValid())
 	{
 		return;
 	}
 	if (this->player->IsCollidingWithWorld())
 	{
-		this->jumps.Tail().touchDuration += g_pKZUtils->GetGlobals()->frametime;
+		this->jumps.back().touchDuration += g_pKZUtils->GetGlobals()->frametime;
 		// Headhit invadidates following bhops but not the current jump,
 		// while other collisions do after a certain duration.
-		if (this->jumps.Tail().touchDuration > JS_TOUCH_GRACE_PERIOD)
+		if (this->jumps.back().touchDuration > JS_TOUCH_GRACE_PERIOD)
 		{
 			this->InvalidateJumpstats("Invalid collisions");
 		}
 		if (this->player->moveDataPre.m_vecVelocity.z > 0.0f)
 		{
-			this->jumps.Tail().MarkHitHead();
+			this->jumps.back().MarkHitHead();
 		}
 	}
 }
@@ -98,7 +98,7 @@ void KZJumpstatsService::DetectExternalModifications()
 
 void KZJumpstatsService::DetectWater()
 {
-	if (this->jumps.Count() == 0 || !this->jumps.Tail().IsValid())
+	if (this->jumps.empty() || !this->jumps.back().IsValid())
 	{
 		return;
 	}

@@ -182,7 +182,7 @@ public:
 		StyleServiceFactory factory {};
 		char md5[33] {};
 		i32 databaseID = -1;
-		CCopyableUtlVector<CUtlString> incompatibleStyles;
+		std::vector<CUtlString> incompatibleStyles;
 	};
 
 	virtual bool RegisterStyle(PluginId id, const char *shortName, const char *longName, StyleServiceFactory factory,
@@ -196,7 +196,7 @@ public:
 	void ClearStyles(KZPlayer *player, bool silent = false, bool updatePreference = true);
 	void RefreshStyles(KZPlayer *player, bool updatePreference = true);
 	CUtlString GetStylesString(KZPlayer *player);
-	static const CUtlVector<StylePluginInfo> &GetStyles();
+	static const std::vector<StylePluginInfo> &GetStyles();
 	void PrintActiveStyles(KZPlayer *player);
 	void PrintAllStyles(KZPlayer *player);
 

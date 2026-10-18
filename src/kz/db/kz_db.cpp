@@ -1,26 +1,33 @@
 #include "kz_db.h"
 #include "vendor/sql_mm/src/public/sql_mm.h"
+#include <algorithm>
 
 using namespace KZ::Database;
 
 KZ::Database::DatabaseType KZDatabaseService::databaseType;
 ISQLConnection *KZDatabaseService::databaseConnection;
 
-CUtlVector<KZDatabaseServiceEventListener *> KZDatabaseService::eventListeners;
+std::vector<KZDatabaseServiceEventListener *> KZDatabaseService::eventListeners;
 
 bool KZDatabaseService::RegisterEventListener(KZDatabaseServiceEventListener *eventListener)
 {
-	if (eventListeners.Find(eventListener) >= 0)
+	if (std::find(eventListeners.begin(), eventListeners.end(), eventListener) != eventListeners.end())
 	{
 		return false;
 	}
-	eventListeners.AddToTail(eventListener);
+	eventListeners.push_back(eventListener);
 	return true;
 }
 
 bool KZDatabaseService::UnregisterEventListener(KZDatabaseServiceEventListener *eventListener)
 {
-	return eventListeners.FindAndRemove(eventListener);
+	auto it = std::find(eventListeners.begin(), eventListeners.end(), eventListener);
+	if (it == eventListeners.end())
+	{
+		return false;
+	}
+	eventListeners.erase(it);
+	return true;
 }
 
 void KZDatabaseService::Init()

@@ -15,8 +15,8 @@
 #include "kz/language/kz_language.h"
 #include "utils/simplecmds.h"
 #include "utils/tables.h"
-#include "tier0/utlsortvector.h"
-#include <memory>
+#include <algorithm>
+#include <array>
 
 #include "tier0/memdbgon.h"
 
@@ -24,15 +24,6 @@
 #define KEY_IS_COURSE_DESCRIPTOR "timer_course_descriptor"
 
 using namespace KZ::course;
-
-class CourseLessFunc
-{
-public:
-	bool Less(const KZCourseDescriptor *src1, const KZCourseDescriptor *src2, void *pCtx)
-	{
-		return src1->id < src2->id;
-	}
-};
 
 enum
 {
@@ -42,12 +33,14 @@ enum
 
 static_global struct
 {
-	CUtlVectorFixed<KZCourseDescriptor, KZ_MAX_COURSE_COUNT> courseDescriptors;
+	std::array<KZCourseDescriptor, KZ_MAX_COURSE_COUNT> courseDescriptors;
+	u32 courseDescriptorCount;
 	i32 mapApiVersion;
 	bool apiVersionLoaded;
 	bool fatalFailure;
 
-	CUtlVectorFixed<KzTrigger, KZ_MAX_TRIGGER_COUNT> triggers;
+	std::array<KzTrigger, KZ_MAX_TRIGGER_COUNT> triggers;
+	u32 triggerCount;
 	bool roundIsStarting;
 	i32 errorFlags;
 	i32 errorCount;
@@ -68,7 +61,15 @@ static_global const char *g_triggerNames[] = {"Disabled",   "Modifier",   "Reset
 static_function MappingInterface g_mappingInterface;
 
 MappingInterface *g_pMappingApi = &g_mappingInterface;
-static_global CUtlSortVector<KZCourseDescriptor *, CourseLessFunc> g_sortedCourses(KZ_MAX_COURSE_COUNT, KZ_MAX_COURSE_COUNT);
+// Sorted by id.
+static_global std::vector<KZCourseDescriptor *> g_sortedCourses;
+
+static_function void InsertSortedCourse(KZCourseDescriptor *course)
+{
+	auto it = std::upper_bound(g_sortedCourses.begin(), g_sortedCourses.end(), course,
+							   [](const KZCourseDescriptor *a, const KZCourseDescriptor *b) { return a->id < b->id; });
+	g_sortedCourses.insert(it, course);
+}
 
 // TODO: add error check to make sure a course has at least 1 start zone and 1 end zone
 
@@ -122,11 +123,11 @@ static_function f64 Mapi_PrintErrors()
 {
 	if (g_mappingApi.errorFlags & MAPI_ERR_TOO_MANY_TRIGGERS)
 	{
-		utils::CPrintChatAll("%sToo many Mapping API triggers! Maximum is %i!", g_errorPrefix, g_mappingApi.triggers.Count());
+		utils::CPrintChatAll("%sToo many Mapping API triggers! Maximum is %u!", g_errorPrefix, g_mappingApi.triggerCount);
 	}
 	if (g_mappingApi.errorFlags & MAPI_ERR_TOO_MANY_COURSES)
 	{
-		utils::CPrintChatAll("%sToo many Courses! Maximum is %i!", g_errorPrefix, g_mappingApi.courseDescriptors.Count());
+		utils::CPrintChatAll("%sToo many Courses! Maximum is %u!", g_errorPrefix, g_mappingApi.courseDescriptorCount);
 	}
 	for (i32 i = 0; i < g_mappingApi.errorCount; i++)
 	{
@@ -141,7 +142,7 @@ static_function bool Mapi_CreateCourse(i32 courseNumber = 1, const char *courseN
 {
 	// Make sure we don't exceed this ridiculous value.
 	// If we do, it is most likely that something went wrong, or it is caused by the mapper.
-	if (g_mappingApi.courseDescriptors.Count() >= KZ_MAX_COURSE_COUNT)
+	if (g_mappingApi.courseDescriptorCount >= KZ_MAX_COURSE_COUNT)
 	{
 		assert(0);
 		Mapi_Error("Failed to register course name '%s' (hammerId %i): Too many courses!", courseName, hammerId);
@@ -149,7 +150,7 @@ static_function bool Mapi_CreateCourse(i32 courseNumber = 1, const char *courseN
 	}
 
 	auto &currentCourses = g_mappingApi.courseDescriptors;
-	FOR_EACH_VEC(currentCourses, i)
+	for (u32 i = 0; i < g_mappingApi.courseDescriptorCount; i++)
 	{
 		if (currentCourses[i].hammerId == hammerId)
 		{
@@ -163,9 +164,10 @@ static_function bool Mapi_CreateCourse(i32 courseNumber = 1, const char *courseN
 		}
 	}
 
-	i32 index = g_mappingApi.courseDescriptors.AddToTail(
-		{hammerId, targetName, disableCheckpoints, (u32)g_mappingApi.courseDescriptors.Count() + 1, courseNumber, courseName});
-	g_sortedCourses.Insert(&g_mappingApi.courseDescriptors[index]);
+	KZCourseDescriptor &course = g_mappingApi.courseDescriptors[g_mappingApi.courseDescriptorCount];
+	course = {hammerId, targetName, disableCheckpoints, g_mappingApi.courseDescriptorCount + 1, courseNumber, courseName};
+	g_mappingApi.courseDescriptorCount++;
+	InsertSortedCourse(&course);
 	return true;
 }
 
@@ -372,13 +374,13 @@ static_function void Mapi_OnTriggerMultipleSpawn(const EntitySpawnInfo_t *info)
 		break;
 	}
 
-	if (g_mappingApi.triggers.Count() >= KZ_MAX_TRIGGER_COUNT)
+	if (g_mappingApi.triggerCount >= KZ_MAX_TRIGGER_COUNT)
 	{
 		g_mappingApi.errorFlags |= MAPI_ERR_TOO_MANY_TRIGGERS;
 		return;
 	}
 
-	g_mappingApi.triggers.AddToTail(trigger);
+	g_mappingApi.triggers[g_mappingApi.triggerCount++] = trigger;
 }
 
 static_function void Mapi_OnInfoTargetSpawn(const CEntityKeyValues *ekv)
@@ -437,7 +439,7 @@ static_function KzTrigger *Mapi_FindKzTrigger(CBaseTrigger *trigger)
 		return nullptr;
 	}
 
-	FOR_EACH_VEC(g_mappingApi.triggers, i)
+	for (u32 i = 0; i < g_mappingApi.triggerCount; i++)
 	{
 		if (triggerHandle == g_mappingApi.triggers[i].entity)
 		{
@@ -456,7 +458,7 @@ static_function KZCourseDescriptor *Mapi_FindCourse(const char *targetname)
 		return result;
 	}
 
-	FOR_EACH_VEC(g_mappingApi.courseDescriptors, i)
+	for (u32 i = 0; i < g_mappingApi.courseDescriptorCount; i++)
 	{
 		if (KZ_STREQI(g_mappingApi.courseDescriptors[i].entityTargetname, targetname))
 		{
@@ -515,9 +517,7 @@ static_function void Mapi_OnInfoTeleportDestinationSpawn(const EntitySpawnInfo_t
 
 void KZ::mapapi::Init()
 {
-	// Not `= {}`: moving a CUtlVectorFixed doesn't compile in s2sdk (its fixed memory has no Swap).
-	std::destroy_at(&g_mappingApi);
-	new (&g_mappingApi) decltype(g_mappingApi)();
+	g_mappingApi = {};
 
 	g_errorTimer = g_errorTimer ? g_errorTimer : StartTimer(Mapi_PrintErrors, true);
 }
@@ -645,21 +645,21 @@ void KZ::mapapi::OnSpawn(int count, const EntitySpawnInfo_t *info)
 
 	if (g_mappingApi.fatalFailure)
 	{
-		g_mappingApi.triggers.RemoveAll();
-		g_mappingApi.courseDescriptors.RemoveAll();
+		g_mappingApi.triggerCount = 0;
+		g_mappingApi.courseDescriptorCount = 0;
 	}
 }
 
 void KZ::mapapi::OnRoundPreStart()
 {
-	g_mappingApi.triggers.RemoveAll();
+	g_mappingApi.triggerCount = 0;
 	g_mappingApi.roundIsStarting = true;
 }
 
 void KZ::mapapi::OnRoundStart()
 {
 	g_mappingApi.roundIsStarting = false;
-	FOR_EACH_VEC(g_mappingApi.courseDescriptors, courseInd)
+	for (u32 courseInd = 0; courseInd < g_mappingApi.courseDescriptorCount; courseInd++)
 	{
 		// Find the number of split/checkpoint/stage zones that a course has
 		//  and make sure that they are unique, start from 1 and are consecutive.
@@ -677,7 +677,7 @@ void KZ::mapapi::OnRoundStart()
 		i32 cpCount = 0;
 		i32 stageCount = 0;
 		KZCourseDescriptor *courseDescriptor = &g_mappingApi.courseDescriptors[courseInd];
-		FOR_EACH_VEC(g_mappingApi.triggers, i)
+		for (u32 i = 0; i < g_mappingApi.triggerCount; i++)
 		{
 			KzTrigger *trigger = &g_mappingApi.triggers[i];
 			if (!KZ::mapapi::IsTimerTrigger(trigger->type))
@@ -754,7 +754,7 @@ void KZ::mapapi::OnRoundStart()
 
 		if (invalid)
 		{
-			g_mappingApi.courseDescriptors.FastRemove(courseInd);
+			g_mappingApi.courseDescriptors[courseInd] = g_mappingApi.courseDescriptors[--g_mappingApi.courseDescriptorCount];
 			courseInd--;
 			continue;
 		}
@@ -770,10 +770,10 @@ void KZ::mapapi::OnRoundStart()
 	}
 
 	// FastRemove moves elements around, so the sorted pointers have to be rebuilt.
-	g_sortedCourses.RemoveAll();
-	FOR_EACH_VEC(g_mappingApi.courseDescriptors, courseInd)
+	g_sortedCourses.clear();
+	for (u32 courseInd = 0; courseInd < g_mappingApi.courseDescriptorCount; courseInd++)
 	{
-		g_sortedCourses.Insert(&g_mappingApi.courseDescriptors[courseInd]);
+		InsertSortedCourse(&g_mappingApi.courseDescriptors[courseInd]);
 	}
 }
 
@@ -852,22 +852,22 @@ bool MappingInterface::GetJumpstatArea(Vector &pos, QAngle &angles)
 
 void KZ::course::ClearCourses()
 {
-	g_sortedCourses.RemoveAll();
+	g_sortedCourses.clear();
 	KZTimerService::ClearRecordCache();
 }
 
 u32 KZ::course::GetCourseCount()
 {
-	return g_sortedCourses.Count();
+	return g_sortedCourses.size();
 }
 
 const KZCourseDescriptor *KZ::course::GetCourseByCourseID(i32 id)
 {
-	FOR_EACH_VEC(g_sortedCourses, i)
+	for (KZCourseDescriptor *course : g_sortedCourses)
 	{
-		if (g_sortedCourses[i]->id == id)
+		if (course->id == id)
 		{
-			return g_sortedCourses[i];
+			return course;
 		}
 	}
 	return nullptr;
@@ -875,11 +875,11 @@ const KZCourseDescriptor *KZ::course::GetCourseByCourseID(i32 id)
 
 const KZCourseDescriptor *KZ::course::GetCourseByLocalCourseID(u32 id)
 {
-	FOR_EACH_VEC(g_sortedCourses, i)
+	for (KZCourseDescriptor *course : g_sortedCourses)
 	{
-		if (g_sortedCourses[i]->localDatabaseID == id)
+		if (course->localDatabaseID == id)
 		{
-			return g_sortedCourses[i];
+			return course;
 		}
 	}
 	return nullptr;
@@ -887,11 +887,11 @@ const KZCourseDescriptor *KZ::course::GetCourseByLocalCourseID(u32 id)
 
 const KZCourseDescriptor *KZ::course::GetCourseByGlobalCourseID(u32 id)
 {
-	FOR_EACH_VEC(g_sortedCourses, i)
+	for (KZCourseDescriptor *course : g_sortedCourses)
 	{
-		if (g_sortedCourses[i]->globalDatabaseID == id)
+		if (course->globalDatabaseID == id)
 		{
-			return g_sortedCourses[i];
+			return course;
 		}
 	}
 	return nullptr;
@@ -899,22 +899,22 @@ const KZCourseDescriptor *KZ::course::GetCourseByGlobalCourseID(u32 id)
 
 const KZCourseDescriptor *KZ::course::GetCourse(const char *courseName, bool caseSensitive, bool matchPartial)
 {
-	FOR_EACH_VEC(g_sortedCourses, i)
+	for (KZCourseDescriptor *course : g_sortedCourses)
 	{
-		const char *name = g_sortedCourses[i]->name;
+		const char *name = course->name;
 		if (caseSensitive ? KZ_STREQ(name, courseName) : KZ_STREQI(name, courseName))
 		{
-			return g_sortedCourses[i];
+			return course;
 		}
 	}
-	FOR_EACH_VEC(g_sortedCourses, i)
+	for (KZCourseDescriptor *course : g_sortedCourses)
 	{
-		const char *name = g_sortedCourses[i]->name;
+		const char *name = course->name;
 		if (matchPartial)
 		{
 			if (caseSensitive ? V_strstr(name, courseName) : V_stristr(name, courseName))
 			{
-				return g_sortedCourses[i];
+				return course;
 			}
 		}
 	}
@@ -923,11 +923,11 @@ const KZCourseDescriptor *KZ::course::GetCourse(const char *courseName, bool cas
 
 const KZCourseDescriptor *KZ::course::GetCourse(u32 guid)
 {
-	FOR_EACH_VEC(g_sortedCourses, i)
+	for (KZCourseDescriptor *course : g_sortedCourses)
 	{
-		if (g_sortedCourses[i]->guid == guid)
+		if (course->guid == guid)
 		{
-			return g_sortedCourses[i];
+			return course;
 		}
 	}
 	return nullptr;
@@ -935,7 +935,7 @@ const KZCourseDescriptor *KZ::course::GetCourse(u32 guid)
 
 const KZCourseDescriptor *KZ::course::GetFirstCourse()
 {
-	if (g_sortedCourses.Count() >= 1)
+	if (g_sortedCourses.size() >= 1)
 	{
 		return g_sortedCourses[0];
 	}
@@ -952,11 +952,11 @@ void KZ::course::SetupLocalCourses()
 
 bool KZ::course::UpdateCourseLocalID(const char *courseName, u32 databaseID)
 {
-	FOR_EACH_VEC(g_sortedCourses, i)
+	for (KZCourseDescriptor *course : g_sortedCourses)
 	{
-		if (g_sortedCourses[i]->GetName() == courseName)
+		if (course->GetName() == courseName)
 		{
-			g_sortedCourses[i]->localDatabaseID = databaseID;
+			course->localDatabaseID = databaseID;
 			return true;
 		}
 	}
@@ -965,11 +965,11 @@ bool KZ::course::UpdateCourseLocalID(const char *courseName, u32 databaseID)
 
 bool KZ::course::UpdateCourseGlobalID(const char *courseName, u32 globalID)
 {
-	FOR_EACH_VEC(g_sortedCourses, i)
+	for (KZCourseDescriptor *course : g_sortedCourses)
 	{
-		if (g_sortedCourses[i]->GetName() == courseName)
+		if (course->GetName() == courseName)
 		{
-			g_sortedCourses[i]->globalDatabaseID = globalID;
+			course->globalDatabaseID = globalID;
 			return true;
 		}
 	}
@@ -1041,7 +1041,7 @@ static_function void PrintCoursesWithMap(KZPlayer *player, const std::vector<KZ:
 		headers[col] = player->languageService->PrepareMessage(columnKeysWithAPI[col]).c_str();
 	}
 	utils::Table<KZ_ARRAYSIZE(columnKeysWithAPI)> table(player->languageService->PrepareMessage(COURSE_TABLE_NAME).c_str(), headers);
-	FOR_EACH_VEC(g_sortedCourses, i)
+	for (size_t i = 0; i < g_sortedCourses.size(); i++)
 	{
 		KZCourseDescriptor *course = g_sortedCourses[i];
 		const KZ::api::Map::Course *apiCourse = nullptr;
@@ -1107,7 +1107,7 @@ static_function void PrintCoursesWithoutMap(KZPlayer *player)
 		headers[col] = player->languageService->PrepareMessage(columnKeysWithoutAPI[col]).c_str();
 	}
 	utils::Table<KZ_ARRAYSIZE(columnKeysWithoutAPI)> table(player->languageService->PrepareMessage(COURSE_TABLE_NAME).c_str(), headers);
-	FOR_EACH_VEC(g_sortedCourses, i)
+	for (size_t i = 0; i < g_sortedCourses.size(); i++)
 	{
 		KZCourseDescriptor *course = g_sortedCourses[i];
 		// clang-format off

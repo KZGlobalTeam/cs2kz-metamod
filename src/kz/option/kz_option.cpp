@@ -5,6 +5,7 @@
 #include "utils/eventlisteners.h"
 #include "utils/logging.h"
 
+#include <algorithm>
 #include <mutex>
 
 static_global KeyValues *pServerCfgKeyValues;
@@ -23,7 +24,7 @@ IMPLEMENT_CLASS_EVENT_LISTENER(KZOptionService, KZOptionServiceEventListener);
 // Helper function to merge loaded preferences with existing ones
 // Source values overwrite target values, except for keys in excludeKeys
 // excludeKeys: list of keys to never overwrite (user-set preferences)
-static_function void MergePreferences(KeyValues3 *target, KeyValues3 *source, const CUtlVector<CUtlString> *excludeKeys = nullptr)
+static_function void MergePreferences(KeyValues3 *target, KeyValues3 *source, const std::vector<CUtlString> *excludeKeys = nullptr)
 {
 	if (!source || !target)
 	{
@@ -37,7 +38,7 @@ static_function void MergePreferences(KeyValues3 *target, KeyValues3 *source, co
 		const char *name = source->GetMemberName(i);
 
 		// Skip if this key is in the exclude list (user-set)
-		if (excludeKeys && excludeKeys->Find(name) != excludeKeys->InvalidIndex())
+		if (excludeKeys && std::find(excludeKeys->begin(), excludeKeys->end(), name) != excludeKeys->end())
 		{
 			continue;
 		}
