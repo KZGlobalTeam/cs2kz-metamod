@@ -4,17 +4,15 @@
 #include "sdk/datatypes.h"
 #include "playerslot.h"
 #include "vector.h"
-#include "igameeventsystem.h"
+#include "engine2/igameeventsystem.h"
+#include "engine2/isource2server.h"
+#include "engine2/ivengineserver2.h"
 
 class CGameConfig;
 class CTraceFilter;
 class CCSPlayerController;
-class CGameResourceService;
 class CSchemaSystem;
-class IVEngineServer2;
-class ISource2Server;
 class IGameEventManager2;
-class IGameEventSystem;
 class CBasePlayerPawn;
 class CCSPlayerPawn;
 class CBaseEntity;
@@ -23,7 +21,6 @@ class IGameEventListener2;
 class CTimerBase;
 class CServerSideClient;
 class CCSGameRules;
-class BotProfile;
 
 // temporary botprofile classes
 #include "utllinkedlist.h"
@@ -90,7 +87,6 @@ typedef void DecalTrace_t(trace_t *trace, CGlobalSymbol *symbol, f32 size_overri
 
 namespace interfaces
 {
-	inline CGameResourceService *pGameResourceServiceServer = nullptr;
 	inline IVEngineServer2 *pEngine = nullptr;
 	inline ISource2Server *pServer = nullptr;
 	inline IGameEventManager2 *pGameEventManager = nullptr;
@@ -99,8 +95,7 @@ namespace interfaces
 	inline bool Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
 	{
 		GET_V_IFACE_CURRENT(GetEngineFactory, g_pCVar, ICvar, CVAR_INTERFACE_VERSION);
-		GET_V_IFACE_CURRENT(GetEngineFactory, interfaces::pGameResourceServiceServer, CGameResourceService,
-							GAMERESOURCESERVICESERVER_INTERFACE_VERSION);
+		GET_V_IFACE_CURRENT(GetEngineFactory, g_pGameResourceServiceServer, IGameResourceService, GAMERESOURCESERVICESERVER_INTERFACE_VERSION);
 		GET_V_IFACE_CURRENT(GetServerFactory, g_pSource2GameClients, ISource2GameClients, INTERFACEVERSION_SERVERGAMECLIENTS);
 		GET_V_IFACE_CURRENT(GetServerFactory, g_pSource2GameEntities, ISource2GameEntities, SOURCE2GAMEENTITIES_INTERFACE_VERSION);
 		GET_V_IFACE_CURRENT(GetEngineFactory, interfaces::pEngine, IVEngineServer2, INTERFACEVERSION_VENGINESERVER);

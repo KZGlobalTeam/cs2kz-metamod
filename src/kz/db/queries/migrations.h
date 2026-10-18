@@ -25,5 +25,5 @@ constexpr char sql_migrations_fetchall[] = R"(
 
 constexpr char sql_migrations_insert[] = R"(
     INSERT INTO Migrations (CRC32, Created)
-        VALUES ('%lu', CURRENT_TIMESTAMP)
+        VALUES ('%u', CURRENT_TIMESTAMP)
 )";

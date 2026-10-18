@@ -38,7 +38,6 @@
 #include "vprof.h"
 #include "steam/isteamgameserver.h"
 #include "tier0/memdbgon.h"
-extern CSteamGameServerAPIContext g_steamAPI;
 
 void KZPlayer::DestroyServices()
 {

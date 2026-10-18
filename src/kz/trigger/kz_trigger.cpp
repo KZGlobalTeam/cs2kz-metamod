@@ -299,10 +299,10 @@ bool KZTriggerService::IsPossibleLegacyBhopTrigger(CTriggerMultiple *trigger)
 	{
 		return false;
 	}
-	EntityIOConnection_t *connection = trigger->m_OnTrigger().m_pConnections;
+	EntityIOConnection_t *connection = trigger->m_OnTrigger()->m_pConnections;
 	while (connection)
 	{
-		if (!V_stricmp(connection->m_targetInput.ToCStr(), "TeleportEntity"))
+		if (!V_stricmp(connection->m_targetInput.String(), "TeleportEntity"))
 		{
 			return true;
 		}

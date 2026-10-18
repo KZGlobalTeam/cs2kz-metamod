@@ -1,6 +1,6 @@
 #pragma once
 
-#include "KeyValues.h"
+#include "tier0/keyvalues.h"
 
 #include <string>
 #include <unordered_map>

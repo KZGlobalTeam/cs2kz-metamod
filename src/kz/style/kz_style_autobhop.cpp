@@ -76,11 +76,6 @@ bool KZAutoBhopStylePlugin::Unpause(char *error, size_t maxlen)
 	return true;
 }
 
-CGameEntitySystem *GameEntitySystem()
-{
-	return g_pKZUtils->GetGameEntitySystem();
-}
-
 void KZAutoBhopStyleService::Init()
 {
 	g_pKZUtils->SendConVarValue(this->player->GetPlayerSlot(), sv_autobunnyhopping, "true");

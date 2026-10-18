@@ -1,5 +1,4 @@
 #include "kz_racing.h"
-extern CSteamGameServerAPIContext g_steamAPI;
 
 void KZRacingService::CheckMap()
 {
@@ -33,19 +32,19 @@ bool KZRacingService::IsMapCorrectForRace()
 bool KZRacingService::IsMapReadyForChange(u64 workshopID)
 {
 	// Make sure it is installed, doesn't need update, and isn't in downloading state.
-	auto state = g_steamAPI.SteamUGC()->GetItemState(workshopID);
+	auto state = SteamGameServerUGC()->GetItemState(workshopID);
 	return (state & (k_EItemStateInstalled | k_EItemStateNeedsUpdate | k_EItemStateDownloading | k_EItemStateDownloadPending))
 		   == k_EItemStateInstalled;
 }
 
 bool KZRacingService::IsMapQueuedForDownload(u64 workshopID)
 {
-	return g_steamAPI.SteamUGC()->GetItemState(workshopID) & (k_EItemStateDownloading | k_EItemStateDownloadPending);
+	return SteamGameServerUGC()->GetItemState(workshopID) & (k_EItemStateDownloading | k_EItemStateDownloadPending);
 }
 
 void KZRacingService::TriggerWorkshopDownload(u64 workshopID)
 {
-	g_steamAPI.SteamUGC()->DownloadItem(workshopID, true);
+	SteamGameServerUGC()->DownloadItem(workshopID, true);
 }
 
 void KZRacingService::ItemDownloadHandler::OnAddonDownloaded(DownloadItemResult_t *pParam)

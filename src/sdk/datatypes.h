@@ -10,35 +10,17 @@
 #include "entityinstance.h"
 #include "ehandle.h"
 #include "gametrace.h"
+#include "shareddefs.h"
+
+struct bbox_t
+{
+	Vector mins;
+	Vector maxs;
+};
 
 class CCSPlayerPawn;
 class CCSPlayerController;
 class CBaseTrigger;
-
-struct TransmitInfo
-{
-	CBitVec<16384> *m_pTransmitEdict;
-};
-
-enum ObserverMode_t : uint32
-{
-	OBS_MODE_NONE = 0,
-	OBS_MODE_FIXED = 1,
-	OBS_MODE_IN_EYE = 2,
-	OBS_MODE_CHASE = 3,
-	OBS_MODE_ROAMING = 4,
-	NUM_OBSERVER_MODES = 5,
-};
-
-enum MsgDest : int32_t
-{
-	HUD_PRINTNOTIFY = 1,
-	HUD_PRINTCONSOLE = 2,
-	HUD_PRINTTALK = 3,
-	HUD_PRINTCENTER = 4,
-	HUD_PRINTTALK2 = 5, // Not sure what the difference between this and HUD_PRINTTALK is...
-	HUD_PRINTALERT = 6
-};
 
 enum gear_slot_t : uint32_t
 {
@@ -61,31 +43,6 @@ enum gear_slot_t : uint32_t
 	GEAR_SLOT_LAST = 12,
 };
 
-enum InputBitMask_t : uint64
-{
-	IN_NONE = 0x0,
-	IN_ALL = 0xffffffffffffffff,
-	IN_ATTACK = 0x1,
-	IN_JUMP = 0x2,
-	IN_DUCK = 0x4,
-	IN_FORWARD = 0x8,
-	IN_BACK = 0x10,
-	IN_USE = 0x20,
-	IN_TURNLEFT = 0x80,
-	IN_TURNRIGHT = 0x100,
-	IN_MOVELEFT = 0x200,
-	IN_MOVERIGHT = 0x400,
-	IN_ATTACK2 = 0x800,
-	IN_RELOAD = 0x2000,
-	IN_SPEED = 0x10000,
-	IN_JOYAUTOSPRINT = 0x20000,
-	IN_FIRST_MOD_SPECIFIC_BIT = 0x100000000,
-	IN_USEORRELOAD = 0x100000000,
-	IN_SCORE = 0x200000000,
-	IN_ZOOM = 0x400000000,
-	IN_LOOK_AT_WEAPON = 0x800000000,
-};
-
 // Sound stuff.
 
 typedef uint32 SoundEventGuid_t;
@@ -102,35 +59,6 @@ struct SndOpEventGuid_t
 	// #define SND_OP_FLAG_VOICE (1 << 3)
 	uint8 m_nFlags;
 	CPlayerBitVec m_Players;
-};
-
-struct EmitSound_t
-{
-	// clang-format off
-	EmitSound_t() :
-		m_pSoundName( 0 ),
-		m_flVolume( VOL_NORM ),
-		m_flSoundTime( 0.0f ),
-		m_nSpeakerEntity( -1 ),
-		m_nForceGuid( 0 ),
-		m_nSourceSoundscape( 0 ),
-		m_nPitch( PITCH_NORM )
-	{
-	}
-
-	// clang-format on
-	const char *m_pSoundName;
-	Vector m_vecOrigin;
-	float m_flVolume;    // soundevent's volume_atten
-	float m_flSoundTime; // sound delay
-	CEntityIndex m_nSpeakerEntity;
-	SoundEventGuid_t m_nForceGuid;
-	CEntityIndex m_nSourceSoundscape;
-	uint16 m_nPitch; // Pretty sure this is unused.
-	// (1<<3) overrides the source soundscape with the speaker entity.
-	// (1<<4) emits sound at specified position, otherwise attached to entity index.
-	// Possibly share the same flags as SndOpEventGuid_t.
-	uint8 m_nFlags;
 };
 
 // Tracing stuff.

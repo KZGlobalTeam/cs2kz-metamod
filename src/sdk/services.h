@@ -78,7 +78,7 @@ class CPlayer_ObserverServices : public CPlayerPawnComponent
 
 public:
 	DECLARE_SCHEMA_CLASS_ENTITY(CPlayer_ObserverServices)
-	SCHEMA_FIELD(ObserverMode_t, m_iObserverMode)
+	SCHEMA_FIELD(uint8, m_iObserverMode)
 	SCHEMA_FIELD(ObserverMode_t, m_iObserverLastMode)
 	SCHEMA_FIELD(CHandle<CBaseEntity>, m_hObserverTarget)
 };

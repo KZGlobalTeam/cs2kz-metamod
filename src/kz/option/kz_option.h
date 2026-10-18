@@ -1,9 +1,9 @@
 #pragma once
 #include "kz/kz.h"
 #include "utils/utils.h"
-#include "KeyValues.h"
+#include "tier0/keyvalues.h"
 #include "interfaces/interfaces.h"
-#include "filesystem.h"
+#include "filesystem/ifilesystem.h"
 #include "keyvalues3.h"
 #include "utils/eventlisteners.h"
 

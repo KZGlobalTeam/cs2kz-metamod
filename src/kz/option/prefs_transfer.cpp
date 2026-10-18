@@ -9,7 +9,7 @@
 #include "utils/ctimer.h"
 #include "utils/simplecmds.h"
 
-#include "tier1/strtools.h"
+#include "tier0/tier0_strtools.h"
 
 #include <string>
 #include <unordered_map>
