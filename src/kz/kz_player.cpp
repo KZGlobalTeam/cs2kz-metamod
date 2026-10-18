@@ -1079,7 +1079,7 @@ void KZPlayer::OnChangeTeamPost(i32 team)
 const CVValue_t *KZPlayer::GetCvarValueFromModeStyles(KzModeCvars cvar)
 {
 	const char *name = KZ::mode::modeCvarNames[cvar];
-	for (i32 i = (i32)this->styleServices.size() - 1; i >= 0; i--)
+	for (size_t i = this->styleServices.size(); i-- > 0;)
 	{
 		if (this->styleServices[i]->GetTweakedConvarValue(name))
 		{

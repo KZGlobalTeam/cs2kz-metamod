@@ -471,13 +471,13 @@ void KZJumpstatsService::PrintJumpToConsole(KZPlayer *target, Jump *jump, bool b
 	}
 	utils::Table<KZ_ARRAYSIZE(columnKeys)> table("", headers);
 	
-	for (i32 i = 0; i < (i32)jump->strafes.size(); i++)
+	for (size_t i = 0; i < jump->strafes.size(); i++)
 	{
 		char strafeNumberString[5];
 		char syncString[16], gainString[16], lossString[16], externalGainString[16], externalLossString[16], maxString[16], durationString[16];
 		char badAngleString[16], overlapString[16], deadAirString[16], widthString[16], avgGainString[16], gainEffString[16];
 		char angRatioString[32];
-		V_snprintf(strafeNumberString, sizeof(strafeNumberString), "%i.", i+1);
+		V_snprintf(strafeNumberString, sizeof(strafeNumberString), "%zu.", i + 1);
 		V_snprintf(syncString, sizeof(syncString), "%.0f%%%%", jump->strafes[i].GetSync() * 100.0f);
 		V_snprintf(gainString, sizeof(gainString), "%.2f", jump->strafes[i].GetGain());
 		V_snprintf(externalGainString, sizeof(externalGainString), "(+%.2f)", fabs(jump->strafes[i].GetGain(true)));

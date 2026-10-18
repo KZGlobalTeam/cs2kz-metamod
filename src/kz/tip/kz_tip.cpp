@@ -81,10 +81,10 @@ void KZTipService::LoadTips()
 
 void KZTipService::ShuffleTips()
 {
-	for (int i = (i32)tipNames.size() - 1; i > 0; --i)
+	for (size_t i = tipNames.size(); i > 1; i--)
 	{
-		int j = RandomInt(0, i);
-		V_swap(tipNames[i], tipNames[j]);
+		int j = RandomInt(0, i - 1);
+		V_swap(tipNames[i - 1], tipNames[j]);
 	}
 }
 
@@ -110,7 +110,7 @@ f64 KZTipService::PrintTips()
 			player->tipService->PrintTip();
 		}
 	}
-	nextTipIndex = (nextTipIndex + 1) % (i32)tipNames.size();
+	nextTipIndex = (nextTipIndex + 1) % tipNames.size();
 	return tipInterval;
 }
 

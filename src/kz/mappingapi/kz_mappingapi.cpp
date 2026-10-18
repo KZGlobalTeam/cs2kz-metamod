@@ -34,13 +34,13 @@ enum
 static_global struct
 {
 	std::array<KZCourseDescriptor, KZ_MAX_COURSE_COUNT> courseDescriptors;
-	i32 courseDescriptorCount;
+	u32 courseDescriptorCount;
 	i32 mapApiVersion;
 	bool apiVersionLoaded;
 	bool fatalFailure;
 
 	std::array<KzTrigger, KZ_MAX_TRIGGER_COUNT> triggers;
-	i32 triggerCount;
+	u32 triggerCount;
 	bool roundIsStarting;
 	i32 errorFlags;
 	i32 errorCount;
@@ -123,11 +123,11 @@ static_function f64 Mapi_PrintErrors()
 {
 	if (g_mappingApi.errorFlags & MAPI_ERR_TOO_MANY_TRIGGERS)
 	{
-		utils::CPrintChatAll("%sToo many Mapping API triggers! Maximum is %i!", g_errorPrefix, g_mappingApi.triggerCount);
+		utils::CPrintChatAll("%sToo many Mapping API triggers! Maximum is %u!", g_errorPrefix, g_mappingApi.triggerCount);
 	}
 	if (g_mappingApi.errorFlags & MAPI_ERR_TOO_MANY_COURSES)
 	{
-		utils::CPrintChatAll("%sToo many Courses! Maximum is %i!", g_errorPrefix, g_mappingApi.courseDescriptorCount);
+		utils::CPrintChatAll("%sToo many Courses! Maximum is %u!", g_errorPrefix, g_mappingApi.courseDescriptorCount);
 	}
 	for (i32 i = 0; i < g_mappingApi.errorCount; i++)
 	{
@@ -150,7 +150,7 @@ static_function bool Mapi_CreateCourse(i32 courseNumber = 1, const char *courseN
 	}
 
 	auto &currentCourses = g_mappingApi.courseDescriptors;
-	for (i32 i = 0; i < g_mappingApi.courseDescriptorCount; i++)
+	for (u32 i = 0; i < g_mappingApi.courseDescriptorCount; i++)
 	{
 		if (currentCourses[i].hammerId == hammerId)
 		{
@@ -165,7 +165,7 @@ static_function bool Mapi_CreateCourse(i32 courseNumber = 1, const char *courseN
 	}
 
 	KZCourseDescriptor &course = g_mappingApi.courseDescriptors[g_mappingApi.courseDescriptorCount];
-	course = {hammerId, targetName, disableCheckpoints, (u32)g_mappingApi.courseDescriptorCount + 1, courseNumber, courseName};
+	course = {hammerId, targetName, disableCheckpoints, g_mappingApi.courseDescriptorCount + 1, courseNumber, courseName};
 	g_mappingApi.courseDescriptorCount++;
 	InsertSortedCourse(&course);
 	return true;
@@ -439,7 +439,7 @@ static_function KzTrigger *Mapi_FindKzTrigger(CBaseTrigger *trigger)
 		return nullptr;
 	}
 
-	for (i32 i = 0; i < g_mappingApi.triggerCount; i++)
+	for (u32 i = 0; i < g_mappingApi.triggerCount; i++)
 	{
 		if (triggerHandle == g_mappingApi.triggers[i].entity)
 		{
@@ -458,7 +458,7 @@ static_function KZCourseDescriptor *Mapi_FindCourse(const char *targetname)
 		return result;
 	}
 
-	for (i32 i = 0; i < g_mappingApi.courseDescriptorCount; i++)
+	for (u32 i = 0; i < g_mappingApi.courseDescriptorCount; i++)
 	{
 		if (KZ_STREQI(g_mappingApi.courseDescriptors[i].entityTargetname, targetname))
 		{
@@ -659,7 +659,7 @@ void KZ::mapapi::OnRoundPreStart()
 void KZ::mapapi::OnRoundStart()
 {
 	g_mappingApi.roundIsStarting = false;
-	for (i32 courseInd = 0; courseInd < g_mappingApi.courseDescriptorCount; courseInd++)
+	for (u32 courseInd = 0; courseInd < g_mappingApi.courseDescriptorCount; courseInd++)
 	{
 		// Find the number of split/checkpoint/stage zones that a course has
 		//  and make sure that they are unique, start from 1 and are consecutive.
@@ -677,7 +677,7 @@ void KZ::mapapi::OnRoundStart()
 		i32 cpCount = 0;
 		i32 stageCount = 0;
 		KZCourseDescriptor *courseDescriptor = &g_mappingApi.courseDescriptors[courseInd];
-		for (i32 i = 0; i < g_mappingApi.triggerCount; i++)
+		for (u32 i = 0; i < g_mappingApi.triggerCount; i++)
 		{
 			KzTrigger *trigger = &g_mappingApi.triggers[i];
 			if (!KZ::mapapi::IsTimerTrigger(trigger->type))
@@ -771,7 +771,7 @@ void KZ::mapapi::OnRoundStart()
 
 	// FastRemove moves elements around, so the sorted pointers have to be rebuilt.
 	g_sortedCourses.clear();
-	for (i32 courseInd = 0; courseInd < g_mappingApi.courseDescriptorCount; courseInd++)
+	for (u32 courseInd = 0; courseInd < g_mappingApi.courseDescriptorCount; courseInd++)
 	{
 		InsertSortedCourse(&g_mappingApi.courseDescriptors[courseInd]);
 	}

@@ -5,7 +5,7 @@ std::vector<CTimerBase *> g_PersistentTimers;
 
 static_function void ProcessTimerList(std::vector<CTimerBase *> &timers)
 {
-	for (int i = (i32)timers.size() - 1; i >= 0; i--)
+	for (size_t i = timers.size(); i-- > 0;)
 	{
 		auto timer = timers[i];
 		f64 currentTime = timer->useRealTime ? g_pKZUtils->GetGlobals()->realtime : g_pKZUtils->GetGlobals()->curtime;

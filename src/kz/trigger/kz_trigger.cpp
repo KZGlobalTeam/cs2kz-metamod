@@ -150,7 +150,7 @@ void KZTriggerService::OnStopTouchGround()
 
 void KZTriggerService::OnTeleport()
 {
-	for (i32 i = (i32)this->pushEvents.size() - 1; i >= 0; i--)
+	for (size_t i = this->pushEvents.size(); i-- > 0;)
 	{
 		if (this->pushEvents[i].source->push.cancelOnTeleport)
 		{
@@ -209,7 +209,7 @@ void KZTriggerService::UpdateTriggerTouchList()
 	trace_t tr;
 	INavPhysicsInterface::TraceShape(Ray_t(bounds.mins, bounds.maxs), origin, origin, &filter, &tr);
 
-	for (i32 i = (i32)this->triggerTrackers.size() - 1; i >= 0; i--)
+	for (size_t i = this->triggerTrackers.size(); i-- > 0;)
 	{
 		CEntityHandle handle = this->triggerTrackers[i].triggerHandle;
 		CBaseTrigger *trigger = dynamic_cast<CBaseTrigger *>(GameEntitySystem()->GetEntityInstance(handle));

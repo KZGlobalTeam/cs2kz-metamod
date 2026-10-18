@@ -115,7 +115,7 @@ void KZTriggerService::CleanupPushEvents()
 		return;
 	}
 	f32 curtime = g_pKZUtils->GetGlobals()->curtime;
-	for (i32 i = (i32)this->pushEvents.size() - 1; i >= 0; i--)
+	for (size_t i = this->pushEvents.size(); i-- > 0;)
 	{
 		if (!this->pushEvents[i].applied)
 		{
