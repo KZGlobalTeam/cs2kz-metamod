@@ -14,7 +14,7 @@ class KZPlayer;
 
 enum : u32
 {
-	KZ_REPLAY_VERSION = 6,
+	KZ_REPLAY_VERSION = 7,
 };
 
 // Maximum subtick moves per tick. The theoretical engine maximum is 64, but 36 is a much more reasonable amount.
@@ -229,6 +229,7 @@ struct SubtickData
 		{
 			bool pressed;
 
+			// The angle deltas are stored for every step, but only v7+ records them for steps without a button.
 			struct
 			{
 				f32 analog_forward_delta;

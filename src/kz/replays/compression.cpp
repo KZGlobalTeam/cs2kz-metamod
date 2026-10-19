@@ -39,6 +39,21 @@ static_function bool ReadIfFlag(u64 flags, u64 flag, const char *&ptr, const cha
 	return !(flags & flag) || ReadFromBuffer(ptr, end, dst, size);
 }
 
+static_function void ClearAnalogSubtickAngles(std::vector<SubtickData> &subtickData)
+{
+	for (SubtickData &data : subtickData)
+	{
+		for (u32 i = 0; i < data.numSubtickMoves && i < MAX_SUBTICK_MOVES; i++)
+		{
+			if (data.subtickMoves[i].IsAnalogInput())
+			{
+				data.subtickMoves[i].analogMove.pitch_delta = 0.0f;
+				data.subtickMoves[i].analogMove.yaw_delta = 0.0f;
+			}
+		}
+	}
+}
+
 // ========================================
 // Compression utility functions
 // ========================================
@@ -493,6 +508,10 @@ static_function bool ReadTickDataSections(const char *&cursor, const char *end, 
 			}
 		}
 		delete[] tempBuf;
+	}
+	if (success && !parser->analogSubtickAngles)
+	{
+		ClearAnalogSubtickAngles(*outSubtickData);
 	}
 	cursor += subtickHeader.compressedSize;
 	return success;
@@ -1177,6 +1196,10 @@ bool KZ::replaysystem::compression::ReadCmdDataCompressed(const char *&cursor, c
 			}
 		}
 		delete[] tempBuf;
+	}
+	if (success && !parser->analogSubtickAngles)
+	{
+		ClearAnalogSubtickAngles(outCmdSubtickData);
 	}
 	cursor += subtickHeader.compressedSize;
 	return success;

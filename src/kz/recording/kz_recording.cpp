@@ -27,11 +27,12 @@ void SubtickData::RpSubtickMove::FromMove(const CSubtickMoveStep &move)
 {
 	this->when = move.when();
 	this->button = move.button();
+	// Any step can turn the view, including steps that carry no input at all.
+	this->analogMove = {0.0f, 0.0f, move.pitch_delta(), move.yaw_delta()};
 	if (move.button())
 	{
+		// Shares its storage with analog_forward_delta, which button steps don't use.
 		this->pressed = move.pressed();
-		this->analogMove.pitch_delta = move.pitch_delta();
-		this->analogMove.yaw_delta = move.yaw_delta();
 	}
 	else
 	{
@@ -244,7 +245,7 @@ void KZRecordingService::RecordCommand(CUserCmd *cmds, i32 numCmds)
 		this->circularRecording->cmdData->Write(data);
 		this->PushToRecorders(data, RecorderType::Both);
 
-		SubtickData subtickData;
+		SubtickData subtickData {};
 		subtickData.numSubtickMoves = pc.base().subtick_moves_size();
 		for (u32 j = 0; j < subtickData.numSubtickMoves && j < MAX_SUBTICK_MOVES; j++)
 		{

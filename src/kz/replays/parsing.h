@@ -14,6 +14,8 @@ namespace KZ::replaysystem::parsing
 		bool modernJump;
 		bool compactSubticks;
 		bool jumpFractions;
+		// Older versions left the angle deltas of analog steps unwritten, so they hold garbage.
+		bool analogSubtickAngles;
 		bool (*readEvents)(const char *, size_t, u32, std::vector<RpEvent> &);
 	};
 

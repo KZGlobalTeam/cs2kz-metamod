@@ -295,9 +295,16 @@ namespace KZ::replaysystem::parsing
 		return parser;
 	}
 
+	static_function VersionParser ParserV7()
+	{
+		VersionParser parser = ParserV6();
+		parser.analogSubtickAngles = true;
+		return parser;
+	}
+
 	const VersionParser *GetVersionParser(u32 version)
 	{
-		static const VersionParser versions[] = {ParserV1(), ParserV2(), ParserV3(), ParserV4(), ParserV5(), ParserV6()};
+		static const VersionParser versions[] = {ParserV1(), ParserV2(), ParserV3(), ParserV4(), ParserV5(), ParserV6(), ParserV7()};
 		return version > 0 && version <= sizeof(versions) / sizeof(versions[0]) ? &versions[version - 1] : nullptr;
 	}
 
