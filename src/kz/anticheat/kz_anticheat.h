@@ -76,7 +76,7 @@ public:
 			60.0f * 24 * 60 * 30, // InvalidCvar - 30 days
 			60.0f * 24 * 60 * 30, // InvalidInput - 30 days
 			60.0f * 10,           // Nulls - 10 minutes
-			-1.0f,                // SubtickSpam - no ban, just kick (for now)
+			60.0f * 10,           // SubtickSpam - 10 minutes
 			60.0f * 10            // Desubtick - 10 minutes
 		};
 		static_assert(KZ_ARRAYSIZE(banDurations) == static_cast<u8>(Infraction::Type::COUNT));
@@ -296,11 +296,23 @@ public:
 
 	std::deque<f32> suspiciousSubtickMoveTimes;
 	std::deque<f32> invalidCommandTimes;
+	std::deque<f32> angleOnlyMoveCommandTimes;
 	std::deque<f32> zeroWhenCommandTimes;
 	std::deque<f32> numCommandsWithSubtickInputs;
 	// Clear up old entries beyond a certain duration and ban if there are too many within that timeframe.
 	void CheckSubtickAbuse(CUserCmd *cmd);
 	void CheckSuspiciousSubtickCommands();
+
+	struct SubtickSplitSample
+	{
+		u32 serverTick {};
+		u32 numSplits {};
+	};
+
+	std::deque<SubtickSplitSample> recentSubtickSplits;
+	void RecordSubtickSplits(CUserCmd *cmd);
+	// Has to run before the jump is announced or recorded, since it can invalidate the jump.
+	void CheckJumpSubtickSplits(Jump *jump);
 
 	// ===========[ Strafe optimization ]===========
 

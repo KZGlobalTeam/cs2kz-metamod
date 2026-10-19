@@ -109,6 +109,7 @@ void KZAnticheatService::OnSetupMove(CUserCmd *cmd)
 
 	this->currentCmdNum = cmd->cmdNum;
 	this->CheckSubtickAbuse(cmd);
+	this->RecordSubtickSplits(cmd);
 	this->CreateInputEvents(cmd);
 	this->ParseCommandForJump(cmd);
 	this->DetectOptimization(cmd);
@@ -137,8 +138,10 @@ void KZAnticheatService::ClearDetectionBuffers()
 	this->recentLeftRightEvents.clear();
 	this->suspiciousSubtickMoveTimes.clear();
 	this->invalidCommandTimes.clear();
+	this->angleOnlyMoveCommandTimes.clear();
 	this->zeroWhenCommandTimes.clear();
 	this->numCommandsWithSubtickInputs.clear();
+	this->recentSubtickSplits.clear();
 	this->recentJumpStatuses.clear();
 	this->recentJumps.clear();
 	this->recentLandingEvents.clear();

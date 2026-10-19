@@ -1032,6 +1032,7 @@ void KZJumpstatsService::EndJump()
 	{
 		return;
 	}
+	this->player->anticheatService->CheckJumpSubtickSplits(jump);
 	KZJumpstatsService::AnnounceJump(jump);
 	this->player->recordingService->OnJumpFinish(jump);
 	this->player->anticheatService->OnJumpFinish(jump);
