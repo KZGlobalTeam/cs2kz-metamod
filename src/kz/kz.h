@@ -85,11 +85,11 @@ public:
 	virtual void OnPhysicsSimulate() override;
 	virtual void OnPhysicsSimulatePost() override;
 	// Returns false when the command must not run.
-	bool OnPlayerRunCommand(PlayerCommand *cmd);
-	virtual void OnProcessUsercmds(PlayerCommand *, int) override;
-	virtual void OnProcessUsercmdsPost(PlayerCommand *, int) override;
-	virtual void OnSetupMove(PlayerCommand *) override;
-	virtual void OnSetupMovePost(PlayerCommand *) override;
+	bool OnPlayerRunCommand(CUserCmd *cmd);
+	virtual void OnProcessUsercmds(CUserCmd *, int) override;
+	virtual void OnProcessUsercmdsPost(CUserCmd *, int) override;
+	virtual void OnSetupMove(CUserCmd *) override;
+	virtual void OnSetupMovePost(CUserCmd *) override;
 	virtual void OnProcessMovement() override;
 	virtual void OnProcessMovementPost() override;
 	virtual void OnPlayerMove() override;

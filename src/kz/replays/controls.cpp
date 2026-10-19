@@ -464,7 +464,7 @@ namespace KZ::replaysystem::controls
 		}
 	}
 
-	void ControlsWindow::OnProcessUsercmds(PlayerCommand *cmds, i32 numCmds)
+	void ControlsWindow::OnProcessUsercmds(CUserCmd *cmds, i32 numCmds)
 	{
 		for (i32 i = 0; i < numCmds; i++)
 		{

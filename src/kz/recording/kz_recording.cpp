@@ -151,7 +151,7 @@ void KZRecordingService::RecordTickData_PhysicsSimulate()
 														   movementServices->m_ModernJump().m_flLastLandedVelocityZ()};
 }
 
-void KZRecordingService::RecordTickData_SetupMove(PlayerCommand *pc)
+void KZRecordingService::RecordTickData_SetupMove(CUserCmd *pc)
 {
 	this->currentTickData.cmdNumber = pc->cmdNum;
 	this->currentTickData.clientTick = pc->base().client_tick();
@@ -198,7 +198,7 @@ void KZRecordingService::RecordTickData_PhysicsSimulatePost()
 	this->PushToRecorders<Recorder::Vec::Tick>(this->currentSubtickData, RecorderType::Both);
 }
 
-void KZRecordingService::RecordCommand(PlayerCommand *cmds, i32 numCmds)
+void KZRecordingService::RecordCommand(CUserCmd *cmds, i32 numCmds)
 {
 	this->EnsureCircularRecorderInitialized();
 

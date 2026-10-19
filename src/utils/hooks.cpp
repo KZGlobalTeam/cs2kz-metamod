@@ -691,7 +691,7 @@ static KHook::Virtual<IGameSystem, void, const EventBuildGameSessionManifest_t *
 // CCSPlayer_MovementServices virtual hooks
 // ============================================================
 
-static KHook::Return<void> PlayerRunCommandPre(CCSPlayer_MovementServices *pThis, PlayerCommand *pCmd)
+static KHook::Return<void> PlayerRunCommandPre(CCSPlayer_MovementServices *pThis, CUserCmd *pCmd)
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(pThis);
@@ -702,14 +702,14 @@ static KHook::Return<void> PlayerRunCommandPre(CCSPlayer_MovementServices *pThis
 	return {KHook::Action::Ignore};
 }
 
-static KHook::Virtual<CCSPlayer_MovementServices, void, PlayerCommand *> playerRunCommandHook(PlayerRunCommandPre, nullptr);
+static KHook::Virtual<CCSPlayer_MovementServices, void, CUserCmd *> playerRunCommandHook(PlayerRunCommandPre, nullptr);
 
-void hooks::CallOriginalPlayerRunCommand(CCSPlayer_MovementServices *pThis, PlayerCommand *pCmd)
+void hooks::CallOriginalPlayerRunCommand(CCSPlayer_MovementServices *pThis, CUserCmd *pCmd)
 {
 	playerRunCommandHook.CallOriginal(pThis, pCmd);
 }
 
-static KHook::Return<void> FinishMovePre(CCSPlayer_MovementServices *pThis, PlayerCommand *pCmd, CMoveData *pMoveData)
+static KHook::Return<void> FinishMovePre(CCSPlayer_MovementServices *pThis, CUserCmd *pCmd, CMoveData *pMoveData)
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(pThis);
@@ -717,7 +717,7 @@ static KHook::Return<void> FinishMovePre(CCSPlayer_MovementServices *pThis, Play
 	return {KHook::Action::Ignore};
 }
 
-static KHook::Virtual<CCSPlayer_MovementServices, void, PlayerCommand *, CMoveData *> finishMoveHook(FinishMovePre, nullptr);
+static KHook::Virtual<CCSPlayer_MovementServices, void, CUserCmd *, CMoveData *> finishMoveHook(FinishMovePre, nullptr);
 
 // ============================================================
 // Signature-based hooks
@@ -802,11 +802,11 @@ static KHook::Return<void> PhysicsSimulatePost(CCSPlayerController *controller)
 
 static KHook::Member<CCSPlayerController, void> PhysicsSimulate(PhysicsSimulatePre, PhysicsSimulatePost);
 
-static KHook::Return<i32> ProcessUsercmdsPre(CCSPlayerController *controller, PlayerCommand *cmds, int numcmds, bool paused, float margin);
+static KHook::Return<i32> ProcessUsercmdsPre(CCSPlayerController *controller, CUserCmd *cmds, int numcmds, bool paused, float margin);
 
-static KHook::Member<CCSPlayerController, i32, PlayerCommand *, int, bool, float> ProcessUsercmds(ProcessUsercmdsPre, nullptr);
+static KHook::Member<CCSPlayerController, i32, CUserCmd *, int, bool, float> ProcessUsercmds(ProcessUsercmdsPre, nullptr);
 
-static KHook::Return<i32> ProcessUsercmdsPre(CCSPlayerController *controller, PlayerCommand *cmds, int numcmds, bool paused, float margin)
+static KHook::Return<i32> ProcessUsercmdsPre(CCSPlayerController *controller, CUserCmd *cmds, int numcmds, bool paused, float margin)
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
 	MovementPlayer *player = playerManager->ToPlayer(controller);
@@ -816,7 +816,7 @@ static KHook::Return<i32> ProcessUsercmdsPre(CCSPlayerController *controller, Pl
 	return {KHook::Action::Supersede, retValue};
 }
 
-static KHook::Return<void> SetupMovePre(CCSPlayer_MovementServices *ms, PlayerCommand *pc, CMoveData *mv)
+static KHook::Return<void> SetupMovePre(CCSPlayer_MovementServices *ms, CUserCmd *pc, CMoveData *mv)
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
 	MovementPlayer *player = playerManager->ToPlayer(ms);
@@ -826,14 +826,14 @@ static KHook::Return<void> SetupMovePre(CCSPlayer_MovementServices *ms, PlayerCo
 	return {KHook::Action::Ignore};
 }
 
-static KHook::Return<void> SetupMovePost(CCSPlayer_MovementServices *ms, PlayerCommand *pc, CMoveData *mv)
+static KHook::Return<void> SetupMovePost(CCSPlayer_MovementServices *ms, CUserCmd *pc, CMoveData *mv)
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
 	playerManager->ToPlayer(ms)->OnSetupMovePost(pc);
 	return {KHook::Action::Ignore};
 }
 
-static KHook::Member<CCSPlayer_MovementServices, void, PlayerCommand *, CMoveData *> SetupMove(SetupMovePre, SetupMovePost);
+static KHook::Member<CCSPlayer_MovementServices, void, CUserCmd *, CMoveData *> SetupMove(SetupMovePre, SetupMovePost);
 
 static KHook::Return<void> ProcessMovementPre(CCSPlayer_MovementServices *ms, CMoveData *mv)
 {

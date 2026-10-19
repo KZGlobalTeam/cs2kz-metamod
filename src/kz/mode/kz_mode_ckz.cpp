@@ -395,7 +395,7 @@ void KZClassicModeService::ClearFrictionSplit()
 	moveServices->m_bUseFrictionStashedSpeed(false);
 }
 
-void KZClassicModeService::OnSetupMove(PlayerCommand *pc)
+void KZClassicModeService::OnSetupMove(CUserCmd *pc)
 {
 	for (i32 j = 0; j < pc->mutable_base()->subtick_moves_size(); j++)
 	{

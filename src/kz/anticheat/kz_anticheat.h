@@ -234,7 +234,7 @@ public:
 	u64 heldMovementButtons;
 	std::vector<f32> nullsFramerateBuffer;
 
-	void CreateInputEvents(PlayerCommand *cmd);
+	void CreateInputEvents(CUserCmd *cmd);
 	void CheckNulls();
 	void AnalyzeNullsForAxis(const std::deque<InputEvent> &events, u64 button1, u64 button2);
 	void CleanupOldInputEvents();
@@ -263,7 +263,7 @@ public:
 
 	f32 lastValidMoveTypeTime = -1.0f;
 	std::deque<LandingEvent> recentLandingEvents;
-	void ParseCommandForJump(PlayerCommand *cmd);
+	void ParseCommandForJump(CUserCmd *cmd);
 
 	void CreateLandEvent();
 	// Update existing events.
@@ -292,14 +292,14 @@ public:
 	};
 
 	// `forwardAxis` and `sideAxis` are the movement impulses the command starts from.
-	static SubtickRejection VerifySubtickMoves(const PlayerCommand *cmd, f32 forwardAxis, f32 sideAxis);
+	static SubtickRejection VerifySubtickMoves(const CUserCmd *cmd, f32 forwardAxis, f32 sideAxis);
 
 	std::deque<f32> suspiciousSubtickMoveTimes;
 	std::deque<f32> invalidCommandTimes;
 	std::deque<f32> zeroWhenCommandTimes;
 	std::deque<f32> numCommandsWithSubtickInputs;
 	// Clear up old entries beyond a certain duration and ban if there are too many within that timeframe.
-	void CheckSubtickAbuse(PlayerCommand *cmd);
+	void CheckSubtickAbuse(CUserCmd *cmd);
 	void CheckSuspiciousSubtickCommands();
 
 	// ===========[ Strafe optimization ]===========
@@ -316,12 +316,12 @@ public:
 
 	float CalculateYawSpeed(size_t index);
 	float CalculateYawAccel(size_t index);
-	void DetectOptimization(PlayerCommand *pc);
+	void DetectOptimization(CUserCmd *pc);
 
 	// Generic Events
 	void OnJump();
 
-	void OnSetupMove(PlayerCommand *cmd);
+	void OnSetupMove(CUserCmd *cmd);
 	void OnPhysicsSimulatePost();
 
 	struct BanInfo

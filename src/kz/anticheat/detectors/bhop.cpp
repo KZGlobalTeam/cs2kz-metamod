@@ -27,7 +27,7 @@
 #define LOW_PATTERN_THRESHOLD        4    // ...if the most common pattern is smaller than 4.
 #define HIGH_PATTERN_THRESHOLD       16.0f
 
-void KZAnticheatService::ParseCommandForJump(PlayerCommand *cmd)
+void KZAnticheatService::ParseCommandForJump(CUserCmd *cmd)
 {
 	if (this->player->IsFakeClient() || this->player->IsCSTV())
 	{

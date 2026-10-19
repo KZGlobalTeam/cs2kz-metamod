@@ -94,7 +94,7 @@ void KZAnticheatService::OnPlayerFullyConnect()
 	this->InitCvarMonitor();
 }
 
-void KZAnticheatService::OnSetupMove(PlayerCommand *cmd)
+void KZAnticheatService::OnSetupMove(CUserCmd *cmd)
 {
 	if (this->player->IsFakeClient() || this->player->IsCSTV())
 	{

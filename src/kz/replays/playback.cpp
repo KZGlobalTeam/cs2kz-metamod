@@ -380,7 +380,7 @@ namespace KZ::replaysystem::playback
 	}
 
 	// Moves the bot between two replay ticks without simulating, so that nothing but where it is changes.
-	static_function void MoveHeldBot(KZPlayer *player, PlayerCommand *command)
+	static_function void MoveHeldBot(KZPlayer *player, CUserCmd *command)
 	{
 		auto replay = data::GetCurrentReplay();
 		auto pawn = player->GetPlayerPawn();
@@ -405,7 +405,7 @@ namespace KZ::replaysystem::playback
 		pawn->SetAnimGraphUpdateEnabled(false);
 	}
 
-	bool OnPlayerRunCommandPre(KZPlayer *player, PlayerCommand *command)
+	bool OnPlayerRunCommandPre(KZPlayer *player, CUserCmd *command)
 	{
 		if (!player || !bot::IsValidBot(player->GetController()))
 		{
@@ -513,7 +513,7 @@ namespace KZ::replaysystem::playback
 		return true;
 	}
 
-	void CheckWeapon(KZPlayer &player, PlayerCommand &cmd)
+	void CheckWeapon(KZPlayer &player, CUserCmd &cmd)
 	{
 		auto replay = data::GetCurrentReplay();
 		if (!replay->playingReplay)

@@ -3,7 +3,7 @@
 #include "sdk/datatypes.h"
 
 class KZPlayer;
-class PlayerCommand;
+class CUserCmd;
 class CMoveData;
 struct TickData;
 struct SubtickData;
@@ -70,10 +70,10 @@ namespace KZ::replaysystem::playback
 	// Applies currentTick's post state, runs its events and jumps, and moves on to the next replay tick.
 	void OnPhysicsSimulatePost(KZPlayer *player);
 	// Fills the command with currentTick's input, or moves the held bot. Returns false when the command must not run.
-	bool OnPlayerRunCommandPre(KZPlayer *player, PlayerCommand *command);
+	bool OnPlayerRunCommandPre(KZPlayer *player, CUserCmd *command);
 
 	// Weapon management during playback
-	void CheckWeapon(KZPlayer &player, PlayerCommand &cmd);
+	void CheckWeapon(KZPlayer &player, CUserCmd &cmd);
 	void InitializeWeapons();
 
 	// Playback state management

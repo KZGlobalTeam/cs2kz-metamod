@@ -27,7 +27,7 @@ CConVar<bool> kz_ac_subtick_debug("kz_ac_subtick_debug", FCVAR_NONE, "Enable sub
 
 // Every command should have all button presses/releases accounted for in subtick moves.
 // Only cheats that modify buttons without updating subtick moves would fail this.
-static_global bool VerifyCommand(const PlayerCommand &cmd)
+static_global bool VerifyCommand(const CUserCmd &cmd)
 {
 	// Expect a press/release this tick
 	u64 expectedButtons = cmd.base().buttons_pb().buttonstate2() | cmd.base().buttons_pb().buttonstate3();
@@ -65,7 +65,7 @@ static_global bool VerifyCommand(const PlayerCommand &cmd)
 
 // Yaw alias abuse detection: A legitimate client only produces a handful of angle changes per command, unless they are scrolling to jump.
 // If there's more than SUBTICK_YAW_DELTA_THRESHOLD subtick moves carrying an actual yaw change in a single tick, flag it.
-static_global bool HasExcessiveSubtickMovesWithAngles(const PlayerCommand &cmd)
+static_global bool HasExcessiveSubtickMovesWithAngles(const CUserCmd &cmd)
 {
 	i32 numYawDeltas = 0;
 	for (i32 i = 0; i < cmd.base().subtick_moves_size(); i++)
@@ -93,7 +93,7 @@ static_global bool HasExcessiveSubtickMovesWithAngles(const PlayerCommand &cmd)
 // The engine validates the whole subtick move list before it applies any of it, and throws all of it away if
 // any move fails. A command that fails this moves the player from its final button state for the whole tick,
 // the same as a command that carried no subtick moves at all.
-KZAnticheatService::SubtickRejection KZAnticheatService::VerifySubtickMoves(const PlayerCommand *cmd, f32 forwardAxis, f32 sideAxis)
+KZAnticheatService::SubtickRejection KZAnticheatService::VerifySubtickMoves(const CUserCmd *cmd, f32 forwardAxis, f32 sideAxis)
 {
 	if (cmd->base().subtick_moves_size() > ENGINE_MAX_SUBTICK_MOVES)
 	{
@@ -149,7 +149,7 @@ KZAnticheatService::SubtickRejection KZAnticheatService::VerifySubtickMoves(cons
 	return SubtickRejection::None;
 }
 
-static_global bool PossibleDesubtickedCommand(const PlayerCommand &cmd, const Vector &impulses)
+static_global bool PossibleDesubtickedCommand(const CUserCmd &cmd, const Vector &impulses)
 {
 	// Can't tell if there are no subtick moves.
 	if (cmd.base().subtick_moves_size() == 0)
@@ -182,7 +182,7 @@ static_global bool PossibleDesubtickedCommand(const PlayerCommand &cmd, const Ve
 	return hasNonAnalogMove && hasZeroWhen;
 }
 
-void KZAnticheatService::CheckSubtickAbuse(PlayerCommand *cmd)
+void KZAnticheatService::CheckSubtickAbuse(CUserCmd *cmd)
 {
 	if (this->player->IsFakeClient() || this->player->IsCSTV())
 	{

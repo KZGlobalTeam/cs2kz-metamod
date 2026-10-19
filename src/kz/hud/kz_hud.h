@@ -31,7 +31,7 @@ struct GameHudPartDef
 extern const GameHudPartDef GAME_HUD_PARTS[GAME_HUD_PART_COUNT];
 class CCSCustomHudLayout;
 class Jump;
-class PlayerCommand;
+class CUserCmd;
 
 #define MHUD_JS_PILL_COUNT     5
 #define MHUD_JS_PILL_GONE_RANK 4
@@ -423,7 +423,7 @@ public:
 	}
 
 	// Counts every +jump press in the command, subtick ones included, so each scroll notch adds one.
-	void OnSetupMove(PlayerCommand *cmd);
+	void OnSetupMove(CUserCmd *cmd);
 
 	// The jump presses since the count last lapsed, or 0 once MHUD_KEYS_JUMP_COUNT_HOLD has passed without one.
 	i32 GetJumpInputCount() const;
@@ -459,7 +459,7 @@ public:
 	}
 
 	// Reads each usercmd as it arrives while dragging, and keeps the pawn's view where it was before the drag.
-	void OnProcessUsercmds(PlayerCommand *cmds, i32 numCmds);
+	void OnProcessUsercmds(CUserCmd *cmds, i32 numCmds);
 
 	// One jump as the jumpstats panel shows it, defined in mhud.cpp.
 	struct JumpstatText;
@@ -724,7 +724,7 @@ private:
 	void EndDrag(bool confirm);
 	void SnapEditView(const QAngle &angles);
 	void BuildEditTargets();
-	void TrackEditCommand(CCSPlayerPawn *pawn, PlayerCommand &cmd);
+	void TrackEditCommand(CCSPlayerPawn *pawn, CUserCmd &cmd);
 	void UpdateDragPosition(u64 newlyPressed, u64 held);
 	void UpdateMove(u64 newlyPressed, u64 held);
 	void UpdateResize(u64 newlyPressed, f32 unitsX, f32 unitsY);

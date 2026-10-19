@@ -3,7 +3,6 @@
 
 class KZPlayer;
 class CCSPlayerPawnBase;
-class PlayerCommand;
 class CUserCmd;
 class CBasePlayerWeapon;
 struct EconInfo;
@@ -29,12 +28,12 @@ namespace KZ::replaysystem
 	void OnFinishMovePre(KZPlayer *player, CMoveData *pMoveData);
 	void OnPhysicsSimulatePost(KZPlayer *player);
 	// Returns false when the command must not run.
-	bool OnPlayerRunCommandPre(KZPlayer *player, PlayerCommand *command);
+	bool OnPlayerRunCommandPre(KZPlayer *player, CUserCmd *command);
 	bool IsReplayBot(KZPlayer *player);
 	bool CanTouchTrigger(KZPlayer *player, CBaseTrigger *trigger);
 	// The playback controls shown to players watching the replay bot.
 	void UpdateControls(KZPlayer *player);
-	void OnProcessUsercmds(KZPlayer *player, PlayerCommand *cmds, i32 numCmds);
+	void OnProcessUsercmds(KZPlayer *player, CUserCmd *cmds, i32 numCmds);
 
 	namespace item
 	{

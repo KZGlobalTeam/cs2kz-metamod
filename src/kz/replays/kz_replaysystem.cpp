@@ -84,7 +84,7 @@ namespace KZ::replaysystem
 		playback::OnPhysicsSimulatePost(player);
 	}
 
-	bool OnPlayerRunCommandPre(KZPlayer *player, PlayerCommand *command)
+	bool OnPlayerRunCommandPre(KZPlayer *player, CUserCmd *command)
 	{
 		return playback::OnPlayerRunCommandPre(player, command);
 	}
@@ -125,7 +125,7 @@ namespace KZ::replaysystem
 		}
 	}
 
-	void OnProcessUsercmds(KZPlayer *player, PlayerCommand *cmds, i32 numCmds)
+	void OnProcessUsercmds(KZPlayer *player, CUserCmd *cmds, i32 numCmds)
 	{
 		if (!player->IsFakeClient())
 		{

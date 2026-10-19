@@ -17,7 +17,7 @@
 #include "utils/circularfifobuffer.h"
 #include "utils/uuid.h"
 
-class PlayerCommand;
+class CUserCmd;
 class Jump;
 
 // two minute replay buffer that constantly records
@@ -290,10 +290,10 @@ public:
 	static void Shutdown();
 	static void OnActivateServer();
 	static void ProcessFileWriteCompletion();
-	void OnProcessUsercmds(PlayerCommand *base, i32 numCmds);
+	void OnProcessUsercmds(CUserCmd *base, i32 numCmds);
 
 	void OnPhysicsSimulate();
-	void OnSetupMove(PlayerCommand *pc);
+	void OnSetupMove(CUserCmd *pc);
 	void OnPhysicsSimulatePost();
 
 	virtual void Reset() override;
@@ -332,11 +332,11 @@ public:
 	void OnClientDisconnect();
 
 	void RecordTickData_PhysicsSimulate();
-	void RecordTickData_SetupMove(PlayerCommand *pc);
+	void RecordTickData_SetupMove(CUserCmd *pc);
 	void RecordTickData_PhysicsSimulatePost();
 
 	// Record ALL commands as received by the server.
-	void RecordCommand(PlayerCommand *cmds, i32 numCmds);
+	void RecordCommand(CUserCmd *cmds, i32 numCmds);
 
 	// Check all active recorders and stop those that have reached their desired stop time.
 	void CheckRecorders();

@@ -5,7 +5,7 @@
 #include "engine2/inetworkgameserver.h"
 
 class CCSPlayer_MovementServices;
-class PlayerCommand;
+class CUserCmd;
 
 namespace hooks
 {
@@ -19,5 +19,5 @@ namespace hooks
 	void CallOriginalStartTouch(CBaseEntity *pThis, CBaseEntity *pOther);
 	void CallOriginalTouch(CBaseEntity *pThis, CBaseEntity *pOther);
 	void CallOriginalEndTouch(CBaseEntity *pThis, CBaseEntity *pOther);
-	void CallOriginalPlayerRunCommand(CCSPlayer_MovementServices *pThis, PlayerCommand *pCmd);
+	void CallOriginalPlayerRunCommand(CCSPlayer_MovementServices *pThis, CUserCmd *pCmd);
 } // namespace hooks

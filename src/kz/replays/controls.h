@@ -16,7 +16,7 @@
 // Splits, checkpoints, stages and teleports.
 #define KZ_REPLAY_CONTROLS_ZONE_KINDS 4
 
-class PlayerCommand;
+class CUserCmd;
 
 namespace KZ::replaysystem::controls
 {
@@ -29,7 +29,7 @@ namespace KZ::replaysystem::controls
 		ControlsWindow(KZPlayer *player) : player(player) {}
 
 		void Update();
-		void OnProcessUsercmds(PlayerCommand *cmds, i32 numCmds);
+		void OnProcessUsercmds(CUserCmd *cmds, i32 numCmds);
 		// Both return false when the player is not watching the replay bot.
 		bool ToggleCursor();
 		bool ToggleVisibility();

@@ -40,7 +40,7 @@ float KZAnticheatService::CalculateYawAccel(size_t index)
 	return (currentSpeed - lastSpeed) / frameTime;
 }
 
-void KZAnticheatService::DetectOptimization(PlayerCommand *pc)
+void KZAnticheatService::DetectOptimization(CUserCmd *pc)
 {
 	// get yaw delta from subtick moves
 	float totalYawDelta = 0.0f;

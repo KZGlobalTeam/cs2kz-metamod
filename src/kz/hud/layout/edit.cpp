@@ -433,7 +433,7 @@ void KZHUDService::SnapEditView(const QAngle &angles)
 // Movement, buttons and weapon switches pass through untouched, because rewriting them only makes the client mispredict.
 // Weapons are held through their attack times instead. While dragging, the pawn keeps the view it had before the drag,
 // so spectators do not watch it spin, while the client's own angles keep moving the element.
-static_function void PinEditViewAngles(PlayerCommand *cmd, const QAngle &viewAngles)
+static_function void PinEditViewAngles(CUserCmd *cmd, const QAngle &viewAngles)
 {
 	CMsgQAngle *angles = cmd->mutable_base()->mutable_viewangles();
 	angles->set_x(viewAngles.x);
@@ -441,7 +441,7 @@ static_function void PinEditViewAngles(PlayerCommand *cmd, const QAngle &viewAng
 	angles->set_z(0.0f);
 }
 
-void KZHUDService::OnProcessUsercmds(PlayerCommand *cmds, i32 numCmds)
+void KZHUDService::OnProcessUsercmds(CUserCmd *cmds, i32 numCmds)
 {
 	CCSPlayerPawn *pawn = this->player->GetPlayerPawn();
 	if (!this->IsEditingHud() || !pawn)
@@ -465,7 +465,7 @@ void KZHUDService::OnProcessUsercmds(PlayerCommand *cmds, i32 numCmds)
 	}
 }
 
-void KZHUDService::TrackEditCommand(CCSPlayerPawn *pawn, PlayerCommand &cmd)
+void KZHUDService::TrackEditCommand(CCSPlayerPawn *pawn, CUserCmd &cmd)
 {
 	this->edit.lastCmdNum = cmd.cmdNum;
 	const CBaseUserCmdPB &base = cmd.base();

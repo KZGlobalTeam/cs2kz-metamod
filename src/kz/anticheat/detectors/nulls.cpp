@@ -32,7 +32,7 @@
 
 CConVar<bool> kz_ac_nulls_debug("kz_ac_nulls_debug", FCVAR_NONE, "Enable nulls detector debug messages", false);
 
-void KZAnticheatService::CreateInputEvents(PlayerCommand *cmd)
+void KZAnticheatService::CreateInputEvents(CUserCmd *cmd)
 {
 	// Ignore bots.
 	if (this->player->IsFakeClient() || this->player->IsCSTV())

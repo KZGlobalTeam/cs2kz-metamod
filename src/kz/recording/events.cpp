@@ -92,7 +92,7 @@ void KZRecordingService::ProcessFileWriteCompletion()
 	}
 }
 
-void KZRecordingService::OnProcessUsercmds(PlayerCommand *cmds, i32 numCmds)
+void KZRecordingService::OnProcessUsercmds(CUserCmd *cmds, i32 numCmds)
 {
 	if (KZ::replaysystem::IsReplayBot(this->player))
 	{
@@ -404,7 +404,7 @@ void KZRecordingService::OnPhysicsSimulate()
 	this->RecordTickData_PhysicsSimulate();
 }
 
-void KZRecordingService::OnSetupMove(PlayerCommand *pc)
+void KZRecordingService::OnSetupMove(CUserCmd *pc)
 {
 	if (KZ::replaysystem::IsReplayBot(this->player))
 	{

@@ -90,7 +90,7 @@ void KZHUDService::Reset()
 	this->crouchJumping = false;
 }
 
-void KZHUDService::OnSetupMove(PlayerCommand *cmd)
+void KZHUDService::OnSetupMove(CUserCmd *cmd)
 {
 	i32 presses = 0;
 	if (cmd->base().subtick_moves_size() == 0)
