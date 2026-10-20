@@ -64,8 +64,6 @@ public:
 	}
 };
 
-struct SndOpEventGuid_t;
-struct EmitSound_t;
 class CAttributeList;
 class CBaseModelEntity;
 class CGlobalSymbol;
@@ -73,7 +71,6 @@ class CGlobalSymbol;
 typedef IGameEventListener2 *GetLegacyGameEventListener_t(CPlayerSlot slot);
 typedef void SnapViewAngles_t(CBasePlayerPawn *pawn, const QAngle &angle);
 typedef CBaseEntity *FindEntityByClassname_t(CEntitySystem *, CEntityInstance *, const char *);
-typedef SndOpEventGuid_t EmitSoundFunc_t(IRecipientFilter &filter, CEntityIndex ent, const EmitSound_t &params);
 typedef void SwitchTeam_t(CCSPlayerController *controller, int team);
 typedef void SetPawn_t(CBasePlayerController *controller, CCSPlayerPawn *pawn, bool, bool, bool, bool);
 typedef CBaseEntity *CreateEntityByName_t(const char *className, int iForceEdictIndex);
@@ -104,6 +101,7 @@ namespace interfaces
 		GET_V_IFACE_CURRENT(GetEngineFactory, g_pNetworkServerService, INetworkServerService, NETWORKSERVERSERVICE_INTERFACE_VERSION);
 		GET_V_IFACE_CURRENT(GetEngineFactory, g_pNetworkMessages, INetworkMessages, NETWORKMESSAGES_INTERFACE_VERSION);
 		GET_V_IFACE_CURRENT(GetEngineFactory, interfaces::pGameEventSystem, IGameEventSystem, GAMEEVENTSYSTEM_INTERFACE_VERSION);
+		GET_V_IFACE_CURRENT(GetEngineFactory, g_pSoundSystem, ISoundSystem, SOUNDSYSTEM_INTERFACE_VERSION);
 		GET_V_IFACE_CURRENT(GetFileSystemFactory, g_pFullFileSystem, IFileSystem, FILESYSTEM_INTERFACE_VERSION);
 
 		return true;
@@ -116,20 +114,18 @@ namespace interfaces
 class KZUtils
 {
 public:
-	KZUtils(GetLegacyGameEventListener_t *GetLegacyGameEventListener, SnapViewAngles_t *SnapViewAngles, EmitSoundFunc_t *EmitSound,
-			SwitchTeam_t *SwitchTeam, SetPawn_t *SetPawn, CreateEntityByName_t *CreateEntityByName, DispatchSpawn_t *DispatchSpawn,
-			RemoveEntity_t *RemoveEntity, DebugDrawMesh_t *DebugDrawMesh, CreateBot_t *CreateBot,
-			SetOrAddAttributeValueByName_t *SetOrAddAttributeValueByName, SetModel_t *SetModel, DecalTrace_t *DecalTrace)
-		: GetLegacyGameEventListener(GetLegacyGameEventListener), SnapViewAngles(SnapViewAngles), EmitSound(EmitSound), SwitchTeam(SwitchTeam),
-		  SetPawn(SetPawn), CreateEntityByName(CreateEntityByName), DispatchSpawn(DispatchSpawn), RemoveEntity(RemoveEntity),
-		  DebugDrawMesh(DebugDrawMesh), CreateBot(CreateBot), SetOrAddAttributeValueByName(SetOrAddAttributeValueByName), SetModel(SetModel),
-		  DecalTrace(DecalTrace)
+	KZUtils(GetLegacyGameEventListener_t *GetLegacyGameEventListener, SnapViewAngles_t *SnapViewAngles, SwitchTeam_t *SwitchTeam,
+			SetPawn_t *SetPawn, CreateEntityByName_t *CreateEntityByName, DispatchSpawn_t *DispatchSpawn, RemoveEntity_t *RemoveEntity,
+			DebugDrawMesh_t *DebugDrawMesh, CreateBot_t *CreateBot, SetOrAddAttributeValueByName_t *SetOrAddAttributeValueByName,
+			SetModel_t *SetModel, DecalTrace_t *DecalTrace)
+		: GetLegacyGameEventListener(GetLegacyGameEventListener), SnapViewAngles(SnapViewAngles), SwitchTeam(SwitchTeam), SetPawn(SetPawn),
+		  CreateEntityByName(CreateEntityByName), DispatchSpawn(DispatchSpawn), RemoveEntity(RemoveEntity), DebugDrawMesh(DebugDrawMesh),
+		  CreateBot(CreateBot), SetOrAddAttributeValueByName(SetOrAddAttributeValueByName), SetModel(SetModel), DecalTrace(DecalTrace)
 	{
 	}
 
 	GetLegacyGameEventListener_t *const GetLegacyGameEventListener;
 	SnapViewAngles_t *const SnapViewAngles;
-	EmitSoundFunc_t *const EmitSound;
 	SwitchTeam_t *const SwitchTeam;
 	SetPawn_t *const SetPawn;
 	CreateEntityByName_t *const CreateEntityByName;

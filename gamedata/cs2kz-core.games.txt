@@ -257,13 +257,6 @@
 				"windows"	"40 55 56 41 54 48 8B EC 48 83 EC 50"
 				"linux"		"55 48 89 E5 41 56 41 55 41 54 53 48 89 FB 48 83 EC ?? E8 ?? ?? ?? ?? 80 BB"
 			}
-			// search for "CT_Water.StepLeft", this is called after that string is referenced (the one with 4 parameters).
-			"EmitSound"
-			{
-				"library"	"server"
-				"windows"	"40 53 48 83 EC ?? 4C 89 4C 24 ?? 48 8B D9 45 8B C8"
-				"linux"		"55 48 89 E5 53 48 89 FB 48 83 EC ?? E8 ?? ?? ?? ?? 48 89 D8 48 8B 5D ?? C9 C3 CC CC CC CC CC CC 48 B8"
-			}
 			// "%sRecv usercmd %d.  Margin:%5.1fms net +%2d queue =%5.1f"
 			"ProcessUsercmds"
 			{
@@ -383,6 +376,13 @@
 			{
 				"windows"		"351"
 				"linux"			"352"
+			}
+			// ISoundSystem virtual that hands out a new sound event guid.
+			// "snd_break_on_start_soundevent" cvar, the g_pSoundSystem call in the function that reads it (vtable offset / 8).
+			"TakeSoundGuid"
+			{
+				"windows"		"78"
+				"linux"			"77"
 			}
 			// Check sv_fullupdate
 			"ClientOffset"

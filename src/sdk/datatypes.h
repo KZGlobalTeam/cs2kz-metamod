@@ -43,24 +43,6 @@ enum gear_slot_t : uint32_t
 	GEAR_SLOT_LAST = 12,
 };
 
-// Sound stuff.
-
-typedef uint32 SoundEventGuid_t;
-
-struct SndOpEventGuid_t
-{
-	SndOpEventGuid_t() : m_nGuid(0), m_hStackHash(-1) {}
-
-	SoundEventGuid_t m_nGuid;
-	uint32 m_hStackHash;
-	// #define SND_OP_FLAG_DEFAULT (1 << 0)
-	// #define SND_OP_FLAG_RELIABLE (1 << 1)
-	// #define SND_OP_FLAG_INIT (1 << 2)
-	// #define SND_OP_FLAG_VOICE (1 << 3)
-	uint8 m_nFlags;
-	CPlayerBitVec m_Players;
-};
-
 // Tracing stuff.
 
 struct touchlist_t

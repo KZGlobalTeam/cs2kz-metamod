@@ -13,6 +13,7 @@
 #include "virtual.h"
 
 #include "networkbasetypes.pb.h"
+#include "gameevents.pb.h"
 
 #include "convar.h"
 #include "engine2/igameeventsystem.h"
@@ -24,6 +25,7 @@
 #include "steam/steam_gameserver.h"
 
 #include "tier0/dbg.h"
+#include "tier0/generichash.h"
 #include "tier0/memdbgon.h"
 
 #define FCVAR_FLAGS_TO_REMOVE (FCVAR_HIDDEN | FCVAR_DEVELOPMENTONLY | FCVAR_DEFENSIVE)
@@ -70,7 +72,6 @@ bool utils::Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
 	bool sigResolved = true;
 	RESOLVE_SIG(g_pGameConfig, "GetLegacyGameEventListener", GetLegacyGameEventListener_t, GetLegacyGameEventListener, sigResolved);
 	RESOLVE_SIG(g_pGameConfig, "SnapViewAngles", SnapViewAngles_t, SnapViewAngles, sigResolved);
-	RESOLVE_SIG(g_pGameConfig, "EmitSound", EmitSoundFunc_t, EmitSound, sigResolved);
 	RESOLVE_SIG(g_pGameConfig, "CCSPlayerController_SwitchTeam", SwitchTeam_t, SwitchTeam, sigResolved);
 	RESOLVE_SIG(g_pGameConfig, "CBasePlayerController_SetPawn", SetPawn_t, SetPawn, sigResolved);
 	RESOLVE_SIG(g_pGameConfig, "CreateEntityByName", CreateEntityByName_t, CreateEntityByName, sigResolved);
@@ -88,8 +89,8 @@ bool utils::Initialize(ISmmAPI *ismm, char *error, size_t maxlen)
 		KZ_LOG_WARN(LogChannel::General, "%s\n", error);
 		return false;
 	}
-	g_pKZUtils = new KZUtils(GetLegacyGameEventListener, SnapViewAngles, EmitSound, SwitchTeam, SetPawn, CreateEntityByName, DispatchSpawn,
-							 RemoveEntity, DebugDrawMesh, CreateBot, SetOrAddAttributeValueByName, SetModel, DecalTrace);
+	g_pKZUtils = new KZUtils(GetLegacyGameEventListener, SnapViewAngles, SwitchTeam, SetPawn, CreateEntityByName, DispatchSpawn, RemoveEntity,
+							 DebugDrawMesh, CreateBot, SetOrAddAttributeValueByName, SetModel, DecalTrace);
 
 	utils::UnlockConVars();
 	utils::UnlockConCommands();
@@ -233,7 +234,20 @@ CPlayerSlot utils::GetEntityPlayerSlot(CBaseEntity *entity)
 	}
 }
 
-void utils::PlaySoundToClient(CPlayerSlot player, const char *sound, f32 volume)
+static_function u32 TakeSoundGuid()
+{
+	static_persist const i32 offset = g_pGameConfig->GetOffset("TakeSoundGuid");
+#ifdef _WIN32
+	// The guid is returned through a hidden out pointer on Windows.
+	u32 guid = 0;
+	CALL_VIRTUAL(u32 *, offset, g_pSoundSystem, &guid);
+	return guid;
+#else
+	return CALL_VIRTUAL(u32, offset, g_pSoundSystem);
+#endif
+}
+
+void utils::PlaySoundToClient(CPlayerSlot player, const char *sound, std::optional<f32> volume)
 {
 	if (strncmp(sound, "kz.", strlen("kz.")) == 0 && !g_KZPlugin.IsAddonMounted())
 	{
@@ -245,11 +259,41 @@ void utils::PlaySoundToClient(CPlayerSlot player, const char *sound, f32 volume)
 		return;
 	}
 
+	INetworkMessageInternal *netmsg = g_pNetworkMessages->FindNetworkMessagePartial("CMsgSosStartSoundEvent");
+	if (!netmsg)
+	{
+		return;
+	}
+
+	u32 guid = TakeSoundGuid();
+	auto msg = netmsg->AllocateMessage()->ToPB<CMsgSosStartSoundEvent>();
+	msg->set_soundevent_hash(MurmurHash2LowerCase(sound, 0x53524332));
+	msg->set_soundevent_guid(guid);
+	msg->set_seed(guid);
+	// No source entity, so the sound plays at the listener without distance falloff.
+	msg->set_source_entity_index(-1);
+
+	// EmitSound_t::m_flVolume ends up in "public.volume_atten", which csgo_mega sound events don't have.
+	// "public.volume" replaces the volume authored in the sound event.
+	if (volume.has_value())
+	{
+		static_persist const u32 volumeField = MurmurHash2LowerCase("public.volume", 0x31415926);
+		// "public.volume" is a linear gain, but perceived loudness doubles every +10 dB (x3.16 gain),
+		// so raise to log2(3.16) to make 0.5 sound half as loud and 2 twice as loud.
+		f32 value = powf(volume.value(), 1.661f);
+		// Field hash, field type (float), data size, array index, data.
+		u8 params[11] = {};
+		memcpy(&params[0], &volumeField, sizeof(volumeField));
+		params[4] = 8;
+		params[5] = sizeof(value);
+		params[6] = 0;
+		memcpy(&params[7], &value, sizeof(value));
+		msg->set_packed_params(params, sizeof(params));
+	}
+
 	CSingleRecipientFilter filter(player.Get());
-	EmitSound_t soundParams;
-	soundParams.m_pSoundName = sound;
-	soundParams.m_flVolume = volume;
-	g_pKZUtils->EmitSound(filter, player.Get() + 1, soundParams);
+	interfaces::pGameEventSystem->PostEventAbstract(0, false, &filter, netmsg, msg, 0);
+	delete msg;
 }
 
 f32 utils::NormalizeDeg(f32 a)

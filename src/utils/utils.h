@@ -4,6 +4,8 @@
 #include "sdk/datatypes.h"
 #include "igameevents.h"
 
+#include <optional>
+
 class KZUtils;
 class CBasePlayerController;
 
@@ -68,7 +70,9 @@ namespace utils
 	void CPrintChatAll(const char *format, ...);
 
 	// Sounds
-	void PlaySoundToClient(CPlayerSlot player, const char *sound, f32 volume = 1.0f);
+	// Volume is a perceived loudness multiplier (2 = twice as loud).
+	// Without a volume, the sound plays at the volume authored in its sound event.
+	void PlaySoundToClient(CPlayerSlot player, const char *sound, std::optional<f32> volume = std::nullopt);
 
 	// Return true if the spawn found is truly valid (not in the ground or out of bounds)
 	bool IsSpawnValid(const Vector &origin);
