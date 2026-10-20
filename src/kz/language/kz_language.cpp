@@ -199,7 +199,12 @@ void KZLanguageService::OnPlayerPreferencesLoaded()
 
 const char *KZLanguageService::GetLanguage()
 {
-	return KZLanguageService::clientLanguageInfos[this->player->GetSteamId64(false)].language;
+	auto it = KZLanguageService::clientLanguageInfos.find(this->player->GetSteamId64(false));
+	if (it == KZLanguageService::clientLanguageInfos.end())
+	{
+		return KZOptionService::GetOptionStr("defaultLanguage", KZ_DEFAULT_LANGUAGE);
+	}
+	return it->second.language;
 }
 
 const char *KZLanguageService::GetTranslatedFormat(const char *language, const char *phrase)
@@ -255,7 +260,12 @@ void KZLanguageService::UpdateLanguage(u64 xuid, const char *langKey, LanguageIn
 
 void KZLanguageService::OnPlayerConnect(u64 steamID64)
 {
-	if (!steamID64 || KZLanguageService::clientLanguageInfos[steamID64].cacheLevel > LanguageInfo::CacheLevel::CACHE_NONE)
+	if (!steamID64)
+	{
+		return;
+	}
+	auto it = KZLanguageService::clientLanguageInfos.find(steamID64);
+	if (it != KZLanguageService::clientLanguageInfos.end() && it->second.cacheLevel > LanguageInfo::CacheLevel::CACHE_NONE)
 	{
 		return;
 	}

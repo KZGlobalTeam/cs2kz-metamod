@@ -70,6 +70,13 @@ static_function PageRange GetPageRange(const ReplayFilterCriteria &criteria, siz
 	return {startIndex, endIndex};
 }
 
+// Grouping keys compare names case-insensitively, so they are lowercased up front to keep the hash consistent with equality.
+static_function std::string LowercaseKey(std::string str)
+{
+	V_strlower(str.data());
+	return str;
+}
+
 template<typename MapT>
 static_function std::vector<std::pair<UUID_t, ReplayHeader>> CollectMatchesWithMapFallback(const MapT &replayMap,
 																						   const ReplayFilterCriteria &criteria, std::mutex &mutex)
@@ -732,12 +739,7 @@ void ReplayWatcher::ProcessRunReplays(std::vector<std::tuple<UUID_t, ReplayHeade
 
 		bool operator==(const RunReplayKey &o) const
 		{
-			// clang-format off
-			return steamid64 == o.steamid64 
-                && !V_stricmp(mapName.c_str(), o.mapName.c_str())
-                && !V_stricmp(modeName.c_str(), o.modeName.c_str())
-				&& !V_stricmp(courseName.c_str(), o.courseName.c_str());
-			// clang-format on
+			return steamid64 == o.steamid64 && mapName == o.mapName && modeName == o.modeName && courseName == o.courseName;
 		}
 	};
 
@@ -769,7 +771,8 @@ void ReplayWatcher::ProcessRunReplays(std::vector<std::tuple<UUID_t, ReplayHeade
 		}
 		if (run.styles_size() == 0)
 		{
-			RunReplayKey key {hdr.player().steamid64(), hdr.map().name(), run.mode().name(), run.course_name()};
+			RunReplayKey key {hdr.player().steamid64(), LowercaseKey(hdr.map().name()), LowercaseKey(run.mode().name()),
+							  LowercaseKey(run.course_name())};
 			groups[key].push_back(replay);
 		}
 		runMap[uuid] = hdr;
@@ -819,7 +822,7 @@ void ReplayWatcher::ProcessJumpReplays(std::vector<std::tuple<UUID_t, ReplayHead
 
 		bool operator==(const Key &o) const
 		{
-			return steamid64 == o.steamid64 && jumpType == o.jumpType && !V_stristr(modeName.c_str(), o.modeName.c_str());
+			return steamid64 == o.steamid64 && jumpType == o.jumpType && modeName == o.modeName;
 		}
 	};
 
@@ -840,7 +843,7 @@ void ReplayWatcher::ProcessJumpReplays(std::vector<std::tuple<UUID_t, ReplayHead
 			continue;
 		}
 		auto &jump = hdr.jump();
-		Key key {hdr.player().steamid64(), (u8)jump.jump_type(), jump.mode().name()};
+		Key key {hdr.player().steamid64(), (u8)jump.jump_type(), LowercaseKey(jump.mode().name())};
 		groups[key].push_back(t);
 		jumpMap[uuid] = hdr;
 	}

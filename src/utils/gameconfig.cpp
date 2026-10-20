@@ -205,7 +205,8 @@ void *CGameConfig::ResolveSignature(const char *name)
 		size_t scanSize = (*module)->m_size - sigBytes + 1;
 		address = KHook::LookupSignature(base, scanSize, signature);
 		// LookupSignature stops at the first match, so scan the rest of the module to reject ambiguous signatures.
-		if (address && !m_umAllowMultiMatch[name])
+		auto multiMatch = m_umAllowMultiMatch.find(name);
+		if (address && (multiMatch == m_umAllowMultiMatch.end() || !multiMatch->second))
 		{
 			byte *next = (byte *)address + 1;
 			if (KHook::LookupSignature(next, scanSize - (next - base), signature))

@@ -106,12 +106,17 @@ namespace KZ::ui
 		{
 			return;
 		}
-		std::string &cached = this->writtenVars[var];
-		if (cached == value)
+		// Keyed by panel too, so two panels sharing a variable name don't suppress each other's writes.
+		std::string key = std::string(panelId) + '/' + var;
+		auto [it, inserted] = this->writtenVars.try_emplace(std::move(key), value);
+		if (!inserted)
 		{
-			return;
+			if (it->second == value)
+			{
+				return;
+			}
+			it->second = value;
 		}
-		cached = value;
 		layout->SetDialogVariableString(panelId, var, value);
 	}
 

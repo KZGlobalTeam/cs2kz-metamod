@@ -119,7 +119,8 @@ void KZ::replaysystem::item::InitItemAttributes()
 		{
 			continue;
 		}
-		weaponItemMapping[id] = {sub->GetString("name"), gear_slot_t::GEAR_SLOT_INVALID};
+		ItemData &itemData = weaponItemMapping[id];
+		itemData = {sub->GetString("name"), gear_slot_t::GEAR_SLOT_INVALID};
 		// Try to get "item_gear_slot" from the item, if not found, find it in the prefab.
 		// Prefabs can be nested so we need to take that into account as well.
 		const char *gearSlotStr = sub->GetString("item_gear_slot", "");
@@ -139,7 +140,7 @@ void KZ::replaysystem::item::InitItemAttributes()
 			gearSlotStr = prefab->GetString("item_gear_slot", "");
 			current = prefab;
 		}
-		weaponItemMapping[id].gearSlot = GetGearSlot(gearSlotStr);
+		itemData.gearSlot = GetGearSlot(gearSlotStr);
 	}
 	// Cache the plain knife, used as a stand-in during playback for items the bot can't hold.
 	for (const auto &[id, itemData] : weaponItemMapping)

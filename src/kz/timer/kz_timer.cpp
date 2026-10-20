@@ -1154,35 +1154,19 @@ const PBData *KZTimerService::GetCompareTargetForType(CompareType type, PBDataKe
 	{
 		case COMPARE_WR:
 		{
-			if (KZTimerService::wrCache.find(key) != KZTimerService::wrCache.end())
-			{
-				return &KZTimerService::wrCache[key];
-			}
-			break;
+			return KZTimerService::GetCachedRecord(key, true);
 		}
 		case COMPARE_SR:
 		{
-			if (KZTimerService::srCache.find(key) != KZTimerService::srCache.end())
-			{
-				return &KZTimerService::srCache[key];
-			}
-			break;
+			return KZTimerService::GetCachedRecord(key, false);
 		}
 		case COMPARE_GPB:
 		{
-			if (KZTimerService::globalPBCache.find(key) != KZTimerService::globalPBCache.end())
-			{
-				return &this->globalPBCache[key];
-			}
-			break;
+			return this->GetCachedPB(key, true);
 		}
 		case COMPARE_SPB:
 		{
-			if (KZTimerService::localPBCache.find(key) != KZTimerService::localPBCache.end())
-			{
-				return &this->localPBCache[key];
-			}
-			break;
+			return this->GetCachedPB(key, false);
 		}
 	}
 	return nullptr;
@@ -1190,42 +1174,7 @@ const PBData *KZTimerService::GetCompareTargetForType(CompareType type, PBDataKe
 
 const PBData *KZTimerService::GetCompareTarget(PBDataKey key)
 {
-	switch (this->currentCompareType)
-	{
-		case COMPARE_WR:
-		{
-			if (KZTimerService::wrCache.find(key) != KZTimerService::wrCache.end())
-			{
-				return &KZTimerService::wrCache[key];
-			}
-			break;
-		}
-		case COMPARE_SR:
-		{
-			if (KZTimerService::srCache.find(key) != KZTimerService::srCache.end())
-			{
-				return &KZTimerService::srCache[key];
-			}
-			break;
-		}
-		case COMPARE_GPB:
-		{
-			if (KZTimerService::globalPBCache.find(key) != KZTimerService::globalPBCache.end())
-			{
-				return &this->globalPBCache[key];
-			}
-			break;
-		}
-		case COMPARE_SPB:
-		{
-			if (KZTimerService::localPBCache.find(key) != KZTimerService::localPBCache.end())
-			{
-				return &this->localPBCache[key];
-			}
-			break;
-		}
-	}
-	return nullptr;
+	return this->GetCompareTargetForType(this->currentCompareType, key);
 }
 
 void KZTimerService::ClearRecordCache()
@@ -1290,14 +1239,7 @@ void KZTimerService::UpdateLocalRecordCache()
 
 const PBData *KZTimerService::GetGlobalCachedRecord(const KZCourseDescriptor *course, PluginId modeID)
 {
-	PBDataKey key = ToPBDataKey(modeID, course->guid);
-
-	if (KZTimerService::wrCache.find(key) == KZTimerService::wrCache.end())
-	{
-		return nullptr;
-	}
-
-	return &KZTimerService::wrCache[key];
+	return KZTimerService::GetCachedRecord(ToPBDataKey(modeID, course->guid), true);
 }
 
 void KZTimerService::InsertRecordToCache(f64 time, const KZCourseDescriptor *course, PluginId modeID, bool overall, bool global, CUtlString metadata,
@@ -1374,14 +1316,7 @@ void KZTimerService::ClearPBCache()
 
 const PBData *KZTimerService::GetGlobalCachedPB(const KZCourseDescriptor *course, PluginId modeID)
 {
-	PBDataKey key = ToPBDataKey(modeID, course->guid);
-
-	if (this->globalPBCache.find(key) == this->globalPBCache.end())
-	{
-		return nullptr;
-	}
-
-	return &this->globalPBCache[key];
+	return this->GetCachedPB(ToPBDataKey(modeID, course->guid), true);
 }
 
 void KZTimerService::InsertPBToCache(f64 time, const KZCourseDescriptor *course, PluginId modeID, bool overall, bool global, CUtlString metadata,
