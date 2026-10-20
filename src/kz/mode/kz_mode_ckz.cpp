@@ -121,6 +121,8 @@ void KZClassicModeService::Reset()
 {
 	this->hasValidDesiredViewAngle = {};
 	this->lastValidDesiredViewAngle = vec3_angle;
+	this->serverAngleChange = {};
+	this->lastConsumedAngleChange = {};
 	this->oldDuckPressed = {};
 	this->forcedUnduck = {};
 	this->postProcessMovementZSpeed = {};
@@ -407,6 +409,17 @@ void KZClassicModeService::OnSetupMove(CUserCmd *pc)
 		float when = subtickMove->when();
 		subtickMove->set_when(when >= 0.5 ? 0.5 : 0);
 	}
+
+	// SetupMove replaces the angles with any change the client has not applied yet, and a command that applies one
+	// starts from the snapped angles instead of the last ones.
+	u32 consumed = pc->base().consumed_server_angle_changes();
+	this->serverAngleChange = consumed > this->lastConsumedAngleChange;
+	this->lastConsumedAngleChange = MAX(this->lastConsumedAngleChange, consumed);
+	CSchemaCollection<ViewAngleServerChange_t> changes = this->player->GetPlayerPawn()->m_ServerViewAngleChanges();
+	for (i32 i = 0; i < changes.Count() && !this->serverAngleChange; i++)
+	{
+		this->serverAngleChange = changes.Element(i)->nIndex() > consumed;
+	}
 }
 
 void KZClassicModeService::OnProcessMovement()
@@ -451,7 +464,7 @@ void KZClassicModeService::InterpolateViewAngles()
 	CGlobalVars *globals = g_pKZUtils->GetGlobals();
 	f64 subtickFraction, whole;
 	subtickFraction = modf((f64)globals->curtime * ENGINE_FIXED_TICK_RATE, &whole);
-	if (subtickFraction < 0.001)
+	if (subtickFraction < 0.001 || this->serverAngleChange)
 	{
 		return;
 	}

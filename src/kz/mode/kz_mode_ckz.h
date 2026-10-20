@@ -144,6 +144,9 @@ class KZClassicModeService : public KZModeService
 
 	bool hasValidDesiredViewAngle {};
 	QAngle lastValidDesiredViewAngle;
+	// The command's angles come from a server angle change (teleport, snap) rather than from the player turning.
+	bool serverAngleChange {};
+	u32 lastConsumedAngleChange {};
 	bool oldDuckPressed {};
 	bool oldJumpPressed {};
 	bool forcedUnduck {};
