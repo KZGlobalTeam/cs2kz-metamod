@@ -1,0 +1,46 @@
+// THIS FILE IS AUTO-GENERATED
+
+Layer0
+{
+	shader "csgo_projected_decals.vfx"
+
+	//---- Decal ----
+	F_BLEND_MODE 2 // Emissive
+
+	//---- Alpha ----
+	g_flDecalZAlphaScale "0.010"
+
+	//---- Color ----
+	TextureColor "materials/cs2kz/paint/paint_decal_color.tga"
+
+	//---- Emissive ----
+	g_flAdditiveAmount "0.000"
+	g_flEmissiveBrightness "0.000"
+	g_vEmissiveTint "[1.000000 1.000000 1.000000 0.000000]"
+
+	//---- Translucent ----
+	TextureTranslucency "materials/cs2kz/paint/paint_decal_trans.tga"
+
+	Attributes
+	{
+		DecalFadeStartTime "-1"
+		DecalFadeDuration "0"
+	}
+
+
+	VariableState
+	{
+		"Alpha"
+		{
+		}
+		"Color"
+		{
+		}
+		"Emissive"
+		{
+		}
+		"Translucent"
+		{
+		}
+	}
+}

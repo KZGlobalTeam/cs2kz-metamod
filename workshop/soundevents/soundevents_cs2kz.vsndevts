@@ -1,0 +1,91 @@
+<!-- kv3 encoding:text:version{e21c7f3c-8a33-41c5-9977-a76d3a32aa0d} format:generic:version{7412167c-06e9-4698-aff2-e63eb59037e7} -->
+{
+    kz.amb.base = 
+    {
+        type = "csgo_mega"
+        volume = 0.500000
+        occlusion_intensity = 0
+        distance_effect_mix = 0
+        restrict_source_reverb = true
+        disable_volume_culling = true
+        distance_volume_mapping_curve = 
+        [
+            
+            [
+                0,
+                1,
+                0,
+                0,
+                2,
+                3,
+            ],
+            
+            [
+                2048,
+                0,
+                0,
+                0,
+                2,
+                3,
+            ],
+        ]
+    }
+    kz.godlike = 
+    {
+        base = "kz.amb.base"
+        vsnd_files_track_01 = 
+        [
+            "sounds/cs2kz/godlike.vsnd",
+        ]
+    }
+    kz.holyshit = 
+    {
+        base = "kz.amb.base"
+        vsnd_files_track_01 = 
+        [
+            "sounds/cs2kz/holyshit.vsnd",
+        ]
+    }
+    kz.impressive = 
+    {
+        base = "kz.amb.base"
+        vsnd_files_track_01 = 
+        [
+            "sounds/cs2kz/impressive.vsnd",
+        ]
+    }
+    kz.ownage = 
+    {
+        base = "kz.amb.base"
+        vsnd_files_track_01 = 
+        [
+            "sounds/cs2kz/ownage.vsnd",
+        ]
+    }
+    kz.perfect = 
+    {
+        base = "kz.amb.base"
+        vsnd_files_track_01 = 
+        [
+            "sounds/cs2kz/perfect.vsnd",
+        ]
+    }
+    kz.wickedsick = 
+    {
+        base = "kz.amb.base"
+        vsnd_files_track_01 = 
+        [
+            "sounds/cs2kz/wickedsick.vsnd",
+        ]
+        vsnd_duration = 2.521633
+    }
+    kz.wrecker = 
+    {
+        base = "kz.amb.base"
+        vsnd_files_track_01 = 
+        [
+            "sounds/cs2kz/wrecker.vsnd",
+        ]
+        vsnd_duration = 1.910794
+    }
+}
