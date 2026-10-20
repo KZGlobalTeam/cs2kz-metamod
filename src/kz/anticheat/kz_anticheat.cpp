@@ -113,6 +113,7 @@ void KZAnticheatService::OnSetupMove(CUserCmd *cmd)
 	this->CreateInputEvents(cmd);
 	this->ParseCommandForJump(cmd);
 	this->DetectOptimization(cmd);
+	this->TrackTurn(cmd);
 }
 
 void KZAnticheatService::OnPhysicsSimulatePost()
@@ -150,6 +151,11 @@ void KZAnticheatService::ClearDetectionBuffers()
 	this->lastValidMoveTypeTime = -1.0f;
 	this->angleFrameHistory.clear();
 	this->yawAccelPercent = 0.0f;
+	this->currentTurn.clear();
+	this->lastTurnCmdNum = -1;
+	this->turnWindowRates.clear();
+	this->strafeTurnRates.clear();
+	this->numExactTurnWindows = 0;
 }
 
 void KZAnticheatService::OnGlobalAuthFinished(BanInfo *banInfo)
