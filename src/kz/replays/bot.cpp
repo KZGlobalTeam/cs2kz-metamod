@@ -5,10 +5,39 @@
 #include "data.h"
 #include "item.h"
 #include "kz/spec/kz_spec.h"
+#include "kz/timer/kz_timer.h"
+#include "kz/language/kz_language.h"
 #include "utils/ctimer.h"
+
+// How long a player with a running timer gets to become able to pause before the replay gives up on moving them to spectator.
+#define KZ_REPLAY_SPECTATE_TIMEOUT 2.0f
 
 static_global CHandle<CCSPlayerController> g_replayBot;
 extern CConVar<bool> kz_replay_playback_skins_enable;
+
+static_function f64 RetrySpectateBot(CPlayerUserId userID, UUID_t replayID, f64 deadline)
+{
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(userID);
+	KZPlayer *botPlayer = KZ::replaysystem::bot::GetBotPlayer();
+	// The player left, or the replay ended or was replaced.
+	if (!player || !player->IsConnected() || !botPlayer || !(KZ::replaysystem::data::GetCurrentReplay()->uuid == replayID))
+	{
+		return 0.0f;
+	}
+	if (!player->timerService->GetTimerRunning() || player->specService->CanSpectate())
+	{
+		player->specService->SpectatePlayer(botPlayer, true);
+		return 0.0f;
+	}
+	if (g_pKZUtils->GetServerGlobals()->curtime < deadline)
+	{
+		return ENGINE_FIXED_TICK_INTERVAL;
+	}
+	// CanSpectate failed on an alive, unpaused player, so CanPause prints why.
+	player->timerService->CanPause(true);
+	player->languageService->PrintChat(true, false, "Replay - Spectate Failed", botPlayer->GetName());
+	return 0.0f;
+}
 
 static_function f64 SetBotModel()
 {
@@ -147,10 +176,19 @@ namespace KZ::replaysystem::bot
 	void SpectateBot(KZPlayer *spectator)
 	{
 		KZPlayer *botPlayer = GetBotPlayer();
-		if (botPlayer && spectator)
+		if (!botPlayer || !spectator)
 		{
-			spectator->specService->SpectatePlayer(botPlayer);
+			return;
 		}
+		// Without a running timer there is no run to protect, so the pause checks do not apply.
+		if (!spectator->timerService->GetTimerRunning() || spectator->specService->CanSpectate())
+		{
+			spectator->specService->SpectatePlayer(botPlayer, true);
+			return;
+		}
+		f64 deadline = g_pKZUtils->GetServerGlobals()->curtime + KZ_REPLAY_SPECTATE_TIMEOUT;
+		StartTimer<CPlayerUserId, UUID_t, f64>(RetrySpectateBot, spectator->GetClient()->GetUserID(), data::GetCurrentReplay()->uuid, deadline,
+											   ENGINE_FIXED_TICK_INTERVAL, false);
 	}
 
 } // namespace KZ::replaysystem::bot

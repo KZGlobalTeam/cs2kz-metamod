@@ -372,6 +372,11 @@
 		"de"		"{lime}Wiederholung erfolgreich geladen! Starte Wiedergabe..."
 		"ko"		"{lime}리플레이가 성공적으로 불러와졌습니다! 재생을 시작합니다..."
 	}
+	"Replay - Spectate Failed"
+	{
+		"#format"	"name:s"
+		"en"		"{grey}Couldn't move you to spectator mode. Type {default}!spec {name}{grey} to watch the replay."
+	}
 	"Replay - No Loading Progress"
 	{
 		"en"		"{grey}No replay loading in progress"

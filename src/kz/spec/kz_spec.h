@@ -21,7 +21,8 @@ public:
 
 	bool IsSpectating(KZPlayer *target);
 	bool SpectatePlayer(const char *playerName);
-	bool SpectatePlayer(KZPlayer *target);
+	// force skips CanSpectate.
+	bool SpectatePlayer(KZPlayer *target, bool force = false);
 	bool CanSpectate();
 
 	void GetSpectatorList(std::vector<CUtlString> &spectatorList);

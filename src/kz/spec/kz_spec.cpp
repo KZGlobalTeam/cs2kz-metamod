@@ -141,9 +141,9 @@ static_function f64 TeleportObserver(CPlayerUserId userID, Vector origin, QAngle
 	return 0.0f;
 };
 
-bool KZSpecService::SpectatePlayer(KZPlayer *target)
+bool KZSpecService::SpectatePlayer(KZPlayer *target, bool force)
 {
-	if (!target || !this->CanSpectate())
+	if (!target || (!force && !this->CanSpectate()))
 	{
 		return false;
 	}
