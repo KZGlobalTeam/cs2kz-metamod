@@ -671,12 +671,14 @@ void utils::ResetMapIfEmpty()
 	// There are players in the server already, do not restart
 	if (g_pKZUtils->GetPlayerCount() > 0)
 	{
+		KZ_LOG_DEBUG(LogChannel::General, "Server has %d players, not restarting map.\n", g_pKZUtils->GetPlayerCount());
 		return;
 	}
 
 	// Don't restart if the server is just up to map reload loops.
 	if (g_pKZUtils->GetGlobals() && g_pKZUtils->GetGlobals()->curtime < 30.0f)
 	{
+		KZ_LOG_DEBUG(LogChannel::General, "Server is only %.2f seconds old, not restarting map.\n", g_pKZUtils->GetGlobals()->curtime);
 		return;
 	}
 
