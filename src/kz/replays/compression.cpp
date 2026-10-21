@@ -63,6 +63,25 @@ struct LegacySectionHeader
 	u32 elementCount;
 };
 
+// Adds up the content sizes of the zstd frames in a section. v7+ sections hold one frame per recording piece.
+static_function bool GetSectionContentSize(const char *src, size_t size, u64 &outSize)
+{
+	outSize = 0;
+	while (size > 0)
+	{
+		size_t frameSize = ZSTD_findFrameCompressedSize(src, size);
+		unsigned long long contentSize = ZSTD_getFrameContentSize(src, size);
+		if (ZSTD_isError(frameSize) || contentSize == ZSTD_CONTENTSIZE_UNKNOWN || contentSize == ZSTD_CONTENTSIZE_ERROR)
+		{
+			return false;
+		}
+		outSize += contentSize;
+		src += frameSize;
+		size -= frameSize;
+	}
+	return true;
+}
+
 // Reads a section header and bounds it before anything is allocated from its sizes.
 static_function bool ReadSectionHeader(const char *&cursor, const char *end, const parsing::VersionParser &parser, CompressedSectionHeader &header)
 {
@@ -92,35 +111,61 @@ static_function bool ReadSectionHeader(const char *&cursor, const char *end, con
 		return false;
 	}
 	// ZSTD_compress always records the content size, so a mismatch means a corrupt header or frame.
-	return ZSTD_getFrameContentSize(cursor, header.compressedSize) == header.uncompressedSize;
+	u64 contentSize;
+	return GetSectionContentSize(cursor, header.compressedSize, contentSize) && contentSize == header.uncompressedSize;
 }
 
-// Compresses one section and appends its header and payload.
-static_function bool AppendCompressedSection(std::vector<char> &outBuffer, const void *data, size_t size, size_t elementCount)
+// Compresses one piece of a section into its own zstd frame.
+static_function bool AddSectionFrame(SectionBuilder &section, const void *data, size_t size, size_t elementCount)
 {
-	if (elementCount > UINT32_MAX)
+	if (section.elementCount + elementCount > UINT32_MAX)
 	{
-		KZ_LOG_WARN(LogChannel::Replays, "Replay section with %zu elements is too large to save\n", elementCount);
+		KZ_LOG_WARN(LogChannel::Replays, "Replay section with %llu elements is too large to save\n",
+					(unsigned long long)(section.elementCount + elementCount));
 		return false;
 	}
-
 	void *compressedData = nullptr;
 	size_t compressedSize = 0;
 	if (!Compress(data, size, &compressedData, &compressedSize))
 	{
 		return false;
 	}
-
-	CompressedSectionHeader header {compressedSize, size, elementCount};
-	AppendToBuffer(outBuffer, &header, sizeof(header));
-	AppendToBuffer(outBuffer, compressedData, compressedSize);
+	AppendToBuffer(section.frames, compressedData, compressedSize);
 	delete[] static_cast<char *>(compressedData);
+	section.uncompressedSize += size;
+	section.elementCount += elementCount;
 	return true;
 }
 
-// v7+ subtick sections store each element's move count followed by its moves.
-static_function bool AppendSubtickSection(std::vector<char> &outBuffer, const std::vector<u8> &counts, const std::vector<RpSubtickMove> &moves)
+static_function bool AppendSection(std::vector<char> &outBuffer, SectionBuilder &section)
 {
+	// An empty section still holds one frame, which records its content size of zero.
+	if (section.frames.empty() && !AddSectionFrame(section, nullptr, 0, 0))
+	{
+		return false;
+	}
+	CompressedSectionHeader header {section.frames.size(), section.uncompressedSize, section.elementCount};
+	AppendToBuffer(outBuffer, &header, sizeof(header));
+	AppendToBuffer(outBuffer, section.frames.data(), section.frames.size());
+	// The section is now in outBuffer, so it need not be held twice while later sections are appended.
+	std::vector<char>().swap(section.frames);
+	return true;
+}
+
+// Compresses a section written in one piece and appends its header and payload.
+static_function bool AppendCompressedSection(std::vector<char> &outBuffer, const void *data, size_t size, size_t elementCount)
+{
+	SectionBuilder section;
+	return AddSectionFrame(section, data, size, elementCount) && AppendSection(outBuffer, section);
+}
+
+// v7+ subtick sections store each element's move count followed by its moves.
+static_function bool AddSubtickFrame(SectionBuilder &section, const std::vector<u8> &counts, const std::vector<RpSubtickMove> &moves)
+{
+	if (counts.empty())
+	{
+		return true;
+	}
 	std::vector<char> bytes;
 	bytes.reserve(counts.size() + moves.size() * sizeof(RpSubtickMove));
 	size_t move = 0;
@@ -134,7 +179,7 @@ static_function bool AppendSubtickSection(std::vector<char> &outBuffer, const st
 		AppendToBuffer(bytes, moves.data() + move, count * sizeof(RpSubtickMove));
 		move += count;
 	}
-	return move == moves.size() && AppendCompressedSection(outBuffer, bytes.data(), bytes.size(), counts.size());
+	return move == moves.size() && AddSectionFrame(section, bytes.data(), bytes.size(), counts.size());
 }
 
 static_function bool ReadPackedSubticks(const char *src, const CompressedSectionHeader &header, std::vector<u8> &outCounts,
@@ -407,12 +452,14 @@ static_function u64 BuildPostChangeFlags(const TickData::MovementData &current, 
 }
 
 // Delta-encodes tick data into a std::vector<char>, or into a ByteCounter to measure it.
+// last is the tick before tickData[0] when a recording is encoded in pieces, nullptr for the first piece.
 template<typename Buffer>
-static_function void EncodeTickData(Buffer &buffer, const std::vector<TickData> &tickData)
+static_function void EncodeTickData(Buffer &buffer, const std::vector<TickData> &tickData, const TickData *last)
 {
 	for (size_t i = 0; i < tickData.size(); i++)
 	{
 		const TickData &current = tickData[i];
+		const TickData *previous = i > 0 ? &tickData[i - 1] : last;
 
 		// Determine what to compare against
 		// For tick 0: compare pre with zero, post with pre
@@ -420,7 +467,7 @@ static_function void EncodeTickData(Buffer &buffer, const std::vector<TickData> 
 		TickData::MovementData prevPre = {};
 		TickData::MovementData prevPost = {};
 
-		if (i == 0)
+		if (!previous)
 		{
 			// First tick: prevPre is zero, prevPost is current.pre
 			prevPost = current.pre;
@@ -428,7 +475,7 @@ static_function void EncodeTickData(Buffer &buffer, const std::vector<TickData> 
 		else
 		{
 			// N-th tick: prevPre is previous.post, prevPost is current.pre
-			prevPre = tickData[i - 1].post;
+			prevPre = previous->post;
 			prevPost = current.pre;
 		}
 
@@ -436,53 +483,53 @@ static_function void EncodeTickData(Buffer &buffer, const std::vector<TickData> 
 		u64 flags = 0;
 
 		// Server tick: only write if difference is not 1
-		u32 expectedServerTick = (i == 0) ? 0 : tickData[i - 1].serverTick + 1;
+		u32 expectedServerTick = (!previous) ? 0 : previous->serverTick + 1;
 		if (current.serverTick != expectedServerTick)
 		{
 			flags |= CHANGED_SERVER_TICK;
 		}
 		// clang-format off
-		if (i == 0 || current.gameTime != tickData[i - 1].gameTime) flags |= CHANGED_GAME_TIME;
-		if (i == 0 || current.realTime != tickData[i - 1].realTime) flags |= CHANGED_REAL_TIME;
-		if (i == 0 || current.unixTime != tickData[i - 1].unixTime) flags |= CHANGED_UNIX_TIME;
-		if (i == 0 || current.cmdNumber != tickData[i - 1].cmdNumber) flags |= CHANGED_CMD_NUMBER;
-		if (i == 0 || current.clientTick != tickData[i - 1].clientTick) flags |= CHANGED_CLIENT_TICK;
-		if (i == 0 || current.forward != tickData[i - 1].forward) flags |= CHANGED_FORWARD;
-		if (i == 0 || current.left != tickData[i - 1].left) flags |= CHANGED_LEFT;
-		if (i == 0 || current.up != tickData[i - 1].up) flags |= CHANGED_UP;
-		if (i == 0 || current.leftHanded != tickData[i - 1].leftHanded) flags |= CHANGED_LEFT_HANDED;
-		if (i == 0 || current.weapon != tickData[i - 1].weapon) flags |= CHANGED_WEAPON;
+		if (!previous || current.gameTime != previous->gameTime) flags |= CHANGED_GAME_TIME;
+		if (!previous || current.realTime != previous->realTime) flags |= CHANGED_REAL_TIME;
+		if (!previous || current.unixTime != previous->unixTime) flags |= CHANGED_UNIX_TIME;
+		if (!previous || current.cmdNumber != previous->cmdNumber) flags |= CHANGED_CMD_NUMBER;
+		if (!previous || current.clientTick != previous->clientTick) flags |= CHANGED_CLIENT_TICK;
+		if (!previous || current.forward != previous->forward) flags |= CHANGED_FORWARD;
+		if (!previous || current.left != previous->left) flags |= CHANGED_LEFT;
+		if (!previous || current.up != previous->up) flags |= CHANGED_UP;
+		if (!previous || current.leftHanded != previous->leftHanded) flags |= CHANGED_LEFT_HANDED;
+		if (!previous || current.weapon != previous->weapon) flags |= CHANGED_WEAPON;
 
 		// Build change flags for pre/post
 		flags |= BuildPreChangeFlags(current.pre, prevPre);
 		flags |= BuildPostChangeFlags(current.post, prevPost);
 
 		// Check for checkpoint data changes
-		if (i == 0 || 
-			current.checkpoint.index != tickData[i - 1].checkpoint.index ||
-			current.checkpoint.checkpointCount != tickData[i - 1].checkpoint.checkpointCount ||
-			current.checkpoint.teleportCount != tickData[i - 1].checkpoint.teleportCount)
+		if (!previous || 
+			current.checkpoint.index != previous->checkpoint.index ||
+			current.checkpoint.checkpointCount != previous->checkpoint.checkpointCount ||
+			current.checkpoint.teleportCount != previous->checkpoint.teleportCount)
 		{
 			flags |= CHANGED_CHECKPOINT;
 		}
 
 		// 2026 ModernJump fields
-		if (i == 0 || 
-			current.modernJump.lastActualJumpPressTick != tickData[i - 1].modernJump.lastActualJumpPressTick ||
-			current.modernJump.lastActualJumpPressFrac != tickData[i - 1].modernJump.lastActualJumpPressFrac)
+		if (!previous || 
+			current.modernJump.lastActualJumpPressTick != previous->modernJump.lastActualJumpPressTick ||
+			current.modernJump.lastActualJumpPressFrac != previous->modernJump.lastActualJumpPressFrac)
 		{
 			flags |= CHANGED_MODERN_JUMP_ACTUAL_PRESS;
 		}
-		if (i == 0 || 
-			current.modernJump.lastUsableJumpPressTick != tickData[i - 1].modernJump.lastUsableJumpPressTick ||
-			current.modernJump.lastUsableJumpPressFrac != tickData[i - 1].modernJump.lastUsableJumpPressFrac)
+		if (!previous || 
+			current.modernJump.lastUsableJumpPressTick != previous->modernJump.lastUsableJumpPressTick ||
+			current.modernJump.lastUsableJumpPressFrac != previous->modernJump.lastUsableJumpPressFrac)
 		{
 			flags |= CHANGED_MODERN_JUMP_USABLE_PRESS;
 		}
-		if (i == 0 || 
-			current.modernJump.lastLandedTick != tickData[i - 1].modernJump.lastLandedTick ||
-			current.modernJump.lastLandedFrac != tickData[i - 1].modernJump.lastLandedFrac ||
-			current.modernJump.lastLandedVelocity != tickData[i - 1].modernJump.lastLandedVelocity)
+		if (!previous || 
+			current.modernJump.lastLandedTick != previous->modernJump.lastLandedTick ||
+			current.modernJump.lastLandedFrac != previous->modernJump.lastLandedFrac ||
+			current.modernJump.lastLandedVelocity != previous->modernJump.lastLandedVelocity)
 		{
 			flags |= CHANGED_MODERN_JUMP_LANDED;
 		}
@@ -564,19 +611,38 @@ static_function void EncodeTickData(Buffer &buffer, const std::vector<TickData> 
 	}
 }
 
+bool RecordingWriter::AddTicks(const std::vector<TickData> &ticks, const std::vector<u8> &subtickCounts, const std::vector<RpSubtickMove> &subtickMoves)
+{
+	if (!ticks.empty())
+	{
+		const TickData *last = hasLastTick ? &lastTick : nullptr;
+		// A sizing pass first, so the delta buffer is allocated once at its exact size.
+		ByteCounter counter;
+		EncodeTickData(counter, ticks, last);
+		std::vector<char> buffer;
+		buffer.reserve(counter.size);
+		EncodeTickData(buffer, ticks, last);
+		if (!AddSectionFrame(tickSection, buffer.data(), buffer.size(), ticks.size()))
+		{
+			return false;
+		}
+		lastTick = ticks.back();
+		hasLastTick = true;
+	}
+	return AddSubtickFrame(subtickSection, subtickCounts, subtickMoves);
+}
+
+bool RecordingWriter::AppendTickSections(std::vector<char> &outBuffer)
+{
+	// The reader expects the subtick section to follow, so a failure there fails the whole write.
+	return AppendSection(outBuffer, tickSection) && AppendSection(outBuffer, subtickSection);
+}
+
 bool KZ::replaysystem::compression::WriteTickDataCompressed(std::vector<char> &outBuffer, const std::vector<TickData> &tickData,
 														   const std::vector<u8> &subtickCounts, const std::vector<RpSubtickMove> &subtickMoves)
 {
-	// A sizing pass first, so the delta buffer is allocated once at its exact size.
-	ByteCounter counter;
-	EncodeTickData(counter, tickData);
-	std::vector<char> buffer;
-	buffer.reserve(counter.size);
-	EncodeTickData(buffer, tickData);
-
-	// The reader expects the subtick section to follow, so a failure there fails the whole write.
-	return AppendCompressedSection(outBuffer, buffer.data(), buffer.size(), tickData.size())
-		   && AppendSubtickSection(outBuffer, subtickCounts, subtickMoves);
+	RecordingWriter writer;
+	return writer.AddTicks(tickData, subtickCounts, subtickMoves) && writer.AppendTickSections(outBuffer);
 }
 
 static_function bool ReadTickDataSections(const char *&cursor, const char *end, std::vector<TickData> *outTickData,
@@ -1255,42 +1321,44 @@ bool KZ::replaysystem::compression::WriteWeaponsCompressed(std::vector<char> &ou
 }
 
 // Delta-encodes cmd data into a std::vector<char>, or into a ByteCounter to measure it.
+// last is the cmd before cmdData[0] when a recording is encoded in pieces, nullptr for the first piece.
 template<typename Buffer>
-static_function void EncodeCmdData(Buffer &buffer, const std::vector<CmdData> &cmdData)
+static_function void EncodeCmdData(Buffer &buffer, const std::vector<CmdData> &cmdData, const CmdData *last)
 {
 	for (size_t i = 0; i < cmdData.size(); i++)
 	{
 		const CmdData &current = cmdData[i];
+		const CmdData *previous = i > 0 ? &cmdData[i - 1] : last;
 
 		// Build change flags
 		u64 flags = 0;
 
 		// clang-format off
 		// Server tick: only write if difference is not 1
-		u32 expectedServerTick = (i == 0) ? 0 : cmdData[i - 1].serverTick + 1;
+		u32 expectedServerTick = (!previous) ? 0 : previous->serverTick + 1;
 		if (current.serverTick != expectedServerTick) flags |= CHANGED_CMD_SERVER_TICK;
 		// gameTime is expected to increment by 1/64 (0.015625)
-		f32 expectedGameTime = (i == 0) ? 0.0f : cmdData[i - 1].gameTime + ENGINE_FIXED_TICK_INTERVAL;
+		f32 expectedGameTime = (!previous) ? 0.0f : previous->gameTime + ENGINE_FIXED_TICK_INTERVAL;
 		if (current.gameTime != expectedGameTime) flags |= CHANGED_CMD_GAME_TIME;
-		if (i == 0 || current.realTime != cmdData[i - 1].realTime) flags |= CHANGED_CMD_REAL_TIME;
-		if (i == 0 || current.unixTime != cmdData[i - 1].unixTime) flags |= CHANGED_CMD_UNIX_TIME;
-		if (i == 0 || current.framerate != cmdData[i - 1].framerate) flags |= CHANGED_CMD_FRAMERATE;
-		if (i == 0 || current.latency != cmdData[i - 1].latency) flags |= CHANGED_CMD_LATENCY;
-		if (i == 0 || current.avgLoss != cmdData[i - 1].avgLoss) flags |= CHANGED_CMD_AVG_LOSS;
-		if (i == 0 || current.cmdNumber != cmdData[i - 1].cmdNumber) flags |= CHANGED_CMD_CMD_NUMBER;
-		if (i == 0 || current.clientTick != cmdData[i - 1].clientTick) flags |= CHANGED_CMD_CLIENT_TICK;
-		if (i == 0 || current.forward != cmdData[i - 1].forward) flags |= CHANGED_CMD_FORWARD;
-		if (i == 0 || current.left != cmdData[i - 1].left) flags |= CHANGED_CMD_LEFT;
-		if (i == 0 || current.up != cmdData[i - 1].up) flags |= CHANGED_CMD_UP;
-		if (i == 0 || current.buttons[0] != cmdData[i - 1].buttons[0]) flags |= CHANGED_CMD_BUTTONS_0;
-		if (i == 0 || current.buttons[1] != cmdData[i - 1].buttons[1]) flags |= CHANGED_CMD_BUTTONS_1;
-		if (i == 0 || current.buttons[2] != cmdData[i - 1].buttons[2]) flags |= CHANGED_CMD_BUTTONS_2;
-		if (i == 0 || current.angles != cmdData[i - 1].angles) flags |= CHANGED_CMD_ANGLES;
-		if (i == 0 || current.mousedx != cmdData[i - 1].mousedx) flags |= CHANGED_CMD_MOUSEDX;
-		if (i == 0 || current.mousedy != cmdData[i - 1].mousedy) flags |= CHANGED_CMD_MOUSEDY;
-		if (i == 0 || current.sensitivity != cmdData[i - 1].sensitivity) flags |= CHANGED_CMD_SENSITIVITY;
-		if (i == 0 || current.m_yaw != cmdData[i - 1].m_yaw) flags |= CHANGED_CMD_M_YAW;
-		if (i == 0 || current.m_pitch != cmdData[i - 1].m_pitch) flags |= CHANGED_CMD_M_PITCH;
+		if (!previous || current.realTime != previous->realTime) flags |= CHANGED_CMD_REAL_TIME;
+		if (!previous || current.unixTime != previous->unixTime) flags |= CHANGED_CMD_UNIX_TIME;
+		if (!previous || current.framerate != previous->framerate) flags |= CHANGED_CMD_FRAMERATE;
+		if (!previous || current.latency != previous->latency) flags |= CHANGED_CMD_LATENCY;
+		if (!previous || current.avgLoss != previous->avgLoss) flags |= CHANGED_CMD_AVG_LOSS;
+		if (!previous || current.cmdNumber != previous->cmdNumber) flags |= CHANGED_CMD_CMD_NUMBER;
+		if (!previous || current.clientTick != previous->clientTick) flags |= CHANGED_CMD_CLIENT_TICK;
+		if (!previous || current.forward != previous->forward) flags |= CHANGED_CMD_FORWARD;
+		if (!previous || current.left != previous->left) flags |= CHANGED_CMD_LEFT;
+		if (!previous || current.up != previous->up) flags |= CHANGED_CMD_UP;
+		if (!previous || current.buttons[0] != previous->buttons[0]) flags |= CHANGED_CMD_BUTTONS_0;
+		if (!previous || current.buttons[1] != previous->buttons[1]) flags |= CHANGED_CMD_BUTTONS_1;
+		if (!previous || current.buttons[2] != previous->buttons[2]) flags |= CHANGED_CMD_BUTTONS_2;
+		if (!previous || current.angles != previous->angles) flags |= CHANGED_CMD_ANGLES;
+		if (!previous || current.mousedx != previous->mousedx) flags |= CHANGED_CMD_MOUSEDX;
+		if (!previous || current.mousedy != previous->mousedy) flags |= CHANGED_CMD_MOUSEDY;
+		if (!previous || current.sensitivity != previous->sensitivity) flags |= CHANGED_CMD_SENSITIVITY;
+		if (!previous || current.m_yaw != previous->m_yaw) flags |= CHANGED_CMD_M_YAW;
+		if (!previous || current.m_pitch != previous->m_pitch) flags |= CHANGED_CMD_M_PITCH;
 
 		// Write change flags
 		AppendToBuffer(buffer, &flags, sizeof(flags));
@@ -1321,17 +1389,37 @@ static_function void EncodeCmdData(Buffer &buffer, const std::vector<CmdData> &c
 	}
 }
 
+bool RecordingWriter::AddCmds(const std::vector<CmdData> &cmds, const std::vector<u8> &cmdSubtickCounts,
+							  const std::vector<RpSubtickMove> &cmdSubtickMoves)
+{
+	if (!cmds.empty())
+	{
+		const CmdData *last = hasLastCmd ? &lastCmd : nullptr;
+		// A sizing pass first, so the delta buffer is allocated once at its exact size.
+		ByteCounter counter;
+		EncodeCmdData(counter, cmds, last);
+		std::vector<char> buffer;
+		buffer.reserve(counter.size);
+		EncodeCmdData(buffer, cmds, last);
+		if (!AddSectionFrame(cmdSection, buffer.data(), buffer.size(), cmds.size()))
+		{
+			return false;
+		}
+		lastCmd = cmds.back();
+		hasLastCmd = true;
+	}
+	return AddSubtickFrame(cmdSubtickSection, cmdSubtickCounts, cmdSubtickMoves);
+}
+
+bool RecordingWriter::AppendCmdSections(std::vector<char> &outBuffer)
+{
+	// The reader expects the cmd subtick section to follow, so a failure there fails the whole write.
+	return AppendSection(outBuffer, cmdSection) && AppendSection(outBuffer, cmdSubtickSection);
+}
+
 bool KZ::replaysystem::compression::WriteCmdDataCompressed(std::vector<char> &outBuffer, const std::vector<CmdData> &cmdData,
 														  const std::vector<u8> &cmdSubtickCounts, const std::vector<RpSubtickMove> &cmdSubtickMoves)
 {
-	// A sizing pass first, so the delta buffer is allocated once at its exact size.
-	ByteCounter counter;
-	EncodeCmdData(counter, cmdData);
-	std::vector<char> buffer;
-	buffer.reserve(counter.size);
-	EncodeCmdData(buffer, cmdData);
-
-	// The reader expects the cmd subtick section to follow, so a failure there fails the whole write.
-	return AppendCompressedSection(outBuffer, buffer.data(), buffer.size(), cmdData.size())
-		   && AppendSubtickSection(outBuffer, cmdSubtickCounts, cmdSubtickMoves);
+	RecordingWriter writer;
+	return writer.AddCmds(cmdData, cmdSubtickCounts, cmdSubtickMoves) && writer.AppendCmdSections(outBuffer);
 }

@@ -22,6 +22,44 @@ namespace KZ::replaysystem::compression
 	// Subtick data travels packed: one move count per tick and the moves of all ticks back to back,
 	// because most ticks have no subtick moves at all.
 
+	// One compressed section assembled from consecutive pieces, each compressed as its own zstd frame.
+	struct SectionBuilder
+	{
+		std::vector<char> frames;
+		u64 uncompressedSize = 0;
+		u64 elementCount = 0;
+	};
+
+	// Writes the tick, subtick, cmd and cmd subtick sections of a recording that arrives in consecutive pieces, such as the
+	// chunks a long recording flushes to disk. Only the compressed sections and the current piece have to be in memory.
+	class RecordingWriter
+	{
+	public:
+		bool AddTicks(const std::vector<TickData> &ticks, const std::vector<u8> &subtickCounts, const std::vector<SubtickData::RpSubtickMove> &subtickMoves);
+		bool AddCmds(const std::vector<CmdData> &cmds, const std::vector<u8> &cmdSubtickCounts,
+					 const std::vector<SubtickData::RpSubtickMove> &cmdSubtickMoves);
+
+		// The tick and subtick sections follow the replay header; the cmd and cmd subtick sections come last.
+		bool AppendTickSections(std::vector<char> &outBuffer);
+		bool AppendCmdSections(std::vector<char> &outBuffer);
+
+		size_t CompressedSize() const
+		{
+			return tickSection.frames.size() + subtickSection.frames.size() + cmdSection.frames.size() + cmdSubtickSection.frames.size();
+		}
+
+	private:
+		SectionBuilder tickSection;
+		SectionBuilder subtickSection;
+		SectionBuilder cmdSection;
+		SectionBuilder cmdSubtickSection;
+		// The delta encoding of each piece continues from the last element of the previous one.
+		TickData lastTick {};
+		bool hasLastTick = false;
+		CmdData lastCmd {};
+		bool hasLastCmd = false;
+	};
+
 	// Write compressed tick data with delta encoding
 	bool WriteTickDataCompressed(std::vector<char> &outBuffer, const std::vector<TickData> &tickData, const std::vector<u8> &subtickCounts,
 								 const std::vector<SubtickData::RpSubtickMove> &subtickMoves);

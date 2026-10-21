@@ -103,11 +103,21 @@ struct Recorder
 
 	// Flush in-memory recording data to a temp chunk file on disk, then clear in-memory vectors.
 	void FlushChunkToDisk();
-	// Read all flushed chunks from disk back into vectors, appending the current in-memory remainder.
-	void LoadFlushedChunks(std::vector<TickData> &outTick, std::vector<u8> &outSubtickCounts,
-						   std::vector<SubtickData::RpSubtickMove> &outSubtickMoves, std::vector<RpEvent> &outEvents,
-						   std::vector<RpJumpStats> &outJumps, std::vector<CmdData> &outCmd, std::vector<u8> &outCmdSubtickCounts,
-						   std::vector<SubtickData::RpSubtickMove> &outCmdSubtickMoves);
+	// The recording data of one flushed chunk.
+	struct Chunk
+	{
+		std::vector<TickData> tickData;
+		std::vector<u8> subtickCounts;
+		std::vector<SubtickData::RpSubtickMove> subtickMoves;
+		std::vector<RpEvent> events;
+		std::vector<RpJumpStats> jumps;
+		std::vector<CmdData> cmdData;
+		std::vector<u8> cmdSubtickCounts;
+		std::vector<SubtickData::RpSubtickMove> cmdSubtickMoves;
+	};
+
+	// Read one flushed chunk back from disk. Pending async writes must have been drained.
+	bool ReadFlushedChunk(u32 chunk, Chunk &out);
 	void CleanupTempFiles();
 
 	// Copy the last numSeconds seconds of data from the circular recorder.

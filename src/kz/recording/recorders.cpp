@@ -268,19 +268,22 @@ Recorder::~Recorder()
 
 // Binary chunk format:
 //   u32 numTicks
+//   u32 numSubtickCounts
 //   u32 numSubtickMoves (total RpSubtickMove entries)
 //   u32 numEvents
 //   u32 numJumps
 //   u32 numCmds
+//   u32 numCmdSubtickCounts
 //   u32 numCmdSubtickMoves
 //   TickData[numTicks]
-//   u8[numTicks] (subtick counts)
+//   u8[numSubtickCounts] (subtick counts)
 //   RpSubtickMove[numSubtickMoves]
 //   RpEvent[numEvents]
 //   RpJumpStats[numJumps]  -- serialized with size prefix per entry due to std::vector member
 //   CmdData[numCmds]
-//   u8[numCmds] (cmd subtick counts)
+//   u8[numCmdSubtickCounts] (cmd subtick counts)
 //   RpSubtickMove[numCmdSubtickMoves]
+// Subtick counts are pushed apart from ticks and commands, so their numbers are stored on their own.
 
 void Recorder::FlushChunkToDisk()
 {
@@ -297,28 +300,32 @@ void Recorder::FlushChunkToDisk()
 
 	std::vector<char> buf;
 	u32 numTicks = (u32)tickData.size();
+	u32 numSubtickCounts = (u32)subtickCounts.size();
 	u32 numSubtickMovesTotal = (u32)subtickMoves.size();
 	u32 numEvents = (u32)rpEvents.size();
 	u32 numJumps = (u32)jumps.size();
 	u32 numCmds = (u32)cmdData.size();
+	u32 numCmdSubtickCounts = (u32)cmdSubtickCounts.size();
 	u32 numCmdSubtickMovesTotal = (u32)cmdSubtickMoves.size();
 
 	// Reserve approximate size
-	buf.reserve(numTicks * (sizeof(TickData) + 1 + sizeof(SubtickData::RpSubtickMove) * 2) + numCmds * sizeof(CmdData) + 6 * sizeof(u32));
+	buf.reserve(numTicks * (sizeof(TickData) + 1 + sizeof(SubtickData::RpSubtickMove) * 2) + numCmds * sizeof(CmdData) + 8 * sizeof(u32));
 
 	auto appendRaw = [&buf](const void *data, size_t size) { buf.insert(buf.end(), (const char *)data, (const char *)data + size); };
 
 	appendRaw(&numTicks, sizeof(u32));
+	appendRaw(&numSubtickCounts, sizeof(u32));
 	appendRaw(&numSubtickMovesTotal, sizeof(u32));
 	appendRaw(&numEvents, sizeof(u32));
 	appendRaw(&numJumps, sizeof(u32));
 	appendRaw(&numCmds, sizeof(u32));
+	appendRaw(&numCmdSubtickCounts, sizeof(u32));
 	appendRaw(&numCmdSubtickMovesTotal, sizeof(u32));
 
 	// Tick data
 	appendRaw(tickData.data(), numTicks * sizeof(TickData));
 	// Subtick counts
-	appendRaw(subtickCounts.data(), numTicks * sizeof(u8));
+	appendRaw(subtickCounts.data(), numSubtickCounts * sizeof(u8));
 	// Subtick moves
 	appendRaw(subtickMoves.data(), numSubtickMovesTotal * sizeof(SubtickData::RpSubtickMove));
 	// Events
@@ -346,7 +353,7 @@ void Recorder::FlushChunkToDisk()
 	// Cmd data
 	appendRaw(cmdData.data(), numCmds * sizeof(CmdData));
 	// Cmd subtick counts
-	appendRaw(cmdSubtickCounts.data(), numCmds * sizeof(u8));
+	appendRaw(cmdSubtickCounts.data(), numCmdSubtickCounts * sizeof(u8));
 	// Cmd subtick moves
 	appendRaw(cmdSubtickMoves.data(), numCmdSubtickMovesTotal * sizeof(SubtickData::RpSubtickMove));
 
@@ -378,172 +385,75 @@ void Recorder::FlushChunkToDisk()
 	cmdSubtickMoves.clear();
 }
 
-void Recorder::LoadFlushedChunks(std::vector<TickData> &outTick, std::vector<u8> &outSubtickCounts,
-								 std::vector<SubtickData::RpSubtickMove> &outSubtickMoves, std::vector<RpEvent> &outEvents,
-								 std::vector<RpJumpStats> &outJumps, std::vector<CmdData> &outCmd, std::vector<u8> &outCmdSubtickCounts,
-								 std::vector<SubtickData::RpSubtickMove> &outCmdSubtickMoves)
+bool Recorder::ReadFlushedChunk(u32 chunk, Chunk &out)
 {
-	// Ensure all async writes have completed before reading chunks back.
-	if (g_asyncFileIO)
+	char chunkPath[512];
+	V_snprintf(chunkPath, sizeof(chunkPath), "%s_%u.chunk", tempFileBase.c_str(), chunk);
+
+	std::vector<char> buf;
+	if (!utils::ReadBufferFromFile(chunkPath, buf))
 	{
-		g_asyncFileIO->Drain();
+		return false;
 	}
 
-	for (u32 chunk = 0; chunk < numFlushedChunks; chunk++)
+	const char *cursor = buf.data();
+	const char *end = buf.data() + buf.size();
+
+	auto readRaw = [&cursor, end](void *dst, size_t size) -> bool
 	{
-		char chunkPath[512];
-		V_snprintf(chunkPath, sizeof(chunkPath), "%s_%u.chunk", tempFileBase.c_str(), chunk);
+		if (size > (size_t)(end - cursor))
+		{
+			return false;
+		}
+		memcpy(dst, cursor, size);
+		cursor += size;
+		return true;
+	};
+	// Sizes the vector only once the chunk is known to hold that many elements.
+	auto readArray = [&cursor, end, &readRaw](auto &vec, u32 count) -> bool
+	{
+		size_t size = (size_t)count * sizeof(vec[0]);
+		if (size > (size_t)(end - cursor))
+		{
+			return false;
+		}
+		vec.resize(count);
+		return readRaw(vec.data(), size);
+	};
 
-		std::vector<char> buf;
-		if (!utils::ReadBufferFromFile(chunkPath, buf))
-		{
-			KZ_LOG_WARN(LogChannel::Recording, "Failed to read chunk %u from disk\n", chunk);
-			continue;
-		}
+	u32 counts[8];
+	if (!readRaw(counts, sizeof(counts)))
+	{
+		return false;
+	}
+	u32 numTicks = counts[0], numSubtickCounts = counts[1], numSubtickMoves = counts[2], numEvents = counts[3], numJumps = counts[4],
+		numCmds = counts[5], numCmdSubtickCounts = counts[6], numCmdSubtickMoves = counts[7];
 
-		const char *cursor = buf.data();
-		const char *end = buf.data() + buf.size();
-
-		auto readRaw = [&cursor, end](void *dst, size_t size) -> bool
-		{
-			if (cursor + size > end)
-			{
-				return false;
-			}
-			memcpy(dst, cursor, size);
-			cursor += size;
-			return true;
-		};
-
-		u32 numTicks, numSubtickMovesTotal, numEvents, numJumps, numCmds, numCmdSubtickMovesTotal;
-		if (!readRaw(&numTicks, sizeof(u32)))
-		{
-			continue;
-		}
-		if (!readRaw(&numSubtickMovesTotal, sizeof(u32)))
-		{
-			continue;
-		}
-		if (!readRaw(&numEvents, sizeof(u32)))
-		{
-			continue;
-		}
-		if (!readRaw(&numJumps, sizeof(u32)))
-		{
-			continue;
-		}
-		if (!readRaw(&numCmds, sizeof(u32)))
-		{
-			continue;
-		}
-		if (!readRaw(&numCmdSubtickMovesTotal, sizeof(u32)))
-		{
-			continue;
-		}
-
-		// Tick data
-		size_t prevSize = outTick.size();
-		outTick.resize(prevSize + numTicks);
-		if (!readRaw(&outTick[prevSize], numTicks * sizeof(TickData)))
-		{
-			continue;
-		}
-
-		// Subtick counts
-		prevSize = outSubtickCounts.size();
-		outSubtickCounts.resize(prevSize + numTicks);
-		if (!readRaw(&outSubtickCounts[prevSize], numTicks * sizeof(u8)))
-		{
-			continue;
-		}
-
-		// Subtick moves
-		prevSize = outSubtickMoves.size();
-		outSubtickMoves.resize(prevSize + numSubtickMovesTotal);
-		if (!readRaw(&outSubtickMoves[prevSize], numSubtickMovesTotal * sizeof(SubtickData::RpSubtickMove)))
-		{
-			continue;
-		}
-
-		// Events
-		prevSize = outEvents.size();
-		outEvents.resize(prevSize + numEvents);
-		if (!readRaw(&outEvents[prevSize], numEvents * sizeof(RpEvent)))
-		{
-			continue;
-		}
-
-		// Jumps
-		for (u32 j = 0; j < numJumps; j++)
-		{
-			RpJumpStats jump = {};
-			if (!readRaw(&jump.overall, sizeof(RpJumpStats::GeneralData)))
-			{
-				break;
-			}
-			u32 numStrafes;
-			if (!readRaw(&numStrafes, sizeof(u32)))
-			{
-				break;
-			}
-			if (numStrafes > 0)
-			{
-				jump.strafes.resize(numStrafes);
-				if (!readRaw(jump.strafes.data(), numStrafes * sizeof(RpJumpStats::StrafeData)))
-				{
-					break;
-				}
-			}
-			u32 numAACalls;
-			if (!readRaw(&numAACalls, sizeof(u32)))
-			{
-				break;
-			}
-			if (numAACalls > 0)
-			{
-				jump.aaCalls.resize(numAACalls);
-				if (!readRaw(jump.aaCalls.data(), numAACalls * sizeof(RpJumpStats::AAData)))
-				{
-					break;
-				}
-			}
-			outJumps.push_back(std::move(jump));
-		}
-
-		// Cmd data
-		prevSize = outCmd.size();
-		outCmd.resize(prevSize + numCmds);
-		if (!readRaw(&outCmd[prevSize], numCmds * sizeof(CmdData)))
-		{
-			continue;
-		}
-
-		// Cmd subtick counts
-		prevSize = outCmdSubtickCounts.size();
-		outCmdSubtickCounts.resize(prevSize + numCmds);
-		if (!readRaw(&outCmdSubtickCounts[prevSize], numCmds * sizeof(u8)))
-		{
-			continue;
-		}
-
-		// Cmd subtick moves
-		prevSize = outCmdSubtickMoves.size();
-		outCmdSubtickMoves.resize(prevSize + numCmdSubtickMovesTotal);
-		if (!readRaw(&outCmdSubtickMoves[prevSize], numCmdSubtickMovesTotal * sizeof(SubtickData::RpSubtickMove)))
-		{
-			continue;
-		}
+	if (!readArray(out.tickData, numTicks) || !readArray(out.subtickCounts, numSubtickCounts) || !readArray(out.subtickMoves, numSubtickMoves)
+		|| !readArray(out.events, numEvents))
+	{
+		return false;
 	}
 
-	// Append current in-memory remainder
-	outTick.insert(outTick.end(), tickData.begin(), tickData.end());
-	outSubtickCounts.insert(outSubtickCounts.end(), subtickCounts.begin(), subtickCounts.end());
-	outSubtickMoves.insert(outSubtickMoves.end(), subtickMoves.begin(), subtickMoves.end());
-	outEvents.insert(outEvents.end(), rpEvents.begin(), rpEvents.end());
-	outJumps.insert(outJumps.end(), jumps.begin(), jumps.end());
-	outCmd.insert(outCmd.end(), cmdData.begin(), cmdData.end());
-	outCmdSubtickCounts.insert(outCmdSubtickCounts.end(), cmdSubtickCounts.begin(), cmdSubtickCounts.end());
-	outCmdSubtickMoves.insert(outCmdSubtickMoves.end(), cmdSubtickMoves.begin(), cmdSubtickMoves.end());
+	out.jumps.clear();
+	for (u32 j = 0; j < numJumps; j++)
+	{
+		RpJumpStats jump = {};
+		u32 numStrafes;
+		if (!readRaw(&jump.overall, sizeof(RpJumpStats::GeneralData)) || !readRaw(&numStrafes, sizeof(u32)) || !readArray(jump.strafes, numStrafes))
+		{
+			return false;
+		}
+		u32 numAACalls;
+		if (!readRaw(&numAACalls, sizeof(u32)) || !readArray(jump.aaCalls, numAACalls))
+		{
+			return false;
+		}
+		out.jumps.push_back(std::move(jump));
+	}
+
+	return readArray(out.cmdData, numCmds) && readArray(out.cmdSubtickCounts, numCmdSubtickCounts)
+		   && readArray(out.cmdSubtickMoves, numCmdSubtickMoves) && cursor == end;
 }
 
 void Recorder::CleanupTempFiles()
@@ -617,43 +527,69 @@ bool Recorder::WriteToMemory(std::vector<char> &outBuffer)
 	time(&unixTime);
 	replayHeader.set_timestamp((u64)unixTime);
 
-	// If chunks were flushed to disk, load them all back and combine with in-memory remainder.
-	std::vector<TickData> allTickData;
-	std::vector<u8> allSubtickCounts;
-	std::vector<SubtickData::RpSubtickMove> allSubtickMoves;
+	// Long recordings were flushed to disk in chunks. Each chunk is compressed as it is read back, so only the compressed
+	// sections and one chunk are ever in memory, not the whole recording.
+	KZ::replaysystem::compression::RecordingWriter writer;
 	std::vector<RpEvent> allEvents;
 	std::vector<RpJumpStats> allJumps;
-	std::vector<CmdData> allCmdData;
-	std::vector<u8> allCmdSubtickCounts;
-	std::vector<SubtickData::RpSubtickMove> allCmdSubtickMoves;
-
-	if (numFlushedChunks > 0)
+	if (numFlushedChunks > 0 && g_asyncFileIO)
 	{
-		LoadFlushedChunks(allTickData, allSubtickCounts, allSubtickMoves, allEvents, allJumps, allCmdData, allCmdSubtickCounts, allCmdSubtickMoves);
+		// Ensure all async writes have completed before reading chunks back.
+		g_asyncFileIO->Drain();
 	}
-	else
+	for (u32 i = 0; i < numFlushedChunks; i++)
 	{
-		allTickData = std::move(this->tickData);
-		allSubtickCounts = std::move(this->subtickCounts);
-		allSubtickMoves = std::move(this->subtickMoves);
-		allEvents = std::move(this->rpEvents);
-		allJumps = std::move(this->jumps);
-		allCmdData = std::move(this->cmdData);
-		allCmdSubtickCounts = std::move(this->cmdSubtickCounts);
-		allCmdSubtickMoves = std::move(this->cmdSubtickMoves);
+		Chunk chunk;
+		// A missing chunk would leave a gap in the ticks, so the replay is not written at all.
+		if (!ReadFlushedChunk(i, chunk) || !writer.AddTicks(chunk.tickData, chunk.subtickCounts, chunk.subtickMoves)
+			|| !writer.AddCmds(chunk.cmdData, chunk.cmdSubtickCounts, chunk.cmdSubtickMoves))
+		{
+			KZ_LOG_WARN(LogChannel::Recording, "Failed to read back replay chunk %u, the replay is not saved\n", i);
+			outBuffer.clear();
+			return false;
+		}
+		allEvents.insert(allEvents.end(), chunk.events.begin(), chunk.events.end());
+		allJumps.insert(allJumps.end(), std::make_move_iterator(chunk.jumps.begin()), std::make_move_iterator(chunk.jumps.end()));
 	}
 
-	// Order of writing must match order of reading in kz_replaydata.cpp
-	if (!this->WriteHeader(outBuffer)
-		|| !KZ::replaysystem::compression::WriteTickDataCompressed(outBuffer, allTickData, allSubtickCounts, allSubtickMoves)
-		|| !KZ::replaysystem::compression::WriteWeaponsCompressed(outBuffer, this->weaponTable)
-		|| !KZ::replaysystem::compression::WriteJumpsCompressed(outBuffer, allJumps)
-		|| !KZ::replaysystem::compression::WriteEventsCompressed(outBuffer, allEvents)
-		|| !KZ::replaysystem::compression::WriteCmdDataCompressed(outBuffer, allCmdData, allCmdSubtickCounts, allCmdSubtickMoves))
+	// The part recorded since the last flush.
+	if (!writer.AddTicks(this->tickData, this->subtickCounts, this->subtickMoves)
+		|| !writer.AddCmds(this->cmdData, this->cmdSubtickCounts, this->cmdSubtickMoves))
+	{
+		outBuffer.clear();
+		return false;
+	}
+	allEvents.insert(allEvents.end(), this->rpEvents.begin(), this->rpEvents.end());
+	allJumps.insert(allJumps.end(), this->jumps.begin(), this->jumps.end());
+
+	// The sections between the tick and cmd sections are small; they are built first so the output is sized once.
+	std::vector<char> middleSections;
+	if (!KZ::replaysystem::compression::WriteWeaponsCompressed(middleSections, this->weaponTable)
+		|| !KZ::replaysystem::compression::WriteJumpsCompressed(middleSections, allJumps)
+		|| !KZ::replaysystem::compression::WriteEventsCompressed(middleSections, allEvents))
 	{
 		outBuffer.clear();
 		return false;
 	}
 
+	// Order of writing must match order of reading in kz_replaydata.cpp
+	if (!this->WriteHeader(outBuffer))
+	{
+		outBuffer.clear();
+		return false;
+	}
+	// Slack for the section headers and the empty frames of empty sections.
+	outBuffer.reserve(outBuffer.size() + writer.CompressedSize() + middleSections.size() + 1024);
+	if (!writer.AppendTickSections(outBuffer))
+	{
+		outBuffer.clear();
+		return false;
+	}
+	outBuffer.insert(outBuffer.end(), middleSections.begin(), middleSections.end());
+	if (!writer.AppendCmdSections(outBuffer))
+	{
+		outBuffer.clear();
+		return false;
+	}
 	return true;
 }
