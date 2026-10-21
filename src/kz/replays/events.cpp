@@ -32,8 +32,8 @@ namespace KZ::replaysystem::events
 			return;
 		}
 
-		TickData *tickData = &replay->tickData[replay->currentTick];
-		u32 serverTick = tickData->serverTick;
+		const TickData tickData = data::GetTick(replay, replay->currentTick);
+		u32 serverTick = tickData.serverTick;
 
 		while (replay->currentEvent < replay->numEvents && replay->events[replay->currentEvent].serverTick <= serverTick)
 		{
@@ -74,8 +74,8 @@ namespace KZ::replaysystem::events
 			return;
 		}
 
-		TickData *tickData = &replay->tickData[replay->currentTick];
-		u32 serverTick = tickData->serverTick;
+		const TickData tickData = data::GetTick(replay, replay->currentTick);
+		u32 serverTick = tickData.serverTick;
 
 		while (replay->currentJump < replay->numJumps && replay->jumps[replay->currentJump].overall.serverTick <= serverTick)
 		{
@@ -321,8 +321,8 @@ namespace KZ::replaysystem::events
 		}
 
 		// Get the server tick of the target tick data
-		u32 targetServerTick = replay->tickData[targetTick].serverTick;
-		u32 currentServerTick = replay->currentTick < replay->tickCount ? replay->tickData[replay->currentTick].serverTick : 0;
+		u32 targetServerTick = data::GetTick(replay, targetTick).serverTick;
+		u32 currentServerTick = replay->currentTick < replay->tickCount ? data::GetTick(replay, replay->currentTick).serverTick : 0;
 
 		// Optimization: If seeking forward, we only need to process events from current position
 		bool isSeekingForward = (targetTick > replay->currentTick) && replay->currentTick > 0;
@@ -438,9 +438,9 @@ namespace KZ::replaysystem::events
 								u32 pauseStartTickIndex = data::GetTickAtServerTick(replay, pauseStartTick);
 								u32 resumeTickIndex = data::GetTickAtServerTick(replay, event->serverTick);
 
-								TickData *pauseStartTickData = &replay->tickData[pauseStartTickIndex];
-								TickData *resumeTickData = &replay->tickData[resumeTickIndex];
-								totalPauseTime += (resumeTickData->gameTime - pauseStartTickData->gameTime);
+								const TickData pauseStartTickData = data::GetTick(replay, pauseStartTickIndex);
+								const TickData resumeTickData = data::GetTick(replay, resumeTickIndex);
+								totalPauseTime += (resumeTickData.gameTime - pauseStartTickData.gameTime);
 								inPause = false;
 							}
 							break;
@@ -504,9 +504,9 @@ namespace KZ::replaysystem::events
 		{
 			u32 pauseStartTickIndex = data::GetTickAtServerTick(replay, pauseStartTick);
 
-			TickData *pauseStartTickData = &replay->tickData[pauseStartTickIndex];
-			TickData *targetTickData = &replay->tickData[targetTick];
-			totalPauseTime += (targetTickData->gameTime - pauseStartTickData->gameTime) + ENGINE_FIXED_TICK_INTERVAL;
+			const TickData pauseStartTickData = data::GetTick(replay, pauseStartTickIndex);
+			const TickData targetTickData = data::GetTick(replay, targetTick);
+			totalPauseTime += (targetTickData.gameTime - pauseStartTickData.gameTime) + ENGINE_FIXED_TICK_INTERVAL;
 		}
 
 		// Apply pause time adjustment to startTime if we have an active timer
@@ -549,10 +549,10 @@ namespace KZ::replaysystem::events
 		}
 
 		// Update checkpoint state from target tick data
-		TickData *targetTickData = &replay->tickData[targetTick];
-		replay->currentCpIndex = targetTickData->checkpoint.index;
-		replay->currentCheckpoint = targetTickData->checkpoint.checkpointCount;
-		replay->currentTeleport = targetTickData->checkpoint.teleportCount;
+		const TickData targetTickData = data::GetTick(replay, targetTick);
+		replay->currentCpIndex = targetTickData.checkpoint.index;
+		replay->currentCheckpoint = targetTickData.checkpoint.checkpointCount;
+		replay->currentTeleport = targetTickData.checkpoint.teleportCount;
 	}
 
 } // namespace KZ::replaysystem::events

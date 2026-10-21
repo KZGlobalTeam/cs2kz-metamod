@@ -3,6 +3,11 @@
 #include "kz_replay.h"
 #include <functional>
 
+namespace KZ::replaysystem::parsing
+{
+	struct VersionParser;
+} // namespace KZ::replaysystem::parsing
+
 namespace KZ::replaysystem::compression
 {
 	// Compressed section header (written before each compressed data block). v1-6 replays used u32 fields instead.
@@ -12,6 +17,59 @@ namespace KZ::replaysystem::compression
 		u64 uncompressedSize; // Original size of data
 		u64 elementCount;     // Number of elements (e.g., tick count)
 	};
+
+	// The ticks of a loaded replay, kept delta-encoded as they are on disk. Every KEYFRAME_INTERVAL-th tick is also kept in
+	// full, so a read decodes forward from the keyframe before it, and reading the tick after the last one decodes just that one.
+	// The last tick read and the one before it are cached. Main thread only.
+	class TickStore
+	{
+	public:
+		static constexpr u32 KEYFRAME_INTERVAL = 64;
+
+		u32 Count() const
+		{
+			return count;
+		}
+
+		// index must be below Count().
+		TickData Get(u32 index);
+		// The first tick recorded on or after serverTick, or the last tick if there is none. Count() must not be 0.
+		u32 FindServerTick(u32 serverTick);
+
+		// The ticks where the teleport count goes up, found while loading.
+		const std::vector<u32> &TeleportTicks() const
+		{
+			return teleportTicks;
+		}
+
+	private:
+		friend bool ReadTickStore(const char *&cursor, const char *end, TickStore &outTicks, std::vector<u8> &outSubtickCounts,
+								  std::vector<SubtickData::RpSubtickMove> &outSubtickMoves, u32 replayVersion);
+
+		struct Keyframe
+		{
+			TickData tick;
+			// Where the tick after it starts in deltas.
+			u64 nextOffset;
+		};
+
+		std::vector<char> deltas;
+		std::vector<Keyframe> keyframes;
+		std::vector<u32> teleportTicks;
+		const parsing::VersionParser *parser = nullptr;
+		u32 count = 0;
+
+		TickData current {};
+		TickData previous {};
+		u32 currentIndex = 0;
+		u64 currentEnd = 0;
+		bool hasCurrent = false;
+		bool hasPrevious = false;
+	};
+
+	// Reads the tick and subtick sections into a TickStore for playback.
+	bool ReadTickStore(const char *&cursor, const char *end, TickStore &outTicks, std::vector<u8> &outSubtickCounts,
+					   std::vector<SubtickData::RpSubtickMove> &outSubtickMoves, u32 replayVersion);
 
 	// Compress a buffer using zstd level 3
 	bool Compress(const void *src, size_t srcSize, void **outDst, size_t *outDstSize);

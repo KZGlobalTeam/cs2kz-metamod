@@ -8,6 +8,11 @@
 #include <atomic>
 #include <functional>
 
+namespace KZ::replaysystem::compression
+{
+	class TickStore;
+} // namespace KZ::replaysystem::compression
+
 namespace KZ::replaysystem::data
 {
 	// Replay data structure
@@ -18,7 +23,8 @@ namespace KZ::replaysystem::data
 		ReplayHeader header;
 
 		u32 tickCount;
-		TickData *tickData;
+		// Read through GetTick, which decodes the tick on demand.
+		compression::TickStore *ticks;
 		// tickCount + 1 entries; the subtick moves of tick i are subtickMoves[subtickOffsets[i]] to subtickMoves[subtickOffsets[i + 1] - 1].
 		u64 *subtickOffsets;
 		SubtickData::RpSubtickMove *subtickMoves;
@@ -97,6 +103,9 @@ namespace KZ::replaysystem::data
 	void LoadReplayMemoryAsync(std::vector<char> data, UUID_t uuid, LoadSuccessCallback onSuccess, LoadFailureCallback onFailure);
 	void FreeReplayData(ReplayPlayback *replay);
 	void ResetReplayState(ReplayPlayback *replay);
+	// index must be below replay->tickCount. Reading the tick after the last one read is cheap, other ticks cost up to
+	// compression::TickStore::KEYFRAME_INTERVAL tick decodes.
+	TickData GetTick(const ReplayPlayback *replay, u32 index);
 	// The first replay tick recorded on or after serverTick, or the last tick if there is none.
 	u32 GetTickAtServerTick(const ReplayPlayback *replay, u32 serverTick);
 

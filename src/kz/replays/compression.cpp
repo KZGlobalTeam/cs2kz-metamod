@@ -11,11 +11,6 @@ namespace parsing = KZ::replaysystem::parsing;
 // Helper functions
 // ========================================
 
-// The route reader supplies a visitor to retain only positions and checkpoint data as ticks are decoded.
-// Normal replay playback leaves it null and keeps the full tick and subtick arrays.
-static_function bool DecodeTickDataBuffer(const char *decompressedData, size_t uncompressedSize, u32 elementCount,
-										  const parsing::VersionParser &parser, std::vector<TickData> *outTickData, const TickVisitor *visitor);
-
 static_function void AppendToBuffer(std::vector<char> &buffer, const void *data, size_t size)
 {
 	const char *bytes = static_cast<const char *>(data);
@@ -645,63 +640,185 @@ bool KZ::replaysystem::compression::WriteTickDataCompressed(std::vector<char> &o
 	return writer.AddTicks(tickData, subtickCounts, subtickMoves) && writer.AppendTickSections(outBuffer);
 }
 
+// Decodes the tick after tick in the delta stream, in place. first marks the replay's first tick.
+static_function bool DecodeNextTick(const char *&readPtr, const char *endPtr, bool first, const parsing::VersionParser &parser, TickData &tick)
+{
+	const u64 weaponFlag = parser.weaponFlag;
+	const u64 modernActualFlag = parser.modernActualFlag;
+	const u64 modernUsableFlag = parser.modernUsableFlag;
+	const u64 modernLandedFlag = parser.modernLandedFlag;
+
+	if (first)
+	{
+		// Vector's default constructor leaves it uninitialized, and v1 replays never write this field.
+		tick.modernJump.lastLandedVelocity.Init();
+	}
+
+	// Read change flags
+	u64 flags = 0;
+	if (!ReadFromBuffer(readPtr, endPtr, &flags, sizeof(flags)))
+	{
+		return false;
+	}
+
+	// Unchanged scalar fields stay in tick. The sole implicit change is serverTick.
+	// clang-format off
+	if (!first && !(flags & CHANGED_SERVER_TICK)) ++tick.serverTick;
+
+	// Read changed fields
+	if (!ReadIfFlag(flags, CHANGED_SERVER_TICK, readPtr, endPtr, &tick.serverTick, sizeof(tick.serverTick))) return false;
+	if (!ReadIfFlag(flags, CHANGED_GAME_TIME, readPtr, endPtr, &tick.gameTime, sizeof(tick.gameTime))) return false;
+	if (!ReadIfFlag(flags, CHANGED_REAL_TIME, readPtr, endPtr, &tick.realTime, sizeof(tick.realTime))) return false;
+	if (!ReadIfFlag(flags, CHANGED_UNIX_TIME, readPtr, endPtr, &tick.unixTime, sizeof(tick.unixTime))) return false;
+	if (!ReadIfFlag(flags, CHANGED_CMD_NUMBER, readPtr, endPtr, &tick.cmdNumber, sizeof(tick.cmdNumber))) return false;
+	if (!ReadIfFlag(flags, CHANGED_CLIENT_TICK, readPtr, endPtr, &tick.clientTick, sizeof(tick.clientTick))) return false;
+	if (!ReadIfFlag(flags, CHANGED_FORWARD, readPtr, endPtr, &tick.forward, sizeof(tick.forward))) return false;
+	if (!ReadIfFlag(flags, CHANGED_LEFT, readPtr, endPtr, &tick.left, sizeof(tick.left))) return false;
+	if (!ReadIfFlag(flags, CHANGED_UP, readPtr, endPtr, &tick.up, sizeof(tick.up))) return false;
+	if (!ReadIfFlag(flags, CHANGED_LEFT_HANDED, readPtr, endPtr, &tick.leftHanded, sizeof(tick.leftHanded))) return false;
+	if (!ReadIfFlag(flags, weaponFlag, readPtr, endPtr, &tick.weapon, sizeof(tick.weapon))) return false;
+
+	// Pre movement inherits the preceding post, then post inherits this pre.
+	tick.pre = !first ? tick.post : TickData::MovementData {};
+
+	if (!ReadIfFlag(flags, CHANGED_PRE_ORIGIN, readPtr, endPtr, &tick.pre.origin, sizeof(tick.pre.origin))) return false;
+	if (!ReadIfFlag(flags, CHANGED_PRE_VELOCITY, readPtr, endPtr, &tick.pre.velocity, sizeof(tick.pre.velocity))) return false;
+	if (!ReadIfFlag(flags, CHANGED_PRE_ANGLES, readPtr, endPtr, &tick.pre.angles, sizeof(tick.pre.angles))) return false;
+	if (!ReadIfFlag(flags, CHANGED_PRE_BUTTONS_0, readPtr, endPtr, &tick.pre.buttons[0], sizeof(tick.pre.buttons[0]))) return false;
+	if (!ReadIfFlag(flags, CHANGED_PRE_BUTTONS_1, readPtr, endPtr, &tick.pre.buttons[1], sizeof(tick.pre.buttons[1]))) return false;
+	if (!ReadIfFlag(flags, CHANGED_PRE_BUTTONS_2, readPtr, endPtr, &tick.pre.buttons[2], sizeof(tick.pre.buttons[2]))) return false;
+	if (!ReadIfFlag(flags, CHANGED_PRE_JUMP_PRESSED_TIME, readPtr, endPtr, &tick.pre.jumpPressedTime, sizeof(tick.pre.jumpPressedTime))) return false;
+	if (!ReadIfFlag(flags, CHANGED_PRE_DUCK_SPEED, readPtr, endPtr, &tick.pre.duckSpeed, sizeof(tick.pre.duckSpeed))) return false;
+	if (!ReadIfFlag(flags, CHANGED_PRE_DUCK_AMOUNT, readPtr, endPtr, &tick.pre.duckAmount, sizeof(tick.pre.duckAmount))) return false;
+	if (!ReadIfFlag(flags, CHANGED_PRE_DUCK_OFFSET, readPtr, endPtr, &tick.pre.duckOffset, sizeof(tick.pre.duckOffset))) return false;
+	if (!ReadIfFlag(flags, CHANGED_PRE_LAST_DUCK_TIME, readPtr, endPtr, &tick.pre.lastDuckTime, sizeof(tick.pre.lastDuckTime))) return false;
+	if (!ReadIfFlag(flags, CHANGED_PRE_REPLAY_FLAGS, readPtr, endPtr, &tick.pre.replayFlags, sizeof(tick.pre.replayFlags))) return false;
+	if (!ReadIfFlag(flags, CHANGED_PRE_ENTITY_FLAGS, readPtr, endPtr, &tick.pre.entityFlags, sizeof(tick.pre.entityFlags))) return false;
+	if (!ReadIfFlag(flags, CHANGED_PRE_MOVE_TYPE, readPtr, endPtr, &tick.pre.moveType, sizeof(tick.pre.moveType))) return false;
+
+	// Reconstruct post data (compare with tick.pre)
+	tick.post = tick.pre;
+	if (!ReadIfFlag(flags, CHANGED_POST_ORIGIN, readPtr, endPtr, &tick.post.origin, sizeof(tick.post.origin))) return false;
+	if (!ReadIfFlag(flags, CHANGED_POST_VELOCITY, readPtr, endPtr, &tick.post.velocity, sizeof(tick.post.velocity))) return false;
+	if (!ReadIfFlag(flags, CHANGED_POST_ANGLES, readPtr, endPtr, &tick.post.angles, sizeof(tick.post.angles))) return false;
+	if (!ReadIfFlag(flags, CHANGED_POST_BUTTONS_0, readPtr, endPtr, &tick.post.buttons[0], sizeof(tick.post.buttons[0]))) return false;
+	if (!ReadIfFlag(flags, CHANGED_POST_BUTTONS_1, readPtr, endPtr, &tick.post.buttons[1], sizeof(tick.post.buttons[1]))) return false;
+	if (!ReadIfFlag(flags, CHANGED_POST_BUTTONS_2, readPtr, endPtr, &tick.post.buttons[2], sizeof(tick.post.buttons[2]))) return false;
+	if (!ReadIfFlag(flags, CHANGED_POST_JUMP_PRESSED_TIME, readPtr, endPtr, &tick.post.jumpPressedTime, sizeof(tick.post.jumpPressedTime))) return false;
+	if (!ReadIfFlag(flags, CHANGED_POST_DUCK_SPEED, readPtr, endPtr, &tick.post.duckSpeed, sizeof(tick.post.duckSpeed))) return false;
+	if (!ReadIfFlag(flags, CHANGED_POST_DUCK_AMOUNT, readPtr, endPtr, &tick.post.duckAmount, sizeof(tick.post.duckAmount))) return false;
+	if (!ReadIfFlag(flags, CHANGED_POST_DUCK_OFFSET, readPtr, endPtr, &tick.post.duckOffset, sizeof(tick.post.duckOffset))) return false;
+	if (!ReadIfFlag(flags, CHANGED_POST_LAST_DUCK_TIME, readPtr, endPtr, &tick.post.lastDuckTime, sizeof(tick.post.lastDuckTime))) return false;
+	if (!ReadIfFlag(flags, CHANGED_POST_REPLAY_FLAGS, readPtr, endPtr, &tick.post.replayFlags, sizeof(tick.post.replayFlags))) return false;
+	if (!ReadIfFlag(flags, CHANGED_POST_ENTITY_FLAGS, readPtr, endPtr, &tick.post.entityFlags, sizeof(tick.post.entityFlags))) return false;
+	if (!ReadIfFlag(flags, CHANGED_POST_MOVE_TYPE, readPtr, endPtr, &tick.post.moveType, sizeof(tick.post.moveType))) return false;
+
+	// Checkpoint counters and jump state persist until their delta changes.
+	if (flags & CHANGED_CHECKPOINT)
+	{
+		if (!ReadFromBuffer(readPtr, endPtr, &tick.checkpoint.index, sizeof(tick.checkpoint.index))) return false;
+		if (!ReadFromBuffer(readPtr, endPtr, &tick.checkpoint.checkpointCount, sizeof(tick.checkpoint.checkpointCount))) return false;
+		if (!ReadFromBuffer(readPtr, endPtr, &tick.checkpoint.teleportCount, sizeof(tick.checkpoint.teleportCount))) return false;
+	}
+
+	// Only read these fields if present in the data (v2+)
+	if (parser.modernJump)
+	{
+		if (flags & modernActualFlag)
+		{
+			if (!ReadFromBuffer(readPtr, endPtr, &tick.modernJump.lastActualJumpPressTick, sizeof(tick.modernJump.lastActualJumpPressTick))) return false;
+			if (!ReadFromBuffer(readPtr, endPtr, &tick.modernJump.lastActualJumpPressFrac, sizeof(tick.modernJump.lastActualJumpPressFrac))) return false;
+		}
+		if (flags & modernUsableFlag)
+		{
+			if (!ReadFromBuffer(readPtr, endPtr, &tick.modernJump.lastUsableJumpPressTick, sizeof(tick.modernJump.lastUsableJumpPressTick))) return false;
+			if (!ReadFromBuffer(readPtr, endPtr, &tick.modernJump.lastUsableJumpPressFrac, sizeof(tick.modernJump.lastUsableJumpPressFrac))) return false;
+		}
+		if (flags & modernLandedFlag)
+		{
+			if (!ReadFromBuffer(readPtr, endPtr, &tick.modernJump.lastLandedTick, sizeof(tick.modernJump.lastLandedTick))) return false;
+			if (!ReadFromBuffer(readPtr, endPtr, &tick.modernJump.lastLandedFrac, sizeof(tick.modernJump.lastLandedFrac))) return false;
+			if (!ReadFromBuffer(readPtr, endPtr, &tick.modernJump.lastLandedVelocity, sizeof(tick.modernJump.lastLandedVelocity))) return false;
+		}
+	}
+	// clang-format on
+	return true;
+}
+
+// Decompresses the delta-encoded tick section.
+static_function bool ReadTickSection(const char *&cursor, const char *end, const parsing::VersionParser &parser, std::vector<char> &outBytes,
+									 u32 &outCount)
+{
+	CompressedSectionHeader header;
+	if (!ReadSectionHeader(cursor, end, parser, header))
+	{
+		return false;
+	}
+	// Each tick starts with a u64 change mask, which bounds the tick count by the checked size.
+	if (header.elementCount > header.uncompressedSize / sizeof(u64))
+	{
+		return false;
+	}
+	outBytes.resize(header.uncompressedSize);
+	bool success = Decompress(cursor, header.compressedSize, outBytes.data(), outBytes.size());
+	cursor += header.compressedSize;
+	outCount = (u32)header.elementCount;
+	return success;
+}
+
+static_function bool ReadSubtickSection(const char *&cursor, const char *end, const parsing::VersionParser &parser, std::vector<u8> &outCounts,
+										std::vector<RpSubtickMove> &outMoves)
+{
+	CompressedSectionHeader header;
+	if (!ReadSectionHeader(cursor, end, parser, header))
+	{
+		return false;
+	}
+	bool success = DecodeSubtickSection(cursor, header, parser, outCounts, outMoves);
+	cursor += header.compressedSize;
+	return success;
+}
+
+// The route reader supplies a visitor to retain only positions and checkpoint data as ticks are decoded.
 static_function bool ReadTickDataSections(const char *&cursor, const char *end, std::vector<TickData> *outTickData,
 										  std::vector<u8> *outSubtickCounts, std::vector<RpSubtickMove> *outSubtickMoves, u32 replayVersion,
 										  const TickVisitor *visitor)
 {
 	const auto *parser = parsing::GetVersionParser(replayVersion);
-	if (!parser)
+	std::vector<char> bytes;
+	u32 count;
+	if (!parser || !ReadTickSection(cursor, end, *parser, bytes, count))
 	{
 		return false;
 	}
-	CompressedSectionHeader header;
-	if (!ReadSectionHeader(cursor, end, *parser, header))
+	if (outTickData)
+	{
+		outTickData->clear();
+		outTickData->reserve(count);
+	}
+	const char *readPtr = bytes.data();
+	const char *endPtr = bytes.data() + bytes.size();
+	TickData tick {};
+	for (u32 i = 0; i < count; i++)
+	{
+		if (!DecodeNextTick(readPtr, endPtr, i == 0, *parser, tick) || (visitor && !(*visitor)(tick)))
+		{
+			return false;
+		}
+		if (outTickData)
+		{
+			outTickData->push_back(tick);
+		}
+	}
+	if (readPtr != endPtr)
 	{
 		return false;
 	}
-	// Each tick starts with a u64 change mask, which bounds the tick reservation by the checked size.
-	if (header.elementCount > header.uncompressedSize / sizeof(u64))
-	{
-		return false;
-	}
-	char *decompressedData = new char[header.uncompressedSize];
-	if (!decompressedData)
-	{
-		return false;
-	}
-
-	// Decompress
-	bool success = Decompress(cursor, header.compressedSize, decompressedData, header.uncompressedSize);
-	cursor += header.compressedSize;
-	if (!success)
-	{
-		delete[] decompressedData;
-		return false;
-	}
-
-	// Reconstruct tick data from delta-encoded buffer
-	bool decoded = DecodeTickDataBuffer(decompressedData, header.uncompressedSize, (u32)header.elementCount, *parser, outTickData, visitor);
-
-	delete[] decompressedData;
-	if (!decoded)
-	{
-		return false;
-	}
-
 	if (visitor)
 	{
 		return SkipCompressedSection(cursor, end, replayVersion);
 	}
-
-	// Read subtick data
-	CompressedSectionHeader subtickHeader;
-	if (!ReadSectionHeader(cursor, end, *parser, subtickHeader))
-	{
-		return false;
-	}
-	success = DecodeSubtickSection(cursor, subtickHeader, *parser, *outSubtickCounts, *outSubtickMoves);
-	cursor += subtickHeader.compressedSize;
-	return success;
+	return ReadSubtickSection(cursor, end, *parser, *outSubtickCounts, *outSubtickMoves);
 }
 
 bool KZ::replaysystem::compression::ReadTickDataCompressed(const char *&cursor, const char *end, std::vector<TickData> &ticks,
@@ -715,119 +832,111 @@ bool KZ::replaysystem::compression::ReadTickDataCompressed(const char *&cursor, 
 	return ReadTickDataSections(cursor, end, nullptr, nullptr, nullptr, version, &visitor);
 }
 
-static_function bool DecodeTickDataBuffer(const char *decompressedData, size_t uncompressedSize, u32 elementCount,
-										  const parsing::VersionParser &parser, std::vector<TickData> *outTickData, const TickVisitor *visitor)
+bool KZ::replaysystem::compression::ReadTickStore(const char *&cursor, const char *end, TickStore &outTicks, std::vector<u8> &outSubtickCounts,
+												 std::vector<RpSubtickMove> &outSubtickMoves, u32 replayVersion)
 {
-	if (outTickData)
+	const auto *parser = parsing::GetVersionParser(replayVersion);
+	if (!parser || !ReadTickSection(cursor, end, *parser, outTicks.deltas, outTicks.count))
 	{
-		outTickData->clear();
-		outTickData->reserve(elementCount);
+		return false;
 	}
-	const u64 weaponFlag = parser.weaponFlag;
-	const u64 modernActualFlag = parser.modernActualFlag;
-	const u64 modernUsableFlag = parser.modernUsableFlag;
-	const u64 modernLandedFlag = parser.modernLandedFlag;
-	const char *readPtr = decompressedData;
-	const char *endPtr = decompressedData + uncompressedSize;
+	outTicks.parser = parser;
+	outTicks.keyframes.clear();
+	outTicks.keyframes.reserve((outTicks.count + TickStore::KEYFRAME_INTERVAL - 1) / TickStore::KEYFRAME_INTERVAL);
+	outTicks.teleportTicks.clear();
+	outTicks.hasCurrent = false;
+	outTicks.hasPrevious = false;
 
+	// Every tick is decoded once here, which checks the whole stream, so later reads need not.
+	const char *start = outTicks.deltas.data();
+	const char *readPtr = start;
+	const char *endPtr = start + outTicks.deltas.size();
 	TickData tick {};
-	// Vector's default constructor leaves it uninitialized, and v1 replays never write this field.
-	tick.modernJump.lastLandedVelocity.Init();
-	for (u32 i = 0; i < elementCount; i++)
+	for (u32 i = 0; i < outTicks.count; i++)
 	{
-		// Read change flags
-		u64 flags = 0;
-		if (!ReadFromBuffer(readPtr, endPtr, &flags, sizeof(flags)))
+		i32 teleportCount = tick.checkpoint.teleportCount;
+		if (!DecodeNextTick(readPtr, endPtr, i == 0, *parser, tick))
 		{
 			return false;
 		}
-
-		// Unchanged scalar fields stay in tick. The sole implicit change is serverTick.
-		// clang-format off
-		if (i > 0 && !(flags & CHANGED_SERVER_TICK)) ++tick.serverTick;
-
-		// Read changed fields
-		if (!ReadIfFlag(flags, CHANGED_SERVER_TICK, readPtr, endPtr, &tick.serverTick, sizeof(tick.serverTick))) return false;
-		if (!ReadIfFlag(flags, CHANGED_GAME_TIME, readPtr, endPtr, &tick.gameTime, sizeof(tick.gameTime))) return false;
-		if (!ReadIfFlag(flags, CHANGED_REAL_TIME, readPtr, endPtr, &tick.realTime, sizeof(tick.realTime))) return false;
-		if (!ReadIfFlag(flags, CHANGED_UNIX_TIME, readPtr, endPtr, &tick.unixTime, sizeof(tick.unixTime))) return false;
-		if (!ReadIfFlag(flags, CHANGED_CMD_NUMBER, readPtr, endPtr, &tick.cmdNumber, sizeof(tick.cmdNumber))) return false;
-		if (!ReadIfFlag(flags, CHANGED_CLIENT_TICK, readPtr, endPtr, &tick.clientTick, sizeof(tick.clientTick))) return false;
-		if (!ReadIfFlag(flags, CHANGED_FORWARD, readPtr, endPtr, &tick.forward, sizeof(tick.forward))) return false;
-		if (!ReadIfFlag(flags, CHANGED_LEFT, readPtr, endPtr, &tick.left, sizeof(tick.left))) return false;
-		if (!ReadIfFlag(flags, CHANGED_UP, readPtr, endPtr, &tick.up, sizeof(tick.up))) return false;
-		if (!ReadIfFlag(flags, CHANGED_LEFT_HANDED, readPtr, endPtr, &tick.leftHanded, sizeof(tick.leftHanded))) return false;
-		if (!ReadIfFlag(flags, weaponFlag, readPtr, endPtr, &tick.weapon, sizeof(tick.weapon))) return false;
-
-		// Pre movement inherits the preceding post, then post inherits this pre.
-		tick.pre = i > 0 ? tick.post : TickData::MovementData {};
-
-		if (!ReadIfFlag(flags, CHANGED_PRE_ORIGIN, readPtr, endPtr, &tick.pre.origin, sizeof(tick.pre.origin))) return false;
-		if (!ReadIfFlag(flags, CHANGED_PRE_VELOCITY, readPtr, endPtr, &tick.pre.velocity, sizeof(tick.pre.velocity))) return false;
-		if (!ReadIfFlag(flags, CHANGED_PRE_ANGLES, readPtr, endPtr, &tick.pre.angles, sizeof(tick.pre.angles))) return false;
-		if (!ReadIfFlag(flags, CHANGED_PRE_BUTTONS_0, readPtr, endPtr, &tick.pre.buttons[0], sizeof(tick.pre.buttons[0]))) return false;
-		if (!ReadIfFlag(flags, CHANGED_PRE_BUTTONS_1, readPtr, endPtr, &tick.pre.buttons[1], sizeof(tick.pre.buttons[1]))) return false;
-		if (!ReadIfFlag(flags, CHANGED_PRE_BUTTONS_2, readPtr, endPtr, &tick.pre.buttons[2], sizeof(tick.pre.buttons[2]))) return false;
-		if (!ReadIfFlag(flags, CHANGED_PRE_JUMP_PRESSED_TIME, readPtr, endPtr, &tick.pre.jumpPressedTime, sizeof(tick.pre.jumpPressedTime))) return false;
-		if (!ReadIfFlag(flags, CHANGED_PRE_DUCK_SPEED, readPtr, endPtr, &tick.pre.duckSpeed, sizeof(tick.pre.duckSpeed))) return false;
-		if (!ReadIfFlag(flags, CHANGED_PRE_DUCK_AMOUNT, readPtr, endPtr, &tick.pre.duckAmount, sizeof(tick.pre.duckAmount))) return false;
-		if (!ReadIfFlag(flags, CHANGED_PRE_DUCK_OFFSET, readPtr, endPtr, &tick.pre.duckOffset, sizeof(tick.pre.duckOffset))) return false;
-		if (!ReadIfFlag(flags, CHANGED_PRE_LAST_DUCK_TIME, readPtr, endPtr, &tick.pre.lastDuckTime, sizeof(tick.pre.lastDuckTime))) return false;
-		if (!ReadIfFlag(flags, CHANGED_PRE_REPLAY_FLAGS, readPtr, endPtr, &tick.pre.replayFlags, sizeof(tick.pre.replayFlags))) return false;
-		if (!ReadIfFlag(flags, CHANGED_PRE_ENTITY_FLAGS, readPtr, endPtr, &tick.pre.entityFlags, sizeof(tick.pre.entityFlags))) return false;
-		if (!ReadIfFlag(flags, CHANGED_PRE_MOVE_TYPE, readPtr, endPtr, &tick.pre.moveType, sizeof(tick.pre.moveType))) return false;
-
-		// Reconstruct post data (compare with tick.pre)
-		tick.post = tick.pre;
-		if (!ReadIfFlag(flags, CHANGED_POST_ORIGIN, readPtr, endPtr, &tick.post.origin, sizeof(tick.post.origin))) return false;
-		if (!ReadIfFlag(flags, CHANGED_POST_VELOCITY, readPtr, endPtr, &tick.post.velocity, sizeof(tick.post.velocity))) return false;
-		if (!ReadIfFlag(flags, CHANGED_POST_ANGLES, readPtr, endPtr, &tick.post.angles, sizeof(tick.post.angles))) return false;
-		if (!ReadIfFlag(flags, CHANGED_POST_BUTTONS_0, readPtr, endPtr, &tick.post.buttons[0], sizeof(tick.post.buttons[0]))) return false;
-		if (!ReadIfFlag(flags, CHANGED_POST_BUTTONS_1, readPtr, endPtr, &tick.post.buttons[1], sizeof(tick.post.buttons[1]))) return false;
-		if (!ReadIfFlag(flags, CHANGED_POST_BUTTONS_2, readPtr, endPtr, &tick.post.buttons[2], sizeof(tick.post.buttons[2]))) return false;
-		if (!ReadIfFlag(flags, CHANGED_POST_JUMP_PRESSED_TIME, readPtr, endPtr, &tick.post.jumpPressedTime, sizeof(tick.post.jumpPressedTime))) return false;
-		if (!ReadIfFlag(flags, CHANGED_POST_DUCK_SPEED, readPtr, endPtr, &tick.post.duckSpeed, sizeof(tick.post.duckSpeed))) return false;
-		if (!ReadIfFlag(flags, CHANGED_POST_DUCK_AMOUNT, readPtr, endPtr, &tick.post.duckAmount, sizeof(tick.post.duckAmount))) return false;
-		if (!ReadIfFlag(flags, CHANGED_POST_DUCK_OFFSET, readPtr, endPtr, &tick.post.duckOffset, sizeof(tick.post.duckOffset))) return false;
-		if (!ReadIfFlag(flags, CHANGED_POST_LAST_DUCK_TIME, readPtr, endPtr, &tick.post.lastDuckTime, sizeof(tick.post.lastDuckTime))) return false;
-		if (!ReadIfFlag(flags, CHANGED_POST_REPLAY_FLAGS, readPtr, endPtr, &tick.post.replayFlags, sizeof(tick.post.replayFlags))) return false;
-		if (!ReadIfFlag(flags, CHANGED_POST_ENTITY_FLAGS, readPtr, endPtr, &tick.post.entityFlags, sizeof(tick.post.entityFlags))) return false;
-		if (!ReadIfFlag(flags, CHANGED_POST_MOVE_TYPE, readPtr, endPtr, &tick.post.moveType, sizeof(tick.post.moveType))) return false;
-
-		// Checkpoint counters and jump state persist until their delta changes.
-		if (flags & CHANGED_CHECKPOINT)
+		if (i % TickStore::KEYFRAME_INTERVAL == 0)
 		{
-			if (!ReadFromBuffer(readPtr, endPtr, &tick.checkpoint.index, sizeof(tick.checkpoint.index))) return false;
-			if (!ReadFromBuffer(readPtr, endPtr, &tick.checkpoint.checkpointCount, sizeof(tick.checkpoint.checkpointCount))) return false;
-			if (!ReadFromBuffer(readPtr, endPtr, &tick.checkpoint.teleportCount, sizeof(tick.checkpoint.teleportCount))) return false;
+			outTicks.keyframes.push_back({tick, (u64)(readPtr - start)});
 		}
-
-		// Only read these fields if present in the data (v2+)
-		if (parser.modernJump)
+		// Every kz_tp raises the recorded teleport count.
+		if (i > 0 && tick.checkpoint.teleportCount > teleportCount)
 		{
-			if (flags & modernActualFlag)
-			{
-				if (!ReadFromBuffer(readPtr, endPtr, &tick.modernJump.lastActualJumpPressTick, sizeof(tick.modernJump.lastActualJumpPressTick))) return false;
-				if (!ReadFromBuffer(readPtr, endPtr, &tick.modernJump.lastActualJumpPressFrac, sizeof(tick.modernJump.lastActualJumpPressFrac))) return false;
-			}
-			if (flags & modernUsableFlag)
-			{
-				if (!ReadFromBuffer(readPtr, endPtr, &tick.modernJump.lastUsableJumpPressTick, sizeof(tick.modernJump.lastUsableJumpPressTick))) return false;
-				if (!ReadFromBuffer(readPtr, endPtr, &tick.modernJump.lastUsableJumpPressFrac, sizeof(tick.modernJump.lastUsableJumpPressFrac))) return false;
-			}
-			if (flags & modernLandedFlag)
-			{
-				if (!ReadFromBuffer(readPtr, endPtr, &tick.modernJump.lastLandedTick, sizeof(tick.modernJump.lastLandedTick))) return false;
-				if (!ReadFromBuffer(readPtr, endPtr, &tick.modernJump.lastLandedFrac, sizeof(tick.modernJump.lastLandedFrac))) return false;
-				if (!ReadFromBuffer(readPtr, endPtr, &tick.modernJump.lastLandedVelocity, sizeof(tick.modernJump.lastLandedVelocity))) return false;
-			}
+			outTicks.teleportTicks.push_back(i);
 		}
-		if (visitor && !(*visitor)(tick)) return false;
-		if (outTickData) outTickData->push_back(tick);
 	}
-	// clang-format on
-	return readPtr == endPtr;
+	return readPtr == endPtr && ReadSubtickSection(cursor, end, *parser, outSubtickCounts, outSubtickMoves);
 }
+
+TickData TickStore::Get(u32 index)
+{
+	if (hasCurrent && index == currentIndex)
+	{
+		return current;
+	}
+	if (hasPrevious && index + 1 == currentIndex)
+	{
+		return previous;
+	}
+	// Continue from the last read tick when it lies between the keyframe and index, otherwise restart at the keyframe.
+	u32 keyframeIndex = index - index % KEYFRAME_INTERVAL;
+	if (!hasCurrent || currentIndex > index || currentIndex < keyframeIndex)
+	{
+		const Keyframe &keyframe = keyframes[index / KEYFRAME_INTERVAL];
+		current = keyframe.tick;
+		currentIndex = keyframeIndex;
+		currentEnd = keyframe.nextOffset;
+		hasCurrent = true;
+		hasPrevious = false;
+	}
+	const char *readPtr = deltas.data() + currentEnd;
+	const char *endPtr = deltas.data() + deltas.size();
+	while (currentIndex < index)
+	{
+		previous = current;
+		hasPrevious = true;
+		DecodeNextTick(readPtr, endPtr, false, *parser, current);
+		currentIndex++;
+	}
+	currentEnd = readPtr - deltas.data();
+	return current;
+}
+
+u32 TickStore::FindServerTick(u32 serverTick)
+{
+	// Find the first keyframe at or after serverTick; the tick lies in the interval before it.
+	size_t low = 0;
+	size_t high = keyframes.size();
+	while (low < high)
+	{
+		size_t mid = (low + high) / 2;
+		if (keyframes[mid].tick.serverTick < serverTick)
+		{
+			low = mid + 1;
+		}
+		else
+		{
+			high = mid;
+		}
+	}
+	if (low == 0)
+	{
+		return 0;
+	}
+	for (u32 i = (u32)(low - 1) * KEYFRAME_INTERVAL + 1; i < count; i++)
+	{
+		if (Get(i).serverTick >= serverTick)
+		{
+			return i;
+		}
+	}
+	return count - 1;
+}
+
 
 bool KZ::replaysystem::compression::ReadWeaponsCompressed(const char *&cursor, const char *end, std::vector<std::pair<i32, EconInfo>> &outWeaponTable,
 														   u32 replayVersion)
@@ -1283,14 +1392,7 @@ bool KZ::replaysystem::compression::ReadCmdDataCompressed(const char *&cursor, c
 	}
 
 	// Cmd subtick section
-	CompressedSectionHeader subtickHeader;
-	if (!ReadSectionHeader(cursor, end, *parser, subtickHeader))
-	{
-		return false;
-	}
-	success = DecodeSubtickSection(cursor, subtickHeader, *parser, outCmdSubtickCounts, outCmdSubtickMoves);
-	cursor += subtickHeader.compressedSize;
-	return success;
+	return ReadSubtickSection(cursor, end, *parser, outCmdSubtickCounts, outCmdSubtickMoves);
 }
 
 bool KZ::replaysystem::compression::WriteWeaponsCompressed(std::vector<char> &outBuffer, const std::vector<std::pair<i32, EconInfo>> &weaponTable)

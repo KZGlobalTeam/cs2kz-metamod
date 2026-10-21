@@ -32,7 +32,7 @@ namespace KZ::replaysystem::commands
 
 		// Reset replay state and reprocess events up to target tick
 		data::ResetReplayState(replay);
-		playback::ResetBotClock(bot::GetBotPlayer(), replay->tickData[targetTick].serverTick);
+		playback::ResetBotClock(bot::GetBotPlayer(), data::GetTick(replay, targetTick).serverTick);
 		events::ReprocessEventsUpToTick(replay, targetTick);
 
 		// Set current tick
@@ -45,8 +45,8 @@ namespace KZ::replaysystem::commands
 			KZPlayer *botPlayer = g_pKZPlayerManager->ToPlayer(bot);
 			if (botPlayer)
 			{
-				TickData *tickData = &replay->tickData[targetTick];
-				playback::ApplyTickState(botPlayer, tickData);
+				const TickData tickData = data::GetTick(replay, targetTick);
+				playback::ApplyTickState(botPlayer, &tickData);
 			}
 		}
 	}

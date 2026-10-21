@@ -80,7 +80,7 @@ namespace KZ::replaysystem::playback
 		const TickData::MovementData &pre = tickData->pre;
 		const TickData::MovementData &post = tickData->post;
 		// A tick's pre angles are already the ones its command asks for, so the turn is from where the last tick ended.
-		const QAngle &from = replay->currentTick > 0 ? replay->tickData[replay->currentTick - 1].post.angles : pre.angles;
+		const QAngle from = replay->currentTick > 0 ? data::GetTick(replay, replay->currentTick - 1).post.angles : pre.angles;
 
 		HeldState state;
 		state.origin = Lerp(fraction, pre.origin, post.origin);
@@ -167,7 +167,7 @@ namespace KZ::replaysystem::playback
 		{
 			return;
 		}
-		data::SetBotTickcount(data::GetCurrentReplay()->tickData[data::GetCurrentReplay()->currentTick].serverTick);
+		data::SetBotTickcount(data::GetTick(data::GetCurrentReplay(), data::GetCurrentReplay()->currentTick).serverTick);
 		ApplyBotTime();
 		PutPunchOnBotClock(player);
 	}
@@ -205,38 +205,38 @@ namespace KZ::replaysystem::playback
 			return;
 		}
 
-		TickData *tickData = &replay->tickData[replay->currentTick];
+		const TickData tickData = data::GetTick(replay, replay->currentTick);
 		auto pawn = player->GetPlayerPawn();
 
 		// Setting the origin via teleport will break client interp, set the values directly
-		pawn->m_CBodyComponent()->m_pSceneNode()->m_vecAbsOrigin(tickData->pre.origin);
-		pawn->m_angEyeAngles(tickData->pre.angles);
-		pawn->m_vecAbsVelocity(tickData->pre.velocity);
+		pawn->m_CBodyComponent()->m_pSceneNode()->m_vecAbsOrigin(tickData.pre.origin);
+		pawn->m_angEyeAngles(tickData.pre.angles);
+		pawn->m_vecAbsVelocity(tickData.pre.velocity);
 
 		auto moveServices = player->GetMoveServices();
 		// The bot's clock is the one the replay was recorded on, so recorded times can be used directly instead of being adjusted.
-		moveServices->m_LegacyJump().m_flJumpPressedTime = tickData->pre.jumpPressedTime;
+		moveServices->m_LegacyJump().m_flJumpPressedTime = tickData.pre.jumpPressedTime;
 
-		moveServices->m_flDuckSpeed = tickData->pre.duckSpeed;
-		moveServices->m_flDuckAmount = tickData->pre.duckAmount;
-		moveServices->m_flLastDuckTime = tickData->pre.lastDuckTime;
-		moveServices->m_bDucking = tickData->pre.replayFlags.ducking;
-		moveServices->m_bDucked = tickData->pre.replayFlags.ducked;
-		moveServices->m_bDesiresDuck = tickData->pre.replayFlags.desiresDuck;
+		moveServices->m_flDuckSpeed = tickData.pre.duckSpeed;
+		moveServices->m_flDuckAmount = tickData.pre.duckAmount;
+		moveServices->m_flLastDuckTime = tickData.pre.lastDuckTime;
+		moveServices->m_bDucking = tickData.pre.replayFlags.ducking;
+		moveServices->m_bDucked = tickData.pre.replayFlags.ducked;
+		moveServices->m_bDesiresDuck = tickData.pre.replayFlags.desiresDuck;
 
-		moveServices->m_ModernJump().m_nLastActualJumpPressTick = tickData->modernJump.lastActualJumpPressTick;
-		moveServices->m_ModernJump().m_flLastActualJumpPressFrac = tickData->modernJump.lastActualJumpPressFrac;
-		moveServices->m_ModernJump().m_nLastUsableJumpPressTick = tickData->modernJump.lastUsableJumpPressTick;
-		moveServices->m_ModernJump().m_flLastUsableJumpPressFrac = tickData->modernJump.lastUsableJumpPressFrac;
-		moveServices->m_ModernJump().m_nLastLandedTick = tickData->modernJump.lastLandedTick;
-		moveServices->m_ModernJump().m_flLastLandedFrac = tickData->modernJump.lastLandedFrac;
-		moveServices->m_ModernJump().m_flLastLandedVelocityX = tickData->modernJump.lastLandedVelocity.x;
-		moveServices->m_ModernJump().m_flLastLandedVelocityY = tickData->modernJump.lastLandedVelocity.y;
-		moveServices->m_ModernJump().m_flLastLandedVelocityZ = tickData->modernJump.lastLandedVelocity.z;
+		moveServices->m_ModernJump().m_nLastActualJumpPressTick = tickData.modernJump.lastActualJumpPressTick;
+		moveServices->m_ModernJump().m_flLastActualJumpPressFrac = tickData.modernJump.lastActualJumpPressFrac;
+		moveServices->m_ModernJump().m_nLastUsableJumpPressTick = tickData.modernJump.lastUsableJumpPressTick;
+		moveServices->m_ModernJump().m_flLastUsableJumpPressFrac = tickData.modernJump.lastUsableJumpPressFrac;
+		moveServices->m_ModernJump().m_nLastLandedTick = tickData.modernJump.lastLandedTick;
+		moveServices->m_ModernJump().m_flLastLandedFrac = tickData.modernJump.lastLandedFrac;
+		moveServices->m_ModernJump().m_flLastLandedVelocityX = tickData.modernJump.lastLandedVelocity.x;
+		moveServices->m_ModernJump().m_flLastLandedVelocityY = tickData.modernJump.lastLandedVelocity.y;
+		moveServices->m_ModernJump().m_flLastLandedVelocityZ = tickData.modernJump.lastLandedVelocity.z;
 
 		u32 playerFlagBits = (-1) & ~((u32)(FL_CLIENT | FL_BOT));
-		pawn->m_fFlags = (pawn->m_fFlags & ~playerFlagBits) | (tickData->pre.entityFlags & playerFlagBits);
-		pawn->v_angle = tickData->pre.angles;
+		pawn->m_fFlags = (pawn->m_fFlags & ~playerFlagBits) | (tickData.pre.entityFlags & playerFlagBits);
+		pawn->v_angle = tickData.pre.angles;
 	}
 
 	void OnProcessMovement(KZPlayer *player)
@@ -290,19 +290,19 @@ namespace KZ::replaysystem::playback
 
 		// Setting the origin via teleport will break client interp, set the values directly.
 		// We have to do it here to be ahead of SetAbsOrigin calls in FinishMove.
-		TickData *tickData = &replay->tickData[replay->currentTick];
+		const TickData tickData = data::GetTick(replay, replay->currentTick);
 		if (replay->holdingTick)
 		{
-			HeldState held = GetHeldState(replay, tickData);
+			HeldState held = GetHeldState(replay, &tickData);
 			mv->m_vecAbsOrigin = held.origin;
 			mv->m_vecVelocity = held.velocity;
 			mv->m_vecViewAngles = held.angles;
 		}
 		else
 		{
-			mv->m_vecAbsOrigin = tickData->post.origin;
-			mv->m_vecVelocity = tickData->post.velocity;
-			mv->m_vecViewAngles = tickData->post.angles;
+			mv->m_vecAbsOrigin = tickData.post.origin;
+			mv->m_vecVelocity = tickData.post.velocity;
+			mv->m_vecViewAngles = tickData.post.angles;
 		}
 
 		// Directly set the pawn's origin/angles/velocity to something else so that they will be resynchronized.
@@ -324,24 +324,24 @@ namespace KZ::replaysystem::playback
 		}
 
 		auto pawn = player->GetPlayerPawn();
-		TickData *tickData = &replay->tickData[replay->currentTick];
+		const TickData tickData = data::GetTick(replay, replay->currentTick);
 
 		auto moveServices = player->GetMoveServices();
-		moveServices->m_nButtons().m_pButtonStates[0] = tickData->post.buttons[0];
-		moveServices->m_nButtons().m_pButtonStates[1] = tickData->post.buttons[1];
-		moveServices->m_nButtons().m_pButtonStates[2] = tickData->post.buttons[2];
-		moveServices->m_LegacyJump().m_flJumpPressedTime = tickData->post.jumpPressedTime;
+		moveServices->m_nButtons().m_pButtonStates[0] = tickData.post.buttons[0];
+		moveServices->m_nButtons().m_pButtonStates[1] = tickData.post.buttons[1];
+		moveServices->m_nButtons().m_pButtonStates[2] = tickData.post.buttons[2];
+		moveServices->m_LegacyJump().m_flJumpPressedTime = tickData.post.jumpPressedTime;
 
-		moveServices->m_flDuckSpeed = tickData->post.duckSpeed;
-		moveServices->m_flDuckAmount = tickData->post.duckAmount;
-		moveServices->m_flLastDuckTime = tickData->post.lastDuckTime;
-		moveServices->m_bDucking = tickData->post.replayFlags.ducking;
-		moveServices->m_bDucked = tickData->post.replayFlags.ducked;
-		moveServices->m_bDesiresDuck = tickData->post.replayFlags.desiresDuck;
-		player->SetMoveType(tickData->post.moveType);
+		moveServices->m_flDuckSpeed = tickData.post.duckSpeed;
+		moveServices->m_flDuckAmount = tickData.post.duckAmount;
+		moveServices->m_flLastDuckTime = tickData.post.lastDuckTime;
+		moveServices->m_bDucking = tickData.post.replayFlags.ducking;
+		moveServices->m_bDucked = tickData.post.replayFlags.ducked;
+		moveServices->m_bDesiresDuck = tickData.post.replayFlags.desiresDuck;
+		player->SetMoveType(tickData.post.moveType);
 		u32 playerFlagBits = (-1) & ~((u32)(FL_CLIENT | FL_FAKECLIENT | FL_BOT));
-		pawn->m_fFlags = (pawn->m_fFlags & ~playerFlagBits) | (tickData->post.entityFlags & playerFlagBits);
-		pawn->v_angle = tickData->post.angles;
+		pawn->m_fFlags = (pawn->m_fFlags & ~playerFlagBits) | (tickData.post.entityFlags & playerFlagBits);
+		pawn->v_angle = tickData.post.angles;
 		pawn->SetAnimGraphUpdateEnabled(true);
 
 		// MoveHeldBot hands this back to FinishMove on server ticks that do not simulate.
@@ -352,9 +352,9 @@ namespace KZ::replaysystem::playback
 		}
 
 		// Update checkpoint state from current tick data
-		replay->currentCpIndex = tickData->checkpoint.index;
-		replay->currentCheckpoint = tickData->checkpoint.checkpointCount;
-		replay->currentTeleport = tickData->checkpoint.teleportCount;
+		replay->currentCpIndex = tickData.checkpoint.index;
+		replay->currentCheckpoint = tickData.checkpoint.checkpointCount;
+		replay->currentTeleport = tickData.checkpoint.teleportCount;
 
 		// Process jumps and events after physics simulation
 		events::CheckJumps(*player);
@@ -430,50 +430,50 @@ namespace KZ::replaysystem::playback
 		// PlayerRunCommand advances the tick base by one and runs the command at that tick.
 		player->GetController()->m_nTickBase(data::GetBotTickcount() - 1);
 
-		TickData *tickData = &replay->tickData[replay->currentTick];
-		command->mutable_base()->set_forwardmove(tickData->forward);
-		command->mutable_base()->set_leftmove(tickData->left);
-		command->mutable_base()->set_upmove(tickData->up);
+		const TickData tickData = data::GetTick(replay, replay->currentTick);
+		command->mutable_base()->set_forwardmove(tickData.forward);
+		command->mutable_base()->set_leftmove(tickData.left);
+		command->mutable_base()->set_upmove(tickData.up);
 
 		command->mutable_base()->mutable_viewangles()->Clear();
-		if (tickData->pre.angles.x != 0)
+		if (tickData.pre.angles.x != 0)
 		{
-			command->mutable_base()->mutable_viewangles()->set_x(tickData->pre.angles.x);
+			command->mutable_base()->mutable_viewangles()->set_x(tickData.pre.angles.x);
 		}
-		if (tickData->pre.angles.y != 0)
+		if (tickData.pre.angles.y != 0)
 		{
-			command->mutable_base()->mutable_viewangles()->set_y(tickData->pre.angles.y);
+			command->mutable_base()->mutable_viewangles()->set_y(tickData.pre.angles.y);
 		}
-		if (tickData->pre.angles.z != 0)
+		if (tickData.pre.angles.z != 0)
 		{
-			command->mutable_base()->mutable_viewangles()->set_z(tickData->pre.angles.z);
+			command->mutable_base()->mutable_viewangles()->set_z(tickData.pre.angles.z);
 		}
 
 		// Fast playback runs the same command object for several replay ticks, so nothing may be left over from the last one.
 		command->mutable_base()->mutable_buttons_pb()->Clear();
 		command->mutable_base()->clear_weaponselect();
 		command->clear_left_hand_desired();
-		if (tickData->pre.buttons[0])
+		if (tickData.pre.buttons[0])
 		{
-			command->mutable_base()->mutable_buttons_pb()->set_buttonstate1(tickData->pre.buttons[0]);
+			command->mutable_base()->mutable_buttons_pb()->set_buttonstate1(tickData.pre.buttons[0]);
 		}
-		if (tickData->pre.buttons[1])
+		if (tickData.pre.buttons[1])
 		{
-			command->mutable_base()->mutable_buttons_pb()->set_buttonstate2(tickData->pre.buttons[1]);
+			command->mutable_base()->mutable_buttons_pb()->set_buttonstate2(tickData.pre.buttons[1]);
 		}
-		if (tickData->pre.buttons[2])
+		if (tickData.pre.buttons[2])
 		{
-			command->mutable_base()->mutable_buttons_pb()->set_buttonstate3(tickData->pre.buttons[2]);
+			command->mutable_base()->mutable_buttons_pb()->set_buttonstate3(tickData.pre.buttons[2]);
 		}
-		command->buttonstates.m_pButtonStates[0] = tickData->pre.buttons[0];
-		command->buttonstates.m_pButtonStates[1] = tickData->pre.buttons[1];
-		command->buttonstates.m_pButtonStates[2] = tickData->pre.buttons[2];
+		command->buttonstates.m_pButtonStates[0] = tickData.pre.buttons[0];
+		command->buttonstates.m_pButtonStates[1] = tickData.pre.buttons[1];
+		command->buttonstates.m_pButtonStates[2] = tickData.pre.buttons[2];
 
-		if (tickData->leftHanded)
+		if (tickData.leftHanded)
 		{
 			command->set_left_hand_desired(true);
 		}
-		player->SetMoveType(tickData->pre.moveType);
+		player->SetMoveType(tickData.pre.moveType);
 
 		// Bots should never have any subtick move, but who knows?
 		command->mutable_base()->clear_subtick_moves();
@@ -520,10 +520,10 @@ namespace KZ::replaysystem::playback
 			return;
 		}
 
-		TickData *tickData = &replay->tickData[replay->currentTick];
+		const TickData tickData = data::GetTick(replay, replay->currentTick);
 
 		// Check what the current weapon should be.
-		i32 weaponIndex = tickData->weapon;
+		i32 weaponIndex = tickData.weapon;
 		i32 found = -1;
 		for (i32 i = 0; i < replay->weaponTableSize; i++)
 		{
@@ -646,7 +646,7 @@ namespace KZ::replaysystem::playback
 		replay->tickProgress = 0.0f;
 		replay->stepTicks = 0;
 		replay->currentTick = 0;
-		ResetBotClock(bot::GetBotPlayer(), replay->tickData[0].serverTick);
+		ResetBotClock(bot::GetBotPlayer(), data::GetTick(replay, 0).serverTick);
 		controls::OnReplayStart();
 	}
 

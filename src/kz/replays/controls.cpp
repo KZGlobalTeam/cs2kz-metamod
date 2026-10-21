@@ -13,6 +13,7 @@
 #include "commands.h"
 #include "playback.h"
 #include "data.h"
+#include "compression.h"
 #include "bot.h"
 
 #include <vector>
@@ -378,13 +379,9 @@ namespace KZ::replaysystem::controls
 			zoneMarkers.push_back(marker);
 			jumpTicks[marker.kind].push_back(GetEventSeekTick(marker.tick));
 		}
-		// Every kz_tp raises the recorded teleport count, so the tick where it goes up is where the teleport happened.
-		for (u32 i = 1; i < replay->tickCount; i++)
+		for (u32 tick : replay->ticks->TeleportTicks())
 		{
-			if (replay->tickData[i].checkpoint.teleportCount > replay->tickData[i - 1].checkpoint.teleportCount)
-			{
-				jumpTicks[TELEPORT_KIND].push_back(GetEventSeekTick(i));
-			}
+			jumpTicks[TELEPORT_KIND].push_back(GetEventSeekTick(tick));
 		}
 	}
 
