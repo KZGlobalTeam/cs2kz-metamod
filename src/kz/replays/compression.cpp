@@ -57,16 +57,39 @@ static_function void ClearAnalogSubtickAngles(std::vector<SubtickData> &subtickD
 // Pre-v4 replays stored subtickMoves[64] instead of subtickMoves[MAX_SUBTICK_MOVES].
 static constexpr size_t LEGACY_SUBTICK_DATA_SIZE = sizeof(u32) + 64 * sizeof(SubtickData::RpSubtickMove);
 
-// Reads a section header and bounds it before anything is allocated from its sizes.
-static_function bool ReadSectionHeader(const char *&cursor, const char *end, CompressedSectionHeader &header)
+// v1-6 section header. Its u32 sizes wrapped once a subtick section passed 4 GiB (about 4.95M ticks).
+struct LegacySectionHeader
 {
-	if ((size_t)(end - cursor) < sizeof(header))
+	u32 compressedSize;
+	u32 uncompressedSize;
+	u32 elementCount;
+};
+
+// Reads a section header and bounds it before anything is allocated from its sizes.
+static_function bool ReadSectionHeader(const char *&cursor, const char *end, const parsing::VersionParser &parser, CompressedSectionHeader &header)
+{
+	if (parser.wideSections)
 	{
-		return false;
+		if ((size_t)(end - cursor) < sizeof(header))
+		{
+			return false;
+		}
+		memcpy(&header, cursor, sizeof(header));
+		cursor += sizeof(header);
 	}
-	memcpy(&header, cursor, sizeof(header));
-	cursor += sizeof(header);
-	if (header.compressedSize > (size_t)(end - cursor))
+	else
+	{
+		LegacySectionHeader legacy;
+		if ((size_t)(end - cursor) < sizeof(legacy))
+		{
+			return false;
+		}
+		memcpy(&legacy, cursor, sizeof(legacy));
+		cursor += sizeof(legacy);
+		header = {legacy.compressedSize, legacy.uncompressedSize, legacy.elementCount};
+	}
+	// Decoded element counts and tick indices are u32, the same width as the server tick.
+	if (header.elementCount > UINT32_MAX || header.compressedSize > (size_t)(end - cursor))
 	{
 		return false;
 	}
@@ -74,33 +97,27 @@ static_function bool ReadSectionHeader(const char *&cursor, const char *end, Com
 	return ZSTD_getFrameContentSize(cursor, header.compressedSize) == header.uncompressedSize;
 }
 
-// Compresses one section and appends its header and payload. Returns 0 if compression fails or a size does not fit the header.
-static_function i32 AppendCompressedSection(std::vector<char> &outBuffer, const void *data, size_t size, size_t elementCount)
+// Compresses one section and appends its header and payload.
+static_function bool AppendCompressedSection(std::vector<char> &outBuffer, const void *data, size_t size, size_t elementCount)
 {
-	if (size > UINT32_MAX || elementCount > UINT32_MAX)
+	if (elementCount > UINT32_MAX)
 	{
-		KZ_LOG_WARN(LogChannel::Replays, "Replay section of %zu bytes (%zu elements) is too large to save\n", size, elementCount);
-		return 0;
+		KZ_LOG_WARN(LogChannel::Replays, "Replay section with %zu elements is too large to save\n", elementCount);
+		return false;
 	}
 
 	void *compressedData = nullptr;
 	size_t compressedSize = 0;
 	if (!Compress(data, size, &compressedData, &compressedSize))
 	{
-		return 0;
-	}
-	if (compressedSize > UINT32_MAX)
-	{
-		KZ_LOG_WARN(LogChannel::Replays, "Compressed replay section of %zu bytes is too large to save\n", compressedSize);
-		delete[] static_cast<char *>(compressedData);
-		return 0;
+		return false;
 	}
 
-	CompressedSectionHeader header {(u32)compressedSize, (u32)size, (u32)elementCount};
+	CompressedSectionHeader header {compressedSize, size, elementCount};
 	AppendToBuffer(outBuffer, &header, sizeof(header));
 	AppendToBuffer(outBuffer, compressedData, compressedSize);
 	delete[] static_cast<char *>(compressedData);
-	return (i32)(sizeof(header) + compressedSize);
+	return true;
 }
 
 // Decompresses a tick or cmd subtick section, converting pre-v4 entries to the current layout.
@@ -298,7 +315,7 @@ static_function u64 BuildPostChangeFlags(const TickData::MovementData &current, 
 	return flags;
 }
 
-i32 KZ::replaysystem::compression::WriteTickDataCompressed(std::vector<char> &outBuffer, const std::vector<TickData> &tickData,
+bool KZ::replaysystem::compression::WriteTickDataCompressed(std::vector<char> &outBuffer, const std::vector<TickData> &tickData,
 														   const std::vector<SubtickData> &subtickData)
 {
 	std::vector<char> buffer;
@@ -459,19 +476,9 @@ i32 KZ::replaysystem::compression::WriteTickDataCompressed(std::vector<char> &ou
 		// clang-format on
 	}
 
-	i32 bytesWritten = AppendCompressedSection(outBuffer, buffer.data(), buffer.size(), tickData.size());
-	if (!bytesWritten)
-	{
-		return 0;
-	}
-
-	// The reader expects the subtick section to follow, so a failure here fails the whole write.
-	i32 subtickBytesWritten = AppendCompressedSection(outBuffer, subtickData.data(), subtickData.size() * sizeof(SubtickData), subtickData.size());
-	if (!subtickBytesWritten)
-	{
-		return 0;
-	}
-	return bytesWritten + subtickBytesWritten;
+	// The reader expects the subtick section to follow, so a failure there fails the whole write.
+	return AppendCompressedSection(outBuffer, buffer.data(), buffer.size(), tickData.size())
+		   && AppendCompressedSection(outBuffer, subtickData.data(), subtickData.size() * sizeof(SubtickData), subtickData.size());
 }
 
 static_function bool ReadTickDataSections(const char *&cursor, const char *end, std::vector<TickData> *outTickData,
@@ -483,7 +490,7 @@ static_function bool ReadTickDataSections(const char *&cursor, const char *end, 
 		return false;
 	}
 	CompressedSectionHeader header;
-	if (!ReadSectionHeader(cursor, end, header))
+	if (!ReadSectionHeader(cursor, end, *parser, header))
 	{
 		return false;
 	}
@@ -508,7 +515,7 @@ static_function bool ReadTickDataSections(const char *&cursor, const char *end, 
 	}
 
 	// Reconstruct tick data from delta-encoded buffer
-	bool decoded = DecodeTickDataBuffer(decompressedData, header.uncompressedSize, header.elementCount, *parser, outTickData, visitor);
+	bool decoded = DecodeTickDataBuffer(decompressedData, header.uncompressedSize, (u32)header.elementCount, *parser, outTickData, visitor);
 
 	delete[] decompressedData;
 	if (!decoded)
@@ -518,12 +525,12 @@ static_function bool ReadTickDataSections(const char *&cursor, const char *end, 
 
 	if (visitor)
 	{
-		return SkipCompressedSection(cursor, end);
+		return SkipCompressedSection(cursor, end, replayVersion);
 	}
 
 	// Read subtick data
 	CompressedSectionHeader subtickHeader;
-	if (!ReadSectionHeader(cursor, end, subtickHeader))
+	if (!ReadSectionHeader(cursor, end, *parser, subtickHeader))
 	{
 		return false;
 	}
@@ -655,10 +662,12 @@ static_function bool DecodeTickDataBuffer(const char *decompressedData, size_t u
 	return readPtr == endPtr;
 }
 
-bool KZ::replaysystem::compression::ReadWeaponsCompressed(const char *&cursor, const char *end, std::vector<std::pair<i32, EconInfo>> &outWeaponTable)
+bool KZ::replaysystem::compression::ReadWeaponsCompressed(const char *&cursor, const char *end, std::vector<std::pair<i32, EconInfo>> &outWeaponTable,
+														   u32 replayVersion)
 {
+	const auto *parser = parsing::GetVersionParser(replayVersion);
 	CompressedSectionHeader header;
-	if (!ReadSectionHeader(cursor, end, header))
+	if (!parser || !ReadSectionHeader(cursor, end, *parser, header))
 	{
 		return false;
 	}
@@ -722,16 +731,11 @@ bool KZ::replaysystem::compression::ReadWeaponsCompressed(const char *&cursor, c
 // Events compression
 // ========================================
 
-bool KZ::replaysystem::compression::SkipCompressedSection(const char *&cursor, const char *end)
+bool KZ::replaysystem::compression::SkipCompressedSection(const char *&cursor, const char *end, u32 replayVersion)
 {
-	if ((size_t)(end - cursor) < sizeof(CompressedSectionHeader))
-	{
-		return false;
-	}
+	const auto *parser = parsing::GetVersionParser(replayVersion);
 	CompressedSectionHeader header;
-	memcpy(&header, cursor, sizeof(header));
-	cursor += sizeof(header);
-	if (header.compressedSize > (size_t)(end - cursor))
+	if (!parser || !ReadSectionHeader(cursor, end, *parser, header))
 	{
 		return false;
 	}
@@ -743,7 +747,7 @@ bool KZ::replaysystem::compression::ReadEventsCompressed(const char *&cursor, co
 {
 	const auto *parser = parsing::GetVersionParser(version);
 	CompressedSectionHeader header;
-	if (!parser || !ReadSectionHeader(cursor, end, header))
+	if (!parser || !ReadSectionHeader(cursor, end, *parser, header))
 	{
 		return false;
 	}
@@ -753,15 +757,15 @@ bool KZ::replaysystem::compression::ReadEventsCompressed(const char *&cursor, co
 		return false;
 	}
 	cursor += header.compressedSize;
-	return parser->readEvents(bytes.data(), bytes.size(), header.elementCount, outEvents);
+	return parser->readEvents(bytes.data(), bytes.size(), (u32)header.elementCount, outEvents);
 }
 
-i32 KZ::replaysystem::compression::WriteEventsCompressed(std::vector<char> &outBuffer, const std::vector<RpEvent> &events)
+bool KZ::replaysystem::compression::WriteEventsCompressed(std::vector<char> &outBuffer, const std::vector<RpEvent> &events)
 {
 	std::vector<char> bytes;
 	if (!parsing::EncodeEventsV6(events, bytes))
 	{
-		return 0;
+		return false;
 	}
 	return AppendCompressedSection(outBuffer, bytes.data(), bytes.size(), events.size());
 }
@@ -778,7 +782,7 @@ bool KZ::replaysystem::compression::ReadJumpsCompressed(const char *&cursor, con
 		return false;
 	}
 	CompressedSectionHeader header;
-	if (!ReadSectionHeader(cursor, end, header))
+	if (!ReadSectionHeader(cursor, end, *parser, header))
 	{
 		return false;
 	}
@@ -926,7 +930,7 @@ bool KZ::replaysystem::compression::ReadJumpsCompressed(const char *&cursor, con
 	return ok;
 }
 
-i32 KZ::replaysystem::compression::WriteJumpsCompressed(std::vector<char> &outBuffer, const std::vector<RpJumpStats> &jumps)
+bool KZ::replaysystem::compression::WriteJumpsCompressed(std::vector<char> &outBuffer, const std::vector<RpJumpStats> &jumps)
 {
 	// Serialize jumps to a buffer first (since they have variable-sized vectors)
 	std::vector<char> buffer;
@@ -1003,7 +1007,7 @@ bool KZ::replaysystem::compression::ReadCmdDataCompressed(const char *&cursor, c
 		return false;
 	}
 	CompressedSectionHeader header;
-	if (!ReadSectionHeader(cursor, end, header))
+	if (!ReadSectionHeader(cursor, end, *parser, header))
 	{
 		return false;
 	}
@@ -1112,7 +1116,7 @@ bool KZ::replaysystem::compression::ReadCmdDataCompressed(const char *&cursor, c
 
 	// Cmd subtick section
 	CompressedSectionHeader subtickHeader;
-	if (!ReadSectionHeader(cursor, end, subtickHeader))
+	if (!ReadSectionHeader(cursor, end, *parser, subtickHeader))
 	{
 		return false;
 	}
@@ -1121,7 +1125,7 @@ bool KZ::replaysystem::compression::ReadCmdDataCompressed(const char *&cursor, c
 	return success;
 }
 
-i32 KZ::replaysystem::compression::WriteWeaponsCompressed(std::vector<char> &outBuffer, const std::vector<std::pair<i32, EconInfo>> &weaponTable)
+bool KZ::replaysystem::compression::WriteWeaponsCompressed(std::vector<char> &outBuffer, const std::vector<std::pair<i32, EconInfo>> &weaponTable)
 {
 	// Serialize weapon table to a buffer first
 	std::vector<char> buffer;
@@ -1150,7 +1154,7 @@ i32 KZ::replaysystem::compression::WriteWeaponsCompressed(std::vector<char> &out
 	return AppendCompressedSection(outBuffer, buffer.data(), buffer.size(), weaponTable.size());
 }
 
-i32 KZ::replaysystem::compression::WriteCmdDataCompressed(std::vector<char> &outBuffer, const std::vector<CmdData> &cmdData,
+bool KZ::replaysystem::compression::WriteCmdDataCompressed(std::vector<char> &outBuffer, const std::vector<CmdData> &cmdData,
 														  const std::vector<SubtickData> &cmdSubtickData)
 {
 	std::vector<char> buffer;
@@ -1220,17 +1224,7 @@ i32 KZ::replaysystem::compression::WriteCmdDataCompressed(std::vector<char> &out
 		// clang-format on
 	}
 
-	i32 bytesWritten = AppendCompressedSection(outBuffer, buffer.data(), buffer.size(), cmdData.size());
-	if (!bytesWritten)
-	{
-		return 0;
-	}
-
-	// The reader expects the cmd subtick section to follow, so a failure here fails the whole write.
-	i32 subtickBytesWritten = AppendCompressedSection(outBuffer, cmdSubtickData.data(), cmdSubtickData.size() * sizeof(SubtickData), cmdSubtickData.size());
-	if (!subtickBytesWritten)
-	{
-		return 0;
-	}
-	return bytesWritten + subtickBytesWritten;
+	// The reader expects the cmd subtick section to follow, so a failure there fails the whole write.
+	return AppendCompressedSection(outBuffer, buffer.data(), buffer.size(), cmdData.size())
+		   && AppendCompressedSection(outBuffer, cmdSubtickData.data(), cmdSubtickData.size() * sizeof(SubtickData), cmdSubtickData.size());
 }

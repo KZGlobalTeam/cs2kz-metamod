@@ -299,6 +299,7 @@ namespace KZ::replaysystem::parsing
 	{
 		VersionParser parser = ParserV6();
 		parser.analogSubtickAngles = true;
+		parser.wideSections = true;
 		return parser;
 	}
 

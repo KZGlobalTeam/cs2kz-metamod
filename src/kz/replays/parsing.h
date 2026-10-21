@@ -16,6 +16,8 @@ namespace KZ::replaysystem::parsing
 		bool jumpFractions;
 		// Older versions left the angle deltas of analog steps unwritten, so they hold garbage.
 		bool analogSubtickAngles;
+		// Section headers hold 64-bit sizes (v7+).
+		bool wideSections;
 		bool (*readEvents)(const char *, size_t, u32, std::vector<RpEvent> &);
 	};
 

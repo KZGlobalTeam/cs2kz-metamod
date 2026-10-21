@@ -5,12 +5,12 @@
 
 namespace KZ::replaysystem::compression
 {
-	// Compressed section header (written before each compressed data block)
+	// Compressed section header (written before each compressed data block). v1-6 replays used u32 fields instead.
 	struct CompressedSectionHeader
 	{
-		u32 compressedSize;   // Size of compressed data
-		u32 uncompressedSize; // Original size of data
-		u32 elementCount;     // Number of elements (e.g., tick count)
+		u64 compressedSize;   // Size of compressed data
+		u64 uncompressedSize; // Original size of data
+		u64 elementCount;     // Number of elements (e.g., tick count)
 	};
 
 	// Compress a buffer using zstd level 3
@@ -20,7 +20,7 @@ namespace KZ::replaysystem::compression
 	bool Decompress(const void *src, size_t srcSize, void *dst, size_t dstSize);
 
 	// Write compressed tick data with delta encoding
-	i32 WriteTickDataCompressed(std::vector<char> &outBuffer, const std::vector<TickData> &tickData, const std::vector<SubtickData> &subtickData);
+	bool WriteTickDataCompressed(std::vector<char> &outBuffer, const std::vector<TickData> &tickData, const std::vector<SubtickData> &subtickData);
 
 	// The route reader receives decoded ticks without retaining full tick/subtick arrays.
 	// Returning false aborts decoding, for example when a map change cancels loading.
@@ -34,10 +34,10 @@ namespace KZ::replaysystem::compression
 	bool ReadTickDataCompressed(const char *&cursor, const char *end, u32 replayVersion, const TickVisitor &visitor);
 
 	// Bounds-checks and advances past one compressed block without decompressing it.
-	bool SkipCompressedSection(const char *&cursor, const char *end);
+	bool SkipCompressedSection(const char *&cursor, const char *end, u32 replayVersion);
 
 	// Read compressed weapon changes
-	bool ReadWeaponsCompressed(const char *&cursor, const char *end, std::vector<std::pair<i32, EconInfo>> &outWeaponTable);
+	bool ReadWeaponsCompressed(const char *&cursor, const char *end, std::vector<std::pair<i32, EconInfo>> &outWeaponTable, u32 replayVersion);
 
 	// Read compressed events
 	bool ReadEventsCompressed(const char *&cursor, const char *end, std::vector<RpEvent> &outEvents, u32 replayVersion);
@@ -50,14 +50,14 @@ namespace KZ::replaysystem::compression
 							   u32 replayVersion);
 
 	// Write compressed weapon changes
-	i32 WriteWeaponsCompressed(std::vector<char> &outBuffer, const std::vector<std::pair<i32, EconInfo>> &weaponTable);
+	bool WriteWeaponsCompressed(std::vector<char> &outBuffer, const std::vector<std::pair<i32, EconInfo>> &weaponTable);
 
 	// Write compressed events
-	i32 WriteEventsCompressed(std::vector<char> &outBuffer, const std::vector<RpEvent> &events);
+	bool WriteEventsCompressed(std::vector<char> &outBuffer, const std::vector<RpEvent> &events);
 
 	// Write compressed jumps
-	i32 WriteJumpsCompressed(std::vector<char> &outBuffer, const std::vector<RpJumpStats> &jumps);
+	bool WriteJumpsCompressed(std::vector<char> &outBuffer, const std::vector<RpJumpStats> &jumps);
 
 	// Write compressed CmdData
-	i32 WriteCmdDataCompressed(std::vector<char> &outBuffer, const std::vector<CmdData> &cmdData, const std::vector<SubtickData> &cmdSubtickData);
+	bool WriteCmdDataCompressed(std::vector<char> &outBuffer, const std::vector<CmdData> &cmdData, const std::vector<SubtickData> &cmdSubtickData);
 } // namespace KZ::replaysystem::compression

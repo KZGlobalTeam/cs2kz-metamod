@@ -260,7 +260,7 @@ namespace KZ::replaysystem::data
 
 		std::vector<std::pair<i32, EconInfo>> weaponTableVec;
 
-		if (!KZ::replaysystem::compression::ReadWeaponsCompressed(cursor, end, weaponTableVec))
+		if (!KZ::replaysystem::compression::ReadWeaponsCompressed(cursor, end, weaponTableVec, result.header.version()))
 		{
 			delete[] result.tickData;
 			delete[] result.subtickData;
