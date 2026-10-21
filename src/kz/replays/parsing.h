@@ -18,6 +18,8 @@ namespace KZ::replaysystem::parsing
 		bool analogSubtickAngles;
 		// Section headers hold 64-bit sizes (v7+).
 		bool wideSections;
+		// Subtick sections hold one move count per element followed by all moves, instead of one SubtickData each (v7+).
+		bool packedSubticks;
 		bool (*readEvents)(const char *, size_t, u32, std::vector<RpEvent> &);
 	};
 

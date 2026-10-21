@@ -188,21 +188,6 @@ struct Recorder
 		}
 	}
 
-	// Reconstruct SubtickData vectors from packed storage (for serialization).
-	void UnpackSubtickData(std::vector<SubtickData> &out, const std::vector<u8> &counts, const std::vector<SubtickData::RpSubtickMove> &moves) const
-	{
-		out.resize(counts.size());
-		u32 offset = 0;
-		for (size_t i = 0; i < counts.size(); i++)
-		{
-			out[i].numSubtickMoves = counts[i];
-			for (u8 j = 0; j < counts[i]; j++)
-			{
-				out[i].subtickMoves[j] = moves[offset++];
-			}
-		}
-	}
-
 	static void Init(ReplayHeader &hdr, KZPlayer *player, ReplayType type);
 };
 

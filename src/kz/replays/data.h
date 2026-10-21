@@ -19,7 +19,9 @@ namespace KZ::replaysystem::data
 
 		u32 tickCount;
 		TickData *tickData;
-		SubtickData *subtickData;
+		// tickCount + 1 entries; the subtick moves of tick i are subtickMoves[subtickOffsets[i]] to subtickMoves[subtickOffsets[i + 1] - 1].
+		u64 *subtickOffsets;
+		SubtickData::RpSubtickMove *subtickMoves;
 		i32 weaponTableSize;
 		i32 *weaponIndices;
 		EconInfo *weapons;

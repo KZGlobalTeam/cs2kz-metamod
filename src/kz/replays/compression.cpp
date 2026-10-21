@@ -39,23 +39,10 @@ static_function bool ReadIfFlag(u64 flags, u64 flag, const char *&ptr, const cha
 	return !(flags & flag) || ReadFromBuffer(ptr, end, dst, size);
 }
 
-static_function void ClearAnalogSubtickAngles(std::vector<SubtickData> &subtickData)
-{
-	for (SubtickData &data : subtickData)
-	{
-		for (u32 i = 0; i < data.numSubtickMoves && i < MAX_SUBTICK_MOVES; i++)
-		{
-			if (data.subtickMoves[i].IsAnalogInput())
-			{
-				data.subtickMoves[i].analogMove.pitch_delta = 0.0f;
-				data.subtickMoves[i].analogMove.yaw_delta = 0.0f;
-			}
-		}
-	}
-}
+using RpSubtickMove = SubtickData::RpSubtickMove;
 
-// Pre-v4 replays stored subtickMoves[64] instead of subtickMoves[MAX_SUBTICK_MOVES].
-static constexpr size_t LEGACY_SUBTICK_DATA_SIZE = sizeof(u32) + 64 * sizeof(SubtickData::RpSubtickMove);
+// Subtick moves are stored as raw structs, so their layout is part of the file format.
+static_assert(sizeof(RpSubtickMove) == 24);
 
 // v1-6 section header. Its u32 sizes wrapped once a subtick section passed 4 GiB (about 4.95M ticks).
 struct LegacySectionHeader
@@ -120,46 +107,139 @@ static_function bool AppendCompressedSection(std::vector<char> &outBuffer, const
 	return true;
 }
 
-// Decompresses a tick or cmd subtick section, converting pre-v4 entries to the current layout.
-static_function bool DecompressSubtickSection(const char *src, const CompressedSectionHeader &header, const parsing::VersionParser &parser,
-											  std::vector<SubtickData> &outSubtickData)
+// v7+ subtick sections store each element's move count followed by its moves.
+static_function bool AppendSubtickSection(std::vector<char> &outBuffer, const std::vector<u8> &counts, const std::vector<RpSubtickMove> &moves)
 {
-	size_t entrySize = parser.compactSubticks ? sizeof(SubtickData) : LEGACY_SUBTICK_DATA_SIZE;
-	// Decompress writes uncompressedSize bytes, so it has to match the entries the buffer is sized for.
-	if (header.uncompressedSize != (u64)header.elementCount * entrySize)
+	std::vector<char> bytes;
+	bytes.reserve(counts.size() + moves.size() * sizeof(RpSubtickMove));
+	size_t move = 0;
+	for (u8 count : counts)
+	{
+		if (count > MAX_SUBTICK_MOVES || count > moves.size() - move)
+		{
+			return false;
+		}
+		AppendToBuffer(bytes, &count, sizeof(count));
+		AppendToBuffer(bytes, moves.data() + move, count * sizeof(RpSubtickMove));
+		move += count;
+	}
+	return move == moves.size() && AppendCompressedSection(outBuffer, bytes.data(), bytes.size(), counts.size());
+}
+
+static_function bool ReadPackedSubticks(const char *src, const CompressedSectionHeader &header, std::vector<u8> &outCounts,
+										std::vector<RpSubtickMove> &outMoves)
+{
+	// Every element takes at least its count byte.
+	if (header.elementCount > header.uncompressedSize)
+	{
+		return false;
+	}
+	std::vector<char> bytes(header.uncompressedSize);
+	if (!Decompress(src, header.compressedSize, bytes.data(), bytes.size()))
 	{
 		return false;
 	}
 
-	bool success;
-	if (parser.compactSubticks)
+	// Moves take 24 bytes against 1 byte per count, so the moves fill at most this share of the section.
+	outCounts.clear();
+	outCounts.reserve(header.elementCount);
+	outMoves.clear();
+	outMoves.reserve((header.uncompressedSize - header.elementCount) / sizeof(RpSubtickMove));
+	const char *readPtr = bytes.data();
+	const char *endPtr = bytes.data() + bytes.size();
+	for (u64 i = 0; i < header.elementCount; i++)
 	{
-		outSubtickData.resize(header.elementCount);
-		success = Decompress(src, header.compressedSize, outSubtickData.data(), header.uncompressedSize);
-	}
-	else
-	{
-		char *tempBuf = new char[header.uncompressedSize];
-		success = Decompress(src, header.compressedSize, tempBuf, header.uncompressedSize);
-		if (success)
+		u8 count;
+		if (!ReadFromBuffer(readPtr, endPtr, &count, sizeof(count)) || count > MAX_SUBTICK_MOVES
+			|| count * sizeof(RpSubtickMove) > (size_t)(endPtr - readPtr))
 		{
-			outSubtickData.resize(header.elementCount);
-			for (u32 i = 0; i < header.elementCount; i++)
+			return false;
+		}
+		outCounts.push_back(count);
+		for (u8 j = 0; j < count; j++)
+		{
+			RpSubtickMove move;
+			memcpy(&move, readPtr, sizeof(move));
+			readPtr += sizeof(move);
+			outMoves.push_back(move);
+		}
+	}
+	return readPtr == endPtr;
+}
+
+// v1-6 subtick sections hold one fixed-size SubtickData per element, almost all of it empty.
+// The section is streamed through a small window and packed on the fly, so it is never expanded in full.
+static_function bool ReadFixedSubticks(const char *src, const CompressedSectionHeader &header, const parsing::VersionParser &parser,
+									   std::vector<u8> &outCounts, std::vector<RpSubtickMove> &outMoves)
+{
+	// v4-6 stored subtickMoves[MAX_SUBTICK_MOVES]; older versions stored subtickMoves[64].
+	size_t entrySize = sizeof(u32) + (parser.compactSubticks ? MAX_SUBTICK_MOVES : 64) * sizeof(RpSubtickMove);
+	if (header.uncompressedSize != header.elementCount * entrySize)
+	{
+		return false;
+	}
+	outCounts.clear();
+	outCounts.reserve(header.elementCount);
+	outMoves.clear();
+
+	ZSTD_DCtx *dctx = ZSTD_createDCtx();
+	if (!dctx)
+	{
+		return false;
+	}
+	std::vector<char> window(entrySize * 64);
+	ZSTD_inBuffer input {src, header.compressedSize, 0};
+	ZSTD_outBuffer output {window.data(), window.size(), 0};
+	bool ok = true;
+	// ZSTD_decompressStream returns 0 once the frame is fully decoded.
+	size_t remaining = 1;
+	while (remaining != 0)
+	{
+		size_t inputBefore = input.pos;
+		size_t outputBefore = output.pos;
+		remaining = ZSTD_decompressStream(dctx, &output, &input);
+		// No progress means the frame is truncated.
+		if (ZSTD_isError(remaining) || (input.pos == inputBefore && output.pos == outputBefore))
+		{
+			ok = false;
+			break;
+		}
+
+		size_t numEntries = output.pos / entrySize;
+		for (size_t i = 0; i < numEntries; i++)
+		{
+			const char *entry = window.data() + i * entrySize;
+			u32 numMoves;
+			memcpy(&numMoves, entry, sizeof(numMoves));
+			u8 count = (u8)MIN(numMoves, MAX_SUBTICK_MOVES);
+			outCounts.push_back(count);
+			for (u8 j = 0; j < count; j++)
 			{
-				memcpy(&outSubtickData[i], tempBuf + i * entrySize, sizeof(SubtickData));
-				if (outSubtickData[i].numSubtickMoves > MAX_SUBTICK_MOVES)
+				RpSubtickMove move;
+				memcpy(&move, entry + sizeof(u32) + j * sizeof(move), sizeof(move));
+				// Older versions left the angle deltas of analog steps unwritten, so they hold garbage.
+				if (!parser.analogSubtickAngles && move.IsAnalogInput())
 				{
-					outSubtickData[i].numSubtickMoves = MAX_SUBTICK_MOVES;
+					move.analogMove.pitch_delta = 0.0f;
+					move.analogMove.yaw_delta = 0.0f;
 				}
+				outMoves.push_back(move);
 			}
 		}
-		delete[] tempBuf;
+		// A partially decoded entry moves to the front of the window for the next pass.
+		size_t consumed = numEntries * entrySize;
+		memmove(window.data(), window.data() + consumed, output.pos - consumed);
+		output.pos -= consumed;
 	}
-	if (success && !parser.analogSubtickAngles)
-	{
-		ClearAnalogSubtickAngles(outSubtickData);
-	}
-	return success;
+	ZSTD_freeDCtx(dctx);
+	return ok && output.pos == 0 && input.pos == input.size && outCounts.size() == header.elementCount;
+}
+
+static_function bool DecodeSubtickSection(const char *src, const CompressedSectionHeader &header, const parsing::VersionParser &parser,
+										std::vector<u8> &outCounts, std::vector<RpSubtickMove> &outMoves)
+{
+	return parser.packedSubticks ? ReadPackedSubticks(src, header, outCounts, outMoves)
+								 : ReadFixedSubticks(src, header, parser, outCounts, outMoves);
 }
 
 // ========================================
@@ -316,7 +396,7 @@ static_function u64 BuildPostChangeFlags(const TickData::MovementData &current, 
 }
 
 bool KZ::replaysystem::compression::WriteTickDataCompressed(std::vector<char> &outBuffer, const std::vector<TickData> &tickData,
-														   const std::vector<SubtickData> &subtickData)
+														   const std::vector<u8> &subtickCounts, const std::vector<RpSubtickMove> &subtickMoves)
 {
 	std::vector<char> buffer;
 
@@ -478,11 +558,12 @@ bool KZ::replaysystem::compression::WriteTickDataCompressed(std::vector<char> &o
 
 	// The reader expects the subtick section to follow, so a failure there fails the whole write.
 	return AppendCompressedSection(outBuffer, buffer.data(), buffer.size(), tickData.size())
-		   && AppendCompressedSection(outBuffer, subtickData.data(), subtickData.size() * sizeof(SubtickData), subtickData.size());
+		   && AppendSubtickSection(outBuffer, subtickCounts, subtickMoves);
 }
 
 static_function bool ReadTickDataSections(const char *&cursor, const char *end, std::vector<TickData> *outTickData,
-										  std::vector<SubtickData> *outSubtickData, u32 replayVersion, const TickVisitor *visitor)
+										  std::vector<u8> *outSubtickCounts, std::vector<RpSubtickMove> *outSubtickMoves, u32 replayVersion,
+										  const TickVisitor *visitor)
 {
 	const auto *parser = parsing::GetVersionParser(replayVersion);
 	if (!parser)
@@ -534,20 +615,20 @@ static_function bool ReadTickDataSections(const char *&cursor, const char *end, 
 	{
 		return false;
 	}
-	success = DecompressSubtickSection(cursor, subtickHeader, *parser, *outSubtickData);
+	success = DecodeSubtickSection(cursor, subtickHeader, *parser, *outSubtickCounts, *outSubtickMoves);
 	cursor += subtickHeader.compressedSize;
 	return success;
 }
 
 bool KZ::replaysystem::compression::ReadTickDataCompressed(const char *&cursor, const char *end, std::vector<TickData> &ticks,
-														   std::vector<SubtickData> &subticks, u32 version)
+														   std::vector<u8> &subtickCounts, std::vector<RpSubtickMove> &subtickMoves, u32 version)
 {
-	return ReadTickDataSections(cursor, end, &ticks, &subticks, version, nullptr);
+	return ReadTickDataSections(cursor, end, &ticks, &subtickCounts, &subtickMoves, version, nullptr);
 }
 
 bool KZ::replaysystem::compression::ReadTickDataCompressed(const char *&cursor, const char *end, u32 version, const TickVisitor &visitor)
 {
-	return ReadTickDataSections(cursor, end, nullptr, nullptr, version, &visitor);
+	return ReadTickDataSections(cursor, end, nullptr, nullptr, nullptr, version, &visitor);
 }
 
 static_function bool DecodeTickDataBuffer(const char *decompressedData, size_t uncompressedSize, u32 elementCount,
@@ -999,7 +1080,8 @@ enum CmdDataChangeFlags : u64
 };
 
 bool KZ::replaysystem::compression::ReadCmdDataCompressed(const char *&cursor, const char *end, std::vector<CmdData> &outCmdData,
-														  std::vector<SubtickData> &outCmdSubtickData, u32 replayVersion)
+														  std::vector<u8> &outCmdSubtickCounts, std::vector<RpSubtickMove> &outCmdSubtickMoves,
+														  u32 replayVersion)
 {
 	const auto *parser = parsing::GetVersionParser(replayVersion);
 	if (!parser)
@@ -1120,7 +1202,7 @@ bool KZ::replaysystem::compression::ReadCmdDataCompressed(const char *&cursor, c
 	{
 		return false;
 	}
-	success = DecompressSubtickSection(cursor, subtickHeader, *parser, outCmdSubtickData);
+	success = DecodeSubtickSection(cursor, subtickHeader, *parser, outCmdSubtickCounts, outCmdSubtickMoves);
 	cursor += subtickHeader.compressedSize;
 	return success;
 }
@@ -1155,7 +1237,7 @@ bool KZ::replaysystem::compression::WriteWeaponsCompressed(std::vector<char> &ou
 }
 
 bool KZ::replaysystem::compression::WriteCmdDataCompressed(std::vector<char> &outBuffer, const std::vector<CmdData> &cmdData,
-														  const std::vector<SubtickData> &cmdSubtickData)
+														  const std::vector<u8> &cmdSubtickCounts, const std::vector<RpSubtickMove> &cmdSubtickMoves)
 {
 	std::vector<char> buffer;
 
@@ -1226,5 +1308,5 @@ bool KZ::replaysystem::compression::WriteCmdDataCompressed(std::vector<char> &ou
 
 	// The reader expects the cmd subtick section to follow, so a failure there fails the whole write.
 	return AppendCompressedSection(outBuffer, buffer.data(), buffer.size(), cmdData.size())
-		   && AppendCompressedSection(outBuffer, cmdSubtickData.data(), cmdSubtickData.size() * sizeof(SubtickData), cmdSubtickData.size());
+		   && AppendSubtickSection(outBuffer, cmdSubtickCounts, cmdSubtickMoves);
 }

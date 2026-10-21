@@ -643,19 +643,13 @@ bool Recorder::WriteToMemory(std::vector<char> &outBuffer)
 		allCmdSubtickMoves = std::move(this->cmdSubtickMoves);
 	}
 
-	// Unpack subtick data from flat storage into SubtickData format for compression.
-	std::vector<SubtickData> unpackedSubtick;
-	UnpackSubtickData(unpackedSubtick, allSubtickCounts, allSubtickMoves);
-
-	std::vector<SubtickData> unpackedCmdSubtick;
-	UnpackSubtickData(unpackedCmdSubtick, allCmdSubtickCounts, allCmdSubtickMoves);
-
 	// Order of writing must match order of reading in kz_replaydata.cpp
-	if (!this->WriteHeader(outBuffer) || !KZ::replaysystem::compression::WriteTickDataCompressed(outBuffer, allTickData, unpackedSubtick)
+	if (!this->WriteHeader(outBuffer)
+		|| !KZ::replaysystem::compression::WriteTickDataCompressed(outBuffer, allTickData, allSubtickCounts, allSubtickMoves)
 		|| !KZ::replaysystem::compression::WriteWeaponsCompressed(outBuffer, this->weaponTable)
 		|| !KZ::replaysystem::compression::WriteJumpsCompressed(outBuffer, allJumps)
 		|| !KZ::replaysystem::compression::WriteEventsCompressed(outBuffer, allEvents)
-		|| !KZ::replaysystem::compression::WriteCmdDataCompressed(outBuffer, allCmdData, unpackedCmdSubtick))
+		|| !KZ::replaysystem::compression::WriteCmdDataCompressed(outBuffer, allCmdData, allCmdSubtickCounts, allCmdSubtickMoves))
 	{
 		outBuffer.clear();
 		return false;

@@ -27,10 +27,15 @@ namespace KZ::replaysystem::data
 			delete[] replay->tickData;
 			replay->tickData = nullptr;
 		}
-		if (replay->subtickData)
+		if (replay->subtickOffsets)
 		{
-			delete[] replay->subtickData;
-			replay->subtickData = nullptr;
+			delete[] replay->subtickOffsets;
+			replay->subtickOffsets = nullptr;
+		}
+		if (replay->subtickMoves)
+		{
+			delete[] replay->subtickMoves;
+			replay->subtickMoves = nullptr;
 		}
 		if (replay->weapons)
 		{
@@ -232,20 +237,28 @@ namespace KZ::replaysystem::data
 		KZ_LOG_DEBUG(LogChannel::Replays, "Loading compressed tick data...\n");
 
 		std::vector<TickData> tickDataVec;
-		std::vector<SubtickData> subtickDataVec;
+		std::vector<u8> subtickCounts;
+		std::vector<SubtickData::RpSubtickMove> subtickMoves;
 
-		if (!KZ::replaysystem::compression::ReadTickDataCompressed(cursor, end, tickDataVec, subtickDataVec, result.header.version()))
+		if (!KZ::replaysystem::compression::ReadTickDataCompressed(cursor, end, tickDataVec, subtickCounts, subtickMoves, result.header.version()))
 		{
 			return result;
 		}
 
 		result.tickCount = tickDataVec.size();
 		tickDataVec.shrink_to_fit();
-		subtickDataVec.shrink_to_fit();
 		result.tickData = tickDataVec.data();
-		result.subtickData = subtickDataVec.data();
 		new (&tickDataVec) std::vector<TickData>();
-		new (&subtickDataVec) std::vector<SubtickData>();
+
+		// Older recordings can hold one subtick entry more than ticks; a tick without an entry has no moves.
+		result.subtickOffsets = new u64[result.tickCount + 1];
+		result.subtickOffsets[0] = 0;
+		for (u32 i = 0; i < result.tickCount; i++)
+		{
+			result.subtickOffsets[i + 1] = result.subtickOffsets[i] + (i < subtickCounts.size() ? subtickCounts[i] : 0);
+		}
+		result.subtickMoves = new SubtickData::RpSubtickMove[subtickMoves.size()];
+		std::copy(subtickMoves.begin(), subtickMoves.end(), result.subtickMoves);
 
 		UpdateProgress(cursor, data, size, progress);
 
@@ -253,7 +266,8 @@ namespace KZ::replaysystem::data
 		if (shouldCancel)
 		{
 			delete[] result.tickData;
-			delete[] result.subtickData;
+			delete[] result.subtickOffsets;
+			delete[] result.subtickMoves;
 			return {};
 		}
 		KZ_LOG_DEBUG(LogChannel::Replays, "Loading weapons...\n");
@@ -263,7 +277,8 @@ namespace KZ::replaysystem::data
 		if (!KZ::replaysystem::compression::ReadWeaponsCompressed(cursor, end, weaponTableVec, result.header.version()))
 		{
 			delete[] result.tickData;
-			delete[] result.subtickData;
+			delete[] result.subtickOffsets;
+			delete[] result.subtickMoves;
 			return {};
 		}
 
@@ -283,7 +298,8 @@ namespace KZ::replaysystem::data
 		if (shouldCancel)
 		{
 			delete[] result.tickData;
-			delete[] result.subtickData;
+			delete[] result.subtickOffsets;
+			delete[] result.subtickMoves;
 			delete[] result.weaponIndices;
 			delete[] result.weapons;
 			return {};
@@ -295,7 +311,8 @@ namespace KZ::replaysystem::data
 		if (!KZ::replaysystem::compression::ReadJumpsCompressed(cursor, end, jumpsVec, result.header.version()))
 		{
 			delete[] result.tickData;
-			delete[] result.subtickData;
+			delete[] result.subtickOffsets;
+			delete[] result.subtickMoves;
 			delete[] result.weaponIndices;
 			delete[] result.weapons;
 			return {};
@@ -321,7 +338,8 @@ namespace KZ::replaysystem::data
 		if (shouldCancel)
 		{
 			delete[] result.tickData;
-			delete[] result.subtickData;
+			delete[] result.subtickOffsets;
+			delete[] result.subtickMoves;
 			delete[] result.weaponIndices;
 			delete[] result.weapons;
 			delete[] result.jumps;
@@ -334,7 +352,8 @@ namespace KZ::replaysystem::data
 		if (!KZ::replaysystem::compression::ReadEventsCompressed(cursor, end, eventsVec, result.header.version()))
 		{
 			delete[] result.tickData;
-			delete[] result.subtickData;
+			delete[] result.subtickOffsets;
+			delete[] result.subtickMoves;
 			delete[] result.weaponIndices;
 			delete[] result.weapons;
 			delete[] result.jumps;

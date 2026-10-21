@@ -475,37 +475,36 @@ namespace KZ::replaysystem::playback
 		}
 		player->SetMoveType(tickData->pre.moveType);
 
-		SubtickData *subtickData = &replay->subtickData[replay->currentTick];
-
 		// Bots should never have any subtick move, but who knows?
 		command->mutable_base()->clear_subtick_moves();
-		for (u32 i = 0; i < subtickData->numSubtickMoves && i < MAX_SUBTICK_MOVES; i++)
+		for (u64 i = replay->subtickOffsets[replay->currentTick]; i < replay->subtickOffsets[replay->currentTick + 1]; i++)
 		{
+			SubtickData::RpSubtickMove &subtickMove = replay->subtickMoves[i];
 			auto move = command->mutable_base()->add_subtick_moves();
-			move->set_when(subtickData->subtickMoves[i].when);
-			move->set_button(subtickData->subtickMoves[i].button);
-			if (!subtickData->subtickMoves[i].IsAnalogInput())
+			move->set_when(subtickMove.when);
+			move->set_button(subtickMove.button);
+			if (!subtickMove.IsAnalogInput())
 			{
-				move->set_pressed(subtickData->subtickMoves[i].pressed);
+				move->set_pressed(subtickMove.pressed);
 			}
 			else
 			{
-				if (subtickData->subtickMoves[i].analogMove.analog_forward_delta != 0)
+				if (subtickMove.analogMove.analog_forward_delta != 0)
 				{
-					move->set_analog_forward_delta(subtickData->subtickMoves[i].analogMove.analog_forward_delta);
+					move->set_analog_forward_delta(subtickMove.analogMove.analog_forward_delta);
 				}
-				if (subtickData->subtickMoves[i].analogMove.analog_left_delta != 0)
+				if (subtickMove.analogMove.analog_left_delta != 0)
 				{
-					move->set_analog_left_delta(subtickData->subtickMoves[i].analogMove.analog_left_delta);
+					move->set_analog_left_delta(subtickMove.analogMove.analog_left_delta);
 				}
 			}
-			if (subtickData->subtickMoves[i].analogMove.pitch_delta != 0)
+			if (subtickMove.analogMove.pitch_delta != 0)
 			{
-				move->set_pitch_delta(subtickData->subtickMoves[i].analogMove.pitch_delta);
+				move->set_pitch_delta(subtickMove.analogMove.pitch_delta);
 			}
-			if (subtickData->subtickMoves[i].analogMove.yaw_delta != 0)
+			if (subtickMove.analogMove.yaw_delta != 0)
 			{
-				move->set_yaw_delta(subtickData->subtickMoves[i].analogMove.yaw_delta);
+				move->set_yaw_delta(subtickMove.analogMove.yaw_delta);
 			}
 		}
 		KZ_LOG_DEBUG(LogChannel::Replays, "%s\n", command->DebugString().c_str());
