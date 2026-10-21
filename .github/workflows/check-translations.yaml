@@ -3,18 +3,16 @@ name: Translations checks
 on:
   push:
     paths:
-      - 'translations/cs2kz-*.phrases.txt'
-      - 'translations/config.txt'
-      - 'menu/*.txt'
-      - 'scripts/check-translations.py'
-      - '.github/workflows/check-translations.yaml'
+      - "translations/cs2kz-*.phrases.txt"
+      - "translations/config.txt"
+      - "menu/*.txt"
+      - ".github/workflows/check-translations.yaml"
   pull_request:
     paths:
-      - 'translations/cs2kz-*.phrases.txt'
-      - 'translations/config.txt'
-      - 'menu/*.txt'
-      - 'scripts/check-translations.py'
-      - '.github/workflows/check-translations.yaml'
+      - "translations/cs2kz-*.phrases.txt"
+      - "translations/config.txt"
+      - "menu/*.txt"
+      - ".github/workflows/check-translations.yaml"
 
 jobs:
   lint-translations:
@@ -27,10 +25,7 @@ jobs:
         uses: actions/checkout@v7
         with:
           fetch-depth: 0
-      - name: Set up Python
-        uses: actions/setup-python@v6
-        with:
-          python-version: '3.14'
+          submodules: false
       - name: Get source commit info
         id: source
         run: |
@@ -39,10 +34,16 @@ jobs:
           echo "message=$(git log -1 --pretty=%s | tr -d '"' | tr -d "'" | tr -d '`' | cut -c1-80)" >> "$GITHUB_OUTPUT"
 
       - name: Run translation linter
-        id: lint
-        run: |
-          python scripts/check-translations.py . 2>&1 | tee translation-lint-results.txt
-          echo "exit_code=${PIPESTATUS[0]}" >> "$GITHUB_OUTPUT"
+        uses: jvnipers/kv-lint@v1
+        with:
+          phrases: translations/cs2kz-*.phrases.txt
+          radiopanel: menu/*.txt
+          languages: translations/config.txt
+          report: missing-translations.txt
+          json: missing-translations.json
+          output: translation-lint-results.txt
+      - name: Write clean lint results
+        run: '[ -f translation-lint-results.txt ] || echo "No issues found!" > translation-lint-results.txt'
       - name: Upload artifacts
         if: always()
         uses: actions/upload-artifact@v7
@@ -178,7 +179,3 @@ jobs:
 
           Source: ${COMMIT_SHA} - ${COMMIT_MSG}" || echo "No changes to commit"
           git push origin translation-reports --force
-
-      - name: Check for errors
-        if: steps.lint.outputs.exit_code != '0'
-        run: exit 1
