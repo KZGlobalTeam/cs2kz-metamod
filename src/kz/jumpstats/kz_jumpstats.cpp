@@ -881,6 +881,8 @@ void KZJumpstatsService::Reset()
 	this->possibleEdgebug = {};
 	this->lastWPressedTime = {};
 	this->ladderHopThisMove = false;
+	this->lastExternalVelocityTime = {};
+	this->externalVelocityReason = {};
 }
 
 void KZJumpstatsService::OnProcessMovement()
@@ -993,6 +995,10 @@ void KZJumpstatsService::AddJump()
 	this->poseHistory.Advance(this->poseHistory.GetReadAvailable());
 	this->jumps.push_back({this->player});
 	this->jumps.back().Init();
+	if (this->externalVelocityReason && this->lastExternalVelocityTime + JS_MAX_PUSH_RESET_TIME >= g_pKZUtils->GetGlobals()->curtime)
+	{
+		this->jumps.back().Invalidate(this->externalVelocityReason);
+	}
 }
 
 void KZJumpstatsService::UpdateJump()
@@ -1076,6 +1082,13 @@ void KZJumpstatsService::InvalidateJumpstats(const char *reason)
 	{
 		this->jumps.back().Invalidate(reason);
 	}
+}
+
+void KZJumpstatsService::MarkExternalVelocity(const char *reason)
+{
+	this->lastExternalVelocityTime = g_pKZUtils->GetGlobals()->curtime;
+	this->externalVelocityReason = reason;
+	this->InvalidateJumpstats(reason);
 }
 
 void KZJumpstatsService::TrackJumpstatsVariables()

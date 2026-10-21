@@ -69,7 +69,7 @@ void KZJumpstatsService::DetectInvalidGains()
 
 	if (this->player->GetPlayerPawn()->m_vecBaseVelocity().Length() > 0.0f || this->player->GetPlayerPawn()->m_fFlags() & FL_BASEVELOCITY)
 	{
-		this->InvalidateJumpstats("Base velocity detected");
+		this->MarkExternalVelocity("Base velocity detected");
 	}
 
 	// clang-format on
@@ -88,7 +88,7 @@ void KZJumpstatsService::DetectExternalModifications()
 	}
 	if (this->player->GetPlayerPawn()->m_vecBaseVelocity().Length() > 0.0f || this->player->GetPlayerPawn()->m_fFlags() & FL_BASEVELOCITY)
 	{
-		this->InvalidateJumpstats("Base velocity detected");
+		this->MarkExternalVelocity("Base velocity detected");
 	}
 	if (this->player->GetPlayerPawn()->m_flGravityScale() != 1 || this->player->GetPlayerPawn()->m_flActualGravityScale() != 1)
 	{

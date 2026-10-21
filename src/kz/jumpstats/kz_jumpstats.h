@@ -117,6 +117,7 @@ struct JSFieldText
 #define JS_MAX_BHOP_GROUND_TIME         0.05f
 #define JS_MAX_DUCKBUG_RESET_TIME       0.05f
 #define JS_MAX_NOCLIP_RESET_TIME        0.4f
+#define JS_MAX_PUSH_RESET_TIME          (2 * ENGINE_FIXED_TICK_INTERVAL) // A push right before takeoff is still in the takeoff speed
 #define JS_MAX_WEIRDJUMP_FALL_OFFSET    (64.0f + JS_EPSILON)
 #define JS_TOUCH_GRACE_PERIOD           0.04f
 #define JS_SPEED_MODIFICATION_TOLERANCE 0.1f
@@ -586,6 +587,8 @@ public:
 	bool possibleEdgebug {};
 	f32 lastWPressedTime {};
 	bool ladderHopThisMove {};
+	f32 lastExternalVelocityTime {};
+	const char *externalVelocityReason {};
 
 public:
 	bool GetDistTierFromString(const char *tierString, DistanceTier &outTier);
@@ -617,6 +620,8 @@ public:
 	void EndJump();
 	void HandleTeleport();
 	void InvalidateJumpstats(const char *reason = NULL);
+	// Also invalidates a jump that takes off right after the push.
+	void MarkExternalVelocity(const char *reason);
 	void OnAirAccelerate();
 	void OnAirAcceleratePost(Vector wishdir, f32 wishspeed, f32 accel);
 

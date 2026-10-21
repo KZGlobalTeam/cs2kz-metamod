@@ -189,7 +189,7 @@ void KZTriggerService::ApplyPushes()
 			{
 				this->player->SetVelocity(vel);
 			}
-			this->player->jumpstatsService->InvalidateJumpstats("Disabled By Map");
+			this->player->jumpstatsService->MarkExternalVelocity("Disabled By Map");
 		}
 	}
 	// Try to nullify velocity if needed.

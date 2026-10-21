@@ -117,7 +117,7 @@ static KHook::Return<void> TouchPre(CBaseEntity *pThis, CBaseEntity *pOther)
 	}
 	if (player)
 	{
-		player->jumpstatsService->InvalidateJumpstats("Base velocity detected");
+		player->jumpstatsService->MarkExternalVelocity("Base velocity detected");
 	}
 	if (KZTriggerService::IsManagedByTriggerService(pThis, pOther) && !g_KZPlugin.simulatingPhysics)
 	{
