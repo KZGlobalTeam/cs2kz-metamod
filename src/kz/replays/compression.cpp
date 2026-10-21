@@ -22,6 +22,17 @@ static_function void AppendToBuffer(std::vector<char> &buffer, const void *data,
 	buffer.insert(buffer.end(), bytes, bytes + size);
 }
 
+// Stands in for the output buffer to measure an encoding without writing it.
+struct ByteCounter
+{
+	size_t size = 0;
+};
+
+static_function void AppendToBuffer(ByteCounter &counter, const void *data, size_t size)
+{
+	counter.size += size;
+}
+
 static_function bool ReadFromBuffer(const char *&ptr, const char *end, void *dst, size_t size)
 {
 	if (size > static_cast<size_t>(end - ptr))
@@ -395,14 +406,10 @@ static_function u64 BuildPostChangeFlags(const TickData::MovementData &current, 
 	return flags;
 }
 
-bool KZ::replaysystem::compression::WriteTickDataCompressed(std::vector<char> &outBuffer, const std::vector<TickData> &tickData,
-														   const std::vector<u8> &subtickCounts, const std::vector<RpSubtickMove> &subtickMoves)
+// Delta-encodes tick data into a std::vector<char>, or into a ByteCounter to measure it.
+template<typename Buffer>
+static_function void EncodeTickData(Buffer &buffer, const std::vector<TickData> &tickData)
 {
-	std::vector<char> buffer;
-
-	// Reserve approximate size
-	buffer.reserve(tickData.size() * 120); // Rough estimate
-
 	for (size_t i = 0; i < tickData.size(); i++)
 	{
 		const TickData &current = tickData[i];
@@ -555,6 +562,17 @@ bool KZ::replaysystem::compression::WriteTickDataCompressed(std::vector<char> &o
 		}
 		// clang-format on
 	}
+}
+
+bool KZ::replaysystem::compression::WriteTickDataCompressed(std::vector<char> &outBuffer, const std::vector<TickData> &tickData,
+														   const std::vector<u8> &subtickCounts, const std::vector<RpSubtickMove> &subtickMoves)
+{
+	// A sizing pass first, so the delta buffer is allocated once at its exact size.
+	ByteCounter counter;
+	EncodeTickData(counter, tickData);
+	std::vector<char> buffer;
+	buffer.reserve(counter.size);
+	EncodeTickData(buffer, tickData);
 
 	// The reader expects the subtick section to follow, so a failure there fails the whole write.
 	return AppendCompressedSection(outBuffer, buffer.data(), buffer.size(), tickData.size())
@@ -1236,14 +1254,10 @@ bool KZ::replaysystem::compression::WriteWeaponsCompressed(std::vector<char> &ou
 	return AppendCompressedSection(outBuffer, buffer.data(), buffer.size(), weaponTable.size());
 }
 
-bool KZ::replaysystem::compression::WriteCmdDataCompressed(std::vector<char> &outBuffer, const std::vector<CmdData> &cmdData,
-														  const std::vector<u8> &cmdSubtickCounts, const std::vector<RpSubtickMove> &cmdSubtickMoves)
+// Delta-encodes cmd data into a std::vector<char>, or into a ByteCounter to measure it.
+template<typename Buffer>
+static_function void EncodeCmdData(Buffer &buffer, const std::vector<CmdData> &cmdData)
 {
-	std::vector<char> buffer;
-
-	// Reserve approximate size
-	buffer.reserve(cmdData.size() * 120); // Rough estimate
-
 	for (size_t i = 0; i < cmdData.size(); i++)
 	{
 		const CmdData &current = cmdData[i];
@@ -1305,6 +1319,17 @@ bool KZ::replaysystem::compression::WriteCmdDataCompressed(std::vector<char> &ou
 		if (flags & CHANGED_CMD_M_PITCH) AppendToBuffer(buffer, &current.m_pitch, sizeof(current.m_pitch));
 		// clang-format on
 	}
+}
+
+bool KZ::replaysystem::compression::WriteCmdDataCompressed(std::vector<char> &outBuffer, const std::vector<CmdData> &cmdData,
+														  const std::vector<u8> &cmdSubtickCounts, const std::vector<RpSubtickMove> &cmdSubtickMoves)
+{
+	// A sizing pass first, so the delta buffer is allocated once at its exact size.
+	ByteCounter counter;
+	EncodeCmdData(counter, cmdData);
+	std::vector<char> buffer;
+	buffer.reserve(counter.size);
+	EncodeCmdData(buffer, cmdData);
 
 	// The reader expects the cmd subtick section to follow, so a failure there fails the whole write.
 	return AppendCompressedSection(outBuffer, buffer.data(), buffer.size(), cmdData.size())
