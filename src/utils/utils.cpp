@@ -850,12 +850,24 @@ bool utils::ReadBufferFromFile(const char *relativePath, std::vector<char> &outB
 		KZ_LOG_WARN(LogChannel::General, "Failed to open file for reading: %s\n", absPath);
 		return false;
 	}
-	fseek(fp, 0, SEEK_END);
-	long size = ftell(fp);
-	fseek(fp, 0, SEEK_SET);
+	// ftell returns a 32-bit long on Windows, which breaks past 2 GiB.
+	std::error_code error;
+	uintmax_t size = std::filesystem::file_size(absPath, error);
+	if (error)
+	{
+		fclose(fp);
+		KZ_LOG_WARN(LogChannel::General, "Failed to get size of file: %s\n", absPath);
+		return false;
+	}
 	outBuffer.resize(size);
-	fread(outBuffer.data(), 1, size, fp);
+	bool readOk = fread(outBuffer.data(), 1, size, fp) == size;
 	fclose(fp);
+	if (!readOk)
+	{
+		KZ_LOG_WARN(LogChannel::General, "Failed to read file: %s\n", absPath);
+		outBuffer.clear();
+		return false;
+	}
 	return true;
 }
 

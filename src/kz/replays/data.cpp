@@ -355,15 +355,16 @@ namespace KZ::replaysystem::data
 	}
 
 	// Complete-file reader shared by the replay loading entry points.
-	static_function bool ReadReplayFile(const char *path, CUtlBuffer &buffer, const std::atomic<bool> &cancel)
+	// Replays are written under csgo/ with utils::WriteBufferToFile, and CUtlBuffer cannot hold files past 2 GiB.
+	static_function bool ReadReplayFile(const char *path, std::vector<char> &buffer, const std::atomic<bool> &cancel)
 	{
-		return !cancel && g_pFullFileSystem->ReadFile(path, nullptr, buffer) && !cancel && buffer.TellPut() > 0;
+		return !cancel && utils::ReadBufferFromFile(path, buffer) && !cancel && !buffer.empty();
 	}
 
 	// File-based entry point: reads the entire file into memory then parses.
 	static_function ReplayPlayback LoadReplayWithProgress(const char *path, std::atomic<f32> &progress, std::atomic<bool> &shouldCancel)
 	{
-		CUtlBuffer buffer;
+		std::vector<char> buffer;
 		if (!ReadReplayFile(path, buffer, shouldCancel))
 		{
 			return {};
@@ -373,7 +374,7 @@ namespace KZ::replaysystem::data
 		{
 			return {};
 		}
-		return LoadReplayFromMemory((const char *)buffer.Base(), buffer.TellPut(), uuid, progress, shouldCancel);
+		return LoadReplayFromMemory(buffer.data(), buffer.size(), uuid, progress, shouldCancel);
 	}
 
 	// Memory-based entry point: parse directly from a provided buffer.
