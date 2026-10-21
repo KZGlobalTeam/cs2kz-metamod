@@ -287,10 +287,9 @@ static_function bool ReadFixedSubticks(const char *src, const CompressedSectionH
 }
 
 static_function bool DecodeSubtickSection(const char *src, const CompressedSectionHeader &header, const parsing::VersionParser &parser,
-										std::vector<u8> &outCounts, std::vector<RpSubtickMove> &outMoves)
+										  std::vector<u8> &outCounts, std::vector<RpSubtickMove> &outMoves)
 {
-	return parser.packedSubticks ? ReadPackedSubticks(src, header, outCounts, outMoves)
-								 : ReadFixedSubticks(src, header, parser, outCounts, outMoves);
+	return parser.packedSubticks ? ReadPackedSubticks(src, header, outCounts, outMoves) : ReadFixedSubticks(src, header, parser, outCounts, outMoves);
 }
 
 // ========================================
@@ -606,7 +605,8 @@ static_function void EncodeTickData(Buffer &buffer, const std::vector<TickData> 
 	}
 }
 
-bool RecordingWriter::AddTicks(const std::vector<TickData> &ticks, const std::vector<u8> &subtickCounts, const std::vector<RpSubtickMove> &subtickMoves)
+bool RecordingWriter::AddTicks(const std::vector<TickData> &ticks, const std::vector<u8> &subtickCounts,
+							   const std::vector<RpSubtickMove> &subtickMoves)
 {
 	if (!ticks.empty())
 	{
@@ -634,7 +634,7 @@ bool RecordingWriter::AppendTickSections(std::vector<char> &outBuffer)
 }
 
 bool KZ::replaysystem::compression::WriteTickDataCompressed(std::vector<char> &outBuffer, const std::vector<TickData> &tickData,
-														   const std::vector<u8> &subtickCounts, const std::vector<RpSubtickMove> &subtickMoves)
+															const std::vector<u8> &subtickCounts, const std::vector<RpSubtickMove> &subtickMoves)
 {
 	RecordingWriter writer;
 	return writer.AddTicks(tickData, subtickCounts, subtickMoves) && writer.AppendTickSections(outBuffer);
@@ -780,9 +780,8 @@ static_function bool ReadSubtickSection(const char *&cursor, const char *end, co
 }
 
 // The route reader supplies a visitor to retain only positions and checkpoint data as ticks are decoded.
-static_function bool ReadTickDataSections(const char *&cursor, const char *end, std::vector<TickData> *outTickData,
-										  std::vector<u8> *outSubtickCounts, std::vector<RpSubtickMove> *outSubtickMoves, u32 replayVersion,
-										  const TickVisitor *visitor)
+static_function bool ReadTickDataSections(const char *&cursor, const char *end, std::vector<TickData> *outTickData, std::vector<u8> *outSubtickCounts,
+										  std::vector<RpSubtickMove> *outSubtickMoves, u32 replayVersion, const TickVisitor *visitor)
 {
 	const auto *parser = parsing::GetVersionParser(replayVersion);
 	std::vector<char> bytes;
@@ -833,7 +832,7 @@ bool KZ::replaysystem::compression::ReadTickDataCompressed(const char *&cursor, 
 }
 
 bool KZ::replaysystem::compression::ReadTickStore(const char *&cursor, const char *end, TickStore &outTicks, std::vector<u8> &outSubtickCounts,
-												 std::vector<RpSubtickMove> &outSubtickMoves, u32 replayVersion)
+												  std::vector<RpSubtickMove> &outSubtickMoves, u32 replayVersion)
 {
 	const auto *parser = parsing::GetVersionParser(replayVersion);
 	if (!parser || !ReadTickSection(cursor, end, *parser, outTicks.deltas, outTicks.count))
@@ -937,9 +936,8 @@ u32 TickStore::FindServerTick(u32 serverTick)
 	return count - 1;
 }
 
-
 bool KZ::replaysystem::compression::ReadWeaponsCompressed(const char *&cursor, const char *end, std::vector<std::pair<i32, EconInfo>> &outWeaponTable,
-														   u32 replayVersion)
+														  u32 replayVersion)
 {
 	const auto *parser = parsing::GetVersionParser(replayVersion);
 	CompressedSectionHeader header;
@@ -1522,7 +1520,7 @@ bool RecordingWriter::AppendCmdSections(std::vector<char> &outBuffer)
 }
 
 bool KZ::replaysystem::compression::WriteCmdDataCompressed(std::vector<char> &outBuffer, const std::vector<CmdData> &cmdData,
-														  const std::vector<u8> &cmdSubtickCounts, const std::vector<RpSubtickMove> &cmdSubtickMoves)
+														   const std::vector<u8> &cmdSubtickCounts, const std::vector<RpSubtickMove> &cmdSubtickMoves)
 {
 	RecordingWriter writer;
 	return writer.AddCmds(cmdData, cmdSubtickCounts, cmdSubtickMoves) && writer.AppendCmdSections(outBuffer);

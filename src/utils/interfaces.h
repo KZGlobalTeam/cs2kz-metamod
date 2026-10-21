@@ -114,10 +114,9 @@ namespace interfaces
 class KZUtils
 {
 public:
-	KZUtils(GetLegacyGameEventListener_t *GetLegacyGameEventListener, SnapViewAngles_t *SnapViewAngles, SwitchTeam_t *SwitchTeam,
-			SetPawn_t *SetPawn, CreateEntityByName_t *CreateEntityByName, DispatchSpawn_t *DispatchSpawn, RemoveEntity_t *RemoveEntity,
-			DebugDrawMesh_t *DebugDrawMesh, CreateBot_t *CreateBot, SetOrAddAttributeValueByName_t *SetOrAddAttributeValueByName,
-			SetModel_t *SetModel, DecalTrace_t *DecalTrace)
+	KZUtils(GetLegacyGameEventListener_t *GetLegacyGameEventListener, SnapViewAngles_t *SnapViewAngles, SwitchTeam_t *SwitchTeam, SetPawn_t *SetPawn,
+			CreateEntityByName_t *CreateEntityByName, DispatchSpawn_t *DispatchSpawn, RemoveEntity_t *RemoveEntity, DebugDrawMesh_t *DebugDrawMesh,
+			CreateBot_t *CreateBot, SetOrAddAttributeValueByName_t *SetOrAddAttributeValueByName, SetModel_t *SetModel, DecalTrace_t *DecalTrace)
 		: GetLegacyGameEventListener(GetLegacyGameEventListener), SnapViewAngles(SnapViewAngles), SwitchTeam(SwitchTeam), SetPawn(SetPawn),
 		  CreateEntityByName(CreateEntityByName), DispatchSpawn(DispatchSpawn), RemoveEntity(RemoveEntity), DebugDrawMesh(DebugDrawMesh),
 		  CreateBot(CreateBot), SetOrAddAttributeValueByName(SetOrAddAttributeValueByName), SetModel(SetModel), DecalTrace(DecalTrace)

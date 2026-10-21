@@ -277,6 +277,14 @@
 		"lv"		"Panelis atslēgts."
 	}
 
+	"HUD Option - Hide HUD - Enable"
+	{
+		"en"		"{grey}The game HUD is now hidden, except for chat. Use {default}!hidehud {grey}again to show it."
+	}
+	"HUD Option - Hide HUD - Disable"
+	{
+		"en"		"{grey}The game HUD is now shown."
+	}
 	"HUD Option - Info Panel - Enable"
 	{
 		"en"		"{grey}Your centre information panel has been enabled."

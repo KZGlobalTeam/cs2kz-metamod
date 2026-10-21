@@ -142,6 +142,9 @@ KZHUDService::SpeedInfo KZHUDService::GetSpeedInfo(const MHUDPrefs &prefs)
 	this->player->GetBaseVelocity(&baseVelocity);
 	velocity += baseVelocity;
 	info.speed = velocity.Length2D();
+	// CategorizePosition sets this when it finds no ground while rising at up to NON_JUMP_VELOCITY.
+	info.deadstrafe =
+		!(pawn->m_fFlags & FL_ONGROUND) && pawn->m_MoveType == MOVETYPE_WALK && this->player->GetMoveServices()->m_flSurfaceFriction() == 0.25f;
 	// Keep the takeoff velocity on for a while after landing so the speed values flicker less.
 	// mhudPrespeedShow == Always skips this timeout, so the last takeoff speed keeps showing while grounded.
 	const bool pastGraceWindow =
@@ -341,6 +344,30 @@ SCMD(kz_hudedit, SCFL_HUD)
 	{
 		player->hudService->StartHudEdit();
 	}
+	return true;
+}
+
+SCMD(kz_hidehud, SCFL_HUD)
+{
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
+	// HIDEHUD_ALL also stops the chat input from opening, which would leave no way to type the command again.
+	bool hide = false;
+	for (const GameHudPartDef &part : GAME_HUD_PARTS)
+	{
+		if (part.bit != KZ_HIDEHUD_ALL && !player->optionService->GetPreferenceBool(part.prefKey, false))
+		{
+			hide = true;
+			break;
+		}
+	}
+	for (const GameHudPartDef &part : GAME_HUD_PARTS)
+	{
+		if (part.bit != KZ_HIDEHUD_ALL)
+		{
+			player->optionService->SetPreferenceBool(part.prefKey, hide);
+		}
+	}
+	player->languageService->PrintChat(true, false, hide ? "HUD Option - Hide HUD - Enable" : "HUD Option - Hide HUD - Disable");
 	return true;
 }
 

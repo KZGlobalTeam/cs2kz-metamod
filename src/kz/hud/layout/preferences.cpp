@@ -60,6 +60,8 @@ void KZHUDService::RefreshPrefs()
 	this->prefs.prespeed[(i32)MHUDSpeedState::Perf] = opts->GetPreferenceColor("mhudPrespeedPerfColor", MHUD_DEF_PERF_COLOR);
 	this->prefs.prespeed[(i32)MHUDSpeedState::CrouchPerf] = opts->GetPreferenceColor("mhudPrespeedCrouchPerfColor", MHUD_DEF_PERF_COLOR);
 	this->prefs.prespeed[(i32)MHUDSpeedState::Jumpbug] = opts->GetPreferenceColor("mhudPrespeedJumpbugColor", MHUD_DEF_JUMPBUG_COLOR);
+	this->prefs.speedDeadstrafe = opts->GetPreferenceColor("mhudSpeedDeadstrafeColor", MHUD_DEF_DEADSTRAFE_COLOR);
+	this->prefs.prespeedDeadstrafe = opts->GetPreferenceColor("mhudPrespeedDeadstrafeColor", MHUD_DEF_DEADSTRAFE_COLOR);
 	this->prefs.keys = opts->GetPreferenceColor("mhudKeysColor", MHUD_DEF_BASE_COLOR);
 	this->prefs.keysOverlap = opts->GetPreferenceColor("mhudKeysOverlapColor", MHUD_DEF_KEYS_OVERLAP_COLOR);
 	this->prefs.keysPressed = opts->GetPreferenceColor("mhudKeysPressedColor", MHUD_DEF_KEYS_PRESSED_COLOR);
@@ -96,6 +98,8 @@ void KZHUDService::RefreshPrefs()
 	this->prefs.timerShowState = opts->GetPreferenceBool("mhudTimerShowState", true);
 	this->prefs.speedPrecise = opts->GetPreferenceBool("mhudSpeedPrecise", false);
 	this->prefs.prespeedPrecise = opts->GetPreferenceBool("mhudPrespeedPrecise", false);
+	this->prefs.speedDeadstrafeEnabled = opts->GetPreferenceBool("mhudSpeedDeadstrafe", false);
+	this->prefs.prespeedDeadstrafeEnabled = opts->GetPreferenceBool("mhudPrespeedDeadstrafe", false);
 	const i32 prespeedShow = (i32)opts->GetPreferenceInt("mhudPrespeedShow", (i64)MHUDPrespeedShow::Brief);
 	this->prefs.prespeedShow = (MHUDPrespeedShow)Clamp(prespeedShow, (i32)MHUDPrespeedShow::Brief, (i32)MHUDPrespeedShow::Always);
 	this->prefs.keysOverlapEnabled = opts->GetPreferenceBool("mhudKeysOverlap", true);

@@ -93,7 +93,8 @@ namespace KZ::replaysystem::compression
 	class RecordingWriter
 	{
 	public:
-		bool AddTicks(const std::vector<TickData> &ticks, const std::vector<u8> &subtickCounts, const std::vector<SubtickData::RpSubtickMove> &subtickMoves);
+		bool AddTicks(const std::vector<TickData> &ticks, const std::vector<u8> &subtickCounts,
+					  const std::vector<SubtickData::RpSubtickMove> &subtickMoves);
 		bool AddCmds(const std::vector<CmdData> &cmds, const std::vector<u8> &cmdSubtickCounts,
 					 const std::vector<SubtickData::RpSubtickMove> &cmdSubtickMoves);
 

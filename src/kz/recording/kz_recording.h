@@ -103,6 +103,7 @@ struct Recorder
 
 	// Flush in-memory recording data to a temp chunk file on disk, then clear in-memory vectors.
 	void FlushChunkToDisk();
+
 	// The recording data of one flushed chunk.
 	struct Chunk
 	{

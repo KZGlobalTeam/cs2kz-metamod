@@ -648,6 +648,18 @@
 		"ua"		"Колір Jumpbug"
 		"ru"		"Цвет Jumpbug"
 	}
+	"Menu - Color Deadstrafe"
+	{
+		"en"		"Deadstrafe color"
+	}
+	"Menu - Deadstrafe"
+	{
+		"en"		"Show deadstrafe"
+	}
+	"Menu - Deadstrafe Sub"
+	{
+		"en"		"Recolors the value while air acceleration is cut to a quarter, from rising slower than 140 u/s"
+	}
 	"Menu - Color Pro"
 	{
 		"en"		"PRO color"

@@ -343,6 +343,9 @@ void KZHUDService::RegisterMenu()
 			{
 				KZ::menu::AddToggle(sub, "Menu - Decimal", "mhudSpeedPrecise", false);
 				KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
+				KZ::menu::AddToggle(sub, "Menu - Deadstrafe", "mhudSpeedDeadstrafe", false);
+				KZ::menu::SetItemSubtext(sub, "Menu - Deadstrafe Sub");
+				KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
 				KZ::menu::AddChoice(sub, "Menu - Border", GetBorderChoices, GetCurrentBorder, PickBorder, e);
 				KZ::menu::SetItemPref(sub, def.borderKey, KZOptStorage::Int, (i32)MHUDBorder::None);
 				KZ::menu::SetItemSubtext(sub, "Menu - Border Sub");
@@ -353,6 +356,9 @@ void KZHUDService::RegisterMenu()
 			case MHUDElement::Prespeed:
 			{
 				KZ::menu::AddToggle(sub, "Menu - Decimal", "mhudPrespeedPrecise", false);
+				KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
+				KZ::menu::AddToggle(sub, "Menu - Deadstrafe", "mhudPrespeedDeadstrafe", false);
+				KZ::menu::SetItemSubtext(sub, "Menu - Deadstrafe Sub");
 				KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
 				KZ::menu::AddChoice(sub, "Menu - Border", GetBorderChoices, GetCurrentBorder, PickBorder, e);
 				KZ::menu::SetItemPref(sub, def.borderKey, KZOptStorage::Int, (i32)MHUDBorder::None);

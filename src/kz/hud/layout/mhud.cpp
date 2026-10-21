@@ -72,7 +72,7 @@ void KZHUDService::UpdateSpeedElement(CCSCustomHudLayout *layout, const SpeedInf
 	const MHUDPrefs &prefs = this->GetPrefs();
 	char text[24];
 	FormatBordered(text, sizeof(text), prefs.elements[(i32)MHUDElement::Speed], prefs.speedPrecise, info.speed);
-	const Color color = prefs.speed[(i32)info.GetState()];
+	const Color color = prefs.speedDeadstrafeEnabled && info.deadstrafe ? prefs.speedDeadstrafe : prefs.speed[(i32)info.GetState()];
 	this->UpdateLayoutElement(layout, MHUDElement::Speed, this->IsMHUDElementEnabled(MHUDElement::Speed), text, color, force);
 }
 
@@ -81,7 +81,7 @@ void KZHUDService::UpdatePrespeedElement(CCSCustomHudLayout *layout, const Speed
 	const MHUDPrefs &prefs = this->GetPrefs();
 	char text[24];
 	FormatBordered(text, sizeof(text), prefs.elements[(i32)MHUDElement::Prespeed], prefs.prespeedPrecise, info.takeoffSpeed);
-	const Color color = prefs.prespeed[(i32)info.GetState()];
+	const Color color = prefs.prespeedDeadstrafeEnabled && info.deadstrafe ? prefs.prespeedDeadstrafe : prefs.prespeed[(i32)info.GetState()];
 	const bool hideWalkOff = prefs.prespeedShow == MHUDPrespeedShow::JumpOrLadder;
 	const bool show = this->IsMHUDElementEnabled(MHUDElement::Prespeed) && info.showTakeoff && !(hideWalkOff && info.walkedOff);
 	this->UpdateLayoutElement(layout, MHUDElement::Prespeed, show, text, color, force);

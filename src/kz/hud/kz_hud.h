@@ -134,6 +134,7 @@ static_global const Color MHUD_DEF_BASE_COLOR(255, 255, 255, 255);
 static_global const Color MHUD_DEF_PERF_COLOR(0x40, 0xFF, 0x40, 0xFF);
 static_global const Color MHUD_DEF_JUMPBUG_COLOR(0xFF, 0xFF, 0x20, 0xFF);
 static_global const Color MHUD_DEF_CJ_COLOR(0x71, 0xEE, 0xB8, 0xFF);
+static_global const Color MHUD_DEF_DEADSTRAFE_COLOR(0xFF, 0x00, 0x00, 0xFF);
 static_global const Color MHUD_DEF_TIMER_TP_COLOR(0xFF, 0xFF, 0x00, 0xFF);
 static_global const Color MHUD_DEF_TIMER_PRO_COLOR(0x5F, 0x99, 0xD9, 0xFF);
 static_global const Color MHUD_DEF_TIMER_PAUSED_COLOR(0xFF, 0x80, 0x00, 0xFF);
@@ -279,6 +280,7 @@ struct MHUDPrefs
 	Color timerPaused, timerStopped, timerTp, timerPro;
 	Color speed[(i32)MHUDSpeedState::Count];
 	Color prespeed[(i32)MHUDSpeedState::Count];
+	Color speedDeadstrafe, prespeedDeadstrafe;
 	Color keys, keysOverlap, keysPressed, keysOverlapGlow;
 	Color checkpoint, checkpointTp;
 	Color indicator[MHUD_INDICATOR_COUNT];
@@ -301,6 +303,8 @@ struct MHUDPrefs
 	bool timerShowState {true};
 	bool speedPrecise {};
 	bool prespeedPrecise {};
+	bool speedDeadstrafeEnabled {};
+	bool prespeedDeadstrafeEnabled {};
 	MHUDPrespeedShow prespeedShow {MHUDPrespeedShow::Brief};
 	bool keysOverlapEnabled {true};
 	bool keysOverlapAxis {}; // tint only the two keys causing the overlap, not the whole element
@@ -475,6 +479,7 @@ private:
 		bool crouchJump {};
 		bool walkedOff {};     // left the ground without jumping and not off a ladder
 		bool recentTakeoff {}; // airborne or inside the landing grace, even when showTakeoff is held on
+		bool deadstrafe {};    // airborne with m_flSurfaceFriction at 0.25, so air acceleration is quartered
 
 		MHUDSpeedState GetState() const
 		{

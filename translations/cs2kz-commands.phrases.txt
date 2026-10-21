@@ -1999,6 +1999,10 @@
 		"ua"		"Переміщати елементи HUD за допомогою миші."
 		"ru"		"Перемещение элементов HUD мышью."
 	}
+	"Command Description - kz_hidehud"
+	{
+		"en"		"Toggle hiding the crosshair, weapons, notices and voice status. Chat stays visible."
+	}
 	"Command Description - kz_exportprefs"
 	{
 		"en"		"Export your preferences to the console."

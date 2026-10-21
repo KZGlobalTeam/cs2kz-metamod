@@ -71,6 +71,7 @@ static_global constexpr MHUDColorPrefDef SPEED_COLOR_PREFS[] =
 	{"Menu - Color Perf",       "mhudSpeedPerfColor",       0xFF, 0xFF, 0xFF, false, NULL, true},
 	{"Menu - Color Crouch Perf","mhudSpeedCrouchPerfColor", 0x71, 0xEE, 0xB8, false, NULL, true},
 	{"Menu - Color Jumpbug",    "mhudSpeedJumpbugColor",    0xFF, 0xFF, 0xFF, false, NULL, true},
+	{"Menu - Color Deadstrafe", "mhudSpeedDeadstrafeColor", 0xFF, 0x00, 0x00, false, "mhudSpeedDeadstrafe"},
 };
 
 static_global constexpr MHUDColorPrefDef PRESPEED_COLOR_PREFS[] =
@@ -80,6 +81,7 @@ static_global constexpr MHUDColorPrefDef PRESPEED_COLOR_PREFS[] =
 	{"Menu - Color Perf",       "mhudPrespeedPerfColor",       0x40, 0xFF, 0x40, false, NULL, true},
 	{"Menu - Color Crouch Perf","mhudPrespeedCrouchPerfColor", 0x40, 0xFF, 0x40, false, NULL, true},
 	{"Menu - Color Jumpbug",    "mhudPrespeedJumpbugColor",    0xFF, 0xFF, 0x20, false, NULL, true},
+	{"Menu - Color Deadstrafe", "mhudPrespeedDeadstrafeColor", 0xFF, 0x00, 0x00, false, "mhudPrespeedDeadstrafe"},
 };
 
 static_global constexpr MHUDColorPrefDef KEYS_COLOR_PREFS[] =
