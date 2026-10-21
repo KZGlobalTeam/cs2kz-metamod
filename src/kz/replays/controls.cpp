@@ -145,25 +145,7 @@ static_function u64 GetNewlyPressedButtons(const CInButtonStatePB &buttons)
 	return buttons.buttonstate3() | (buttons.buttonstate1() & buttons.buttonstate2());
 }
 
-// The first replay tick recorded on or after serverTick. Ticks are recorded in server tick order.
-static_function u32 GetTickAtServerTick(const KZ::replaysystem::data::ReplayPlayback *replay, u32 serverTick)
-{
-	u32 low = 0;
-	u32 high = replay->tickCount;
-	while (low < high)
-	{
-		const u32 mid = (low + high) / 2;
-		if (replay->tickData[mid].serverTick < serverTick)
-		{
-			low = mid + 1;
-		}
-		else
-		{
-			high = mid;
-		}
-	}
-	return MIN(low, replay->tickCount - 1);
-}
+using KZ::replaysystem::data::GetTickAtServerTick;
 
 static_function bool IsTimerEvent(const RpEvent &event, RpEvent::RpEventData::TimerEvent::TimerEventType type)
 {

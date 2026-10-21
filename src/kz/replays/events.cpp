@@ -435,26 +435,8 @@ namespace KZ::replaysystem::events
 							if (inActiveTimerRun && inPause)
 							{
 								// Calculate pause duration and add to total
-								u32 pauseStartTickIndex = 0;
-								u32 resumeTickIndex = 0;
-
-								for (u32 j = 0; j < replay->tickCount; j++)
-								{
-									if (replay->tickData[j].serverTick >= pauseStartTick)
-									{
-										pauseStartTickIndex = j;
-										break;
-									}
-								}
-
-								for (u32 j = 0; j < replay->tickCount; j++)
-								{
-									if (replay->tickData[j].serverTick >= event->serverTick)
-									{
-										resumeTickIndex = j;
-										break;
-									}
-								}
+								u32 pauseStartTickIndex = data::GetTickAtServerTick(replay, pauseStartTick);
+								u32 resumeTickIndex = data::GetTickAtServerTick(replay, event->serverTick);
 
 								TickData *pauseStartTickData = &replay->tickData[pauseStartTickIndex];
 								TickData *resumeTickData = &replay->tickData[resumeTickIndex];
@@ -520,15 +502,7 @@ namespace KZ::replaysystem::events
 		// counts as played, and playback adds a tick for every played tick of a pause, the target included.
 		if (inPause && inActiveTimerRun && replay->startTime > 0.0f)
 		{
-			u32 pauseStartTickIndex = 0;
-			for (u32 j = 0; j < replay->tickCount; j++)
-			{
-				if (replay->tickData[j].serverTick >= pauseStartTick)
-				{
-					pauseStartTickIndex = j;
-					break;
-				}
-			}
+			u32 pauseStartTickIndex = data::GetTickAtServerTick(replay, pauseStartTick);
 
 			TickData *pauseStartTickData = &replay->tickData[pauseStartTickIndex];
 			TickData *targetTickData = &replay->tickData[targetTick];

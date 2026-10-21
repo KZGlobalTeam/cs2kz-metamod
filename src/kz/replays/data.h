@@ -97,6 +97,8 @@ namespace KZ::replaysystem::data
 	void LoadReplayMemoryAsync(std::vector<char> data, UUID_t uuid, LoadSuccessCallback onSuccess, LoadFailureCallback onFailure);
 	void FreeReplayData(ReplayPlayback *replay);
 	void ResetReplayState(ReplayPlayback *replay);
+	// The first replay tick recorded on or after serverTick, or the last tick if there is none.
+	u32 GetTickAtServerTick(const ReplayPlayback *replay, u32 serverTick);
 
 	// Async loading status
 	AsyncLoadStatus *GetLoadStatus();

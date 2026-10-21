@@ -60,6 +60,26 @@ namespace KZ::replaysystem::data
 		*replay = {};
 	}
 
+	// Ticks are recorded in server tick order, so a binary search finds it.
+	u32 GetTickAtServerTick(const ReplayPlayback *replay, u32 serverTick)
+	{
+		u32 low = 0;
+		u32 high = replay->tickCount;
+		while (low < high)
+		{
+			const u32 mid = (low + high) / 2;
+			if (replay->tickData[mid].serverTick < serverTick)
+			{
+				low = mid + 1;
+			}
+			else
+			{
+				high = mid;
+			}
+		}
+		return MIN(low, replay->tickCount - 1);
+	}
+
 	void ResetReplayState(ReplayPlayback *replay)
 	{
 		// Reset all tracking indices
