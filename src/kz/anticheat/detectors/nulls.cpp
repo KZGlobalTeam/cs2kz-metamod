@@ -6,7 +6,7 @@
 #include "utils/simplecmds.h"
 
 #define NUM_MIN_INPUT_EVENTS_FOR_DETECTION                    128
-#define NUM_CONSECUTIVE_PERFECT_CSTRAFE_FOR_DETECTION_MINIMUM 128
+#define NUM_CONSECUTIVE_PERFECT_CSTRAFE_FOR_DETECTION_MINIMUM 256
 #define NUM_CONSECUTIVE_PERFECT_CSTRAFE_FOR_DETECTION_MAXIMUM 640
 
 // The higher the FPS, the less likely player can get perfect counter-strafes by chance.
@@ -335,13 +335,17 @@ void KZAnticheatService::AnalyzeNullsForAxis(const std::deque<InputEvent> &event
 						}
 					}
 				}
-				else if (event.airSpeed >= MIN_AIR_SPEED_FOR_DETECTION)
+				else
 				{
-					if (kz_ac_nulls_debug.Get() && event.cmdNum == this->currentCmdNum)
+					if (event.airSpeed >= MIN_AIR_SPEED_FOR_DETECTION)
 					{
-						this->player->PrintConsole(false, true, "Overlap %.3f ms @ %f", overlapDuration * 1000, event.cmdNum + event.fraction);
+						if (kz_ac_nulls_debug.Get() && event.cmdNum == this->currentCmdNum)
+						{
+							this->player->PrintConsole(false, true, "Overlap %.3f ms @ %f", overlapDuration * 1000, event.cmdNum + event.fraction);
+						}
+						numOverlaps += weight;
 					}
-					numOverlaps += weight;
+					// An overlap breaks the streak even where it is not counted, such as on the ground.
 					numConsecutivePerfect = 0;
 				}
 			}
