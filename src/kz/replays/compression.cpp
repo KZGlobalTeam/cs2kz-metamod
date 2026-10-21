@@ -731,6 +731,8 @@ static_function bool DecodeTickDataBuffer(const char *decompressedData, size_t u
 	const char *endPtr = decompressedData + uncompressedSize;
 
 	TickData tick {};
+	// Vector's default constructor leaves it uninitialized, and v1 replays never write this field.
+	tick.modernJump.lastLandedVelocity.Init();
 	for (u32 i = 0; i < elementCount; i++)
 	{
 		// Read change flags
