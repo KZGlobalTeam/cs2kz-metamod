@@ -74,6 +74,35 @@ static_function bool ReadSectionHeader(const char *&cursor, const char *end, Com
 	return ZSTD_getFrameContentSize(cursor, header.compressedSize) == header.uncompressedSize;
 }
 
+// Compresses one section and appends its header and payload. Returns 0 if compression fails or a size does not fit the header.
+static_function i32 AppendCompressedSection(std::vector<char> &outBuffer, const void *data, size_t size, size_t elementCount)
+{
+	if (size > UINT32_MAX || elementCount > UINT32_MAX)
+	{
+		KZ_LOG_WARN(LogChannel::Replays, "Replay section of %zu bytes (%zu elements) is too large to save\n", size, elementCount);
+		return 0;
+	}
+
+	void *compressedData = nullptr;
+	size_t compressedSize = 0;
+	if (!Compress(data, size, &compressedData, &compressedSize))
+	{
+		return 0;
+	}
+	if (compressedSize > UINT32_MAX)
+	{
+		KZ_LOG_WARN(LogChannel::Replays, "Compressed replay section of %zu bytes is too large to save\n", compressedSize);
+		delete[] static_cast<char *>(compressedData);
+		return 0;
+	}
+
+	CompressedSectionHeader header {(u32)compressedSize, (u32)size, (u32)elementCount};
+	AppendToBuffer(outBuffer, &header, sizeof(header));
+	AppendToBuffer(outBuffer, compressedData, compressedSize);
+	delete[] static_cast<char *>(compressedData);
+	return (i32)(sizeof(header) + compressedSize);
+}
+
 // Decompresses a tick or cmd subtick section, converting pre-v4 entries to the current layout.
 static_function bool DecompressSubtickSection(const char *src, const CompressedSectionHeader &header, const parsing::VersionParser &parser,
 											  std::vector<SubtickData> &outSubtickData)
@@ -272,7 +301,6 @@ static_function u64 BuildPostChangeFlags(const TickData::MovementData &current, 
 i32 KZ::replaysystem::compression::WriteTickDataCompressed(std::vector<char> &outBuffer, const std::vector<TickData> &tickData,
 														   const std::vector<SubtickData> &subtickData)
 {
-	i32 bytesWritten = 0;
 	std::vector<char> buffer;
 
 	// Reserve approximate size
@@ -431,52 +459,19 @@ i32 KZ::replaysystem::compression::WriteTickDataCompressed(std::vector<char> &ou
 		// clang-format on
 	}
 
-	// Compress the buffer
-	void *compressedData = nullptr;
-	size_t compressedSize = 0;
-
-	bool success = Compress(buffer.data(), buffer.size(), &compressedData, &compressedSize);
-	if (!success)
+	i32 bytesWritten = AppendCompressedSection(outBuffer, buffer.data(), buffer.size(), tickData.size());
+	if (!bytesWritten)
 	{
 		return 0;
 	}
 
-	// Write section header
-	CompressedSectionHeader header;
-	header.compressedSize = (u32)compressedSize;
-	header.uncompressedSize = (u32)buffer.size();
-	header.elementCount = (u32)tickData.size();
-
-	AppendToBuffer(outBuffer, &header, sizeof(header));
-	bytesWritten += (i32)sizeof(header);
-	AppendToBuffer(outBuffer, compressedData, compressedSize);
-	bytesWritten += (i32)compressedSize;
-
-	delete[] static_cast<char *>(compressedData);
-
-	// Compress subtick data
-	void *compressedSubtick = nullptr;
-	size_t compressedSubtickSize = 0;
-	size_t uncompressedSubtickSize = subtickData.size() * sizeof(SubtickData);
-
-	success = Compress(subtickData.data(), uncompressedSubtickSize, &compressedSubtick, &compressedSubtickSize);
-
-	if (success)
+	// The reader expects the subtick section to follow, so a failure here fails the whole write.
+	i32 subtickBytesWritten = AppendCompressedSection(outBuffer, subtickData.data(), subtickData.size() * sizeof(SubtickData), subtickData.size());
+	if (!subtickBytesWritten)
 	{
-		CompressedSectionHeader subtickHeader;
-		subtickHeader.compressedSize = (u32)compressedSubtickSize;
-		subtickHeader.uncompressedSize = (u32)uncompressedSubtickSize;
-		subtickHeader.elementCount = (u32)subtickData.size();
-
-		AppendToBuffer(outBuffer, &subtickHeader, sizeof(subtickHeader));
-		bytesWritten += (i32)sizeof(subtickHeader);
-		AppendToBuffer(outBuffer, compressedSubtick, compressedSubtickSize);
-		bytesWritten += (i32)compressedSubtickSize;
-
-		delete[] static_cast<char *>(compressedSubtick);
+		return 0;
 	}
-
-	return bytesWritten;
+	return bytesWritten + subtickBytesWritten;
 }
 
 static_function bool ReadTickDataSections(const char *&cursor, const char *end, std::vector<TickData> *outTickData,
@@ -768,17 +763,7 @@ i32 KZ::replaysystem::compression::WriteEventsCompressed(std::vector<char> &outB
 	{
 		return 0;
 	}
-	void *compressedData = nullptr;
-	size_t compressedSize = 0;
-	if (!Compress(bytes.data(), bytes.size(), &compressedData, &compressedSize))
-	{
-		return 0;
-	}
-	CompressedSectionHeader header {(u32)compressedSize, (u32)bytes.size(), (u32)events.size()};
-	AppendToBuffer(outBuffer, &header, sizeof(header));
-	AppendToBuffer(outBuffer, compressedData, compressedSize);
-	delete[] static_cast<char *>(compressedData);
-	return (i32)(sizeof(header) + compressedSize);
+	return AppendCompressedSection(outBuffer, bytes.data(), bytes.size(), events.size());
 }
 
 // ========================================
@@ -943,8 +928,6 @@ bool KZ::replaysystem::compression::ReadJumpsCompressed(const char *&cursor, con
 
 i32 KZ::replaysystem::compression::WriteJumpsCompressed(std::vector<char> &outBuffer, const std::vector<RpJumpStats> &jumps)
 {
-	i32 bytesWritten = 0;
-
 	// Serialize jumps to a buffer first (since they have variable-sized vectors)
 	std::vector<char> buffer;
 
@@ -978,30 +961,7 @@ i32 KZ::replaysystem::compression::WriteJumpsCompressed(std::vector<char> &outBu
 		AppendToBuffer(buffer, jump.aaCalls.data(), sizeof(RpJumpStats::AAData) * numAACalls);
 	}
 
-	// Compress
-	void *compressedData = nullptr;
-	size_t compressedSize = 0;
-
-	bool success = Compress(buffer.data(), buffer.size(), &compressedData, &compressedSize);
-	if (!success)
-	{
-		return 0;
-	}
-
-	// Write header and compressed data
-	CompressedSectionHeader header;
-	header.compressedSize = (u32)compressedSize;
-	header.uncompressedSize = (u32)buffer.size();
-	header.elementCount = (u32)jumps.size();
-
-	AppendToBuffer(outBuffer, &header, sizeof(header));
-	bytesWritten += (i32)sizeof(header);
-	AppendToBuffer(outBuffer, compressedData, compressedSize);
-	bytesWritten += (i32)compressedSize;
-
-	delete[] static_cast<char *>(compressedData);
-
-	return bytesWritten;
+	return AppendCompressedSection(outBuffer, buffer.data(), buffer.size(), jumps.size());
 }
 
 // ========================================
@@ -1163,8 +1123,6 @@ bool KZ::replaysystem::compression::ReadCmdDataCompressed(const char *&cursor, c
 
 i32 KZ::replaysystem::compression::WriteWeaponsCompressed(std::vector<char> &outBuffer, const std::vector<std::pair<i32, EconInfo>> &weaponTable)
 {
-	i32 bytesWritten = 0;
-
 	// Serialize weapon table to a buffer first
 	std::vector<char> buffer;
 
@@ -1189,36 +1147,12 @@ i32 KZ::replaysystem::compression::WriteWeaponsCompressed(std::vector<char> &out
 		}
 	}
 
-	// Compress
-	void *compressedData = nullptr;
-	size_t compressedSize = 0;
-
-	bool success = Compress(buffer.data(), buffer.size(), &compressedData, &compressedSize);
-	if (!success)
-	{
-		return 0;
-	}
-
-	// Write header and compressed data
-	CompressedSectionHeader header;
-	header.compressedSize = (u32)compressedSize;
-	header.uncompressedSize = (u32)buffer.size();
-	header.elementCount = (u32)weaponTable.size();
-
-	AppendToBuffer(outBuffer, &header, sizeof(header));
-	bytesWritten += (i32)sizeof(header);
-	AppendToBuffer(outBuffer, compressedData, compressedSize);
-	bytesWritten += (i32)compressedSize;
-
-	delete[] static_cast<char *>(compressedData);
-
-	return bytesWritten;
+	return AppendCompressedSection(outBuffer, buffer.data(), buffer.size(), weaponTable.size());
 }
 
 i32 KZ::replaysystem::compression::WriteCmdDataCompressed(std::vector<char> &outBuffer, const std::vector<CmdData> &cmdData,
 														  const std::vector<SubtickData> &cmdSubtickData)
 {
-	i32 bytesWritten = 0;
 	std::vector<char> buffer;
 
 	// Reserve approximate size
@@ -1286,49 +1220,17 @@ i32 KZ::replaysystem::compression::WriteCmdDataCompressed(std::vector<char> &out
 		// clang-format on
 	}
 
-	// Compress the buffer
-	void *compressedData = nullptr;
-	size_t compressedSize = 0;
-
-	bool success = Compress(buffer.data(), buffer.size(), &compressedData, &compressedSize);
-	if (!success)
+	i32 bytesWritten = AppendCompressedSection(outBuffer, buffer.data(), buffer.size(), cmdData.size());
+	if (!bytesWritten)
 	{
 		return 0;
 	}
 
-	CompressedSectionHeader header;
-	header.compressedSize = (u32)compressedSize;
-	header.uncompressedSize = (u32)buffer.size();
-	header.elementCount = (u32)cmdData.size();
-
-	AppendToBuffer(outBuffer, &header, sizeof(header));
-	bytesWritten += (i32)sizeof(header);
-	AppendToBuffer(outBuffer, compressedData, compressedSize);
-	bytesWritten += (i32)compressedSize;
-
-	delete[] static_cast<char *>(compressedData);
-
-	// Compress cmd subtick data
-	void *compressedSubtick = nullptr;
-	size_t compressedSubtickSize = 0;
-	size_t uncompressedSubtickSize = cmdSubtickData.size() * sizeof(SubtickData);
-
-	success = Compress(cmdSubtickData.data(), uncompressedSubtickSize, &compressedSubtick, &compressedSubtickSize);
-
-	if (success)
+	// The reader expects the cmd subtick section to follow, so a failure here fails the whole write.
+	i32 subtickBytesWritten = AppendCompressedSection(outBuffer, cmdSubtickData.data(), cmdSubtickData.size() * sizeof(SubtickData), cmdSubtickData.size());
+	if (!subtickBytesWritten)
 	{
-		CompressedSectionHeader subtickHeader;
-		subtickHeader.compressedSize = (u32)compressedSubtickSize;
-		subtickHeader.uncompressedSize = (u32)uncompressedSubtickSize;
-		subtickHeader.elementCount = (u32)cmdSubtickData.size();
-
-		AppendToBuffer(outBuffer, &subtickHeader, sizeof(subtickHeader));
-		bytesWritten += (i32)sizeof(subtickHeader);
-		AppendToBuffer(outBuffer, compressedSubtick, compressedSubtickSize);
-		bytesWritten += (i32)compressedSubtickSize;
-
-		delete[] static_cast<char *>(compressedSubtick);
+		return 0;
 	}
-
-	return bytesWritten;
+	return bytesWritten + subtickBytesWritten;
 }
