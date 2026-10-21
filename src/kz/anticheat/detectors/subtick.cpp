@@ -13,6 +13,7 @@
 #define SUBTICK_SUSPICIOUS_MOVES_WINDOW    0.5f
 #define SUBTICK_SUSPICIOUS_MOVES_THRESHOLD 20
 #define SUBTICK_YAW_DELTA_THRESHOLD        2
+#define SUBTICK_MOVE_YAW_TOLERANCE         2.0f
 #define SUBTICK_SUBTICK_INPUTS_WINDOW      20.0f
 #define SUBTICK_SUBTICK_INPUTS_THRESHOLD   30
 #define SUBTICK_ZERO_WHEN_RATIO_THRESHOLD  0.9f
@@ -113,6 +114,49 @@ static_function bool HasMultipleAngleOnlyMoves(const CUserCmd &cmd)
 		}
 	}
 	return numAngleOnlyMoves > 1;
+}
+
+// The client keeps any input that lands at the end of the tick for the next command, where it happens at the start.
+static_function bool HasEndOfTickMove(const CUserCmd &cmd)
+{
+	for (i32 i = 0; i < cmd.base().subtick_moves_size(); i++)
+	{
+		if (cmd.base().subtick_moves(i).when() >= 1.0f)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
+// A subtick move steers with the view angles of the frame it happened in, and the input history holds every frame the client rendered.
+// Returns how many degrees the furthest move turned past all of those frames.
+static_function f32 GetMoveYawOutsideFrames(const CUserCmd &cmd, f32 previousFrameYaw, bool hasPreviousFrame)
+{
+	f32 yaw = cmd.base().viewangles().y();
+	f32 minYaw = 0.0f;
+	f32 maxYaw = 0.0f;
+	if (hasPreviousFrame)
+	{
+		f32 offset = utils::GetAngleDifference(yaw, previousFrameYaw, 180.0f, true);
+		minYaw = MIN(minYaw, offset);
+		maxYaw = MAX(maxYaw, offset);
+	}
+	for (i32 i = 0; i < cmd.input_history_size(); i++)
+	{
+		f32 offset = utils::GetAngleDifference(yaw, cmd.input_history(i).view_angles().y(), 180.0f, true);
+		minYaw = MIN(minYaw, offset);
+		maxYaw = MAX(maxYaw, offset);
+	}
+	f32 moveYaw = 0.0f;
+	f32 outside = 0.0f;
+	for (i32 i = 0; i < cmd.base().subtick_moves_size(); i++)
+	{
+		moveYaw += cmd.base().subtick_moves(i).yaw_delta();
+		f32 offset = utils::GetAngleDifference(0.0f, moveYaw, 180.0f, true);
+		outside = MAX(outside, MAX(minYaw - offset, offset - maxYaw));
+	}
+	return outside;
 }
 
 // The engine validates the whole subtick move list before it applies any of it, and throws all of it away if
@@ -301,6 +345,19 @@ void KZAnticheatService::CheckSubtickAbuse(CUserCmd *cmd)
 	{
 		this->angleOnlyMoveCommandTimes.push_back(g_pKZUtils->GetServerGlobals()->curtime);
 	}
+	if (!cmd->IsLate() && HasEndOfTickMove(*cmd))
+	{
+		this->endOfTickMoveCommandTimes.push_back(g_pKZUtils->GetServerGlobals()->curtime);
+	}
+	if (cmd->input_history_size() > 0)
+	{
+		if (!cmd->IsLate() && GetMoveYawOutsideFrames(*cmd, this->lastFrameYaw, this->hasLastFrameYaw) > SUBTICK_MOVE_YAW_TOLERANCE)
+		{
+			this->offViewMoveCommandTimes.push_back(g_pKZUtils->GetServerGlobals()->curtime);
+		}
+		this->lastFrameYaw = cmd->input_history(cmd->input_history_size() - 1).view_angles().y();
+		this->hasLastFrameYaw = true;
+	}
 	// Check for possible desubticked commands
 	if (cmd->base().subtick_moves_size() > 0)
 	{
@@ -344,6 +401,26 @@ void KZAnticheatService::CheckSuspiciousSubtickCommands()
 	{
 		this->MarkInfraction(Infraction::Type::InvalidInput, "Multiple angle-only subtick moves in one command");
 		this->angleOnlyMoveCommandTimes.clear();
+	}
+
+	while (!this->endOfTickMoveCommandTimes.empty() && currentTime - this->endOfTickMoveCommandTimes.front() > SUBTICK_INVALID_COMMAND_WINDOW)
+	{
+		this->endOfTickMoveCommandTimes.pop_front();
+	}
+	if (this->endOfTickMoveCommandTimes.size() >= SUBTICK_INVALID_COMMAND_THRESHOLD)
+	{
+		this->MarkInfraction(Infraction::Type::InvalidInput, "Subtick moves at the end of the tick");
+		this->endOfTickMoveCommandTimes.clear();
+	}
+
+	while (!this->offViewMoveCommandTimes.empty() && currentTime - this->offViewMoveCommandTimes.front() > SUBTICK_INVALID_COMMAND_WINDOW)
+	{
+		this->offViewMoveCommandTimes.pop_front();
+	}
+	if (this->offViewMoveCommandTimes.size() >= SUBTICK_INVALID_COMMAND_THRESHOLD)
+	{
+		this->MarkInfraction(Infraction::Type::InvalidInput, "Subtick moves turned away from every rendered frame");
+		this->offViewMoveCommandTimes.clear();
 	}
 
 	// Clear out old entries beyond configured window

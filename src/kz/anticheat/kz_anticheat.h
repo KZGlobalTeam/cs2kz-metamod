@@ -162,6 +162,9 @@ public:
 		nullsFramerateBuffer.clear();
 		suspiciousSubtickMoveTimes.clear();
 		invalidCommandTimes.clear();
+		endOfTickMoveCommandTimes.clear();
+		offViewMoveCommandTimes.clear();
+		hasLastFrameYaw = false;
 		zeroWhenCommandTimes.clear();
 		numCommandsWithSubtickInputs.clear();
 		recentJumpStatuses.clear();
@@ -310,6 +313,10 @@ public:
 	std::deque<f32> suspiciousSubtickMoveTimes;
 	std::deque<f32> invalidCommandTimes;
 	std::deque<f32> angleOnlyMoveCommandTimes;
+	std::deque<f32> endOfTickMoveCommandTimes;
+	std::deque<f32> offViewMoveCommandTimes;
+	f32 lastFrameYaw {};
+	bool hasLastFrameYaw {};
 	std::deque<f32> zeroWhenCommandTimes;
 	std::deque<f32> numCommandsWithSubtickInputs;
 	// Clear up old entries beyond a certain duration and ban if there are too many within that timeframe.

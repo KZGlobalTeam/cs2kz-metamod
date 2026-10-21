@@ -140,6 +140,9 @@ void KZAnticheatService::ClearDetectionBuffers()
 	this->suspiciousSubtickMoveTimes.clear();
 	this->invalidCommandTimes.clear();
 	this->angleOnlyMoveCommandTimes.clear();
+	this->endOfTickMoveCommandTimes.clear();
+	this->offViewMoveCommandTimes.clear();
+	this->hasLastFrameYaw = false;
 	this->zeroWhenCommandTimes.clear();
 	this->numCommandsWithSubtickInputs.clear();
 	this->recentSubtickSplits.clear();
