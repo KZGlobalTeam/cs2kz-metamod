@@ -31,7 +31,7 @@ static bool IsFieldNetworked(const char *cppName, SchemaClassFieldData_t &field)
 		return false;
 	}
 
-	if (pDatabase->m_ClassInfos[index]->FindField(field.m_pszName))
+	if (pDatabase->m_ClassInfos[index]->FindField(field.m_pName))
 	{
 		return true;
 	}
@@ -43,14 +43,14 @@ static bool IsFieldNetworked(const char *cppName, SchemaClassFieldData_t &field)
 // (e.g. CCSGameRules -> CTeamplayRules -> CMultiplayRules -> CGameRules, in this case it's in CGameRules)
 static void InitChainOffset(SchemaClassInfoData_t *pClassInfo, SchemaKeyValueMap_t &keyValueMap)
 {
-	short fieldsSize = pClassInfo->m_nFieldCount;
+	short fieldsSize = pClassInfo->m_nNumFields;
 	SchemaClassFieldData_t *pFields = pClassInfo->m_pFields;
 
 	for (int i = 0; i < fieldsSize; ++i)
 	{
 		SchemaClassFieldData_t &field = pFields[i];
 
-		if (hash_32_fnv1a_const(field.m_pszName) != g_ChainKey)
+		if (hash_32_fnv1a_const(field.m_pName) != g_ChainKey)
 		{
 			continue;
 		}
@@ -58,14 +58,14 @@ static void InitChainOffset(SchemaClassInfoData_t *pClassInfo, SchemaKeyValueMap
 		std::pair<uint32_t, SchemaKey> keyValuePair;
 		keyValuePair.first = g_ChainKey;
 		keyValuePair.second.offset = field.m_nSingleInheritanceOffset;
-		keyValuePair.second.networked = IsFieldNetworked(pClassInfo->m_pszName, field);
+		keyValuePair.second.networked = IsFieldNetworked(pClassInfo->m_pName, field);
 
 		keyValueMap.insert(keyValuePair);
 		return;
 	}
 
 	// Not the base class yet, keep looking
-	if (pClassInfo->m_nBaseClassCount)
+	if (pClassInfo->m_nNumBaseClasses)
 	{
 		return InitChainOffset(pClassInfo->m_pBaseClasses[0].m_pClass, keyValueMap);
 	}
@@ -73,7 +73,7 @@ static void InitChainOffset(SchemaClassInfoData_t *pClassInfo, SchemaKeyValueMap
 
 static void InitSchemaKeyValueMap(SchemaClassInfoData_t *pClassInfo, SchemaKeyValueMap_t &keyValueMap)
 {
-	short fieldsSize = pClassInfo->m_nFieldCount;
+	short fieldsSize = pClassInfo->m_nNumFields;
 	SchemaClassFieldData_t *pFields = pClassInfo->m_pFields;
 
 	for (int i = 0; i < fieldsSize; ++i)
@@ -81,21 +81,21 @@ static void InitSchemaKeyValueMap(SchemaClassInfoData_t *pClassInfo, SchemaKeyVa
 		SchemaClassFieldData_t &field = pFields[i];
 
 #ifdef _DEBUG
-		Msg("%s::%s found at -> 0x%X - %llx\n", pClassInfo->m_pszName, field.m_pszName, field.m_nSingleInheritanceOffset, &field);
+		Msg("%s::%s found at -> 0x%X - %llx\n", pClassInfo->m_pName, field.m_pName, field.m_nSingleInheritanceOffset, &field);
 #endif
 
 		std::pair<uint32_t, SchemaKey> keyValuePair;
-		keyValuePair.first = hash_32_fnv1a_const(field.m_pszName);
+		keyValuePair.first = hash_32_fnv1a_const(field.m_pName);
 		keyValuePair.second.offset = field.m_nSingleInheritanceOffset;
-		keyValuePair.second.networked = IsFieldNetworked(pClassInfo->m_pszName, field);
+		keyValuePair.second.networked = IsFieldNetworked(pClassInfo->m_pName, field);
 
 		keyValueMap.insert(keyValuePair);
 	}
 
-	short dataNumFields = pClassInfo->m_pDataDescMap ? pClassInfo->m_pDataDescMap->dataNumFields : 0;
+	short dataNumFields = pClassInfo->m_pDataDesc ? pClassInfo->m_pDataDesc->dataNumFields : 0;
 	for (int i = 0; i < dataNumFields; ++i)
 	{
-		auto &field = pClassInfo->m_pDataDescMap->dataDesc[i];
+		auto &field = pClassInfo->m_pDataDesc->dataDesc[i];
 
 		if (!field.fieldName || !field.fieldName[0] || field.fieldOffset < 0)
 		{
@@ -108,7 +108,7 @@ static void InitSchemaKeyValueMap(SchemaClassInfoData_t *pClassInfo, SchemaKeyVa
 		}
 
 #ifdef _DEBUG
-		Msg("%s::%s found at -> 0x%X (datamap) - %llx, type: %d, size: %d\n", pClassInfo->m_pszName, field.fieldName, field.fieldOffset, &field,
+		Msg("%s::%s found at -> 0x%X (datamap) - %llx, type: %d, size: %d\n", pClassInfo->m_pName, field.fieldName, field.fieldOffset, &field,
 			field.fieldType, field.fieldSize);
 #endif
 
@@ -120,7 +120,7 @@ static void InitSchemaKeyValueMap(SchemaClassInfoData_t *pClassInfo, SchemaKeyVa
 	}
 
 	// If this is a child class there might be a parent class with __m_pChainEntity
-	if (keyValueMap.find(g_ChainKey) == keyValueMap.end() && pClassInfo->m_nBaseClassCount)
+	if (keyValueMap.find(g_ChainKey) == keyValueMap.end() && pClassInfo->m_nNumBaseClasses)
 	{
 		InitChainOffset(pClassInfo->m_pBaseClasses[0].m_pClass, keyValueMap);
 	}
@@ -169,11 +169,11 @@ SchemaCollectionManipulatorFn_t schema::GetCollectionManipulator(const char *cla
 		return NULL;
 	}
 
-	for (int i = 0; i < pClassInfo->m_nFieldCount; ++i)
+	for (int i = 0; i < pClassInfo->m_nNumFields; ++i)
 	{
 		SchemaClassFieldData_t &field = pClassInfo->m_pFields[i];
 
-		if (V_strcmp(field.m_pszName, fieldName) != 0)
+		if (V_strcmp(field.m_pName, fieldName) != 0)
 		{
 			continue;
 		}
