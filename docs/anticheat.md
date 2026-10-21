@@ -1,6 +1,6 @@
 # Anticheat
 
-Each detection method is implemented separately in its own file under the `detectors` folder.
+Each detection method is implemented separately in its own file under `src/kz/anticheat/detectors`.
 
 ## Post-detection flow
 
