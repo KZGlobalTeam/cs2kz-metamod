@@ -54,6 +54,68 @@ static_function void ClearAnalogSubtickAngles(std::vector<SubtickData> &subtickD
 	}
 }
 
+// Pre-v4 replays stored subtickMoves[64] instead of subtickMoves[MAX_SUBTICK_MOVES].
+static constexpr size_t LEGACY_SUBTICK_DATA_SIZE = sizeof(u32) + 64 * sizeof(SubtickData::RpSubtickMove);
+
+// Reads a section header and bounds it before anything is allocated from its sizes.
+static_function bool ReadSectionHeader(const char *&cursor, const char *end, CompressedSectionHeader &header)
+{
+	if ((size_t)(end - cursor) < sizeof(header))
+	{
+		return false;
+	}
+	memcpy(&header, cursor, sizeof(header));
+	cursor += sizeof(header);
+	if (header.compressedSize > (size_t)(end - cursor))
+	{
+		return false;
+	}
+	// ZSTD_compress always records the content size, so a mismatch means a corrupt header or frame.
+	return ZSTD_getFrameContentSize(cursor, header.compressedSize) == header.uncompressedSize;
+}
+
+// Decompresses a tick or cmd subtick section, converting pre-v4 entries to the current layout.
+static_function bool DecompressSubtickSection(const char *src, const CompressedSectionHeader &header, const parsing::VersionParser &parser,
+											  std::vector<SubtickData> &outSubtickData)
+{
+	size_t entrySize = parser.compactSubticks ? sizeof(SubtickData) : LEGACY_SUBTICK_DATA_SIZE;
+	// Decompress writes uncompressedSize bytes, so it has to match the entries the buffer is sized for.
+	if (header.uncompressedSize != (u64)header.elementCount * entrySize)
+	{
+		return false;
+	}
+
+	bool success;
+	if (parser.compactSubticks)
+	{
+		outSubtickData.resize(header.elementCount);
+		success = Decompress(src, header.compressedSize, outSubtickData.data(), header.uncompressedSize);
+	}
+	else
+	{
+		char *tempBuf = new char[header.uncompressedSize];
+		success = Decompress(src, header.compressedSize, tempBuf, header.uncompressedSize);
+		if (success)
+		{
+			outSubtickData.resize(header.elementCount);
+			for (u32 i = 0; i < header.elementCount; i++)
+			{
+				memcpy(&outSubtickData[i], tempBuf + i * entrySize, sizeof(SubtickData));
+				if (outSubtickData[i].numSubtickMoves > MAX_SUBTICK_MOVES)
+				{
+					outSubtickData[i].numSubtickMoves = MAX_SUBTICK_MOVES;
+				}
+			}
+		}
+		delete[] tempBuf;
+	}
+	if (success && !parser.analogSubtickAngles)
+	{
+		ClearAnalogSubtickAngles(outSubtickData);
+	}
+	return success;
+}
+
 // ========================================
 // Compression utility functions
 // ========================================
@@ -425,15 +487,13 @@ static_function bool ReadTickDataSections(const char *&cursor, const char *end, 
 	{
 		return false;
 	}
-	if (cursor + (ptrdiff_t)sizeof(CompressedSectionHeader) > end)
+	CompressedSectionHeader header;
+	if (!ReadSectionHeader(cursor, end, header))
 	{
 		return false;
 	}
-	CompressedSectionHeader header;
-	memcpy(&header, cursor, sizeof(header));
-	cursor += sizeof(header);
-
-	if (cursor + (ptrdiff_t)header.compressedSize > end)
+	// Each tick starts with a u64 change mask, which bounds the tick reservation by the checked size.
+	if (header.elementCount > header.uncompressedSize / sizeof(u64))
 	{
 		return false;
 	}
@@ -467,52 +527,12 @@ static_function bool ReadTickDataSections(const char *&cursor, const char *end, 
 	}
 
 	// Read subtick data
-	if (cursor + (ptrdiff_t)sizeof(CompressedSectionHeader) > end)
-	{
-		return false;
-	}
 	CompressedSectionHeader subtickHeader;
-	memcpy(&subtickHeader, cursor, sizeof(subtickHeader));
-	cursor += sizeof(subtickHeader);
-
-	if (cursor + (ptrdiff_t)subtickHeader.compressedSize > end)
+	if (!ReadSectionHeader(cursor, end, subtickHeader))
 	{
 		return false;
 	}
-
-	// v4+ uses subtickMoves[MAX_SUBTICK_MOVES]; older replays used subtickMoves[64].
-	if (parser->compactSubticks)
-	{
-		outSubtickData->resize(subtickHeader.elementCount);
-		success = Decompress(cursor, subtickHeader.compressedSize, outSubtickData->data(), subtickHeader.uncompressedSize);
-	}
-	else
-	{
-		char *tempBuf = new char[subtickHeader.uncompressedSize];
-		success = Decompress(cursor, subtickHeader.compressedSize, tempBuf, subtickHeader.uncompressedSize);
-		if (success)
-		{
-			outSubtickData->resize(subtickHeader.elementCount);
-			if (subtickHeader.elementCount > 0)
-			{
-				size_t oldEntrySize = subtickHeader.uncompressedSize / subtickHeader.elementCount;
-				for (u32 i = 0; i < subtickHeader.elementCount; i++)
-				{
-					const char *entry = tempBuf + i * oldEntrySize;
-					memcpy(&(*outSubtickData)[i], entry, MIN(oldEntrySize, sizeof(SubtickData)));
-					if ((*outSubtickData)[i].numSubtickMoves > MAX_SUBTICK_MOVES)
-					{
-						(*outSubtickData)[i].numSubtickMoves = MAX_SUBTICK_MOVES;
-					}
-				}
-			}
-		}
-		delete[] tempBuf;
-	}
-	if (success && !parser->analogSubtickAngles)
-	{
-		ClearAnalogSubtickAngles(*outSubtickData);
-	}
+	success = DecompressSubtickSection(cursor, subtickHeader, *parser, *outSubtickData);
 	cursor += subtickHeader.compressedSize;
 	return success;
 }
@@ -642,15 +662,8 @@ static_function bool DecodeTickDataBuffer(const char *decompressedData, size_t u
 
 bool KZ::replaysystem::compression::ReadWeaponsCompressed(const char *&cursor, const char *end, std::vector<std::pair<i32, EconInfo>> &outWeaponTable)
 {
-	if (cursor + (ptrdiff_t)sizeof(CompressedSectionHeader) > end)
-	{
-		return false;
-	}
 	CompressedSectionHeader header;
-	memcpy(&header, cursor, sizeof(header));
-	cursor += sizeof(header);
-
-	if (cursor + (ptrdiff_t)header.compressedSize > end)
+	if (!ReadSectionHeader(cursor, end, header))
 	{
 		return false;
 	}
@@ -671,7 +684,6 @@ bool KZ::replaysystem::compression::ReadWeaponsCompressed(const char *&cursor, c
 
 	// Deserialize weapon table from buffer
 	outWeaponTable.clear();
-	outWeaponTable.reserve(header.elementCount);
 
 	const char *readPtr = decompressedData;
 	const char *readEnd = decompressedData + header.uncompressedSize;
@@ -735,14 +747,8 @@ bool KZ::replaysystem::compression::SkipCompressedSection(const char *&cursor, c
 bool KZ::replaysystem::compression::ReadEventsCompressed(const char *&cursor, const char *end, std::vector<RpEvent> &outEvents, u32 version)
 {
 	const auto *parser = parsing::GetVersionParser(version);
-	if (!parser || (size_t)(end - cursor) < sizeof(CompressedSectionHeader))
-	{
-		return false;
-	}
 	CompressedSectionHeader header;
-	memcpy(&header, cursor, sizeof(header));
-	cursor += sizeof(header);
-	if (header.compressedSize > (size_t)(end - cursor))
+	if (!parser || !ReadSectionHeader(cursor, end, header))
 	{
 		return false;
 	}
@@ -786,15 +792,8 @@ bool KZ::replaysystem::compression::ReadJumpsCompressed(const char *&cursor, con
 	{
 		return false;
 	}
-	if (cursor + (ptrdiff_t)sizeof(CompressedSectionHeader) > end)
-	{
-		return false;
-	}
 	CompressedSectionHeader header;
-	memcpy(&header, cursor, sizeof(header));
-	cursor += sizeof(header);
-
-	if (cursor + (ptrdiff_t)header.compressedSize > end)
+	if (!ReadSectionHeader(cursor, end, header))
 	{
 		return false;
 	}
@@ -815,7 +814,6 @@ bool KZ::replaysystem::compression::ReadJumpsCompressed(const char *&cursor, con
 
 	// Deserialize jumps from buffer.
 	outJumps.clear();
-	outJumps.reserve(header.elementCount);
 
 	const char *readPtr = decompressedData;
 	const char *readEnd = decompressedData + header.uncompressedSize;
@@ -882,15 +880,15 @@ bool KZ::replaysystem::compression::ReadJumpsCompressed(const char *&cursor, con
 			break;
 		}
 
+		size_t aaCallsSize = (parser->jumpFractions ? sizeof(RpJumpStats::AAData) : sizeof(OldAAData)) * (size_t)numAACalls;
+		if (aaCallsSize > (size_t)(readEnd - readPtr))
+		{
+			ok = false;
+			break;
+		}
 		jump.aaCalls.resize(numAACalls);
 		if (parser->jumpFractions)
 		{
-			size_t aaCallsSize = sizeof(RpJumpStats::AAData) * (size_t)numAACalls;
-			if (aaCallsSize > (size_t)(readEnd - readPtr))
-			{
-				ok = false;
-				break;
-			}
 			memcpy(jump.aaCalls.data(), readPtr, aaCallsSize);
 			readPtr += aaCallsSize;
 		}
@@ -1044,15 +1042,13 @@ bool KZ::replaysystem::compression::ReadCmdDataCompressed(const char *&cursor, c
 	{
 		return false;
 	}
-	if (cursor + (ptrdiff_t)sizeof(CompressedSectionHeader) > end)
+	CompressedSectionHeader header;
+	if (!ReadSectionHeader(cursor, end, header))
 	{
 		return false;
 	}
-	CompressedSectionHeader header;
-	memcpy(&header, cursor, sizeof(header));
-	cursor += sizeof(header);
-
-	if (cursor + (ptrdiff_t)header.compressedSize > end)
+	// Each cmd starts with a u64 change mask, which bounds the cmd allocation by the checked size.
+	if (header.elementCount > header.uncompressedSize / sizeof(u64))
 	{
 		return false;
 	}
@@ -1155,52 +1151,12 @@ bool KZ::replaysystem::compression::ReadCmdDataCompressed(const char *&cursor, c
 	}
 
 	// Cmd subtick section
-	if (cursor + (ptrdiff_t)sizeof(CompressedSectionHeader) > end)
-	{
-		return false;
-	}
 	CompressedSectionHeader subtickHeader;
-	memcpy(&subtickHeader, cursor, sizeof(subtickHeader));
-	cursor += sizeof(subtickHeader);
-
-	if (cursor + (ptrdiff_t)subtickHeader.compressedSize > end)
+	if (!ReadSectionHeader(cursor, end, subtickHeader))
 	{
 		return false;
 	}
-
-	// v4+ uses subtickMoves[MAX_SUBTICK_MOVES]; older replays used subtickMoves[64].
-	if (parser->compactSubticks)
-	{
-		outCmdSubtickData.resize(subtickHeader.elementCount);
-		success = Decompress(cursor, subtickHeader.compressedSize, outCmdSubtickData.data(), subtickHeader.uncompressedSize);
-	}
-	else
-	{
-		char *tempBuf = new char[subtickHeader.uncompressedSize];
-		success = Decompress(cursor, subtickHeader.compressedSize, tempBuf, subtickHeader.uncompressedSize);
-		if (success)
-		{
-			outCmdSubtickData.resize(subtickHeader.elementCount);
-			if (subtickHeader.elementCount > 0)
-			{
-				size_t oldEntrySize = subtickHeader.uncompressedSize / subtickHeader.elementCount;
-				for (u32 i = 0; i < subtickHeader.elementCount; i++)
-				{
-					const char *entry = tempBuf + i * oldEntrySize;
-					memcpy(&outCmdSubtickData[i], entry, MIN(oldEntrySize, sizeof(SubtickData)));
-					if (outCmdSubtickData[i].numSubtickMoves > MAX_SUBTICK_MOVES)
-					{
-						outCmdSubtickData[i].numSubtickMoves = MAX_SUBTICK_MOVES;
-					}
-				}
-			}
-		}
-		delete[] tempBuf;
-	}
-	if (success && !parser->analogSubtickAngles)
-	{
-		ClearAnalogSubtickAngles(outCmdSubtickData);
-	}
+	success = DecompressSubtickSection(cursor, subtickHeader, *parser, outCmdSubtickData);
 	cursor += subtickHeader.compressedSize;
 	return success;
 }
