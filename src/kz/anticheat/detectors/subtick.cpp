@@ -22,10 +22,14 @@
 #define SUBTICK_SPLIT_EDGE_TICKS       7
 #define SUBTICK_SPLIT_MIN_WINDOW_TICKS 7
 #define SUBTICK_SPLIT_HISTORY_TICKS    256
-// Splits per second of air time.
-#define SUBTICK_SPLIT_INVALIDATE_RATE 10.0f
-#define SUBTICK_SPLIT_INFRACTION_RATE 50.0f
-#define SUBTICK_SPLIT_BUTTON_MASK     (IN_ATTACK | IN_ATTACK2 | IN_JUMP | IN_DUCK)
+// A single flick of the scroll wheel can fill the window of a short hop.
+#define SUBTICK_SPLIT_MIN_AIR_TICKS 32
+// Splits per second of air time. It takes five jumps at the drill rate to mark an infraction, and one at the instant rate.
+#define SUBTICK_SPLIT_DRILL_RATE    30.0f
+#define SUBTICK_SPLIT_DRILL_JUMPS   5
+#define SUBTICK_SPLIT_INSTANT_RATE  64.0f
+#define SUBTICK_SPLIT_DRILL_HISTORY 10
+#define SUBTICK_SPLIT_BUTTON_MASK   (IN_ATTACK | IN_ATTACK2 | IN_JUMP | IN_DUCK)
 
 // The engine's own limits on a subtick move list, from CCSPlayer_MovementServices.
 // Not to be confused with MAX_SUBTICK_MOVES, which is how many the replay format stores.
@@ -281,7 +285,9 @@ void KZAnticheatService::RecordSubtickSplits(CUserCmd *cmd)
 		return;
 	}
 	u32 currentTick = g_pKZUtils->GetServerGlobals()->tickcount;
-	this->recentSubtickSplits.push_back({currentTick, CountSubtickSplits(*cmd)});
+	// Without subtick view angles every part of the tick moves with the same angles, so splitting it changes nothing.
+	bool usesSubtickViewAngles = this->player->GetCvarValueFromModeStyles(MODECVAR_SV_SUBTICK_MOVEMENT_VIEW_ANGLES)->m_bValue;
+	this->recentSubtickSplits.push_back({currentTick, usesSubtickViewAngles ? CountSubtickSplits(*cmd) : 0});
 	while (currentTick - this->recentSubtickSplits.front().serverTick > SUBTICK_SPLIT_HISTORY_TICKS)
 	{
 		this->recentSubtickSplits.pop_front();
@@ -291,7 +297,7 @@ void KZAnticheatService::RecordSubtickSplits(CUserCmd *cmd)
 void KZAnticheatService::CheckJumpSubtickSplits(Jump *jump)
 {
 	u32 airTicks = (u32)roundf(jump->airtime * ENGINE_FIXED_TICK_RATE);
-	if (airTicks < 2 * SUBTICK_SPLIT_EDGE_TICKS + SUBTICK_SPLIT_MIN_WINDOW_TICKS)
+	if (airTicks < SUBTICK_SPLIT_MIN_AIR_TICKS)
 	{
 		return;
 	}
@@ -312,13 +318,31 @@ void KZAnticheatService::CheckJumpSubtickSplits(Jump *jump)
 		return;
 	}
 	f32 splitRate = numSplits * ENGINE_FIXED_TICK_RATE / numCommands;
-	if (splitRate > SUBTICK_SPLIT_INFRACTION_RATE)
+	f32 drillScore = 0.0f;
+	if (splitRate > SUBTICK_SPLIT_DRILL_RATE)
 	{
-		this->MarkInfraction(Infraction::Type::SubtickSpam, tfm::format("%.1f subtick splits per second in the air", splitRate));
+		f32 ratio = Clamp((splitRate - SUBTICK_SPLIT_DRILL_RATE) / (SUBTICK_SPLIT_INSTANT_RATE - SUBTICK_SPLIT_DRILL_RATE), 0.0f, 1.0f);
+		drillScore = 1.0f / Lerp(ratio, (f32)SUBTICK_SPLIT_DRILL_JUMPS, 1.0f);
 	}
-	if (splitRate > SUBTICK_SPLIT_INVALIDATE_RATE)
+	this->recentJumpDrillScores.push_back(drillScore);
+	if (this->recentJumpDrillScores.size() > SUBTICK_SPLIT_DRILL_HISTORY)
 	{
-		jump->Invalidate("Subtick spam");
+		this->recentJumpDrillScores.pop_front();
+	}
+	f32 totalDrillScore = 0.0f;
+	u32 numDrilledJumps = 0;
+	for (f32 score : this->recentJumpDrillScores)
+	{
+		totalDrillScore += score;
+		numDrilledJumps += score > 0.0f;
+	}
+	// Five scores of 0.2 can add up to slightly less than 1.
+	if (totalDrillScore >= 0.999f)
+	{
+		this->MarkInfraction(Infraction::Type::SubtickSpam,
+							 tfm::format("%.1f subtick splits per second in the air, %d of the last %zu jumps over %.0f", splitRate, numDrilledJumps,
+										 this->recentJumpDrillScores.size(), SUBTICK_SPLIT_DRILL_RATE));
+		this->recentJumpDrillScores.clear();
 	}
 }
 

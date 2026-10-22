@@ -146,6 +146,7 @@ void KZAnticheatService::ClearDetectionBuffers()
 	this->zeroWhenCommandTimes.clear();
 	this->numCommandsWithSubtickInputs.clear();
 	this->recentSubtickSplits.clear();
+	this->recentJumpDrillScores.clear();
 	this->recentJumpStatuses.clear();
 	this->recentJumps.clear();
 	this->recentLandingEvents.clear();

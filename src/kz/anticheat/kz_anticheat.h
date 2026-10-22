@@ -330,8 +330,8 @@ public:
 	};
 
 	std::deque<SubtickSplitSample> recentSubtickSplits;
+	std::deque<f32> recentJumpDrillScores;
 	void RecordSubtickSplits(CUserCmd *cmd);
-	// Has to run before the jump is announced or recorded, since it can invalidate the jump.
 	void CheckJumpSubtickSplits(Jump *jump);
 
 	// ===========[ Strafe optimization ]===========
