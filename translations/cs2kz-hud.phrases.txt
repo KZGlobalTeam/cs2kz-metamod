@@ -281,15 +281,18 @@
 	{
 		"#format"	"elements:s"
 		"en"		"{grey}Hidden: {default}{elements}{grey}. Run the same command again to show them."
+		"ua"		"{grey}Приховано: {default}{elements}{grey}. Виконайте ту саму команду ще раз, щоб показати їх."
 	}
 	"HUD Option - Hide HUD - Disable"
 	{
 		"#format"	"elements:s"
 		"en"		"{grey}Shown: {default}{elements}{grey}."
+		"ua"		"{grey}Показується: {default}{elements}{grey}."
 	}
 	"HideHUD Command Usage"
 	{
 		"en"		"{grey}Usage: {default}!hidehud [crosshair|weapons|notices|voice]...{grey}. Without arguments, hides everything but chat and the crosshair."
+		"ua"		"{grey}Використання: {default}!hidehud [crosshair|weapons|notices|voice]...{grey}. Без додаткових аргументів приховує все, крім чату та прицілу."
 	}
 	"HUD Option - Info Panel - Enable"
 	{
@@ -575,6 +578,7 @@
 	"HUD - Course Route"
 	{
 		"en"		"Progress"
+		"ua"		"Прогрес"
 	}
 	"HUD - Course All"
 	{
