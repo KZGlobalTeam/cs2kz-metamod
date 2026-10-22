@@ -9,29 +9,29 @@ Automated translation linter reports for cs2kz-metamod.
 | **Linter Errors** | 0 |
 | **Linter Warnings** | 2 |
 | **Total Languages** | 15 |
-| **Total Phrases** | 1106 |
-| **Phrases Missing Translations** | 1106 |
-| **Total Missing Entries** | 7680 |
+| **Total Phrases** | 1108 |
+| **Phrases Missing Translations** | 1108 |
+| **Total Missing Entries** | 7708 |
 | **Menu Files** | 11 |
 
 ## Language Coverage (Phrases)
 
 ```
-  chi (schinese)       [██████████████████░░]  91.8% (1015/1106)
-  de (german)          [█████████░░░░░░░░░░░]  47.2% (522/1106)
-  en (english)         [████████████████████] 100.0% (1106/1106)
-  es (spanish)         [████████░░░░░░░░░░░░]  43.9% (486/1106)
-  fi (finnish)         [████░░░░░░░░░░░░░░░░]  21.2% (235/1106)
-  it (italian)         [████░░░░░░░░░░░░░░░░]  20.5% (227/1106)
-  ko (korean)          [███████████░░░░░░░░░]  59.3% (656/1106)
-  lv (latvian)         [█████░░░░░░░░░░░░░░░]  29.8% (330/1106)
-  nl (dutch)           [░░░░░░░░░░░░░░░░░░░░]   0.5% (5/1106)
-  pl (polish)          [█████████░░░░░░░░░░░]  47.4% (524/1106)
-  ru (russian)         [██████████████████░░]  90.2% (998/1106)
-  sv (swedish)         [███████░░░░░░░░░░░░░]  35.6% (394/1106)
-  tr (turkish)         [████░░░░░░░░░░░░░░░░]  23.9% (264/1106)
-  ua (ukrainian)       [███████████████████░]  97.4% (1077/1106)
-  zho (tchinese)       [███████████████████░]  96.8% (1071/1106)
+  chi (schinese)       [██████████████████░░]  91.6% (1015/1108)
+  de (german)          [█████████░░░░░░░░░░░]  47.1% (522/1108)
+  en (english)         [████████████████████] 100.0% (1108/1108)
+  es (spanish)         [████████░░░░░░░░░░░░]  43.9% (486/1108)
+  fi (finnish)         [████░░░░░░░░░░░░░░░░]  21.2% (235/1108)
+  it (italian)         [████░░░░░░░░░░░░░░░░]  20.5% (227/1108)
+  ko (korean)          [███████████░░░░░░░░░]  59.2% (656/1108)
+  lv (latvian)         [█████░░░░░░░░░░░░░░░]  29.8% (330/1108)
+  nl (dutch)           [░░░░░░░░░░░░░░░░░░░░]   0.5% (5/1108)
+  pl (polish)          [█████████░░░░░░░░░░░]  47.3% (524/1108)
+  ru (russian)         [██████████████████░░]  90.1% (998/1108)
+  sv (swedish)         [███████░░░░░░░░░░░░░]  35.6% (394/1108)
+  tr (turkish)         [████░░░░░░░░░░░░░░░░]  23.8% (264/1108)
+  ua (ukrainian)       [███████████████████░]  97.2% (1077/1108)
+  zho (tchinese)       [███████████████████░]  96.7% (1071/1108)
 ```
 
 ## Menu Translation Status
@@ -81,9 +81,9 @@ Automated translation linter reports for cs2kz-metamod.
 
 ## Last Updated
 
-- **Commit:** [`75b7d64`](https://github.com/KZGlobalTeam/cs2kz-metamod/commit/75b7d6493f4d896a5f006c54d2db12c9d7ca1f18)
-- **Time:** 2026-10-22 07:57:58 UTC
-- **Message:** WebSocket refactor (#608)
+- **Commit:** [`1a0ab7f`](https://github.com/KZGlobalTeam/cs2kz-metamod/commit/1a0ab7f7fd2021b73b2d83a2571e48df33330b98)
+- **Time:** 2026-10-22 10:46:41 UTC
+- **Message:** Fix subtick spam detector being too sensitive
 
 ---
 

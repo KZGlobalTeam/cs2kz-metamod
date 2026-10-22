@@ -6,28 +6,28 @@ Generated for: /home/runner/work/cs2kz-metamod/cs2kz-metamod
 SUMMARY
 ----------------------------------------------------------------------
 Total languages: 15
-Total phrases: 1106
-Phrases with missing translations: 1106
-Total missing translation entries: 7680
+Total phrases: 1108
+Phrases with missing translations: 1108
+Total missing translation entries: 7708
 
 LANGUAGE COVERAGE (Phrases)
 ----------------------------------------------------------------------
 
-  chi (schinese)       [██████████████████░░]  91.8% (1015/1106)
-  de (german)          [█████████░░░░░░░░░░░]  47.2% (522/1106)
-  en (english)         [████████████████████] 100.0% (1106/1106)
-  es (spanish)         [████████░░░░░░░░░░░░]  43.9% (486/1106)
-  fi (finnish)         [████░░░░░░░░░░░░░░░░]  21.2% (235/1106)
-  it (italian)         [████░░░░░░░░░░░░░░░░]  20.5% (227/1106)
-  ko (korean)          [███████████░░░░░░░░░]  59.3% (656/1106)
-  lv (latvian)         [█████░░░░░░░░░░░░░░░]  29.8% (330/1106)
-  nl (dutch)           [░░░░░░░░░░░░░░░░░░░░]   0.5% (5/1106)
-  pl (polish)          [█████████░░░░░░░░░░░]  47.4% (524/1106)
-  ru (russian)         [██████████████████░░]  90.2% (998/1106)
-  sv (swedish)         [███████░░░░░░░░░░░░░]  35.6% (394/1106)
-  tr (turkish)         [████░░░░░░░░░░░░░░░░]  23.9% (264/1106)
-  ua (ukrainian)       [███████████████████░]  97.4% (1077/1106)
-  zho (tchinese)       [███████████████████░]  96.8% (1071/1106)
+  chi (schinese)       [██████████████████░░]  91.6% (1015/1108)
+  de (german)          [█████████░░░░░░░░░░░]  47.1% (522/1108)
+  en (english)         [████████████████████] 100.0% (1108/1108)
+  es (spanish)         [████████░░░░░░░░░░░░]  43.9% (486/1108)
+  fi (finnish)         [████░░░░░░░░░░░░░░░░]  21.2% (235/1108)
+  it (italian)         [████░░░░░░░░░░░░░░░░]  20.5% (227/1108)
+  ko (korean)          [███████████░░░░░░░░░]  59.2% (656/1108)
+  lv (latvian)         [█████░░░░░░░░░░░░░░░]  29.8% (330/1108)
+  nl (dutch)           [░░░░░░░░░░░░░░░░░░░░]   0.5% (5/1108)
+  pl (polish)          [█████████░░░░░░░░░░░]  47.3% (524/1108)
+  ru (russian)         [██████████████████░░]  90.1% (998/1108)
+  sv (swedish)         [███████░░░░░░░░░░░░░]  35.6% (394/1108)
+  tr (turkish)         [████░░░░░░░░░░░░░░░░]  23.8% (264/1108)
+  ua (ukrainian)       [███████████████████░]  97.2% (1077/1108)
+  zho (tchinese)       [███████████████████░]  96.7% (1071/1108)
 
 Global languages (15): chi, de, en, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
 
@@ -470,89 +470,91 @@ translations/cs2kz-commands.phrases.txt
     Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
   Line 2076: "Command Usage - kz_panel"
     Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
-  Line 2083: "Command Usage - kz_jstier"
+  Line 2083: "Command Usage - kz_hidehud"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 2087: "Command Usage - kz_jstier"
     Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
-  Line 2090: "Command Usage - kz_jstierhud"
+  Line 2094: "Command Usage - kz_jstierhud"
     Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
-  Line 2097: "Command Usage - kz_jstierconsole"
+  Line 2101: "Command Usage - kz_jstierconsole"
     Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
-  Line 2104: "Command Usage - kz_jssound"
+  Line 2108: "Command Usage - kz_jssound"
     Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
-  Line 2111: "Command Usage - kz_jsbroadcast"
+  Line 2115: "Command Usage - kz_jsbroadcast"
     Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
-  Line 2118: "Command Usage - kz_jsbroadcastconsole"
+  Line 2122: "Command Usage - kz_jsbroadcastconsole"
     Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
-  Line 2125: "Command Usage - kz_jsbroadcastsound"
+  Line 2129: "Command Usage - kz_jsbroadcastsound"
     Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
-  Line 2132: "Command Usage - kz_jsvolume"
+  Line 2136: "Command Usage - kz_jsvolume"
     Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
-  Line 2139: "Command Usage - kz_language"
+  Line 2143: "Command Usage - kz_language"
     Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
-  Line 2146: "Command Usage - kz_course"
+  Line 2150: "Command Usage - kz_course"
     Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
-  Line 2153: "Command Usage - kz_tier"
+  Line 2157: "Command Usage - kz_tier"
     Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
-  Line 2160: "Command Usage - kz_end"
+  Line 2164: "Command Usage - kz_end"
     Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
-  Line 2167: "Command Usage - kz_restart"
+  Line 2171: "Command Usage - kz_restart"
     Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
-  Line 2174: "Command Usage - kz_playercheck"
+  Line 2178: "Command Usage - kz_playercheck"
     Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
-  Line 2181: "Command Usage - kz_mode"
+  Line 2185: "Command Usage - kz_mode"
     Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
-  Line 2188: "Command Usage - kz_paintcolor"
+  Line 2192: "Command Usage - kz_paintcolor"
     Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
-  Line 2195: "Command Usage - kz_paintsize"
+  Line 2199: "Command Usage - kz_paintsize"
     Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
-  Line 2202: "Command Usage - kz_pistol"
+  Line 2206: "Command Usage - kz_pistol"
     Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
-  Line 2209: "Command Usage - kz_rpsave"
+  Line 2213: "Command Usage - kz_rpsave"
     Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
-  Line 2216: "Command Usage - kz_replay"
+  Line 2220: "Command Usage - kz_replay"
     Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
-  Line 2223: "Command Usage - kz_rpgoto"
+  Line 2227: "Command Usage - kz_rpgoto"
     Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
-  Line 2230: "Command Usage - kz_rpgototick"
+  Line 2234: "Command Usage - kz_rpgototick"
     Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
-  Line 2237: "Command Usage - kz_rptimescale"
+  Line 2241: "Command Usage - kz_rptimescale"
     Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
-  Line 2244: "Command Usage - kz_replays"
+  Line 2248: "Command Usage - kz_replays"
     Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
-  Line 2251: "Command Usage - kz_spec"
+  Line 2255: "Command Usage - kz_spec"
     Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
-  Line 2258: "Command Usage - kz_style"
+  Line 2262: "Command Usage - kz_style"
     Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
-  Line 2265: "Command Usage - kz_togglestyle"
+  Line 2269: "Command Usage - kz_togglestyle"
     Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
-  Line 2272: "Command Usage - kz_addstyle"
+  Line 2276: "Command Usage - kz_addstyle"
     Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
-  Line 2279: "Command Usage - kz_removestyle"
+  Line 2283: "Command Usage - kz_removestyle"
     Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
-  Line 2286: "Command Usage - kz_modernperfstats"
+  Line 2290: "Command Usage - kz_modernperfstats"
     Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
-  Line 2293: "Command Usage - kz_legacyperfstats"
+  Line 2297: "Command Usage - kz_legacyperfstats"
     Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
-  Line 2300: "Command Usage - kz_comparelevel"
+  Line 2304: "Command Usage - kz_comparelevel"
     Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
-  Line 2307: "Command Usage - kz_recordvolume"
+  Line 2311: "Command Usage - kz_recordvolume"
     Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
-  Line 2314: "Command Usage - kz_ctop"
+  Line 2318: "Command Usage - kz_ctop"
     Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
-  Line 2321: "Command Usage - kz_gctop"
+  Line 2325: "Command Usage - kz_gctop"
     Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
-  Line 2328: "Command Usage - kz_sctop"
+  Line 2332: "Command Usage - kz_sctop"
     Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
-  Line 2335: "Command Usage - kz_pb"
+  Line 2339: "Command Usage - kz_pb"
     Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
-  Line 2342: "Command Usage - kz_spb"
+  Line 2346: "Command Usage - kz_spb"
     Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
-  Line 2349: "Command Usage - kz_gpb"
+  Line 2353: "Command Usage - kz_gpb"
     Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
-  Line 2356: "Command Usage - kz_wr"
+  Line 2360: "Command Usage - kz_wr"
     Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
-  Line 2363: "Command Usage - kz_sr"
+  Line 2367: "Command Usage - kz_sr"
     Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
-  Line 2370: "Command Usage - kz_ztopwatch"
+  Line 2374: "Command Usage - kz_ztopwatch"
     Missing (11): de, es, fi, it, ko, lv, nl, pl, ru, sv, tr
 
 translations/cs2kz-common.phrases.txt
@@ -732,95 +734,97 @@ translations/cs2kz-hud.phrases.txt
     Missing (1): nl
   Line 280: "HUD Option - Hide HUD - Enable"
     Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 284: "HUD Option - Hide HUD - Disable"
+  Line 285: "HUD Option - Hide HUD - Disable"
     Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 288: "HUD Option - Info Panel - Enable"
-    Missing (1): nl
-  Line 305: "HUD Option - Info Panel - Disable"
-    Missing (1): nl
-  Line 322: "HUD Option - Compact Panel - Enable"
-    Missing (9): de, es, fi, it, lv, nl, pl, sv, tr
-  Line 331: "HUD Option - Compact Panel - Disable"
-    Missing (9): de, es, fi, it, lv, nl, pl, sv, tr
-  Line 340: "Panel Command Usage"
-    Missing (9): de, es, fi, it, lv, nl, pl, sv, tr
-  Line 349: "Fonts - Help (Chat)"
-    Missing (10): de, es, fi, it, ko, lv, nl, pl, sv, tr
-  Line 357: "Fonts - Help (Console)"
-    Missing (10): de, es, fi, it, ko, lv, nl, pl, sv, tr
-  Line 370: "HUD Edit - Pick Hint"
-    Missing (11): chi, de, es, fi, it, ko, lv, nl, pl, sv, tr
-  Line 377: "HUD Edit - Place"
-    Missing (11): chi, de, es, fi, it, ko, lv, nl, pl, sv, tr
-  Line 384: "HUD Edit - Cancel"
-    Missing (11): chi, de, es, fi, it, ko, lv, nl, pl, sv, tr
-  Line 391: "HUD Edit - Default"
-    Missing (11): chi, de, es, fi, it, ko, lv, nl, pl, sv, tr
-  Line 398: "HUD Edit - Free Move"
-    Missing (11): chi, de, es, fi, it, ko, lv, nl, pl, sv, tr
-  Line 405: "HUD Edit - Done"
-    Missing (11): chi, de, es, fi, it, ko, lv, nl, pl, sv, tr
-  Line 412: "HUD Edit - Unavailable"
-    Missing (11): chi, de, es, fi, it, ko, lv, nl, pl, sv, tr
-  Line 419: "HUD - Release Text"
-    Missing (11): chi, de, es, fi, it, ko, lv, nl, pl, sv, tr
-  Line 428: "HUD - Course Global"
-    Missing (11): chi, de, es, fi, it, ko, lv, nl, pl, sv, tr
-  Line 435: "HUD - Course Non Global"
-    Missing (11): chi, de, es, fi, it, ko, lv, nl, pl, sv, tr
-  Line 442: "HUD - Course Line"
-    Missing (11): chi, de, es, fi, it, ko, lv, nl, pl, sv, tr
-  Line 451: "HUD - Course Tier"
-    Missing (11): chi, de, es, fi, it, ko, lv, nl, pl, sv, tr
-  Line 460: "HUD - Course Tiers"
-    Missing (11): chi, de, es, fi, it, ko, lv, nl, pl, sv, tr
-  Line 469: "HUD - Course Pill Split"
-    Missing (11): chi, de, es, fi, it, ko, lv, nl, pl, sv, tr
-  Line 477: "HUD - Course Pill Checkpoint"
-    Missing (11): chi, de, es, fi, it, ko, lv, nl, pl, sv, tr
-  Line 485: "HUD - Course Pill Stage"
-    Missing (11): chi, de, es, fi, it, ko, lv, nl, pl, sv, tr
-  Line 493: "HUD - Course Pill Info"
-    Missing (11): chi, de, es, fi, it, ko, lv, nl, pl, sv, tr
-  Line 502: "HUD - Compare Server PB"
-    Missing (11): chi, de, es, fi, it, ko, lv, nl, pl, sv, tr
-  Line 509: "HUD - Compare Global PB"
-    Missing (11): chi, de, es, fi, it, ko, lv, nl, pl, sv, tr
-  Line 516: "HUD - Compare SR"
-    Missing (11): chi, de, es, fi, it, ko, lv, nl, pl, sv, tr
-  Line 523: "HUD - Compare WR"
-    Missing (11): chi, de, es, fi, it, ko, lv, nl, pl, sv, tr
-  Line 530: "HUD - Compare Pro"
-    Missing (11): chi, de, es, fi, it, ko, lv, nl, pl, sv, tr
-  Line 539: "HUD - Course Stages"
-    Missing (11): chi, de, es, fi, it, ko, lv, nl, pl, sv, tr
-  Line 546: "HUD - Course Checkpoints"
-    Missing (11): chi, de, es, fi, it, ko, lv, nl, pl, sv, tr
-  Line 553: "HUD - Course Splits"
-    Missing (11): chi, de, es, fi, it, ko, lv, nl, pl, sv, tr
-  Line 560: "HUD - Course Progress"
-    Missing (11): chi, de, es, fi, it, ko, lv, nl, pl, sv, tr
-  Line 569: "HUD - Course Route"
+  Line 290: "HideHUD Command Usage"
     Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
-  Line 573: "HUD - Course All"
+  Line 294: "HUD Option - Info Panel - Enable"
+    Missing (1): nl
+  Line 311: "HUD Option - Info Panel - Disable"
+    Missing (1): nl
+  Line 328: "HUD Option - Compact Panel - Enable"
+    Missing (9): de, es, fi, it, lv, nl, pl, sv, tr
+  Line 337: "HUD Option - Compact Panel - Disable"
+    Missing (9): de, es, fi, it, lv, nl, pl, sv, tr
+  Line 346: "Panel Command Usage"
+    Missing (9): de, es, fi, it, lv, nl, pl, sv, tr
+  Line 355: "Fonts - Help (Chat)"
+    Missing (10): de, es, fi, it, ko, lv, nl, pl, sv, tr
+  Line 363: "Fonts - Help (Console)"
+    Missing (10): de, es, fi, it, ko, lv, nl, pl, sv, tr
+  Line 376: "HUD Edit - Pick Hint"
     Missing (11): chi, de, es, fi, it, ko, lv, nl, pl, sv, tr
-  Line 580: "HUD - Course Pro"
+  Line 383: "HUD Edit - Place"
     Missing (11): chi, de, es, fi, it, ko, lv, nl, pl, sv, tr
-  Line 587: "HUD - Course Badge TP"
+  Line 390: "HUD Edit - Cancel"
     Missing (11): chi, de, es, fi, it, ko, lv, nl, pl, sv, tr
-  Line 594: "HUD - Course Badge Pro"
+  Line 397: "HUD Edit - Default"
     Missing (11): chi, de, es, fi, it, ko, lv, nl, pl, sv, tr
-  Line 601: "HUD - Course By"
+  Line 404: "HUD Edit - Free Move"
     Missing (11): chi, de, es, fi, it, ko, lv, nl, pl, sv, tr
-  Line 609: "HUD - Course Gap"
+  Line 411: "HUD Edit - Done"
     Missing (11): chi, de, es, fi, it, ko, lv, nl, pl, sv, tr
-  Line 618: "HUD - Course No Records"
+  Line 418: "HUD Edit - Unavailable"
     Missing (11): chi, de, es, fi, it, ko, lv, nl, pl, sv, tr
-  Line 625: "HUD - Course Ranked"
+  Line 425: "HUD - Release Text"
     Missing (11): chi, de, es, fi, it, ko, lv, nl, pl, sv, tr
-  Line 632: "HUD - Course Pending"
+  Line 434: "HUD - Course Global"
     Missing (11): chi, de, es, fi, it, ko, lv, nl, pl, sv, tr
-  Line 639: "HUD - Course Unranked"
+  Line 441: "HUD - Course Non Global"
+    Missing (11): chi, de, es, fi, it, ko, lv, nl, pl, sv, tr
+  Line 448: "HUD - Course Line"
+    Missing (11): chi, de, es, fi, it, ko, lv, nl, pl, sv, tr
+  Line 457: "HUD - Course Tier"
+    Missing (11): chi, de, es, fi, it, ko, lv, nl, pl, sv, tr
+  Line 466: "HUD - Course Tiers"
+    Missing (11): chi, de, es, fi, it, ko, lv, nl, pl, sv, tr
+  Line 475: "HUD - Course Pill Split"
+    Missing (11): chi, de, es, fi, it, ko, lv, nl, pl, sv, tr
+  Line 483: "HUD - Course Pill Checkpoint"
+    Missing (11): chi, de, es, fi, it, ko, lv, nl, pl, sv, tr
+  Line 491: "HUD - Course Pill Stage"
+    Missing (11): chi, de, es, fi, it, ko, lv, nl, pl, sv, tr
+  Line 499: "HUD - Course Pill Info"
+    Missing (11): chi, de, es, fi, it, ko, lv, nl, pl, sv, tr
+  Line 508: "HUD - Compare Server PB"
+    Missing (11): chi, de, es, fi, it, ko, lv, nl, pl, sv, tr
+  Line 515: "HUD - Compare Global PB"
+    Missing (11): chi, de, es, fi, it, ko, lv, nl, pl, sv, tr
+  Line 522: "HUD - Compare SR"
+    Missing (11): chi, de, es, fi, it, ko, lv, nl, pl, sv, tr
+  Line 529: "HUD - Compare WR"
+    Missing (11): chi, de, es, fi, it, ko, lv, nl, pl, sv, tr
+  Line 536: "HUD - Compare Pro"
+    Missing (11): chi, de, es, fi, it, ko, lv, nl, pl, sv, tr
+  Line 545: "HUD - Course Stages"
+    Missing (11): chi, de, es, fi, it, ko, lv, nl, pl, sv, tr
+  Line 552: "HUD - Course Checkpoints"
+    Missing (11): chi, de, es, fi, it, ko, lv, nl, pl, sv, tr
+  Line 559: "HUD - Course Splits"
+    Missing (11): chi, de, es, fi, it, ko, lv, nl, pl, sv, tr
+  Line 566: "HUD - Course Progress"
+    Missing (11): chi, de, es, fi, it, ko, lv, nl, pl, sv, tr
+  Line 575: "HUD - Course Route"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 579: "HUD - Course All"
+    Missing (11): chi, de, es, fi, it, ko, lv, nl, pl, sv, tr
+  Line 586: "HUD - Course Pro"
+    Missing (11): chi, de, es, fi, it, ko, lv, nl, pl, sv, tr
+  Line 593: "HUD - Course Badge TP"
+    Missing (11): chi, de, es, fi, it, ko, lv, nl, pl, sv, tr
+  Line 600: "HUD - Course Badge Pro"
+    Missing (11): chi, de, es, fi, it, ko, lv, nl, pl, sv, tr
+  Line 607: "HUD - Course By"
+    Missing (11): chi, de, es, fi, it, ko, lv, nl, pl, sv, tr
+  Line 615: "HUD - Course Gap"
+    Missing (11): chi, de, es, fi, it, ko, lv, nl, pl, sv, tr
+  Line 624: "HUD - Course No Records"
+    Missing (11): chi, de, es, fi, it, ko, lv, nl, pl, sv, tr
+  Line 631: "HUD - Course Ranked"
+    Missing (11): chi, de, es, fi, it, ko, lv, nl, pl, sv, tr
+  Line 638: "HUD - Course Pending"
+    Missing (11): chi, de, es, fi, it, ko, lv, nl, pl, sv, tr
+  Line 645: "HUD - Course Unranked"
     Missing (11): chi, de, es, fi, it, ko, lv, nl, pl, sv, tr
 
 translations/cs2kz-jumpstats.phrases.txt
