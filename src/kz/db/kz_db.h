@@ -102,6 +102,7 @@ public:
 
 private:
 	static void CheckMigrations(std::vector<ISQLQuery *> queries);
+	static void ScheduleMigrationRetry();
 
 public:
 	static bool IsMapSetUp();

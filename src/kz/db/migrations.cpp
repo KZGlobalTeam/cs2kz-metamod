@@ -1,5 +1,6 @@
 #include "kz_db.h"
 #include "kz/option/kz_option.h"
+#include "utils/ctimer.h"
 
 #include <regex>
 #include "checksum_crc.h"
@@ -65,6 +66,32 @@ static_global const std::string sqliteMigrations[] =
 
 // clang-format on
 
+static_global constexpr f64 migrationRetryInterval = 5.0;
+// With the 10s lock wait, roughly 15 minutes before giving up.
+static_global constexpr u32 maxMigrationAttempts = 60;
+static_global u32 migrationAttempts;
+
+static_function f64 RetryMigrations()
+{
+	if (KZDatabaseService::GetDatabaseConnection())
+	{
+		KZDatabaseService::RunMigrations();
+	}
+	return 0.0;
+}
+
+static_function void ReleaseMigrationLock()
+{
+	if (KZDatabaseService::GetDatabaseType() != DatabaseType::MySQL)
+	{
+		return;
+	}
+	Transaction txn;
+	txn.queries.push_back(mysql_migrations_unlock);
+	KZDatabaseService::GetDatabaseConnection()->ExecuteTransaction(
+		txn, [](std::vector<ISQLQuery *> queries) {}, KZDatabaseService::OnGenericTxnFailure);
+}
+
 void KZDatabaseService::RunMigrations()
 {
 	Transaction txn;
@@ -72,6 +99,8 @@ void KZDatabaseService::RunMigrations()
 	{
 		case DatabaseType::MySQL:
 		{
+			// Must come first so the migration count below is read while holding the lock.
+			txn.queries.push_back(mysql_migrations_lock);
 			txn.queries.push_back(mysql_migrations_create);
 			break;
 		}
@@ -83,12 +112,45 @@ void KZDatabaseService::RunMigrations()
 	}
 	txn.queries.push_back(sql_migrations_fetchall);
 
-	GetDatabaseConnection()->ExecuteTransaction(txn, KZDatabaseService::CheckMigrations, OnGenericTxnFailure);
+	auto onFailure = [](std::string error, int failIndex)
+	{
+		KZ_LOG_WARN(LogChannel::DB, "Failed to read database migrations at %i (%s).\n", failIndex, error.c_str());
+		// The lock may have been acquired before the failing query, and a rollback doesn't release it.
+		ReleaseMigrationLock();
+		ScheduleMigrationRetry();
+	};
+
+	GetDatabaseConnection()->ExecuteTransaction(txn, KZDatabaseService::CheckMigrations, onFailure);
+}
+
+void KZDatabaseService::ScheduleMigrationRetry()
+{
+	if (++migrationAttempts >= maxMigrationAttempts)
+	{
+		KZ_LOG_WARN(LogChannel::DB, "Database migration failed after %u attempts. LocalDB will not be available.\n", migrationAttempts);
+		migrationAttempts = 0;
+		databaseConnection->Destroy();
+		databaseConnection = nullptr;
+		return;
+	}
+	StartTimer(RetryMigrations, migrationRetryInterval, true, true);
 }
 
 void KZDatabaseService::CheckMigrations(std::vector<ISQLQuery *> queries)
 {
-	ISQLResult *result = queries[1]->GetResultSet();
+	if (KZDatabaseService::GetDatabaseType() == DatabaseType::MySQL)
+	{
+		// GET_LOCK returns 0 on timeout and NULL on error.
+		ISQLResult *lockResult = queries[0]->GetResultSet();
+		if (!lockResult->FetchRow() || lockResult->IsNull(0) || lockResult->GetInt(0) != 1)
+		{
+			KZ_LOG_WARN(LogChannel::DB, "Timed out waiting for another server to finish migrating the database, retrying.\n");
+			ScheduleMigrationRetry();
+			return;
+		}
+	}
+
+	ISQLResult *result = queries.back()->GetResultSet();
 
 	u32 current = result->GetRowCount();
 	u32 max = 0;
@@ -108,6 +170,7 @@ void KZDatabaseService::CheckMigrations(std::vector<ISQLQuery *> queries)
 	if (current > max)
 	{
 		KZ_LOG_WARN(LogChannel::DB, "Fatal error: Number of current migrations are higher than the maximum!\n");
+		ReleaseMigrationLock();
 		return;
 	}
 
@@ -144,17 +207,20 @@ void KZDatabaseService::CheckMigrations(std::vector<ISQLQuery *> queries)
 		}
 	}
 
+	// The failure paths destroy the connection, which drops the lock with it.
 	auto onSuccess = []()
 	{
 		KZ_LOG_INFO(LogChannel::DB, "Database migration successful.\n");
+		ReleaseMigrationLock();
+		migrationAttempts = 0;
 		localDBConnected = true;
 		KZDatabaseService::SetupMap();
 		CALL_FORWARD(eventListeners, OnDatabaseSetup);
 	};
 
-	auto onFailure = []()
+	auto onFailure = [](std::string error, int failIndex)
 	{
-		KZ_LOG_WARN(LogChannel::DB, "Database migration failed. LocalDB will not be available.\n");
+		KZ_LOG_WARN(LogChannel::DB, "Database migration failed at %i (%s). LocalDB will not be available.\n", failIndex, error.c_str());
 		databaseConnection->Destroy();
 		databaseConnection = nullptr;
 	};
@@ -190,8 +256,7 @@ void KZDatabaseService::CheckMigrations(std::vector<ISQLQuery *> queries)
 		txn.queries.push_back(query);
 	}
 
-	GetDatabaseConnection()->ExecuteTransaction(
-		txn, [onSuccess](std::vector<ISQLQuery *> queries) { onSuccess(); }, [onFailure](std::string error, int failIndex) { onFailure(); });
+	GetDatabaseConnection()->ExecuteTransaction(txn, [onSuccess](std::vector<ISQLQuery *> queries) { onSuccess(); }, onFailure);
 }
 
 bool KZDatabaseService::IsReady()
