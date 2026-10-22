@@ -36,11 +36,12 @@ extern const MHUDBorderDef MHUD_BORDERS[(i32)MHUDBorder::Count] =
 // What each bit hides, from the client's HUD element constructors.
 extern const GameHudPartDef GAME_HUD_PARTS[GAME_HUD_PART_COUNT] =
 {
-	{"Menu - Game HUD All", "hideGameHudAll", KZ_HIDEHUD_ALL},
-	{"Menu - Game HUD Crosshair", "hideGameHudCrosshair", KZ_HIDEHUD_CROSSHAIR},
-	{"Menu - Game HUD Weapons", "hideGameHudWeapons", KZ_HIDEHUD_WEAPONSELECTION},
-	{"Menu - Game HUD Notices", "hideGameHudNotices", KZ_HIDEHUD_MISCSTATUS},
-	{"Menu - Game HUD Voice", "hideGameHudVoice", KZ_HIDEHUD_CHAT},
+	// HIDEHUD_ALL also stops the chat input from opening, so kz_hidehud from chat could never undo it.
+	{"Menu - Game HUD All", "hideGameHudAll", KZ_HIDEHUD_ALL, nullptr},
+	{"Menu - Game HUD Crosshair", "hideGameHudCrosshair", KZ_HIDEHUD_CROSSHAIR, "crosshair"},
+	{"Menu - Game HUD Weapons", "hideGameHudWeapons", KZ_HIDEHUD_WEAPONSELECTION, "weapons"},
+	{"Menu - Game HUD Notices", "hideGameHudNotices", KZ_HIDEHUD_MISCSTATUS, "notices"},
+	{"Menu - Game HUD Voice", "hideGameHudVoice", KZ_HIDEHUD_CHAT, "voice"},
 };
 
 extern const MHUDIndicatorDef MHUD_INDICATOR_DEFS[MHUD_INDICATOR_COUNT] =

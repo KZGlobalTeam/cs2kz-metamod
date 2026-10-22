@@ -2001,7 +2001,7 @@
 	}
 	"Command Description - kz_hidehud"
 	{
-		"en"		"Toggle hiding the crosshair, weapons, notices and voice status. Chat stays visible."
+		"en"		"Toggle hiding game HUD elements. Without arguments, hides everything but chat and the crosshair."
 	}
 	"Command Description - kz_exportprefs"
 	{
@@ -2079,6 +2079,10 @@
 		"chi"		"!panel [compact]"
 		"zho"		"!panel [compact]"
 		"ua"		"!panel [compact]"
+	}
+	"Command Usage - kz_hidehud"
+	{
+		"en"		"!hidehud [crosshair|weapons|notices|voice]..."
 	}
 	"Command Usage - kz_jstier"
 	{

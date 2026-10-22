@@ -26,6 +26,7 @@ struct GameHudPartDef
 	const char *phraseKey;
 	const char *prefKey; // bool preference
 	u32 bit;
+	const char *argName; // kz_hidehud argument, null when the command can't toggle it
 };
 
 extern const GameHudPartDef GAME_HUD_PARTS[GAME_HUD_PART_COUNT];

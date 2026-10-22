@@ -350,24 +350,57 @@ SCMD(kz_hudedit, SCFL_HUD)
 SCMD(kz_hidehud, SCFL_HUD)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
-	// HIDEHUD_ALL also stops the chat input from opening, which would leave no way to type the command again.
+	// Without arguments, everything the command can toggle except the crosshair.
+	u32 bits = 0;
+	if (args->ArgC() < 2)
+	{
+		for (const GameHudPartDef &part : GAME_HUD_PARTS)
+		{
+			if (part.argName && part.bit != KZ_HIDEHUD_CROSSHAIR)
+			{
+				bits |= part.bit;
+			}
+		}
+	}
+	for (i32 i = 1; i < args->ArgC(); i++)
+	{
+		const GameHudPartDef *found = nullptr;
+		for (const GameHudPartDef &part : GAME_HUD_PARTS)
+		{
+			if (part.argName && KZ_STREQI(args->Arg(i), part.argName))
+			{
+				found = &part;
+				break;
+			}
+		}
+		if (!found)
+		{
+			player->languageService->PrintChat(true, false, "HideHUD Command Usage");
+			return true;
+		}
+		bits |= found->bit;
+	}
+
+	// Hide them all unless every one is already hidden.
 	bool hide = false;
 	for (const GameHudPartDef &part : GAME_HUD_PARTS)
 	{
-		if (part.bit != KZ_HIDEHUD_ALL && !player->optionService->GetPreferenceBool(part.prefKey, false))
+		if ((part.bit & bits) && !player->optionService->GetPreferenceBool(part.prefKey, false))
 		{
 			hide = true;
 			break;
 		}
 	}
+	std::string names;
 	for (const GameHudPartDef &part : GAME_HUD_PARTS)
 	{
-		if (part.bit != KZ_HIDEHUD_ALL)
+		if (part.bit & bits)
 		{
 			player->optionService->SetPreferenceBool(part.prefKey, hide);
+			names += names.empty() ? part.argName : std::string(", ") + part.argName;
 		}
 	}
-	player->languageService->PrintChat(true, false, hide ? "HUD Option - Hide HUD - Enable" : "HUD Option - Hide HUD - Disable");
+	player->languageService->PrintChat(true, false, hide ? "HUD Option - Hide HUD - Enable" : "HUD Option - Hide HUD - Disable", names.c_str());
 	return true;
 }
 

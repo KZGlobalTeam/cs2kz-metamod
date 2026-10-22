@@ -279,11 +279,17 @@
 
 	"HUD Option - Hide HUD - Enable"
 	{
-		"en"		"{grey}The game HUD is now hidden, except for chat. Use {default}!hidehud {grey}again to show it."
+		"#format"	"elements:s"
+		"en"		"{grey}Hidden: {default}{elements}{grey}. Run the same command again to show them."
 	}
 	"HUD Option - Hide HUD - Disable"
 	{
-		"en"		"{grey}The game HUD is now shown."
+		"#format"	"elements:s"
+		"en"		"{grey}Shown: {default}{elements}{grey}."
+	}
+	"HideHUD Command Usage"
+	{
+		"en"		"{grey}Usage: {default}!hidehud [crosshair|weapons|notices|voice]...{grey}. Without arguments, hides everything but chat and the crosshair."
 	}
 	"HUD Option - Info Panel - Enable"
 	{
