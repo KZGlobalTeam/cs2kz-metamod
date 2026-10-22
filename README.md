@@ -81,9 +81,9 @@ Automated translation linter reports for cs2kz-metamod.
 
 ## Last Updated
 
-- **Commit:** [`1a0ab7f`](https://github.com/KZGlobalTeam/cs2kz-metamod/commit/1a0ab7f7fd2021b73b2d83a2571e48df33330b98)
-- **Time:** 2026-10-22 10:46:41 UTC
-- **Message:** Fix subtick spam detector being too sensitive
+- **Commit:** [`d7ae9ff`](https://github.com/KZGlobalTeam/cs2kz-metamod/commit/d7ae9ff2b12a5c7e34e05c6ad25b5546dea69adc)
+- **Time:** 2026-10-22 15:22:02 UTC
+- **Message:** Fix multiple crash points on plugin unload/server shutdown
 
 ---
 

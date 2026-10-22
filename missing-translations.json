@@ -31683,13 +31683,13 @@
         },
         {
           "file": "translations/cs2kz-timer-toprecord.phrases.txt",
-          "phrase": "WR/SR Command Usage",
+          "phrase": "Top Record Command Usage",
           "line": 147,
           "english_text": "{grey}Usage: {default}kz_wr{grey}/{default}kz_wr {purple}<c/course/map/mode/p/player/s/style=...>{grey}. Check console for details!"
         },
         {
           "file": "translations/cs2kz-timer-toprecord.phrases.txt",
-          "phrase": "WR/SR Command Usage - Console",
+          "phrase": "Top Record Command Usage - Console",
           "line": 164,
           "english_text": "Usage: kz_wr/kz_sr <c/course/map/mode=...>\\nExample: \\\"kz_wr map=kz_map c=Main\\\"."
         },
@@ -69945,7 +69945,7 @@
           ]
         },
         {
-          "name": "WR/SR Command Usage",
+          "name": "Top Record Command Usage",
           "line": 147,
           "english_text": "{grey}Usage: {default}kz_wr{grey}/{default}kz_wr {purple}<c/course/map/mode/p/player/s/style=...>{grey}. Check console for details!",
           "existing_languages": [
@@ -69969,7 +69969,7 @@
           ]
         },
         {
-          "name": "WR/SR Command Usage - Console",
+          "name": "Top Record Command Usage - Console",
           "line": 164,
           "english_text": "Usage: kz_wr/kz_sr <c/course/map/mode=...>\\nExample: \\\"kz_wr map=kz_map c=Main\\\".",
           "existing_languages": [

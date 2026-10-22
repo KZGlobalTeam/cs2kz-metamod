@@ -2095,9 +2095,9 @@ translations/cs2kz-timer-toprecord.phrases.txt
     Missing (1): nl
   Line 129: "Top Record Request - Invalid Course Name"
     Missing (1): nl
-  Line 147: "WR/SR Command Usage"
+  Line 147: "Top Record Command Usage"
     Missing (1): nl
-  Line 164: "WR/SR Command Usage - Console"
+  Line 164: "Top Record Command Usage - Console"
     Missing (1): nl
 
 translations/cs2kz-timer.phrases.txt
