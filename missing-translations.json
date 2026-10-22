@@ -1,9 +1,9 @@
 {
   "summary": {
     "total_languages": 15,
-    "total_phrases": 1098,
-    "phrases_with_missing": 1098,
-    "total_missing_entries": 7606,
+    "total_phrases": 1102,
+    "phrases_with_missing": 1102,
+    "total_missing_entries": 7662,
     "all_languages": [
       "chi",
       "de",
@@ -59,9 +59,9 @@
   "languages": {
     "chi": {
       "name": "schinese",
-      "coverage_percent": 92.08,
+      "coverage_percent": 91.74,
       "translated": 1011,
-      "missing": 87,
+      "missing": 91,
       "missing_phrases": [
         {
           "file": "cs2kz-commands.phrases.txt",
@@ -245,62 +245,68 @@
         },
         {
           "file": "cs2kz-hud.phrases.txt",
-          "phrase": "HUD - Course All",
+          "phrase": "HUD - Course Route",
           "line": 569,
+          "english_text": "Progress"
+        },
+        {
+          "file": "cs2kz-hud.phrases.txt",
+          "phrase": "HUD - Course All",
+          "line": 573,
           "english_text": "All"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course Pro",
-          "line": 576,
+          "line": 580,
           "english_text": "Pro"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course Badge TP",
-          "line": 583,
+          "line": 587,
           "english_text": "TP"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course Badge Pro",
-          "line": 590,
+          "line": 594,
           "english_text": "PRO"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course By",
-          "line": 597,
+          "line": 601,
           "english_text": "by {name}"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course Gap",
-          "line": 605,
+          "line": 609,
           "english_text": "({gap})"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course No Records",
-          "line": 614,
+          "line": 618,
           "english_text": "No records yet"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course Ranked",
-          "line": 621,
+          "line": 625,
           "english_text": "Ranked"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course Pending",
-          "line": 628,
+          "line": 632,
           "english_text": "Pending"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course Unranked",
-          "line": 635,
+          "line": 639,
           "english_text": "Unranked"
         },
         {
@@ -454,6 +460,24 @@
           "english_text": "Recolors the value while air acceleration is cut to a quarter, from rising slower than 140 u/s"
         },
         {
+          "file": "cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Course Show Route",
+          "line": 2176,
+          "english_text": "Route progress"
+        },
+        {
+          "file": "cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Course Show Route Sub",
+          "line": 2180,
+          "english_text": "How far along the course you are, measured on the record run's route"
+        },
+        {
+          "file": "cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Course Show Route Label",
+          "line": 2184,
+          "english_text": "Route progress label"
+        },
+        {
           "file": "cs2kz-replays.phrases.txt",
           "phrase": "Replay - Timescale Set",
           "line": 298,
@@ -599,9 +623,9 @@
     },
     "de": {
       "name": "german",
-      "coverage_percent": 47.18,
+      "coverage_percent": 47.01,
       "translated": 518,
-      "missing": 580,
+      "missing": 584,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -1619,62 +1643,68 @@
         },
         {
           "file": "cs2kz-hud.phrases.txt",
-          "phrase": "HUD - Course All",
+          "phrase": "HUD - Course Route",
           "line": 569,
+          "english_text": "Progress"
+        },
+        {
+          "file": "cs2kz-hud.phrases.txt",
+          "phrase": "HUD - Course All",
+          "line": 573,
           "english_text": "All"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course Pro",
-          "line": 576,
+          "line": 580,
           "english_text": "Pro"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course Badge TP",
-          "line": 583,
+          "line": 587,
           "english_text": "TP"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course Badge Pro",
-          "line": 590,
+          "line": 594,
           "english_text": "PRO"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course By",
-          "line": 597,
+          "line": 601,
           "english_text": "by {name}"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course Gap",
-          "line": 605,
+          "line": 609,
           "english_text": "({gap})"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course No Records",
-          "line": 614,
+          "line": 618,
           "english_text": "No records yet"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course Ranked",
-          "line": 621,
+          "line": 625,
           "english_text": "Ranked"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course Pending",
-          "line": 628,
+          "line": 632,
           "english_text": "Pending"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course Unranked",
-          "line": 635,
+          "line": 639,
           "english_text": "Unranked"
         },
         {
@@ -3515,14 +3545,32 @@
         },
         {
           "file": "cs2kz-menu.phrases.txt",
-          "phrase": "Menu - Course Show Records",
+          "phrase": "Menu - Course Show Route",
           "line": 2176,
+          "english_text": "Route progress"
+        },
+        {
+          "file": "cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Course Show Route Sub",
+          "line": 2180,
+          "english_text": "How far along the course you are, measured on the record run's route"
+        },
+        {
+          "file": "cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Course Show Route Label",
+          "line": 2184,
+          "english_text": "Route progress label"
+        },
+        {
+          "file": "cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Course Show Records",
+          "line": 2188,
           "english_text": "Records"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Records Sub",
-          "line": 2184,
+          "line": 2196,
           "english_text": "The world record and your gap to it, or the server record on a non-global map"
         },
         {
@@ -4093,7 +4141,7 @@
     "en": {
       "name": "english",
       "coverage_percent": 100.0,
-      "translated": 1098,
+      "translated": 1102,
       "missing": 0,
       "missing_phrases": [],
       "menu": {
@@ -4104,9 +4152,9 @@
     },
     "es": {
       "name": "spanish",
-      "coverage_percent": 44.08,
+      "coverage_percent": 43.92,
       "translated": 484,
-      "missing": 614,
+      "missing": 618,
       "missing_phrases": [
         {
           "file": "cs2kz-commands.phrases.txt",
@@ -4836,62 +4884,68 @@
         },
         {
           "file": "cs2kz-hud.phrases.txt",
-          "phrase": "HUD - Course All",
+          "phrase": "HUD - Course Route",
           "line": 569,
+          "english_text": "Progress"
+        },
+        {
+          "file": "cs2kz-hud.phrases.txt",
+          "phrase": "HUD - Course All",
+          "line": 573,
           "english_text": "All"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course Pro",
-          "line": 576,
+          "line": 580,
           "english_text": "Pro"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course Badge TP",
-          "line": 583,
+          "line": 587,
           "english_text": "TP"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course Badge Pro",
-          "line": 590,
+          "line": 594,
           "english_text": "PRO"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course By",
-          "line": 597,
+          "line": 601,
           "english_text": "by {name}"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course Gap",
-          "line": 605,
+          "line": 609,
           "english_text": "({gap})"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course No Records",
-          "line": 614,
+          "line": 618,
           "english_text": "No records yet"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course Ranked",
-          "line": 621,
+          "line": 625,
           "english_text": "Ranked"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course Pending",
-          "line": 628,
+          "line": 632,
           "english_text": "Pending"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course Unranked",
-          "line": 635,
+          "line": 639,
           "english_text": "Unranked"
         },
         {
@@ -6690,14 +6744,32 @@
         },
         {
           "file": "cs2kz-menu.phrases.txt",
-          "phrase": "Menu - Course Show Records",
+          "phrase": "Menu - Course Show Route",
           "line": 2176,
+          "english_text": "Route progress"
+        },
+        {
+          "file": "cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Course Show Route Sub",
+          "line": 2180,
+          "english_text": "How far along the course you are, measured on the record run's route"
+        },
+        {
+          "file": "cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Course Show Route Label",
+          "line": 2184,
+          "english_text": "Route progress label"
+        },
+        {
+          "file": "cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Course Show Records",
+          "line": 2188,
           "english_text": "Records"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Records Sub",
-          "line": 2184,
+          "line": 2196,
           "english_text": "The world record and your gap to it, or the server record on a non-global map"
         },
         {
@@ -7801,9 +7873,9 @@
     },
     "fi": {
       "name": "finnish",
-      "coverage_percent": 21.22,
+      "coverage_percent": 21.14,
       "translated": 233,
-      "missing": 865,
+      "missing": 869,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -9337,62 +9409,68 @@
         },
         {
           "file": "cs2kz-hud.phrases.txt",
-          "phrase": "HUD - Course All",
+          "phrase": "HUD - Course Route",
           "line": 569,
+          "english_text": "Progress"
+        },
+        {
+          "file": "cs2kz-hud.phrases.txt",
+          "phrase": "HUD - Course All",
+          "line": 573,
           "english_text": "All"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course Pro",
-          "line": 576,
+          "line": 580,
           "english_text": "Pro"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course Badge TP",
-          "line": 583,
+          "line": 587,
           "english_text": "TP"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course Badge Pro",
-          "line": 590,
+          "line": 594,
           "english_text": "PRO"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course By",
-          "line": 597,
+          "line": 601,
           "english_text": "by {name}"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course Gap",
-          "line": 605,
+          "line": 609,
           "english_text": "({gap})"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course No Records",
-          "line": 614,
+          "line": 618,
           "english_text": "No records yet"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course Ranked",
-          "line": 621,
+          "line": 625,
           "english_text": "Ranked"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course Pending",
-          "line": 628,
+          "line": 632,
           "english_text": "Pending"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course Unranked",
-          "line": 635,
+          "line": 639,
           "english_text": "Unranked"
         },
         {
@@ -11407,14 +11485,32 @@
         },
         {
           "file": "cs2kz-menu.phrases.txt",
-          "phrase": "Menu - Course Show Records",
+          "phrase": "Menu - Course Show Route",
           "line": 2176,
+          "english_text": "Route progress"
+        },
+        {
+          "file": "cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Course Show Route Sub",
+          "line": 2180,
+          "english_text": "How far along the course you are, measured on the record run's route"
+        },
+        {
+          "file": "cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Course Show Route Label",
+          "line": 2184,
+          "english_text": "Route progress label"
+        },
+        {
+          "file": "cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Course Show Records",
+          "line": 2188,
           "english_text": "Records"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Records Sub",
-          "line": 2184,
+          "line": 2196,
           "english_text": "The world record and your gap to it, or the server record on a non-global map"
         },
         {
@@ -13009,9 +13105,9 @@
     },
     "it": {
       "name": "italian",
-      "coverage_percent": 20.49,
+      "coverage_percent": 20.42,
       "translated": 225,
-      "missing": 873,
+      "missing": 877,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -14563,62 +14659,68 @@
         },
         {
           "file": "cs2kz-hud.phrases.txt",
-          "phrase": "HUD - Course All",
+          "phrase": "HUD - Course Route",
           "line": 569,
+          "english_text": "Progress"
+        },
+        {
+          "file": "cs2kz-hud.phrases.txt",
+          "phrase": "HUD - Course All",
+          "line": 573,
           "english_text": "All"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course Pro",
-          "line": 576,
+          "line": 580,
           "english_text": "Pro"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course Badge TP",
-          "line": 583,
+          "line": 587,
           "english_text": "TP"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course Badge Pro",
-          "line": 590,
+          "line": 594,
           "english_text": "PRO"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course By",
-          "line": 597,
+          "line": 601,
           "english_text": "by {name}"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course Gap",
-          "line": 605,
+          "line": 609,
           "english_text": "({gap})"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course No Records",
-          "line": 614,
+          "line": 618,
           "english_text": "No records yet"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course Ranked",
-          "line": 621,
+          "line": 625,
           "english_text": "Ranked"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course Pending",
-          "line": 628,
+          "line": 632,
           "english_text": "Pending"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course Unranked",
-          "line": 635,
+          "line": 639,
           "english_text": "Unranked"
         },
         {
@@ -16633,14 +16735,32 @@
         },
         {
           "file": "cs2kz-menu.phrases.txt",
-          "phrase": "Menu - Course Show Records",
+          "phrase": "Menu - Course Show Route",
           "line": 2176,
+          "english_text": "Route progress"
+        },
+        {
+          "file": "cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Course Show Route Sub",
+          "line": 2180,
+          "english_text": "How far along the course you are, measured on the record run's route"
+        },
+        {
+          "file": "cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Course Show Route Label",
+          "line": 2184,
+          "english_text": "Route progress label"
+        },
+        {
+          "file": "cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Course Show Records",
+          "line": 2188,
           "english_text": "Records"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Records Sub",
-          "line": 2184,
+          "line": 2196,
           "english_text": "The world record and your gap to it, or the server record on a non-global map"
         },
         {
@@ -18265,9 +18385,9 @@
     },
     "ko": {
       "name": "korean",
-      "coverage_percent": 59.38,
+      "coverage_percent": 59.17,
       "translated": 652,
-      "missing": 446,
+      "missing": 450,
       "missing_phrases": [
         {
           "file": "cs2kz-commands.phrases.txt",
@@ -18967,62 +19087,68 @@
         },
         {
           "file": "cs2kz-hud.phrases.txt",
-          "phrase": "HUD - Course All",
+          "phrase": "HUD - Course Route",
           "line": 569,
+          "english_text": "Progress"
+        },
+        {
+          "file": "cs2kz-hud.phrases.txt",
+          "phrase": "HUD - Course All",
+          "line": 573,
           "english_text": "All"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course Pro",
-          "line": 576,
+          "line": 580,
           "english_text": "Pro"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course Badge TP",
-          "line": 583,
+          "line": 587,
           "english_text": "TP"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course Badge Pro",
-          "line": 590,
+          "line": 594,
           "english_text": "PRO"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course By",
-          "line": 597,
+          "line": 601,
           "english_text": "by {name}"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course Gap",
-          "line": 605,
+          "line": 609,
           "english_text": "({gap})"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course No Records",
-          "line": 614,
+          "line": 618,
           "english_text": "No records yet"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course Ranked",
-          "line": 621,
+          "line": 625,
           "english_text": "Ranked"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course Pending",
-          "line": 628,
+          "line": 632,
           "english_text": "Pending"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course Unranked",
-          "line": 635,
+          "line": 639,
           "english_text": "Unranked"
         },
         {
@@ -20785,14 +20911,32 @@
         },
         {
           "file": "cs2kz-menu.phrases.txt",
-          "phrase": "Menu - Course Show Records",
+          "phrase": "Menu - Course Show Route",
           "line": 2176,
+          "english_text": "Route progress"
+        },
+        {
+          "file": "cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Course Show Route Sub",
+          "line": 2180,
+          "english_text": "How far along the course you are, measured on the record run's route"
+        },
+        {
+          "file": "cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Course Show Route Label",
+          "line": 2184,
+          "english_text": "Route progress label"
+        },
+        {
+          "file": "cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Course Show Records",
+          "line": 2188,
           "english_text": "Records"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Records Sub",
-          "line": 2184,
+          "line": 2196,
           "english_text": "The world record and your gap to it, or the server record on a non-global map"
         },
         {
@@ -20954,9 +21098,9 @@
     },
     "lv": {
       "name": "latvian",
-      "coverage_percent": 29.87,
+      "coverage_percent": 29.76,
       "translated": 328,
-      "missing": 770,
+      "missing": 774,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -22238,62 +22382,68 @@
         },
         {
           "file": "cs2kz-hud.phrases.txt",
-          "phrase": "HUD - Course All",
+          "phrase": "HUD - Course Route",
           "line": 569,
+          "english_text": "Progress"
+        },
+        {
+          "file": "cs2kz-hud.phrases.txt",
+          "phrase": "HUD - Course All",
+          "line": 573,
           "english_text": "All"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course Pro",
-          "line": 576,
+          "line": 580,
           "english_text": "Pro"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course Badge TP",
-          "line": 583,
+          "line": 587,
           "english_text": "TP"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course Badge Pro",
-          "line": 590,
+          "line": 594,
           "english_text": "PRO"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course By",
-          "line": 597,
+          "line": 601,
           "english_text": "by {name}"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course Gap",
-          "line": 605,
+          "line": 609,
           "english_text": "({gap})"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course No Records",
-          "line": 614,
+          "line": 618,
           "english_text": "No records yet"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course Ranked",
-          "line": 621,
+          "line": 625,
           "english_text": "Ranked"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course Pending",
-          "line": 628,
+          "line": 632,
           "english_text": "Pending"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course Unranked",
-          "line": 635,
+          "line": 639,
           "english_text": "Unranked"
         },
         {
@@ -24284,14 +24434,32 @@
         },
         {
           "file": "cs2kz-menu.phrases.txt",
-          "phrase": "Menu - Course Show Records",
+          "phrase": "Menu - Course Show Route",
           "line": 2176,
+          "english_text": "Route progress"
+        },
+        {
+          "file": "cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Course Show Route Sub",
+          "line": 2180,
+          "english_text": "How far along the course you are, measured on the record run's route"
+        },
+        {
+          "file": "cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Course Show Route Label",
+          "line": 2184,
+          "english_text": "Route progress label"
+        },
+        {
+          "file": "cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Course Show Records",
+          "line": 2188,
           "english_text": "Records"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Records Sub",
-          "line": 2184,
+          "line": 2196,
           "english_text": "The world record and your gap to it, or the server record on a non-global map"
         },
         {
@@ -25587,9 +25755,9 @@
     },
     "nl": {
       "name": "dutch",
-      "coverage_percent": 0.46,
+      "coverage_percent": 0.45,
       "translated": 5,
-      "missing": 1093,
+      "missing": 1097,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -27681,62 +27849,68 @@
         },
         {
           "file": "cs2kz-hud.phrases.txt",
-          "phrase": "HUD - Course All",
+          "phrase": "HUD - Course Route",
           "line": 569,
+          "english_text": "Progress"
+        },
+        {
+          "file": "cs2kz-hud.phrases.txt",
+          "phrase": "HUD - Course All",
+          "line": 573,
           "english_text": "All"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course Pro",
-          "line": 576,
+          "line": 580,
           "english_text": "Pro"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course Badge TP",
-          "line": 583,
+          "line": 587,
           "english_text": "TP"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course Badge Pro",
-          "line": 590,
+          "line": 594,
           "english_text": "PRO"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course By",
-          "line": 597,
+          "line": 601,
           "english_text": "by {name}"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course Gap",
-          "line": 605,
+          "line": 609,
           "english_text": "({gap})"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course No Records",
-          "line": 614,
+          "line": 618,
           "english_text": "No records yet"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course Ranked",
-          "line": 621,
+          "line": 625,
           "english_text": "Ranked"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course Pending",
-          "line": 628,
+          "line": 632,
           "english_text": "Pending"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course Unranked",
-          "line": 635,
+          "line": 639,
           "english_text": "Unranked"
         },
         {
@@ -29991,14 +30165,32 @@
         },
         {
           "file": "cs2kz-menu.phrases.txt",
-          "phrase": "Menu - Course Show Records",
+          "phrase": "Menu - Course Show Route",
           "line": 2176,
+          "english_text": "Route progress"
+        },
+        {
+          "file": "cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Course Show Route Sub",
+          "line": 2180,
+          "english_text": "How far along the course you are, measured on the record run's route"
+        },
+        {
+          "file": "cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Course Show Route Label",
+          "line": 2184,
+          "english_text": "Route progress label"
+        },
+        {
+          "file": "cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Course Show Records",
+          "line": 2188,
           "english_text": "Records"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Records Sub",
-          "line": 2184,
+          "line": 2196,
           "english_text": "The world record and your gap to it, or the server record on a non-global map"
         },
         {
@@ -32158,9 +32350,9 @@
     },
     "pl": {
       "name": "polish",
-      "coverage_percent": 47.36,
+      "coverage_percent": 47.19,
       "translated": 520,
-      "missing": 578,
+      "missing": 582,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -33166,62 +33358,68 @@
         },
         {
           "file": "cs2kz-hud.phrases.txt",
-          "phrase": "HUD - Course All",
+          "phrase": "HUD - Course Route",
           "line": 569,
+          "english_text": "Progress"
+        },
+        {
+          "file": "cs2kz-hud.phrases.txt",
+          "phrase": "HUD - Course All",
+          "line": 573,
           "english_text": "All"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course Pro",
-          "line": 576,
+          "line": 580,
           "english_text": "Pro"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course Badge TP",
-          "line": 583,
+          "line": 587,
           "english_text": "TP"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course Badge Pro",
-          "line": 590,
+          "line": 594,
           "english_text": "PRO"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course By",
-          "line": 597,
+          "line": 601,
           "english_text": "by {name}"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course Gap",
-          "line": 605,
+          "line": 609,
           "english_text": "({gap})"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course No Records",
-          "line": 614,
+          "line": 618,
           "english_text": "No records yet"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course Ranked",
-          "line": 621,
+          "line": 625,
           "english_text": "Ranked"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course Pending",
-          "line": 628,
+          "line": 632,
           "english_text": "Pending"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course Unranked",
-          "line": 635,
+          "line": 639,
           "english_text": "Unranked"
         },
         {
@@ -35062,14 +35260,32 @@
         },
         {
           "file": "cs2kz-menu.phrases.txt",
-          "phrase": "Menu - Course Show Records",
+          "phrase": "Menu - Course Show Route",
           "line": 2176,
+          "english_text": "Route progress"
+        },
+        {
+          "file": "cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Course Show Route Sub",
+          "line": 2180,
+          "english_text": "How far along the course you are, measured on the record run's route"
+        },
+        {
+          "file": "cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Course Show Route Label",
+          "line": 2184,
+          "english_text": "Route progress label"
+        },
+        {
+          "file": "cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Course Show Records",
+          "line": 2188,
           "english_text": "Records"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Records Sub",
-          "line": 2184,
+          "line": 2196,
           "english_text": "The world record and your gap to it, or the server record on a non-global map"
         },
         {
@@ -35639,9 +35855,9 @@
     },
     "ru": {
       "name": "russian",
-      "coverage_percent": 90.53,
+      "coverage_percent": 90.2,
       "translated": 994,
-      "missing": 104,
+      "missing": 108,
       "missing_phrases": [
         {
           "file": "cs2kz-commands.phrases.txt",
@@ -36112,6 +36328,12 @@
           "english_text": "{grey}The game HUD is now shown."
         },
         {
+          "file": "cs2kz-hud.phrases.txt",
+          "phrase": "HUD - Course Route",
+          "line": 569,
+          "english_text": "Progress"
+        },
+        {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Ind CJ Opacity",
           "line": 484,
@@ -36134,6 +36356,24 @@
           "phrase": "Menu - Deadstrafe Sub",
           "line": 659,
           "english_text": "Recolors the value while air acceleration is cut to a quarter, from rising slower than 140 u/s"
+        },
+        {
+          "file": "cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Course Show Route",
+          "line": 2176,
+          "english_text": "Route progress"
+        },
+        {
+          "file": "cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Course Show Route Sub",
+          "line": 2180,
+          "english_text": "How far along the course you are, measured on the record run's route"
+        },
+        {
+          "file": "cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Course Show Route Label",
+          "line": 2184,
+          "english_text": "Route progress label"
         },
         {
           "file": "cs2kz-replays.phrases.txt",
@@ -36276,9 +36516,9 @@
     },
     "sv": {
       "name": "swedish",
-      "coverage_percent": 35.7,
+      "coverage_percent": 35.57,
       "translated": 392,
-      "missing": 706,
+      "missing": 710,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -37392,62 +37632,68 @@
         },
         {
           "file": "cs2kz-hud.phrases.txt",
-          "phrase": "HUD - Course All",
+          "phrase": "HUD - Course Route",
           "line": 569,
+          "english_text": "Progress"
+        },
+        {
+          "file": "cs2kz-hud.phrases.txt",
+          "phrase": "HUD - Course All",
+          "line": 573,
           "english_text": "All"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course Pro",
-          "line": 576,
+          "line": 580,
           "english_text": "Pro"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course Badge TP",
-          "line": 583,
+          "line": 587,
           "english_text": "TP"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course Badge Pro",
-          "line": 590,
+          "line": 594,
           "english_text": "PRO"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course By",
-          "line": 597,
+          "line": 601,
           "english_text": "by {name}"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course Gap",
-          "line": 605,
+          "line": 609,
           "english_text": "({gap})"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course No Records",
-          "line": 614,
+          "line": 618,
           "english_text": "No records yet"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course Ranked",
-          "line": 621,
+          "line": 625,
           "english_text": "Ranked"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course Pending",
-          "line": 628,
+          "line": 632,
           "english_text": "Pending"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course Unranked",
-          "line": 635,
+          "line": 639,
           "english_text": "Unranked"
         },
         {
@@ -39336,14 +39582,32 @@
         },
         {
           "file": "cs2kz-menu.phrases.txt",
-          "phrase": "Menu - Course Show Records",
+          "phrase": "Menu - Course Show Route",
           "line": 2176,
+          "english_text": "Route progress"
+        },
+        {
+          "file": "cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Course Show Route Sub",
+          "line": 2180,
+          "english_text": "How far along the course you are, measured on the record run's route"
+        },
+        {
+          "file": "cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Course Show Route Label",
+          "line": 2184,
+          "english_text": "Route progress label"
+        },
+        {
+          "file": "cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Course Show Records",
+          "line": 2188,
           "english_text": "Records"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Records Sub",
-          "line": 2184,
+          "line": 2196,
           "english_text": "The world record and your gap to it, or the server record on a non-global map"
         },
         {
@@ -40525,9 +40789,9 @@
     },
     "tr": {
       "name": "turkish",
-      "coverage_percent": 23.86,
+      "coverage_percent": 23.77,
       "translated": 262,
-      "missing": 836,
+      "missing": 840,
       "missing_phrases": [
         {
           "file": "cs2kz-anticheat.phrases.txt",
@@ -42019,62 +42283,68 @@
         },
         {
           "file": "cs2kz-hud.phrases.txt",
-          "phrase": "HUD - Course All",
+          "phrase": "HUD - Course Route",
           "line": 569,
+          "english_text": "Progress"
+        },
+        {
+          "file": "cs2kz-hud.phrases.txt",
+          "phrase": "HUD - Course All",
+          "line": 573,
           "english_text": "All"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course Pro",
-          "line": 576,
+          "line": 580,
           "english_text": "Pro"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course Badge TP",
-          "line": 583,
+          "line": 587,
           "english_text": "TP"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course Badge Pro",
-          "line": 590,
+          "line": 594,
           "english_text": "PRO"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course By",
-          "line": 597,
+          "line": 601,
           "english_text": "by {name}"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course Gap",
-          "line": 605,
+          "line": 609,
           "english_text": "({gap})"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course No Records",
-          "line": 614,
+          "line": 618,
           "english_text": "No records yet"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course Ranked",
-          "line": 621,
+          "line": 625,
           "english_text": "Ranked"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course Pending",
-          "line": 628,
+          "line": 632,
           "english_text": "Pending"
         },
         {
           "file": "cs2kz-hud.phrases.txt",
           "phrase": "HUD - Course Unranked",
-          "line": 635,
+          "line": 639,
           "english_text": "Unranked"
         },
         {
@@ -44089,14 +44359,32 @@
         },
         {
           "file": "cs2kz-menu.phrases.txt",
-          "phrase": "Menu - Course Show Records",
+          "phrase": "Menu - Course Show Route",
           "line": 2176,
+          "english_text": "Route progress"
+        },
+        {
+          "file": "cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Course Show Route Sub",
+          "line": 2180,
+          "english_text": "How far along the course you are, measured on the record run's route"
+        },
+        {
+          "file": "cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Course Show Route Label",
+          "line": 2184,
+          "english_text": "Route progress label"
+        },
+        {
+          "file": "cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Course Show Records",
+          "line": 2188,
           "english_text": "Records"
         },
         {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Course Show Records Sub",
-          "line": 2184,
+          "line": 2196,
           "english_text": "The world record and your gap to it, or the server record on a non-global map"
         },
         {
@@ -45559,9 +45847,9 @@
     },
     "ua": {
       "name": "ukrainian",
-      "coverage_percent": 97.72,
+      "coverage_percent": 97.37,
       "translated": 1073,
-      "missing": 25,
+      "missing": 29,
       "missing_phrases": [
         {
           "file": "cs2kz-commands.phrases.txt",
@@ -45588,6 +45876,12 @@
           "english_text": "{grey}The game HUD is now shown."
         },
         {
+          "file": "cs2kz-hud.phrases.txt",
+          "phrase": "HUD - Course Route",
+          "line": 569,
+          "english_text": "Progress"
+        },
+        {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Color Deadstrafe",
           "line": 651,
@@ -45604,6 +45898,24 @@
           "phrase": "Menu - Deadstrafe Sub",
           "line": 659,
           "english_text": "Recolors the value while air acceleration is cut to a quarter, from rising slower than 140 u/s"
+        },
+        {
+          "file": "cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Course Show Route",
+          "line": 2176,
+          "english_text": "Route progress"
+        },
+        {
+          "file": "cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Course Show Route Sub",
+          "line": 2180,
+          "english_text": "How far along the course you are, measured on the record run's route"
+        },
+        {
+          "file": "cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Course Show Route Label",
+          "line": 2184,
+          "english_text": "Route progress label"
         },
         {
           "file": "cs2kz-replays.phrases.txt",
@@ -45722,9 +46034,9 @@
     },
     "zho": {
       "name": "tchinese",
-      "coverage_percent": 97.36,
+      "coverage_percent": 97.01,
       "translated": 1069,
-      "missing": 29,
+      "missing": 33,
       "missing_phrases": [
         {
           "file": "cs2kz-commands.phrases.txt",
@@ -45751,6 +46063,12 @@
           "english_text": "{grey}The game HUD is now shown."
         },
         {
+          "file": "cs2kz-hud.phrases.txt",
+          "phrase": "HUD - Course Route",
+          "line": 569,
+          "english_text": "Progress"
+        },
+        {
           "file": "cs2kz-menu.phrases.txt",
           "phrase": "Menu - Color Deadstrafe",
           "line": 651,
@@ -45767,6 +46085,24 @@
           "phrase": "Menu - Deadstrafe Sub",
           "line": 659,
           "english_text": "Recolors the value while air acceleration is cut to a quarter, from rising slower than 140 u/s"
+        },
+        {
+          "file": "cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Course Show Route",
+          "line": 2176,
+          "english_text": "Route progress"
+        },
+        {
+          "file": "cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Course Show Route Sub",
+          "line": 2180,
+          "english_text": "How far along the course you are, measured on the record run's route"
+        },
+        {
+          "file": "cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Course Show Route Label",
+          "line": 2184,
+          "english_text": "Route progress label"
         },
         {
           "file": "cs2kz-replays.phrases.txt",
@@ -53069,7 +53405,7 @@
       ]
     },
     "cs2kz-hud.phrases.txt": {
-      "phrases_with_missing": 62,
+      "phrases_with_missing": 63,
       "phrases": [
         {
           "name": "Speed",
@@ -54320,8 +54656,32 @@
           ]
         },
         {
-          "name": "HUD - Course All",
+          "name": "HUD - Course Route",
           "line": 569,
+          "english_text": "Progress",
+          "existing_languages": [
+            "en"
+          ],
+          "missing_languages": [
+            "chi",
+            "de",
+            "es",
+            "fi",
+            "it",
+            "ko",
+            "lv",
+            "nl",
+            "pl",
+            "ru",
+            "sv",
+            "tr",
+            "ua",
+            "zho"
+          ]
+        },
+        {
+          "name": "HUD - Course All",
+          "line": 573,
           "english_text": "All",
           "existing_languages": [
             "en",
@@ -54345,7 +54705,7 @@
         },
         {
           "name": "HUD - Course Pro",
-          "line": 576,
+          "line": 580,
           "english_text": "Pro",
           "existing_languages": [
             "en",
@@ -54369,7 +54729,7 @@
         },
         {
           "name": "HUD - Course Badge TP",
-          "line": 583,
+          "line": 587,
           "english_text": "TP",
           "existing_languages": [
             "en",
@@ -54393,7 +54753,7 @@
         },
         {
           "name": "HUD - Course Badge Pro",
-          "line": 590,
+          "line": 594,
           "english_text": "PRO",
           "existing_languages": [
             "en",
@@ -54417,7 +54777,7 @@
         },
         {
           "name": "HUD - Course By",
-          "line": 597,
+          "line": 601,
           "english_text": "by {name}",
           "existing_languages": [
             "en",
@@ -54441,7 +54801,7 @@
         },
         {
           "name": "HUD - Course Gap",
-          "line": 605,
+          "line": 609,
           "english_text": "({gap})",
           "existing_languages": [
             "en",
@@ -54465,7 +54825,7 @@
         },
         {
           "name": "HUD - Course No Records",
-          "line": 614,
+          "line": 618,
           "english_text": "No records yet",
           "existing_languages": [
             "en",
@@ -54489,7 +54849,7 @@
         },
         {
           "name": "HUD - Course Ranked",
-          "line": 621,
+          "line": 625,
           "english_text": "Ranked",
           "existing_languages": [
             "en",
@@ -54513,7 +54873,7 @@
         },
         {
           "name": "HUD - Course Pending",
-          "line": 628,
+          "line": 632,
           "english_text": "Pending",
           "existing_languages": [
             "en",
@@ -54537,7 +54897,7 @@
         },
         {
           "name": "HUD - Course Unranked",
-          "line": 635,
+          "line": 639,
           "english_text": "Unranked",
           "existing_languages": [
             "en",
@@ -57193,7 +57553,7 @@
       ]
     },
     "cs2kz-menu.phrases.txt": {
-      "phrases_with_missing": 273,
+      "phrases_with_missing": 276,
       "phrases": [
         {
           "name": "Menu - Title Options",
@@ -63700,8 +64060,80 @@
           ]
         },
         {
-          "name": "Menu - Course Show Records",
+          "name": "Menu - Course Show Route",
           "line": 2176,
+          "english_text": "Route progress",
+          "existing_languages": [
+            "en"
+          ],
+          "missing_languages": [
+            "chi",
+            "de",
+            "es",
+            "fi",
+            "it",
+            "ko",
+            "lv",
+            "nl",
+            "pl",
+            "ru",
+            "sv",
+            "tr",
+            "ua",
+            "zho"
+          ]
+        },
+        {
+          "name": "Menu - Course Show Route Sub",
+          "line": 2180,
+          "english_text": "How far along the course you are, measured on the record run's route",
+          "existing_languages": [
+            "en"
+          ],
+          "missing_languages": [
+            "chi",
+            "de",
+            "es",
+            "fi",
+            "it",
+            "ko",
+            "lv",
+            "nl",
+            "pl",
+            "ru",
+            "sv",
+            "tr",
+            "ua",
+            "zho"
+          ]
+        },
+        {
+          "name": "Menu - Course Show Route Label",
+          "line": 2184,
+          "english_text": "Route progress label",
+          "existing_languages": [
+            "en"
+          ],
+          "missing_languages": [
+            "chi",
+            "de",
+            "es",
+            "fi",
+            "it",
+            "ko",
+            "lv",
+            "nl",
+            "pl",
+            "ru",
+            "sv",
+            "tr",
+            "ua",
+            "zho"
+          ]
+        },
+        {
+          "name": "Menu - Course Show Records",
+          "line": 2188,
           "english_text": "Records",
           "existing_languages": [
             "chi",
@@ -63725,7 +64157,7 @@
         },
         {
           "name": "Menu - Course Show Records Sub",
-          "line": 2184,
+          "line": 2196,
           "english_text": "The world record and your gap to it, or the server record on a non-global map",
           "existing_languages": [
             "chi",

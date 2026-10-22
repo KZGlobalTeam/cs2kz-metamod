@@ -6,28 +6,28 @@ Generated for: /home/runner/work/cs2kz-metamod/cs2kz-metamod
 SUMMARY
 ----------------------------------------------------------------------
 Total languages: 15
-Total phrases: 1098
-Phrases with missing translations: 1098
-Total missing translation entries: 7606
+Total phrases: 1102
+Phrases with missing translations: 1102
+Total missing translation entries: 7662
 
 LANGUAGE COVERAGE (Phrases)
 ----------------------------------------------------------------------
 
-  chi (schinese)       [██████████████████░░]  92.1% (1011/1098)
-  de (german)          [█████████░░░░░░░░░░░]  47.2% (518/1098)
-  en (english)         [████████████████████] 100.0% (1098/1098)
-  es (spanish)         [████████░░░░░░░░░░░░]  44.1% (484/1098)
-  fi (finnish)         [████░░░░░░░░░░░░░░░░]  21.2% (233/1098)
-  it (italian)         [████░░░░░░░░░░░░░░░░]  20.5% (225/1098)
-  ko (korean)          [███████████░░░░░░░░░]  59.4% (652/1098)
-  lv (latvian)         [█████░░░░░░░░░░░░░░░]  29.9% (328/1098)
-  nl (dutch)           [░░░░░░░░░░░░░░░░░░░░]   0.5% (5/1098)
-  pl (polish)          [█████████░░░░░░░░░░░]  47.4% (520/1098)
-  ru (russian)         [██████████████████░░]  90.5% (994/1098)
-  sv (swedish)         [███████░░░░░░░░░░░░░]  35.7% (392/1098)
-  tr (turkish)         [████░░░░░░░░░░░░░░░░]  23.9% (262/1098)
-  ua (ukrainian)       [███████████████████░]  97.7% (1073/1098)
-  zho (tchinese)       [███████████████████░]  97.4% (1069/1098)
+  chi (schinese)       [██████████████████░░]  91.7% (1011/1102)
+  de (german)          [█████████░░░░░░░░░░░]  47.0% (518/1102)
+  en (english)         [████████████████████] 100.0% (1102/1102)
+  es (spanish)         [████████░░░░░░░░░░░░]  43.9% (484/1102)
+  fi (finnish)         [████░░░░░░░░░░░░░░░░]  21.1% (233/1102)
+  it (italian)         [████░░░░░░░░░░░░░░░░]  20.4% (225/1102)
+  ko (korean)          [███████████░░░░░░░░░]  59.2% (652/1102)
+  lv (latvian)         [█████░░░░░░░░░░░░░░░]  29.8% (328/1102)
+  nl (dutch)           [░░░░░░░░░░░░░░░░░░░░]   0.5% (5/1102)
+  pl (polish)          [█████████░░░░░░░░░░░]  47.2% (520/1102)
+  ru (russian)         [██████████████████░░]  90.2% (994/1102)
+  sv (swedish)         [███████░░░░░░░░░░░░░]  35.6% (392/1102)
+  tr (turkish)         [████░░░░░░░░░░░░░░░░]  23.8% (262/1102)
+  ua (ukrainian)       [███████████████████░]  97.4% (1073/1102)
+  zho (tchinese)       [███████████████████░]  97.0% (1069/1102)
 
 Global languages (15): chi, de, en, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
 
@@ -800,25 +800,27 @@ cs2kz-hud.phrases.txt
     Missing (11): chi, de, es, fi, it, ko, lv, nl, pl, sv, tr
   Line 560: "HUD - Course Progress"
     Missing (11): chi, de, es, fi, it, ko, lv, nl, pl, sv, tr
-  Line 569: "HUD - Course All"
+  Line 569: "HUD - Course Route"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 573: "HUD - Course All"
     Missing (11): chi, de, es, fi, it, ko, lv, nl, pl, sv, tr
-  Line 576: "HUD - Course Pro"
+  Line 580: "HUD - Course Pro"
     Missing (11): chi, de, es, fi, it, ko, lv, nl, pl, sv, tr
-  Line 583: "HUD - Course Badge TP"
+  Line 587: "HUD - Course Badge TP"
     Missing (11): chi, de, es, fi, it, ko, lv, nl, pl, sv, tr
-  Line 590: "HUD - Course Badge Pro"
+  Line 594: "HUD - Course Badge Pro"
     Missing (11): chi, de, es, fi, it, ko, lv, nl, pl, sv, tr
-  Line 597: "HUD - Course By"
+  Line 601: "HUD - Course By"
     Missing (11): chi, de, es, fi, it, ko, lv, nl, pl, sv, tr
-  Line 605: "HUD - Course Gap"
+  Line 609: "HUD - Course Gap"
     Missing (11): chi, de, es, fi, it, ko, lv, nl, pl, sv, tr
-  Line 614: "HUD - Course No Records"
+  Line 618: "HUD - Course No Records"
     Missing (11): chi, de, es, fi, it, ko, lv, nl, pl, sv, tr
-  Line 621: "HUD - Course Ranked"
+  Line 625: "HUD - Course Ranked"
     Missing (11): chi, de, es, fi, it, ko, lv, nl, pl, sv, tr
-  Line 628: "HUD - Course Pending"
+  Line 632: "HUD - Course Pending"
     Missing (11): chi, de, es, fi, it, ko, lv, nl, pl, sv, tr
-  Line 635: "HUD - Course Unranked"
+  Line 639: "HUD - Course Unranked"
     Missing (11): chi, de, es, fi, it, ko, lv, nl, pl, sv, tr
 
 cs2kz-jumpstats.phrases.txt
@@ -1592,9 +1594,15 @@ cs2kz-menu.phrases.txt
     Missing (10): de, es, fi, it, ko, lv, nl, pl, sv, tr
   Line 2168: "Menu - Course Show Progress Sub"
     Missing (10): de, es, fi, it, ko, lv, nl, pl, sv, tr
-  Line 2176: "Menu - Course Show Records"
+  Line 2176: "Menu - Course Show Route"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 2180: "Menu - Course Show Route Sub"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 2184: "Menu - Course Show Route Label"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 2188: "Menu - Course Show Records"
     Missing (10): de, es, fi, it, ko, lv, nl, pl, sv, tr
-  Line 2184: "Menu - Course Show Records Sub"
+  Line 2196: "Menu - Course Show Records Sub"
     Missing (10): de, es, fi, it, ko, lv, nl, pl, sv, tr
 
 cs2kz-modes.phrases.txt
