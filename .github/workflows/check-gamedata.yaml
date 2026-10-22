@@ -1,0 +1,28 @@
+name: Gamedata checks
+
+on:
+  push:
+    paths:
+      - "gamedata/*.txt"
+      - ".github/workflows/check-gamedata.yaml"
+  pull_request:
+    paths:
+      - "gamedata/*.txt"
+      - ".github/workflows/check-gamedata.yaml"
+
+jobs:
+  lint-gamedata:
+    name: Lint Gamedata Files
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+          submodules: false
+
+      - name: Run gamedata linter
+        uses: jvnipers/kv-lint@v1
+        with:
+          gamedata: gamedata/*.txt
+          gamedata-style: ida
