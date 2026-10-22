@@ -254,8 +254,8 @@
 			"PostThink"
 			{
 				"library"	"server"
-				"windows"	"40 55 56 41 54 48 8B EC 48 83 EC 50"
-				"linux"		"55 48 89 E5 41 56 41 55 41 54 53 48 89 FB 48 83 EC ?? E8 ?? ?? ?? ?? 80 BB"
+				"windows"	"40 55 53 56 57 41 54 48 8B EC 48 83 EC ?? 4C 89 AC 24"
+				"linux"		"55 48 89 E5 41 57 41 56 41 55 41 54 53 48 89 FB 48 83 EC ?? E8 ?? ?? ?? ?? 80 BB ?? ?? ?? ?? 00 74 ?? C6 83"
 			}
 			// "%sRecv usercmd %d.  Margin:%5.1fms net +%2d queue =%5.1f"
 			"ProcessUsercmds"
