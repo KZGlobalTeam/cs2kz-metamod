@@ -1,50 +1,37 @@
-Loaded 33 language entries from config.txt
-Base directory: /home/runner/work/cs2kz-metamod/cs2kz-metamod
-Translations directory: /home/runner/work/cs2kz-metamod/cs2kz-metamod/translations
-Menu directory: /home/runner/work/cs2kz-metamod/cs2kz-metamod/menu
-
-Checking 36 translation files in '/home/runner/work/cs2kz-metamod/cs2kz-metamod/translations'...
-
-Languages found across all files: ['chi', 'de', 'en', 'es', 'fi', 'it', 'ko', 'lv', 'nl', 'pl', 'ru', 'sv', 'tr', 'ua', 'zho']
-
-Checking 11 menu files in '/home/runner/work/cs2kz-metamod/cs2kz-metamod/menu'...
-
 ======================================================================
-SUMMARY: 0 error(s), 24 warning(s)
+SUMMARY: 0 error(s), 2 warning(s), 22 info
 ======================================================================
 
-cs2kz-menu.phrases.txt (0 errors, 2 warnings)
+menu/ (0 errors, 0 warnings, 22 info)
 --------------------------------------------------
-  cs2kz-menu.phrases.txt:600: [WARNING] Formatting: Line has trailing whitespace
-  cs2kz-menu.phrases.txt:601: [WARNING] Formatting: Line has trailing whitespace
+  menu/:0: [INFO] missing-menu-file: Missing menu translation file: arabic.txt (for language code 'ar')
+  menu/:0: [INFO] missing-menu-file: Missing menu translation file: brazilian.txt (for language code 'pt')
+  menu/:0: [INFO] missing-menu-file: Missing menu translation file: bulgarian.txt (for language code 'bg')
+  menu/:0: [INFO] missing-menu-file: Missing menu translation file: czech.txt (for language code 'cze')
+  menu/:0: [INFO] missing-menu-file: Missing menu translation file: danish.txt (for language code 'da')
+  menu/:0: [INFO] missing-menu-file: Missing menu translation file: finnish.txt (for language code 'fi')
+  menu/:0: [INFO] missing-menu-file: Missing menu translation file: french.txt (for language code 'fr')
+  menu/:0: [INFO] missing-menu-file: Missing menu translation file: greek.txt (for language code 'el')
+  menu/:0: [INFO] missing-menu-file: Missing menu translation file: hebrew.txt (for language code 'he')
+  menu/:0: [INFO] missing-menu-file: Missing menu translation file: hungarian.txt (for language code 'hu')
+  menu/:0: [INFO] missing-menu-file: Missing menu translation file: italian.txt (for language code 'it')
+  menu/:0: [INFO] missing-menu-file: Missing menu translation file: japanese.txt (for language code 'jp')
+  menu/:0: [INFO] missing-menu-file: Missing menu translation file: lithuanian.txt (for language code 'lt')
+  menu/:0: [INFO] missing-menu-file: Missing menu translation file: norwegian.txt (for language code 'no')
+  menu/:0: [INFO] missing-menu-file: Missing menu translation file: portuguese.txt (for language code 'pt_p')
+  menu/:0: [INFO] missing-menu-file: Missing menu translation file: romanian.txt (for language code 'ro')
+  menu/:0: [INFO] missing-menu-file: Missing menu translation file: schinese.txt (for language code 'chi')
+  menu/:0: [INFO] missing-menu-file: Missing menu translation file: slovak.txt (for language code 'sk')
+  menu/:0: [INFO] missing-menu-file: Missing menu translation file: tchinese.txt (for language code 'zho')
+  menu/:0: [INFO] missing-menu-file: Missing menu translation file: thai.txt (for language code 'th')
+  menu/:0: [INFO] missing-menu-file: Missing menu translation file: turkish.txt (for language code 'tr')
+  menu/:0: [INFO] missing-menu-file: Missing menu translation file: vietnamese.txt (for language code 'vi')
 
-menu/ (0 errors, 22 warnings)
+translations/cs2kz-menu.phrases.txt (0 errors, 2 warnings)
 --------------------------------------------------
-  menu/:0: [WARNING] Missing: Missing menu translation file: arabic.txt (for language code 'ar')
-  menu/:0: [WARNING] Missing: Missing menu translation file: brazilian.txt (for language code 'pt')
-  menu/:0: [WARNING] Missing: Missing menu translation file: bulgarian.txt (for language code 'bg')
-  menu/:0: [WARNING] Missing: Missing menu translation file: czech.txt (for language code 'cze')
-  menu/:0: [WARNING] Missing: Missing menu translation file: danish.txt (for language code 'da')
-  menu/:0: [WARNING] Missing: Missing menu translation file: finnish.txt (for language code 'fi')
-  menu/:0: [WARNING] Missing: Missing menu translation file: french.txt (for language code 'fr')
-  menu/:0: [WARNING] Missing: Missing menu translation file: greek.txt (for language code 'el')
-  menu/:0: [WARNING] Missing: Missing menu translation file: hebrew.txt (for language code 'he')
-  menu/:0: [WARNING] Missing: Missing menu translation file: hungarian.txt (for language code 'hu')
-  menu/:0: [WARNING] Missing: Missing menu translation file: italian.txt (for language code 'it')
-  menu/:0: [WARNING] Missing: Missing menu translation file: japanese.txt (for language code 'jp')
-  menu/:0: [WARNING] Missing: Missing menu translation file: lithuanian.txt (for language code 'lt')
-  menu/:0: [WARNING] Missing: Missing menu translation file: norwegian.txt (for language code 'no')
-  menu/:0: [WARNING] Missing: Missing menu translation file: portuguese.txt (for language code 'pt_p')
-  menu/:0: [WARNING] Missing: Missing menu translation file: romanian.txt (for language code 'ro')
-  menu/:0: [WARNING] Missing: Missing menu translation file: schinese.txt (for language code 'chi')
-  menu/:0: [WARNING] Missing: Missing menu translation file: slovak.txt (for language code 'sk')
-  menu/:0: [WARNING] Missing: Missing menu translation file: tchinese.txt (for language code 'zho')
-  menu/:0: [WARNING] Missing: Missing menu translation file: thai.txt (for language code 'th')
-  menu/:0: [WARNING] Missing: Missing menu translation file: turkish.txt (for language code 'tr')
-  menu/:0: [WARNING] Missing: Missing menu translation file: vietnamese.txt (for language code 'vi')
+  translations/cs2kz-menu.phrases.txt:600: [WARNING] trailing-whitespace: Line has trailing whitespace
+  translations/cs2kz-menu.phrases.txt:601: [WARNING] trailing-whitespace: Line has trailing whitespace
 
 ======================================================================
-TOTAL: 0 error(s), 24 warning(s) in 2 file(s)
+TOTAL: 0 error(s), 2 warning(s), 22 info in 2 file(s)
 ======================================================================
-Missing translations report written to: missing-translations.txt
-Missing translations JSON written to: missing-translations.json
