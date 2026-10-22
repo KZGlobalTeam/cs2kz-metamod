@@ -2173,6 +2173,18 @@
 		"ua"		"Етапи, контрольні точки та спліти, досягнуті на курсах, якщо такі є"
 		"ru"		"Достигнутые этапы, контрольные точки и сплиты, если они есть"
 	}
+	"Menu - Course Show Route"
+	{
+		"en"		"Route progress"
+	}
+	"Menu - Course Show Route Sub"
+	{
+		"en"		"How far along the course you are, measured on the record run's route"
+	}
+	"Menu - Course Show Route Label"
+	{
+		"en"		"Route progress label"
+	}
 	"Menu - Course Show Records"
 	{
 		"en"		"Records"

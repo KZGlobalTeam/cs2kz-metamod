@@ -296,6 +296,8 @@ struct MHUDPrefs
 	bool courseRecords {true};
 	bool coursePro {true};
 	bool courseSplits {true};
+	bool courseShowProgress {true};
+	bool courseShowProgressLabel {true};
 
 	bool legacyStyle {};
 	bool compactPanel {};
@@ -353,6 +355,7 @@ public:
 	void InvalidatePrefs()
 	{
 		this->prefsDirty = true;
+		this->layoutCourse.routeLabelDirty = true;
 	}
 
 	static void RegisterMenu();
@@ -613,10 +616,14 @@ private:
 		i32 progressHidden {-1};
 		i32 progressRowHidden[MHUD_COURSE_PROGRESS_COUNT] {-1, -1, -1};
 		i32 progressTotals[MHUD_COURSE_PROGRESS_COUNT] {}; // a course without zones of a kind hides that row
+		i32 routeHidden {-1};
+		i32 routeLabelHidden {-1};
+		bool routeLabelDirty {true};
+		std::string routeLabelLanguage {};
 		i32 historyHidden {-1};
 		f64 nextRefresh {};
 		// The last text sent to each label, in the order course.cpp lists them.
-		std::string texts[4 + MHUD_COURSE_ROW_COUNT * 5 + MHUD_COURSE_PROGRESS_COUNT * 2] {};
+		std::string texts[6 + MHUD_COURSE_ROW_COUNT * 5 + MHUD_COURSE_PROGRESS_COUNT * 2] {};
 		const char *badgeClasses[MHUD_COURSE_ROW_COUNT] {};
 		const char *nameClasses[MHUD_COURSE_ROW_COUNT] {};
 		const char *statusClass {};

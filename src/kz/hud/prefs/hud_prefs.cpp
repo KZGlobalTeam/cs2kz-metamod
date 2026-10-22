@@ -423,6 +423,11 @@ void KZHUDService::RegisterMenu()
 				KZ::menu::AddToggle(sub, "Menu - Course Show Progress", "mhudCourseShowProgress", true);
 				KZ::menu::SetItemSubtext(sub, "Menu - Course Show Progress Sub");
 				KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
+				KZ::menu::AddToggle(sub, "Menu - Course Show Route", "mhudCourseShowRoute", true);
+				KZ::menu::SetItemSubtext(sub, "Menu - Course Show Route Sub");
+				KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
+				KZ::menu::AddToggle(sub, "Menu - Course Show Route Label", "mhudCourseShowRouteLabel", true);
+				KZ::menu::SetItemEnabledBy(sub, "mhudCourseShowRoute");
 				KZ::menu::AddToggle(sub, "Menu - Course Show Records", "mhudCourseShowRecords", true);
 				KZ::menu::SetItemSubtext(sub, "Menu - Course Show Records Sub");
 				KZ::menu::SetItemEnabledBy(sub, def.enabledKey);

@@ -566,6 +566,10 @@
 		"ua"		"{reached} / {total}"
 		"ru"		"{reached} / {total}"
 	}
+	"HUD - Course Route"
+	{
+		"en"		"Progress"
+	}
 	"HUD - Course All"
 	{
 		"en"		"All"
