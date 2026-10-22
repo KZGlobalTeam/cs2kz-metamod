@@ -651,14 +651,17 @@
 	"Menu - Color Deadstrafe"
 	{
 		"en"		"Deadstrafe color"
+		"ua"		"Колір Deadstrafe"
 	}
 	"Menu - Deadstrafe"
 	{
 		"en"		"Show deadstrafe"
+		"ua"		"Показати Deadstrafe"
 	}
 	"Menu - Deadstrafe Sub"
 	{
 		"en"		"Recolors the value while air acceleration is cut to a quarter, from rising slower than 140 u/s"
+		"ua"		"Змінює колір швидкості, коли прискорення в повітрі падає до чверті та при зростанні <140 u/s"
 	}
 	"Menu - Color Pro"
 	{
@@ -2176,14 +2179,17 @@
 	"Menu - Course Show Route"
 	{
 		"en"		"Route progress"
+		"ua"		"Прогрес маршруту"
 	}
 	"Menu - Course Show Route Sub"
 	{
 		"en"		"How far along the course you are, measured on the record run's route"
+		"ua"		"Як далеко ви просунулися по маршруту, вимірюється за рекордним проходженням"
 	}
 	"Menu - Course Show Route Label"
 	{
 		"en"		"Route progress label"
+		"ua"		"Надпис прогресу маршруту"
 	}
 	"Menu - Course Show Records"
 	{
