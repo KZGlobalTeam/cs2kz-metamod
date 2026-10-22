@@ -7,9 +7,32 @@
 #include "events.h"
 #include "commands.h"
 #include "controls.h"
+#include "kz_replay.h"
+#include "utils/uuid.h"
+#include "filesystem/ifilesystem.h"
 
 namespace KZ::replaysystem
 {
+	bool FindReplayPath(const char *uuid, std::string &path)
+	{
+		path.clear();
+		UUID_t parsed(false);
+		if (!uuid || !g_pFullFileSystem || !UUID_t::FromString(uuid, &parsed))
+		{
+			return false;
+		}
+		const std::string filename = parsed.ToString() + ".replay";
+		for (const char *directory : {KZ_REPLAY_PATH, KZ_REPLAY_DOWNLOADS_PATH})
+		{
+			const std::string candidate = std::string(directory) + "/" + filename;
+			if (g_pFullFileSystem->FileExists(candidate.c_str()))
+			{
+				path = candidate;
+				return true;
+			}
+		}
+		return false;
+	}
 
 	void Init()
 	{

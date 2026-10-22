@@ -11,6 +11,9 @@ struct KZCourseDescriptor;
 
 namespace KZ::replaysystem
 {
+	// Finds the replay file of a UUID among the local and downloaded replays.
+	bool FindReplayPath(const char *uuid, std::string &path);
+
 	void Init();
 	void Cleanup();
 	void OnRoundStart();
