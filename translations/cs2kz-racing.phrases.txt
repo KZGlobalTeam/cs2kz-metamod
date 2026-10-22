@@ -188,7 +188,7 @@
 	"Racing - Race Info - No Teleport Limit (Chat)"
 	{
 		// A new race has been started!
-		// Course Main | No time limit0
+		// Course Main | No time limit
 		"#format"	"course:s,mode:s,time_limit:s"
 		"en"		"{default}A new race has been started!\n{grey}Course: {default}{course}{grey} | {time_limit}"
 		"chi"		"{default}新比赛已启动!\n{grey}路线：{default}{course}{grey} | {time_limit}"
