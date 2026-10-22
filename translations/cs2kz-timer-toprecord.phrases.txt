@@ -144,7 +144,7 @@
 		"ko"		"{darkred}기록 정보를 가져오지 못했습니다. {grey}(잘못된 코스 이름 {default}{course_name}{grey})"
 		"lv"		"{darkred}Neizdevās iegūt rekorda informāciju. {grey}(Nederīgs kursa nosaukums {default}{course_name}{grey})"
 	}
-	"WR/SR Command Usage"
+	"Top Record Command Usage"
 	{
 		"en"		"{grey}Usage: {default}kz_wr{grey}/{default}kz_wr {purple}<c/course/map/mode/p/player/s/style=...>{grey}. Check console for details!"
 		"chi"		"{grey}用法: {default}kz_wr{grey}/{default}kz_wr {purple}<c/course/map/mode/p/player/s/style=...>{grey}. 打开控制台查看详情!"
@@ -161,7 +161,7 @@
 		"ko"		"{grey}사용법: {default}kz_wr{grey}/{default}kz_wr {purple}<c/course/map/mode/p/player/s/style=...>{grey}. 자세한 내용은 콘솔을 확인하세요!"
 		"lv"		"{grey}Pielietojums: {default}kz_wr{grey}/{default}kz_wr {purple}<c/course/map/mode/p/player/s/style=...>{grey}. Pārbaudi konsoli, lai iegūtu detalizētu informāciju!"
 	}
-	"WR/SR Command Usage - Console"
+	"Top Record Command Usage - Console"
 	{
 		"en"		"Usage: kz_wr/kz_sr <c/course/map/mode=...>\nExample: \"kz_wr map=kz_map c=Main\"."
 		"chi"		"用法: kz_wr/kz_sr <c/course/map/mode=...>\n例如: \"kz_wr map=kz_map c=Main\"."

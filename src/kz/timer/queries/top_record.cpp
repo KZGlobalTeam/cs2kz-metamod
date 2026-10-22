@@ -32,8 +32,8 @@ struct TopRecordRequest : public BaseRequest
 		{
 			return;
 		}
-		player->languageService->PrintChat(true, false, "WR/SR Command Usage");
-		player->languageService->PrintConsole(false, false, "WR/SR Command Usage - Console");
+		player->languageService->PrintChat(true, false, "Top Record Command Usage");
+		player->languageService->PrintConsole(false, false, "Top Record Command Usage - Console");
 	}
 
 	virtual void QueryGlobal()
