@@ -32,6 +32,7 @@ enum class LogChannel
 	Timer,
 	Tip,
 	Trigger,
+	WS,
 };
 
 // Register CS2KZ logging listener and all CS2KZ channels from the channel table. Also purge old log files.
