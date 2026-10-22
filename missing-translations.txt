@@ -6,28 +6,28 @@ Generated for: /home/runner/work/cs2kz-metamod/cs2kz-metamod
 SUMMARY
 ----------------------------------------------------------------------
 Total languages: 15
-Total phrases: 1104
-Phrases with missing translations: 1104
-Total missing translation entries: 7664
+Total phrases: 1106
+Phrases with missing translations: 1106
+Total missing translation entries: 7680
 
 LANGUAGE COVERAGE (Phrases)
 ----------------------------------------------------------------------
 
-  chi (schinese)       [██████████████████░░]  91.8% (1013/1104)
-  de (german)          [█████████░░░░░░░░░░░]  47.1% (520/1104)
-  en (english)         [████████████████████] 100.0% (1104/1104)
-  es (spanish)         [████████░░░░░░░░░░░░]  44.0% (486/1104)
-  fi (finnish)         [████░░░░░░░░░░░░░░░░]  21.3% (235/1104)
-  it (italian)         [████░░░░░░░░░░░░░░░░]  20.6% (227/1104)
-  ko (korean)          [███████████░░░░░░░░░]  59.2% (654/1104)
-  lv (latvian)         [█████░░░░░░░░░░░░░░░]  29.9% (330/1104)
-  nl (dutch)           [░░░░░░░░░░░░░░░░░░░░]   0.5% (5/1104)
-  pl (polish)          [█████████░░░░░░░░░░░]  47.3% (522/1104)
-  ru (russian)         [██████████████████░░]  90.2% (996/1104)
-  sv (swedish)         [███████░░░░░░░░░░░░░]  35.7% (394/1104)
-  tr (turkish)         [████░░░░░░░░░░░░░░░░]  23.9% (264/1104)
-  ua (ukrainian)       [███████████████████░]  97.4% (1075/1104)
-  zho (tchinese)       [███████████████████░]  97.0% (1071/1104)
+  chi (schinese)       [██████████████████░░]  91.8% (1015/1106)
+  de (german)          [█████████░░░░░░░░░░░]  47.2% (522/1106)
+  en (english)         [████████████████████] 100.0% (1106/1106)
+  es (spanish)         [████████░░░░░░░░░░░░]  43.9% (486/1106)
+  fi (finnish)         [████░░░░░░░░░░░░░░░░]  21.2% (235/1106)
+  it (italian)         [████░░░░░░░░░░░░░░░░]  20.5% (227/1106)
+  ko (korean)          [███████████░░░░░░░░░]  59.3% (656/1106)
+  lv (latvian)         [█████░░░░░░░░░░░░░░░]  29.8% (330/1106)
+  nl (dutch)           [░░░░░░░░░░░░░░░░░░░░]   0.5% (5/1106)
+  pl (polish)          [█████████░░░░░░░░░░░]  47.4% (524/1106)
+  ru (russian)         [██████████████████░░]  90.2% (998/1106)
+  sv (swedish)         [███████░░░░░░░░░░░░░]  35.6% (394/1106)
+  tr (turkish)         [████░░░░░░░░░░░░░░░░]  23.9% (264/1106)
+  ua (ukrainian)       [███████████████████░]  97.4% (1077/1106)
+  zho (tchinese)       [███████████████████░]  96.8% (1071/1106)
 
 Global languages (15): chi, de, en, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
 
@@ -1710,19 +1710,23 @@ translations/cs2kz-racing.phrases.txt
     Missing (7): es, fi, it, lv, nl, sv, tr
   Line 149: "Racing - Time Limit"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 161: "Racing - Race Info"
+  Line 161: "Racing - Race Info - No Teleport Limit"
+    Missing (8): es, fi, it, lv, nl, sv, tr, zho
+  Line 174: "Racing - Race Info - Teleport Limit"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 175: "Racing - Race Info (Chat)"
+  Line 188: "Racing - Race Info - No Teleport Limit (Chat)"
+    Missing (8): es, fi, it, lv, nl, sv, tr, zho
+  Line 201: "Racing - Race Info - Teleport Limit (Chat)"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 190: "Racing - Race Cancelled"
+  Line 216: "Racing - Race Cancelled"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 201: "Racing - Go!"
+  Line 227: "Racing - Go!"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 212: "Racing - Race Starting In"
+  Line 238: "Racing - Race Starting In"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 224: "Racing - Player Accepted"
+  Line 250: "Racing - Player Accepted"
     Missing (7): es, fi, it, lv, nl, sv, tr
-  Line 236: "Racing - Player Unregistered"
+  Line 262: "Racing - Player Unregistered"
     Missing (7): es, fi, it, lv, nl, sv, tr
 
 translations/cs2kz-replays.phrases.txt

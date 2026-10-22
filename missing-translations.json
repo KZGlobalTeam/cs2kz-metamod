@@ -1,9 +1,9 @@
 {
   "summary": {
     "total_languages": 15,
-    "total_phrases": 1104,
-    "phrases_with_missing": 1104,
-    "total_missing_entries": 7664,
+    "total_phrases": 1106,
+    "phrases_with_missing": 1106,
+    "total_missing_entries": 7680,
     "all_languages": [
       "chi",
       "de",
@@ -59,8 +59,8 @@
   "languages": {
     "chi": {
       "name": "schinese",
-      "coverage_percent": 91.76,
-      "translated": 1013,
+      "coverage_percent": 91.77,
+      "translated": 1015,
       "missing": 91,
       "missing_phrases": [
         {
@@ -623,8 +623,8 @@
     },
     "de": {
       "name": "german",
-      "coverage_percent": 47.1,
-      "translated": 520,
+      "coverage_percent": 47.2,
+      "translated": 522,
       "missing": 584,
       "missing_phrases": [
         {
@@ -4141,7 +4141,7 @@
     "en": {
       "name": "english",
       "coverage_percent": 100.0,
-      "translated": 1104,
+      "translated": 1106,
       "missing": 0,
       "missing_phrases": [],
       "menu": {
@@ -4152,9 +4152,9 @@
     },
     "es": {
       "name": "spanish",
-      "coverage_percent": 44.02,
+      "coverage_percent": 43.94,
       "translated": 486,
-      "missing": 618,
+      "missing": 620,
       "missing_phrases": [
         {
           "file": "translations/cs2kz-commands.phrases.txt",
@@ -6918,44 +6918,56 @@
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
-          "phrase": "Racing - Race Info",
+          "phrase": "Racing - Race Info - No Teleport Limit",
           "line": 161,
+          "english_text": "Race on course {course}\\n{mode} - {time_limit}"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing - Race Info - Teleport Limit",
+          "line": 174,
           "english_text": "Race on course {course}\\n{mode} - Max TPs: {teleport_count} - {time_limit}"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
-          "phrase": "Racing - Race Info (Chat)",
-          "line": 175,
+          "phrase": "Racing - Race Info - No Teleport Limit (Chat)",
+          "line": 188,
+          "english_text": "{default}A new race has been started!\\n{grey}Course: {default}{course}{grey} | {time_limit}"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing - Race Info - Teleport Limit (Chat)",
+          "line": 201,
           "english_text": "{default}A new race has been started!\\n{grey}Course: {default}{course}{grey} | Max TPs: {yellow}{teleport_count}{grey} | {time_limit}"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Cancelled",
-          "line": 190,
+          "line": 216,
           "english_text": "{darkred}Race has been cancelled!"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing - Go!",
-          "line": 201,
+          "line": 227,
           "english_text": "GO!"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Starting In",
-          "line": 212,
+          "line": 238,
           "english_text": "Race starting in {time}s!"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Accepted",
-          "line": 224,
+          "line": 250,
           "english_text": "{lime}{player}{grey} has accepted the race."
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Unregistered",
-          "line": 236,
+          "line": 262,
           "english_text": "{lime}{player}{grey} has unregistered from the race."
         },
         {
@@ -7873,9 +7885,9 @@
     },
     "fi": {
       "name": "finnish",
-      "coverage_percent": 21.29,
+      "coverage_percent": 21.25,
       "translated": 235,
-      "missing": 869,
+      "missing": 871,
       "missing_phrases": [
         {
           "file": "translations/cs2kz-anticheat.phrases.txt",
@@ -11695,44 +11707,56 @@
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
-          "phrase": "Racing - Race Info",
+          "phrase": "Racing - Race Info - No Teleport Limit",
           "line": 161,
+          "english_text": "Race on course {course}\\n{mode} - {time_limit}"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing - Race Info - Teleport Limit",
+          "line": 174,
           "english_text": "Race on course {course}\\n{mode} - Max TPs: {teleport_count} - {time_limit}"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
-          "phrase": "Racing - Race Info (Chat)",
-          "line": 175,
+          "phrase": "Racing - Race Info - No Teleport Limit (Chat)",
+          "line": 188,
+          "english_text": "{default}A new race has been started!\\n{grey}Course: {default}{course}{grey} | {time_limit}"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing - Race Info - Teleport Limit (Chat)",
+          "line": 201,
           "english_text": "{default}A new race has been started!\\n{grey}Course: {default}{course}{grey} | Max TPs: {yellow}{teleport_count}{grey} | {time_limit}"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Cancelled",
-          "line": 190,
+          "line": 216,
           "english_text": "{darkred}Race has been cancelled!"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing - Go!",
-          "line": 201,
+          "line": 227,
           "english_text": "GO!"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Starting In",
-          "line": 212,
+          "line": 238,
           "english_text": "Race starting in {time}s!"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Accepted",
-          "line": 224,
+          "line": 250,
           "english_text": "{lime}{player}{grey} has accepted the race."
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Unregistered",
-          "line": 236,
+          "line": 262,
           "english_text": "{lime}{player}{grey} has unregistered from the race."
         },
         {
@@ -13105,9 +13129,9 @@
     },
     "it": {
       "name": "italian",
-      "coverage_percent": 20.56,
+      "coverage_percent": 20.52,
       "translated": 227,
-      "missing": 877,
+      "missing": 879,
       "missing_phrases": [
         {
           "file": "translations/cs2kz-anticheat.phrases.txt",
@@ -16945,44 +16969,56 @@
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
-          "phrase": "Racing - Race Info",
+          "phrase": "Racing - Race Info - No Teleport Limit",
           "line": 161,
+          "english_text": "Race on course {course}\\n{mode} - {time_limit}"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing - Race Info - Teleport Limit",
+          "line": 174,
           "english_text": "Race on course {course}\\n{mode} - Max TPs: {teleport_count} - {time_limit}"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
-          "phrase": "Racing - Race Info (Chat)",
-          "line": 175,
+          "phrase": "Racing - Race Info - No Teleport Limit (Chat)",
+          "line": 188,
+          "english_text": "{default}A new race has been started!\\n{grey}Course: {default}{course}{grey} | {time_limit}"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing - Race Info - Teleport Limit (Chat)",
+          "line": 201,
           "english_text": "{default}A new race has been started!\\n{grey}Course: {default}{course}{grey} | Max TPs: {yellow}{teleport_count}{grey} | {time_limit}"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Cancelled",
-          "line": 190,
+          "line": 216,
           "english_text": "{darkred}Race has been cancelled!"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing - Go!",
-          "line": 201,
+          "line": 227,
           "english_text": "GO!"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Starting In",
-          "line": 212,
+          "line": 238,
           "english_text": "Race starting in {time}s!"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Accepted",
-          "line": 224,
+          "line": 250,
           "english_text": "{lime}{player}{grey} has accepted the race."
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Unregistered",
-          "line": 236,
+          "line": 262,
           "english_text": "{lime}{player}{grey} has unregistered from the race."
         },
         {
@@ -18385,8 +18421,8 @@
     },
     "ko": {
       "name": "korean",
-      "coverage_percent": 59.24,
-      "translated": 654,
+      "coverage_percent": 59.31,
+      "translated": 656,
       "missing": 450,
       "missing_phrases": [
         {
@@ -21098,9 +21134,9 @@
     },
     "lv": {
       "name": "latvian",
-      "coverage_percent": 29.89,
+      "coverage_percent": 29.84,
       "translated": 330,
-      "missing": 774,
+      "missing": 776,
       "missing_phrases": [
         {
           "file": "translations/cs2kz-anticheat.phrases.txt",
@@ -24644,44 +24680,56 @@
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
-          "phrase": "Racing - Race Info",
+          "phrase": "Racing - Race Info - No Teleport Limit",
           "line": 161,
+          "english_text": "Race on course {course}\\n{mode} - {time_limit}"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing - Race Info - Teleport Limit",
+          "line": 174,
           "english_text": "Race on course {course}\\n{mode} - Max TPs: {teleport_count} - {time_limit}"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
-          "phrase": "Racing - Race Info (Chat)",
-          "line": 175,
+          "phrase": "Racing - Race Info - No Teleport Limit (Chat)",
+          "line": 188,
+          "english_text": "{default}A new race has been started!\\n{grey}Course: {default}{course}{grey} | {time_limit}"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing - Race Info - Teleport Limit (Chat)",
+          "line": 201,
           "english_text": "{default}A new race has been started!\\n{grey}Course: {default}{course}{grey} | Max TPs: {yellow}{teleport_count}{grey} | {time_limit}"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Cancelled",
-          "line": 190,
+          "line": 216,
           "english_text": "{darkred}Race has been cancelled!"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing - Go!",
-          "line": 201,
+          "line": 227,
           "english_text": "GO!"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Starting In",
-          "line": 212,
+          "line": 238,
           "english_text": "Race starting in {time}s!"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Accepted",
-          "line": 224,
+          "line": 250,
           "english_text": "{lime}{player}{grey} has accepted the race."
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Unregistered",
-          "line": 236,
+          "line": 262,
           "english_text": "{lime}{player}{grey} has unregistered from the race."
         },
         {
@@ -25757,7 +25805,7 @@
       "name": "dutch",
       "coverage_percent": 0.45,
       "translated": 5,
-      "missing": 1099,
+      "missing": 1101,
       "missing_phrases": [
         {
           "file": "translations/cs2kz-anticheat.phrases.txt",
@@ -30459,44 +30507,56 @@
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
-          "phrase": "Racing - Race Info",
+          "phrase": "Racing - Race Info - No Teleport Limit",
           "line": 161,
+          "english_text": "Race on course {course}\\n{mode} - {time_limit}"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing - Race Info - Teleport Limit",
+          "line": 174,
           "english_text": "Race on course {course}\\n{mode} - Max TPs: {teleport_count} - {time_limit}"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
-          "phrase": "Racing - Race Info (Chat)",
-          "line": 175,
+          "phrase": "Racing - Race Info - No Teleport Limit (Chat)",
+          "line": 188,
+          "english_text": "{default}A new race has been started!\\n{grey}Course: {default}{course}{grey} | {time_limit}"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing - Race Info - Teleport Limit (Chat)",
+          "line": 201,
           "english_text": "{default}A new race has been started!\\n{grey}Course: {default}{course}{grey} | Max TPs: {yellow}{teleport_count}{grey} | {time_limit}"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Cancelled",
-          "line": 190,
+          "line": 216,
           "english_text": "{darkred}Race has been cancelled!"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing - Go!",
-          "line": 201,
+          "line": 227,
           "english_text": "GO!"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Starting In",
-          "line": 212,
+          "line": 238,
           "english_text": "Race starting in {time}s!"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Accepted",
-          "line": 224,
+          "line": 250,
           "english_text": "{lime}{player}{grey} has accepted the race."
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Unregistered",
-          "line": 236,
+          "line": 262,
           "english_text": "{lime}{player}{grey} has unregistered from the race."
         },
         {
@@ -32362,8 +32422,8 @@
     },
     "pl": {
       "name": "polish",
-      "coverage_percent": 47.28,
-      "translated": 522,
+      "coverage_percent": 47.38,
+      "translated": 524,
       "missing": 582,
       "missing_phrases": [
         {
@@ -35867,8 +35927,8 @@
     },
     "ru": {
       "name": "russian",
-      "coverage_percent": 90.22,
-      "translated": 996,
+      "coverage_percent": 90.24,
+      "translated": 998,
       "missing": 108,
       "missing_phrases": [
         {
@@ -36528,9 +36588,9 @@
     },
     "sv": {
       "name": "swedish",
-      "coverage_percent": 35.69,
+      "coverage_percent": 35.62,
       "translated": 394,
-      "missing": 710,
+      "missing": 712,
       "missing_phrases": [
         {
           "file": "translations/cs2kz-anticheat.phrases.txt",
@@ -39768,44 +39828,56 @@
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
-          "phrase": "Racing - Race Info",
+          "phrase": "Racing - Race Info - No Teleport Limit",
           "line": 161,
+          "english_text": "Race on course {course}\\n{mode} - {time_limit}"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing - Race Info - Teleport Limit",
+          "line": 174,
           "english_text": "Race on course {course}\\n{mode} - Max TPs: {teleport_count} - {time_limit}"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
-          "phrase": "Racing - Race Info (Chat)",
-          "line": 175,
+          "phrase": "Racing - Race Info - No Teleport Limit (Chat)",
+          "line": 188,
+          "english_text": "{default}A new race has been started!\\n{grey}Course: {default}{course}{grey} | {time_limit}"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing - Race Info - Teleport Limit (Chat)",
+          "line": 201,
           "english_text": "{default}A new race has been started!\\n{grey}Course: {default}{course}{grey} | Max TPs: {yellow}{teleport_count}{grey} | {time_limit}"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Cancelled",
-          "line": 190,
+          "line": 216,
           "english_text": "{darkred}Race has been cancelled!"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing - Go!",
-          "line": 201,
+          "line": 227,
           "english_text": "GO!"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Starting In",
-          "line": 212,
+          "line": 238,
           "english_text": "Race starting in {time}s!"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Accepted",
-          "line": 224,
+          "line": 250,
           "english_text": "{lime}{player}{grey} has accepted the race."
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Unregistered",
-          "line": 236,
+          "line": 262,
           "english_text": "{lime}{player}{grey} has unregistered from the race."
         },
         {
@@ -40801,9 +40873,9 @@
     },
     "tr": {
       "name": "turkish",
-      "coverage_percent": 23.91,
+      "coverage_percent": 23.87,
       "translated": 264,
-      "missing": 840,
+      "missing": 842,
       "missing_phrases": [
         {
           "file": "translations/cs2kz-anticheat.phrases.txt",
@@ -44581,44 +44653,56 @@
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
-          "phrase": "Racing - Race Info",
+          "phrase": "Racing - Race Info - No Teleport Limit",
           "line": 161,
+          "english_text": "Race on course {course}\\n{mode} - {time_limit}"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing - Race Info - Teleport Limit",
+          "line": 174,
           "english_text": "Race on course {course}\\n{mode} - Max TPs: {teleport_count} - {time_limit}"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
-          "phrase": "Racing - Race Info (Chat)",
-          "line": 175,
+          "phrase": "Racing - Race Info - No Teleport Limit (Chat)",
+          "line": 188,
+          "english_text": "{default}A new race has been started!\\n{grey}Course: {default}{course}{grey} | {time_limit}"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing - Race Info - Teleport Limit (Chat)",
+          "line": 201,
           "english_text": "{default}A new race has been started!\\n{grey}Course: {default}{course}{grey} | Max TPs: {yellow}{teleport_count}{grey} | {time_limit}"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Cancelled",
-          "line": 190,
+          "line": 216,
           "english_text": "{darkred}Race has been cancelled!"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing - Go!",
-          "line": 201,
+          "line": 227,
           "english_text": "GO!"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing - Race Starting In",
-          "line": 212,
+          "line": 238,
           "english_text": "Race starting in {time}s!"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Accepted",
-          "line": 224,
+          "line": 250,
           "english_text": "{lime}{player}{grey} has accepted the race."
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing - Player Unregistered",
-          "line": 236,
+          "line": 262,
           "english_text": "{lime}{player}{grey} has unregistered from the race."
         },
         {
@@ -45859,8 +45943,8 @@
     },
     "ua": {
       "name": "ukrainian",
-      "coverage_percent": 97.37,
-      "translated": 1075,
+      "coverage_percent": 97.38,
+      "translated": 1077,
       "missing": 29,
       "missing_phrases": [
         {
@@ -46046,9 +46130,9 @@
     },
     "zho": {
       "name": "tchinese",
-      "coverage_percent": 97.01,
+      "coverage_percent": 96.84,
       "translated": 1071,
-      "missing": 33,
+      "missing": 35,
       "missing_phrases": [
         {
           "file": "translations/cs2kz-commands.phrases.txt",
@@ -46115,6 +46199,18 @@
           "phrase": "Menu - Course Show Route Label",
           "line": 2184,
           "english_text": "Route progress label"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing - Race Info - No Teleport Limit",
+          "line": 161,
+          "english_text": "Race on course {course}\\n{mode} - {time_limit}"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing - Race Info - No Teleport Limit (Chat)",
+          "line": 188,
+          "english_text": "{default}A new race has been started!\\n{grey}Course: {default}{course}{grey} | {time_limit}"
         },
         {
           "file": "translations/cs2kz-replays.phrases.txt",
@@ -64963,7 +65059,7 @@
       ]
     },
     "translations/cs2kz-racing.phrases.txt": {
-      "phrases_with_missing": 20,
+      "phrases_with_missing": 22,
       "phrases": [
         {
           "name": "Racing - Race Countdown",
@@ -65278,8 +65374,32 @@
           ]
         },
         {
-          "name": "Racing - Race Info",
+          "name": "Racing - Race Info - No Teleport Limit",
           "line": 161,
+          "english_text": "Race on course {course}\\n{mode} - {time_limit}",
+          "existing_languages": [
+            "chi",
+            "de",
+            "en",
+            "ko",
+            "pl",
+            "ru",
+            "ua"
+          ],
+          "missing_languages": [
+            "es",
+            "fi",
+            "it",
+            "lv",
+            "nl",
+            "sv",
+            "tr",
+            "zho"
+          ]
+        },
+        {
+          "name": "Racing - Race Info - Teleport Limit",
+          "line": 174,
           "english_text": "Race on course {course}\\n{mode} - Max TPs: {teleport_count} - {time_limit}",
           "existing_languages": [
             "chi",
@@ -65302,8 +65422,32 @@
           ]
         },
         {
-          "name": "Racing - Race Info (Chat)",
-          "line": 175,
+          "name": "Racing - Race Info - No Teleport Limit (Chat)",
+          "line": 188,
+          "english_text": "{default}A new race has been started!\\n{grey}Course: {default}{course}{grey} | {time_limit}",
+          "existing_languages": [
+            "chi",
+            "de",
+            "en",
+            "ko",
+            "pl",
+            "ru",
+            "ua"
+          ],
+          "missing_languages": [
+            "es",
+            "fi",
+            "it",
+            "lv",
+            "nl",
+            "sv",
+            "tr",
+            "zho"
+          ]
+        },
+        {
+          "name": "Racing - Race Info - Teleport Limit (Chat)",
+          "line": 201,
           "english_text": "{default}A new race has been started!\\n{grey}Course: {default}{course}{grey} | Max TPs: {yellow}{teleport_count}{grey} | {time_limit}",
           "existing_languages": [
             "chi",
@@ -65327,7 +65471,7 @@
         },
         {
           "name": "Racing - Race Cancelled",
-          "line": 190,
+          "line": 216,
           "english_text": "{darkred}Race has been cancelled!",
           "existing_languages": [
             "chi",
@@ -65351,7 +65495,7 @@
         },
         {
           "name": "Racing - Go!",
-          "line": 201,
+          "line": 227,
           "english_text": "GO!",
           "existing_languages": [
             "chi",
@@ -65375,7 +65519,7 @@
         },
         {
           "name": "Racing - Race Starting In",
-          "line": 212,
+          "line": 238,
           "english_text": "Race starting in {time}s!",
           "existing_languages": [
             "chi",
@@ -65399,7 +65543,7 @@
         },
         {
           "name": "Racing - Player Accepted",
-          "line": 224,
+          "line": 250,
           "english_text": "{lime}{player}{grey} has accepted the race.",
           "existing_languages": [
             "chi",
@@ -65423,7 +65567,7 @@
         },
         {
           "name": "Racing - Player Unregistered",
-          "line": 236,
+          "line": 262,
           "english_text": "{lime}{player}{grey} has unregistered from the race.",
           "existing_languages": [
             "chi",
