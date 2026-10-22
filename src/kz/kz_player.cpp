@@ -921,7 +921,7 @@ void KZPlayer::OnStartTouchGround()
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
 	this->anticheatService->CreateLandEvent();
-	this->jumpstatsService->EndJump();
+	this->jumpstatsService->EndJump(true);
 	this->timerService->OnStartTouchGround();
 	this->modeService->OnStartTouchGround();
 	for (size_t i = 0; i < this->styleServices.size(); i++)

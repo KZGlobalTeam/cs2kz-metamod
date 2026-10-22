@@ -616,7 +616,7 @@ public:
 
 	void AddJump();
 	void UpdateJump();
-	void EndJump();
+	void EndJump(bool landed);
 	void HandleTeleport();
 	void InvalidateJumpstats(const char *reason = NULL);
 	// Also invalidates a jump that takes off right after the push.

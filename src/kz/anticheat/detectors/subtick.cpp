@@ -19,15 +19,16 @@
 #define SUBTICK_ZERO_WHEN_RATIO_THRESHOLD  0.9f
 
 // Scrolling into and out of a jump is normal, so about 0.1s at each end of a jump is left out.
-#define SUBTICK_SPLIT_EDGE_TICKS       7
-#define SUBTICK_SPLIT_MIN_WINDOW_TICKS 7
-#define SUBTICK_SPLIT_HISTORY_TICKS    256
-// A single flick of the scroll wheel can fill the window of a short hop.
-#define SUBTICK_SPLIT_MIN_AIR_TICKS 32
-// Splits per second of air time. It takes five jumps at the drill rate to mark an infraction, and one at the instant rate.
-#define SUBTICK_SPLIT_DRILL_RATE    30.0f
+#define SUBTICK_SPLIT_EDGE_TICKS    7
+#define SUBTICK_SPLIT_HISTORY_TICKS 256
+// Scrolling in place gains nothing, so splits only count above this speed.
+#define SUBTICK_SPLIT_MIN_SPEED 100.0f
+// Drilling keeps up its rate for the whole jump while a scroll lasts a fraction of it, so the rate is taken over the busiest 0.5s.
+#define SUBTICK_SPLIT_SUSTAIN_TICKS 32
+// Splits per second. It takes five jumps at the drill rate to mark an infraction, and one at the instant rate.
+#define SUBTICK_SPLIT_DRILL_RATE    48.0f
 #define SUBTICK_SPLIT_DRILL_JUMPS   5
-#define SUBTICK_SPLIT_INSTANT_RATE  64.0f
+#define SUBTICK_SPLIT_INSTANT_RATE  96.0f
 #define SUBTICK_SPLIT_DRILL_HISTORY 10
 #define SUBTICK_SPLIT_BUTTON_MASK   (IN_ATTACK | IN_ATTACK2 | IN_JUMP | IN_DUCK)
 
@@ -284,10 +285,20 @@ void KZAnticheatService::RecordSubtickSplits(CUserCmd *cmd)
 	{
 		return;
 	}
+	// Late commands run without moving the player, and the substitute that ran in place of the last one already carries its moves.
+	if (cmd->IsLate())
+	{
+		return;
+	}
 	u32 currentTick = g_pKZUtils->GetServerGlobals()->tickcount;
+	u32 numSplits = 0;
 	// Without subtick view angles every part of the tick moves with the same angles, so splitting it changes nothing.
-	bool usesSubtickViewAngles = this->player->GetCvarValueFromModeStyles(MODECVAR_SV_SUBTICK_MOVEMENT_VIEW_ANGLES)->m_bValue;
-	this->recentSubtickSplits.push_back({currentTick, usesSubtickViewAngles ? CountSubtickSplits(*cmd) : 0});
+	if (this->player->GetCvarValueFromModeStyles(MODECVAR_SV_SUBTICK_MOVEMENT_VIEW_ANGLES)->m_bValue
+		&& this->player->moveDataPost.m_vecVelocity.Length2D() >= SUBTICK_SPLIT_MIN_SPEED)
+	{
+		numSplits = CountSubtickSplits(*cmd);
+	}
+	this->recentSubtickSplits.push_back({currentTick, numSplits});
 	while (currentTick - this->recentSubtickSplits.front().serverTick > SUBTICK_SPLIT_HISTORY_TICKS)
 	{
 		this->recentSubtickSplits.pop_front();
@@ -297,27 +308,36 @@ void KZAnticheatService::RecordSubtickSplits(CUserCmd *cmd)
 void KZAnticheatService::CheckJumpSubtickSplits(Jump *jump)
 {
 	u32 airTicks = (u32)roundf(jump->airtime * ENGINE_FIXED_TICK_RATE);
-	if (airTicks < SUBTICK_SPLIT_MIN_AIR_TICKS)
+	if (airTicks < 2 * SUBTICK_SPLIT_EDGE_TICKS + SUBTICK_SPLIT_SUSTAIN_TICKS)
 	{
 		return;
 	}
 	u32 windowStart = jump->serverTick - airTicks + SUBTICK_SPLIT_EDGE_TICKS;
 	u32 windowEnd = jump->serverTick - SUBTICK_SPLIT_EDGE_TICKS;
-	u32 numSplits = 0;
-	u32 numCommands = 0;
+	std::vector<u32> commandSplits;
 	for (const SubtickSplitSample &sample : this->recentSubtickSplits)
 	{
 		if (sample.serverTick >= windowStart && sample.serverTick < windowEnd)
 		{
-			numSplits += sample.numSplits;
-			numCommands++;
+			commandSplits.push_back(sample.numSplits);
 		}
 	}
-	if (numCommands < SUBTICK_SPLIT_MIN_WINDOW_TICKS)
+	if (commandSplits.size() < SUBTICK_SPLIT_SUSTAIN_TICKS)
 	{
 		return;
 	}
-	f32 splitRate = numSplits * ENGINE_FIXED_TICK_RATE / numCommands;
+	u32 numSplits = 0;
+	u32 maxSplits = 0;
+	for (size_t i = 0; i < commandSplits.size(); i++)
+	{
+		numSplits += commandSplits[i];
+		if (i >= SUBTICK_SPLIT_SUSTAIN_TICKS)
+		{
+			numSplits -= commandSplits[i - SUBTICK_SPLIT_SUSTAIN_TICKS];
+		}
+		maxSplits = Max(maxSplits, numSplits);
+	}
+	f32 splitRate = maxSplits * ENGINE_FIXED_TICK_RATE / SUBTICK_SPLIT_SUSTAIN_TICKS;
 	f32 drillScore = 0.0f;
 	if (splitRate > SUBTICK_SPLIT_DRILL_RATE)
 	{
@@ -340,8 +360,8 @@ void KZAnticheatService::CheckJumpSubtickSplits(Jump *jump)
 	if (totalDrillScore >= 0.999f)
 	{
 		this->MarkInfraction(Infraction::Type::SubtickSpam,
-							 tfm::format("%.1f subtick splits per second in the air, %d of the last %zu jumps over %.0f", splitRate, numDrilledJumps,
-										 this->recentJumpDrillScores.size(), SUBTICK_SPLIT_DRILL_RATE));
+							 tfm::format("%.1f subtick splits per second in the air for 0.5s, %d of the last %zu jumps over %.0f", splitRate,
+										 numDrilledJumps, this->recentJumpDrillScores.size(), SUBTICK_SPLIT_DRILL_RATE));
 		this->recentJumpDrillScores.clear();
 	}
 }

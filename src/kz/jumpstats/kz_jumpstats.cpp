@@ -918,7 +918,7 @@ void KZJumpstatsService::OnChangeMoveType(MoveType_t oldMoveType)
 	{
 		// Not really a valid jump for jumpstats purposes.
 		this->InvalidateJumpstats("Invalid movetype change");
-		this->EndJump();
+		this->EndJump(false);
 	}
 }
 
@@ -1016,7 +1016,7 @@ void KZJumpstatsService::UpdateJump()
 	this->DetectNoclip();
 }
 
-void KZJumpstatsService::EndJump()
+void KZJumpstatsService::EndJump(bool landed)
 {
 	if (KZ::replaysystem::IsReplayBot(this->player))
 	{
@@ -1038,7 +1038,11 @@ void KZJumpstatsService::EndJump()
 	{
 		return;
 	}
-	this->player->anticheatService->CheckJumpSubtickSplits(jump);
+	// A jump cut short by a teleport or a ladder leaves too little air time to judge.
+	if (landed)
+	{
+		this->player->anticheatService->CheckJumpSubtickSplits(jump);
+	}
 	KZJumpstatsService::AnnounceJump(jump);
 	this->player->recordingService->OnJumpFinish(jump);
 	this->player->anticheatService->OnJumpFinish(jump);
@@ -1073,7 +1077,7 @@ void KZJumpstatsService::HandleTeleport()
 	this->player->landingVelocity = this->player->currentMoveData->m_vecVelocity;
 
 	jump->Invalidate("Teleported");
-	this->EndJump();
+	this->EndJump(false);
 }
 
 void KZJumpstatsService::InvalidateJumpstats(const char *reason)
