@@ -87,6 +87,8 @@ bool KZWebSocket::Handle::SendMessage(KZWebSocket::Message &&message)
 		case ix::ReadyState::Closed:
 			return false;
 	}
+
+	return false;
 }
 
 void KZWebSocket::Handle::Start()
