@@ -1413,13 +1413,14 @@ static_global const SignatureHook SIGNATURE_HOOKS[] = {
 
 #undef SIGNATURE_HOOK
 
+static_global void *signatureAddresses[KZ_ARRAYSIZE(SIGNATURE_HOOKS)];
+
 // ============================================================
-// hooks::Initialize
+// hooks::ResolveSignatures
 // ============================================================
-bool hooks::Initialize(char *error, size_t maxlen)
+bool hooks::ResolveSignatures(char *error, size_t maxlen)
 {
 	// Resolve every signature before anything is hooked, so outdated gamedata aborts the load instead of running with missing detours.
-	void *signatureAddresses[KZ_ARRAYSIZE(SIGNATURE_HOOKS)];
 	std::string missingSignatures;
 	for (u32 i = 0; i < KZ_ARRAYSIZE(SIGNATURE_HOOKS); i++)
 	{
@@ -1436,7 +1437,14 @@ bool hooks::Initialize(char *error, size_t maxlen)
 		KZ_LOG_WARN(LogChannel::General, "%s\n", error);
 		return false;
 	}
+	return true;
+}
 
+// ============================================================
+// hooks::Initialize
+// ============================================================
+void hooks::Initialize()
+{
 	playerManager = static_cast<MovementPlayerManager *>(g_pPlayerManager);
 
 	// Entity hooks
@@ -1551,7 +1559,6 @@ bool hooks::Initialize(char *error, size_t maxlen)
 	{
 		SIGNATURE_HOOKS[i].configure(signatureAddresses[i]);
 	}
-	return true;
 }
 
 void hooks::Cleanup()

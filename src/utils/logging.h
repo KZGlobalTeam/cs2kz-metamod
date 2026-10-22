@@ -35,7 +35,10 @@ enum class LogChannel
 	WS,
 };
 
-// Register CS2KZ logging listener and all CS2KZ channels from the channel table. Also purge old log files.
+// Register all CS2KZ channels from the channel table.
+void RegisterKZLogChannels();
+
+// Register CS2KZ logging listener and purge old log files.
 void InitKZLogging();
 
 // Get the logging channel for a given service.

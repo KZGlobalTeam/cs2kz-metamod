@@ -97,17 +97,23 @@ static void PurgeLogs()
 	}
 }
 
-void InitKZLogging()
+void RegisterKZLogChannels()
 {
-	LoggingSystem_RegisterLoggingListener(&g_KZLoggingListener);
 	LoggingVerbosity_t verbosity = CommandLine()->FindParm("-debug") ? LV_MAX : LV_DEFAULT;
 	for (auto &entry : g_KZChannels)
 	{
-		if (LoggingSystem_FindChannel(entry.name) == -1)
+		// Channels outlive the plugin, so a reload finds the ones it registered last time.
+		entry.handle = LoggingSystem_FindChannel(entry.name);
+		if (entry.handle == INVALID_LOGGING_CHANNEL_ID)
 		{
 			entry.handle = LoggingSystem_RegisterLoggingChannel(entry.name, RegisterKZChannelTags, 0, verbosity, Color(37, 162, 255, 255));
 		}
 	}
+}
+
+void InitKZLogging()
+{
+	LoggingSystem_RegisterLoggingListener(&g_KZLoggingListener);
 	PurgeLogs();
 }
 

@@ -60,23 +60,33 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 
 	if (!interfaces::Initialize(ismm, error, maxlen))
 	{
+		modules::Cleanup();
 		return false;
 	}
 
+	// Metamod keeps the binary loaded after a failed load and reuses it on the next "meta load", so every step that can fail
+	// runs before anything that can't be undone.
+	RegisterKZLogChannels();
+	if (!utils::Initialize(ismm, error, maxlen) || !hooks::ResolveSignatures(error, maxlen))
+	{
+		utils::Cleanup();
+		return false;
+	}
+
+	// The convars can't be registered twice in one binary, Metamod unregisters them for good once the load fails.
 	META_CONVAR_REGISTER(FCVAR_NONE);
+	if (!KZ::mode::CheckModeCvars())
+	{
+		snprintf(error, maxlen, "Failed to find one or more mode cvars.");
+		utils::Cleanup();
+		return false;
+	}
+
 	KZOptionService::InitOptions();
 	InitKZLogging();
 	kz_log_to_file.Set((bool)KZOptionService::GetOptionInt("logToFile", true));
 
-	if (!utils::Initialize(ismm, error, maxlen))
-	{
-		return false;
-	}
-
-	if (!hooks::Initialize(error, maxlen))
-	{
-		return false;
-	}
+	hooks::Initialize();
 	ix::initNetSystem();
 
 	KZ::misc::Init();
@@ -99,10 +109,6 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 	KZRecordingService::Init();
 	// Must come after KZTimerService::Init, it hooks into the timer's event listeners.
 	KZ::pubapi::Init();
-	if (!KZ::mode::CheckModeCvars())
-	{
-		return false;
-	}
 
 	ismm->AddListener(this, this);
 	KZ::mapapi::Init();
@@ -131,6 +137,11 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 
 bool KZPlugin::Unload(char *error, size_t maxlen)
 {
+	// Metamod still calls Unload after a failed load (shutdown, meta unload), Load already undid its own setup.
+	if (this->loading)
+	{
+		return true;
+	}
 	this->unloading = true;
 	KZUIService::Cleanup();
 	KZProgressService::Cleanup();

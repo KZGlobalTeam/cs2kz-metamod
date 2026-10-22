@@ -9,7 +9,9 @@ class CUserCmd;
 
 namespace hooks
 {
-	bool Initialize(char *error, size_t maxlen);
+	// Resolves every signature hook without installing anything, so a failure leaves nothing to undo.
+	bool ResolveSignatures(char *error, size_t maxlen);
+	void Initialize();
 	void Cleanup();
 	void HookEntities();
 
