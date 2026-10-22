@@ -167,7 +167,7 @@ CBasePlayerController *utils::GetController(CBaseEntity *entity)
 		CBasePlayerPawn *pawn = static_cast<CBasePlayerPawn *>(entity);
 		if (!pawn->m_hController().IsValid() || pawn->m_hController.Get() == 0)
 		{
-			for (i32 i = 0; i <= MAXPLAYERS; i++)
+			for (i32 i = 0; i < MAXPLAYERS; i++)
 			{
 				controller = (CCSPlayerController *)utils::GetController(CPlayerSlot(i));
 				if (controller && controller->m_hObserverPawn() && controller->m_hObserverPawn().Get() == entity)
@@ -185,7 +185,7 @@ CBasePlayerController *utils::GetController(CBaseEntity *entity)
 		if (!pawn->m_hController().IsValid() || pawn->m_hController.Get() == 0)
 		{
 			// Seems like the pawn lost its controller, we can try looping through the controllers to find this pawn instead.
-			for (i32 i = 0; i <= MAXPLAYERS; i++)
+			for (i32 i = 0; i < MAXPLAYERS; i++)
 			{
 				controller = (CCSPlayerController *)utils::GetController(CPlayerSlot(i));
 				if (controller && controller->m_hPlayerPawn() && controller->m_hPlayerPawn().Get() == entity)
@@ -209,7 +209,7 @@ CBasePlayerController *utils::GetController(CBaseEntity *entity)
 
 CBasePlayerController *utils::GetController(CPlayerSlot slot)
 {
-	if (!GameEntitySystem() || slot.Get() < 0 || slot.Get() > MAXPLAYERS)
+	if (!GameEntitySystem() || slot.Get() < 0 || slot.Get() >= MAXPLAYERS)
 	{
 		return nullptr;
 	}

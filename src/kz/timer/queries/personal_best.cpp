@@ -43,9 +43,8 @@ struct PBRequest : public BaseRequest
 		}
 		else if (this->targetSteamID64)
 		{
-			for (u32 i = 1; i < MAXPLAYERS + 1; i++)
+			for (KZPlayer *player : g_pKZPlayerManager->GetAllSlots())
 			{
-				KZPlayer *player = g_pKZPlayerManager->ToPlayer(i);
 				if (this->targetSteamID64 == player->GetSteamId64())
 				{
 					if (player->anticheatService->isBanned)

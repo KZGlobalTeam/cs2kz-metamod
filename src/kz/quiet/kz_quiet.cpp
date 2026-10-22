@@ -46,7 +46,7 @@ void KZ::quiet::OnCheckTransmit(CCheckTransmitInfo **pInfo, int infoCount)
 		CPlayerSlot targetSlot = pTransmitInfo->m_nPlayerSlot;
 		KZPlayer *targetPlayer = g_pKZPlayerManager->ToPlayer(targetSlot);
 		// Make sure the target isn't CSTV.
-		CCSPlayerController *targetController = targetPlayer->GetController();
+		CCSPlayerController *targetController = targetPlayer ? targetPlayer->GetController() : nullptr;
 		if (!targetController || targetController->m_bIsHLTV)
 		{
 			continue;
@@ -141,12 +141,12 @@ void KZ::quiet::OnCheckTransmit(CCheckTransmitInfo **pInfo, int infoCount)
 
 static void FilterQuietClients(const uint64 *clients, u32 emitterPlayerIndex = 0)
 {
-	for (i32 recipientPlayerIndex = 1; recipientPlayerIndex < MAXPLAYERS + 1; recipientPlayerIndex++)
+	for (i32 recipientSlot = 0; recipientSlot < MAXPLAYERS; recipientSlot++)
 	{
-		KZPlayer *recipient = g_pKZPlayerManager->ToPlayer(recipientPlayerIndex);
+		KZPlayer *recipient = g_pKZPlayerManager->ToPlayer(CPlayerSlot(recipientSlot));
 		if (recipient->quietService->ShouldHide() && (emitterPlayerIndex == 0 || recipient->quietService->ShouldHideIndex(emitterPlayerIndex)))
 		{
-			*(uint64 *)clients &= ~(1ull << (recipientPlayerIndex - 1));
+			*(uint64 *)clients &= ~(1ull << recipientSlot);
 		}
 	}
 }
@@ -169,30 +169,30 @@ void KZ::quiet::OnPostEvent(INetworkMessageInternal *pEvent, const CNetMessage *
 			u64 currentRecipients = *(const u64 *)clients;
 
 			// Find the player who initiated this paint.
-			for (i32 i = 1; i <= MAXPLAYERS; i++)
+			for (i32 i = 0; i < MAXPLAYERS; i++)
 			{
-				KZPlayer *painter = g_pKZPlayerManager->ToPlayer(i);
+				KZPlayer *painter = g_pKZPlayerManager->ToPlayer(CPlayerSlot(i));
 				if (!painter || !painter->paintService || !painter->paintService->pendingPaint)
 				{
 					continue;
 				}
 
 				u64 paintRecipients = 0;
-				for (i32 recipientPlayerIndex = 1; recipientPlayerIndex <= MAXPLAYERS; recipientPlayerIndex++)
+				for (i32 recipientSlot = 0; recipientSlot < MAXPLAYERS; recipientSlot++)
 				{
-					u64 recipientBit = 1ull << (recipientPlayerIndex - 1);
+					u64 recipientBit = 1ull << recipientSlot;
 					if ((currentRecipients & recipientBit) == 0)
 					{
 						continue;
 					}
 
-					if (recipientPlayerIndex == i)
+					if (recipientSlot == i)
 					{
 						paintRecipients |= recipientBit;
 						continue;
 					}
 
-					KZPlayer *recipient = g_pKZPlayerManager->ToPlayer(recipientPlayerIndex);
+					KZPlayer *recipient = g_pKZPlayerManager->ToPlayer(CPlayerSlot(recipientSlot));
 					if (recipient && recipient->paintService && recipient->paintService->ShouldShowAllPaint())
 					{
 						paintRecipients |= recipientBit;
@@ -440,10 +440,9 @@ void KZQuietService::ReleaseWeaponCamera()
 
 void KZQuietService::Cleanup()
 {
-	for (i32 i = 0; i < MAXPLAYERS; i++)
+	for (KZPlayer *player : g_pKZPlayerManager->GetAllSlots())
 	{
-		KZPlayer *player = g_pKZPlayerManager->ToPlayer(CPlayerSlot(i));
-		if (player && player->quietService)
+		if (player->quietService)
 		{
 			player->quietService->ReleaseWeaponCamera();
 		}

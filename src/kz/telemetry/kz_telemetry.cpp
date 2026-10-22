@@ -15,16 +15,8 @@ static_function KZPlayer *FindPerfStatsTarget(KZPlayer *requester, const char *p
 		return requester;
 	}
 
-	for (i32 i = 0; i <= MAXPLAYERS; i++)
+	for (KZPlayer *otherPlayer : g_pKZPlayerManager->GetInGamePlayers())
 	{
-		CBasePlayerController *controller = g_pKZPlayerManager->players[i]->GetController();
-		KZPlayer *otherPlayer = g_pKZPlayerManager->ToPlayer(i);
-
-		if (!controller || !otherPlayer)
-		{
-			continue;
-		}
-
 		if (V_stristr(otherPlayer->GetName(), playerNamePart))
 		{
 			return otherPlayer;
@@ -172,10 +164,9 @@ void KZTelemetryService::ActiveCheck()
 {
 	f64 currentTime = g_pKZUtils->GetServerGlobals()->realtime;
 	f64 duration = currentTime - KZTelemetryService::lastActiveCheckTime;
-	for (u32 i = 0; i < MAXPLAYERS + 1; i++)
+	for (KZPlayer *player : g_pKZPlayerManager->GetInGamePlayers())
 	{
-		KZPlayer *player = g_pKZPlayerManager->ToPlayer(i);
-		if (!player->IsInGame() || player->IsFakeClient() || player->IsCSTV())
+		if (player->IsFakeClient() || player->IsCSTV())
 		{
 			continue;
 		}

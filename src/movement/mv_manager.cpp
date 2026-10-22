@@ -32,8 +32,3 @@ MovementPlayer *MovementPlayerManager::ToPlayer(CPlayerUserId userID)
 {
 	return static_cast<MovementPlayer *>(PlayerManager::ToPlayer(userID));
 }
-
-MovementPlayer *MovementPlayerManager::ToPlayer(u32 index)
-{
-	return static_cast<MovementPlayer *>(PlayerManager::players[index]);
-}

@@ -745,12 +745,13 @@ static KHook::Return<bool> TraceShapePost(const void *physicsQuery, const Ray_t 
 	bool ret = *(bool *)KHook::GetOriginalValuePtr();
 	f32 error;
 	Vector velocity;
-	for (u32 i = 0; i < 2; i++)
+	for (i32 i = 0; i < 2; i++)
 	{
-		if (g_pKZPlayerManager->ToPlayer(i) && g_pKZPlayerManager->ToPlayer(i)->GetMoveServices())
+		KZPlayer *player = g_pKZPlayerManager->ToPlayer(CPlayerSlot(i));
+		if (player && player->GetMoveServices())
 		{
-			error = g_pKZPlayerManager->ToPlayer(i)->GetMoveServices()->m_flAccumulatedJumpError();
-			velocity = g_pKZPlayerManager->ToPlayer(i)->currentMoveData->m_vecVelocity;
+			error = player->GetMoveServices()->m_flAccumulatedJumpError();
+			velocity = player->currentMoveData->m_vecVelocity;
 			break;
 		}
 	}

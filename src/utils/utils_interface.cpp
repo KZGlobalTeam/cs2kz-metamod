@@ -133,6 +133,18 @@ CUtlVector<CServerSideClient *> *KZUtils::GetClientList()
 	return (CUtlVector<CServerSideClient *> *)((char *)g_pNetworkServerService->GetIGameServer() + offset);
 }
 
+// The engine keeps the client object in its slot after a disconnect, so only hand it out while someone occupies the slot.
+CServerSideClient *KZUtils::GetClientBySlot(CPlayerSlot slot)
+{
+	CUtlVector<CServerSideClient *> *clients = this->GetClientList();
+	if (!clients || slot.Get() < 0 || slot.Get() >= clients->Count())
+	{
+		return nullptr;
+	}
+	CServerSideClient *client = clients->Element(slot.Get());
+	return client && client->IsConnected() ? client : nullptr;
+}
+
 CUtlString KZUtils::GetCurrentMapName(bool *result)
 {
 	CNetworkGameServerBase *networkGameServer = (CNetworkGameServerBase *)g_pNetworkServerService->GetIGameServer();

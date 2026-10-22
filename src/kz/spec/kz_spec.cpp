@@ -74,12 +74,9 @@ bool KZSpecService::SpectatePlayer(const char *playerName)
 	else
 	{
 		// Prefer exact matches over partial matches.
-		for (i32 i = 0; i <= MAXPLAYERS; i++)
+		for (KZPlayer *otherPlayer : g_pKZPlayerManager->GetInGamePlayers())
 		{
-			CBasePlayerController *controller = g_pKZPlayerManager->players[i]->GetController();
-			KZPlayer *otherPlayer = g_pKZPlayerManager->ToPlayer(i);
-
-			if (!controller || this->player == otherPlayer)
+			if (this->player == otherPlayer)
 			{
 				continue;
 			}
@@ -97,12 +94,9 @@ bool KZSpecService::SpectatePlayer(const char *playerName)
 		// If no exact match was found, try partial matches.
 		if (!targetPlayer)
 		{
-			for (i32 i = 0; i <= MAXPLAYERS; i++)
+			for (KZPlayer *otherPlayer : g_pKZPlayerManager->GetInGamePlayers())
 			{
-				CBasePlayerController *controller = g_pKZPlayerManager->players[i]->GetController();
-				KZPlayer *otherPlayer = g_pKZPlayerManager->ToPlayer(i);
-
-				if (!controller || this->player == otherPlayer)
+				if (this->player == otherPlayer)
 				{
 					continue;
 				}
@@ -224,10 +218,10 @@ KZPlayer *KZSpecService::GetSpectatedPlayer()
 
 KZPlayer *KZSpecService::GetNextSpectator(KZPlayer *current)
 {
-	for (int i = current ? current->index + 1 : 0; i < MAXPLAYERS + 1; i++)
+	for (i32 i = current ? current->GetPlayerSlot().Get() + 1 : 0; i < MAXPLAYERS; i++)
 	{
-		KZPlayer *player = g_pKZPlayerManager->ToPlayer(i);
-		if (player->specService->IsSpectating(this->player))
+		KZPlayer *player = g_pKZPlayerManager->ToPlayer(CPlayerSlot(i));
+		if (player->IsInGame() && player->specService->IsSpectating(this->player))
 		{
 			return player;
 		}
@@ -258,10 +252,9 @@ SCMD(kz_spec, SCFL_SPEC)
 
 	// Find the first alive player other than the player themselves.
 	KZPlayer *firstAlivePlayer = nullptr;
-	for (i32 i = 0; i < MAXPLAYERS + 1; i++)
+	for (KZPlayer *otherPlayer : g_pKZPlayerManager->GetInGamePlayers())
 	{
-		KZPlayer *otherPlayer = g_pKZPlayerManager->ToPlayer(i);
-		if (otherPlayer && otherPlayer->IsAlive() && otherPlayer != player)
+		if (otherPlayer->IsAlive() && otherPlayer != player)
 		{
 			firstAlivePlayer = otherPlayer;
 			break;

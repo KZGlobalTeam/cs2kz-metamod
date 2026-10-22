@@ -128,10 +128,9 @@ void KZProgressService::OnMapChange()
 	{
 		return;
 	}
-	for (i32 i = 0; i <= MAXPLAYERS; i++)
+	for (KZPlayer *player : g_pKZPlayerManager->GetAllSlots())
 	{
-		auto *player = g_pKZPlayerManager->ToPlayer(CPlayerSlot(i));
-		if (player && player->progressService)
+		if (player->progressService)
 		{
 			player->progressService->Reset();
 		}

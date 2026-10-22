@@ -276,11 +276,11 @@ void KZGlobalService::OnMapInfo(const std::optional<KZ::api::Map> &mapInfo, std:
 
 	// The map change cleared every record cache, and players who stayed connected get no new join ack to refill theirs.
 	KZGlobalService::UpdateRecordCache();
-	for (Player *player : g_pKZPlayerManager->players)
+	for (KZPlayer *player : g_pKZPlayerManager->GetAllSlots())
 	{
-		if (player && player->IsConnected() && player->IsAuthenticated())
+		if (player->IsAuthenticated())
 		{
-			g_pKZPlayerManager->ToKZPlayer(player)->globalService->UpdatePlayerRecordCache();
+			player->globalService->UpdatePlayerRecordCache();
 		}
 	}
 }
@@ -858,9 +858,9 @@ void KZGlobalService::WS::InitiateHandshake()
 	KZGlobalService::WS::handshakeMapName = currentMapName.Get();
 	KZ::api::messages::handshake::Hello hello(g_KZPlugin.GetMD5(), currentMapName.Get());
 
-	for (Player *player : g_pPlayerManager->players)
+	for (Player *player : g_pPlayerManager->GetAllSlots())
 	{
-		if (player && player->IsAuthenticated())
+		if (player->IsAuthenticated())
 		{
 			hello.AddPlayer(player->GetSteamId64(), player->GetName());
 		}
@@ -988,11 +988,11 @@ void KZGlobalService::WS::CompleteHandshake(KZ::api::messages::handshake::HelloA
 		KZGlobalService::UpdateRecordCache();
 	}
 
-	for (Player *player : g_pKZPlayerManager->players)
+	for (KZPlayer *player : g_pKZPlayerManager->GetAllSlots())
 	{
-		if (player && player->IsConnected() && player->IsAuthenticated())
+		if (player->IsAuthenticated())
 		{
-			g_pKZPlayerManager->ToKZPlayer(player)->globalService->OnPlayerAuthorized();
+			player->globalService->OnPlayerAuthorized();
 		}
 	}
 }

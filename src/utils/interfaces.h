@@ -162,10 +162,7 @@ public:
 	virtual void RemoveTimer(CTimerBase *timer);
 	virtual CUtlVector<CServerSideClient *> *GetClientList();
 
-	CServerSideClient *GetClientBySlot(CPlayerSlot slot)
-	{
-		return (GetClientList() && GetController(slot)) ? GetClientList()->Element(slot.Get()) : nullptr;
-	}
+	CServerSideClient *GetClientBySlot(CPlayerSlot slot);
 
 	virtual CUtlString GetCurrentMapName(bool *success = NULL);
 	virtual u64 GetCurrentMapWorkshopID();

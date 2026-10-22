@@ -213,9 +213,8 @@ void KZModeManager::UnregisterMode(PluginId id)
 	{
 		if (id == modeInfos[modeIdx].id)
 		{
-			for (u32 slot = 0; slot < MAXPLAYERS + 1; slot++)
+			for (KZPlayer *player : g_pKZPlayerManager->GetAllSlots())
 			{
-				KZPlayer *player = g_pKZPlayerManager->ToPlayer(slot);
 				if (!player->IsInGame())
 				{
 					// The plugin owning this service is about to be unloaded, so the pointer would dangle.

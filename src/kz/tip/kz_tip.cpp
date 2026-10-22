@@ -102,9 +102,8 @@ f64 KZTipService::PrintTips()
 	{
 		return tipInterval;
 	}
-	for (int i = 0; i <= MAXPLAYERS; i++)
+	for (KZPlayer *player : g_pKZPlayerManager->GetInGamePlayers())
 	{
-		KZPlayer *player = g_pKZPlayerManager->ToPlayer(i);
 		if (player->tipService->ShouldPrintTip())
 		{
 			player->tipService->PrintTip();

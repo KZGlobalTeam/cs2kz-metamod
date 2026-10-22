@@ -472,10 +472,9 @@ bool KZTimerService::TimerStop(bool playSound)
 
 void KZTimerService::TimerStopAll(bool playSound)
 {
-	for (int i = 0; i < MAXPLAYERS + 1; i++)
+	for (KZPlayer *player : g_pKZPlayerManager->GetAllSlots())
 	{
-		KZPlayer *player = g_pKZPlayerManager->ToPlayer(i);
-		if (!player || !player->timerService)
+		if (!player->timerService)
 		{
 			continue;
 		}
@@ -1182,10 +1181,9 @@ void KZTimerService::ClearRecordCache()
 	KZTimerService::srCache.clear();
 	KZTimerService::wrCache.clear();
 	CALL_FORWARD(eventListeners, OnRecordCacheCleared);
-	for (i32 i = 0; i < MAXPLAYERS + 1; i++)
+	for (KZPlayer *player : g_pKZPlayerManager->GetAllSlots())
 	{
-		KZPlayer *player = g_pKZPlayerManager->ToPlayer(i);
-		if (player && player->timerService)
+		if (player->timerService)
 		{
 			player->timerService->ClearPBCache();
 		}

@@ -866,13 +866,8 @@ void RunSubmission::AnnounceRun()
 		combinedModeStyleText += "{grey}";
 	}
 
-	for (u32 i = 0; i < MAXPLAYERS + 1; i++)
+	for (KZPlayer *player : g_pKZPlayerManager->GetInGamePlayers())
 	{
-		KZPlayer *player = g_pKZPlayerManager->ToPlayer(i);
-		if (!player->IsInGame())
-		{
-			continue;
-		}
 		std::string teleportText = "{blue}PRO{grey}";
 		if (this->teleports > 0)
 		{
@@ -891,14 +886,8 @@ void RunSubmission::AnnounceLocal()
 		return;
 	}
 
-	for (u32 i = 0; i < MAXPLAYERS + 1; i++)
+	for (KZPlayer *player : g_pKZPlayerManager->GetInGamePlayers())
 	{
-		KZPlayer *player = g_pKZPlayerManager->ToPlayer(i);
-		if (!player->IsInGame())
-		{
-			continue;
-		}
-
 		char formattedDiffTime[32];
 		KZTimerService::FormatDiffTime(this->localResponse.overall.pbDiff, formattedDiffTime, sizeof(formattedDiffTime));
 
@@ -937,14 +926,8 @@ void RunSubmission::AnnounceGlobal()
 		return;
 	}
 
-	for (u32 i = 0; i < MAXPLAYERS + 1; i++)
+	for (KZPlayer *player : g_pKZPlayerManager->GetInGamePlayers())
 	{
-		KZPlayer *player = g_pKZPlayerManager->ToPlayer(i);
-		if (!player->IsInGame())
-		{
-			continue;
-		}
-
 		bool hasOldPB = this->oldGPB.overall.time != 0;
 		bool hasOldPBPro = this->oldGPB.pro.time != 0;
 
@@ -1005,13 +988,8 @@ void RunSubmission::AnnounceGlobal()
 		}
 		if (beatWR || beatWRPro)
 		{
-			for (i32 j = 0; j < MAXPLAYERS + 1; j++)
+			for (KZPlayer *p : g_pKZPlayerManager->GetInGamePlayers())
 			{
-				KZPlayer *p = g_pKZPlayerManager->ToPlayer(j);
-				if (!p->IsInGame())
-				{
-					continue;
-				}
 				utils::PlaySoundToClient(p->GetPlayerSlot(), "kz.holyshit", p->optionService->GetPreferenceFloat("recordVolume", 1.0f));
 			}
 		}

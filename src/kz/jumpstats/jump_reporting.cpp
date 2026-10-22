@@ -631,13 +631,8 @@ void KZJumpstatsService::AnnounceJump(Jump *jump)
 		return;
 	}
 	bool isFailstat = jump->IsFailstat();
-	for (i32 i = 1; i <= MAXPLAYERS; i++)
+	for (KZPlayer *player : g_pKZPlayerManager->GetInGamePlayers())
 	{
-		KZPlayer *player = g_pKZPlayerManager->ToPlayer(i);
-		if (!player || !player->IsInGame())
-		{
-			continue;
-		}
 		// If the player is the one who did the jump or is spectating the jumper, we show more details in chat.
 		if (player == jump->GetJumpPlayer() || player->specService->GetSpectatedPlayer() == jump->GetJumpPlayer())
 		{

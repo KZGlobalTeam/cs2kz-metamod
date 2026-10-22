@@ -123,10 +123,9 @@ bool KZPaintService::IsAutoPaintEnabled() const
 
 void KZPaintService::OnGameFrame()
 {
-	for (i32 i = 1; i <= MAXPLAYERS; i++)
+	for (KZPlayer *player : g_pKZPlayerManager->GetAllSlots())
 	{
-		KZPlayer *player = g_pKZPlayerManager->ToPlayer(i);
-		if (!player || !player->paintService)
+		if (!player->paintService)
 		{
 			continue;
 		}

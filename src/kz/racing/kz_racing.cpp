@@ -67,35 +67,30 @@ void KZRacingService::BroadcastRaceInfo()
 		case RaceInfo::State::Init:
 		{
 			// Broadcast the race info to all players.
-			for (i32 i = 0; i < MAXPLAYERS + 1; i++)
+			for (KZPlayer *player : g_pKZPlayerManager->GetInGamePlayers())
 			{
-				KZPlayer *player = g_pKZPlayerManager->ToPlayer(i);
-				if (player)
+				std::string timeLimitString;
+				if (KZRacingService::currentRace.conf.maxDurationSeconds.has_value())
 				{
-					std::string timeLimitString;
-					if (KZRacingService::currentRace.conf.maxDurationSeconds.has_value())
-					{
-						auto timeStr = utils::FormatTime(*KZRacingService::currentRace.conf.maxDurationSeconds, false);
-						timeLimitString = player->languageService->PrepareMessage("Racing - Time Limit", timeStr.Get());
-					}
-					else
-					{
-						timeLimitString = player->languageService->PrepareMessage("Racing - No Time Limit");
-					}
+					auto timeStr = utils::FormatTime(*KZRacingService::currentRace.conf.maxDurationSeconds, false);
+					timeLimitString = player->languageService->PrepareMessage("Racing - Time Limit", timeStr.Get());
+				}
+				else
+				{
+					timeLimitString = player->languageService->PrepareMessage("Racing - No Time Limit");
+				}
 
-					if (KZRacingService::currentRace.conf.maxTeleports.has_value())
-					{
-						player->languageService->PrintAlert(false, false, "Racing - Race Info - Teleport Limit",
-															KZRacingService::currentRace.conf.courseName.c_str(),
-															KZRacingService::currentRace.conf.modeName.c_str(),
-															*KZRacingService::currentRace.conf.maxTeleports, timeLimitString.c_str());
-					}
-					else
-					{
-						player->languageService->PrintAlert(false, false, "Racing - Race Info - No Teleport Limit",
-															KZRacingService::currentRace.conf.courseName.c_str(),
-															KZRacingService::currentRace.conf.modeName.c_str(), timeLimitString.c_str());
-					}
+				if (KZRacingService::currentRace.conf.maxTeleports.has_value())
+				{
+					player->languageService->PrintAlert(
+						false, false, "Racing - Race Info - Teleport Limit", KZRacingService::currentRace.conf.courseName.c_str(),
+						KZRacingService::currentRace.conf.modeName.c_str(), *KZRacingService::currentRace.conf.maxTeleports, timeLimitString.c_str());
+				}
+				else
+				{
+					player->languageService->PrintAlert(false, false, "Racing - Race Info - No Teleport Limit",
+														KZRacingService::currentRace.conf.courseName.c_str(),
+														KZRacingService::currentRace.conf.modeName.c_str(), timeLimitString.c_str());
 				}
 			}
 			break;

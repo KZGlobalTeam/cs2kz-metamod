@@ -261,15 +261,9 @@ void BaseRequest::SetupPlayer(CUtlString playerName)
 		this->targetSteamID64 = callingPlayer->GetSteamId64();
 		return;
 	}
-	for (u32 i = 1; i < MAXPLAYERS + 1; i++)
+	for (KZPlayer *player : g_pKZPlayerManager->GetInGamePlayers())
 	{
-		KZPlayer *player = g_pKZPlayerManager->ToPlayer(i);
-		CServerSideClient *client = player->GetClient();
-		if (!client)
-		{
-			continue;
-		}
-		if (playerName == client->GetClientName())
+		if (playerName == player->GetClient()->GetClientName())
 		{
 			targetPlayerName = player->GetName();
 			targetSteamID64 = player->GetSteamId64();

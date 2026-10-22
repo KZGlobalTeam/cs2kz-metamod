@@ -301,18 +301,11 @@ SCMD(kz_playercheck, SCFL_PLAYER)
 	}
 	else
 	{
-		for (i32 i = 0; i <= MAXPLAYERS; i++)
+		for (KZPlayer *otherPlayer : g_pKZPlayerManager->GetInGamePlayers())
 		{
-			CBasePlayerController *controller = g_pKZPlayerManager->players[i]->GetController();
-
-			if (!controller)
+			if (V_stristr(otherPlayer->GetName(), args->ArgS()))
 			{
-				continue;
-			}
-
-			if (V_stristr(g_pKZPlayerManager->players[i]->GetName(), args->ArgS()))
-			{
-				targetPlayer = g_pKZPlayerManager->ToPlayer(i);
+				targetPlayer = otherPlayer;
 				break;
 			}
 		}

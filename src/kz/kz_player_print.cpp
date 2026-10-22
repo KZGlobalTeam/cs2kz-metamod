@@ -48,14 +48,9 @@ static_function bool BuildRecipientFilter(CRecipientFilter &filter, KZPlayer *ta
 	{
 		return false;
 	}
-	for (int i = 0; i < MAXPLAYERS + 1; i++)
+	for (KZPlayer *player : g_pKZPlayerManager->GetInGamePlayers())
 	{
-		KZPlayer *player = g_pKZPlayerManager->ToPlayer(i);
-		if (!player || player->IsAlive())
-		{
-			continue;
-		}
-		if (!player->GetController() || !player->GetController()->m_hObserverPawn())
+		if (player->IsAlive() || !player->GetController()->m_hObserverPawn())
 		{
 			continue;
 		}

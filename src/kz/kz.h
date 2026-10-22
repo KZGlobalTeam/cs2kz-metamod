@@ -257,10 +257,10 @@ class KZPlayerManager : public MovementPlayerManager
 public:
 	KZPlayerManager()
 	{
-		for (int i = 0; i < MAXPLAYERS + 1; i++)
+		for (i32 i = 0; i < MAXPLAYERS; i++)
 		{
 			delete players[i];
-			players[i] = new KZPlayer(i);
+			players[i] = new KZPlayer(i + 1);
 		}
 	}
 
@@ -271,8 +271,17 @@ public:
 	KZPlayer *ToPlayer(CPlayerSlot slot);
 	KZPlayer *ToPlayer(CEntityIndex entIndex);
 	KZPlayer *ToPlayer(CPlayerUserId userID);
-	KZPlayer *ToPlayer(u32 index);
 	KZPlayer *SteamIdToPlayer(u64 steamID, bool validated = true);
+
+	PlayerSlotRange<KZPlayer> GetAllSlots()
+	{
+		return PlayerSlotRange<KZPlayer>(players, false);
+	}
+
+	PlayerSlotRange<KZPlayer> GetInGamePlayers()
+	{
+		return PlayerSlotRange<KZPlayer>(players, true);
+	}
 
 	KZPlayer *ToKZPlayer(MovementPlayer *player)
 	{

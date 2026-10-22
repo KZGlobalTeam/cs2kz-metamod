@@ -237,13 +237,8 @@ void KZBeamService::Reset()
 
 void KZBeamService::UpdateBeams()
 {
-	for (i32 i = 0; i < MAXPLAYERS + 1; i++)
+	for (KZPlayer *player : g_pKZPlayerManager->GetInGamePlayers())
 	{
-		KZPlayer *player = g_pKZPlayerManager->ToPlayer(i);
-		if (!player || !player->IsInGame())
-		{
-			continue;
-		}
 		player->beamService->Update();
 	}
 }

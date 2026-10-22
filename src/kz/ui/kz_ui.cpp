@@ -195,10 +195,9 @@ void KZUIService::OnCheckTransmit(CCheckTransmitInfo **pInfo, int infoCount)
 
 void KZUIService::Cleanup()
 {
-	for (i32 i = 0; i < MAXPLAYERS; i++)
+	for (KZPlayer *player : g_pKZPlayerManager->GetAllSlots())
 	{
-		KZPlayer *player = g_pKZPlayerManager->ToPlayer(CPlayerSlot(i));
-		if (player && player->uiService)
+		if (player->uiService)
 		{
 			player->uiService->CloseAll(CloseReason::Unload);
 			player->uiService->DestroyOwnedWindows();

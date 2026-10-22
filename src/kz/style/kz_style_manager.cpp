@@ -183,9 +183,8 @@ void KZStyleManager::UnregisterStyle(PluginId id)
 	{
 		if (styleInfos[styleIdx].id == id)
 		{
-			for (u32 slot = 0; slot < MAXPLAYERS + 1; slot++)
+			for (KZPlayer *player : g_pKZPlayerManager->GetAllSlots())
 			{
-				KZPlayer *player = g_pKZPlayerManager->ToPlayer(slot);
 				for (size_t svcIdx = 0; svcIdx < player->styleServices.size(); svcIdx++)
 				{
 					if (!V_stricmp(player->styleServices[svcIdx]->GetStyleName(), styleInfos[styleIdx].longName)

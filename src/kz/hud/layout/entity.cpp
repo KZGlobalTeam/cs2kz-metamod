@@ -160,10 +160,9 @@ void KZHUDService::DestroyOwnedLayout()
 
 void KZHUDService::Cleanup()
 {
-	for (i32 i = 0; i < MAXPLAYERS; i++)
+	for (KZPlayer *player : g_pKZPlayerManager->GetAllSlots())
 	{
-		KZPlayer *player = g_pKZPlayerManager->ToPlayer(CPlayerSlot(i));
-		if (player && player->hudService)
+		if (player->hudService)
 		{
 			player->hudService->DestroyOwnedLayout();
 			player->hudService->RestoreGameHud();

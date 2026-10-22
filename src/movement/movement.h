@@ -307,10 +307,10 @@ class MovementPlayerManager : public PlayerManager
 public:
 	MovementPlayerManager()
 	{
-		for (int i = 0; i < MAXPLAYERS + 1; i++)
+		for (i32 i = 0; i < MAXPLAYERS; i++)
 		{
 			delete players[i];
-			players[i] = new MovementPlayer(i);
+			players[i] = new MovementPlayer(i + 1);
 		}
 	}
 
@@ -321,7 +321,16 @@ public:
 	MovementPlayer *ToPlayer(CPlayerSlot slot);
 	MovementPlayer *ToPlayer(CEntityIndex entIndex);
 	MovementPlayer *ToPlayer(CPlayerUserId userID);
-	MovementPlayer *ToPlayer(u32 index);
+
+	PlayerSlotRange<MovementPlayer> GetAllSlots()
+	{
+		return PlayerSlotRange<MovementPlayer>(players, false);
+	}
+
+	PlayerSlotRange<MovementPlayer> GetInGamePlayers()
+	{
+		return PlayerSlotRange<MovementPlayer>(players, true);
+	}
 
 	MovementPlayer *ToMovementPlayer(Player *player)
 	{

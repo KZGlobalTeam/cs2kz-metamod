@@ -27,12 +27,9 @@ bool KZGotoService::GotoPlayer(const char *playerNamePart)
 	KZPlayer *targetPlayer = nullptr;
 
 	// Prefer exact matches over partial matches.
-	for (i32 i = 0; i <= MAXPLAYERS; i++)
+	for (KZPlayer *otherPlayer : g_pKZPlayerManager->GetInGamePlayers())
 	{
-		CBasePlayerController *controller = g_pKZPlayerManager->players[i]->GetController();
-		KZPlayer *otherPlayer = g_pKZPlayerManager->ToPlayer(i);
-
-		if (!controller || this->player == otherPlayer)
+		if (this->player == otherPlayer)
 		{
 			continue;
 		}
@@ -51,12 +48,9 @@ bool KZGotoService::GotoPlayer(const char *playerNamePart)
 	// If no exact match was found, try partial matches.
 	if (!targetPlayer)
 	{
-		for (i32 i = 0; i <= MAXPLAYERS; i++)
+		for (KZPlayer *otherPlayer : g_pKZPlayerManager->GetInGamePlayers())
 		{
-			CBasePlayerController *controller = g_pKZPlayerManager->players[i]->GetController();
-			KZPlayer *otherPlayer = g_pKZPlayerManager->ToPlayer(i);
-
-			if (!controller || this->player == otherPlayer)
+			if (this->player == otherPlayer)
 			{
 				continue;
 			}

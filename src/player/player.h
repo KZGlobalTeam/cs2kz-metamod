@@ -61,9 +61,10 @@ public:
 		return GetClient() ? GetClient()->IsConnected() : false;
 	}
 
+	// Active clients still lose their controller for a moment during a map change.
 	bool IsInGame()
 	{
-		return GetClient() ? GetClient()->IsActive() : false;
+		return GetClient() && GetClient()->IsActive() && GetController();
 	}
 
 	bool IsFakeClient()
@@ -151,24 +152,85 @@ private:
 	CSteamID unauthenticatedSteamID = k_steamIDNil;
 };
 
+// Iterates every player slot, or only the slots whose player is in game.
+template<typename T>
+class PlayerSlotRange
+{
+public:
+	class Iterator
+	{
+	public:
+		Iterator(Player *const *entry, Player *const *last, bool inGameOnly) : entry(entry), last(last), inGameOnly(inGameOnly)
+		{
+			this->SkipFiltered();
+		}
+
+		T *operator*() const
+		{
+			return static_cast<T *>(*entry);
+		}
+
+		Iterator &operator++()
+		{
+			entry++;
+			this->SkipFiltered();
+			return *this;
+		}
+
+		bool operator!=(const Iterator &other) const
+		{
+			return entry != other.entry;
+		}
+
+	private:
+		void SkipFiltered()
+		{
+			while (inGameOnly && entry != last && !(*entry)->IsInGame())
+			{
+				entry++;
+			}
+		}
+
+		Player *const *entry;
+		Player *const *last;
+		bool inGameOnly;
+	};
+
+	PlayerSlotRange(Player *const *players, bool inGameOnly) : players(players), inGameOnly(inGameOnly) {}
+
+	Iterator begin() const
+	{
+		return Iterator(players, players + MAXPLAYERS, inGameOnly);
+	}
+
+	Iterator end() const
+	{
+		return Iterator(players + MAXPLAYERS, players + MAXPLAYERS, inGameOnly);
+	}
+
+private:
+	Player *const *players;
+	bool inGameOnly;
+};
+
 class PlayerManager
 {
 public:
 	PlayerManager()
 	{
-		for (int i = 0; i < MAXPLAYERS + 1; i++)
+		for (i32 i = 0; i < MAXPLAYERS; i++)
 		{
 			delete players[i];
-			players[i] = new Player(i);
+			players[i] = new Player(i + 1);
 			players[i]->Reset();
 		}
 	}
 
 	virtual ~PlayerManager()
 	{
-		for (int i = 0; i < MAXPLAYERS + 1; i++)
+		for (Player *player : players)
 		{
-			delete players[i];
+			delete player;
 		}
 	}
 
@@ -181,11 +243,21 @@ public:
 	Player *ToPlayer(CPlayerUserId userID);
 	Player *SteamIdToPlayer(u64 steamID, bool validated = true);
 
+	PlayerSlotRange<Player> GetAllSlots()
+	{
+		return PlayerSlotRange<Player>(players, false);
+	}
+
+	PlayerSlotRange<Player> GetInGamePlayers()
+	{
+		return PlayerSlotRange<Player>(players, true);
+	}
+
 	virtual void ResetPlayers()
 	{
-		for (int i = 0; i < MAXPLAYERS + 1; i++)
+		for (Player *player : players)
 		{
-			players[i]->Reset();
+			player->Reset();
 		}
 	}
 
@@ -240,8 +312,8 @@ private:
 	std::vector<CPlayerSlot> authQueue; // Queue of players pending auth validation
 
 public:
-	// Zero-initialized: PlayerManager's constructor deletes every slot before allocating.
-	Player *players[MAXPLAYERS + 1] {};
+	// Indexed by player slot, and zero-initialized because PlayerManager's constructor deletes every slot before allocating.
+	Player *players[MAXPLAYERS] {};
 };
 
 extern PlayerManager *g_pPlayerManager;

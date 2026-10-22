@@ -246,13 +246,9 @@ public:
 	template<typename... Args> \
 	static void name(bool addPrefix, const char *message, Args &&...args) \
 	{ \
-		for (u32 i = 0; i < MAXPLAYERS + 1; i++) \
+		for (KZPlayer *player : g_pKZPlayerManager->GetInGamePlayers()) \
 		{ \
-			CBasePlayerController *controller = g_pKZPlayerManager->players[i]->GetController(); \
-			if (controller) \
-			{ \
-				PrintSingle(g_pKZPlayerManager->ToPlayer(i), addPrefix, false, type, message, args...); \
-			} \
+			PrintSingle(player, addPrefix, false, type, message, args...); \
 		} \
 	}
 
