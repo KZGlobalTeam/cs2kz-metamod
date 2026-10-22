@@ -8,6 +8,7 @@
 #include "kz/style/kz_style.h"
 #include "kz/option/kz_option.h"
 #include "kz/replays/kz_replay.h"
+#include "kz/replays/kz_replaysystem.h"
 #include "utils/async_file_io.h"
 #include "utils/utils.h"
 
@@ -322,7 +323,14 @@ void RunSubmission::OnReplayReady(std::vector<char> &&buffer)
 	BuildReplayPath(replayPath, sizeof(replayPath), finalUUID);
 	if (g_asyncFileIO)
 	{
-		g_asyncFileIO->QueueWriteBuffer(replayPath, replayBuffer);
+		g_asyncFileIO->QueueWriteBuffer(replayPath, replayBuffer,
+										[uuid = finalUUID.ToString()](bool success)
+										{
+											if (success)
+											{
+												KZ::replaysystem::NotifyReplayFileChanged(uuid.c_str());
+											}
+										});
 		// Notify the player now (write is async but fire-and-forget, effectively always succeeds).
 		KZPlayer *callbackPlayer = this->IsFromPreviousMap() ? nullptr : g_pKZPlayerManager->ToPlayer(userID);
 		if (callbackPlayer)
@@ -507,7 +515,15 @@ void RunSubmission::DoLateAPIResponse(const std::string &apiUUID)
 	BuildReplayPath(newPath, sizeof(newPath), apiFinalUUID);
 
 	// Rename replay file on the bg thread
-	g_asyncFileIO->QueueRename(oldPath, newPath);
+	g_asyncFileIO->QueueRename(oldPath, newPath,
+							   [oldUUID = localUUID.ToString(), newUUID = apiFinalUUID.ToString()](bool success)
+							   {
+								   if (success)
+								   {
+									   KZ::replaysystem::NotifyReplayFileChanged(oldUUID.c_str());
+									   KZ::replaysystem::NotifyReplayFileChanged(newUUID.c_str());
+								   }
+							   });
 
 	// Update DB row, then reload the record cache, which still holds the old UUID.
 	KZDatabaseService::UpdateRunUUID(

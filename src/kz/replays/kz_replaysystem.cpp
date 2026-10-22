@@ -11,8 +11,50 @@
 #include "utils/uuid.h"
 #include "filesystem/ifilesystem.h"
 
+#include <algorithm>
+
 namespace KZ::replaysystem
 {
+	static_global std::vector<ReplayEventListener *> replayEventListeners;
+
+	bool RegisterReplayEventListener(ReplayEventListener *listener)
+	{
+		if (!listener || std::find(replayEventListeners.begin(), replayEventListeners.end(), listener) != replayEventListeners.end())
+		{
+			return false;
+		}
+		replayEventListeners.push_back(listener);
+		return true;
+	}
+
+	bool UnregisterReplayEventListener(ReplayEventListener *listener)
+	{
+		const auto found = std::find(replayEventListeners.begin(), replayEventListeners.end(), listener);
+		if (found == replayEventListeners.end())
+		{
+			return false;
+		}
+		replayEventListeners.erase(found);
+		return true;
+	}
+
+	void NotifyReplayFileChanged(const char *uuid)
+	{
+		if (!uuid || !UUID_t::FromString(uuid))
+		{
+			return;
+		}
+		// A listener may unsubscribe while handling the notification.
+		const auto listeners = replayEventListeners;
+		for (ReplayEventListener *listener : listeners)
+		{
+			if (std::find(replayEventListeners.begin(), replayEventListeners.end(), listener) != replayEventListeners.end())
+			{
+				listener->OnReplayFileChanged(uuid);
+			}
+		}
+	}
+
 	bool FindReplayPath(const char *uuid, std::string &path)
 	{
 		path.clear();

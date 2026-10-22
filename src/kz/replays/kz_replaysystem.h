@@ -11,6 +11,20 @@ struct KZCourseDescriptor;
 
 namespace KZ::replaysystem
 {
+	// Receives completed replay writes and renames on the main thread.
+	class ReplayEventListener
+	{
+	public:
+		virtual ~ReplayEventListener() = default;
+
+		virtual void OnReplayFileChanged(const char *uuid) {}
+	};
+
+	// Registering a listener twice returns false.
+	bool RegisterReplayEventListener(ReplayEventListener *listener);
+	bool UnregisterReplayEventListener(ReplayEventListener *listener);
+	// Called on the main thread once a replay file is written or renamed.
+	void NotifyReplayFileChanged(const char *uuid);
 	// Finds the replay file of a UUID among the local and downloaded replays.
 	bool FindReplayPath(const char *uuid, std::string &path);
 
