@@ -98,6 +98,23 @@ namespace KZ::replaysystem::data
 		std::mutex callbackMutex;
 	};
 
+	// The positions and events of a replay, without the data only playback needs.
+	struct MovementSample
+	{
+		u32 serverTick;
+		Vector pre, post;
+		bool preNoclip, postNoclip;
+	};
+
+	struct ReplayMovement
+	{
+		ReplayHeader header;
+		std::vector<MovementSample> samples;
+		std::vector<RpEvent> events;
+	};
+
+	bool ReadReplayMovement(const char *path, ReplayMovement &result, const std::atomic<bool> &cancel);
+
 	// Data management functions
 	void LoadReplayAsync(std::string path, LoadSuccessCallback onSuccess, LoadFailureCallback onFailure);
 	void LoadReplayMemoryAsync(std::vector<char> data, UUID_t uuid, LoadSuccessCallback onSuccess, LoadFailureCallback onFailure);

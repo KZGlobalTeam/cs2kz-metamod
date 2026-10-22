@@ -390,6 +390,48 @@ namespace KZ::replaysystem::data
 		return !cancel && utils::ReadBufferFromFile(path, buffer) && !cancel && !buffer.empty();
 	}
 
+	bool ReadReplayMovement(const char *path, ReplayMovement &result, const std::atomic<bool> &cancel)
+	{
+		result = {};
+		std::vector<char> buffer;
+		if (!ReadReplayFile(path, buffer, cancel))
+		{
+			return false;
+		}
+		const char *cursor = buffer.data();
+		const char *end = cursor + buffer.size();
+		if (!ReadHeader(cursor, end, result.header))
+		{
+			return false;
+		}
+		// Routes need the v6 event data.
+		if (result.header.version() < 6)
+		{
+			return false;
+		}
+		compression::TickVisitor visitor = [&](const TickData &tick)
+		{
+			if (cancel)
+			{
+				return false;
+			}
+			result.samples.push_back(
+				{tick.serverTick, tick.pre.origin, tick.post.origin, tick.pre.moveType == MOVETYPE_NOCLIP, tick.post.moveType == MOVETYPE_NOCLIP});
+			return true;
+		};
+		if (!compression::ReadTickDataCompressed(cursor, end, result.header.version(), visitor))
+		{
+			return false;
+		}
+		// No weapons or jumpstats are allocated for route analysis.
+		if (!compression::SkipCompressedSection(cursor, end, result.header.version())
+			|| !compression::SkipCompressedSection(cursor, end, result.header.version()))
+		{
+			return false;
+		}
+		return !cancel && compression::ReadEventsCompressed(cursor, end, result.events, result.header.version());
+	}
+
 	// File-based entry point: reads the entire file into memory then parses.
 	static_function ReplayPlayback LoadReplayWithProgress(const char *path, std::atomic<f32> &progress, std::atomic<bool> &shouldCancel)
 	{
