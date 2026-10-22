@@ -37,7 +37,7 @@ constexpr char sql_getcoursetoppro[] = R"(
 // Caching PBs
 
 constexpr char sql_getsrs[] = R"(
-    SELECT x.RunTime, x.MapCourseID, x.ModeID, t.Metadata, p.Alias
+    SELECT x.RunTime, x.MapCourseID, x.ModeID, t.Metadata, p.Alias, t.ID
         FROM Times t
         INNER JOIN Players p ON p.SteamID64 = t.SteamID64
         INNER JOIN MapCourses mc ON mc.ID = t.MapCourseID
@@ -51,7 +51,7 @@ constexpr char sql_getsrs[] = R"(
 )";
 
 constexpr char sql_getsrspro[] = R"(
-    SELECT x.RunTime, x.MapCourseID, x.ModeID, t.Metadata, p.Alias
+    SELECT x.RunTime, x.MapCourseID, x.ModeID, t.Metadata, p.Alias, t.ID
         FROM Times t
         INNER JOIN Players p ON p.SteamID64 = t.SteamID64
         INNER JOIN MapCourses mc ON mc.ID = t.MapCourseID

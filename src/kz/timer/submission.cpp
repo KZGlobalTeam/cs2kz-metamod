@@ -509,8 +509,9 @@ void RunSubmission::DoLateAPIResponse(const std::string &apiUUID)
 	// Rename replay file on the bg thread
 	g_asyncFileIO->QueueRename(oldPath, newPath);
 
-	// Update DB row
-	KZDatabaseService::UpdateRunUUID(localUUID.ToString().c_str(), apiUUID.c_str(), nullptr, nullptr);
+	// Update DB row, then reload the record cache, which still holds the old UUID.
+	KZDatabaseService::UpdateRunUUID(
+		localUUID.ToString().c_str(), apiUUID.c_str(), [](std::vector<ISQLQuery *>) { KZTimerService::UpdateLocalRecordCache(); }, nullptr);
 
 	// Keep finalUUID consistent with the authoritative API-assigned UUID
 	finalUUID = apiFinalUUID;

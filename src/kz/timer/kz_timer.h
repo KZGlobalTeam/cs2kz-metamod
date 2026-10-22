@@ -45,11 +45,13 @@ struct PBData
 	{
 		overall.pbTime = {};
 		overall.holder.clear();
+		overall.replayUUID.clear();
 		overall.pbSplitZoneTimes.fill(-1.0);
 		overall.pbCpZoneTimes.fill(-1.0);
 		overall.pbStageZoneTimes.fill(-1.0);
 		pro.pbTime = {};
 		pro.holder.clear();
+		pro.replayUUID.clear();
 		pro.pbSplitZoneTimes.fill(-1.0);
 		pro.pbCpZoneTimes.fill(-1.0);
 		pro.pbStageZoneTimes.fill(-1.0);
@@ -60,6 +62,7 @@ struct PBData
 		f64 pbTime {};
 		f64 points {};
 		std::string holder {}; // the record holder's name; empty for a personal best
+		std::string replayUUID {};
 		std::array<f64, KZ_MAX_SPLIT_ZONES> pbSplitZoneTimes;
 		std::array<f64, KZ_MAX_CHECKPOINT_ZONES> pbCpZoneTimes;
 		std::array<f64, KZ_MAX_STAGE_ZONES> pbStageZoneTimes;
@@ -131,6 +134,11 @@ public:
 
 	// Fires once per finished run when its ranks are announced, even if the player has left or the map has changed since.
 	virtual void OnRunSubmittedPost(const RunSubmission &submission) {}
+
+	// Called when a cached record gets a different replay.
+	virtual void OnRecordCacheUpdated(PBDataKey key) {}
+
+	virtual void OnRecordCacheCleared() {}
 };
 
 class KZTimerService : public KZBaseService
@@ -219,7 +227,7 @@ public:
 	static void ClearRecordCache();
 	static void UpdateLocalRecordCache();
 	static void InsertRecordToCache(f64 time, const KZCourseDescriptor *courseName, PluginId modeID, bool hasTeleports, bool global,
-									CUtlString metadata = "", const char *holder = "");
+									CUtlString metadata = "", const char *holder = "", const char *replayUUID = "");
 	static const PBData *GetGlobalCachedRecord(const KZCourseDescriptor *course, PluginId modeID);
 
 	void ClearPBCache();
