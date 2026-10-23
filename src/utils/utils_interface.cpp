@@ -125,7 +125,8 @@ void KZUtils::RemoveTimer(CTimerBase *timer)
 
 CUtlVector<CServerSideClient *> *KZUtils::GetClientList()
 {
-	if (!g_pNetworkServerService)
+	// There is no game server before the first map loads.
+	if (!g_pNetworkServerService || !g_pNetworkServerService->GetIGameServer())
 	{
 		return nullptr;
 	}

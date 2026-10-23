@@ -116,11 +116,16 @@ public:
 	{
 		m_Recipients.ClearAll();
 
-		for (int i = 0; i < g_pKZUtils->GetClientList()->Count(); i++)
+		CUtlVector<CServerSideClient *> *clients = g_pKZUtils->GetClientList();
+		if (!clients)
 		{
-			if (g_pKZUtils->GetClientList()->Element(i)->IsActive())
+			return;
+		}
+		for (int i = 0; i < clients->Count(); i++)
+		{
+			if (clients->Element(i)->IsActive())
 			{
-				AddRecipient(g_pKZUtils->GetClientList()->Element(i)->GetPlayerSlot());
+				AddRecipient(clients->Element(i)->GetPlayerSlot());
 			}
 		}
 	}
