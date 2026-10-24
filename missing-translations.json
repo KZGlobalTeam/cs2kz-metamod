@@ -1,9 +1,9 @@
 {
   "summary": {
     "total_languages": 15,
-    "total_phrases": 1131,
-    "phrases_with_missing": 1131,
-    "total_missing_entries": 8030,
+    "total_phrases": 1130,
+    "phrases_with_missing": 1130,
+    "total_missing_entries": 8016,
     "all_languages": [
       "chi",
       "de",
@@ -59,9 +59,9 @@
   "languages": {
     "chi": {
       "name": "schinese",
-      "coverage_percent": 89.74,
+      "coverage_percent": 89.82,
       "translated": 1015,
-      "missing": 116,
+      "missing": 115,
       "missing_phrases": [
         {
           "file": "translations/cs2kz-commands.phrases.txt",
@@ -517,7 +517,7 @@
           "file": "translations/cs2kz-menu.phrases.txt",
           "phrase": "Menu - Race PB Sub",
           "line": 2220,
-          "english_text": "Your personal best on the race course while you run it, pro only in a race without teleports"
+          "english_text": "Your fastest time in the current race, in a fastest time race"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
@@ -587,44 +587,38 @@
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
-          "phrase": "Racing HUD - Pro PB",
-          "line": 320,
-          "english_text": "Pro PB"
-        },
-        {
-          "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - None",
-          "line": 324,
+          "line": 320,
           "english_text": "None"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - Accepted",
-          "line": 328,
+          "line": 324,
           "english_text": "Accepted"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - Join Hint",
-          "line": 332,
+          "line": 328,
           "english_text": "Type !accept to join"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - Not Joined",
-          "line": 336,
+          "line": 332,
           "english_text": "Not joined"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - Running",
-          "line": 340,
+          "line": 336,
           "english_text": "In progress"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - Finished",
-          "line": 344,
+          "line": 340,
           "english_text": "Finished"
         },
         {
@@ -773,9 +767,9 @@
     },
     "de": {
       "name": "german",
-      "coverage_percent": 46.15,
+      "coverage_percent": 46.19,
       "translated": 522,
-      "missing": 609,
+      "missing": 608,
       "missing_phrases": [
         {
           "file": "translations/cs2kz-anticheat.phrases.txt",
@@ -3763,7 +3757,7 @@
           "file": "translations/cs2kz-menu.phrases.txt",
           "phrase": "Menu - Race PB Sub",
           "line": 2220,
-          "english_text": "Your personal best on the race course while you run it, pro only in a race without teleports"
+          "english_text": "Your fastest time in the current race, in a fastest time race"
         },
         {
           "file": "translations/cs2kz-paint.phrases.txt",
@@ -3899,44 +3893,38 @@
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
-          "phrase": "Racing HUD - Pro PB",
-          "line": 320,
-          "english_text": "Pro PB"
-        },
-        {
-          "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - None",
-          "line": 324,
+          "line": 320,
           "english_text": "None"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - Accepted",
-          "line": 328,
+          "line": 324,
           "english_text": "Accepted"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - Join Hint",
-          "line": 332,
+          "line": 328,
           "english_text": "Type !accept to join"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - Not Joined",
-          "line": 336,
+          "line": 332,
           "english_text": "Not joined"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - Running",
-          "line": 340,
+          "line": 336,
           "english_text": "In progress"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - Finished",
-          "line": 344,
+          "line": 340,
           "english_text": "Finished"
         },
         {
@@ -4441,7 +4429,7 @@
     "en": {
       "name": "english",
       "coverage_percent": 100.0,
-      "translated": 1131,
+      "translated": 1130,
       "missing": 0,
       "missing_phrases": [],
       "menu": {
@@ -4452,9 +4440,9 @@
     },
     "es": {
       "name": "spanish",
-      "coverage_percent": 42.97,
+      "coverage_percent": 43.01,
       "translated": 486,
-      "missing": 645,
+      "missing": 644,
       "missing_phrases": [
         {
           "file": "translations/cs2kz-commands.phrases.txt",
@@ -7112,7 +7100,7 @@
           "file": "translations/cs2kz-menu.phrases.txt",
           "phrase": "Menu - Race PB Sub",
           "line": 2220,
-          "english_text": "Your personal best on the race course while you run it, pro only in a race without teleports"
+          "english_text": "Your fastest time in the current race, in a fastest time race"
         },
         {
           "file": "translations/cs2kz-paint.phrases.txt",
@@ -7380,44 +7368,38 @@
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
-          "phrase": "Racing HUD - Pro PB",
-          "line": 320,
-          "english_text": "Pro PB"
-        },
-        {
-          "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - None",
-          "line": 324,
+          "line": 320,
           "english_text": "None"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - Accepted",
-          "line": 328,
+          "line": 324,
           "english_text": "Accepted"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - Join Hint",
-          "line": 332,
+          "line": 328,
           "english_text": "Type !accept to join"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - Not Joined",
-          "line": 336,
+          "line": 332,
           "english_text": "Not joined"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - Running",
-          "line": 340,
+          "line": 336,
           "english_text": "In progress"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - Finished",
-          "line": 344,
+          "line": 340,
           "english_text": "Finished"
         },
         {
@@ -8335,9 +8317,9 @@
     },
     "fi": {
       "name": "finnish",
-      "coverage_percent": 20.78,
+      "coverage_percent": 20.8,
       "translated": 235,
-      "missing": 896,
+      "missing": 895,
       "missing_phrases": [
         {
           "file": "translations/cs2kz-anticheat.phrases.txt",
@@ -12015,7 +11997,7 @@
           "file": "translations/cs2kz-menu.phrases.txt",
           "phrase": "Menu - Race PB Sub",
           "line": 2220,
-          "english_text": "Your personal best on the race course while you run it, pro only in a race without teleports"
+          "english_text": "Your fastest time in the current race, in a fastest time race"
         },
         {
           "file": "translations/cs2kz-paint.phrases.txt",
@@ -12319,44 +12301,38 @@
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
-          "phrase": "Racing HUD - Pro PB",
-          "line": 320,
-          "english_text": "Pro PB"
-        },
-        {
-          "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - None",
-          "line": 324,
+          "line": 320,
           "english_text": "None"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - Accepted",
-          "line": 328,
+          "line": 324,
           "english_text": "Accepted"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - Join Hint",
-          "line": 332,
+          "line": 328,
           "english_text": "Type !accept to join"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - Not Joined",
-          "line": 336,
+          "line": 332,
           "english_text": "Not joined"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - Running",
-          "line": 340,
+          "line": 336,
           "english_text": "In progress"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - Finished",
-          "line": 344,
+          "line": 340,
           "english_text": "Finished"
         },
         {
@@ -13729,9 +13705,9 @@
     },
     "it": {
       "name": "italian",
-      "coverage_percent": 20.07,
+      "coverage_percent": 20.09,
       "translated": 227,
-      "missing": 904,
+      "missing": 903,
       "missing_phrases": [
         {
           "file": "translations/cs2kz-anticheat.phrases.txt",
@@ -17427,7 +17403,7 @@
           "file": "translations/cs2kz-menu.phrases.txt",
           "phrase": "Menu - Race PB Sub",
           "line": 2220,
-          "english_text": "Your personal best on the race course while you run it, pro only in a race without teleports"
+          "english_text": "Your fastest time in the current race, in a fastest time race"
         },
         {
           "file": "translations/cs2kz-paint.phrases.txt",
@@ -17731,44 +17707,38 @@
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
-          "phrase": "Racing HUD - Pro PB",
-          "line": 320,
-          "english_text": "Pro PB"
-        },
-        {
-          "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - None",
-          "line": 324,
+          "line": 320,
           "english_text": "None"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - Accepted",
-          "line": 328,
+          "line": 324,
           "english_text": "Accepted"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - Join Hint",
-          "line": 332,
+          "line": 328,
           "english_text": "Type !accept to join"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - Not Joined",
-          "line": 336,
+          "line": 332,
           "english_text": "Not joined"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - Running",
-          "line": 340,
+          "line": 336,
           "english_text": "In progress"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - Finished",
-          "line": 344,
+          "line": 340,
           "english_text": "Finished"
         },
         {
@@ -19171,9 +19141,9 @@
     },
     "ko": {
       "name": "koreana",
-      "coverage_percent": 58.0,
+      "coverage_percent": 58.05,
       "translated": 656,
-      "missing": 475,
+      "missing": 474,
       "missing_phrases": [
         {
           "file": "translations/cs2kz-commands.phrases.txt",
@@ -21765,7 +21735,7 @@
           "file": "translations/cs2kz-menu.phrases.txt",
           "phrase": "Menu - Race PB Sub",
           "line": 2220,
-          "english_text": "Your personal best on the race course while you run it, pro only in a race without teleports"
+          "english_text": "Your fastest time in the current race, in a fastest time race"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
@@ -21835,44 +21805,38 @@
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
-          "phrase": "Racing HUD - Pro PB",
-          "line": 320,
-          "english_text": "Pro PB"
-        },
-        {
-          "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - None",
-          "line": 324,
+          "line": 320,
           "english_text": "None"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - Accepted",
-          "line": 328,
+          "line": 324,
           "english_text": "Accepted"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - Join Hint",
-          "line": 332,
+          "line": 328,
           "english_text": "Type !accept to join"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - Not Joined",
-          "line": 336,
+          "line": 332,
           "english_text": "Not joined"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - Running",
-          "line": 340,
+          "line": 336,
           "english_text": "In progress"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - Finished",
-          "line": 344,
+          "line": 340,
           "english_text": "Finished"
         },
         {
@@ -22034,9 +21998,9 @@
     },
     "lv": {
       "name": "latvian",
-      "coverage_percent": 29.18,
+      "coverage_percent": 29.2,
       "translated": 330,
-      "missing": 801,
+      "missing": 800,
       "missing_phrases": [
         {
           "file": "translations/cs2kz-anticheat.phrases.txt",
@@ -25438,7 +25402,7 @@
           "file": "translations/cs2kz-menu.phrases.txt",
           "phrase": "Menu - Race PB Sub",
           "line": 2220,
-          "english_text": "Your personal best on the race course while you run it, pro only in a race without teleports"
+          "english_text": "Your fastest time in the current race, in a fastest time race"
         },
         {
           "file": "translations/cs2kz-paint.phrases.txt",
@@ -25742,44 +25706,38 @@
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
-          "phrase": "Racing HUD - Pro PB",
-          "line": 320,
-          "english_text": "Pro PB"
-        },
-        {
-          "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - None",
-          "line": 324,
+          "line": 320,
           "english_text": "None"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - Accepted",
-          "line": 328,
+          "line": 324,
           "english_text": "Accepted"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - Join Hint",
-          "line": 332,
+          "line": 328,
           "english_text": "Type !accept to join"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - Not Joined",
-          "line": 336,
+          "line": 332,
           "english_text": "Not joined"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - Running",
-          "line": 340,
+          "line": 336,
           "english_text": "In progress"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - Finished",
-          "line": 344,
+          "line": 340,
           "english_text": "Finished"
         },
         {
@@ -26855,7 +26813,7 @@
       "name": "dutch",
       "coverage_percent": 0.44,
       "translated": 5,
-      "missing": 1126,
+      "missing": 1125,
       "missing_phrases": [
         {
           "file": "translations/cs2kz-anticheat.phrases.txt",
@@ -31343,7 +31301,7 @@
           "file": "translations/cs2kz-menu.phrases.txt",
           "phrase": "Menu - Race PB Sub",
           "line": 2220,
-          "english_text": "Your personal best on the race course while you run it, pro only in a race without teleports"
+          "english_text": "Your fastest time in the current race, in a fastest time race"
         },
         {
           "file": "translations/cs2kz-modes.phrases.txt",
@@ -31719,44 +31677,38 @@
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
-          "phrase": "Racing HUD - Pro PB",
-          "line": 320,
-          "english_text": "Pro PB"
-        },
-        {
-          "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - None",
-          "line": 324,
+          "line": 320,
           "english_text": "None"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - Accepted",
-          "line": 328,
+          "line": 324,
           "english_text": "Accepted"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - Join Hint",
-          "line": 332,
+          "line": 328,
           "english_text": "Type !accept to join"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - Not Joined",
-          "line": 336,
+          "line": 332,
           "english_text": "Not joined"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - Running",
-          "line": 340,
+          "line": 336,
           "english_text": "In progress"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - Finished",
-          "line": 344,
+          "line": 340,
           "english_text": "Finished"
         },
         {
@@ -33622,9 +33574,9 @@
     },
     "pl": {
       "name": "polish",
-      "coverage_percent": 46.33,
+      "coverage_percent": 46.37,
       "translated": 524,
-      "missing": 607,
+      "missing": 606,
       "missing_phrases": [
         {
           "file": "translations/cs2kz-anticheat.phrases.txt",
@@ -36600,7 +36552,7 @@
           "file": "translations/cs2kz-menu.phrases.txt",
           "phrase": "Menu - Race PB Sub",
           "line": 2220,
-          "english_text": "Your personal best on the race course while you run it, pro only in a race without teleports"
+          "english_text": "Your fastest time in the current race, in a fastest time race"
         },
         {
           "file": "translations/cs2kz-paint.phrases.txt",
@@ -36736,44 +36688,38 @@
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
-          "phrase": "Racing HUD - Pro PB",
-          "line": 320,
-          "english_text": "Pro PB"
-        },
-        {
-          "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - None",
-          "line": 324,
+          "line": 320,
           "english_text": "None"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - Accepted",
-          "line": 328,
+          "line": 324,
           "english_text": "Accepted"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - Join Hint",
-          "line": 332,
+          "line": 328,
           "english_text": "Type !accept to join"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - Not Joined",
-          "line": 336,
+          "line": 332,
           "english_text": "Not joined"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - Running",
-          "line": 340,
+          "line": 336,
           "english_text": "In progress"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - Finished",
-          "line": 344,
+          "line": 340,
           "english_text": "Finished"
         },
         {
@@ -37277,9 +37223,9 @@
     },
     "ru": {
       "name": "russian",
-      "coverage_percent": 88.24,
+      "coverage_percent": 88.32,
       "translated": 998,
-      "missing": 133,
+      "missing": 132,
       "missing_phrases": [
         {
           "file": "translations/cs2kz-commands.phrases.txt",
@@ -37837,7 +37783,7 @@
           "file": "translations/cs2kz-menu.phrases.txt",
           "phrase": "Menu - Race PB Sub",
           "line": 2220,
-          "english_text": "Your personal best on the race course while you run it, pro only in a race without teleports"
+          "english_text": "Your fastest time in the current race, in a fastest time race"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
@@ -37907,44 +37853,38 @@
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
-          "phrase": "Racing HUD - Pro PB",
-          "line": 320,
-          "english_text": "Pro PB"
-        },
-        {
-          "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - None",
-          "line": 324,
+          "line": 320,
           "english_text": "None"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - Accepted",
-          "line": 328,
+          "line": 324,
           "english_text": "Accepted"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - Join Hint",
-          "line": 332,
+          "line": 328,
           "english_text": "Type !accept to join"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - Not Joined",
-          "line": 336,
+          "line": 332,
           "english_text": "Not joined"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - Running",
-          "line": 340,
+          "line": 336,
           "english_text": "In progress"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - Finished",
-          "line": 344,
+          "line": 340,
           "english_text": "Finished"
         },
         {
@@ -38088,9 +38028,9 @@
     },
     "sv": {
       "name": "swedish",
-      "coverage_percent": 34.84,
+      "coverage_percent": 34.87,
       "translated": 394,
-      "missing": 737,
+      "missing": 736,
       "missing_phrases": [
         {
           "file": "translations/cs2kz-anticheat.phrases.txt",
@@ -41222,7 +41162,7 @@
           "file": "translations/cs2kz-menu.phrases.txt",
           "phrase": "Menu - Race PB Sub",
           "line": 2220,
-          "english_text": "Your personal best on the race course while you run it, pro only in a race without teleports"
+          "english_text": "Your fastest time in the current race, in a fastest time race"
         },
         {
           "file": "translations/cs2kz-paint.phrases.txt",
@@ -41490,44 +41430,38 @@
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
-          "phrase": "Racing HUD - Pro PB",
-          "line": 320,
-          "english_text": "Pro PB"
-        },
-        {
-          "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - None",
-          "line": 324,
+          "line": 320,
           "english_text": "None"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - Accepted",
-          "line": 328,
+          "line": 324,
           "english_text": "Accepted"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - Join Hint",
-          "line": 332,
+          "line": 328,
           "english_text": "Type !accept to join"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - Not Joined",
-          "line": 336,
+          "line": 332,
           "english_text": "Not joined"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - Running",
-          "line": 340,
+          "line": 336,
           "english_text": "In progress"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - Finished",
-          "line": 344,
+          "line": 340,
           "english_text": "Finished"
         },
         {
@@ -42523,9 +42457,9 @@
     },
     "tr": {
       "name": "turkish",
-      "coverage_percent": 23.34,
+      "coverage_percent": 23.36,
       "translated": 264,
-      "missing": 867,
+      "missing": 866,
       "missing_phrases": [
         {
           "file": "translations/cs2kz-anticheat.phrases.txt",
@@ -46161,7 +46095,7 @@
           "file": "translations/cs2kz-menu.phrases.txt",
           "phrase": "Menu - Race PB Sub",
           "line": 2220,
-          "english_text": "Your personal best on the race course while you run it, pro only in a race without teleports"
+          "english_text": "Your fastest time in the current race, in a fastest time race"
         },
         {
           "file": "translations/cs2kz-paint.phrases.txt",
@@ -46465,44 +46399,38 @@
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
-          "phrase": "Racing HUD - Pro PB",
-          "line": 320,
-          "english_text": "Pro PB"
-        },
-        {
-          "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - None",
-          "line": 324,
+          "line": 320,
           "english_text": "None"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - Accepted",
-          "line": 328,
+          "line": 324,
           "english_text": "Accepted"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - Join Hint",
-          "line": 332,
+          "line": 328,
           "english_text": "Type !accept to join"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - Not Joined",
-          "line": 336,
+          "line": 332,
           "english_text": "Not joined"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - Running",
-          "line": 340,
+          "line": 336,
           "english_text": "In progress"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - Finished",
-          "line": 344,
+          "line": 340,
           "english_text": "Finished"
         },
         {
@@ -47743,9 +47671,9 @@
     },
     "ua": {
       "name": "ukrainian",
-      "coverage_percent": 95.23,
+      "coverage_percent": 95.31,
       "translated": 1077,
-      "missing": 54,
+      "missing": 53,
       "missing_phrases": [
         {
           "file": "translations/cs2kz-commands.phrases.txt",
@@ -47853,7 +47781,7 @@
           "file": "translations/cs2kz-menu.phrases.txt",
           "phrase": "Menu - Race PB Sub",
           "line": 2220,
-          "english_text": "Your personal best on the race course while you run it, pro only in a race without teleports"
+          "english_text": "Your fastest time in the current race, in a fastest time race"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
@@ -47923,44 +47851,38 @@
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
-          "phrase": "Racing HUD - Pro PB",
-          "line": 320,
-          "english_text": "Pro PB"
-        },
-        {
-          "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - None",
-          "line": 324,
+          "line": 320,
           "english_text": "None"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - Accepted",
-          "line": 328,
+          "line": 324,
           "english_text": "Accepted"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - Join Hint",
-          "line": 332,
+          "line": 328,
           "english_text": "Type !accept to join"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - Not Joined",
-          "line": 336,
+          "line": 332,
           "english_text": "Not joined"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - Running",
-          "line": 340,
+          "line": 336,
           "english_text": "In progress"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - Finished",
-          "line": 344,
+          "line": 340,
           "english_text": "Finished"
         },
         {
@@ -48080,9 +48002,9 @@
     },
     "zho": {
       "name": "tchinese",
-      "coverage_percent": 94.69,
+      "coverage_percent": 94.78,
       "translated": 1071,
-      "missing": 60,
+      "missing": 59,
       "missing_phrases": [
         {
           "file": "translations/cs2kz-commands.phrases.txt",
@@ -48190,7 +48112,7 @@
           "file": "translations/cs2kz-menu.phrases.txt",
           "phrase": "Menu - Race PB Sub",
           "line": 2220,
-          "english_text": "Your personal best on the race course while you run it, pro only in a race without teleports"
+          "english_text": "Your fastest time in the current race, in a fastest time race"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
@@ -48272,44 +48194,38 @@
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
-          "phrase": "Racing HUD - Pro PB",
-          "line": 320,
-          "english_text": "Pro PB"
-        },
-        {
-          "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - None",
-          "line": 324,
+          "line": 320,
           "english_text": "None"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - Accepted",
-          "line": 328,
+          "line": 324,
           "english_text": "Accepted"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - Join Hint",
-          "line": 332,
+          "line": 328,
           "english_text": "Type !accept to join"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - Not Joined",
-          "line": 336,
+          "line": 332,
           "english_text": "Not joined"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - Running",
-          "line": 340,
+          "line": 336,
           "english_text": "In progress"
         },
         {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing HUD - Finished",
-          "line": 344,
+          "line": 340,
           "english_text": "Finished"
         },
         {
@@ -66582,7 +66498,7 @@
         {
           "name": "Menu - Race PB Sub",
           "line": 2220,
-          "english_text": "Your personal best on the race course while you run it, pro only in a race without teleports",
+          "english_text": "Your fastest time in the current race, in a fastest time race",
           "existing_languages": [
             "en"
           ],
@@ -67327,7 +67243,7 @@
       ]
     },
     "translations/cs2kz-racing.phrases.txt": {
-      "phrases_with_missing": 40,
+      "phrases_with_missing": 39,
       "phrases": [
         {
           "name": "Racing - Race Countdown",
@@ -68122,32 +68038,8 @@
           ]
         },
         {
-          "name": "Racing HUD - Pro PB",
-          "line": 320,
-          "english_text": "Pro PB",
-          "existing_languages": [
-            "en"
-          ],
-          "missing_languages": [
-            "chi",
-            "de",
-            "es",
-            "fi",
-            "it",
-            "ko",
-            "lv",
-            "nl",
-            "pl",
-            "ru",
-            "sv",
-            "tr",
-            "ua",
-            "zho"
-          ]
-        },
-        {
           "name": "Racing HUD - None",
-          "line": 324,
+          "line": 320,
           "english_text": "None",
           "existing_languages": [
             "en"
@@ -68171,7 +68063,7 @@
         },
         {
           "name": "Racing HUD - Accepted",
-          "line": 328,
+          "line": 324,
           "english_text": "Accepted",
           "existing_languages": [
             "en"
@@ -68195,7 +68087,7 @@
         },
         {
           "name": "Racing HUD - Join Hint",
-          "line": 332,
+          "line": 328,
           "english_text": "Type !accept to join",
           "existing_languages": [
             "en"
@@ -68219,7 +68111,7 @@
         },
         {
           "name": "Racing HUD - Not Joined",
-          "line": 336,
+          "line": 332,
           "english_text": "Not joined",
           "existing_languages": [
             "en"
@@ -68243,7 +68135,7 @@
         },
         {
           "name": "Racing HUD - Running",
-          "line": 340,
+          "line": 336,
           "english_text": "In progress",
           "existing_languages": [
             "en"
@@ -68267,7 +68159,7 @@
         },
         {
           "name": "Racing HUD - Finished",
-          "line": 344,
+          "line": 340,
           "english_text": "Finished",
           "existing_languages": [
             "en"
