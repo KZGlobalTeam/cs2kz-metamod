@@ -2210,21 +2210,26 @@
 	"Menu - Race"
 	{
 		"en"		"Race"
+		"ua"		"Перегони"
 	}
 	"Menu - Race Time Left"
 	{
 		"en"		"Time left"
+		"ua"		"Залишок часу"
 	}
 	"Menu - Race Time Left Sub"
 	{
 		"en"		"Count down the time left instead of showing the time limit once a race starts"
+		"ua"		"Показує залишок часу, замість того, щоб показувати ліміт часу після старту перегонів"
 	}
 	"Menu - Race PB"
 	{
 		"en"		"Personal best"
+		"ua"		"Особистий рекорд"
 	}
 	"Menu - Race PB Sub"
 	{
 		"en"		"Your fastest time in the current race, in a fastest time race"
+		"ua"		"Ваш найшвидший час у поточних перегонах на швидкість"
 	}
 }
