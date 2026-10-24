@@ -9,29 +9,29 @@ Automated translation linter reports for cs2kz-metamod.
 | **Linter Errors** | 0 |
 | **Linter Warnings** | 2 |
 | **Total Languages** | 15 |
-| **Total Phrases** | 1108 |
-| **Phrases Missing Translations** | 1108 |
-| **Total Missing Entries** | 7708 |
+| **Total Phrases** | 1131 |
+| **Phrases Missing Translations** | 1131 |
+| **Total Missing Entries** | 8030 |
 | **Menu Files** | 11 |
 
 ## Language Coverage (Phrases)
 
 ```
-  chi (schinese)       [██████████████████░░]  91.6% (1015/1108)
-  de (german)          [█████████░░░░░░░░░░░]  47.1% (522/1108)
-  en (english)         [████████████████████] 100.0% (1108/1108)
-  es (spanish)         [████████░░░░░░░░░░░░]  43.9% (486/1108)
-  fi (finnish)         [████░░░░░░░░░░░░░░░░]  21.2% (235/1108)
-  it (italian)         [████░░░░░░░░░░░░░░░░]  20.5% (227/1108)
-  ko (korean)          [███████████░░░░░░░░░]  59.2% (656/1108)
-  lv (latvian)         [█████░░░░░░░░░░░░░░░]  29.8% (330/1108)
-  nl (dutch)           [░░░░░░░░░░░░░░░░░░░░]   0.5% (5/1108)
-  pl (polish)          [█████████░░░░░░░░░░░]  47.3% (524/1108)
-  ru (russian)         [██████████████████░░]  90.1% (998/1108)
-  sv (swedish)         [███████░░░░░░░░░░░░░]  35.6% (394/1108)
-  tr (turkish)         [████░░░░░░░░░░░░░░░░]  23.8% (264/1108)
-  ua (ukrainian)       [███████████████████░]  97.2% (1077/1108)
-  zho (tchinese)       [███████████████████░]  96.7% (1071/1108)
+  chi (schinese)       [█████████████████░░░]  89.7% (1015/1131)
+  de (german)          [█████████░░░░░░░░░░░]  46.2% (522/1131)
+  en (english)         [████████████████████] 100.0% (1131/1131)
+  es (spanish)         [████████░░░░░░░░░░░░]  43.0% (486/1131)
+  fi (finnish)         [████░░░░░░░░░░░░░░░░]  20.8% (235/1131)
+  it (italian)         [████░░░░░░░░░░░░░░░░]  20.1% (227/1131)
+  ko (koreana)         [███████████░░░░░░░░░]  58.0% (656/1131)
+  lv (latvian)         [█████░░░░░░░░░░░░░░░]  29.2% (330/1131)
+  nl (dutch)           [░░░░░░░░░░░░░░░░░░░░]   0.4% (5/1131)
+  pl (polish)          [█████████░░░░░░░░░░░]  46.3% (524/1131)
+  ru (russian)         [█████████████████░░░]  88.2% (998/1131)
+  sv (swedish)         [██████░░░░░░░░░░░░░░]  34.8% (394/1131)
+  tr (turkish)         [████░░░░░░░░░░░░░░░░]  23.3% (264/1131)
+  ua (ukrainian)       [███████████████████░]  95.2% (1077/1131)
+  zho (tchinese)       [██████████████████░░]  94.7% (1071/1131)
 ```
 
 ## Menu Translation Status
@@ -81,9 +81,9 @@ Automated translation linter reports for cs2kz-metamod.
 
 ## Last Updated
 
-- **Commit:** [`d7ae9ff`](https://github.com/KZGlobalTeam/cs2kz-metamod/commit/d7ae9ff2b12a5c7e34e05c6ad25b5546dea69adc)
-- **Time:** 2026-10-22 15:22:02 UTC
-- **Message:** Fix multiple crash points on plugin unload/server shutdown
+- **Commit:** [`7693a85`](https://github.com/KZGlobalTeam/cs2kz-metamod/commit/7693a85d06b89d4b8bc158e0665c4e775a4d65b8)
+- **Time:** 2026-10-24 09:56:15 UTC
+- **Message:** Add race UI
 
 ---
 
