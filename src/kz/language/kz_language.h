@@ -227,6 +227,7 @@ private:
 	}
 
 public:
+	// clang-format off
 #define REGISTER_PRINT_SINGLE_FUNCTION(name, type) \
 	template<typename... Args> \
 	void name(bool addPrefix, bool includeSpectators, const char *message, Args &&...args) \
@@ -258,4 +259,5 @@ public:
 	REGISTER_PRINT_ALL_FUNCTION(PrintAlertAll, MESSAGE_ALERT)
 	REGISTER_PRINT_ALL_FUNCTION(PrintHTMLCentreAll, MESSAGE_HTML)
 #undef REGISTER_PRINT_ALL_FUNCTION
+	// clang-format on
 };
