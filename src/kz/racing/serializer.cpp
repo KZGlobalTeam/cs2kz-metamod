@@ -77,7 +77,8 @@ bool KZ::racing::RaceResult::FromJson(const Json &json)
 		return false;
 	}
 
-	return json.Get("player_name", this->playerName) && json.Get("time", this->timeSeconds) && json.Get("teleports", this->teleports);
+	return json.Get("player_name", this->playerName) && json.Get("time", this->timeSeconds) && json.Get("teleports", this->teleports)
+		   && json.Get("points", this->points);
 }
 
 // ===== Events =====

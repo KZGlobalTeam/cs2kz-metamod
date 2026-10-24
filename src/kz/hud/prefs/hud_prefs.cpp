@@ -9,6 +9,7 @@
 
 static_global constexpr const char *ELEMENT_PHRASE[(i32)MHUDElement::Count] = {
 	"Menu - Timer", "Speed", "Menu - Prespeed", "Menu - Keys", "Menu - Checkpoint", "Menu - Jumpstats", "Menu - Course Info", "Menu - W Release",
+	"Menu - Race",
 	// The indicators share one flattened page, so these only name them; they are not sub titles.
 	"Menu - Ind Perf", "Menu - Ind CJ", "Menu - Ind JB"};
 
@@ -304,7 +305,7 @@ void KZHUDService::RegisterMenu()
 			KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
 		}
 		KZ::menu::AddSize(sub, "Menu - Size", def.sizeKey, def.sizeDefault, def.sizeMin, def.sizeMax, e);
-		if (e == (i32)MHUDElement::Jumpstats || e == (i32)MHUDElement::Course)
+		if (IsMHUDElementScaled((MHUDElement)e))
 		{
 			KZ::menu::SetItemUnit(sub, "%");
 		}
@@ -436,6 +437,17 @@ void KZHUDService::RegisterMenu()
 				KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
 				KZ::menu::AddToggle(sub, "Menu - Course Show Splits", "mhudCourseShowSplits", true);
 				KZ::menu::SetItemSubtext(sub, "Menu - Course Show Splits Sub");
+				KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
+				break;
+			}
+
+			case MHUDElement::Race:
+			{
+				KZ::menu::AddToggle(sub, "Menu - Race Time Left", "raceHudTimeLeft", true);
+				KZ::menu::SetItemSubtext(sub, "Menu - Race Time Left Sub");
+				KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
+				KZ::menu::AddToggle(sub, "Menu - Race PB", "raceHudPB", true);
+				KZ::menu::SetItemSubtext(sub, "Menu - Race PB Sub");
 				KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
 				break;
 			}

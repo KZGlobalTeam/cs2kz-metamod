@@ -135,6 +135,12 @@
 		"de"		"{lime}{player}{grey} hat das Rennen nicht beendet."
 		"ko"		"{lime}{player}{grey}님이 레이스를 완주하지 못했습니다."
 	}
+	"Racing - End Results Points"
+	{
+		// Appended to a result line: Alice has won the race! (00:45.32) [12 points]
+		"#format"	"points:d"
+		"en"		" {grey}[{default}{points}{grey} points]"
+	}
 	"Racing - No Time Limit"
 	{
 		"en"		"No time limit"
@@ -270,5 +276,73 @@
 		"ua"		"{lime}{player}{grey} скасував свою участь у гонці."
 		"de"		"{lime}{player}{grey} hat sich vom Rennen abgemeldet."
 		"ko"		"{lime}{player}{grey}님이 레이스에서 취소했습니다."
+	}
+	"Racing HUD - Title"
+	{
+		"en"		"Race"
+	}
+	"Racing HUD - Course"
+	{
+		"en"		"Course"
+	}
+	"Racing HUD - Mode"
+	{
+		"en"		"Mode"
+	}
+	"Racing HUD - Format"
+	{
+		"en"		"Format"
+	}
+	"Racing HUD - Format Fastest Time"
+	{
+		"en"		"Fastest time"
+	}
+	"Racing HUD - Format First To Finish"
+	{
+		"en"		"First to finish"
+	}
+	"Racing HUD - Teleport Limit"
+	{
+		"en"		"Max TPs"
+	}
+	"Racing HUD - Time Limit"
+	{
+		"en"		"Time limit"
+	}
+	"Racing HUD - Time Left"
+	{
+		"en"		"Time left"
+	}
+	"Racing HUD - PB"
+	{
+		"en"		"PB"
+	}
+	"Racing HUD - Pro PB"
+	{
+		"en"		"Pro PB"
+	}
+	"Racing HUD - None"
+	{
+		"en"		"None"
+	}
+	"Racing HUD - Accepted"
+	{
+		"en"		"Accepted"
+	}
+	"Racing HUD - Join Hint"
+	{
+		"en"		"Type !accept to join"
+	}
+	"Racing HUD - Not Joined"
+	{
+		"en"		"Not joined"
+	}
+	"Racing HUD - Running"
+	{
+		"en"		"In progress"
+	}
+	"Racing HUD - Finished"
+	{
+		"en"		"Finished"
 	}
 }

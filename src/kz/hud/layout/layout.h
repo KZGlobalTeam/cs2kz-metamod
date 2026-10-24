@@ -34,6 +34,11 @@
 #define MHUD_DEF_COURSE_Y    -45
 #define MHUD_DEF_COURSE_SIZE 125
 
+// Under the course panel's default spot, below its zone history. A scale in percent, like the course panel's.
+#define MHUD_DEF_RACE_X    -48
+#define MHUD_DEF_RACE_Y    -5
+#define MHUD_DEF_RACE_SIZE 125
+
 // Right of the prespeed, at its size.
 #define MHUD_DEF_RELEASE_X    5
 #define MHUD_DEF_RELEASE_Y    12

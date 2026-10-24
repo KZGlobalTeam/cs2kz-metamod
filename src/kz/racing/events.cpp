@@ -2,6 +2,21 @@
 #include "kz/language/kz_language.h"
 #include "kz/timer/kz_timer.h"
 
+// The points follow the line, so each recipient gets both in their own language.
+template<typename... Args>
+static_function void PrintRaceResult(const KZ::racing::RaceResult &result, const char *message, Args &&...args)
+{
+	for (KZPlayer *player : g_pKZPlayerManager->GetInGamePlayers())
+	{
+		std::string line = player->languageService->PrepareMessage(message, args...);
+		if (result.points.has_value())
+		{
+			line += player->languageService->PrepareMessage("Racing - End Results Points", *result.points);
+		}
+		player->PrintChat(false, false, "%s", line.c_str());
+	}
+}
+
 void KZRacingService::OnChatMessage(const KZ::racing::events::ChatMessage &message)
 {
 	// If the message starts with a '/' or '!', ignore it.
@@ -112,15 +127,15 @@ void KZRacingService::OnRaceCompleted(const KZ::racing::events::RaceCompleted &m
 
 		if (position == 1)
 		{
-			KZLanguageService::PrintChatAll(false, "Racing - End Results First Place", result.playerName.c_str(), timeStr.Get());
+			PrintRaceResult(result, "Racing - End Results First Place", result.playerName.c_str(), timeStr.Get());
 		}
 		else if (position == finishersCount)
 		{
-			KZLanguageService::PrintChatAll(false, "Racing - End Results Last Place", result.playerName.c_str(), timeStr.Get());
+			PrintRaceResult(result, "Racing - End Results Last Place", result.playerName.c_str(), timeStr.Get());
 		}
 		else
 		{
-			KZLanguageService::PrintChatAll(false, "Racing - End Results Finisher", position, result.playerName.c_str(), timeStr.Get());
+			PrintRaceResult(result, "Racing - End Results Finisher", position, result.playerName.c_str(), timeStr.Get());
 		}
 
 		position++;
@@ -130,7 +145,7 @@ void KZRacingService::OnRaceCompleted(const KZ::racing::events::RaceCompleted &m
 	{
 		if (result.status != KZ::racing::RaceResult::Status::Finished)
 		{
-			KZLanguageService::PrintChatAll(false, "Racing - End Results Non-Finisher", result.playerName.c_str());
+			PrintRaceResult(result, "Racing - End Results Non-Finisher", result.playerName.c_str());
 		}
 	}
 

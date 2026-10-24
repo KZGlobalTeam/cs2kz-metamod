@@ -344,6 +344,23 @@ public:
 		return true;
 	}
 
+	bool Get(const std::string &key, i32 &out) const
+	{
+		if (!this->ContainsKey(key))
+		{
+			return false;
+		}
+
+		if (!this->inner[key].is_number_integer())
+		{
+			KZ_LOG_WARN(LogChannel::General, "[JSON] Key `%s` is not an integer.\n", key.c_str());
+			return false;
+		}
+
+		out = this->inner[key];
+		return true;
+	}
+
 	bool Get(const std::string &key, u32 &out) const
 	{
 		if (!this->ContainsKey(key))

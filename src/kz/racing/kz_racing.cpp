@@ -3,6 +3,8 @@
 #include "kz/language/kz_language.h"
 #include "kz/option/kz_option.h"
 #include "kz/mode/kz_mode.h"
+#include "kz/hud/kz_hud.h"
+#include "kz/spec/kz_spec.h"
 #include "utils/argparse.h"
 #include "utils/simplecmds.h"
 
@@ -62,78 +64,155 @@ void KZRacingService::SendChatMessage(const std::string &content)
 
 void KZRacingService::BroadcastRaceInfo()
 {
-	switch (KZRacingService::currentRace.state)
+	if (KZRacingService::currentRace.state == RaceInfo::State::None)
 	{
-		case RaceInfo::State::Init:
-		{
-			// Broadcast the race info to all players.
-			for (KZPlayer *player : g_pKZPlayerManager->GetInGamePlayers())
-			{
-				std::string timeLimitString;
-				if (KZRacingService::currentRace.conf.maxDurationSeconds.has_value())
-				{
-					auto timeStr = utils::FormatTime(*KZRacingService::currentRace.conf.maxDurationSeconds, false);
-					timeLimitString = player->languageService->PrepareMessage("Racing - Time Limit", timeStr.Get());
-				}
-				else
-				{
-					timeLimitString = player->languageService->PrepareMessage("Racing - No Time Limit");
-				}
+		return;
+	}
 
-				if (KZRacingService::currentRace.conf.maxTeleports.has_value())
-				{
-					player->languageService->PrintAlert(
-						false, false, "Racing - Race Info - Teleport Limit", KZRacingService::currentRace.conf.courseName.c_str(),
-						KZRacingService::currentRace.conf.modeName.c_str(), *KZRacingService::currentRace.conf.maxTeleports, timeLimitString.c_str());
-				}
-				else
-				{
-					player->languageService->PrintAlert(false, false, "Racing - Race Info - No Teleport Limit",
-														KZRacingService::currentRace.conf.courseName.c_str(),
-														KZRacingService::currentRace.conf.modeName.c_str(), timeLimitString.c_str());
-				}
-			}
-			break;
-		}
-		case RaceInfo::State::Ongoing:
+	const KZ::racing::RaceConfig &conf = KZRacingService::currentRace.conf;
+	KZRacingService::hudCourse = KZ::course::GetCourse(conf.courseName.c_str(), false);
+	KZRacingService::hudModeID = conf.modeName.empty() ? -2 : KZ::mode::GetModeInfo(conf.modeName.c_str()).id;
+	for (KZPlayer *player : g_pKZPlayerManager->GetInGamePlayers())
+	{
+		if (player->IsFakeClient() || player->hudService->CanShowRaceHud())
 		{
-			// Broadcast to all participants that the race will start in X seconds.
-			f32 countdownSeconds =
-				(KZRacingService::currentRace.earliestStartTick - g_pKZUtils->GetServerGlobals()->tickcount) * ENGINE_FIXED_TICK_INTERVAL;
-			if (countdownSeconds < 0)
-			{
-				countdownSeconds = 0;
-			}
-
-			for (u64 participantSteamID : KZRacingService::currentRace.localParticipants)
-			{
-				KZPlayer *player = g_pKZPlayerManager->SteamIdToPlayer(participantSteamID);
-				if (player && !player->timerService->GetTimerRunning())
-				{
-					if (countdownSeconds <= 0)
-					{
-						bool shouldAnnounce = true;
-						for (u64 finisherSteamID : KZRacingService::currentRace.localFinishers)
-						{
-							if (finisherSteamID == player->GetSteamId64())
-							{
-								shouldAnnounce = false;
-								continue;
-							}
-						}
-						if (shouldAnnounce)
-						{
-							player->languageService->PrintAlert(false, true, "Racing - Go!");
-						}
-					}
-					else
-					{
-						player->languageService->PrintAlert(false, true, "Racing - Race Starting In", countdownSeconds);
-					}
-				}
-			}
-			break;
+			continue;
 		}
+		HudInfo info;
+		KZRacingService::GetHudInfo(player, info);
+		player->racingService->DrawLegacyHud(info);
+	}
+}
+
+void KZRacingService::GetHudInfo(KZPlayer *viewer, HudInfo &out)
+{
+	const RaceInfo &race = KZRacingService::currentRace;
+	if (race.state == RaceInfo::State::None)
+	{
+		return;
+	}
+	KZPlayer *source = viewer->specService->GetSpectatedPlayer();
+	if (!source)
+	{
+		source = viewer;
+	}
+	const bool participant = source->racingService->IsRaceParticipant();
+	// Once the race has started, it is only shown for the players in it.
+	if (race.state == RaceInfo::State::Ongoing && !participant)
+	{
+		return;
+	}
+	out.show = true;
+	out.started = race.state == RaceInfo::State::Ongoing;
+	out.formatPhrase =
+		race.conf.format == KZ::racing::RaceConfig::Format::FastestTime ? "Racing HUD - Format Fastest Time" : "Racing HUD - Format First To Finish";
+	out.course = race.conf.courseName.c_str();
+	out.mode = race.conf.modeName.c_str();
+	out.maxTeleports = race.conf.maxTeleports.has_value() ? (i32)*race.conf.maxTeleports : -1;
+	out.timeLimit = race.conf.maxDurationSeconds.has_value() ? *race.conf.maxDurationSeconds : 0;
+
+	if (race.state == RaceInfo::State::Init)
+	{
+		if (participant)
+		{
+			out.statusPhrase = "Racing HUD - Accepted";
+			out.statusClass = "race-accepted";
+		}
+		else if (source == viewer && KZRacingService::IsMapCorrectForRace())
+		{
+			out.statusPhrase = "Racing HUD - Join Hint";
+		}
+		else
+		{
+			out.statusPhrase = "Racing HUD - Not Joined";
+		}
+		return;
+	}
+
+	const i32 tick = g_pKZUtils->GetServerGlobals()->tickcount;
+	const MHUDPrefs &prefs = viewer->hudService->GetPrefs();
+	if (prefs.raceTimeLeft && out.timeLimit > 0)
+	{
+		const f64 elapsed = Max(tick - race.earliestStartTick, 0) * ENGINE_FIXED_TICK_INTERVAL;
+		out.showTimeLeft = true;
+		// Rounded up, so it only reads 0:00 once the race is over.
+		out.timeLeft = ceil(Max(out.timeLimit - elapsed, 0.0));
+	}
+
+	if (source->racingService->IsRaceFinisher())
+	{
+		out.statusPhrase = "Racing HUD - Finished";
+		out.statusClass = "race-finished";
+	}
+	else
+	{
+		out.statusPhrase = "Racing HUD - Running";
+		out.statusClass = "race-running";
+		if (!source->timerService->GetTimerRunning())
+		{
+			out.countdown = true;
+			out.countdownSeconds = (race.earliestStartTick - tick) * ENGINE_FIXED_TICK_INTERVAL;
+		}
+	}
+
+	// A first to finish race is decided by who finishes first, so a personal best says nothing about it.
+	if (prefs.racePB && race.conf.format == KZ::racing::RaceConfig::Format::FastestTime && KZRacingService::hudCourse
+		&& KZRacingService::hudModeID >= 0)
+	{
+		// A race without teleports only compares against pro runs.
+		out.pro = out.maxTeleports == 0;
+		const PBDataKey key = ToPBDataKey(KZRacingService::hudModeID, KZRacingService::hudCourse->guid);
+		for (bool global : {true, false})
+		{
+			const PBData *pb = source->timerService->GetCachedPB(key, global);
+			const f64 time = pb ? (out.pro ? pb->pro.pbTime : pb->overall.pbTime) : 0;
+			if (time > 0 && (out.pb <= 0 || time < out.pb))
+			{
+				out.pb = time;
+			}
+		}
+	}
+}
+
+void KZRacingService::DrawLegacyHud(const HudInfo &info)
+{
+	if (!info.show)
+	{
+		return;
+	}
+	KZLanguageService *lang = this->player->languageService;
+	if (KZRacingService::currentRace.state == RaceInfo::State::Ongoing)
+	{
+		if (info.countdown)
+		{
+			if (info.countdownSeconds > 0)
+			{
+				lang->PrintAlert(false, false, "Racing - Race Starting In", info.countdownSeconds);
+			}
+			else
+			{
+				lang->PrintAlert(false, false, "Racing - Go!");
+			}
+		}
+		return;
+	}
+
+	std::string timeLimitString;
+	if (info.timeLimit > 0)
+	{
+		timeLimitString = lang->PrepareMessage("Racing - Time Limit", utils::FormatTime(info.timeLimit, false).Get());
+	}
+	else
+	{
+		timeLimitString = lang->PrepareMessage("Racing - No Time Limit");
+	}
+	if (info.maxTeleports >= 0)
+	{
+		lang->PrintAlert(false, false, "Racing - Race Info - Teleport Limit", info.course, info.mode, info.maxTeleports, timeLimitString.c_str());
+	}
+	else
+	{
+		lang->PrintAlert(false, false, "Racing - Race Info - No Teleport Limit", info.course, info.mode, timeLimitString.c_str());
 	}
 }
 
@@ -185,6 +264,18 @@ bool KZRacingService::IsRaceParticipant()
 		}
 	}
 	return isParticipating;
+}
+
+bool KZRacingService::IsRaceFinisher()
+{
+	for (u64 finisherSteamID : KZRacingService::currentRace.localFinishers)
+	{
+		if (finisherSteamID == this->player->GetSteamId64())
+		{
+			return true;
+		}
+	}
+	return false;
 }
 
 void KZRacingService::RemoveLocalRaceParticipant(u64 steamID)

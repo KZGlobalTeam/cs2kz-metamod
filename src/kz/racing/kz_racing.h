@@ -44,6 +44,8 @@ namespace KZ::racing
 		std::optional<f64> timeSeconds;
 		std::optional<u32> teleports;
 
+		std::optional<i32> points;
+
 		bool FromJson(const Json &json);
 	};
 
@@ -301,12 +303,42 @@ public:
 
 	/* ===== Race management ===== */
 
+	// Shows the race as an alert to every player who has no MHUD to show it on.
 	static void BroadcastRaceInfo();
+
+	// The race as the MHUD shows it to one viewer.
+	struct HudInfo
+	{
+		bool show {};
+		bool started {};
+		const char *course {};
+		const char *mode {};
+		const char *formatPhrase {};
+		// -1 without a teleport limit.
+		i32 maxTeleports {-1};
+		// 0 without a time limit.
+		f64 timeLimit {};
+		// Counted down instead of the limit, once the race has started.
+		bool showTimeLeft {};
+		f64 timeLeft {};
+		bool pro {};
+		// Only a fastest time race has one, and 0 hides it.
+		f64 pb {};
+		const char *statusPhrase {};
+		const char *statusClass {};
+		bool countdown {};
+		// GO! at 0 or less.
+		f32 countdownSeconds {};
+	};
+
+	// A spectator sees the race as the player they watch is in it.
+	static void GetHudInfo(KZPlayer *viewer, HudInfo &out);
 
 	// Race participation
 	void AcceptRace();
 	void SurrenderRace();
 	bool IsRaceParticipant();
+	bool IsRaceFinisher();
 	static void RemoveLocalRaceParticipant(u64 steamID);
 
 	bool CanTeleport();
@@ -321,6 +353,12 @@ public:
 	void OnClientDisconnect();
 
 private:
+	void DrawLegacyHud(const HudInfo &info);
+
+	// The race's course and mode, looked up once per frame instead of once per viewer.
+	static inline const KZCourseDescriptor *hudCourse {};
+	static inline PluginId hudModeID {-2};
+
 	/**
 	 * Sends a message to the API.
 	 */

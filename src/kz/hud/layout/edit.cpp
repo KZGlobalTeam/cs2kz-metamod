@@ -42,6 +42,11 @@
 #define MHUD_EDIT_COURSE_PROGRESS_GAP   6.0f
 #define MHUD_EDIT_COURSE_ROW_HEIGHT     19.0f
 #define MHUD_EDIT_COURSE_HISTORY_HEIGHT 146.0f
+// The race panel at 100%, from mhud.css. Its head is the header and the divider under it, and the sample shows a race
+// before its start, with a teleport limit and a time limit.
+#define MHUD_EDIT_RACE_WIDTH       260.0f
+#define MHUD_EDIT_RACE_HEAD_HEIGHT 29.0f
+#define MHUD_EDIT_RACE_SAMPLE_ROWS 5
 
 // The buttons inside each element's edit box, after its id. Corners are in EditState::corner order.
 #define MHUD_EDIT_MOVE_SUFFIX "_move"
@@ -682,6 +687,14 @@ void KZHUDService::GetEditBoxSize(MHUDElement element, f32 &width, f32 &height)
 		}
 		width = MHUD_EDIT_COURSE_WIDTH * scale + MHUD_EDIT_BOX_PADDING;
 		height = (history + MHUD_EDIT_COURSE_PADDING + head + rows * MHUD_EDIT_COURSE_ROW_HEIGHT) * scale + MHUD_EDIT_BOX_PADDING;
+		return;
+	}
+	if (element == MHUDElement::Race)
+	{
+		const f32 scale = Clamp((i32)size, MHUD_JS_SIZE_MIN, MHUD_JS_SIZE_MAX) / 100.0f;
+		width = MHUD_EDIT_RACE_WIDTH * scale + MHUD_EDIT_BOX_PADDING;
+		height = (MHUD_EDIT_COURSE_PADDING + MHUD_EDIT_RACE_HEAD_HEIGHT + MHUD_EDIT_RACE_SAMPLE_ROWS * MHUD_EDIT_COURSE_ROW_HEIGHT) * scale
+				 + MHUD_EDIT_BOX_PADDING;
 		return;
 	}
 	if (element == MHUDElement::Keys)
