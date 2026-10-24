@@ -317,10 +317,6 @@
 	{
 		"en"		"PB"
 	}
-	"Racing HUD - Pro PB"
-	{
-		"en"		"Pro PB"
-	}
 	"Racing HUD - None"
 	{
 		"en"		"None"

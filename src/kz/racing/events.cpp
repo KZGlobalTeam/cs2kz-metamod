@@ -78,6 +78,13 @@ void KZRacingService::OnRaceStarting(const KZ::racing::events::RaceStarting &mes
 	KZRacingService::currentRace.state = RaceInfo::State::Ongoing;
 	KZRacingService::currentRace.earliestStartTick = g_pKZUtils->GetServerGlobals()->tickcount + message.countdownSeconds * ENGINE_FIXED_TICK_RATE;
 	KZLanguageService::PrintChatAll(true, "Racing - Race Countdown", message.countdownSeconds);
+	for (KZPlayer *player : g_pKZPlayerManager->GetAllSlots())
+	{
+		if (player->racingService)
+		{
+			player->racingService->racePB = {};
+		}
+	}
 	for (u64 steamID : KZRacingService::currentRace.localParticipants)
 	{
 		KZPlayer *player = g_pKZPlayerManager->SteamIdToPlayer(steamID);

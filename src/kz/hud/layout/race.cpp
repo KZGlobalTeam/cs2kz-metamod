@@ -196,7 +196,7 @@ void KZHUDService::UpdateRaceElements(CCSCustomHudLayout *layout, bool showPanel
 		{"Racing HUD - Teleport Limit", teleports, NULL, info.maxTeleports >= 0},
 		{info.showTimeLeft ? "Racing HUD - Time Left" : "Racing HUD - Time Limit", time[0] ? time : NULL, "Racing HUD - None",
 		 time[0] || !info.started},
-		{info.pro ? "Racing HUD - Pro PB" : "Racing HUD - PB", pb, NULL, info.pb > 0},
+		{"Racing HUD - PB", pb, NULL, info.pb > 0},
 	};
 	for (i32 i = 0; i < MHUD_RACE_ROW_COUNT; i++)
 	{

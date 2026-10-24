@@ -2219,6 +2219,6 @@
 	}
 	"Menu - Race PB Sub"
 	{
-		"en"		"Your personal best on the race course while you run it, pro only in a race without teleports"
+		"en"		"Your fastest time in the current race, in a fastest time race"
 	}
 }

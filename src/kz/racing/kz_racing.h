@@ -204,6 +204,7 @@ public:
 	virtual void Reset()
 	{
 		this->timerStartTickServer = {};
+		this->racePB = {};
 	}
 
 	/* ===== Coordinator ===== */
@@ -321,8 +322,7 @@ public:
 		// Counted down instead of the limit, once the race has started.
 		bool showTimeLeft {};
 		f64 timeLeft {};
-		bool pro {};
-		// Only a fastest time race has one, and 0 hides it.
+		// The fastest time sent in this race, which only a fastest time race shows. 0 hides it.
 		f64 pb {};
 		const char *statusPhrase {};
 		const char *statusClass {};
@@ -347,6 +347,8 @@ public:
 	bool OnTimerStart(u32 courseGUID);
 
 	i32 timerStartTickServer {};
+	// The fastest time this player has sent in the current race, or 0.
+	f64 racePB {};
 	// Notify the coordinator about the end of the run.
 	void OnTimerEndPost(u32 courseGUID, f32 time, u32 teleportsUsed);
 
@@ -354,10 +356,6 @@ public:
 
 private:
 	void DrawLegacyHud(const HudInfo &info);
-
-	// The race's course and mode, looked up once per frame instead of once per viewer.
-	static inline const KZCourseDescriptor *hudCourse {};
-	static inline PluginId hudModeID {-2};
 
 	/**
 	 * Sends a message to the API.

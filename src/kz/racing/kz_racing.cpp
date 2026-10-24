@@ -69,9 +69,6 @@ void KZRacingService::BroadcastRaceInfo()
 		return;
 	}
 
-	const KZ::racing::RaceConfig &conf = KZRacingService::currentRace.conf;
-	KZRacingService::hudCourse = KZ::course::GetCourse(conf.courseName.c_str(), false);
-	KZRacingService::hudModeID = conf.modeName.empty() ? -2 : KZ::mode::GetModeInfo(conf.modeName.c_str()).id;
 	for (KZPlayer *player : g_pKZPlayerManager->GetInGamePlayers())
 	{
 		if (player->IsFakeClient() || player->hudService->CanShowRaceHud())
@@ -155,22 +152,10 @@ void KZRacingService::GetHudInfo(KZPlayer *viewer, HudInfo &out)
 		}
 	}
 
-	// A first to finish race is decided by who finishes first, so a personal best says nothing about it.
-	if (prefs.racePB && race.conf.format == KZ::racing::RaceConfig::Format::FastestTime && KZRacingService::hudCourse
-		&& KZRacingService::hudModeID >= 0)
+	// Only the first finish counts in a first to finish race, so a best time says nothing there.
+	if (prefs.racePB && race.conf.format == KZ::racing::RaceConfig::Format::FastestTime)
 	{
-		// A race without teleports only compares against pro runs.
-		out.pro = out.maxTeleports == 0;
-		const PBDataKey key = ToPBDataKey(KZRacingService::hudModeID, KZRacingService::hudCourse->guid);
-		for (bool global : {true, false})
-		{
-			const PBData *pb = source->timerService->GetCachedPB(key, global);
-			const f64 time = pb ? (out.pro ? pb->pro.pbTime : pb->overall.pbTime) : 0;
-			if (time > 0 && (out.pb <= 0 || time < out.pb))
-			{
-				out.pb = time;
-			}
-		}
+		out.pb = source->racingService->racePB;
 	}
 }
 
@@ -371,6 +356,10 @@ void KZRacingService::OnTimerEndPost(u32 courseGUID, f32 time, u32 teleportsUsed
 	}
 
 	this->SendFinishRace(reportedTime, teleportsUsed);
+	if (this->racePB <= 0 || reportedTime < this->racePB)
+	{
+		this->racePB = reportedTime;
+	}
 	// We do this in advance to avoid having to go text showing up for just finished players.
 	for (auto it = KZRacingService::currentRace.localParticipants.begin(); it != KZRacingService::currentRace.localParticipants.end(); ++it)
 	{
