@@ -663,63 +663,6 @@
 	color: #c9301e;
 }
 
-/* The race panel borrows the course panel's look. */
-.race-stack {
-	width: 260px;
-	flow-children: down;
-}
-
-.race-panel {
-	opacity: 1;
-}
-
-.race-title {
-	color: #e4ae39;
-}
-
-.race-accepted {
-	color: #40ff40;
-}
-
-.race-running {
-	color: #ffff20;
-}
-
-.race-finished {
-	color: #5e98d9;
-}
-
-.race-row {
-	flow-children: right;
-}
-
-.race-label {
-	width: 100px;
-}
-
-/* A long course name ellipsizes instead of running out of the panel. */
-.race-value {
-	width: fill-parent-flow(1);
-	vertical-align: center;
-	white-space: nowrap;
-	text-overflow: ellipsis;
-	font-size: 15px;
-	font-weight: bold;
-	color: #f3f4f6;
-}
-
-/* Centred, a fifth of the screen above the crosshair. */
-.race-countdown {
-	horizontal-align: center;
-	vertical-align: middle;
-	y: -22%;
-	font-family: Stratum2, "Arial Unicode MS";
-	font-size: 40px;
-	font-weight: bold;
-	color: #ffffff;
-	text-shadow: 0px 0px 4px 2 #000000ff;
-}
-
 /* The chat colors of distanceTierColors: grey, grey, blue, green, darkred, gold, orchid. */
 .js-tier-0 {
 	color: #c5cad0;

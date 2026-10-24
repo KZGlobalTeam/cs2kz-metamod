@@ -2201,24 +2201,4 @@
 		"ua"		"Світовий рекорд і ваше відставання від нього, або рекорд сервера на неглобальній карті"
 		"ru"		"Мировой рекорд и ваша с ним разница, либо рекорд сервера на неглобальной карте"
 	}
-	"Menu - Race"
-	{
-		"en"		"Race"
-	}
-	"Menu - Race Time Left"
-	{
-		"en"		"Time left"
-	}
-	"Menu - Race Time Left Sub"
-	{
-		"en"		"Count down the time left instead of showing the time limit once a race starts"
-	}
-	"Menu - Race PB"
-	{
-		"en"		"Personal best"
-	}
-	"Menu - Race PB Sub"
-	{
-		"en"		"Your personal best on the race course while you run it, pro only in a race without teleports"
-	}
 }
