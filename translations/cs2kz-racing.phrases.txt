@@ -140,6 +140,7 @@
 		// Appended to a result line: Alice has won the race! (00:45.32) [12 points]
 		"#format"	"points:d"
 		"en"		" {grey}[{default}{points}{grey} points]"
+		"ua"		" {grey}[{default}{points}{grey} балів]"
 	}
 	"Racing - No Time Limit"
 	{
@@ -280,65 +281,81 @@
 	"Racing HUD - Title"
 	{
 		"en"		"Race"
+		"ua"		"Перегони"
 	}
 	"Racing HUD - Course"
 	{
 		"en"		"Course"
+		"ua"		"Курс"
 	}
 	"Racing HUD - Mode"
 	{
 		"en"		"Mode"
+		"ua"		"Режим"
 	}
 	"Racing HUD - Format"
 	{
 		"en"		"Format"
+		"ua"		"Формат"
 	}
 	"Racing HUD - Format Fastest Time"
 	{
 		"en"		"Fastest time"
+		"ua"		"Найшвидший час"
 	}
 	"Racing HUD - Format First To Finish"
 	{
 		"en"		"First to finish"
+		"ua"		"Перший, хто фінішує"
 	}
 	"Racing HUD - Teleport Limit"
 	{
 		"en"		"Max TPs"
+		"ua"		"Макс. TPs"
 	}
 	"Racing HUD - Time Limit"
 	{
 		"en"		"Time limit"
+		"ua"		"Ліміт часу"
 	}
 	"Racing HUD - Time Left"
 	{
 		"en"		"Time left"
+		"ua"		"Залишок часу"
 	}
 	"Racing HUD - PB"
 	{
 		"en"		"PB"
+		"ua"		"PB"
 	}
 	"Racing HUD - None"
 	{
 		"en"		"None"
+		"ua"		"Немає"
 	}
 	"Racing HUD - Accepted"
 	{
 		"en"		"Accepted"
+		"ua"		"Прийнято"
 	}
 	"Racing HUD - Join Hint"
 	{
 		"en"		"Type !accept to join"
+		"ua"		"Введіть !accept, щоб приєднатися"
 	}
 	"Racing HUD - Not Joined"
 	{
 		"en"		"Not joined"
+		"ua"		"Не приєднався"
 	}
 	"Racing HUD - Running"
 	{
 		"en"		"In progress"
+		"ua"		"У процесі"
 	}
 	"Racing HUD - Finished"
 	{
 		"en"		"Finished"
+		"ua"		"Завершив"
 	}
 }
