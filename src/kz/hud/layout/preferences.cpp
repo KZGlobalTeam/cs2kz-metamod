@@ -27,7 +27,7 @@ void KZHUDService::RefreshPrefs()
 		element.x = Clamp((f32)opts->GetPreferenceFloat(def.xKey, def.xDefault), -50.0f, 50.0f);
 		element.y = Clamp((f32)opts->GetPreferenceFloat(def.yKey, def.yDefault), -50.0f, 50.0f);
 		element.size = (f32)opts->GetPreferenceFloat(def.sizeKey, def.sizeDefault);
-		if (e == (i32)MHUDElement::Jumpstats || e == (i32)MHUDElement::Course)
+		if (IsMHUDElementScaled((MHUDElement)e))
 		{
 			// Only the scales js-scale.css defines.
 			element.size = Clamp(element.size, (f32)def.sizeMin, (f32)def.sizeMax);
@@ -118,6 +118,8 @@ void KZHUDService::RefreshPrefs()
 						 : (opts->GetPreferenceBool("mhudKeysHideUnpressed", false) ? (i32)MHUDKeysIdle::Hide : (i32)MHUDKeysIdle::Show);
 	this->prefs.keysIdle = (MHUDKeysIdle)Clamp(idle, (i32)MHUDKeysIdle::Show, (i32)MHUDKeysIdle::Underscore);
 	this->prefs.mimicSpec = opts->GetPreferenceBool("mhudMimicSpec", false);
+	this->prefs.raceTimeLeft = opts->GetPreferenceBool("raceHudTimeLeft", true);
+	this->prefs.racePB = opts->GetPreferenceBool("raceHudPB", true);
 	this->prefs.screenWidth = (i32)Clamp(opts->GetPreferenceInt("mhudScreenWidth", MHUD_DEF_SCREEN_WIDTH), (i64)1000, (i64)4000);
 	this->prefs.hiddenGameHud = 0;
 	for (const GameHudPartDef &part : GAME_HUD_PARTS)

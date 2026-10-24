@@ -159,6 +159,7 @@ def configure_main(sdk_target, sdk, cxx):
     os.path.join(builder.sourcePath, 'src', 'kz', 'option', 'pref_registry.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'option', 'prefs_transfer.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'hud', 'layout', 'preferences.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'hud', 'layout', 'race.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'hud', 'layout', 'tables.cpp'),
 
     os.path.join(builder.sourcePath, 'src', 'kz', 'jumpstats', 'kz_jumpstats.cpp'),

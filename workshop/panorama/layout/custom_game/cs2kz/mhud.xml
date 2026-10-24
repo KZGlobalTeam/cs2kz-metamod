@@ -222,6 +222,32 @@
       </Panel>
     </Panel>
 
+    <Panel id="mhud_race_pos" class="pos" hittest="false">
+      <Panel id="mhud_race" class="element anchor-top race-stack hidden" hittest="false">
+        <Panel class="js-panel race-panel" hittest="false">
+          <Panel class="js-header" hittest="false">
+            <Label id="mhud_race_title" class="js-type race-title" text="{s:v}" hittest="false" />
+            <Label id="mhud_race_status" class="js-tier-name" text="{s:v}" hittest="false" />
+          </Panel>
+          <Panel class="js-divider" hittest="false" />
+          <Panel id="mhud_race_r0" class="js-row race-row hidden" hittest="false"><Label id="mhud_race_l0" class="js-label race-label" text="{s:v}" hittest="false" /><Label id="mhud_race_v0" class="race-value" text="{s:v}" hittest="false" /></Panel>
+          <Panel id="mhud_race_r1" class="js-row race-row hidden" hittest="false"><Label id="mhud_race_l1" class="js-label race-label" text="{s:v}" hittest="false" /><Label id="mhud_race_v1" class="race-value" text="{s:v}" hittest="false" /></Panel>
+          <Panel id="mhud_race_r2" class="js-row race-row hidden" hittest="false"><Label id="mhud_race_l2" class="js-label race-label" text="{s:v}" hittest="false" /><Label id="mhud_race_v2" class="race-value" text="{s:v}" hittest="false" /></Panel>
+          <Panel id="mhud_race_r3" class="js-row race-row hidden" hittest="false"><Label id="mhud_race_l3" class="js-label race-label" text="{s:v}" hittest="false" /><Label id="mhud_race_v3" class="race-value" text="{s:v}" hittest="false" /></Panel>
+          <Panel id="mhud_race_r4" class="js-row race-row hidden" hittest="false"><Label id="mhud_race_l4" class="js-label race-label" text="{s:v}" hittest="false" /><Label id="mhud_race_v4" class="race-value" text="{s:v}" hittest="false" /></Panel>
+          <Panel id="mhud_race_r5" class="js-row race-row hidden" hittest="false"><Label id="mhud_race_l5" class="js-label race-label" text="{s:v}" hittest="false" /><Label id="mhud_race_v5" class="race-value" text="{s:v}" hittest="false" /></Panel>
+        </Panel>
+      </Panel>
+      <Panel id="mhud_race_hit" class="element anchor-top edit-box hidden" hittest="false">
+        <Button id="mhud_race_hit_move" class="edit-hit" />
+        <Button id="mhud_race_hit_tl" class="edit-corner edit-corner-tl" />
+        <Button id="mhud_race_hit_tr" class="edit-corner edit-corner-tr" />
+        <Button id="mhud_race_hit_bl" class="edit-corner edit-corner-bl" />
+        <Button id="mhud_race_hit_br" class="edit-corner edit-corner-br" />
+      </Panel>
+    </Panel>
+    <Label id="mhud_race_countdown" class="race-countdown hidden" text="{s:v}" hittest="false" />
+
     <Panel id="mhud_guide_x_pos" class="pos" hittest="false">
       <Panel id="mhud_guide_x" class="guide guide-x hidden" hittest="false" />
     </Panel>

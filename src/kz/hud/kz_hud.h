@@ -48,6 +48,8 @@ class CUserCmd;
 #define MHUD_COURSE_ROW_COUNT 2
 // Stages, checkpoints and splits reached, each out of the course's total.
 #define MHUD_COURSE_PROGRESS_COUNT 3
+// Course, mode, format, teleport limit, time and personal best.
+#define MHUD_RACE_ROW_COUNT 6
 
 enum class MHUDElement
 {
@@ -59,6 +61,8 @@ enum class MHUDElement
 	Jumpstats,
 	Course,
 	Release,
+	// Only drawn while a race is configured or running.
+	Race,
 	// The indicators are contiguous and last, so an element index maps straight onto the indicator tables.
 	Perf,
 	CrouchJump,
@@ -165,16 +169,22 @@ enum class MHUDAlign
 	Right,
 };
 
-// The course panel hangs off the left edge of the screen, so it stays on it whatever the aspect ratio.
+// The course and race panels hang off the left edge of the screen, so they stay on it whatever the aspect ratio.
 inline MHUDAlign GetMHUDDefaultAlign(MHUDElement element)
 {
-	return element == MHUDElement::Course ? MHUDAlign::Left : MHUDAlign::Center;
+	return element == MHUDElement::Course || element == MHUDElement::Race ? MHUDAlign::Left : MHUDAlign::Center;
 }
 
-// The course panel's height depends on the course, so its y is its top edge rather than its centre.
+// The course and race panels' heights depend on what they show, so their y is their top edge rather than their centre.
 inline bool IsMHUDElementTopAnchored(MHUDElement element)
 {
-	return element == MHUDElement::Course;
+	return element == MHUDElement::Course || element == MHUDElement::Race;
+}
+
+// Panels sized by a scale in percent rather than a font size.
+inline bool IsMHUDElementScaled(MHUDElement element)
+{
+	return element == MHUDElement::Jumpstats || element == MHUDElement::Course || element == MHUDElement::Race;
 }
 
 // The jumpstats and course panels draw a background, which fades apart from their text. NULL for every other element.
@@ -186,6 +196,8 @@ inline const char *GetMHUDBackgroundOpacityKey(MHUDElement element)
 			return "mhudJsBgOpacity";
 		case MHUDElement::Course:
 			return "mhudCourseBgOpacity";
+		case MHUDElement::Race:
+			return "mhudRaceBgOpacity";
 		default:
 			return NULL;
 	}
@@ -299,6 +311,9 @@ struct MHUDPrefs
 	bool courseSplits {true};
 	bool courseShowProgress {true};
 	bool courseShowProgressLabel {true};
+	// Shown to race participants while the race is running.
+	bool raceTimeLeft {true};
+	bool racePB {true};
 
 	bool legacyStyle {};
 	bool compactPanel {};
@@ -450,6 +465,9 @@ public:
 	bool UpdateHudLayout(KZPlayer *source);
 
 	bool IsMHUDElementEnabled(MHUDElement element);
+
+	// Whether the race panel and countdown can be drawn at all, which the legacy alert stands in for otherwise.
+	bool CanShowRaceHud();
 
 	bool IsMHUDTimerDetailed();
 	bool IsMHUDOutlineEnabled(MHUDElement element);
@@ -647,6 +665,25 @@ private:
 	LayoutKeysState layoutKeys {};
 	LayoutJumpstatsState layoutJumpstats {};
 	LayoutCourseState layoutCourse {};
+
+	struct LayoutRaceState
+	{
+		bool preview {};
+		i32 scale {INT_MIN};
+		const char *fontClass {};
+		i32 rowHidden[MHUD_RACE_ROW_COUNT] {-1, -1, -1, -1, -1, -1};
+		i32 countdownHidden {-1};
+		const char *statusClass {};
+		// Labels are only prepared again when their phrase or the viewer's language changes.
+		std::string language {};
+		// The title, the status, then each row's label and each row's value when it is a phrase.
+		const char *phrases[2 + MHUD_RACE_ROW_COUNT * 2] {};
+		std::string values[MHUD_RACE_ROW_COUNT] {};
+		// Tenths of a second, so the countdown is formatted ten times a second rather than every tick. -1 for GO!
+		i32 countdownTenths {INT_MIN};
+	};
+
+	LayoutRaceState layoutRace {};
 	// The W release element's last value, so its text is only rebuilt when that changes.
 	f32 releaseTicks {NAN};
 	std::string releaseText {};
@@ -766,6 +803,8 @@ private:
 	// preview fills every row and the history with sample values, for edit mode.
 	void UpdateCourseElement(CCSCustomHudLayout *layout, KZPlayer *source, bool show, bool force, bool preview = false);
 	void ClearCoursePreview(CCSCustomHudLayout *layout);
+	// preview fills the panel with sample values, for edit mode.
+	void UpdateRaceElements(CCSCustomHudLayout *layout, bool showPanel, bool showCountdown, bool force, bool preview = false);
 	// preview draws a sample jump with every enabled row, for edit mode.
 	void UpdateJumpstatsElement(CCSCustomHudLayout *layout, bool show, bool force, bool preview = false);
 	void PushJumpstatHistory(CCSCustomHudLayout *layout);
