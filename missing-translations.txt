@@ -6,28 +6,28 @@ Generated for: /home/runner/work/cs2kz-metamod/cs2kz-metamod
 SUMMARY
 ----------------------------------------------------------------------
 Total languages: 15
-Total phrases: 1109
-Phrases with missing translations: 1109
-Total missing translation entries: 7722
+Total phrases: 1131
+Phrases with missing translations: 1131
+Total missing translation entries: 8030
 
 LANGUAGE COVERAGE (Phrases)
 ----------------------------------------------------------------------
 
-  chi (schinese)       [██████████████████░░]  91.5% (1015/1109)
-  de (german)          [█████████░░░░░░░░░░░]  47.1% (522/1109)
-  en (english)         [████████████████████] 100.0% (1109/1109)
-  es (spanish)         [████████░░░░░░░░░░░░]  43.8% (486/1109)
-  fi (finnish)         [████░░░░░░░░░░░░░░░░]  21.2% (235/1109)
-  it (italian)         [████░░░░░░░░░░░░░░░░]  20.5% (227/1109)
-  ko (koreana)         [███████████░░░░░░░░░]  59.2% (656/1109)
-  lv (latvian)         [█████░░░░░░░░░░░░░░░]  29.8% (330/1109)
-  nl (dutch)           [░░░░░░░░░░░░░░░░░░░░]   0.5% (5/1109)
-  pl (polish)          [█████████░░░░░░░░░░░]  47.2% (524/1109)
-  ru (russian)         [█████████████████░░░]  90.0% (998/1109)
-  sv (swedish)         [███████░░░░░░░░░░░░░]  35.5% (394/1109)
-  tr (turkish)         [████░░░░░░░░░░░░░░░░]  23.8% (264/1109)
-  ua (ukrainian)       [███████████████████░]  97.1% (1077/1109)
-  zho (tchinese)       [███████████████████░]  96.6% (1071/1109)
+  chi (schinese)       [█████████████████░░░]  89.7% (1015/1131)
+  de (german)          [█████████░░░░░░░░░░░]  46.2% (522/1131)
+  en (english)         [████████████████████] 100.0% (1131/1131)
+  es (spanish)         [████████░░░░░░░░░░░░]  43.0% (486/1131)
+  fi (finnish)         [████░░░░░░░░░░░░░░░░]  20.8% (235/1131)
+  it (italian)         [████░░░░░░░░░░░░░░░░]  20.1% (227/1131)
+  ko (koreana)         [███████████░░░░░░░░░]  58.0% (656/1131)
+  lv (latvian)         [█████░░░░░░░░░░░░░░░]  29.2% (330/1131)
+  nl (dutch)           [░░░░░░░░░░░░░░░░░░░░]   0.4% (5/1131)
+  pl (polish)          [█████████░░░░░░░░░░░]  46.3% (524/1131)
+  ru (russian)         [█████████████████░░░]  88.2% (998/1131)
+  sv (swedish)         [██████░░░░░░░░░░░░░░]  34.8% (394/1131)
+  tr (turkish)         [████░░░░░░░░░░░░░░░░]  23.3% (264/1131)
+  ua (ukrainian)       [███████████████████░]  95.2% (1077/1131)
+  zho (tchinese)       [██████████████████░░]  94.7% (1071/1131)
 
 Global languages (15): chi, de, en, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
 
@@ -1612,6 +1612,16 @@ translations/cs2kz-menu.phrases.txt
     Missing (10): de, es, fi, it, ko, lv, nl, pl, sv, tr
   Line 2196: "Menu - Course Show Records Sub"
     Missing (10): de, es, fi, it, ko, lv, nl, pl, sv, tr
+  Line 2204: "Menu - Race"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 2208: "Menu - Race Time Left"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 2212: "Menu - Race Time Left Sub"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 2216: "Menu - Race PB"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 2220: "Menu - Race PB Sub"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
 
 translations/cs2kz-modes.phrases.txt
 ----------------------------------------------------------------------
@@ -1734,6 +1744,40 @@ translations/cs2kz-racing.phrases.txt
     Missing (7): es, fi, it, lv, nl, sv, tr
   Line 268: "Racing - Player Unregistered"
     Missing (7): es, fi, it, lv, nl, sv, tr
+  Line 280: "Racing HUD - Title"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 284: "Racing HUD - Course"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 288: "Racing HUD - Mode"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 292: "Racing HUD - Format"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 296: "Racing HUD - Format Fastest Time"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 300: "Racing HUD - Format First To Finish"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 304: "Racing HUD - Teleport Limit"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 308: "Racing HUD - Time Limit"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 312: "Racing HUD - Time Left"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 316: "Racing HUD - PB"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 320: "Racing HUD - Pro PB"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 324: "Racing HUD - None"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 328: "Racing HUD - Accepted"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 332: "Racing HUD - Join Hint"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 336: "Racing HUD - Not Joined"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 340: "Racing HUD - Running"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
+  Line 344: "Racing HUD - Finished"
+    Missing (14): chi, de, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
 
 translations/cs2kz-replays.phrases.txt
 ----------------------------------------------------------------------

@@ -1,9 +1,9 @@
 {
   "summary": {
     "total_languages": 15,
-    "total_phrases": 1109,
-    "phrases_with_missing": 1109,
-    "total_missing_entries": 7722,
+    "total_phrases": 1131,
+    "phrases_with_missing": 1131,
+    "total_missing_entries": 8030,
     "all_languages": [
       "chi",
       "de",
@@ -59,9 +59,9 @@
   "languages": {
     "chi": {
       "name": "schinese",
-      "coverage_percent": 91.52,
+      "coverage_percent": 89.74,
       "translated": 1015,
-      "missing": 94,
+      "missing": 116,
       "missing_phrases": [
         {
           "file": "translations/cs2kz-commands.phrases.txt",
@@ -490,10 +490,142 @@
           "english_text": "Route progress label"
         },
         {
+          "file": "translations/cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Race",
+          "line": 2204,
+          "english_text": "Race"
+        },
+        {
+          "file": "translations/cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Race Time Left",
+          "line": 2208,
+          "english_text": "Time left"
+        },
+        {
+          "file": "translations/cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Race Time Left Sub",
+          "line": 2212,
+          "english_text": "Count down the time left instead of showing the time limit once a race starts"
+        },
+        {
+          "file": "translations/cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Race PB",
+          "line": 2216,
+          "english_text": "Personal best"
+        },
+        {
+          "file": "translations/cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Race PB Sub",
+          "line": 2220,
+          "english_text": "Your personal best on the race course while you run it, pro only in a race without teleports"
+        },
+        {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Points",
           "line": 138,
           "english_text": " {grey}[{default}{points}{grey} points]"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Title",
+          "line": 280,
+          "english_text": "Race"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Course",
+          "line": 284,
+          "english_text": "Course"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Mode",
+          "line": 288,
+          "english_text": "Mode"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Format",
+          "line": 292,
+          "english_text": "Format"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Format Fastest Time",
+          "line": 296,
+          "english_text": "Fastest time"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Format First To Finish",
+          "line": 300,
+          "english_text": "First to finish"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Teleport Limit",
+          "line": 304,
+          "english_text": "Max TPs"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Time Limit",
+          "line": 308,
+          "english_text": "Time limit"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Time Left",
+          "line": 312,
+          "english_text": "Time left"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - PB",
+          "line": 316,
+          "english_text": "PB"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Pro PB",
+          "line": 320,
+          "english_text": "Pro PB"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - None",
+          "line": 324,
+          "english_text": "None"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Accepted",
+          "line": 328,
+          "english_text": "Accepted"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Join Hint",
+          "line": 332,
+          "english_text": "Type !accept to join"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Not Joined",
+          "line": 336,
+          "english_text": "Not joined"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Running",
+          "line": 340,
+          "english_text": "In progress"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Finished",
+          "line": 344,
+          "english_text": "Finished"
         },
         {
           "file": "translations/cs2kz-replays.phrases.txt",
@@ -641,9 +773,9 @@
     },
     "de": {
       "name": "german",
-      "coverage_percent": 47.07,
+      "coverage_percent": 46.15,
       "translated": 522,
-      "missing": 587,
+      "missing": 609,
       "missing_phrases": [
         {
           "file": "translations/cs2kz-anticheat.phrases.txt",
@@ -3604,6 +3736,36 @@
           "english_text": "The world record and your gap to it, or the server record on a non-global map"
         },
         {
+          "file": "translations/cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Race",
+          "line": 2204,
+          "english_text": "Race"
+        },
+        {
+          "file": "translations/cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Race Time Left",
+          "line": 2208,
+          "english_text": "Time left"
+        },
+        {
+          "file": "translations/cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Race Time Left Sub",
+          "line": 2212,
+          "english_text": "Count down the time left instead of showing the time limit once a race starts"
+        },
+        {
+          "file": "translations/cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Race PB",
+          "line": 2216,
+          "english_text": "Personal best"
+        },
+        {
+          "file": "translations/cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Race PB Sub",
+          "line": 2220,
+          "english_text": "Your personal best on the race course while you run it, pro only in a race without teleports"
+        },
+        {
           "file": "translations/cs2kz-paint.phrases.txt",
           "phrase": "Paint Color Command Usage",
           "line": 3,
@@ -3674,6 +3836,108 @@
           "phrase": "Racing - End Results Points",
           "line": 138,
           "english_text": " {grey}[{default}{points}{grey} points]"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Title",
+          "line": 280,
+          "english_text": "Race"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Course",
+          "line": 284,
+          "english_text": "Course"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Mode",
+          "line": 288,
+          "english_text": "Mode"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Format",
+          "line": 292,
+          "english_text": "Format"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Format Fastest Time",
+          "line": 296,
+          "english_text": "Fastest time"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Format First To Finish",
+          "line": 300,
+          "english_text": "First to finish"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Teleport Limit",
+          "line": 304,
+          "english_text": "Max TPs"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Time Limit",
+          "line": 308,
+          "english_text": "Time limit"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Time Left",
+          "line": 312,
+          "english_text": "Time left"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - PB",
+          "line": 316,
+          "english_text": "PB"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Pro PB",
+          "line": 320,
+          "english_text": "Pro PB"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - None",
+          "line": 324,
+          "english_text": "None"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Accepted",
+          "line": 328,
+          "english_text": "Accepted"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Join Hint",
+          "line": 332,
+          "english_text": "Type !accept to join"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Not Joined",
+          "line": 336,
+          "english_text": "Not joined"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Running",
+          "line": 340,
+          "english_text": "In progress"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Finished",
+          "line": 344,
+          "english_text": "Finished"
         },
         {
           "file": "translations/cs2kz-replays.phrases.txt",
@@ -4177,7 +4441,7 @@
     "en": {
       "name": "english",
       "coverage_percent": 100.0,
-      "translated": 1109,
+      "translated": 1131,
       "missing": 0,
       "missing_phrases": [],
       "menu": {
@@ -4188,9 +4452,9 @@
     },
     "es": {
       "name": "spanish",
-      "coverage_percent": 43.82,
+      "coverage_percent": 42.97,
       "translated": 486,
-      "missing": 623,
+      "missing": 645,
       "missing_phrases": [
         {
           "file": "translations/cs2kz-commands.phrases.txt",
@@ -6821,6 +7085,36 @@
           "english_text": "The world record and your gap to it, or the server record on a non-global map"
         },
         {
+          "file": "translations/cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Race",
+          "line": 2204,
+          "english_text": "Race"
+        },
+        {
+          "file": "translations/cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Race Time Left",
+          "line": 2208,
+          "english_text": "Time left"
+        },
+        {
+          "file": "translations/cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Race Time Left Sub",
+          "line": 2212,
+          "english_text": "Count down the time left instead of showing the time limit once a race starts"
+        },
+        {
+          "file": "translations/cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Race PB",
+          "line": 2216,
+          "english_text": "Personal best"
+        },
+        {
+          "file": "translations/cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Race PB Sub",
+          "line": 2220,
+          "english_text": "Your personal best on the race course while you run it, pro only in a race without teleports"
+        },
+        {
           "file": "translations/cs2kz-paint.phrases.txt",
           "phrase": "Paint Color Command Usage",
           "line": 3,
@@ -7023,6 +7317,108 @@
           "phrase": "Racing - Player Unregistered",
           "line": 268,
           "english_text": "{lime}{player}{grey} has unregistered from the race."
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Title",
+          "line": 280,
+          "english_text": "Race"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Course",
+          "line": 284,
+          "english_text": "Course"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Mode",
+          "line": 288,
+          "english_text": "Mode"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Format",
+          "line": 292,
+          "english_text": "Format"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Format Fastest Time",
+          "line": 296,
+          "english_text": "Fastest time"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Format First To Finish",
+          "line": 300,
+          "english_text": "First to finish"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Teleport Limit",
+          "line": 304,
+          "english_text": "Max TPs"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Time Limit",
+          "line": 308,
+          "english_text": "Time limit"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Time Left",
+          "line": 312,
+          "english_text": "Time left"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - PB",
+          "line": 316,
+          "english_text": "PB"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Pro PB",
+          "line": 320,
+          "english_text": "Pro PB"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - None",
+          "line": 324,
+          "english_text": "None"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Accepted",
+          "line": 328,
+          "english_text": "Accepted"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Join Hint",
+          "line": 332,
+          "english_text": "Type !accept to join"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Not Joined",
+          "line": 336,
+          "english_text": "Not joined"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Running",
+          "line": 340,
+          "english_text": "In progress"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Finished",
+          "line": 344,
+          "english_text": "Finished"
         },
         {
           "file": "translations/cs2kz-replays.phrases.txt",
@@ -7939,9 +8335,9 @@
     },
     "fi": {
       "name": "finnish",
-      "coverage_percent": 21.19,
+      "coverage_percent": 20.78,
       "translated": 235,
-      "missing": 874,
+      "missing": 896,
       "missing_phrases": [
         {
           "file": "translations/cs2kz-anticheat.phrases.txt",
@@ -11592,6 +11988,36 @@
           "english_text": "The world record and your gap to it, or the server record on a non-global map"
         },
         {
+          "file": "translations/cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Race",
+          "line": 2204,
+          "english_text": "Race"
+        },
+        {
+          "file": "translations/cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Race Time Left",
+          "line": 2208,
+          "english_text": "Time left"
+        },
+        {
+          "file": "translations/cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Race Time Left Sub",
+          "line": 2212,
+          "english_text": "Count down the time left instead of showing the time limit once a race starts"
+        },
+        {
+          "file": "translations/cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Race PB",
+          "line": 2216,
+          "english_text": "Personal best"
+        },
+        {
+          "file": "translations/cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Race PB Sub",
+          "line": 2220,
+          "english_text": "Your personal best on the race course while you run it, pro only in a race without teleports"
+        },
+        {
           "file": "translations/cs2kz-paint.phrases.txt",
           "phrase": "Paint Color Command Usage",
           "line": 3,
@@ -11830,6 +12256,108 @@
           "phrase": "Racing - Player Unregistered",
           "line": 268,
           "english_text": "{lime}{player}{grey} has unregistered from the race."
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Title",
+          "line": 280,
+          "english_text": "Race"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Course",
+          "line": 284,
+          "english_text": "Course"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Mode",
+          "line": 288,
+          "english_text": "Mode"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Format",
+          "line": 292,
+          "english_text": "Format"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Format Fastest Time",
+          "line": 296,
+          "english_text": "Fastest time"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Format First To Finish",
+          "line": 300,
+          "english_text": "First to finish"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Teleport Limit",
+          "line": 304,
+          "english_text": "Max TPs"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Time Limit",
+          "line": 308,
+          "english_text": "Time limit"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Time Left",
+          "line": 312,
+          "english_text": "Time left"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - PB",
+          "line": 316,
+          "english_text": "PB"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Pro PB",
+          "line": 320,
+          "english_text": "Pro PB"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - None",
+          "line": 324,
+          "english_text": "None"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Accepted",
+          "line": 328,
+          "english_text": "Accepted"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Join Hint",
+          "line": 332,
+          "english_text": "Type !accept to join"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Not Joined",
+          "line": 336,
+          "english_text": "Not joined"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Running",
+          "line": 340,
+          "english_text": "In progress"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Finished",
+          "line": 344,
+          "english_text": "Finished"
         },
         {
           "file": "translations/cs2kz-replays.phrases.txt",
@@ -13201,9 +13729,9 @@
     },
     "it": {
       "name": "italian",
-      "coverage_percent": 20.47,
+      "coverage_percent": 20.07,
       "translated": 227,
-      "missing": 882,
+      "missing": 904,
       "missing_phrases": [
         {
           "file": "translations/cs2kz-anticheat.phrases.txt",
@@ -16872,6 +17400,36 @@
           "english_text": "The world record and your gap to it, or the server record on a non-global map"
         },
         {
+          "file": "translations/cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Race",
+          "line": 2204,
+          "english_text": "Race"
+        },
+        {
+          "file": "translations/cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Race Time Left",
+          "line": 2208,
+          "english_text": "Time left"
+        },
+        {
+          "file": "translations/cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Race Time Left Sub",
+          "line": 2212,
+          "english_text": "Count down the time left instead of showing the time limit once a race starts"
+        },
+        {
+          "file": "translations/cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Race PB",
+          "line": 2216,
+          "english_text": "Personal best"
+        },
+        {
+          "file": "translations/cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Race PB Sub",
+          "line": 2220,
+          "english_text": "Your personal best on the race course while you run it, pro only in a race without teleports"
+        },
+        {
           "file": "translations/cs2kz-paint.phrases.txt",
           "phrase": "Paint Color Command Usage",
           "line": 3,
@@ -17110,6 +17668,108 @@
           "phrase": "Racing - Player Unregistered",
           "line": 268,
           "english_text": "{lime}{player}{grey} has unregistered from the race."
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Title",
+          "line": 280,
+          "english_text": "Race"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Course",
+          "line": 284,
+          "english_text": "Course"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Mode",
+          "line": 288,
+          "english_text": "Mode"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Format",
+          "line": 292,
+          "english_text": "Format"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Format Fastest Time",
+          "line": 296,
+          "english_text": "Fastest time"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Format First To Finish",
+          "line": 300,
+          "english_text": "First to finish"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Teleport Limit",
+          "line": 304,
+          "english_text": "Max TPs"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Time Limit",
+          "line": 308,
+          "english_text": "Time limit"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Time Left",
+          "line": 312,
+          "english_text": "Time left"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - PB",
+          "line": 316,
+          "english_text": "PB"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Pro PB",
+          "line": 320,
+          "english_text": "Pro PB"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - None",
+          "line": 324,
+          "english_text": "None"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Accepted",
+          "line": 328,
+          "english_text": "Accepted"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Join Hint",
+          "line": 332,
+          "english_text": "Type !accept to join"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Not Joined",
+          "line": 336,
+          "english_text": "Not joined"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Running",
+          "line": 340,
+          "english_text": "In progress"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Finished",
+          "line": 344,
+          "english_text": "Finished"
         },
         {
           "file": "translations/cs2kz-replays.phrases.txt",
@@ -18511,9 +19171,9 @@
     },
     "ko": {
       "name": "koreana",
-      "coverage_percent": 59.15,
+      "coverage_percent": 58.0,
       "translated": 656,
-      "missing": 453,
+      "missing": 475,
       "missing_phrases": [
         {
           "file": "translations/cs2kz-commands.phrases.txt",
@@ -21078,10 +21738,142 @@
           "english_text": "The world record and your gap to it, or the server record on a non-global map"
         },
         {
+          "file": "translations/cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Race",
+          "line": 2204,
+          "english_text": "Race"
+        },
+        {
+          "file": "translations/cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Race Time Left",
+          "line": 2208,
+          "english_text": "Time left"
+        },
+        {
+          "file": "translations/cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Race Time Left Sub",
+          "line": 2212,
+          "english_text": "Count down the time left instead of showing the time limit once a race starts"
+        },
+        {
+          "file": "translations/cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Race PB",
+          "line": 2216,
+          "english_text": "Personal best"
+        },
+        {
+          "file": "translations/cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Race PB Sub",
+          "line": 2220,
+          "english_text": "Your personal best on the race course while you run it, pro only in a race without teleports"
+        },
+        {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Points",
           "line": 138,
           "english_text": " {grey}[{default}{points}{grey} points]"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Title",
+          "line": 280,
+          "english_text": "Race"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Course",
+          "line": 284,
+          "english_text": "Course"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Mode",
+          "line": 288,
+          "english_text": "Mode"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Format",
+          "line": 292,
+          "english_text": "Format"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Format Fastest Time",
+          "line": 296,
+          "english_text": "Fastest time"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Format First To Finish",
+          "line": 300,
+          "english_text": "First to finish"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Teleport Limit",
+          "line": 304,
+          "english_text": "Max TPs"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Time Limit",
+          "line": 308,
+          "english_text": "Time limit"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Time Left",
+          "line": 312,
+          "english_text": "Time left"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - PB",
+          "line": 316,
+          "english_text": "PB"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Pro PB",
+          "line": 320,
+          "english_text": "Pro PB"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - None",
+          "line": 324,
+          "english_text": "None"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Accepted",
+          "line": 328,
+          "english_text": "Accepted"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Join Hint",
+          "line": 332,
+          "english_text": "Type !accept to join"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Not Joined",
+          "line": 336,
+          "english_text": "Not joined"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Running",
+          "line": 340,
+          "english_text": "In progress"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Finished",
+          "line": 344,
+          "english_text": "Finished"
         },
         {
           "file": "translations/cs2kz-replays.phrases.txt",
@@ -21242,9 +22034,9 @@
     },
     "lv": {
       "name": "latvian",
-      "coverage_percent": 29.76,
+      "coverage_percent": 29.18,
       "translated": 330,
-      "missing": 779,
+      "missing": 801,
       "missing_phrases": [
         {
           "file": "translations/cs2kz-anticheat.phrases.txt",
@@ -24619,6 +25411,36 @@
           "english_text": "The world record and your gap to it, or the server record on a non-global map"
         },
         {
+          "file": "translations/cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Race",
+          "line": 2204,
+          "english_text": "Race"
+        },
+        {
+          "file": "translations/cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Race Time Left",
+          "line": 2208,
+          "english_text": "Time left"
+        },
+        {
+          "file": "translations/cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Race Time Left Sub",
+          "line": 2212,
+          "english_text": "Count down the time left instead of showing the time limit once a race starts"
+        },
+        {
+          "file": "translations/cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Race PB",
+          "line": 2216,
+          "english_text": "Personal best"
+        },
+        {
+          "file": "translations/cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Race PB Sub",
+          "line": 2220,
+          "english_text": "Your personal best on the race course while you run it, pro only in a race without teleports"
+        },
+        {
           "file": "translations/cs2kz-paint.phrases.txt",
           "phrase": "Paint Color Command Usage",
           "line": 3,
@@ -24857,6 +25679,108 @@
           "phrase": "Racing - Player Unregistered",
           "line": 268,
           "english_text": "{lime}{player}{grey} has unregistered from the race."
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Title",
+          "line": 280,
+          "english_text": "Race"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Course",
+          "line": 284,
+          "english_text": "Course"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Mode",
+          "line": 288,
+          "english_text": "Mode"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Format",
+          "line": 292,
+          "english_text": "Format"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Format Fastest Time",
+          "line": 296,
+          "english_text": "Fastest time"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Format First To Finish",
+          "line": 300,
+          "english_text": "First to finish"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Teleport Limit",
+          "line": 304,
+          "english_text": "Max TPs"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Time Limit",
+          "line": 308,
+          "english_text": "Time limit"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Time Left",
+          "line": 312,
+          "english_text": "Time left"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - PB",
+          "line": 316,
+          "english_text": "PB"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Pro PB",
+          "line": 320,
+          "english_text": "Pro PB"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - None",
+          "line": 324,
+          "english_text": "None"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Accepted",
+          "line": 328,
+          "english_text": "Accepted"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Join Hint",
+          "line": 332,
+          "english_text": "Type !accept to join"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Not Joined",
+          "line": 336,
+          "english_text": "Not joined"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Running",
+          "line": 340,
+          "english_text": "In progress"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Finished",
+          "line": 344,
+          "english_text": "Finished"
         },
         {
           "file": "translations/cs2kz-replays.phrases.txt",
@@ -25929,9 +26853,9 @@
     },
     "nl": {
       "name": "dutch",
-      "coverage_percent": 0.45,
+      "coverage_percent": 0.44,
       "translated": 5,
-      "missing": 1104,
+      "missing": 1126,
       "missing_phrases": [
         {
           "file": "translations/cs2kz-anticheat.phrases.txt",
@@ -30392,6 +31316,36 @@
           "english_text": "The world record and your gap to it, or the server record on a non-global map"
         },
         {
+          "file": "translations/cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Race",
+          "line": 2204,
+          "english_text": "Race"
+        },
+        {
+          "file": "translations/cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Race Time Left",
+          "line": 2208,
+          "english_text": "Time left"
+        },
+        {
+          "file": "translations/cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Race Time Left Sub",
+          "line": 2212,
+          "english_text": "Count down the time left instead of showing the time limit once a race starts"
+        },
+        {
+          "file": "translations/cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Race PB",
+          "line": 2216,
+          "english_text": "Personal best"
+        },
+        {
+          "file": "translations/cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Race PB Sub",
+          "line": 2220,
+          "english_text": "Your personal best on the race course while you run it, pro only in a race without teleports"
+        },
+        {
           "file": "translations/cs2kz-modes.phrases.txt",
           "phrase": "Mode Command Usage",
           "line": 3,
@@ -30702,6 +31656,108 @@
           "phrase": "Racing - Player Unregistered",
           "line": 268,
           "english_text": "{lime}{player}{grey} has unregistered from the race."
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Title",
+          "line": 280,
+          "english_text": "Race"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Course",
+          "line": 284,
+          "english_text": "Course"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Mode",
+          "line": 288,
+          "english_text": "Mode"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Format",
+          "line": 292,
+          "english_text": "Format"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Format Fastest Time",
+          "line": 296,
+          "english_text": "Fastest time"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Format First To Finish",
+          "line": 300,
+          "english_text": "First to finish"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Teleport Limit",
+          "line": 304,
+          "english_text": "Max TPs"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Time Limit",
+          "line": 308,
+          "english_text": "Time limit"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Time Left",
+          "line": 312,
+          "english_text": "Time left"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - PB",
+          "line": 316,
+          "english_text": "PB"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Pro PB",
+          "line": 320,
+          "english_text": "Pro PB"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - None",
+          "line": 324,
+          "english_text": "None"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Accepted",
+          "line": 328,
+          "english_text": "Accepted"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Join Hint",
+          "line": 332,
+          "english_text": "Type !accept to join"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Not Joined",
+          "line": 336,
+          "english_text": "Not joined"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Running",
+          "line": 340,
+          "english_text": "In progress"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Finished",
+          "line": 344,
+          "english_text": "Finished"
         },
         {
           "file": "translations/cs2kz-replays.phrases.txt",
@@ -32566,9 +33622,9 @@
     },
     "pl": {
       "name": "polish",
-      "coverage_percent": 47.25,
+      "coverage_percent": 46.33,
       "translated": 524,
-      "missing": 585,
+      "missing": 607,
       "missing_phrases": [
         {
           "file": "translations/cs2kz-anticheat.phrases.txt",
@@ -35517,6 +36573,36 @@
           "english_text": "The world record and your gap to it, or the server record on a non-global map"
         },
         {
+          "file": "translations/cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Race",
+          "line": 2204,
+          "english_text": "Race"
+        },
+        {
+          "file": "translations/cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Race Time Left",
+          "line": 2208,
+          "english_text": "Time left"
+        },
+        {
+          "file": "translations/cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Race Time Left Sub",
+          "line": 2212,
+          "english_text": "Count down the time left instead of showing the time limit once a race starts"
+        },
+        {
+          "file": "translations/cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Race PB",
+          "line": 2216,
+          "english_text": "Personal best"
+        },
+        {
+          "file": "translations/cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Race PB Sub",
+          "line": 2220,
+          "english_text": "Your personal best on the race course while you run it, pro only in a race without teleports"
+        },
+        {
           "file": "translations/cs2kz-paint.phrases.txt",
           "phrase": "Paint Color Command Usage",
           "line": 3,
@@ -35587,6 +36673,108 @@
           "phrase": "Racing - End Results Points",
           "line": 138,
           "english_text": " {grey}[{default}{points}{grey} points]"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Title",
+          "line": 280,
+          "english_text": "Race"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Course",
+          "line": 284,
+          "english_text": "Course"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Mode",
+          "line": 288,
+          "english_text": "Mode"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Format",
+          "line": 292,
+          "english_text": "Format"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Format Fastest Time",
+          "line": 296,
+          "english_text": "Fastest time"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Format First To Finish",
+          "line": 300,
+          "english_text": "First to finish"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Teleport Limit",
+          "line": 304,
+          "english_text": "Max TPs"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Time Limit",
+          "line": 308,
+          "english_text": "Time limit"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Time Left",
+          "line": 312,
+          "english_text": "Time left"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - PB",
+          "line": 316,
+          "english_text": "PB"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Pro PB",
+          "line": 320,
+          "english_text": "Pro PB"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - None",
+          "line": 324,
+          "english_text": "None"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Accepted",
+          "line": 328,
+          "english_text": "Accepted"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Join Hint",
+          "line": 332,
+          "english_text": "Type !accept to join"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Not Joined",
+          "line": 336,
+          "english_text": "Not joined"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Running",
+          "line": 340,
+          "english_text": "In progress"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Finished",
+          "line": 344,
+          "english_text": "Finished"
         },
         {
           "file": "translations/cs2kz-replays.phrases.txt",
@@ -36089,9 +37277,9 @@
     },
     "ru": {
       "name": "russian",
-      "coverage_percent": 89.99,
+      "coverage_percent": 88.24,
       "translated": 998,
-      "missing": 111,
+      "missing": 133,
       "missing_phrases": [
         {
           "file": "translations/cs2kz-commands.phrases.txt",
@@ -36622,10 +37810,142 @@
           "english_text": "Route progress label"
         },
         {
+          "file": "translations/cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Race",
+          "line": 2204,
+          "english_text": "Race"
+        },
+        {
+          "file": "translations/cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Race Time Left",
+          "line": 2208,
+          "english_text": "Time left"
+        },
+        {
+          "file": "translations/cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Race Time Left Sub",
+          "line": 2212,
+          "english_text": "Count down the time left instead of showing the time limit once a race starts"
+        },
+        {
+          "file": "translations/cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Race PB",
+          "line": 2216,
+          "english_text": "Personal best"
+        },
+        {
+          "file": "translations/cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Race PB Sub",
+          "line": 2220,
+          "english_text": "Your personal best on the race course while you run it, pro only in a race without teleports"
+        },
+        {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Points",
           "line": 138,
           "english_text": " {grey}[{default}{points}{grey} points]"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Title",
+          "line": 280,
+          "english_text": "Race"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Course",
+          "line": 284,
+          "english_text": "Course"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Mode",
+          "line": 288,
+          "english_text": "Mode"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Format",
+          "line": 292,
+          "english_text": "Format"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Format Fastest Time",
+          "line": 296,
+          "english_text": "Fastest time"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Format First To Finish",
+          "line": 300,
+          "english_text": "First to finish"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Teleport Limit",
+          "line": 304,
+          "english_text": "Max TPs"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Time Limit",
+          "line": 308,
+          "english_text": "Time limit"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Time Left",
+          "line": 312,
+          "english_text": "Time left"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - PB",
+          "line": 316,
+          "english_text": "PB"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Pro PB",
+          "line": 320,
+          "english_text": "Pro PB"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - None",
+          "line": 324,
+          "english_text": "None"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Accepted",
+          "line": 328,
+          "english_text": "Accepted"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Join Hint",
+          "line": 332,
+          "english_text": "Type !accept to join"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Not Joined",
+          "line": 336,
+          "english_text": "Not joined"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Running",
+          "line": 340,
+          "english_text": "In progress"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Finished",
+          "line": 344,
+          "english_text": "Finished"
         },
         {
           "file": "translations/cs2kz-replays.phrases.txt",
@@ -36768,9 +38088,9 @@
     },
     "sv": {
       "name": "swedish",
-      "coverage_percent": 35.53,
+      "coverage_percent": 34.84,
       "translated": 394,
-      "missing": 715,
+      "missing": 737,
       "missing_phrases": [
         {
           "file": "translations/cs2kz-anticheat.phrases.txt",
@@ -39875,6 +41195,36 @@
           "english_text": "The world record and your gap to it, or the server record on a non-global map"
         },
         {
+          "file": "translations/cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Race",
+          "line": 2204,
+          "english_text": "Race"
+        },
+        {
+          "file": "translations/cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Race Time Left",
+          "line": 2208,
+          "english_text": "Time left"
+        },
+        {
+          "file": "translations/cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Race Time Left Sub",
+          "line": 2212,
+          "english_text": "Count down the time left instead of showing the time limit once a race starts"
+        },
+        {
+          "file": "translations/cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Race PB",
+          "line": 2216,
+          "english_text": "Personal best"
+        },
+        {
+          "file": "translations/cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Race PB Sub",
+          "line": 2220,
+          "english_text": "Your personal best on the race course while you run it, pro only in a race without teleports"
+        },
+        {
           "file": "translations/cs2kz-paint.phrases.txt",
           "phrase": "Paint Color Command Usage",
           "line": 3,
@@ -40077,6 +41427,108 @@
           "phrase": "Racing - Player Unregistered",
           "line": 268,
           "english_text": "{lime}{player}{grey} has unregistered from the race."
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Title",
+          "line": 280,
+          "english_text": "Race"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Course",
+          "line": 284,
+          "english_text": "Course"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Mode",
+          "line": 288,
+          "english_text": "Mode"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Format",
+          "line": 292,
+          "english_text": "Format"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Format Fastest Time",
+          "line": 296,
+          "english_text": "Fastest time"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Format First To Finish",
+          "line": 300,
+          "english_text": "First to finish"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Teleport Limit",
+          "line": 304,
+          "english_text": "Max TPs"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Time Limit",
+          "line": 308,
+          "english_text": "Time limit"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Time Left",
+          "line": 312,
+          "english_text": "Time left"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - PB",
+          "line": 316,
+          "english_text": "PB"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Pro PB",
+          "line": 320,
+          "english_text": "Pro PB"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - None",
+          "line": 324,
+          "english_text": "None"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Accepted",
+          "line": 328,
+          "english_text": "Accepted"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Join Hint",
+          "line": 332,
+          "english_text": "Type !accept to join"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Not Joined",
+          "line": 336,
+          "english_text": "Not joined"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Running",
+          "line": 340,
+          "english_text": "In progress"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Finished",
+          "line": 344,
+          "english_text": "Finished"
         },
         {
           "file": "translations/cs2kz-replays.phrases.txt",
@@ -41071,9 +42523,9 @@
     },
     "tr": {
       "name": "turkish",
-      "coverage_percent": 23.81,
+      "coverage_percent": 23.34,
       "translated": 264,
-      "missing": 845,
+      "missing": 867,
       "missing_phrases": [
         {
           "file": "translations/cs2kz-anticheat.phrases.txt",
@@ -44682,6 +46134,36 @@
           "english_text": "The world record and your gap to it, or the server record on a non-global map"
         },
         {
+          "file": "translations/cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Race",
+          "line": 2204,
+          "english_text": "Race"
+        },
+        {
+          "file": "translations/cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Race Time Left",
+          "line": 2208,
+          "english_text": "Time left"
+        },
+        {
+          "file": "translations/cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Race Time Left Sub",
+          "line": 2212,
+          "english_text": "Count down the time left instead of showing the time limit once a race starts"
+        },
+        {
+          "file": "translations/cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Race PB",
+          "line": 2216,
+          "english_text": "Personal best"
+        },
+        {
+          "file": "translations/cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Race PB Sub",
+          "line": 2220,
+          "english_text": "Your personal best on the race course while you run it, pro only in a race without teleports"
+        },
+        {
           "file": "translations/cs2kz-paint.phrases.txt",
           "phrase": "Paint Color Command Usage",
           "line": 3,
@@ -44920,6 +46402,108 @@
           "phrase": "Racing - Player Unregistered",
           "line": 268,
           "english_text": "{lime}{player}{grey} has unregistered from the race."
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Title",
+          "line": 280,
+          "english_text": "Race"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Course",
+          "line": 284,
+          "english_text": "Course"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Mode",
+          "line": 288,
+          "english_text": "Mode"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Format",
+          "line": 292,
+          "english_text": "Format"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Format Fastest Time",
+          "line": 296,
+          "english_text": "Fastest time"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Format First To Finish",
+          "line": 300,
+          "english_text": "First to finish"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Teleport Limit",
+          "line": 304,
+          "english_text": "Max TPs"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Time Limit",
+          "line": 308,
+          "english_text": "Time limit"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Time Left",
+          "line": 312,
+          "english_text": "Time left"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - PB",
+          "line": 316,
+          "english_text": "PB"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Pro PB",
+          "line": 320,
+          "english_text": "Pro PB"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - None",
+          "line": 324,
+          "english_text": "None"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Accepted",
+          "line": 328,
+          "english_text": "Accepted"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Join Hint",
+          "line": 332,
+          "english_text": "Type !accept to join"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Not Joined",
+          "line": 336,
+          "english_text": "Not joined"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Running",
+          "line": 340,
+          "english_text": "In progress"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Finished",
+          "line": 344,
+          "english_text": "Finished"
         },
         {
           "file": "translations/cs2kz-replays.phrases.txt",
@@ -46159,9 +47743,9 @@
     },
     "ua": {
       "name": "ukrainian",
-      "coverage_percent": 97.11,
+      "coverage_percent": 95.23,
       "translated": 1077,
-      "missing": 32,
+      "missing": 54,
       "missing_phrases": [
         {
           "file": "translations/cs2kz-commands.phrases.txt",
@@ -46242,10 +47826,142 @@
           "english_text": "Route progress label"
         },
         {
+          "file": "translations/cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Race",
+          "line": 2204,
+          "english_text": "Race"
+        },
+        {
+          "file": "translations/cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Race Time Left",
+          "line": 2208,
+          "english_text": "Time left"
+        },
+        {
+          "file": "translations/cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Race Time Left Sub",
+          "line": 2212,
+          "english_text": "Count down the time left instead of showing the time limit once a race starts"
+        },
+        {
+          "file": "translations/cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Race PB",
+          "line": 2216,
+          "english_text": "Personal best"
+        },
+        {
+          "file": "translations/cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Race PB Sub",
+          "line": 2220,
+          "english_text": "Your personal best on the race course while you run it, pro only in a race without teleports"
+        },
+        {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Points",
           "line": 138,
           "english_text": " {grey}[{default}{points}{grey} points]"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Title",
+          "line": 280,
+          "english_text": "Race"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Course",
+          "line": 284,
+          "english_text": "Course"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Mode",
+          "line": 288,
+          "english_text": "Mode"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Format",
+          "line": 292,
+          "english_text": "Format"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Format Fastest Time",
+          "line": 296,
+          "english_text": "Fastest time"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Format First To Finish",
+          "line": 300,
+          "english_text": "First to finish"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Teleport Limit",
+          "line": 304,
+          "english_text": "Max TPs"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Time Limit",
+          "line": 308,
+          "english_text": "Time limit"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Time Left",
+          "line": 312,
+          "english_text": "Time left"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - PB",
+          "line": 316,
+          "english_text": "PB"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Pro PB",
+          "line": 320,
+          "english_text": "Pro PB"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - None",
+          "line": 324,
+          "english_text": "None"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Accepted",
+          "line": 328,
+          "english_text": "Accepted"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Join Hint",
+          "line": 332,
+          "english_text": "Type !accept to join"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Not Joined",
+          "line": 336,
+          "english_text": "Not joined"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Running",
+          "line": 340,
+          "english_text": "In progress"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Finished",
+          "line": 344,
+          "english_text": "Finished"
         },
         {
           "file": "translations/cs2kz-replays.phrases.txt",
@@ -46364,9 +48080,9 @@
     },
     "zho": {
       "name": "tchinese",
-      "coverage_percent": 96.57,
+      "coverage_percent": 94.69,
       "translated": 1071,
-      "missing": 38,
+      "missing": 60,
       "missing_phrases": [
         {
           "file": "translations/cs2kz-commands.phrases.txt",
@@ -46447,6 +48163,36 @@
           "english_text": "Route progress label"
         },
         {
+          "file": "translations/cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Race",
+          "line": 2204,
+          "english_text": "Race"
+        },
+        {
+          "file": "translations/cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Race Time Left",
+          "line": 2208,
+          "english_text": "Time left"
+        },
+        {
+          "file": "translations/cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Race Time Left Sub",
+          "line": 2212,
+          "english_text": "Count down the time left instead of showing the time limit once a race starts"
+        },
+        {
+          "file": "translations/cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Race PB",
+          "line": 2216,
+          "english_text": "Personal best"
+        },
+        {
+          "file": "translations/cs2kz-menu.phrases.txt",
+          "phrase": "Menu - Race PB Sub",
+          "line": 2220,
+          "english_text": "Your personal best on the race course while you run it, pro only in a race without teleports"
+        },
+        {
           "file": "translations/cs2kz-racing.phrases.txt",
           "phrase": "Racing - End Results Points",
           "line": 138,
@@ -46463,6 +48209,108 @@
           "phrase": "Racing - Race Info - No Teleport Limit (Chat)",
           "line": 194,
           "english_text": "{default}A new race has been started!\\n{grey}Course: {default}{course}{grey} | {time_limit}"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Title",
+          "line": 280,
+          "english_text": "Race"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Course",
+          "line": 284,
+          "english_text": "Course"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Mode",
+          "line": 288,
+          "english_text": "Mode"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Format",
+          "line": 292,
+          "english_text": "Format"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Format Fastest Time",
+          "line": 296,
+          "english_text": "Fastest time"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Format First To Finish",
+          "line": 300,
+          "english_text": "First to finish"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Teleport Limit",
+          "line": 304,
+          "english_text": "Max TPs"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Time Limit",
+          "line": 308,
+          "english_text": "Time limit"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Time Left",
+          "line": 312,
+          "english_text": "Time left"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - PB",
+          "line": 316,
+          "english_text": "PB"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Pro PB",
+          "line": 320,
+          "english_text": "Pro PB"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - None",
+          "line": 324,
+          "english_text": "None"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Accepted",
+          "line": 328,
+          "english_text": "Accepted"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Join Hint",
+          "line": 332,
+          "english_text": "Type !accept to join"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Not Joined",
+          "line": 336,
+          "english_text": "Not joined"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Running",
+          "line": 340,
+          "english_text": "In progress"
+        },
+        {
+          "file": "translations/cs2kz-racing.phrases.txt",
+          "phrase": "Racing HUD - Finished",
+          "line": 344,
+          "english_text": "Finished"
         },
         {
           "file": "translations/cs2kz-replays.phrases.txt",
@@ -58009,7 +59857,7 @@
       ]
     },
     "translations/cs2kz-menu.phrases.txt": {
-      "phrases_with_missing": 276,
+      "phrases_with_missing": 281,
       "phrases": [
         {
           "name": "Menu - Title Options",
@@ -64634,6 +66482,126 @@
             "sv",
             "tr"
           ]
+        },
+        {
+          "name": "Menu - Race",
+          "line": 2204,
+          "english_text": "Race",
+          "existing_languages": [
+            "en"
+          ],
+          "missing_languages": [
+            "chi",
+            "de",
+            "es",
+            "fi",
+            "it",
+            "ko",
+            "lv",
+            "nl",
+            "pl",
+            "ru",
+            "sv",
+            "tr",
+            "ua",
+            "zho"
+          ]
+        },
+        {
+          "name": "Menu - Race Time Left",
+          "line": 2208,
+          "english_text": "Time left",
+          "existing_languages": [
+            "en"
+          ],
+          "missing_languages": [
+            "chi",
+            "de",
+            "es",
+            "fi",
+            "it",
+            "ko",
+            "lv",
+            "nl",
+            "pl",
+            "ru",
+            "sv",
+            "tr",
+            "ua",
+            "zho"
+          ]
+        },
+        {
+          "name": "Menu - Race Time Left Sub",
+          "line": 2212,
+          "english_text": "Count down the time left instead of showing the time limit once a race starts",
+          "existing_languages": [
+            "en"
+          ],
+          "missing_languages": [
+            "chi",
+            "de",
+            "es",
+            "fi",
+            "it",
+            "ko",
+            "lv",
+            "nl",
+            "pl",
+            "ru",
+            "sv",
+            "tr",
+            "ua",
+            "zho"
+          ]
+        },
+        {
+          "name": "Menu - Race PB",
+          "line": 2216,
+          "english_text": "Personal best",
+          "existing_languages": [
+            "en"
+          ],
+          "missing_languages": [
+            "chi",
+            "de",
+            "es",
+            "fi",
+            "it",
+            "ko",
+            "lv",
+            "nl",
+            "pl",
+            "ru",
+            "sv",
+            "tr",
+            "ua",
+            "zho"
+          ]
+        },
+        {
+          "name": "Menu - Race PB Sub",
+          "line": 2220,
+          "english_text": "Your personal best on the race course while you run it, pro only in a race without teleports",
+          "existing_languages": [
+            "en"
+          ],
+          "missing_languages": [
+            "chi",
+            "de",
+            "es",
+            "fi",
+            "it",
+            "ko",
+            "lv",
+            "nl",
+            "pl",
+            "ru",
+            "sv",
+            "tr",
+            "ua",
+            "zho"
+          ]
         }
       ]
     },
@@ -65359,7 +67327,7 @@
       ]
     },
     "translations/cs2kz-racing.phrases.txt": {
-      "phrases_with_missing": 23,
+      "phrases_with_missing": 40,
       "phrases": [
         {
           "name": "Racing - Race Countdown",
@@ -65911,6 +67879,414 @@
             "nl",
             "sv",
             "tr"
+          ]
+        },
+        {
+          "name": "Racing HUD - Title",
+          "line": 280,
+          "english_text": "Race",
+          "existing_languages": [
+            "en"
+          ],
+          "missing_languages": [
+            "chi",
+            "de",
+            "es",
+            "fi",
+            "it",
+            "ko",
+            "lv",
+            "nl",
+            "pl",
+            "ru",
+            "sv",
+            "tr",
+            "ua",
+            "zho"
+          ]
+        },
+        {
+          "name": "Racing HUD - Course",
+          "line": 284,
+          "english_text": "Course",
+          "existing_languages": [
+            "en"
+          ],
+          "missing_languages": [
+            "chi",
+            "de",
+            "es",
+            "fi",
+            "it",
+            "ko",
+            "lv",
+            "nl",
+            "pl",
+            "ru",
+            "sv",
+            "tr",
+            "ua",
+            "zho"
+          ]
+        },
+        {
+          "name": "Racing HUD - Mode",
+          "line": 288,
+          "english_text": "Mode",
+          "existing_languages": [
+            "en"
+          ],
+          "missing_languages": [
+            "chi",
+            "de",
+            "es",
+            "fi",
+            "it",
+            "ko",
+            "lv",
+            "nl",
+            "pl",
+            "ru",
+            "sv",
+            "tr",
+            "ua",
+            "zho"
+          ]
+        },
+        {
+          "name": "Racing HUD - Format",
+          "line": 292,
+          "english_text": "Format",
+          "existing_languages": [
+            "en"
+          ],
+          "missing_languages": [
+            "chi",
+            "de",
+            "es",
+            "fi",
+            "it",
+            "ko",
+            "lv",
+            "nl",
+            "pl",
+            "ru",
+            "sv",
+            "tr",
+            "ua",
+            "zho"
+          ]
+        },
+        {
+          "name": "Racing HUD - Format Fastest Time",
+          "line": 296,
+          "english_text": "Fastest time",
+          "existing_languages": [
+            "en"
+          ],
+          "missing_languages": [
+            "chi",
+            "de",
+            "es",
+            "fi",
+            "it",
+            "ko",
+            "lv",
+            "nl",
+            "pl",
+            "ru",
+            "sv",
+            "tr",
+            "ua",
+            "zho"
+          ]
+        },
+        {
+          "name": "Racing HUD - Format First To Finish",
+          "line": 300,
+          "english_text": "First to finish",
+          "existing_languages": [
+            "en"
+          ],
+          "missing_languages": [
+            "chi",
+            "de",
+            "es",
+            "fi",
+            "it",
+            "ko",
+            "lv",
+            "nl",
+            "pl",
+            "ru",
+            "sv",
+            "tr",
+            "ua",
+            "zho"
+          ]
+        },
+        {
+          "name": "Racing HUD - Teleport Limit",
+          "line": 304,
+          "english_text": "Max TPs",
+          "existing_languages": [
+            "en"
+          ],
+          "missing_languages": [
+            "chi",
+            "de",
+            "es",
+            "fi",
+            "it",
+            "ko",
+            "lv",
+            "nl",
+            "pl",
+            "ru",
+            "sv",
+            "tr",
+            "ua",
+            "zho"
+          ]
+        },
+        {
+          "name": "Racing HUD - Time Limit",
+          "line": 308,
+          "english_text": "Time limit",
+          "existing_languages": [
+            "en"
+          ],
+          "missing_languages": [
+            "chi",
+            "de",
+            "es",
+            "fi",
+            "it",
+            "ko",
+            "lv",
+            "nl",
+            "pl",
+            "ru",
+            "sv",
+            "tr",
+            "ua",
+            "zho"
+          ]
+        },
+        {
+          "name": "Racing HUD - Time Left",
+          "line": 312,
+          "english_text": "Time left",
+          "existing_languages": [
+            "en"
+          ],
+          "missing_languages": [
+            "chi",
+            "de",
+            "es",
+            "fi",
+            "it",
+            "ko",
+            "lv",
+            "nl",
+            "pl",
+            "ru",
+            "sv",
+            "tr",
+            "ua",
+            "zho"
+          ]
+        },
+        {
+          "name": "Racing HUD - PB",
+          "line": 316,
+          "english_text": "PB",
+          "existing_languages": [
+            "en"
+          ],
+          "missing_languages": [
+            "chi",
+            "de",
+            "es",
+            "fi",
+            "it",
+            "ko",
+            "lv",
+            "nl",
+            "pl",
+            "ru",
+            "sv",
+            "tr",
+            "ua",
+            "zho"
+          ]
+        },
+        {
+          "name": "Racing HUD - Pro PB",
+          "line": 320,
+          "english_text": "Pro PB",
+          "existing_languages": [
+            "en"
+          ],
+          "missing_languages": [
+            "chi",
+            "de",
+            "es",
+            "fi",
+            "it",
+            "ko",
+            "lv",
+            "nl",
+            "pl",
+            "ru",
+            "sv",
+            "tr",
+            "ua",
+            "zho"
+          ]
+        },
+        {
+          "name": "Racing HUD - None",
+          "line": 324,
+          "english_text": "None",
+          "existing_languages": [
+            "en"
+          ],
+          "missing_languages": [
+            "chi",
+            "de",
+            "es",
+            "fi",
+            "it",
+            "ko",
+            "lv",
+            "nl",
+            "pl",
+            "ru",
+            "sv",
+            "tr",
+            "ua",
+            "zho"
+          ]
+        },
+        {
+          "name": "Racing HUD - Accepted",
+          "line": 328,
+          "english_text": "Accepted",
+          "existing_languages": [
+            "en"
+          ],
+          "missing_languages": [
+            "chi",
+            "de",
+            "es",
+            "fi",
+            "it",
+            "ko",
+            "lv",
+            "nl",
+            "pl",
+            "ru",
+            "sv",
+            "tr",
+            "ua",
+            "zho"
+          ]
+        },
+        {
+          "name": "Racing HUD - Join Hint",
+          "line": 332,
+          "english_text": "Type !accept to join",
+          "existing_languages": [
+            "en"
+          ],
+          "missing_languages": [
+            "chi",
+            "de",
+            "es",
+            "fi",
+            "it",
+            "ko",
+            "lv",
+            "nl",
+            "pl",
+            "ru",
+            "sv",
+            "tr",
+            "ua",
+            "zho"
+          ]
+        },
+        {
+          "name": "Racing HUD - Not Joined",
+          "line": 336,
+          "english_text": "Not joined",
+          "existing_languages": [
+            "en"
+          ],
+          "missing_languages": [
+            "chi",
+            "de",
+            "es",
+            "fi",
+            "it",
+            "ko",
+            "lv",
+            "nl",
+            "pl",
+            "ru",
+            "sv",
+            "tr",
+            "ua",
+            "zho"
+          ]
+        },
+        {
+          "name": "Racing HUD - Running",
+          "line": 340,
+          "english_text": "In progress",
+          "existing_languages": [
+            "en"
+          ],
+          "missing_languages": [
+            "chi",
+            "de",
+            "es",
+            "fi",
+            "it",
+            "ko",
+            "lv",
+            "nl",
+            "pl",
+            "ru",
+            "sv",
+            "tr",
+            "ua",
+            "zho"
+          ]
+        },
+        {
+          "name": "Racing HUD - Finished",
+          "line": 344,
+          "english_text": "Finished",
+          "existing_languages": [
+            "en"
+          ],
+          "missing_languages": [
+            "chi",
+            "de",
+            "es",
+            "fi",
+            "it",
+            "ko",
+            "lv",
+            "nl",
+            "pl",
+            "ru",
+            "sv",
+            "tr",
+            "ua",
+            "zho"
           ]
         }
       ]
