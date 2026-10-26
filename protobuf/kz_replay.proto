@@ -161,6 +161,12 @@ message CheckpointEvent {
 	optional EventVector origin = 3;
 }
 
+message ControlEvent {
+	// Away (0) and spectate (1) start a stretch without input, return (2) ends it.
+	optional uint32 type = 1;
+	optional EventVector origin = 2;
+}
+
 message ReplayEvent {
 	optional uint32 type = 1;
 	optional uint32 server_tick = 2;
@@ -171,5 +177,6 @@ message ReplayEvent {
 		StyleEvent style = 6;
 		TeleportEvent teleport = 7;
 		CheckpointEvent checkpoint = 8;
+		ControlEvent control = 9;
 	}
 }

@@ -407,9 +407,9 @@ The same fields without `startFraction` and `endFraction`, which stand for 0 and
 
 ## Events
 
-Section 5. One element per timer, mode, style, teleport or checkpoint event.
+Section 5. One element per timer, mode, style, teleport, checkpoint or control event.
 
-Event types: 0 timer, 1 mode change, 2 style change, 3 teleport, 4 checkpoint.
+Event types: 0 timer, 1 mode change, 2 style change, 3 teleport, 4 checkpoint, 5 control (version 7, plugin releases after its first).
 Timer event types: 0 start, 1 end, 2 stop, 3 pause, 4 resume, 5 split, 6 checkpoint zone, 7 stage.
 
 ### Raw events (versions 1-5)
@@ -465,6 +465,7 @@ u8  message[length]      # protobuf cs2kz.replay.ReplayEvent
 | `style` | `style` (name, short name, md5), `clear_styles` |
 | `teleport` | `reason` (-1 unknown, 0 checkpoint, 1 checkpoint undo, 2 map trigger, 3 bhop fail), `checkpoint_index`, `previous_origin`, and `origin`, `angles`, `velocity` when the teleport set them |
 | `checkpoint` | `type` (0 save, 1 reset), `index` (1-based for saves, 0 for reset), `origin` (saves only) |
+| `control` | `type` (0 away, 1 spectate, 2 return), `origin`. Away and spectate start a stretch in which the player does not control the pawn and it moves on its own without input; return ends it. A stretch with no return lasts to the end of the replay. |
 
 `type`, `server_tick` and `phase` are always present, and so is the sub-message for the type. Each sub-message carries all
 of its fields except those marked optional above. Every vector carries x, y and z. Events are in non-decreasing
