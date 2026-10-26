@@ -423,7 +423,7 @@ public:
 		pausedOnLadder = ladder;
 	}
 
-	void Pause();
+	void Pause(bool showError = true);
 	bool CanPause(bool showError = false);
 	void Resume(bool force = false);
 	bool CanResume(bool showError = false);

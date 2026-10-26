@@ -569,9 +569,9 @@ static_function std::string GetTeleportCountText(int tpCount, const char *langua
 						: KZLanguageService::PrepareMessageWithLang(language, "2+ Teleports Text", tpCount);
 }
 
-void KZTimerService::Pause()
+void KZTimerService::Pause(bool showError)
 {
-	if (!this->CanPause(true))
+	if (!this->CanPause(showError))
 	{
 		return;
 	}
@@ -583,8 +583,11 @@ void KZTimerService::Pause()
 	}
 	if (!allowPause)
 	{
-		this->player->languageService->PrintChat(true, false, "Can't Pause (Generic)");
-		this->player->PlayErrorSound();
+		if (showError)
+		{
+			this->player->languageService->PrintChat(true, false, "Can't Pause (Generic)");
+			this->player->PlayErrorSound();
+		}
 		return;
 	}
 
