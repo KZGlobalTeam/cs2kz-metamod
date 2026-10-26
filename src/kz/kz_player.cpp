@@ -2,6 +2,7 @@
 #include "utils/utils.h"
 #include "utils/ctimer.h"
 #include "utils/hooks.h"
+#include "utils/cvarquery.h"
 #include "anticheat/kz_anticheat.h"
 #include "beam/kz_beam.h"
 #include "checkpoint/kz_checkpoint.h"
@@ -15,6 +16,7 @@
 #include "mode/kz_mode.h"
 #include "noclip/kz_noclip.h"
 #include "option/kz_option.h"
+#include "option/pref_registry.h"
 #include "paint/kz_paint.h"
 #include "progress/kz_progress.h"
 #include "quiet/kz_quiet.h"
@@ -209,6 +211,39 @@ void KZPlayer::OnPlayerActive()
 		this->languageService->PrintChat(true, false, "Beta Join Warning");
 		this->languageService->PrintChat(true, false, "Tip - website");
 	}
+}
+
+void KZPlayer::CleanupPlayer()
+{
+	CCSPlayerPawn *pawn = this->GetPlayerPawn();
+	if (pawn && this->IsAlive())
+	{
+		pawn->CommitSuicide(false, true);
+	}
+	if (this->GetController())
+	{
+		this->GetController()->m_LastTimePlayerWasDisconnectedForPawnsRemove().SetTime(0.01f);
+		this->GetController()->SwitchTeam(0);
+	}
+	if (pawn)
+	{
+		hooks::RemoveEntityHooks(pawn);
+	}
+	this->timerService->OnClientDisconnect();
+	this->recordingService->OnClientDisconnect();
+	this->optionService->OnClientDisconnect();
+	this->racingService->OnClientDisconnect();
+	this->globalService->OnClientDisconnect();
+	this->CleanupClient();
+}
+
+void KZPlayer::CleanupClient()
+{
+	this->uiService->OnClientDisconnect();
+	this->menuService->OnClientDisconnect();
+	this->hudService->OnClientDisconnect();
+	cvarquery::OnClientDisconnect(this->GetPlayerSlot());
+	KZ::prefs::OnClientDisconnect(this->GetPlayerSlot());
 }
 
 void KZPlayer::OnPlayerFullyConnect()

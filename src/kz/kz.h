@@ -82,6 +82,9 @@ public:
 	virtual void OnPlayerFullyConnect() override;
 	virtual void OnAuthorized() override;
 	virtual void OnPrimeStatusConfirmed() override;
+	// Tears down what belongs to the player being on the server, once they are gone for good.
+	void CleanupPlayer();
+	void CleanupClient();
 
 	virtual void OnPhysicsSimulate() override;
 	virtual void OnPhysicsSimulatePost() override;

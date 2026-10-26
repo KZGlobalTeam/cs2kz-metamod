@@ -334,29 +334,11 @@ static KHook::Return<void> ClientDisconnectPost(ISource2GameClients *pThis, CPla
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(slot);
-	if (player->GetController())
-	{
-		player->GetController()->m_LastTimePlayerWasDisconnectedForPawnsRemove().SetTime(0.01f);
-		player->GetController()->SwitchTeam(0);
-	}
-	if (player->GetPlayerPawn())
-	{
-		hooks::RemoveEntityHooks(player->GetPlayerPawn());
-	}
-	else
+	if (!player->GetPlayerPawn())
 	{
 		Warning("WARNING: Player pawn for slot %i not found!\n", slot.Get());
 	}
-	player->timerService->OnClientDisconnect();
-	player->recordingService->OnClientDisconnect();
-	player->optionService->OnClientDisconnect();
-	player->racingService->OnClientDisconnect();
-	player->globalService->OnClientDisconnect();
-	player->uiService->OnClientDisconnect();
-	player->menuService->OnClientDisconnect();
-	player->hudService->OnClientDisconnect();
-	cvarquery::OnClientDisconnect(slot);
-	KZ::prefs::OnClientDisconnect(slot);
+	player->CleanupPlayer();
 	g_pKZPlayerManager->OnClientDisconnect(slot, reason, pszName, xuid, pszNetworkID);
 	return {KHook::Action::Ignore};
 }
