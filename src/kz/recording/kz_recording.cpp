@@ -288,7 +288,7 @@ void KZRecordingService::CheckRecorders()
 						RunSubmission *sub = RunSubmission::GetByUUID(localUUID);
 						if (sub)
 						{
-							KZPlayer *callbackPlayer = g_pKZPlayerManager->ToPlayer(sub->userID);
+							KZPlayer *callbackPlayer = g_pKZPlayerManager->SessionToPlayer(sub->sessionID);
 							if (callbackPlayer)
 							{
 								callbackPlayer->languageService->PrintChat(true, false, "Replay - Run Replay Failed");

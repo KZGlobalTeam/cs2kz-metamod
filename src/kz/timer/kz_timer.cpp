@@ -1684,11 +1684,11 @@ std::string KZTimerService::GetCurrentRunMetadata()
 
 void KZTimerService::UpdateLocalPBCache()
 {
-	CPlayerUserId uid = player->GetClient()->GetUserID();
+	u32 sessionID = player->sessionID;
 
-	auto onQuerySuccess = [uid](std::vector<ISQLQuery *> queries)
+	auto onQuerySuccess = [sessionID](std::vector<ISQLQuery *> queries)
 	{
-		KZPlayer *pl = g_pKZPlayerManager->ToPlayer(uid);
+		KZPlayer *pl = g_pKZPlayerManager->SessionToPlayer(sessionID);
 		if (!pl)
 		{
 			return;

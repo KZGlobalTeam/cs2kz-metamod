@@ -272,6 +272,7 @@ public:
 	KZPlayer *ToPlayer(CEntityIndex entIndex);
 	KZPlayer *ToPlayer(CPlayerUserId userID);
 	KZPlayer *SteamIdToPlayer(u64 steamID, bool validated = true);
+	KZPlayer *SessionToPlayer(u32 sessionID);
 
 	PlayerSlotRange<KZPlayer> GetAllSlots()
 	{

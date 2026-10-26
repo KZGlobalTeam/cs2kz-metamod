@@ -27,6 +27,7 @@ public:
 		hasPrime = false;
 		authPending = false;
 		authAuthorized = false;
+		sessionID = 0;
 	}
 
 	virtual CCSPlayerController *GetController();
@@ -146,6 +147,8 @@ public:
 	bool hasPrime {};
 	bool authPending {};    // True if in auth queue waiting for validation
 	bool authAuthorized {}; // True if authorization completed
+	// Identifies one stay on the server, which survives a reconnect into the held slot.
+	u32 sessionID {};
 
 private:
 	CSteamID unauthenticatedSteamID = k_steamIDNil;
@@ -241,6 +244,7 @@ public:
 	Player *ToPlayer(CEntityIndex entIndex);
 	Player *ToPlayer(CPlayerUserId userID);
 	Player *SteamIdToPlayer(u64 steamID, bool validated = true);
+	Player *SessionToPlayer(u32 sessionID);
 
 	PlayerSlotRange<Player> GetAllSlots()
 	{
@@ -308,6 +312,7 @@ public:
 
 private:
 	bool callbackRegistered {};
+	u32 nextSessionID = 1;
 	std::vector<CPlayerSlot> authQueue; // Queue of players pending auth validation
 
 public:

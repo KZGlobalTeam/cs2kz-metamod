@@ -212,7 +212,7 @@ static_global class : public KZTimerServiceEventListener
 	virtual void OnRunSubmittedPost(const RunSubmission &submission) override
 	{
 		// The player may have left by now, in which case the slot could already belong to someone else.
-		KZPlayer *player = g_pKZPlayerManager->ToPlayer(submission.userID);
+		KZPlayer *player = g_pKZPlayerManager->SessionToPlayer(submission.sessionID);
 		i32 slot = player && player->IsInGame() ? SlotOf(player) : -1;
 
 		// Everything comes from the submission's own snapshot, not the live map, so this still works after a map change.
