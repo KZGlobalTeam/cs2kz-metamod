@@ -28,6 +28,7 @@ void KZSpecService::SavePosition()
 {
 	this->player->GetOrigin(&this->savedOrigin);
 	this->player->GetAngles(&this->savedAngles);
+	this->player->GetVelocity(&this->savedVelocity);
 	this->savedOnLadder = this->player->GetMoveType() == MOVETYPE_LADDER;
 	this->savedPosition = true;
 }
@@ -38,7 +39,7 @@ void KZSpecService::LoadPosition()
 	{
 		return;
 	}
-	this->player->Teleport(&this->savedOrigin, &this->savedAngles, nullptr);
+	this->player->Teleport(&this->savedOrigin, &this->savedAngles, &this->savedVelocity);
 	if (this->savedOnLadder)
 	{
 		this->player->SetMoveType(MOVETYPE_LADDER);
@@ -49,6 +50,7 @@ void KZSpecService::ResetSavedPosition()
 {
 	this->savedOrigin = vec3_origin;
 	this->savedAngles = vec3_angle;
+	this->savedVelocity = vec3_origin;
 	this->savedOnLadder = false;
 	this->savedPosition = false;
 }

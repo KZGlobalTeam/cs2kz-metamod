@@ -9,6 +9,7 @@ private:
 	bool savedPosition;
 	Vector savedOrigin;
 	QAngle savedAngles;
+	Vector savedVelocity;
 	bool savedOnLadder;
 
 public:
