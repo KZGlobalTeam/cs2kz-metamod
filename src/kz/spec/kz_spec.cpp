@@ -188,7 +188,13 @@ void KZSpecService::GetSpectatorList(std::vector<std::string> &spectatorList)
 	KZPlayer *spectator = this->player->specService->GetNextSpectator(nullptr);
 	while (spectator)
 	{
-		spectatorList.push_back(spectator->GetName());
+		// Only someone watching through the player's eyes or following them counts, not a free camera that still has a target.
+		CPlayer_ObserverServices *obsService = spectator->GetController()->m_hObserverPawn()->m_pObserverServices;
+		u8 mode = obsService ? obsService->m_iObserverMode() : OBS_MODE_NONE;
+		if (mode == OBS_MODE_IN_EYE || mode == OBS_MODE_CHASE)
+		{
+			spectatorList.push_back(spectator->GetName());
+		}
 		spectator = this->player->specService->GetNextSpectator(spectator);
 	}
 }
