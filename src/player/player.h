@@ -24,6 +24,7 @@ public:
 	virtual void Reset()
 	{
 		unauthenticatedSteamID = k_steamIDNil;
+		authorizedSteamID = k_steamIDNil;
 		hasPrime = false;
 		authPending = false;
 		authAuthorized = false;
@@ -52,9 +53,14 @@ public:
 		return index - 1;
 	}
 
-	bool IsAuthenticated()
+	bool IsEngineAuthenticated()
 	{
 		return IsConnected() && !IsFakeClient() && interfaces::pEngine->IsClientFullyAuthenticated(GetPlayerSlot());
+	}
+
+	bool IsAuthenticated()
+	{
+		return authAuthorized && IsConnected();
 	}
 
 	bool IsConnected()
@@ -99,17 +105,11 @@ public:
 
 	const CSteamID GetSteamId(bool validated = true)
 	{
-		static_persist const CSteamID invalidId = k_steamIDNil;
-		if (validated && !IsAuthenticated())
+		if (IsAuthenticated())
 		{
-			return invalidId;
+			return authorizedSteamID;
 		}
-		CServerSideClient *client = GetClient();
-		if (client && IsAuthenticated())
-		{
-			return client->GetClientSteamID();
-		}
-		return unauthenticatedSteamID;
+		return validated ? k_steamIDNil : unauthenticatedSteamID;
 	}
 
 	u64 GetSteamId64(bool validated = true)
@@ -147,6 +147,7 @@ public:
 	bool hasPrime {};
 	bool authPending {};    // True if in auth queue waiting for validation
 	bool authAuthorized {}; // True if authorization completed
+	CSteamID authorizedSteamID = k_steamIDNil;
 	// Identifies one stay on the server, which survives a reconnect into the held slot.
 	u32 sessionID {};
 

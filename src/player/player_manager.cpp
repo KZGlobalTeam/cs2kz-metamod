@@ -190,7 +190,7 @@ void PlayerManager::OnLateLoad()
 	}
 	for (auto player : players)
 	{
-		if (player && player->IsAuthenticated())
+		if (player && player->IsEngineAuthenticated())
 		{
 			this->AuthorizeClient(player->GetPlayerSlot());
 		}
@@ -274,6 +274,7 @@ void PlayerManager::AuthorizeClient(CPlayerSlot slot)
 	}
 
 	// Mark as authorized and clear pending flag
+	player->authorizedSteamID = player->GetClient()->GetClientSteamID();
 	player->authAuthorized = true;
 	player->authPending = false;
 	this->RemoveFromAuthQueue(slot);
@@ -303,7 +304,7 @@ void PlayerManager::PerformAuthChecks()
 		}
 
 		// Check if engine has validated this player's auth identity
-		if (player->IsAuthenticated())
+		if (player->IsEngineAuthenticated())
 		{
 			this->AuthorizeClient(slot);
 		}
