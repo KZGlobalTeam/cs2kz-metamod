@@ -522,7 +522,7 @@ static_function void InitSpawnTraceFilter(CTraceFilter &filter)
 	filter.m_bShouldIgnoreDisabledPairs = true;
 	filter.m_nCollisionGroup = COLLISION_GROUP_DEBRIS;
 	filter.m_nInteractsWith = 0x2c3011;
-	filter.m_bUnknown = true;
+	filter.m_unk101 = true;
 	filter.m_nObjectSetMask = RNQUERY_OBJECTS_ALL;
 	filter.m_nInteractsAs = 0x40000;
 }
