@@ -77,7 +77,7 @@ static_global class KZOptionServiceEventListener_Timer : public KZOptionServiceE
 
 	virtual void OnPlayerPreferenceChanged(KZPlayer *player, const char *optionName)
 	{
-		if (KZ_STREQI(optionName, "preferredCompareType") || KZ_STREQI(optionName, "timerStopSound"))
+		if (KZ_STREQI(optionName, "preferredCompareType") || KZ_STREQI(optionName, "timerStopSound") || KZ_STREQI(optionName, "spectatePause"))
 		{
 			player->timerService->ApplyPreferences();
 		}
@@ -1757,6 +1757,7 @@ void KZTimerService::ApplyPreferences()
 	}
 	this->preferredCompareType = (CompareType)this->player->optionService->GetPreferenceInt("preferredCompareType", COMPARE_GPB);
 	this->shouldPlayTimerStopSound = this->player->optionService->GetPreferenceBool("timerStopSound", true);
+	this->autoPauseWhileSpectating = this->player->optionService->GetPreferenceBool("spectatePause", true);
 }
 
 void KZDatabaseServiceEventListener_Timer::OnMapSetup()

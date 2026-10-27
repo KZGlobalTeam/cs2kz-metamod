@@ -409,10 +409,17 @@ private:
 	i32 lastLandedTickValue {};
 	bool touchedGroundSinceTouchingStartZone {};
 	bool shouldPlayTimerStopSound = true;
+	// Whether the run pauses on its own while the player spectates and their pawn stands still.
+	bool autoPauseWhileSpectating = true;
 
 	f64 lastRestartAttemptTime {};
 
 public:
+	bool GetAutoPauseWhileSpectating()
+	{
+		return autoPauseWhileSpectating;
+	}
+
 	bool GetPaused()
 	{
 		return paused;

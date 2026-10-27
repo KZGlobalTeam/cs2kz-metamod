@@ -295,7 +295,9 @@ void KZAwayService::OnGameFrame()
 			continue;
 		}
 		// The run is paused once the pawn stands completely still and the rules allow it, until then the pawn keeps going.
-		if (away->CanControlPawn() || !player->IsAlive() || player->timerService->GetPaused())
+		// A spectator can turn that off.
+		if (away->CanControlPawn() || !player->IsAlive() || player->timerService->GetPaused()
+			|| (away->observingWithPersistentPawn && !player->timerService->GetAutoPauseWhileSpectating()))
 		{
 			continue;
 		}
