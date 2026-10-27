@@ -205,7 +205,7 @@
 				"linux"		"55 48 89 E5 41 55 49 89 D5 41 54 49 89 FC 53 48 89 F3 48 83 EC 18 48 8B 7F 38"
 			}
 			// sub_7FFE47869020(a1, a2); <- this function
-			// sub_7FFE47863820(a1, a2, "FullWalkMovePreMove"); 
+			// sub_7FFE47863820(a1, a2, "FullWalkMovePreMove");
 			// sub_7FFE4787B4C0(a1, a2); <- the walkmove function
 			// cvar sv_stopspeed
 			"Friction"
@@ -418,12 +418,12 @@
 			}
 			// CCSPlayer_MovementServices
 			// Check for sv_runcmds
-			"PlayerRunCommand" 
+			"PlayerRunCommand"
 			{
 				"windows"		"25"
 				"linux"			"26"
 			}
-			// The function *after* the one containing sv_subtick_movement_view_angles 
+			// The function *after* the one containing sv_subtick_movement_view_angles
 			"FinishMove"
 			{
 				"windows"		"38"
