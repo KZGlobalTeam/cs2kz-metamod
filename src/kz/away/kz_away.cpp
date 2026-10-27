@@ -240,8 +240,8 @@ void KZAwayService::RestorePersistentPawn(bool leaving)
 		return;
 	}
 	this->player->recordingService->OnControlChange(RpEvent::RpEventData::ControlEvent::CONTROL_RETURN);
-	// The run picks up again with the player.
-	if (this->player->timerService->GetPaused())
+	// The run picks up again with the player, unless they turned that off.
+	if (this->player->timerService->GetPaused() && this->player->timerService->GetAutoResumeAfterSpectating())
 	{
 		this->player->timerService->Resume();
 	}

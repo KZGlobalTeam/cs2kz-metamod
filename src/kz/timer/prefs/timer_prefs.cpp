@@ -71,6 +71,8 @@ void KZTimerService::RegisterMenu()
 	KZ::menu::SetItemPref(cat, "timerStopSound", KZOptStorage::Bool, 1);
 	KZ::menu::AddToggle(cat, "Menu - Spectate Pause", "spectatePause", true);
 	KZ::menu::SetItemSubtext(cat, "Menu - Spectate Pause Sub");
+	KZ::menu::AddToggle(cat, "Menu - Spectate Resume", "spectateResume", true);
+	KZ::menu::SetItemSubtext(cat, "Menu - Spectate Resume Sub");
 	KZ::menu::AddChoice(cat, "Menu - Safeguard", GetSafeguardChoices, GetCurrentSafeguard, PickSafeguard);
 	KZ::menu::SetItemPref(cat, "safeguard", KZOptStorage::Int, SAFEGUARD_DISABLED);
 	KZ::menu::SetItemSubtext(cat, "Menu - Safeguard Sub");

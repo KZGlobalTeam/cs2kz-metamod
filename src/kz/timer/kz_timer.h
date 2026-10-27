@@ -411,6 +411,8 @@ private:
 	bool shouldPlayTimerStopSound = true;
 	// Whether the run pauses on its own while the player spectates and their pawn stands still.
 	bool autoPauseWhileSpectating = true;
+	// Whether a paused run resumes on its own once the player stops spectating.
+	bool autoResumeAfterSpectating = true;
 
 	f64 lastRestartAttemptTime {};
 
@@ -418,6 +420,11 @@ public:
 	bool GetAutoPauseWhileSpectating()
 	{
 		return autoPauseWhileSpectating;
+	}
+
+	bool GetAutoResumeAfterSpectating()
+	{
+		return autoResumeAfterSpectating;
 	}
 
 	bool GetPaused()
