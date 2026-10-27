@@ -130,7 +130,7 @@ CUtlVector<CServerSideClient *> *KZUtils::GetClientList()
 	{
 		return nullptr;
 	}
-	// CServerSideClient's only base is CServerSideClientBase, so the element pointers are the same.
+	// CServerSideClient's only base is CServerSideClientBase.
 	auto server = static_cast<CNetworkGameServerBase *>(g_pNetworkServerService->GetIGameServer());
 	return reinterpret_cast<CUtlVector<CServerSideClient *> *>(&server->m_Clients);
 }

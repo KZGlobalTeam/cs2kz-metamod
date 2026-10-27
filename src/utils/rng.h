@@ -1,7 +1,7 @@
 #pragma once
 #include <random>
 
-// tier0's RandomFloat/RandomInt are also what the game's server module draws from, so cs2kz keeps its own sequence.
+// tier0's RandomFloat/RandomInt share their sequence with the game.
 namespace utils
 {
 	inline std::mt19937 randomEngine {std::random_device {}()};

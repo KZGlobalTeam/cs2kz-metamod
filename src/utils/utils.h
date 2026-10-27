@@ -93,7 +93,6 @@ namespace utils
 	void UpdateServerVersion();
 	u32 GetServerVersion();
 
-	// For functions that take a va_list; elsewhere use tfm::format.
 	inline std::string FormatV(const char *format, va_list args)
 	{
 		va_list copy;
@@ -109,7 +108,7 @@ namespace utils
 		return result;
 	}
 
-	// CUtlString's path operations are tier0 code; going through it keeps their exact results.
+	// Through CUtlString to keep tier0's exact results.
 	inline std::string StripExtension(const std::string &path)
 	{
 		return CUtlString(path.c_str()).StripExtension().Get();
@@ -135,13 +134,13 @@ namespace utils
 		return CUtlString(text.c_str()).Replace(search, replacement).Get();
 	}
 
-	// SQL results give nullptr for NULL columns, which CUtlString took as "" and std::string can't take.
+	// SQL results are nullptr for NULL columns.
 	inline const char *OrEmpty(const char *str)
 	{
 		return str ? str : "";
 	}
 
-	// Skips empty pieces, as CSplitString does by default.
+	// Skips empty pieces.
 	inline std::vector<std::string> Split(std::string_view text, char separator)
 	{
 		std::vector<std::string> pieces;
