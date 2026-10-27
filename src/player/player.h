@@ -79,13 +79,13 @@ public:
 
 	void Kick(const char *internalReason = "", ENetworkDisconnectionReason reason = NETWORK_DISCONNECT_KICKED);
 
-	CUtlString sanitizedName;
+	std::string sanitizedName;
 
 	const char *GetName()
 	{
 		sanitizedName = GetClient() ? GetClient()->GetClientName() : "<blank>";
-		sanitizedName.Trim();
-		return sanitizedName.Get();
+		utils::Trim(sanitizedName);
+		return sanitizedName.c_str();
 	}
 
 	void SetName(const char *name);

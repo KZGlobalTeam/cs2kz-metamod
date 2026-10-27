@@ -161,10 +161,10 @@ void KZGlobalService::ReplayManager::OnReplayRequestSuccess(const std::vector<ch
 			{
 				return;
 			}
-			if (!KZ_STREQI(data::GetCurrentReplay()->header.map().name().c_str(), g_pKZUtils->GetCurrentMapName().Get()))
+			if (!KZ_STREQI(data::GetCurrentReplay()->header.map().name().c_str(), g_pKZUtils->GetCurrentMapName().c_str()))
 			{
 				player->languageService->PrintChat(true, false, "Replay - Wrong Map",
-					data::GetCurrentReplay()->header.map().name().c_str(), g_pKZUtils->GetCurrentMapName().Get());
+					data::GetCurrentReplay()->header.map().name().c_str(), g_pKZUtils->GetCurrentMapName().c_str());
 				return;
 			}
 			player->languageService->PrintChat(true, false, "Replay - Loaded Successfully");

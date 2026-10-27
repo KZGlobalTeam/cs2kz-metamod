@@ -576,7 +576,7 @@ static KHook::Return<bool> ActivateServerPost(CNetworkGameServerBase *pThis)
 	u64 id = g_pKZUtils->GetCurrentMapWorkshopID();
 	u64 size = g_pKZUtils->GetCurrentMapSize();
 
-	KZ_LOG_INFO(LogChannel::General, "Loading map %s, workshop ID %llu, size %llu\n", g_pKZUtils->GetCurrentMapVPK().Get(), id, size);
+	KZ_LOG_INFO(LogChannel::General, "Loading map %s, workshop ID %llu, size %llu\n", g_pKZUtils->GetCurrentMapVPK().c_str(), id, size);
 
 	RunSubmission::OnMapChange();
 	KZ::misc::OnActivateServer();

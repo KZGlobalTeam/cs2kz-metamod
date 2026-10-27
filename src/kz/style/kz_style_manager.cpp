@@ -19,7 +19,7 @@
 
 static_global KZStyleManager styleManager;
 
-static_function bool HasStyle(const std::vector<CUtlString> &styles, const char *name)
+static_function bool HasStyle(const std::vector<std::string> &styles, const char *name)
 {
 	return std::find(styles.begin(), styles.end(), name) != styles.end();
 }
@@ -83,11 +83,11 @@ void KZ::style::LoadStylePlugins()
 	}
 }
 
-void KZ::style::UpdateStyleDatabaseID(CUtlString name, i32 id)
+void KZ::style::UpdateStyleDatabaseID(std::string name, i32 id)
 {
 	for (size_t i = 0; i < styleInfos.size(); i++)
 	{
-		if (!V_stricmp(styleInfos[i].longName, name))
+		if (!V_stricmp(styleInfos[i].longName, name.c_str()))
 		{
 			styleInfos[i].databaseID = id;
 			break;
@@ -113,17 +113,17 @@ KZStyleManager::StylePluginInfo KZ::style::GetStyleInfo(KZStyleService *style)
 	return emptyInfo;
 }
 
-KZStyleManager::StylePluginInfo KZ::style::GetStyleInfo(CUtlString styleName)
+KZStyleManager::StylePluginInfo KZ::style::GetStyleInfo(std::string styleName)
 {
 	KZStyleManager::StylePluginInfo emptyInfo;
-	if (styleName.IsEmpty())
+	if (styleName.empty())
 	{
 		KZ_LOG_WARN(LogChannel::Style, "Warning: Getting style info from an empty string!\n");
 		return emptyInfo;
 	}
 	for (size_t i = 0; i < styleInfos.size(); i++)
 	{
-		if (styleName.IsEqual_FastCaseInsensitive(styleInfos[i].shortName) || styleName.IsEqual_FastCaseInsensitive(styleInfos[i].longName))
+		if (KZ_STREQI(styleName.c_str(), styleInfos[i].shortName) || KZ_STREQI(styleName.c_str(), styleInfos[i].longName))
 		{
 			return styleInfos[i];
 		}
@@ -286,7 +286,7 @@ void KZStyleManager::AddStyle(KZPlayer *player, const char *styleName, bool sile
 	player->styleServices.back()->Init();
 	if (updatePreference)
 	{
-		player->optionService->SetPreferenceStr("preferredStyles", styleManager.GetStylesString(player));
+		player->optionService->SetPreferenceStr("preferredStyles", styleManager.GetStylesString(player).c_str());
 	}
 	if (!silent)
 	{
@@ -323,7 +323,7 @@ void KZStyleManager::RemoveStyle(KZPlayer *player, const char *styleName, bool s
 			delete style;
 			if (updatePreference)
 			{
-				player->optionService->SetPreferenceStr("preferredStyles", styleManager.GetStylesString(player));
+				player->optionService->SetPreferenceStr("preferredStyles", styleManager.GetStylesString(player).c_str());
 			}
 			return;
 		}
@@ -366,7 +366,7 @@ void KZStyleManager::ToggleStyle(KZPlayer *player, const char *styleName, bool s
 			delete style;
 			if (updatePreference)
 			{
-				player->optionService->SetPreferenceStr("preferredStyles", styleManager.GetStylesString(player));
+				player->optionService->SetPreferenceStr("preferredStyles", styleManager.GetStylesString(player).c_str());
 			}
 			return;
 		}
@@ -408,7 +408,7 @@ void KZStyleManager::ToggleStyle(KZPlayer *player, const char *styleName, bool s
 	player->styleServices.back()->Init();
 	if (updatePreference)
 	{
-		player->optionService->SetPreferenceStr("preferredStyles", styleManager.GetStylesString(player));
+		player->optionService->SetPreferenceStr("preferredStyles", styleManager.GetStylesString(player).c_str());
 	}
 	if (!silent)
 	{
@@ -431,7 +431,7 @@ void KZStyleManager::ClearStyles(KZPlayer *player, bool silent, bool updatePrefe
 	player->styleServices.clear();
 	if (updatePreference)
 	{
-		player->optionService->SetPreferenceStr("preferredStyles", styleManager.GetStylesString(player));
+		player->optionService->SetPreferenceStr("preferredStyles", styleManager.GetStylesString(player).c_str());
 	}
 	if (!silent)
 	{
@@ -455,15 +455,18 @@ void KZStyleManager::RefreshStyles(KZPlayer *player, bool updatePreference)
 	}
 }
 
-CUtlString KZStyleManager::GetStylesString(KZPlayer *player)
+std::string KZStyleManager::GetStylesString(KZPlayer *player)
 {
-	CUtlString result;
+	std::string result;
 	for (size_t i = 0; i < player->styleServices.size(); i++)
 	{
-		result.Append(player->styleServices[i]->GetStyleName());
-		result.Append(",");
+		result += player->styleServices[i]->GetStyleName();
+		result += ",";
 	}
-	result.TrimRight(',');
+	while (!result.empty() && result.back() == ',')
+	{
+		result.pop_back();
+	}
 	return result;
 }
 
@@ -572,11 +575,10 @@ void KZOptionServiceEventListener_Styles::OnPlayerPreferencesLoaded(KZPlayer *pl
 	if (player->telemetryService->GetTimeInServer() < 30.0f && !player->timerService->GetTimerRunning())
 	{
 		styleManager.ClearStyles(player, true, false);
-		CSplitString splitStyles(styles.c_str(), ",");
-		FOR_EACH_VEC(splitStyles, i)
+		for (const std::string &style : utils::Split(styles, ','))
 		{
 			// Applying the loaded preference is not a change to it, and writing it back would mark it as one.
-			styleManager.AddStyle(player, splitStyles[i], false, false);
+			styleManager.AddStyle(player, style.c_str(), false, false);
 		}
 	}
 }

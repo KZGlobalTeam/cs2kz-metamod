@@ -51,7 +51,7 @@ void KZRacingService::AfterRaceConfigured()
 			if (KZRacingService::currentRace.conf.maxDurationSeconds.has_value())
 			{
 				auto timeStr = utils::FormatTime(*KZRacingService::currentRace.conf.maxDurationSeconds, false);
-				timeLimitString = player->languageService->PrepareMessage("Racing - Time Limit", timeStr.Get());
+				timeLimitString = player->languageService->PrepareMessage("Racing - Time Limit", timeStr.c_str());
 			}
 			else
 			{
@@ -130,19 +130,19 @@ void KZRacingService::OnRaceCompleted(const KZ::racing::events::RaceCompleted &m
 			continue;
 		}
 
-		CUtlString timeStr = utils::FormatTime(*result.timeSeconds);
+		std::string timeStr = utils::FormatTime(*result.timeSeconds);
 
 		if (position == 1)
 		{
-			PrintRaceResult(result, "Racing - End Results First Place", result.playerName.c_str(), timeStr.Get());
+			PrintRaceResult(result, "Racing - End Results First Place", result.playerName.c_str(), timeStr.c_str());
 		}
 		else if (position == finishersCount)
 		{
-			PrintRaceResult(result, "Racing - End Results Last Place", result.playerName.c_str(), timeStr.Get());
+			PrintRaceResult(result, "Racing - End Results Last Place", result.playerName.c_str(), timeStr.c_str());
 		}
 		else
 		{
-			PrintRaceResult(result, "Racing - End Results Finisher", position, result.playerName.c_str(), timeStr.Get());
+			PrintRaceResult(result, "Racing - End Results Finisher", position, result.playerName.c_str(), timeStr.c_str());
 		}
 
 		position++;
@@ -166,19 +166,19 @@ void KZRacingService::OnPlayerReady(const KZ::racing::events::PlayerReady &messa
 
 void KZRacingService::OnPlayerFinished(const KZ::racing::events::PlayerFinished &message)
 {
-	CUtlString timeStr = utils::FormatTime(message.timeSeconds);
+	std::string timeStr = utils::FormatTime(message.timeSeconds);
 
 	if (message.teleports > 1)
 	{
-		KZLanguageService::PrintChatAll(true, "Racing - Player Finish (2+ Teleports)", message.player.c_str(), timeStr.Get(), message.teleports);
+		KZLanguageService::PrintChatAll(true, "Racing - Player Finish (2+ Teleports)", message.player.c_str(), timeStr.c_str(), message.teleports);
 	}
 	else if (message.teleports == 1)
 	{
-		KZLanguageService::PrintChatAll(true, "Racing - Player Finish (1 Teleport)", message.player.c_str(), timeStr.Get(), message.teleports);
+		KZLanguageService::PrintChatAll(true, "Racing - Player Finish (1 Teleport)", message.player.c_str(), timeStr.c_str(), message.teleports);
 	}
 	else
 	{
-		KZLanguageService::PrintChatAll(true, "Racing - Player Finish (PRO)", message.player.c_str(), timeStr.Get(), message.teleports);
+		KZLanguageService::PrintChatAll(true, "Racing - Player Finish (PRO)", message.player.c_str(), timeStr.c_str(), message.teleports);
 	}
 }
 

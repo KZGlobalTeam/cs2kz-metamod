@@ -14,13 +14,13 @@ namespace utils
 	public:
 		static constexpr const size_t columnCount = N;
 
-		Table(CUtlString title, CUtlString headers[columnCount]) : title(title)
+		Table(std::string title, std::string headers[columnCount]) : title(title)
 		{
 			for (u32 i = 0; i < columnCount; i++)
 			{
 				this->headers[i] = headers[i];
-				this->headers[i].Append("ᅟ"); // Add a space to reset the "font" to monospace
-				columnLengths[i] = GetDisplayByteLength(this->headers[i].Get());
+				this->headers[i] += "ᅟ"; // Add a space to reset the "font" to monospace
+				columnLengths[i] = GetDisplayByteLength(this->headers[i].c_str());
 			}
 		}
 
@@ -29,8 +29,8 @@ namespace utils
 			for (u32 i = 0; i < columnCount; i++)
 			{
 				this->headers[i] = headers[i];
-				this->headers[i].Append("ᅟ"); // Add a space to reset the "font" to monospace
-				columnLengths[i] = GetDisplayByteLength(this->headers[i].Get());
+				this->headers[i] += "ᅟ"; // Add a space to reset the "font" to monospace
+				columnLengths[i] = GetDisplayByteLength(this->headers[i].c_str());
 			}
 		}
 
@@ -80,12 +80,12 @@ namespace utils
 
 		struct TableEntry
 		{
-			CUtlString data[columnCount];
+			std::string data[columnCount];
 		};
 
-		CUtlString title;
+		std::string title;
 		std::vector<TableEntry> entries;
-		CUtlString headers[columnCount];
+		std::string headers[columnCount];
 		u32 columnLengths[columnCount];
 
 	public:
@@ -100,14 +100,14 @@ namespace utils
 				entries.resize(row + 1);
 			}
 			entries[row].data[column] = value;
-			entries[row].data[column].Append("ᅟ"); // Add a space to reset the "font" to monospace
-			columnLengths[column] = MAX(columnLengths[column], GetDisplayByteLength(entries[row].data[column].Get()));
+			entries[row].data[column] += "ᅟ"; // Add a space to reset the "font" to monospace
+			columnLengths[column] = MAX(columnLengths[column], GetDisplayByteLength(entries[row].data[column].c_str()));
 			return true;
 		}
 
-		bool Set(u32 row, u32 column, CUtlString value)
+		bool Set(u32 row, u32 column, std::string value)
 		{
-			return Set(row, column, value.Get());
+			return Set(row, column, value.c_str());
 		}
 
 		template<typename... Args>
@@ -121,8 +121,8 @@ namespace utils
 			entries[row] = {args...};
 			for (u32 i = 0; i < columnCount; i++)
 			{
-				entries[row].data[i].Append("ᅟ"); // Add a space to reset the "font" to monospace
-				columnLengths[i] = MAX(columnLengths[i], GetDisplayByteLength(entries[row].data[i].Get()));
+				entries[row].data[i] += "ᅟ"; // Add a space to reset the "font" to monospace
+				columnLengths[i] = MAX(columnLengths[i], GetDisplayByteLength(entries[row].data[i].c_str()));
 			}
 		}
 
@@ -139,65 +139,63 @@ namespace utils
 			{
 				result += columnLengths[i];
 			}
-			return MAX(result, (u32)title.Length());
+			return MAX(result, (u32)title.size());
 		}
 
-		CUtlString GetTitle()
+		std::string GetTitle()
 		{
 			return title;
 		}
 
-		CUtlString GetHeader()
+		std::string GetHeader()
 		{
-			CUtlString result;
+			std::string result;
 			const u32 fontResetSuffixLength = static_cast<u32>(V_strlen(fontResetSuffix));
 			for (u32 i = 0; i < columnCount; i++)
 			{
-				CUtlString value;
-				value.Format("%-*s%s", columnLengths[i] + GetDisplayPadding(headers[i].Get()) + fontResetSuffixLength, headers[i].Get(),
-							 i == columnCount - 1 ? "" : "  ");
-				for (i32 i = 0; i < value.Length() - 1; i++)
+				std::string value = tfm::format("%-*s%s", columnLengths[i] + GetDisplayPadding(headers[i].c_str()) + fontResetSuffixLength,
+												headers[i], i == columnCount - 1 ? "" : "  ");
+				for (size_t i = 0; i + 1 < value.size(); i++)
 				{
 					if (value[i] == '%' && value[i + 1] == '%')
 					{
-						value.Append(" ");
+						value += " ";
 						i++;
 					}
 				}
-				result.Append(value.Get());
+				result += value;
 			}
 			return result;
 		}
 
-		CUtlString GetLine(u32 row)
+		std::string GetLine(u32 row)
 		{
 			if (row >= entries.size())
 			{
 				return "";
 			}
-			CUtlString result;
+			std::string result;
 			const u32 fontResetSuffixLength = static_cast<u32>(V_strlen(fontResetSuffix));
 			for (u32 i = 0; i < columnCount; i++)
 			{
-				CUtlString value;
-				value.Format("%-*s%s", columnLengths[i] + GetDisplayPadding(entries[row].data[i].Get()) + fontResetSuffixLength,
-							 entries[row].data[i].Get(), i == columnCount - 1 ? "" : "  ");
-				for (i32 i = 0; i < value.Length() - 1; i++)
+				std::string value = tfm::format("%-*s%s", columnLengths[i] + GetDisplayPadding(entries[row].data[i].c_str()) + fontResetSuffixLength,
+												entries[row].data[i], i == columnCount - 1 ? "" : "  ");
+				for (size_t i = 0; i + 1 < value.size(); i++)
 				{
 					if (value[i] == '%' && value[i + 1] == '%')
 					{
-						value.Append(" ");
+						value += " ";
 						i++;
 					}
 				}
-				result.Append(value.Get());
+				result += value;
 			}
 			return result;
 		}
 
-		CUtlString GetSeparator(const char *characters = "_")
+		std::string GetSeparator(const char *characters = "_")
 		{
-			CUtlString result;
+			std::string result;
 			for (u32 i = 0; i < GetTableWidth(); i++)
 			{
 				result += characters;
@@ -219,7 +217,7 @@ namespace utils
 		Table<NL> left;
 		Table<NR> right;
 
-		DualTable(CUtlString titleLeft, CUtlString headersLeft[NL], CUtlString titleRight, CUtlString headersRight[NR])
+		DualTable(std::string titleLeft, std::string headersLeft[NL], std::string titleRight, std::string headersRight[NR])
 			: left(titleLeft, headersLeft), right(titleRight, headersRight)
 		{
 		}
@@ -229,37 +227,29 @@ namespace utils
 		{
 		}
 
-		CUtlString GetTitle()
+		std::string GetTitle()
 		{
-			CUtlString result;
-			result.Format("%-*s\t|\t%-*s", left.GetTableWidth(), left.GetTitle().Get(), right.GetTableWidth(), right.GetTitle().Get());
-			return result;
+			return tfm::format("%-*s\t|\t%-*s", left.GetTableWidth(), left.GetTitle(), right.GetTableWidth(), right.GetTitle());
 		}
 
-		CUtlString GetHeader()
+		std::string GetHeader()
 		{
-			CUtlString result;
-			result.Format("%-*s\t|\t%-*s", left.GetTableWidth(), left.GetHeader().Get(), right.GetTableWidth(), right.GetHeader().Get());
-			return result;
+			return tfm::format("%-*s\t|\t%-*s", left.GetTableWidth(), left.GetHeader(), right.GetTableWidth(), right.GetHeader());
 		}
 
-		CUtlString GetLine(u32 row)
+		std::string GetLine(u32 row)
 		{
 			if (row >= GetNumEntries())
 			{
 				return "";
 			}
-			CUtlString result;
-			result.Format("%-*s\t|\t%-*s", left.GetTableWidth(), left.GetLine(row).Get(), right.GetTableWidth(), right.GetLine(row).Get());
-			return result;
+			return tfm::format("%-*s\t|\t%-*s", left.GetTableWidth(), left.GetLine(row), right.GetTableWidth(), right.GetLine(row));
 		}
 
-		CUtlString GetSeparator(const char *characters = "_")
+		std::string GetSeparator(const char *characters = "_")
 		{
-			CUtlString result;
-			result.Format("%-*s \t|\t %-*s", left.GetTableWidth(), left.GetSeparator(characters).Get(), right.GetTableWidth(),
-						  right.GetSeparator(characters).Get());
-			return result;
+			return tfm::format("%-*s \t|\t %-*s", left.GetTableWidth(), left.GetSeparator(characters), right.GetTableWidth(),
+							   right.GetSeparator(characters));
 		}
 
 		u32 GetNumEntries()

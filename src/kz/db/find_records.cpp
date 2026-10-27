@@ -2,9 +2,9 @@
 #include "vendor/sql_mm/src/public/sql_mm.h"
 #include "queries/course_top.h"
 
-void KZDatabaseService::QueryAllRecords(CUtlString mapName, TransactionSuccessCallbackFunc onSuccess, TransactionFailureCallbackFunc onFailure)
+void KZDatabaseService::QueryAllRecords(std::string mapName, TransactionSuccessCallbackFunc onSuccess, TransactionFailureCallbackFunc onFailure)
 {
-	std::string cleanedMapName = KZDatabaseService::GetDatabaseConnection()->Escape(mapName.Get());
+	std::string cleanedMapName = KZDatabaseService::GetDatabaseConnection()->Escape(mapName.c_str());
 
 	Transaction txn;
 
@@ -20,11 +20,11 @@ void KZDatabaseService::QueryAllRecords(CUtlString mapName, TransactionSuccessCa
 	KZDatabaseService::GetDatabaseConnection()->ExecuteTransaction(txn, onSuccess, onFailure);
 }
 
-void KZDatabaseService::QueryRecords(CUtlString mapName, CUtlString courseName, u32 modeID, u32 count, u32 offset,
+void KZDatabaseService::QueryRecords(std::string mapName, std::string courseName, u32 modeID, u32 count, u32 offset,
 									 TransactionSuccessCallbackFunc onSuccess, TransactionFailureCallbackFunc onFailure)
 {
-	std::string cleanedMapName = KZDatabaseService::GetDatabaseConnection()->Escape(mapName.Get());
-	std::string cleanedCourseName = KZDatabaseService::GetDatabaseConnection()->Escape(courseName.Get());
+	std::string cleanedMapName = KZDatabaseService::GetDatabaseConnection()->Escape(mapName.c_str());
+	std::string cleanedCourseName = KZDatabaseService::GetDatabaseConnection()->Escape(courseName.c_str());
 
 	Transaction txn;
 

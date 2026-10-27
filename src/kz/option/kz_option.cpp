@@ -24,7 +24,7 @@ IMPLEMENT_CLASS_EVENT_LISTENER(KZOptionService, KZOptionServiceEventListener);
 // Helper function to merge loaded preferences with existing ones
 // Source values overwrite target values, except for keys in excludeKeys
 // excludeKeys: list of keys to never overwrite (user-set preferences)
-static_function void MergePreferences(KeyValues3 *target, KeyValues3 *source, const std::vector<CUtlString> *excludeKeys = nullptr)
+static_function void MergePreferences(KeyValues3 *target, KeyValues3 *source, const std::vector<std::string> *excludeKeys = nullptr)
 {
 	if (!source || !target)
 	{
@@ -265,14 +265,14 @@ bool KZOptionService::ShouldApplyPrefs(i64 incomingStamp, i32 incomingTier)
 	return incomingTier > (i32)this->dataState;
 }
 
-void KZOptionService::InitializeLocalPrefs(CUtlString text)
+void KZOptionService::InitializeLocalPrefs(std::string text)
 {
 	if (this->localLoaded)
 	{
 		return;
 	}
 	this->localLoaded = true;
-	if (text.IsEmpty())
+	if (text.empty())
 	{
 		text = "{\n}";
 	}
@@ -280,7 +280,7 @@ void KZOptionService::InitializeLocalPrefs(CUtlString text)
 	// Load the preferences from the database into a temporary KV
 	KeyValues3 loadedPrefs(KV3_TYPEEX_TABLE, KV3_SUBTYPE_UNSPECIFIED);
 	CUtlString error;
-	LoadKV3FromJSON(&loadedPrefs, &error, text.Get(), "");
+	LoadKV3FromJSON(&loadedPrefs, &error, text.c_str(), "");
 	if (!error.IsEmpty())
 	{
 		KZ_LOG_WARN(LogChannel::DB, "Error fetching local preference: %s\n", error.Get());
@@ -364,7 +364,7 @@ void KZOptionService::SaveLocalPrefs()
 		KZ_LOG_WARN(LogChannel::DB, "Error saving local preference: %s\n", error.Get());
 		return;
 	}
-	this->player->databaseService->SavePrefs(output);
+	this->player->databaseService->SavePrefs(output.Get());
 }
 
 void KZOptionService::OnPlayerActive()

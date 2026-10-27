@@ -108,7 +108,7 @@ static_function void FormatRecordRow(KZLanguageService *lang, CourseInfoText &ou
 		out.badgeClasses[row] = "hidden";
 		return;
 	}
-	out.times[row] = utils::FormatTime(time).Get();
+	out.times[row] = utils::FormatTime(time).c_str();
 	out.badges[row] = lang->PrepareMessage(teleports ? "HUD - Course Badge TP" : "HUD - Course Badge Pro");
 	out.badgeClasses[row] = teleports ? "ci-badge-tp" : "ci-badge-pro";
 	out.names[row] = holder.empty() ? std::string() : lang->PrepareMessage("HUD - Course By", holder.c_str());
@@ -116,14 +116,14 @@ static_function void FormatRecordRow(KZLanguageService *lang, CourseInfoText &ou
 	out.nameClasses[row] = pb > 0 && pb <= time ? "ci-own" : NULL;
 	if (pb > time)
 	{
-		out.gaps[row] = lang->PrepareMessage("HUD - Course Gap", KZTimerService::FormatDiffTime(pb - time).Get());
+		out.gaps[row] = lang->PrepareMessage("HUD - Course Gap", KZTimerService::FormatDiffTime(pb - time).c_str());
 	}
 }
 
 static_function void GetCourseInfo(KZPlayer *viewer, KZPlayer *source, CourseInfoText &out)
 {
 	KZLanguageService *lang = viewer->languageService;
-	out.map = g_pKZUtils->GetCurrentMapName().Get();
+	out.map = g_pKZUtils->GetCurrentMapName().c_str();
 
 	// The replay bot's run lives in the replay rather than in its timer.
 	const bool replay = KZ::replaysystem::IsReplayBot(source);
@@ -202,7 +202,7 @@ static_function void GetCourseInfo(KZPlayer *viewer, KZPlayer *source, CourseInf
 		out.reached[2] = running ? source->timerService->GetReachedSplits() : 0;
 	}
 
-	out.course = lang->PrepareMessage("HUD - Course Line", course->name, modeInfo.shortModeName.Get());
+	out.course = lang->PrepareMessage("HUD - Course Line", course->name, modeInfo.shortModeName.c_str());
 	if (nubTier > 0)
 	{
 		out.course +=
@@ -265,7 +265,7 @@ void KZHUDService::OnZoneReached(const KZTimerService::ZoneReport &report)
 	const char *const *ids = COURSE_PILL_PANELS[index];
 
 	const std::string zone = lang->PrepareMessage(COURSE_ZONE_PHRASES[(i32)report.kind], report.number);
-	std::string info = utils::FormatTime(report.time).Get();
+	std::string info = utils::FormatTime(report.time).c_str();
 	std::string gap;
 	if (report.hasDiff && COURSE_COMPARE_PHRASES[report.compareType])
 	{
@@ -275,7 +275,7 @@ void KZHUDService::OnZoneReached(const KZTimerService::ZoneReport &report)
 			target = lang->PrepareMessage("HUD - Compare Pro", target.c_str());
 		}
 		info = lang->PrepareMessage("HUD - Course Pill Info", info.c_str(), target.c_str());
-		gap = KZTimerService::FormatDiffTime(report.diff).Get();
+		gap = KZTimerService::FormatDiffTime(report.diff).c_str();
 	}
 	layout->SetDialogVariableString(ids[1], "v", zone.c_str());
 	layout->SetDialogVariableString(ids[2], "v", info.c_str());

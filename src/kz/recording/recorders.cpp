@@ -41,8 +41,8 @@ JumpRecorder::JumpRecorder(Jump *jump) : Recorder(jump->player, 5.0f, RP_JUMPSTA
 	this->desiredStopTime = g_pKZUtils->GetServerGlobals()->curtime + 2.0f;
 	auto *jumpProto = replayHeader.mutable_jump();
 	auto modeInfo = KZ::mode::GetModeInfo(jump->player->modeService);
-	jumpProto->mutable_mode()->set_name(modeInfo.longModeName.Get());
-	jumpProto->mutable_mode()->set_short_name(modeInfo.shortModeName.Get());
+	jumpProto->mutable_mode()->set_name(modeInfo.longModeName.c_str());
+	jumpProto->mutable_mode()->set_short_name(modeInfo.shortModeName.c_str());
 	jumpProto->mutable_mode()->set_md5(modeInfo.md5);
 	jumpProto->set_jump_type(jump->jumpType);
 	jumpProto->set_distance(jump->GetDistance());
@@ -59,10 +59,10 @@ RunRecorder::RunRecorder(KZPlayer *player) : Recorder(player, 5.0f, RP_RUN, true
 {
 	auto *runProto = replayHeader.mutable_run();
 	runProto->set_start_event_index(this->totalEventsRecorded);
-	runProto->set_course_name(player->timerService->GetCourse()->GetName().Get());
+	runProto->set_course_name(player->timerService->GetCourse()->GetName().c_str());
 	auto modeInfo = KZ::mode::GetModeInfo(player->modeService);
-	runProto->mutable_mode()->set_name(modeInfo.longModeName.Get());
-	runProto->mutable_mode()->set_short_name(modeInfo.shortModeName.Get());
+	runProto->mutable_mode()->set_name(modeInfo.longModeName.c_str());
+	runProto->mutable_mode()->set_short_name(modeInfo.shortModeName.c_str());
 	runProto->mutable_mode()->set_md5(modeInfo.md5);
 	for (size_t i = 0; i < player->styleServices.size(); i++)
 	{

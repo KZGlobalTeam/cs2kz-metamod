@@ -210,7 +210,7 @@ static_function void StartReferenceLoad(PBDataKey key, ProgressReference &refere
 	}
 	reference.dirty = false;
 	reference.uuids = CollectReferenceUUIDs(key);
-	ReferenceLoadRequest request {key, reference.revision, {}, g_pKZUtils->GetCurrentMapName().Get(), md5, course->name, modeName, course->id};
+	ReferenceLoadRequest request {key, reference.revision, {}, g_pKZUtils->GetCurrentMapName().c_str(), md5, course->name, modeName, course->id};
 	for (const auto &uuid : reference.uuids)
 	{
 		std::string path;

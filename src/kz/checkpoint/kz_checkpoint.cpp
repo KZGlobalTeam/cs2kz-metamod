@@ -38,12 +38,12 @@ void KZCheckpointService::OnPlayerPreferencesLoaded()
 	player->optionService->GetPreferenceTable("startPositions", ssps);
 
 	bool hasMapName = false;
-	CUtlString currentMap = g_pKZUtils->GetCurrentMapName(&hasMapName);
+	std::string currentMap = g_pKZUtils->GetCurrentMapName(&hasMapName);
 	if (!hasMapName)
 	{
 		return;
 	}
-	if (KeyValues3 *startPos = ssps.FindMember(currentMap.Get()))
+	if (KeyValues3 *startPos = ssps.FindMember(currentMap.c_str()))
 	{
 		if (!startPos || !startPos->FindMember("origin") || !startPos->FindMember("angles") || !startPos->FindMember("ladderNormal")
 			|| !startPos->FindMember("onLadder"))
@@ -434,12 +434,12 @@ void KZCheckpointService::SetStartPosition()
 	}
 	this->customStartPosition.onGround = (pawn->m_fFlags() & FL_ONGROUND) != 0;
 	bool hasMapName = false;
-	CUtlString currentMap = g_pKZUtils->GetCurrentMapName(&hasMapName);
+	std::string currentMap = g_pKZUtils->GetCurrentMapName(&hasMapName);
 	if (hasMapName)
 	{
 		KeyValues3 ssps;
 		player->optionService->GetPreferenceTable("startPositions", ssps);
-		KeyValues3 *startPos = ssps.FindOrCreateMember(currentMap.Get());
+		KeyValues3 *startPos = ssps.FindOrCreateMember(currentMap.c_str());
 
 		startPos->FindOrCreateMember("origin")->SetVector(this->customStartPosition.origin);
 		startPos->FindOrCreateMember("angles")->SetQAngle(this->customStartPosition.angles);
@@ -457,12 +457,12 @@ void KZCheckpointService::ClearStartPosition()
 	this->hasCustomStartPosition = false;
 
 	bool hasMapName = false;
-	CUtlString currentMap = g_pKZUtils->GetCurrentMapName(&hasMapName);
+	std::string currentMap = g_pKZUtils->GetCurrentMapName(&hasMapName);
 	if (hasMapName)
 	{
 		KeyValues3 ssps;
 		player->optionService->GetPreferenceTable("startPositions", ssps);
-		ssps.RemoveMember(currentMap.Get());
+		ssps.RemoveMember(currentMap.c_str());
 		player->optionService->SetPreferenceTable("startPositions", ssps);
 	}
 

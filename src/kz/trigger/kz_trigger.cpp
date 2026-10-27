@@ -131,8 +131,11 @@ void KZTriggerService::OnStopTouchGround()
 			// set last touched triggers for single and sequential bhop.
 			if (tracker.kzTrigger->type == KZTRIGGER_SEQUENTIAL_BHOP)
 			{
-				CEntityHandle handle = tracker.kzTrigger->entity;
-				this->lastTouchedSequentialBhops.Write(handle);
+				this->lastTouchedSequentialBhops.push_back(tracker.kzTrigger->entity);
+				if (this->lastTouchedSequentialBhops.size() > maxSequentialBhops)
+				{
+					this->lastTouchedSequentialBhops.pop_front();
+				}
 			}
 
 			// NOTE: For singlebhops, we don't care which type of bhop we last touched, because

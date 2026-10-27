@@ -159,7 +159,7 @@ struct KZCourseDescriptor
 		return this->id == id && (!V_stricmp(this->name, name));
 	}
 
-	CUtlString GetName() const
+	std::string GetName() const
 	{
 		return name;
 	}

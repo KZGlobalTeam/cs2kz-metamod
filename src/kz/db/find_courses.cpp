@@ -2,10 +2,10 @@
 #include "vendor/sql_mm/src/public/sql_mm.h"
 #include "queries/courses.h"
 
-void KZDatabaseService::FindFirstCourseByMapName(CUtlString mapName, TransactionSuccessCallbackFunc onSuccess,
+void KZDatabaseService::FindFirstCourseByMapName(std::string mapName, TransactionSuccessCallbackFunc onSuccess,
 												 TransactionFailureCallbackFunc onFailure)
 {
-	auto cleanMapName = KZDatabaseService::GetDatabaseConnection()->Escape(mapName.Get());
+	auto cleanMapName = KZDatabaseService::GetDatabaseConnection()->Escape(mapName.c_str());
 
 	char query[2048];
 	V_snprintf(query, sizeof(query), sql_mapcourses_findfirst_mapname, cleanMapName.c_str(), cleanMapName.c_str());

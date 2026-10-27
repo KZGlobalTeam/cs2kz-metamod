@@ -83,7 +83,7 @@ RunSubmission::RunSubmission(KZPlayer *player)
 
 	// Setup course
 	assert(player->timerService->GetCourse());
-	this->course.name = player->timerService->GetCourse()->GetName().Get();
+	this->course.name = player->timerService->GetCourse()->GetName().c_str();
 	this->course.localID = player->timerService->GetCourse()->localDatabaseID;
 
 	if (this->apiMode.has_value())
@@ -134,7 +134,7 @@ RunSubmission::RunSubmission(KZPlayer *player)
 	}
 
 	// Metadata
-	this->metadata = player->timerService->GetCurrentRunMetadata().Get();
+	this->metadata = player->timerService->GetCurrentRunMetadata().c_str();
 
 	// Cheaters and unauthenticated players do not submit
 	if (player->anticheatService->isBanned || !player->IsAuthenticated())
@@ -857,12 +857,11 @@ void RunSubmission::AnnounceRun()
 	char formattedTime[32];
 	utils::FormatTime(time, formattedTime, sizeof(formattedTime));
 
-	CUtlString combinedModeStyleText;
-	combinedModeStyleText.Format("{purple}%s{grey}", this->mode.name.c_str());
+	std::string combinedModeStyleText = tfm::format("{purple}%s{grey}", this->mode.name.c_str());
 	for (auto &style : this->styles)
 	{
 		combinedModeStyleText += " +{grey2}";
-		combinedModeStyleText.Append(style.name.c_str());
+		combinedModeStyleText += style.name;
 		combinedModeStyleText += "{grey}";
 	}
 
@@ -875,7 +874,7 @@ void RunSubmission::AnnounceRun()
 												: player->languageService->PrepareMessage("2+ Teleports Text", this->teleports);
 		}
 		player->languageService->PrintChat(true, false, "Beat Course Info - Basic", this->player.name.c_str(), this->map.name.c_str(),
-										   this->course.name.c_str(), formattedTime, combinedModeStyleText.Get(), teleportText.c_str());
+										   this->course.name.c_str(), formattedTime, combinedModeStyleText.c_str(), teleportText.c_str());
 	}
 }
 

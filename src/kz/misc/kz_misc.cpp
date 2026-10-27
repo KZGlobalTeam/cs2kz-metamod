@@ -72,21 +72,21 @@ SCMD(kz_end, SCFL_MAP)
 	// If the player specify a course name, we first check if it's valid or not.
 	if (V_strlen(args->ArgS()) > 0)
 	{
-		CUtlString courseArg = args->ArgS();
-		courseArg.Trim();
+		std::string courseArg = args->ArgS();
+		utils::Trim(courseArg);
 		const KZCourseDescriptor *course = nullptr;
-		if (utils::IsNumeric(courseArg.Get()))
+		if (utils::IsNumeric(courseArg.c_str()))
 		{
-			course = KZ::course::GetCourseByCourseID(atoi(courseArg.Get()));
+			course = KZ::course::GetCourseByCourseID(atoi(courseArg.c_str()));
 		}
 		else
 		{
-			course = KZ::course::GetCourse(courseArg.Get(), false, true);
+			course = KZ::course::GetCourse(courseArg.c_str(), false, true);
 		}
 
 		if (!course || !course->hasEndPosition)
 		{
-			player->languageService->PrintChat(true, false, "No End Position For Course", courseArg.Get());
+			player->languageService->PrintChat(true, false, "No End Position For Course", courseArg.c_str());
 			return true;
 		}
 		tpOrigin = course->endPosition;
@@ -103,8 +103,8 @@ SCMD(kz_end, SCFL_MAP)
 		}
 		else
 		{
-			CUtlString courseName = player->timerService->GetCourse()->GetName();
-			player->languageService->PrintChat(true, false, "No End Position For Course", courseName.Get());
+			std::string courseName = player->timerService->GetCourse()->GetName();
+			player->languageService->PrintChat(true, false, "No End Position For Course", courseName.c_str());
 			return true;
 		}
 	}
@@ -121,8 +121,8 @@ SCMD(kz_end, SCFL_MAP)
 		}
 		else
 		{
-			CUtlString courseName = KZ::course::GetFirstCourse()->GetName();
-			player->languageService->PrintChat(true, false, "No End Position For Course", courseName.Get());
+			std::string courseName = KZ::course::GetFirstCourse()->GetName();
+			player->languageService->PrintChat(true, false, "No End Position For Course", courseName.c_str());
 		}
 	}
 	else
@@ -161,22 +161,22 @@ void KZ::misc::HandleTeleportToCourse(KZPlayer *player, const CCommand *args)
 	// If the player specify a course name, we first check if it's valid or not.
 	if (V_strlen(args->ArgS()) > 0)
 	{
-		CUtlString courseArg = args->ArgS();
+		std::string courseArg = args->ArgS();
 		// Trim whitespace
-		courseArg.Trim();
-		if (utils::IsNumeric(courseArg.Get()))
+		utils::Trim(courseArg);
+		if (utils::IsNumeric(courseArg.c_str()))
 		{
-			i32 courseID = atoi(courseArg.Get());
+			i32 courseID = atoi(courseArg.c_str());
 			startPosCourse = KZ::course::GetCourseByCourseID(courseID);
 		}
 		else
 		{
-			startPosCourse = KZ::course::GetCourse(courseArg.Get(), false, true);
+			startPosCourse = KZ::course::GetCourse(courseArg.c_str(), false, true);
 		}
 
 		if (!startPosCourse || !startPosCourse->hasStartPosition)
 		{
-			player->languageService->PrintChat(true, false, "No Start Position For Course", courseArg.Get());
+			player->languageService->PrintChat(true, false, "No Start Position For Course", courseArg.c_str());
 			return;
 		}
 	}
@@ -528,10 +528,10 @@ void KZ::misc::ProcessConCommand(ConCommandRef cmd, const CCommandContext &ctx, 
 			return;
 		}
 
-		CUtlString message;
-		message.SetDirect(p, strlen(p) - wrappedInQuotes);
+		std::string message;
+		message.assign(p, strlen(p) - wrappedInQuotes);
 		auto name = player->GetName();
-		std::string text = message.Get();
+		std::string text = message.c_str();
 
 		// We have to replace these CS2 quotes with normal quotes.
 		size_t pos = 0;

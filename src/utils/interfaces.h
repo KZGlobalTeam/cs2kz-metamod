@@ -164,10 +164,10 @@ public:
 
 	CServerSideClient *GetClientBySlot(CPlayerSlot slot);
 
-	virtual CUtlString GetCurrentMapName(bool *success = NULL);
+	virtual std::string GetCurrentMapName(bool *success = NULL);
 	virtual u64 GetCurrentMapWorkshopID();
-	virtual CUtlString GetCurrentMapVPK();
-	virtual CUtlString GetCurrentMapDirectory();
+	virtual std::string GetCurrentMapVPK();
+	virtual std::string GetCurrentMapDirectory();
 	virtual u64 GetCurrentMapSize();
 	// MD5 calculation is not very fast, avoid doing this too often!
 	virtual bool UpdateCurrentMapMD5();

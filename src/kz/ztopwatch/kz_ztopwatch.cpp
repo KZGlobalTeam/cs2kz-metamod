@@ -294,7 +294,7 @@ void KZZtopwatchService::TryStopTimer()
 	{
 		f32 elapsed = g_pKZUtils->GetGlobals()->curtime - this->startTime;
 		this->startTime = 0.0f;
-		this->player->languageService->PrintChat(true, false, "Zone Stopwatch - Time", utils::FormatTime(elapsed).Get());
+		this->player->languageService->PrintChat(true, false, "Zone Stopwatch - Time", utils::FormatTime(elapsed).c_str());
 	}
 }
 

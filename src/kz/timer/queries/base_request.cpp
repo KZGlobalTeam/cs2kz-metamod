@@ -47,10 +47,10 @@ void BaseRequest::Init(u64 features, const CCommand *args, bool queryLocal, bool
 		kv = params.FindMember("map");
 		this->mapName = kv ? kv->GetString() : "";
 		// If a map is not specified, use the current map.
-		if (this->mapName.IsEmpty())
+		if (this->mapName.empty())
 		{
 			bool gotCurrentMap = false;
-			CUtlString currentMap = g_pKZUtils->GetCurrentMapName(&gotCurrentMap);
+			std::string currentMap = g_pKZUtils->GetCurrentMapName(&gotCurrentMap);
 			if (!gotCurrentMap) // Shouldn't happen.
 			{
 				this->Invalidate("Request - Failed (Invalid Map)");
@@ -152,13 +152,13 @@ void BaseRequest::CheckRequests()
 	When specifying a course number, it is possible that the global API will return a different course from the course
 	determined in the local database. In that case, we show both leaderboards and warns the player of potential mismatch.
 */
-void BaseRequest::SetupCourse(CUtlString courseName)
+void BaseRequest::SetupCourse(std::string courseName)
 {
 	if (!isValid || !HasFeature(RequestFeature::Course))
 	{
 		return;
 	}
-	if (!courseName.IsEmpty())
+	if (!courseName.empty())
 	{
 		this->courseName = courseName;
 		return;
@@ -172,7 +172,7 @@ void BaseRequest::SetupCourse(CUtlString courseName)
 	}
 
 	bool gotCurrentMap = false;
-	CUtlString currentMap = g_pKZUtils->GetCurrentMapName(&gotCurrentMap);
+	std::string currentMap = g_pKZUtils->GetCurrentMapName(&gotCurrentMap);
 	if (!gotCurrentMap) // Shouldn't happen.
 	{
 		this->Invalidate("Request - Failed (Invalid Map)");
@@ -190,7 +190,7 @@ void BaseRequest::SetupCourse(CUtlString courseName)
 			course = KZ::course::GetFirstCourse();
 			if (!course)
 			{
-				this->Invalidate("Request - Failed (No Course in Current Map)", currentMap.Get());
+				this->Invalidate("Request - Failed (No Course in Current Map)", currentMap.c_str());
 				return;
 			}
 		}
@@ -211,7 +211,7 @@ void BaseRequest::SetupCourse(CUtlString courseName)
 				ISQLResult *result = queries[0]->GetResultSet();
 				if (result->GetRowCount() > 0 && result->FetchRow())
 				{
-					req->courseName = result->GetString(0);
+					req->courseName = utils::OrEmpty(result->GetString(0));
 				}
 				else
 				{
@@ -239,7 +239,7 @@ void BaseRequest::SetupCourse(CUtlString courseName)
 	}
 }
 
-void BaseRequest::SetupPlayer(CUtlString playerName)
+void BaseRequest::SetupPlayer(std::string playerName)
 {
 	if (!isValid || !HasFeature(RequestFeature::Player))
 	{
@@ -255,7 +255,7 @@ void BaseRequest::SetupPlayer(CUtlString playerName)
 	// Otherwise, players that are currently in the server is prioritized.
 	// If there is no player matching the name in the server, first query the local database to get the player's SteamID.
 	// If there's no local database/player is not found, query the global API to get the player's maptop.
-	if (playerName.IsEmpty())
+	if (playerName.empty())
 	{
 		this->targetPlayerName = callingPlayer->GetName();
 		this->targetSteamID64 = callingPlayer->GetSteamId64();
@@ -282,7 +282,7 @@ void BaseRequest::SetupPlayer(CUtlString playerName)
 				if (result->GetRowCount() > 0 && result->FetchRow())
 				{
 					req->targetSteamID64 = result->GetInt64(0);
-					req->targetPlayerName = result->GetString(1);
+					req->targetPlayerName = utils::OrEmpty(result->GetString(1));
 				}
 				else if (req->globalStatus == ResponseStatus::ENABLED)
 				{
@@ -317,11 +317,11 @@ void BaseRequest::SetupPlayer(CUtlString playerName)
 	}
 	else if (this->globalStatus != ResponseStatus::ENABLED)
 	{
-		this->Invalidate("Error Message (Player Not Found)", targetPlayerName.Get());
+		this->Invalidate("Error Message (Player Not Found)", targetPlayerName.c_str());
 	}
 }
 
-void BaseRequest::SetupMode(CUtlString modeName)
+void BaseRequest::SetupMode(std::string modeName)
 {
 	if (!isValid || !HasFeature(RequestFeature::Mode))
 	{
@@ -335,7 +335,7 @@ void BaseRequest::SetupMode(CUtlString modeName)
 		return;
 	}
 
-	if (modeName.IsEmpty())
+	if (modeName.empty())
 	{
 		KZModeManager::ModePluginInfo modeInfo = KZ::mode::GetModeInfo(callingPlayer->modeService);
 
@@ -364,13 +364,13 @@ void BaseRequest::SetupMode(CUtlString modeName)
 		}
 	}
 
-	if (!KZ::api::DecodeModeString(this->modeName.Get(), this->apiMode))
+	if (!KZ::api::DecodeModeString(this->modeName.c_str(), this->apiMode))
 	{
 		this->globalStatus = ResponseStatus::DISABLED;
 	}
 }
 
-void BaseRequest::SetupStyles(CUtlString styleNames)
+void BaseRequest::SetupStyles(std::string styleNames)
 {
 	if (!isValid || !HasFeature(RequestFeature::Style))
 	{
@@ -385,7 +385,7 @@ void BaseRequest::SetupStyles(CUtlString styleNames)
 	}
 
 	// If the style name is empty, take the calling player's styles.
-	if (styleNames.IsEmpty())
+	if (styleNames.empty())
 	{
 		this->localStyleIDs = 0;
 		for (size_t i = 0; i < callingPlayer->styleServices.size(); i++)
@@ -402,17 +402,16 @@ void BaseRequest::SetupStyles(CUtlString styleNames)
 			styleList.push_back(info.shortName);
 		}
 	}
-	else if (styleNames.IsEqual_FastCaseInsensitive("none"))
+	else if (KZ_STREQI(styleNames.c_str(), "none"))
 	{
 		this->localStyleIDs = 0;
 	}
 	// Example: VNL,CKZ
 	else
 	{
-		CSplitString stylesSplit(styleNames.Get(), ",");
-		FOR_EACH_VEC(stylesSplit, i)
+		for (const std::string &style : utils::Split(styleNames, ','))
 		{
-			KZStyleManager::StylePluginInfo info = KZ::style::GetStyleInfo(stylesSplit[i]);
+			KZStyleManager::StylePluginInfo info = KZ::style::GetStyleInfo(style);
 			if (info.databaseID < 0)
 			{
 				this->localStatus = ResponseStatus::DISABLED;
@@ -421,7 +420,7 @@ void BaseRequest::SetupStyles(CUtlString styleNames)
 			{
 				this->localStyleIDs |= (1ull << info.databaseID);
 			}
-			styleList.push_back(info.id != -2 ? info.shortName : stylesSplit[i]);
+			styleList.push_back(info.id != -2 ? info.shortName : style.c_str());
 		}
 	}
 };

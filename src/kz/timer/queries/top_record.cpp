@@ -16,12 +16,12 @@ struct TopRecordRequest : public BaseRequest
 	struct RecordData
 	{
 		bool hasRecord {};
-		CUtlString holder;
+		std::string holder;
 		f32 runTime {};
 		u32 teleportsUsed {};
 
 		bool hasRecordPro {};
-		CUtlString holderPro;
+		std::string holderPro;
 		f32 runTimePro {};
 	} srData, wrData;
 
@@ -46,8 +46,8 @@ struct TopRecordRequest : public BaseRequest
 		{
 			this->globalStatus = ResponseStatus::PENDING;
 
-			std::string_view map(this->mapName.Get(), this->mapName.Length());
-			std::string_view course(this->courseName.Get(), this->courseName.Length());
+			std::string_view map = this->mapName;
+			std::string_view course = this->courseName;
 			KZGlobalService::MessageCallback<KZ::api::messages::WorldRecords> callback(TopRecordRequest::OnWorldRecordsQueried, this->uid);
 			KZGlobalService::QueryWorldRecords(map, course, this->apiMode, std::move(callback));
 		}
@@ -121,7 +121,7 @@ struct TopRecordRequest : public BaseRequest
 					req->srData.hasRecord = true;
 					if (result->FetchRow())
 					{
-						req->srData.holder = result->GetString(2);
+						req->srData.holder = utils::OrEmpty(result->GetString(2));
 						req->srData.runTime = result->GetFloat(3);
 						req->srData.teleportsUsed = result->GetInt(4);
 					}
@@ -131,7 +131,7 @@ struct TopRecordRequest : public BaseRequest
 					req->srData.hasRecordPro = true;
 					if (result->FetchRow())
 					{
-						req->srData.holderPro = result->GetString(2);
+						req->srData.holderPro = utils::OrEmpty(result->GetString(2));
 						req->srData.runTimePro = result->GetFloat(3);
 					}
 				}
@@ -189,7 +189,7 @@ struct TopRecordRequest : public BaseRequest
 		utils::FormatTime(wrData.runTimePro, proTime, sizeof(proTime));
 
 		// Global Records on kz_map (Main) [VNL]
-		player->languageService->PrintChat(true, false, "WR Header", mapName.Get(), courseName.Get(), modeName.Get());
+		player->languageService->PrintChat(true, false, "WR Header", mapName.c_str(), courseName.c_str(), modeName.c_str());
 		if (!wrData.hasRecord)
 		{
 			player->languageService->PrintChat(true, false, "No Times");
@@ -197,20 +197,20 @@ struct TopRecordRequest : public BaseRequest
 		else if (!wrData.hasRecordPro)
 		{
 			// KZ | Overall Record: 01:23.45 (5 TP) by Bill
-			player->languageService->PrintChat(true, false, "Top Record - Overall", standardTime, wrData.holder.Get(), tpText);
+			player->languageService->PrintChat(true, false, "Top Record - Overall", standardTime, wrData.holder.c_str(), tpText);
 		}
 		// Their MAP PB has 0 teleports, and is therefore also their PRO PB
 		else if (wrData.teleportsUsed == 0)
 		{
 			// KZ | Overall/PRO Record: 01:23.45 by Bill
-			player->languageService->PrintChat(true, false, "Top Record - Combined", standardTime, wrData.holder.Get());
+			player->languageService->PrintChat(true, false, "Top Record - Combined", standardTime, wrData.holder.c_str());
 		}
 		else
 		{
 			// KZ | Overall Record: 01:23.45 (5 TP) by Bill
-			player->languageService->PrintChat(true, false, "Top Record - Overall", standardTime, wrData.holder.Get(), tpText);
+			player->languageService->PrintChat(true, false, "Top Record - Overall", standardTime, wrData.holder.c_str(), tpText);
 			// KZ | PRO Record: 23.45 by Player
-			player->languageService->PrintChat(true, false, "Top Record - PRO", proTime, wrData.holderPro.Get());
+			player->languageService->PrintChat(true, false, "Top Record - PRO", proTime, wrData.holderPro.c_str());
 		}
 	}
 
@@ -231,7 +231,7 @@ struct TopRecordRequest : public BaseRequest
 		utils::FormatTime(srData.runTimePro, proTime, sizeof(proTime));
 
 		// Server Records on kz_map (Main) [VNL]
-		player->languageService->PrintChat(true, false, "SR Header", mapName.Get(), courseName.Get(), modeName.Get());
+		player->languageService->PrintChat(true, false, "SR Header", mapName.c_str(), courseName.c_str(), modeName.c_str());
 		if (!srData.hasRecord)
 		{
 			player->languageService->PrintChat(true, false, "No Times");
@@ -239,20 +239,20 @@ struct TopRecordRequest : public BaseRequest
 		else if (!srData.hasRecordPro)
 		{
 			// KZ | Overall Record: 01:23.45 (5 TP) by Bill
-			player->languageService->PrintChat(true, false, "Top Record - Overall", standardTime, srData.holder.Get(), localTPText);
+			player->languageService->PrintChat(true, false, "Top Record - Overall", standardTime, srData.holder.c_str(), localTPText);
 		}
 		// Their MAP PB has 0 teleports, and is therefore also their PRO PB
 		else if (srData.teleportsUsed == 0)
 		{
 			// KZ | Overall/PRO Record: 01:23.45 by Bill
-			player->languageService->PrintChat(true, false, "Top Record - Combined", standardTime, srData.holder.Get());
+			player->languageService->PrintChat(true, false, "Top Record - Combined", standardTime, srData.holder.c_str());
 		}
 		else
 		{
 			// KZ | Overall Record: 01:23.45 (5 TP) by Bill
-			player->languageService->PrintChat(true, false, "Top Record - Overall", standardTime, srData.holder.Get(), localTPText);
+			player->languageService->PrintChat(true, false, "Top Record - Overall", standardTime, srData.holder.c_str(), localTPText);
 			// KZ | PRO Record: 23.45 by Player
-			player->languageService->PrintChat(true, false, "Top Record - PRO", proTime, srData.holderPro.Get());
+			player->languageService->PrintChat(true, false, "Top Record - PRO", proTime, srData.holderPro.c_str());
 		}
 	}
 };

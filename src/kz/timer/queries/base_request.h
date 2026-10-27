@@ -50,21 +50,21 @@ public:
 	std::string invalidateReasonLocalized {};
 
 	template<typename... Args>
-	void Invalidate(CUtlString reason = "", Args &&...args)
+	void Invalidate(std::string reason = "", Args &&...args)
 	{
 		if (!isValid)
 		{
 			return;
 		}
 		isValid = false;
-		if (reason.IsEmpty())
+		if (reason.empty())
 		{
 			return;
 		}
 		KZPlayer *player = g_pKZPlayerManager->ToPlayer(this->userID);
 		if (player && player->IsInGame())
 		{
-			invalidateReasonLocalized = player->languageService->PrepareMessage(reason, std::forward<Args>(args)...);
+			invalidateReasonLocalized = player->languageService->PrepareMessage(reason.c_str(), std::forward<Args>(args)...);
 		}
 	}
 
@@ -111,35 +111,35 @@ public:
 	};
 
 protected:
-	CUtlString mapName;
+	std::string mapName;
 
-	CUtlString courseName;
+	std::string courseName;
 	bool requestingFirstCourse = false;
 
 	u64 limit = 10;
 	u64 offset = 0;
 
 	u64 targetSteamID64 {};
-	CUtlString targetPlayerName {};
+	std::string targetPlayerName {};
 	// If this is true, the queries should be delayed until it's true.
 	bool requestingLocalPlayer = false;
 	// If this is true, the *local* query should be delayed.
 	bool requestingGlobalPlayer = false;
 
 	u64 localModeID;
-	CUtlString modeName;
+	std::string modeName;
 	KZ::api::Mode apiMode;
 
 	u64 localStyleIDs;
-	std::vector<CUtlString> styleList;
+	std::vector<std::string> styleList;
 
 public:
-	void SetupCourse(CUtlString courseName);
-	void SetupPlayer(CUtlString playerName);
+	void SetupCourse(std::string courseName);
+	void SetupPlayer(std::string playerName);
 
-	void SetupMode(CUtlString modeName);
+	void SetupMode(std::string modeName);
 
-	void SetupStyles(CUtlString styleNames);
+	void SetupStyles(std::string styleNames);
 
 	virtual void PrintInstructions() {}
 

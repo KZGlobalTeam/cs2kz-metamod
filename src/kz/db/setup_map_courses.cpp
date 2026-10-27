@@ -19,7 +19,7 @@ void KZDatabaseService::SetupCourses(std::vector<KZCourseDescriptor *> &courses)
 	Transaction txn;
 	for (KZCourseDescriptor *course : courses)
 	{
-		std::string cleanCourseName = KZDatabaseService::GetDatabaseConnection()->Escape(course->GetName());
+		std::string cleanCourseName = KZDatabaseService::GetDatabaseConnection()->Escape(course->GetName().c_str());
 		switch (databaseType)
 		{
 			case DatabaseType::SQLite:

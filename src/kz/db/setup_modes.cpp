@@ -28,7 +28,7 @@ void KZDatabaseService::UpdateModeIDs()
 	// clang-format on
 }
 
-void KZDatabaseService::InsertAndUpdateModeIDs(CUtlString modeName, CUtlString shortName)
+void KZDatabaseService::InsertAndUpdateModeIDs(std::string modeName, std::string shortName)
 {
 	if (!KZDatabaseService::IsReady())
 	{
@@ -40,12 +40,12 @@ void KZDatabaseService::InsertAndUpdateModeIDs(CUtlString modeName, CUtlString s
 	{
 		case DatabaseType::SQLite:
 		{
-			V_snprintf(query, sizeof(query), sqlite_modes_insert, modeName.Get(), shortName.Get());
+			V_snprintf(query, sizeof(query), sqlite_modes_insert, modeName.c_str(), shortName.c_str());
 			break;
 		}
 		case DatabaseType::MySQL:
 		{
-			V_snprintf(query, sizeof(query), mysql_modes_insert, modeName.Get(), shortName.Get());
+			V_snprintf(query, sizeof(query), mysql_modes_insert, modeName.c_str(), shortName.c_str());
 			break;
 		}
 		default:
@@ -56,7 +56,7 @@ void KZDatabaseService::InsertAndUpdateModeIDs(CUtlString modeName, CUtlString s
 	}
 	txn.queries.push_back(query);
 
-	V_snprintf(query, sizeof(query), sql_modes_findid, modeName.Get());
+	V_snprintf(query, sizeof(query), sql_modes_findid, modeName.c_str());
 	txn.queries.push_back(query);
 	// clang-format off
 	KZDatabaseService::GetDatabaseConnection()->ExecuteTransaction(

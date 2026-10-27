@@ -229,8 +229,8 @@ public:
 		// -1 is for mode that exists in the database (but not loaded in the plugin)
 		// -2 is for invalid mode.
 		PluginId id = -2;
-		CUtlString shortModeName;
-		CUtlString longModeName;
+		std::string shortModeName;
+		std::string longModeName;
 		ModeServiceFactory factory {};
 		bool shortCmdRegistered {};
 		char md5[33] {};
@@ -255,7 +255,7 @@ namespace KZ::mode
 	void InitModeService(KZPlayer *player);
 	void InitModeManager();
 	void LoadModePlugins();
-	void UpdateModeDatabaseID(CUtlString name, i32 id, CUtlString shortName = "");
+	void UpdateModeDatabaseID(std::string name, i32 id, std::string shortName = "");
 	// clang-format off
 
 	inline const char *modeCvarNames[] = {
@@ -353,6 +353,6 @@ namespace KZ::mode
 
 	KZModeManager::ModePluginInfo GetModeInfo(KZModeService *mode);
 	KZModeManager::ModePluginInfo GetModeInfo(KZ::api::Mode mode);
-	KZModeManager::ModePluginInfo GetModeInfo(CUtlString modeName);
+	KZModeManager::ModePluginInfo GetModeInfo(std::string modeName);
 	KZModeManager::ModePluginInfo GetModeInfoFromDatabaseID(i32 id);
 }; // namespace KZ::mode

@@ -109,9 +109,9 @@ namespace KZ::replaysystem::commands
 				{
 					return;
 				}
-				if (!KZ_STREQI(data::GetCurrentReplay()->header.map().name().c_str(), g_pKZUtils->GetCurrentMapName().Get()))
+				if (!KZ_STREQI(data::GetCurrentReplay()->header.map().name().c_str(), g_pKZUtils->GetCurrentMapName().c_str()))
 				{
-					player->languageService->PrintChat(true, false, "Replay - Wrong Map", data::GetCurrentReplay()->header.map().name().c_str(), g_pKZUtils->GetCurrentMapName().Get());
+					player->languageService->PrintChat(true, false, "Replay - Wrong Map", data::GetCurrentReplay()->header.map().name().c_str(), g_pKZUtils->GetCurrentMapName().c_str());
 					return;
 				}
 				for (u32 i = 0; i < data::GetCurrentReplay()->numEvents; i++)
@@ -121,7 +121,7 @@ namespace KZ::replaysystem::commands
 					{
 						case RPEVENT_MODE_CHANGE:
 						{
-							if (KZ::mode::GetModeInfo(CUtlString(event.data.modeChange.name)).id < 0)
+							if (KZ::mode::GetModeInfo(std::string(event.data.modeChange.name)).id < 0)
 							{
 								player->languageService->PrintChat(true, false, "Replay - Unknown Mode", event.data.modeChange.name);
 							}
@@ -130,7 +130,7 @@ namespace KZ::replaysystem::commands
 						case RPEVENT_STYLE_CHANGE:
 						{
 							if (event.data.styleChange.name[0] != '\0'
-								&& KZ::style::GetStyleInfo(CUtlString(event.data.styleChange.name)).id < 0)
+								&& KZ::style::GetStyleInfo(std::string(event.data.styleChange.name)).id < 0)
 							{
 								player->languageService->PrintChat(true, false, "Replay - Unknown Style", event.data.styleChange.name);
 							}
@@ -370,9 +370,9 @@ namespace KZ::replaysystem::commands
 					auto &run = replay->header.run();
 					i32 styleCount = run.styles_size();
 					V_snprintf(modeStr, sizeof(modeStr), "%s%s", run.mode().name().c_str(), styleCount ? "*" : "");
-					CUtlString timeString = utils::FormatTime(run.time());
+					std::string timeString = utils::FormatTime(run.time());
 					player->languageService->PrintConsole(false, false, "Replay - Run Info Console", run.course_name().c_str(), modeStr,
-														  timeString.Get(), run.num_teleports());
+														  timeString.c_str(), run.num_teleports());
 				}
 				break;
 			}
@@ -599,12 +599,12 @@ namespace KZ::replaysystem::commands
 	struct RecordContext
 	{
 		CPlayerUserId playerUserID;
-		CUtlString mapName;
-		CUtlString courseName;
+		std::string mapName;
+		std::string courseName;
 		KZ::api::Mode apiMode;
 		u32 localModeID;
 
-		RecordContext(CPlayerUserId uid, CUtlString map, CUtlString course, KZ::api::Mode mode, u32 modeID)
+		RecordContext(CPlayerUserId uid, std::string map, std::string course, KZ::api::Mode mode, u32 modeID)
 			: playerUserID(uid), mapName(std::move(map)), courseName(std::move(course)), apiMode(mode), localModeID(modeID)
 		{
 		}
@@ -643,8 +643,7 @@ namespace KZ::replaysystem::commands
 			if (p) p->languageService->PrintChat(true, false, "Replay - WR Not Found");
 		});
 		// clang-format on
-		KZGlobalService::QueryWorldRecords(std::string_view(ctx.mapName.Get(), ctx.mapName.Length()),
-										   std::string_view(ctx.courseName.Get(), ctx.courseName.Length()), ctx.apiMode, std::move(callback));
+		KZGlobalService::QueryWorldRecords(ctx.mapName, ctx.courseName, ctx.apiMode, std::move(callback));
 	}
 
 	static void LoadSRReplay(KZPlayer *player, bool isPro, const RecordContext &ctx)
@@ -684,8 +683,8 @@ namespace KZ::replaysystem::commands
 		player->languageService->PrintChat(true, false, "Replay - Querying GPB");
 		KZGlobalService::QueryPBParams params;
 		params.player = KZGlobalService::PlayerIdentifier::SteamID(player->GetSteamId64());
-		params.map = std::string_view(ctx.mapName.Get(), ctx.mapName.Length());
-		params.course = std::string_view(ctx.courseName.Get(), ctx.courseName.Length());
+		params.map = ctx.mapName;
+		params.course = ctx.courseName;
 		params.mode = ctx.apiMode;
 		// clang-format off
 		KZGlobalService::MessageCallback<KZ::api::messages::PersonalBest> callback(
@@ -754,8 +753,8 @@ namespace KZ::replaysystem::commands
 		player->languageService->PrintChat(true, false, "Replay - Querying GPB");
 		KZGlobalService::QueryPBParams params;
 		params.player = KZGlobalService::PlayerIdentifier::SteamID(player->GetSteamId64());
-		params.map = std::string_view(ctx.mapName.Get(), ctx.mapName.Length());
-		params.course = std::string_view(ctx.courseName.Get(), ctx.courseName.Length());
+		params.map = ctx.mapName;
+		params.course = ctx.courseName;
 		params.mode = ctx.apiMode;
 		// clang-format off
 		KZGlobalService::MessageCallback<KZ::api::messages::PersonalBest> callback(
@@ -816,7 +815,7 @@ namespace KZ::replaysystem::commands
 		KZModeManager::ModePluginInfo modeInfo;
 		if (modeArg && modeArg[0] != '\0')
 		{
-			modeInfo = KZ::mode::GetModeInfo(CUtlString(modeArg));
+			modeInfo = KZ::mode::GetModeInfo(std::string(modeArg));
 		}
 		else
 		{
@@ -829,7 +828,7 @@ namespace KZ::replaysystem::commands
 		}
 
 		KZ::api::Mode apiMode {};
-		bool isGlobalMode = KZ::api::DecodeModeString(std::string_view(modeInfo.shortModeName.Get(), modeInfo.shortModeName.Length()), apiMode);
+		bool isGlobalMode = KZ::api::DecodeModeString(modeInfo.shortModeName, apiMode);
 
 		if (!isGlobalMode && (type == RecordType::WR || type == RecordType::WRPro || type == RecordType::GPB || type == RecordType::GPBPro))
 		{

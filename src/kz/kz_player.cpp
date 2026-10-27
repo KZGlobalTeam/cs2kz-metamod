@@ -182,10 +182,9 @@ void KZPlayer::Reset()
 
 	g_pKZModeManager->SwitchToMode(this, KZOptionService::GetOptionStr("defaultMode", KZ_DEFAULT_MODE), true, true, false);
 	g_pKZStyleManager->ClearStyles(this, true, false);
-	CSplitString styles(KZOptionService::GetOptionStr("defaultStyles"), ",");
-	FOR_EACH_VEC(styles, i)
+	for (const std::string &style : utils::Split(KZOptionService::GetOptionStr("defaultStyles"), ','))
 	{
-		g_pKZStyleManager->AddStyle(this, styles[i], true, false);
+		g_pKZStyleManager->AddStyle(this, style.c_str(), true, false);
 	}
 }
 

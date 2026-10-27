@@ -67,7 +67,7 @@ static_function void GetModeChoices(KZPlayer *, i64, std::vector<KZChoice> &out)
 	const std::vector<KZModeManager::ModePluginInfo> &modes = KZModeManager::GetModes();
 	for (size_t i = 0; i < modes.size(); i++)
 	{
-		out.push_back({modes[i].longModeName.Get(), (i64)i, NULL});
+		out.push_back({modes[i].longModeName.c_str(), (i64)i, NULL});
 	}
 }
 
@@ -78,7 +78,7 @@ static_function i64 GetCurrentMode(KZPlayer *player, i64)
 	const std::vector<KZModeManager::ModePluginInfo> &modes = KZModeManager::GetModes();
 	for (size_t i = 0; i < modes.size(); i++)
 	{
-		if (KZ_STREQI(modes[i].longModeName.Get(), current) || KZ_STREQI(modes[i].shortModeName.Get(), current))
+		if (KZ_STREQI(modes[i].longModeName.c_str(), current) || KZ_STREQI(modes[i].shortModeName.c_str(), current))
 		{
 			return i;
 		}
@@ -91,19 +91,19 @@ static_function void PickMode(KZPlayer *player, i64, i64 id)
 	const std::vector<KZModeManager::ModePluginInfo> &modes = KZModeManager::GetModes();
 	if (id >= 0 && id < modes.size())
 	{
-		g_pKZModeManager->SwitchToMode(player, modes[id].longModeName.Get());
+		g_pKZModeManager->SwitchToMode(player, modes[id].longModeName.c_str());
 	}
 }
 
 // Styles stack, so picking one toggles it rather than replacing the selection.
 static_function void GetStyleChoices(KZPlayer *player, i64, std::vector<KZChoice> &out)
 {
-	const CUtlString current = g_pKZStyleManager->GetStylesString(player);
+	const std::string current = g_pKZStyleManager->GetStylesString(player);
 	const std::vector<KZStyleManager::StylePluginInfo> &styles = KZStyleManager::GetStyles();
 	for (size_t i = 0; i < styles.size(); i++)
 	{
 		KZChoice choice {styles[i].longName, (i64)i, NULL};
-		choice.selected = V_stristr(current.Get(), styles[i].longName) != NULL;
+		choice.selected = V_stristr(current.c_str(), styles[i].longName) != NULL;
 		out.push_back(choice);
 	}
 }
@@ -125,11 +125,11 @@ static_function void GetLanguageChoices(KZPlayer *player, i64, std::vector<KZCho
 		// Each language names itself. A missing phrase comes back as its own key, which is the cue to
 		// fall back to the Steam name from config.txt.
 		char key[64];
-		V_snprintf(key, sizeof(key), "Menu - Lang %s", languages[i].code.Get());
+		V_snprintf(key, sizeof(key), "Menu - Lang %s", languages[i].code.c_str());
 		std::string name = KZMenuService::GetPhrase(player, key);
 		if (name == key)
 		{
-			name = languages[i].name.Get();
+			name = languages[i].name.c_str();
 			name[0] = toupper(name[0]);
 		}
 		char label[64];
@@ -144,7 +144,7 @@ static_function i64 GetCurrentLanguage(KZPlayer *player, i64)
 	const auto &languages = KZLanguageService::GetAvailableLanguages();
 	for (i32 i = 0; i < (i32)languages.size(); i++)
 	{
-		if (V_stricmp(languages[i].code.Get(), current) == 0)
+		if (V_stricmp(languages[i].code.c_str(), current) == 0)
 		{
 			return i;
 		}
@@ -177,8 +177,8 @@ static_function void PickLanguage(KZPlayer *player, i64, i64 id)
 	const auto &languages = KZLanguageService::GetAvailableLanguages();
 	if (id >= 0 && id < (i64)languages.size())
 	{
-		player->optionService->SetPreferenceStr("preferredLanguage", languages[id].code.Get());
-		KZLanguageService::UpdateLanguage(player->GetSteamId64(false), languages[id].code.Get(),
+		player->optionService->SetPreferenceStr("preferredLanguage", languages[id].code.c_str());
+		KZLanguageService::UpdateLanguage(player->GetSteamId64(false), languages[id].code.c_str(),
 										  KZLanguageService::LanguageInfo::CacheLevel::CACHE_OVERRIDE, true);
 	}
 }

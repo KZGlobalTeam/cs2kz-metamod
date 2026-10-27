@@ -227,13 +227,13 @@ public:
 	static void ClearRecordCache();
 	static void UpdateLocalRecordCache();
 	static void InsertRecordToCache(f64 time, const KZCourseDescriptor *courseName, PluginId modeID, bool hasTeleports, bool global,
-									CUtlString metadata = "", const char *holder = "", const char *replayUUID = "");
+									std::string metadata = "", const char *holder = "", const char *replayUUID = "");
 	static const PBData *GetGlobalCachedRecord(const KZCourseDescriptor *course, PluginId modeID);
 
 	void ClearPBCache();
 	const PBData *GetGlobalCachedPB(const KZCourseDescriptor *course, PluginId modeID);
 	void UpdateLocalPBCache();
-	void InsertPBToCache(f64 time, const KZCourseDescriptor *courseName, PluginId modeID, bool overall, bool global, CUtlString metadata = "",
+	void InsertPBToCache(f64 time, const KZCourseDescriptor *courseName, PluginId modeID, bool overall, bool global, std::string metadata = "",
 						 f64 points = 0);
 	void SetCompareTarget(const char *typeString);
 
@@ -246,7 +246,7 @@ public:
 	static const PBData *GetCachedRecord(PBDataKey key, bool global);
 	const PBData *GetCachedPB(PBDataKey key, bool global);
 
-	CUtlString GetCurrentRunMetadata();
+	std::string GetCurrentRunMetadata();
 
 private:
 	bool validJump {};
@@ -309,11 +309,11 @@ public:
 		}
 	}
 
-	static CUtlString FormatDiffTime(f64 time, bool precise = true)
+	static std::string FormatDiffTime(f64 time, bool precise = true)
 	{
 		char temp[32];
 		FormatDiffTime(time, temp, sizeof(temp), precise);
-		return CUtlString(temp);
+		return std::string(temp);
 	}
 
 	void SetTime(f64 time)

@@ -777,15 +777,15 @@ void utils::UpdateServerVersion()
 	FileHandle_t fp = g_pFullFileSystem->Open("steam.inf", "r");
 	if (fp)
 	{
-		CUtlString line = g_pFullFileSystem->ReadLine(fp);
-		while (!line.IsEmpty())
+		std::string line = g_pFullFileSystem->ReadLine(fp).Get();
+		while (!line.empty())
 		{
-			if (line.MatchesPattern(CUtlString(SERVER_VERSION_KEY) + "*"))
+			if (line.starts_with(SERVER_VERSION_KEY))
 			{
-				serverVersion = atoi(line.Get() + strlen(SERVER_VERSION_KEY));
+				serverVersion = atoi(line.c_str() + strlen(SERVER_VERSION_KEY));
 				break;
 			}
-			line = g_pFullFileSystem->ReadLine(fp);
+			line = g_pFullFileSystem->ReadLine(fp).Get();
 		}
 		g_pFullFileSystem->Close(fp);
 	}

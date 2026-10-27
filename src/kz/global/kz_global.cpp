@@ -227,12 +227,12 @@ void KZGlobalService::SubmitBan(u64 steamID, std::string reason, std::string det
 void KZGlobalService::OnMapInfo(const std::optional<KZ::api::Map> &mapInfo, std::string sentMapName)
 {
 	bool mapOk = false;
-	CUtlString currentMapName = g_pKZUtils->GetCurrentMapName(&mapOk);
+	std::string currentMapName = g_pKZUtils->GetCurrentMapName(&mapOk);
 
-	if (mapOk && currentMapName.Get() != sentMapName)
+	if (mapOk && currentMapName.c_str() != sentMapName)
 	{
 		KZ_LOG_INFO(LogChannel::Global, "Map changed since MapChange was sent (sent '%s', current '%s'); re-sending.\n", sentMapName.c_str(),
-					currentMapName.Get());
+					currentMapName.c_str());
 		KZGlobalService::SendMapChange();
 		return;
 	}
@@ -311,7 +311,7 @@ void KZGlobalService::PrintAnnouncements()
 void KZGlobalService::SendMapChange()
 {
 	bool mapNameOk = false;
-	CUtlString currentMapName = g_pKZUtils->GetCurrentMapName(&mapNameOk);
+	std::string currentMapName = g_pKZUtils->GetCurrentMapName(&mapNameOk);
 
 	if (!mapNameOk)
 	{
@@ -321,7 +321,7 @@ void KZGlobalService::SendMapChange()
 
 	// Clear immediately so stale global map data isn't used for run submissions
 	// while waiting for the API response.
-	KZ_LOG_INFO(LogChannel::Global, "Sending map change for '%s'...\n", currentMapName.Get());
+	KZ_LOG_INFO(LogChannel::Global, "Sending map change for '%s'...\n", currentMapName.c_str());
 	{
 		std::lock_guard _guard(KZGlobalService::currentMap.mutex);
 		KZGlobalService::currentMap.info = std::nullopt;
@@ -329,9 +329,9 @@ void KZGlobalService::SendMapChange()
 	}
 
 	KZ::api::messages::MapChange message;
-	message.name = currentMapName.Get();
+	message.name = currentMapName.c_str();
 
-	KZGlobalService::MessageCallback<std::optional<KZ::api::Map>> callback(KZGlobalService::OnMapInfo, std::string(currentMapName.Get()));
+	KZGlobalService::MessageCallback<std::optional<KZ::api::Map>> callback(KZGlobalService::OnMapInfo, std::string(currentMapName.c_str()));
 	KZGlobalService::WS::SendMessage(message, std::move(callback));
 }
 
@@ -629,12 +629,12 @@ void KZGlobalService::OnClientDisconnect()
 	message.id = stringifiedSteamID;
 	message.name = this->player->GetName();
 
-	CUtlString getPrefsError;
-	CUtlString getPrefsResult;
+	std::string getPrefsError;
+	std::string getPrefsResult;
 	this->player->optionService->GetPreferencesAsJSON(&getPrefsError, &getPrefsResult);
-	if (getPrefsError.IsEmpty())
+	if (getPrefsError.empty())
 	{
-		message.preferences = Json(getPrefsResult.Get());
+		message.preferences = Json(getPrefsResult.c_str());
 	}
 
 	KZGlobalService::WS::SendMessage(message);
@@ -846,7 +846,7 @@ void KZGlobalService::WS::InitiateHandshake()
 	KZ_LOG_INFO(LogChannel::Global, "Initiating WebSocket handshake...\n");
 
 	bool mapNameOk = false;
-	CUtlString currentMapName = g_pKZUtils->GetCurrentMapName(&mapNameOk);
+	std::string currentMapName = g_pKZUtils->GetCurrentMapName(&mapNameOk);
 
 	if (!mapNameOk)
 	{
@@ -855,8 +855,8 @@ void KZGlobalService::WS::InitiateHandshake()
 		return;
 	}
 
-	KZGlobalService::WS::handshakeMapName = currentMapName.Get();
-	KZ::api::messages::handshake::Hello hello(g_KZPlugin.GetMD5(), currentMapName.Get());
+	KZGlobalService::WS::handshakeMapName = currentMapName.c_str();
+	KZ::api::messages::handshake::Hello hello(g_KZPlugin.GetMD5(), currentMapName.c_str());
 
 	for (Player *player : g_pPlayerManager->GetAllSlots())
 	{
@@ -885,15 +885,15 @@ void KZGlobalService::WS::CompleteHandshake(KZ::api::messages::handshake::HelloA
 
 	{
 		bool mapOk = false;
-		CUtlString currentMapName = g_pKZUtils->GetCurrentMapName(&mapOk);
+		std::string currentMapName = g_pKZUtils->GetCurrentMapName(&mapOk);
 
-		if (mapOk && currentMapName.Get() == KZGlobalService::WS::handshakeMapName)
+		if (mapOk && currentMapName.c_str() == KZGlobalService::WS::handshakeMapName)
 		{
 			char md5[33];
 			g_pKZUtils->GetCurrentMapMD5(md5, sizeof(md5));
 			if (!ack.mapInfo.has_value())
 			{
-				KZ_LOG_WARN(LogChannel::Global, "Current map %s is not approved.\n", currentMapName.Get());
+				KZ_LOG_WARN(LogChannel::Global, "Current map %s is not approved.\n", currentMapName.c_str());
 				mapOk = false;
 			}
 			else if (ack.mapInfo.value().vpkChecksum != md5)
@@ -906,7 +906,7 @@ void KZGlobalService::WS::CompleteHandshake(KZ::api::messages::handshake::HelloA
 		else
 		{
 			KZ_LOG_INFO(LogChannel::Global, "Map changed during handshake (sent '%s', current '%s'); re-sending map_change.\n",
-						KZGlobalService::WS::handshakeMapName.c_str(), mapOk ? currentMapName.Get() : "<unknown>");
+						KZGlobalService::WS::handshakeMapName.c_str(), mapOk ? currentMapName.c_str() : "<unknown>");
 			mapOk = false;
 			mapMismatch = true;
 		}

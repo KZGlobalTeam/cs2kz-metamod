@@ -15,8 +15,8 @@ public:
 
 	struct AvailableLanguage
 	{
-		CUtlString code;
-		CUtlString name;
+		std::string code;
+		std::string name;
 		i32 coverage {}; // percent of the loaded phrases that carry this language
 	};
 

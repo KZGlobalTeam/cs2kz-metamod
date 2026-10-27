@@ -109,7 +109,7 @@ void ReplayWatcher::FilterAndPrintMatchingCheaterReplays(ReplayFilterCriteria &c
 	std::vector<std::pair<UUID_t, ReplayHeader>> matchingReplays =
 		CollectMatchesWithMapFallback(this->cheaterReplays, criteria, this->replayMapsMutex);
 	PageRange page = GetPageRange(criteria, matchingReplays.size());
-	CUtlString headers[KZ_ARRAYSIZE(cheaterReplayTableHeaders)];
+	std::string headers[KZ_ARRAYSIZE(cheaterReplayTableHeaders)];
 	for (u32 i = 0; i < KZ_ARRAYSIZE(cheaterReplayTableHeaders); i++)
 	{
 		headers[i] = player->languageService->PrepareMessage(cheaterReplayTableHeaders[i]).c_str();
@@ -138,14 +138,14 @@ void ReplayWatcher::FilterAndPrintMatchingCheaterReplays(ReplayFilterCriteria &c
 		player->languageService->PrintChat(true, false, "Replay List - No Matching Replays");
 		return;
 	}
-	player->PrintConsole(false, false, table.GetSeparator("="));
-	player->PrintConsole(false, false, table.GetTitle());
-	player->PrintConsole(false, false, table.GetHeader());
+	player->PrintConsole(false, false, table.GetSeparator("=").c_str());
+	player->PrintConsole(false, false, table.GetTitle().c_str());
+	player->PrintConsole(false, false, table.GetHeader().c_str());
 	for (u32 i = 0; i < table.GetNumEntries(); i++)
 	{
-		player->PrintConsole(false, false, table.GetLine(i));
+		player->PrintConsole(false, false, table.GetLine(i).c_str());
 	}
-	player->PrintConsole(false, false, table.GetSeparator("="));
+	player->PrintConsole(false, false, table.GetSeparator("=").c_str());
 }
 
 void ReplayWatcher::FilterAndPrintMatchingRunReplays(ReplayFilterCriteria &criteria, KZPlayer *player)
@@ -157,7 +157,7 @@ void ReplayWatcher::FilterAndPrintMatchingRunReplays(ReplayFilterCriteria &crite
 
 	PageRange page = GetPageRange(criteria, matchingReplays.size());
 
-	CUtlString headers[KZ_ARRAYSIZE(runReplayTableHeaders)];
+	std::string headers[KZ_ARRAYSIZE(runReplayTableHeaders)];
 	for (u32 i = 0; i < KZ_ARRAYSIZE(runReplayTableHeaders); i++)
 	{
 		headers[i] = player->languageService->PrepareMessage(runReplayTableHeaders[i]).c_str();
@@ -202,7 +202,7 @@ void ReplayWatcher::FilterAndPrintMatchingRunReplays(ReplayFilterCriteria &crite
                         run.course_name().c_str(), 
                         modeName.c_str(),
 						stylesList.c_str(),
-                        utils::FormatTime(run.time()).Get(), teleports.c_str(), steamID.c_str(), pair.first.ToString().c_str());
+                        utils::FormatTime(run.time()).c_str(), teleports.c_str(), steamID.c_str(), pair.first.ToString().c_str());
 		// clang-format on
 	}
 	if (table.GetNumEntries() == 0)
@@ -211,21 +211,21 @@ void ReplayWatcher::FilterAndPrintMatchingRunReplays(ReplayFilterCriteria &crite
 		return;
 	}
 	player->languageService->PrintChat(true, false, "Replay List - Check Console");
-	player->PrintConsole(false, false, table.GetSeparator("="));
-	player->PrintConsole(false, false, table.GetTitle());
-	player->PrintConsole(false, false, table.GetHeader());
+	player->PrintConsole(false, false, table.GetSeparator("=").c_str());
+	player->PrintConsole(false, false, table.GetTitle().c_str());
+	player->PrintConsole(false, false, table.GetHeader().c_str());
 	for (u32 i = 0; i < table.GetNumEntries(); i++)
 	{
-		player->PrintConsole(false, false, table.GetLine(i));
+		player->PrintConsole(false, false, table.GetLine(i).c_str());
 	}
-	player->PrintConsole(false, false, table.GetSeparator("="));
+	player->PrintConsole(false, false, table.GetSeparator("=").c_str());
 }
 
 void ReplayWatcher::FilterAndPrintMatchingJumpReplays(ReplayFilterCriteria &criteria, KZPlayer *player)
 {
 	std::vector<std::pair<UUID_t, ReplayHeader>> matchingReplays = CollectMatchesWithMapFallback(this->jumpReplays, criteria, this->replayMapsMutex);
 	PageRange page = GetPageRange(criteria, matchingReplays.size());
-	CUtlString headers[KZ_ARRAYSIZE(jumpReplayTableHeaders)];
+	std::string headers[KZ_ARRAYSIZE(jumpReplayTableHeaders)];
 	for (u32 i = 0; i < KZ_ARRAYSIZE(jumpReplayTableHeaders); i++)
 	{
 		headers[i] = player->languageService->PrepareMessage(jumpReplayTableHeaders[i]).c_str();
@@ -269,14 +269,14 @@ void ReplayWatcher::FilterAndPrintMatchingJumpReplays(ReplayFilterCriteria &crit
 		return;
 	}
 	player->languageService->PrintChat(true, false, "Replay List - Check Console");
-	player->PrintConsole(false, false, table.GetSeparator("="));
-	player->PrintConsole(false, false, table.GetTitle());
-	player->PrintConsole(false, false, table.GetHeader());
+	player->PrintConsole(false, false, table.GetSeparator("=").c_str());
+	player->PrintConsole(false, false, table.GetTitle().c_str());
+	player->PrintConsole(false, false, table.GetHeader().c_str());
 	for (u32 i = 0; i < table.GetNumEntries(); i++)
 	{
-		player->PrintConsole(false, false, table.GetLine(i));
+		player->PrintConsole(false, false, table.GetLine(i).c_str());
 	}
-	player->PrintConsole(false, false, table.GetSeparator("="));
+	player->PrintConsole(false, false, table.GetSeparator("=").c_str());
 }
 
 void ReplayWatcher::FilterAndPrintMatchingManualReplays(ReplayFilterCriteria &criteria, KZPlayer *player)
@@ -284,7 +284,7 @@ void ReplayWatcher::FilterAndPrintMatchingManualReplays(ReplayFilterCriteria &cr
 	std::vector<std::pair<UUID_t, ReplayHeader>> matchingReplays =
 		CollectMatchesWithMapFallback(this->manualReplays, criteria, this->replayMapsMutex);
 	PageRange page = GetPageRange(criteria, matchingReplays.size());
-	CUtlString headers[KZ_ARRAYSIZE(manualReplayTableHeaders)];
+	std::string headers[KZ_ARRAYSIZE(manualReplayTableHeaders)];
 	for (u32 i = 0; i < KZ_ARRAYSIZE(manualReplayTableHeaders); i++)
 	{
 		headers[i] = player->languageService->PrepareMessage(manualReplayTableHeaders[i]).c_str();
@@ -317,14 +317,14 @@ void ReplayWatcher::FilterAndPrintMatchingManualReplays(ReplayFilterCriteria &cr
 		return;
 	}
 	player->languageService->PrintChat(true, false, "Replay List - Check Console");
-	player->PrintConsole(false, false, table.GetSeparator("="));
-	player->PrintConsole(false, false, table.GetTitle());
-	player->PrintConsole(false, false, table.GetHeader());
+	player->PrintConsole(false, false, table.GetSeparator("=").c_str());
+	player->PrintConsole(false, false, table.GetTitle().c_str());
+	player->PrintConsole(false, false, table.GetHeader().c_str());
 	for (u32 i = 0; i < table.GetNumEntries(); i++)
 	{
-		player->PrintConsole(false, false, table.GetLine(i));
+		player->PrintConsole(false, false, table.GetLine(i).c_str());
 	}
-	player->PrintConsole(false, false, table.GetSeparator("="));
+	player->PrintConsole(false, false, table.GetSeparator("=").c_str());
 }
 
 void ReplayWatcher::PrintUsage(KZPlayer *player)
@@ -385,7 +385,7 @@ void ReplayWatcher::FindReplaysMatchingCriteria(const char *inputs, KZPlayer *pl
 	{
 		kv = params.FindMember("m");
 	}
-	criteria.mapName = kv ? kv->GetString() : g_pKZUtils->GetCurrentMapName().Get();
+	criteria.mapName = kv ? kv->GetString() : g_pKZUtils->GetCurrentMapName().c_str();
 
 	// Offset filter
 	kv = params.FindMember("offset");

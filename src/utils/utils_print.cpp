@@ -334,17 +334,17 @@ void utils::PrintHTMLCentre(CBaseEntity *entity, const char *format, ...)
 		return;
 	}
 
-	CUtlString buffer;
+	std::string buffer;
 	va_list args;
 	va_start(args, format);
-	buffer.FormatV(format, args);
+	buffer = utils::FormatV(format, args);
 
 	IGameEvent *event = interfaces::pGameEventManager->CreateEvent("show_survival_respawn_status");
 	if (!event)
 	{
 		return;
 	}
-	event->SetString("loc_token", buffer.Get());
+	event->SetString("loc_token", buffer.c_str());
 	event->SetInt("duration", 1);
 	event->SetInt("userid", -1);
 
@@ -384,17 +384,17 @@ void utils::PrintAlertAll(const char *format, ...)
 
 void utils::PrintHTMLCentreAll(const char *format, ...)
 {
-	CUtlString buffer;
+	std::string buffer;
 	va_list args;
 	va_start(args, format);
-	buffer.FormatV(format, args);
+	buffer = utils::FormatV(format, args);
 
 	IGameEvent *event = interfaces::pGameEventManager->CreateEvent("show_survival_respawn_status");
 	if (!event)
 	{
 		return;
 	}
-	event->SetString("loc_token", buffer.Get());
+	event->SetString("loc_token", buffer.c_str());
 	event->SetInt("duration", 1);
 	event->SetInt("userid", -1);
 

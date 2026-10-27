@@ -4,6 +4,7 @@
 #include "sdk/cskeletoninstance.h"
 #include "sdk/entity/ccsplayerpawn.h"
 #include "filesystem/ifilesystem.h"
+#include "utils/utils.h"
 
 extern CConVar<bool> kz_replay_playback_skins_enable;
 
@@ -285,21 +286,21 @@ void KZ::replaysystem::item::ApplyModelAttributesToPawn(CCSPlayerPawn *pawn, con
 		}
 	}
 	// Don't set model if it doesn't exist.
-	CUtlString modelStr = modelName;
-	modelStr = modelStr.StripExtension();
-	modelStr.Append(".vmdl_c");
+	std::string modelStr = modelName;
+	modelStr = utils::StripExtension(modelStr);
+	modelStr += ".vmdl_c";
 
-	if (g_pFullFileSystem->FileExists(modelStr.Get()))
+	if (g_pFullFileSystem->FileExists(modelStr.c_str()))
 	{
 		// If the model starts with "characters/models" and there's a "agents/models" variant, use that instead.
 		// Newer CS2 versions no longer work with the "characters/models" variants.
-		if (V_strstr(modelStr.Get(), "characters/models/"))
+		if (V_strstr(modelStr.c_str(), "characters/models/"))
 		{
-			CUtlString agentModelStr = modelStr.Replace("characters/models/", "agents/models/");
-			if (g_pFullFileSystem->FileExists(agentModelStr.Get()))
+			std::string agentModelStr = utils::Replace(modelStr, "characters/models/", "agents/models/");
+			if (g_pFullFileSystem->FileExists(agentModelStr.c_str()))
 			{
-				agentModelStr = agentModelStr.Replace(".vmdl_c", ".vmdl");
-				g_pKZUtils->SetModel(pawn, agentModelStr.Get());
+				agentModelStr = utils::Replace(agentModelStr, ".vmdl_c", ".vmdl");
+				g_pKZUtils->SetModel(pawn, agentModelStr.c_str());
 			}
 			else
 			{

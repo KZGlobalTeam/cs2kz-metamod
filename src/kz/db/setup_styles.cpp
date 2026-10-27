@@ -28,7 +28,7 @@ void KZDatabaseService::UpdateStyleIDs()
 	// clang-format on
 }
 
-void KZDatabaseService::InsertAndUpdateStyleIDs(CUtlString styleName, CUtlString shortName)
+void KZDatabaseService::InsertAndUpdateStyleIDs(std::string styleName, std::string shortName)
 {
 	if (!KZDatabaseService::IsReady())
 	{
@@ -40,12 +40,12 @@ void KZDatabaseService::InsertAndUpdateStyleIDs(CUtlString styleName, CUtlString
 	{
 		case DatabaseType::SQLite:
 		{
-			V_snprintf(query, sizeof(query), sqlite_styles_insert, styleName.Get(), shortName.Get());
+			V_snprintf(query, sizeof(query), sqlite_styles_insert, styleName.c_str(), shortName.c_str());
 			break;
 		}
 		case DatabaseType::MySQL:
 		{
-			V_snprintf(query, sizeof(query), mysql_styles_insert, styleName.Get(), shortName.Get());
+			V_snprintf(query, sizeof(query), mysql_styles_insert, styleName.c_str(), shortName.c_str());
 			break;
 		}
 		default:
@@ -56,7 +56,7 @@ void KZDatabaseService::InsertAndUpdateStyleIDs(CUtlString styleName, CUtlString
 	}
 	txn.queries.push_back(query);
 
-	V_snprintf(query, sizeof(query), sql_styles_findid, styleName.Get());
+	V_snprintf(query, sizeof(query), sql_styles_findid, styleName.c_str());
 	txn.queries.push_back(query);
 	// clang-format off
 	KZDatabaseService::GetDatabaseConnection()->ExecuteTransaction(

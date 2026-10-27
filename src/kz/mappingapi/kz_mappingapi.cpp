@@ -1035,7 +1035,7 @@ static_global const char *courseStateKeys[] = {
 
 static_function void PrintCoursesWithMap(KZPlayer *player, const std::vector<KZ::api::Map::Course> &courses)
 {
-	CUtlString headers[KZ_ARRAYSIZE(columnKeysWithAPI)];
+	std::string headers[KZ_ARRAYSIZE(columnKeysWithAPI)];
 	for (u32 col = 0; col < KZ_ARRAYSIZE(columnKeysWithAPI); col++)
 	{
 		headers[col] = player->languageService->PrepareMessage(columnKeysWithAPI[col]).c_str();
@@ -1089,19 +1089,19 @@ static_function void PrintCoursesWithMap(KZPlayer *player, const std::vector<KZ:
 		);
 		// clang-format on
 	}
-	player->PrintConsole(false, false, table.GetSeparator("="));
-	player->PrintConsole(false, false, table.GetTitle());
-	player->PrintConsole(false, false, table.GetHeader());
+	player->PrintConsole(false, false, table.GetSeparator("=").c_str());
+	player->PrintConsole(false, false, table.GetTitle().c_str());
+	player->PrintConsole(false, false, table.GetHeader().c_str());
 	for (u32 i = 0; i < table.GetNumEntries(); i++)
 	{
-		player->PrintConsole(false, false, table.GetLine(i));
+		player->PrintConsole(false, false, table.GetLine(i).c_str());
 	}
-	player->PrintConsole(false, false, table.GetSeparator("="));
+	player->PrintConsole(false, false, table.GetSeparator("=").c_str());
 }
 
 static_function void PrintCoursesWithoutMap(KZPlayer *player)
 {
-	CUtlString headers[KZ_ARRAYSIZE(columnKeysWithoutAPI)];
+	std::string headers[KZ_ARRAYSIZE(columnKeysWithoutAPI)];
 	for (u32 col = 0; col < KZ_ARRAYSIZE(columnKeysWithoutAPI); col++)
 	{
 		headers[col] = player->languageService->PrepareMessage(columnKeysWithoutAPI[col]).c_str();
@@ -1118,14 +1118,14 @@ static_function void PrintCoursesWithoutMap(KZPlayer *player)
 		);
 		// clang-format on
 	}
-	player->PrintConsole(false, false, table.GetSeparator("="));
-	player->PrintConsole(false, false, table.GetTitle());
-	player->PrintConsole(false, false, table.GetHeader());
+	player->PrintConsole(false, false, table.GetSeparator("=").c_str());
+	player->PrintConsole(false, false, table.GetTitle().c_str());
+	player->PrintConsole(false, false, table.GetHeader().c_str());
 	for (u32 i = 0; i < table.GetNumEntries(); i++)
 	{
-		player->PrintConsole(false, false, table.GetLine(i));
+		player->PrintConsole(false, false, table.GetLine(i).c_str());
 	}
-	player->PrintConsole(false, false, table.GetSeparator("="));
+	player->PrintConsole(false, false, table.GetSeparator("=").c_str());
 }
 
 void KZ::course::PrintCourses(KZPlayer *player)
@@ -1187,7 +1187,7 @@ static_function void PrintCurrentMapCoursesInfo(KZPlayer *player)
 		player->languageService->PrintChat(true, false, "Map Info - No API Map Data");
 	}
 	player->languageService->PrintChat(true, false, "Map Info - Check Console");
-	CUtlString mapName = g_pKZUtils->GetCurrentMapName();
+	std::string mapName = g_pKZUtils->GetCurrentMapName();
 
 	// Map name
 	if (g_pKZUtils->GetCurrentMapWorkshopID())
@@ -1196,7 +1196,7 @@ static_function void PrintCurrentMapCoursesInfo(KZPlayer *player)
 		V_snprintf(workshopID, sizeof(workshopID), " (%llu)", g_pKZUtils->GetCurrentMapWorkshopID());
 		mapName += workshopID;
 	}
-	player->languageService->PrintConsole(false, false, "Map Info - Map Info Header", mapName.Get());
+	player->languageService->PrintConsole(false, false, "Map Info - Map Info Header", mapName.c_str());
 
 	if (hasMap)
 	{

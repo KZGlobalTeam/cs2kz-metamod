@@ -95,7 +95,7 @@ void KZDatabaseService::SetupClient()
 						banReason = banResult->GetString(1);
 					}
 				}
-				const char *prefs = result->FetchRow() ? result->GetString(0) : "";
+				const char *prefs = result->FetchRow() ? utils::OrEmpty(result->GetString(0)) : "";
 				this->isSetUp = true;
 				pl->optionService->InitializeLocalPrefs(prefs);
 				CALL_FORWARD(KZDatabaseService::eventListeners, OnClientSetup, pl, pl->GetSteamId64(), isBanned, banReason);
