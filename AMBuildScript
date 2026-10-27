@@ -411,8 +411,7 @@ const char *PLUGIN_REVISION_COUNT = \"{revision_count}\";
       if cxx.family == 'gcc':
         cxx.linkflags += ['-static-libgcc']
       elif cxx.family == 'clang':
-        # lld links clang's LTO objects without the LLVMgold plugin.
-        cxx.linkflags += ['-lgcc_eh', '-fuse-ld=lld']
+        cxx.linkflags += ['-lgcc_eh']
       # cxx.linkflags += ['-static-libstdc++']
     elif cxx.target.platform == 'windows':
       cxx.defines += ['WIN32', '_WINDOWS']

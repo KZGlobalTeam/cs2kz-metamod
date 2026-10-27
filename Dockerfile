@@ -10,7 +10,7 @@ VOLUME /app/build
 RUN wget -4 --retry-on-host-error -O /etc/apt/keyrings/apt.llvm.org.asc https://apt.llvm.org/llvm-snapshot.gpg.key \
 	&& echo "deb [signed-by=/etc/apt/keyrings/apt.llvm.org.asc] http://apt.llvm.org/bullseye/ llvm-toolchain-bullseye-22 main" > /etc/apt/sources.list.d/llvm.list \
 	&& apt update \
-	&& apt install -y --no-install-recommends --no-install-suggests clang-22 lld-22 \
+	&& apt install -y --no-install-recommends --no-install-suggests clang-22 \
 	&& apt autoremove -y \
 	&& apt clean \
 	&& rm -rf /var/lib/apt/lists/*
