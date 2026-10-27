@@ -411,19 +411,6 @@
 				"windows"		"52"
 				"linux"			"52"
 			}
-			// CDebugOverlayGameSystem second vtable, offset 1 (windows):
-			//   result = debugoverlay;
-			//   qword_1815F1700 = debugoverlay;
-			//   qword_1815F1708 = debugoverlay;
-			//   v6 = *(a1 + 80);
-			//   qword_1815F16E8 = debugoverlay;
-			// xref to the other read, that's where the function is
-			
-			"GetDebugOverlay"
-			{
-				"windows"		"74"
-				"linux"			"74"
-			}
 			"ClearOverlays"
 			{
 				"windows"		"2"
