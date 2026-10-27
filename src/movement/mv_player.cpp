@@ -193,7 +193,9 @@ void MovementPlayer::SetAngles(const QAngle &angles)
 	QAngle absAngles = angles;
 	absAngles.x = 0;
 
+	this->settingViewAngles = &angles;
 	pawn->Teleport(NULL, &absAngles, NULL);
+	this->settingViewAngles = nullptr;
 	g_pKZUtils->SnapViewAngles(pawn, angles);
 }
 

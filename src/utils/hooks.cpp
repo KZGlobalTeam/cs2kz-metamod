@@ -21,6 +21,7 @@
 #include "sdk/steamnetworkingsockets.h"
 
 #include "kz/kz.h"
+#include "kz/away/kz_away.h"
 #include "kz/anticheat/kz_anticheat.h"
 #include "kz/beam/kz_beam.h"
 #include "kz/language/kz_language.h"
@@ -44,6 +45,7 @@
 #include "kz/recording/kz_recording.h"
 #include "kz/replays/kz_replaysystem.h"
 #include "kz/racing/kz_racing.h"
+#include "kz/spec/kz_spec.h"
 #include "utils/cvarquery.h"
 #include "sdk/entity/cbasetrigger.h"
 #include "cstrike15_usermessages.pb.h"
@@ -205,6 +207,19 @@ static KHook::Return<void> ChangeTeamPost(CCSPlayerController *pThis, i32 team)
 
 static KHook::Virtual<CCSPlayerController, void, i32> changeTeamHook(nullptr, ChangeTeamPost);
 
+// Detours the function itself, gamerules calls it directly when a player disconnects.
+static KHook::Return<void> ChangeTeamFunctionPre(CCSPlayerController *pThis, i32 team)
+{
+	VPROF_BUDGET(__func__, "CS2KZ");
+	if (KZAwayService::OnChangeTeamPre(pThis, team))
+	{
+		return {KHook::Action::Supersede};
+	}
+	return {KHook::Action::Ignore};
+}
+
+static KHook::Member<CCSPlayerController, void, i32> ChangeTeamFunction(ChangeTeamFunctionPre, nullptr);
+
 // ============================================================
 // ISource2GameEntities hooks
 // ============================================================
@@ -234,6 +249,7 @@ static KHook::Return<void> GameFramePre(ISource2Server *pThis, bool simulating, 
 	g_KZPlugin.serverGlobals = *(g_pKZUtils->GetGlobals());
 	g_KZPlugin.unmodifiedServerGlobals = g_KZPlugin.serverGlobals;
 	g_pKZPlayerManager->PerformAuthChecks();
+	KZAwayService::OnGameFrame();
 	RunSubmission::CheckAll();
 	KZAnticheatService::CleanupInfractions();
 	BaseRequest::CheckRequests();
@@ -273,6 +289,7 @@ static KHook::Return<bool> ClientConnectPre(ISource2GameClients *pThis, CPlayerS
 											bool unk1, CBufferString *pRejectReason)
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
+	KZAwayService::OnClientConnect(slot, xuid);
 	g_pKZPlayerManager->OnClientConnect(slot, pszName, xuid, pszNetworkID, unk1, pRejectReason);
 	return {KHook::Action::Ignore, true};
 }
@@ -311,9 +328,17 @@ static KHook::Return<void> ClientPutInServerPre(ISource2GameClients *pThis, CPla
 static KHook::Virtual<ISource2GameClients, void, CPlayerSlot, char const *, ClientPutInServerType_t, uint64>
 	clientPutInServerHook(ClientPutInServerPre, nullptr);
 
+static KHook::Return<void> ClientActivePre(ISource2GameClients *pThis, CPlayerSlot slot, bool bLoadGame, const char *pszName, uint64 xuid)
+{
+	VPROF_BUDGET(__func__, "CS2KZ");
+	KZAwayService::OnClientActivePre(slot);
+	return {KHook::Action::Ignore};
+}
+
 static KHook::Return<void> ClientActivePost(ISource2GameClients *pThis, CPlayerSlot slot, bool bLoadGame, const char *pszName, uint64 xuid)
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
+	KZAwayService::OnClientActivePost(slot);
 	g_pKZPlayerManager->OnClientActive(slot, bLoadGame, pszName, xuid);
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(slot);
 	if (player->GetPlayerPawn())
@@ -327,13 +352,27 @@ static KHook::Return<void> ClientActivePost(ISource2GameClients *pThis, CPlayerS
 	return {KHook::Action::Ignore};
 }
 
-static KHook::Virtual<ISource2GameClients, void, CPlayerSlot, bool, const char *, uint64> clientActiveHook(nullptr, ClientActivePost);
+static KHook::Virtual<ISource2GameClients, void, CPlayerSlot, bool, const char *, uint64> clientActiveHook(ClientActivePre, ClientActivePost);
+
+static KHook::Return<void> ClientDisconnectPre(ISource2GameClients *pThis, CPlayerSlot slot, ENetworkDisconnectionReason reason, const char *pszName,
+											   uint64 xuid, const char *pszNetworkID)
+{
+	VPROF_BUDGET(__func__, "CS2KZ");
+	KZAwayService::OnClientDisconnectPre(slot, reason);
+	return {KHook::Action::Ignore};
+}
 
 static KHook::Return<void> ClientDisconnectPost(ISource2GameClients *pThis, CPlayerSlot slot, ENetworkDisconnectionReason reason, const char *pszName,
 												uint64 xuid, const char *pszNetworkID)
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(slot);
+	bool stayedAway = KZAwayService::OnClientDisconnectPost(slot);
+	if (stayedAway)
+	{
+		player->CleanupClient();
+		return {KHook::Action::Ignore};
+	}
 	if (!player->GetPlayerPawn())
 	{
 		Warning("WARNING: Player pawn for slot %i not found!\n", slot.Get());
@@ -344,7 +383,7 @@ static KHook::Return<void> ClientDisconnectPost(ISource2GameClients *pThis, CPla
 }
 
 static KHook::Virtual<ISource2GameClients, void, CPlayerSlot, ENetworkDisconnectionReason, const char *, uint64, const char *>
-	clientDisconnectHook(nullptr, ClientDisconnectPost);
+	clientDisconnectHook(ClientDisconnectPre, ClientDisconnectPost);
 
 static KHook::Return<void> ClientVoicePre(ISource2GameClients *pThis, CPlayerSlot slot)
 {
@@ -550,6 +589,7 @@ static KHook::Virtual<CSpawnGroupMgrGameSystem, ILoadingSpawnGroup *, SpawnGroup
 static KHook::Return<bool> ActivateServerPost(CNetworkGameServerBase *pThis)
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
+	KZAwayService::ReleaseAwayPlayers();
 	if (!interfaces::pEngine->IsDedicatedServer())
 	{
 		KZPlayer *player = g_pKZPlayerManager->ToPlayer(CPlayerSlot(0));
@@ -583,6 +623,7 @@ static KHook::Return<CServerSideClientBase *> ConnectClientPre(CNetworkGameServe
 															   const byte *pAuthTicket, int nAuthTicketLength, bool bIsLowViolence)
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
+	KZAwayService::OnConnectClientPre();
 	g_pKZPlayerManager->OnConnectClient(pszName, pAddr, steam_handle, pConnectMsg, pszChallenge, pAuthTicket, nAuthTicketLength, bIsLowViolence);
 	return {KHook::Action::Ignore, nullptr};
 }
@@ -592,6 +633,7 @@ static KHook::Return<CServerSideClientBase *> ConnectClientPost(CNetworkGameServ
 																const byte *pAuthTicket, int nAuthTicketLength, bool bIsLowViolence)
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
+	KZAwayService::OnConnectClientPost();
 	g_pKZPlayerManager->OnConnectClientPost(pszName, pAddr, steam_handle, pConnectMsg, pszChallenge, pAuthTicket, nAuthTicketLength, bIsLowViolence);
 	return {KHook::Action::Ignore, nullptr};
 }
@@ -651,6 +693,7 @@ static KHook::Return<void> ServerGamePostSimulatePost(IGameSystem *pThis, const 
 	}
 	KZRacingService::OnServerGamePostSimulate();
 	KZGlobalService::OnServerGamePostSimulate();
+	KZAwayService::OnServerGamePostSimulate();
 	return {KHook::Action::Ignore};
 }
 
@@ -681,6 +724,7 @@ static KHook::Return<void> PlayerRunCommandPre(CCSPlayer_MovementServices *pThis
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(pThis);
+	player->awayService->OnPlayerRunCommandPre(pCmd);
 	if (!player->OnPlayerRunCommand(pCmd))
 	{
 		return {KHook::Action::Supersede};
@@ -688,7 +732,14 @@ static KHook::Return<void> PlayerRunCommandPre(CCSPlayer_MovementServices *pThis
 	return {KHook::Action::Ignore};
 }
 
-static KHook::Virtual<CCSPlayer_MovementServices, void, CUserCmd *> playerRunCommandHook(PlayerRunCommandPre, nullptr);
+static KHook::Return<void> PlayerRunCommandPost(CCSPlayer_MovementServices *pThis, CUserCmd *pCmd)
+{
+	VPROF_BUDGET(__func__, "CS2KZ");
+	g_pKZPlayerManager->ToPlayer(pThis)->awayService->OnPlayerRunCommandPost();
+	return {KHook::Action::Ignore};
+}
+
+static KHook::Virtual<CCSPlayer_MovementServices, void, CUserCmd *> playerRunCommandHook(PlayerRunCommandPre, PlayerRunCommandPost);
 
 void hooks::CallOriginalPlayerRunCommand(CCSPlayer_MovementServices *pThis, CUserCmd *pCmd)
 {
@@ -704,6 +755,19 @@ static KHook::Return<void> FinishMovePre(CCSPlayer_MovementServices *pThis, CUse
 }
 
 static KHook::Virtual<CCSPlayer_MovementServices, void, CUserCmd *, CMoveData *> finishMoveHook(FinishMovePre, nullptr);
+
+static KHook::Return<bool> IsValidObserverTargetPre(CPlayer_ObserverServices *pThis, CBaseEntity *target)
+{
+	VPROF_BUDGET(__func__, "CS2KZ");
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(pThis);
+	if (player && !player->specService->CanObserveTarget(target))
+	{
+		return {KHook::Action::Supersede, false};
+	}
+	return {KHook::Action::Ignore, false};
+}
+
+static KHook::Virtual<CPlayer_ObserverServices, bool, CBaseEntity *> isValidObserverTargetHook(IsValidObserverTargetPre, nullptr);
 
 // ============================================================
 // Signature-based hooks
@@ -769,8 +833,13 @@ static KHook::Return<void> PhysicsSimulatePre(CCSPlayerController *controller)
 	{
 		return {KHook::Action::Supersede};
 	}
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
+	if (!player->awayService->OnControllerSimulatePre())
+	{
+		return {KHook::Action::Ignore};
+	}
 	g_KZPlugin.simulatingPhysics = true;
-	playerManager->ToPlayer(controller)->OnPhysicsSimulate();
+	player->OnPhysicsSimulate();
 	return {KHook::Action::Ignore};
 }
 
@@ -778,6 +847,11 @@ static KHook::Return<void> PhysicsSimulatePost(CCSPlayerController *controller)
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
 	if (controller->m_bIsHLTV)
+	{
+		return {KHook::Action::Ignore};
+	}
+	g_pKZPlayerManager->ToPlayer(controller)->awayService->OnControllerSimulatePost();
+	if (!g_KZPlugin.simulatingPhysics)
 	{
 		return {KHook::Action::Ignore};
 	}
@@ -1440,6 +1514,7 @@ void hooks::Initialize()
 	changeTeamHook.Configure(g_pGameConfig->GetOffset("ControllerChangeTeam"));
 	playerRunCommandHook.Configure(g_pGameConfig->GetOffset("PlayerRunCommand"));
 	finishMoveHook.Configure(g_pGameConfig->GetOffset("FinishMove"));
+	isValidObserverTargetHook.Configure(g_pGameConfig->GetOffset("IsValidObserverTarget"));
 
 	// Interface hooks
 	checkTransmitHook.Configure(&ISource2GameEntities::CheckTransmit);
@@ -1539,6 +1614,16 @@ void hooks::Initialize()
 		finishMoveHook.AddGlobal((CCSPlayer_MovementServices *)&vtable);
 	}
 
+	{
+		void *vtable = modules::server->FindVirtualTable("CCSObserver_ObserverServices");
+		isValidObserverTargetHook.AddGlobal((CPlayer_ObserverServices *)&vtable);
+	}
+
+	{
+		void **vtable = static_cast<void **>(modules::server->FindVirtualTable("CCSPlayerController"));
+		ChangeTeamFunction.Configure(vtable[g_pGameConfig->GetOffset("ControllerChangeTeam")]);
+	}
+
 	// Signature-based hooks
 	for (u32 i = 0; i < KZ_ARRAYSIZE(SIGNATURE_HOOKS); i++)
 	{
@@ -1581,6 +1666,7 @@ void hooks::Cleanup()
 	createLoadingSpawnGroupHook.ClearHooks();
 	playerRunCommandHook.ClearHooks();
 	finishMoveHook.ClearHooks();
+	isValidObserverTargetHook.ClearHooks();
 
 	cvarquery::Shutdown();
 

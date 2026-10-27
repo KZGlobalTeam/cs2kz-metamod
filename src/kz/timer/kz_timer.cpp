@@ -10,6 +10,7 @@
 #include "kz/spec/kz_spec.h"
 #include "kz/recording/kz_recording.h"
 #include "kz/hud/kz_hud.h"
+#include "kz/away/kz_away.h"
 #include "submission.h"
 
 #include "utils/utils.h"
@@ -744,6 +745,10 @@ bool KZTimerService::CanResume(bool showError)
 
 void KZTimerService::TogglePause()
 {
+	if (!this->player->awayService->CanControlPawn(true))
+	{
+		return;
+	}
 	if (!this->player->IsAlive())
 	{
 		KZ::misc::JoinTeam(player, CS_TEAM_CT);

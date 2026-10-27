@@ -58,9 +58,16 @@ public:
 		return IsConnected() && !IsFakeClient() && interfaces::pEngine->IsClientFullyAuthenticated(GetPlayerSlot());
 	}
 
+	// An authorized player keeps that identity while away and through a reconnect into the held slot.
 	bool IsAuthenticated()
 	{
-		return authAuthorized && IsConnected();
+		return authAuthorized && (IsAway() || IsConnected());
+	}
+
+	// The client left, but the pawn and the player's state persist for a reconnect.
+	virtual bool IsAway()
+	{
+		return false;
 	}
 
 	bool IsConnected()
@@ -88,9 +95,22 @@ public:
 
 	std::string sanitizedName;
 
+	// Takes the name from the client. An away player has no client and keeps the last name it had.
+	void RefreshName()
+	{
+		if (GetClient())
+		{
+			sanitizedName = utils::Trim(GetClient()->GetClientName());
+		}
+		else if (!IsAway())
+		{
+			sanitizedName = "<blank>";
+		}
+	}
+
 	const char *GetName()
 	{
-		sanitizedName = utils::Trim(GetClient() ? GetClient()->GetClientName() : "<blank>");
+		RefreshName();
 		return sanitizedName.c_str();
 	}
 

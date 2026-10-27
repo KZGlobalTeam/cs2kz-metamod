@@ -4,6 +4,7 @@
 #include "utils/hooks.h"
 #include "utils/cvarquery.h"
 #include "anticheat/kz_anticheat.h"
+#include "away/kz_away.h"
 #include "beam/kz_beam.h"
 #include "checkpoint/kz_checkpoint.h"
 #include "db/kz_db.h"
@@ -48,6 +49,7 @@ void KZPlayer::DestroyServices()
 	delete this->uiService;
 	this->uiService = nullptr;
 	delete this->anticheatService;
+	delete this->awayService;
 	delete this->beamService;
 	delete this->checkpointService;
 	delete this->jumpstatsService;
@@ -119,6 +121,7 @@ void KZPlayer::Init()
 	this->DestroyServices();
 
 	this->anticheatService = new KZAnticheatService(this);
+	this->awayService = new KZAwayService(this);
 	this->beamService = new KZBeamService(this);
 	this->checkpointService = new KZCheckpointService(this);
 	this->jumpstatsService = new KZJumpstatsService(this);
@@ -159,6 +162,7 @@ void KZPlayer::Reset()
 	// Reset services that should not persist across player sessions.
 	this->uiService->Reset();
 	this->anticheatService->Reset();
+	this->awayService->Reset();
 	this->languageService->Reset();
 	this->tipService->Reset();
 	this->modeService->Reset();
@@ -198,6 +202,21 @@ void KZPlayer::OnPlayerConnect(u64 steamID64)
 void KZPlayer::OnPlayerActive()
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
+	if (this->awayService->OnReconnect())
+	{
+		// The persistent services are still set up, rebuilding them would stop the timer. The new client only needs their convars.
+		this->modeService->Init();
+		utils::SendMultipleConVarValues(this->GetPlayerSlot(), KZ::mode::modeCvarRefs, this->modeService->GetModeConVarValues(), MODECVAR_COUNT);
+		for (KZStyleService *style : this->styleServices)
+		{
+			style->Init();
+		}
+		this->optionService->OnPlayerActive();
+		this->profileService->OnPlayerActive();
+		this->profileService->UpdateClantag();
+		this->recordingService->EnsureCircularRecorderInitialized();
+		return;
+	}
 	// Mode/Styles stuff must be here for convars to be properly replicated.
 	g_pKZModeManager->SwitchToMode(this, this->modeService->GetModeName(), true, true, false);
 	g_pKZStyleManager->RefreshStyles(this, false);
@@ -211,6 +230,11 @@ void KZPlayer::OnPlayerActive()
 		this->languageService->PrintChat(true, false, "Beta Join Warning");
 		this->languageService->PrintChat(true, false, "Tip - website");
 	}
+}
+
+bool KZPlayer::IsAway()
+{
+	return this->awayService && this->awayService->IsAway();
 }
 
 void KZPlayer::CleanupPlayer()
@@ -1014,6 +1038,7 @@ void KZPlayer::OnTeleport(const Vector *origin, const QAngle *angles, const Vect
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
 	this->lastTeleportTime = g_pKZUtils->GetServerGlobals()->curtime;
+	this->awayService->OnTeleport(angles);
 	this->jumpstatsService->HandleTeleport();
 	this->anticheatService->OnTeleport(angles);
 	this->modeService->OnTeleport(origin, angles, velocity);

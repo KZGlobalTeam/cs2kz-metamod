@@ -70,6 +70,11 @@ bool Player::CheckPrime()
 	{
 		return true;
 	}
+	// An away player has no client to check, so they keep what was known when they left.
+	if (!this->GetClient() || !this->GetController())
+	{
+		return false;
+	}
 	auto steamID = this->GetClient()->GetClientSteamID();
 
 	if (CommandLine()->HasParm("-dedicated"))

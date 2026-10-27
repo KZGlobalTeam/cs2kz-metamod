@@ -631,7 +631,7 @@ SCMD(kz_rpsave, SCFL_REPLAY)
 		return true;
 	}
 
-	KZPlayer *target = player->IsAlive() ? player : player->specService->GetSpectatedPlayer();
+	KZPlayer *target = player->specService->IsObserving() ? player->specService->GetSpectatedPlayer() : player;
 	if (!target)
 	{
 		return true;

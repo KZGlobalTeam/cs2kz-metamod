@@ -3,6 +3,7 @@
 #include "kz/timer/kz_timer.h"
 #include "kz/language/kz_language.h"
 #include "kz/option/kz_option.h"
+#include "kz/away/kz_away.h"
 
 #include "utils/utils.h"
 #include "utils/simplecmds.h"
@@ -68,6 +69,10 @@ void KZNoclipService::HandleNoclip()
 SCMD(kz_noclip, SCFL_PLAYER)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
+	if (!player->awayService->CanControlPawn(true))
+	{
+		return true;
+	}
 	if (!player->noclipService->IsNoclipping() && !player->timerService->CheckSafeguard())
 	{
 		return true;

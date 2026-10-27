@@ -610,7 +610,8 @@ void KZGlobalService::OnClientDisconnect()
 		return;
 	}
 
-	if (!this->player->IsConnected() || !this->player->IsAuthenticated())
+	// A player who stays away already left the API when their client disconnected, and joins it again once they are back.
+	if (this->player->IsAway() || !this->player->IsAuthenticated())
 	{
 		return;
 	}

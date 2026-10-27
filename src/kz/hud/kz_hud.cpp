@@ -9,6 +9,7 @@
 #include "kz/hud/layout/layout.h"
 #include "kz/timer/kz_timer.h"
 #include "kz/checkpoint/kz_checkpoint.h"
+#include "kz/spec/kz_spec.h"
 #include "kz/language/kz_language.h"
 #include "kz/replays/kz_replaysystem.h"
 #include "sdk/entity/ccscustomhudlayout.h"
@@ -127,9 +128,9 @@ KZHUDService::SpeedInfo KZHUDService::GetSpeedInfo(const MHUDPrefs &prefs)
 {
 	SpeedInfo info {};
 	CCSPlayerPawn *pawn = this->player->GetPlayerPawn();
-	if (!pawn || !pawn->IsAlive())
+	// A spectator in free camera sees the camera's speed, even while their own pawn persists.
+	if (!pawn || this->player->specService->IsObserving())
 	{
-		// Probably in spectator mode.
 		CCSPlayerPawnBase *observer = this->player->GetObserverPawn();
 		if (observer)
 		{
@@ -171,11 +172,11 @@ KZHUDService::SpeedInfo KZHUDService::GetSpeedInfo(const MHUDPrefs &prefs)
 CPlayer_MovementServices *KZHUDService::GetHudMoveServices()
 {
 	CCSPlayerPawn *pawn = this->player->GetPlayerPawn();
-	if (pawn && pawn->IsAlive())
+	if (pawn && !this->player->specService->IsObserving())
 	{
 		return this->player->GetMoveServices();
 	}
-	// Dead or spectating.
+	// Dead or spectating, the keys are the observer camera's.
 	CCSPlayerPawnBase *observer = this->player->GetObserverPawn();
 	return observer ? observer->m_pMovementServices() : nullptr;
 }

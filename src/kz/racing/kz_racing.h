@@ -339,6 +339,8 @@ public:
 	void SurrenderRace();
 	bool IsRaceParticipant();
 	bool IsRaceFinisher();
+	// Whether the race is underway and the player is still in it.
+	bool IsRacing();
 	static void RemoveLocalRaceParticipant(u64 steamID);
 
 	bool CanTeleport();

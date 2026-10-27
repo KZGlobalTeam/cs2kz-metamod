@@ -347,6 +347,12 @@
 				"windows"		"161"
 				"linux"			"160"
 			}
+			// CCSObserver_ObserverServices, the function that casts its target to CPlantedC4 through RTTI
+			"IsValidObserverTarget"
+			{
+				"windows"		"34"
+				"linux"			"35"
+			}
 			// 2 functions after one with "targethealthfrac"
 			"CollisionRulesChanged"
 			{

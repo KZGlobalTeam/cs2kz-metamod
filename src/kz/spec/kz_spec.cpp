@@ -1,6 +1,7 @@
 #include "kz_spec.h"
 #include "../timer/kz_timer.h"
 #include "kz/language/kz_language.h"
+#include "kz/away/kz_away.h"
 #include "utils/simplecmds.h"
 #include "utils/ctimer.h"
 
@@ -55,6 +56,23 @@ void KZSpecService::ResetSavedPosition()
 	this->savedPosition = false;
 }
 
+bool KZSpecService::IsObserving()
+{
+	return !this->player->IsAlive() || this->player->awayService->IsObservingWithPersistentPawn();
+}
+
+// An away player is still found by name, to tell why they cannot be spectated.
+static_function bool CanBeFound(KZPlayer *player)
+{
+	return player->IsInGame() || player->IsAway();
+}
+
+// Only a pawn its player controls is sent to other players, a persistent pawn would show frozen in place.
+static_function bool CanBeSpectated(KZPlayer *player)
+{
+	return player->IsInGame() && player->IsAlive() && player->awayService->CanControlPawn();
+}
+
 bool KZSpecService::IsSpectating(KZPlayer *target)
 {
 	return this->GetSpectatedPlayer() == target;
@@ -76,16 +94,16 @@ bool KZSpecService::SpectatePlayer(const char *playerName)
 	else
 	{
 		// Prefer exact matches over partial matches.
-		for (KZPlayer *otherPlayer : g_pKZPlayerManager->GetInGamePlayers())
+		for (KZPlayer *otherPlayer : g_pKZPlayerManager->GetAllSlots())
 		{
-			if (this->player == otherPlayer)
+			if (this->player == otherPlayer || !CanBeFound(otherPlayer))
 			{
 				continue;
 			}
 
 			if (KZ_STREQI(otherPlayer->GetName(), playerName))
 			{
-				if (otherPlayer->GetController()->GetTeam() == CS_TEAM_SPECTATOR)
+				if (!CanBeSpectated(otherPlayer))
 				{
 					continue;
 				}
@@ -96,16 +114,21 @@ bool KZSpecService::SpectatePlayer(const char *playerName)
 		// If no exact match was found, try partial matches.
 		if (!targetPlayer)
 		{
-			for (KZPlayer *otherPlayer : g_pKZPlayerManager->GetInGamePlayers())
+			for (KZPlayer *otherPlayer : g_pKZPlayerManager->GetAllSlots())
 			{
-				if (this->player == otherPlayer)
+				if (this->player == otherPlayer || !CanBeFound(otherPlayer))
 				{
 					continue;
 				}
 
 				if (V_stristr(otherPlayer->GetName(), playerName))
 				{
-					if (otherPlayer->GetController()->GetTeam() == CS_TEAM_SPECTATOR)
+					if (!otherPlayer->awayService->CanControlPawn())
+					{
+						player->languageService->PrintChat(true, false, "Spectate Failure (Not In Control)");
+						return false;
+					}
+					if (!otherPlayer->IsAlive())
 					{
 						player->languageService->PrintChat(true, false, "Spectate Failure (Dead)");
 						return false;
@@ -145,7 +168,7 @@ bool KZSpecService::SpectatePlayer(KZPlayer *target, bool force)
 	}
 	// Join spectator team if not already in it.
 	CCSPlayerController *controller = this->player->GetController();
-	if (controller->GetTeam() != CS_TEAM_SPECTATOR)
+	if (controller->GetTeam() != CS_TEAM_SPECTATOR && !this->player->awayService->IsObservingWithPersistentPawn())
 	{
 		KZ::misc::JoinTeam(this->player, CS_TEAM_SPECTATOR, true);
 	}
@@ -180,7 +203,9 @@ bool KZSpecService::SpectatePlayer(KZPlayer *target, bool force)
 
 bool KZSpecService::CanSpectate()
 {
-	return !this->player->IsAlive() || this->player->timerService->GetPaused() || this->player->timerService->CanPause();
+	return !this->player->IsAlive() || this->player->awayService->IsObservingWithPersistentPawn()
+		   || this->player->awayService->CanSpectateWithPersistentPawn() || this->player->timerService->GetPaused()
+		   || this->player->timerService->CanPause();
 }
 
 void KZSpecService::GetSpectatorList(std::vector<std::string> &spectatorList)
@@ -201,7 +226,7 @@ void KZSpecService::GetSpectatorList(std::vector<std::string> &spectatorList)
 
 KZPlayer *KZSpecService::GetSpectatedPlayer()
 {
-	if (!player || player->IsAlive())
+	if (!player || !this->IsObserving())
 	{
 		return NULL;
 	}
@@ -222,6 +247,17 @@ KZPlayer *KZSpecService::GetSpectatedPlayer()
 	CBasePlayerPawn *target = (CBasePlayerPawn *)obsService->m_hObserverTarget().Get();
 	// If the player is spectating their own corpse, consider that as not spectating anyone.
 	return target == pawn ? nullptr : g_pKZPlayerManager->ToPlayer(target);
+}
+
+bool KZSpecService::CanObserveTarget(CBaseEntity *target)
+{
+	// CSTV is the one viewer that receives a persistent pawn.
+	if (this->player->IsCSTV() || !target || !target->IsPawn())
+	{
+		return true;
+	}
+	KZPlayer *targetPlayer = g_pKZPlayerManager->ToPlayer(static_cast<CBasePlayerPawn *>(target));
+	return !targetPlayer || targetPlayer->awayService->CanControlPawn();
 }
 
 KZPlayer *KZSpecService::GetNextSpectator(KZPlayer *current)
@@ -260,9 +296,9 @@ SCMD(kz_spec, SCFL_SPEC)
 
 	// Find the first alive player other than the player themselves.
 	KZPlayer *firstAlivePlayer = nullptr;
-	for (KZPlayer *otherPlayer : g_pKZPlayerManager->GetInGamePlayers())
+	for (KZPlayer *otherPlayer : g_pKZPlayerManager->GetAllSlots())
 	{
-		if (otherPlayer->IsAlive() && otherPlayer != player)
+		if (CanBeSpectated(otherPlayer) && otherPlayer->IsAlive() && otherPlayer != player)
 		{
 			firstAlivePlayer = otherPlayer;
 			break;
@@ -284,7 +320,7 @@ SCMD(kz_spec, SCFL_SPEC)
 SCMD(kz_specs, SCFL_SPEC)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
-	KZPlayer *targetPlayer = player->IsAlive() ? player : player->specService->GetSpectatedPlayer();
+	KZPlayer *targetPlayer = player->specService->IsObserving() ? player->specService->GetSpectatedPlayer() : player;
 
 	if (!targetPlayer)
 	{

@@ -8,6 +8,7 @@
 #include "kz/racing/kz_racing.h"
 #include "kz/recording/kz_recording.h"
 #include "utils/utils.h"
+#include "kz/away/kz_away.h"
 
 static_global class KZOptionServiceEventListener_Checkpoint : public KZOptionServiceEventListener
 {
@@ -91,7 +92,7 @@ void KZCheckpointService::ResetCheckpoints(bool playSound, bool resetTeleports)
 void KZCheckpointService::SetCheckpoint()
 {
 	CCSPlayerPawn *pawn = this->player->GetPlayerPawn();
-	if (!pawn)
+	if (!pawn || !this->player->awayService->CanControlPawn(true))
 	{
 		return;
 	}
@@ -237,6 +238,7 @@ void KZCheckpointService::DoTeleport(const Checkpoint cp, bool stayOnGround, i32
 	{
 		return;
 	}
+	this->player->awayService->RestorePersistentPawn();
 
 	if (!this->player->triggerService->CanTeleportToCheckpoints())
 	{
@@ -417,6 +419,10 @@ void KZCheckpointService::TpHoldPlayerStill()
 
 void KZCheckpointService::SetStartPosition()
 {
+	if (!this->player->awayService->CanControlPawn(true))
+	{
+		return;
+	}
 	CCSPlayerPawn *pawn = this->player->GetPlayerPawn();
 	if (!pawn)
 	{

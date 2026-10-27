@@ -97,6 +97,10 @@
 		"de"		"{darkred}Der von dir angegebene Spieler ist nicht am Leben."
 		"es"		"{darkred}El jugador especificado no esta vivo."
 	}
+	"Spectate Failure (Not In Control)"
+	{
+		"en"		"{darkred}The player you specified is not controlling their player."
+	}
 	"Spectate Failure (Player Not Found)"
 	{
 		"en"		"{darkred}The player you specified cannot be found."

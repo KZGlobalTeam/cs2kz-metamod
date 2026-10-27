@@ -13,6 +13,7 @@
 
 #include "movement/movement.h"
 #include "kz/kz.h"
+#include "kz/away/kz_away.h"
 #include "kz/option/menu/kz_menu.h"
 #include "kz/ui/kz_ui.h"
 #include "kz/anticheat/kz_anticheat.h"
@@ -143,6 +144,7 @@ bool KZPlugin::Unload(char *error, size_t maxlen)
 		return true;
 	}
 	this->unloading = true;
+	KZAwayService::Shutdown();
 	KZUIService::Cleanup();
 	KZProgressService::Cleanup();
 	KZHUDService::Cleanup();
