@@ -235,7 +235,7 @@ void BaseRequest::SetupCourse(const std::string &courseName)
 	}
 	else
 	{
-		courseName = "1";
+		this->courseName = "1";
 	}
 }
 
