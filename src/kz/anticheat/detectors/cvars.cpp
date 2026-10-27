@@ -10,6 +10,7 @@
 #include "kz/telemetry/kz_telemetry.h"
 #include "utils/ctimer.h"
 #include "utils/cvarquery.h"
+#include "utils/rng.h"
 
 CConVarRef<bool> sv_cheats("sv_cheats");
 
@@ -264,7 +265,7 @@ static_function f64 CheckUserInfoCvars(KZPlayer *player)
 {
 	if (!player->anticheatService->ShouldRunDetections())
 	{
-		return RandomFloat(INTEGRITY_CHECK_MIN_INTERVAL, INTEGRITY_CHECK_MAX_INTERVAL);
+		return utils::RandomFloat(INTEGRITY_CHECK_MIN_INTERVAL, INTEGRITY_CHECK_MAX_INTERVAL);
 	}
 	for (auto &name : userInfoCvarNames)
 	{
@@ -298,7 +299,7 @@ static_function f64 CheckUserInfoCvars(KZPlayer *player)
 			}
 		}
 	}
-	return RandomFloat(INTEGRITY_CHECK_MIN_INTERVAL, INTEGRITY_CHECK_MAX_INTERVAL);
+	return utils::RandomFloat(INTEGRITY_CHECK_MIN_INTERVAL, INTEGRITY_CHECK_MAX_INTERVAL);
 }
 
 static_function f64 CheckClientCvars(CPlayerUserId userID)
@@ -310,7 +311,7 @@ static_function f64 CheckClientCvars(CPlayerUserId userID)
 	}
 	if (!player->anticheatService->ShouldRunDetections())
 	{
-		return RandomFloat(INTEGRITY_CHECK_MIN_INTERVAL, INTEGRITY_CHECK_MAX_INTERVAL);
+		return utils::RandomFloat(INTEGRITY_CHECK_MIN_INTERVAL, INTEGRITY_CHECK_MAX_INTERVAL);
 	}
 	if (CheckUserInfoCvars(player) == 0.0f)
 	{
@@ -324,7 +325,7 @@ static_function f64 CheckClientCvars(CPlayerUserId userID)
 	{
 		cvarquery::Query(player->GetPlayerSlot(), name, ValidateQueriedCvar);
 	}
-	return RandomFloat(INTEGRITY_CHECK_MIN_INTERVAL, INTEGRITY_CHECK_MAX_INTERVAL);
+	return utils::RandomFloat(INTEGRITY_CHECK_MIN_INTERVAL, INTEGRITY_CHECK_MAX_INTERVAL);
 }
 
 void KZAnticheatService::InitCvarMonitor()
@@ -334,5 +335,5 @@ void KZAnticheatService::InitCvarMonitor()
 		return;
 	}
 	StartTimer<CPlayerUserId>(CheckClientCvars, this->player->GetClient()->GetUserID(),
-							  RandomFloat(INTEGRITY_CHECK_MIN_INTERVAL, INTEGRITY_CHECK_MAX_INTERVAL), true, true);
+							  utils::RandomFloat(INTEGRITY_CHECK_MIN_INTERVAL, INTEGRITY_CHECK_MAX_INTERVAL), true, true);
 }

@@ -5,6 +5,7 @@
 #include "kz/mode/kz_mode.h"
 #include "kz/style/kz_style.h"
 #include "kz/option/kz_option.h"
+#include "utils/rng.h"
 
 #include "sdk/recipientfilters.h"
 #include "public/networksystem/inetworkmessages.h"
@@ -130,7 +131,7 @@ void KZProfileService::RequestRating()
 		KZ_LOG_DEBUG(LogChannel::Profile, "Player %s has styles enabled, skipping rating request.\n", this->player->GetName());
 		return;
 	}
-	this->timeToNextRatingRefresh = g_pKZUtils->GetServerGlobals()->realtime + RATING_REFRESH_PERIOD + RandomFloat(-30.0f, 30.0f);
+	this->timeToNextRatingRefresh = g_pKZUtils->GetServerGlobals()->realtime + RATING_REFRESH_PERIOD + utils::RandomFloat(-30.0f, 30.0f);
 	std::string apiURL = std::string(KZOptionService::GetOptionStr("apiUrl", "https://api.cs2kz.org"));
 	// Removing trailing slash if present to avoid double slashes in the URL.
 	if (!apiURL.empty() && apiURL.back() == '/')
