@@ -130,8 +130,9 @@ CUtlVector<CServerSideClient *> *KZUtils::GetClientList()
 	{
 		return nullptr;
 	}
-	static_persist const int offset = g_pGameConfig->GetOffset("ClientOffset");
-	return (CUtlVector<CServerSideClient *> *)((char *)g_pNetworkServerService->GetIGameServer() + offset);
+	// CServerSideClient's only base is CServerSideClientBase, so the element pointers are the same.
+	auto server = static_cast<CNetworkGameServerBase *>(g_pNetworkServerService->GetIGameServer());
+	return reinterpret_cast<CUtlVector<CServerSideClient *> *>(&server->m_Clients);
 }
 
 // The engine keeps the client object in its slot after a disconnect, so only hand it out while someone occupies the slot.

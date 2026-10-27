@@ -384,12 +384,6 @@
 				"windows"		"78"
 				"linux"			"77"
 			}
-			// Check sv_fullupdate
-			"ClientOffset"
-			{
-				"windows"		"616"
-				"linux"			"616"
-			}
 			// teleport_trigger_debug cvar
 			"StartTouch"
 			{
