@@ -275,7 +275,7 @@ void KZProgressService::OnPhysicsSimulatePost()
 	{
 		return;
 	}
-	f64 phase = this->player->GetPlayerSlot().Get() * PROGRESS_UPDATE_INTERVAL / MAXPLAYERS;
+	f64 phase = this->player->GetPlayerSlot().Get() * PROGRESS_UPDATE_INTERVAL / MAX_PLAYERS;
 	this->nextUpdate = (floor((now - phase) / PROGRESS_UPDATE_INTERVAL) + 1) * PROGRESS_UPDATE_INTERVAL + phase;
 	this->visible = false;
 	const auto *course = this->player->timerService->GetCourse();

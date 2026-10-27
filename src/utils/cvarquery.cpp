@@ -8,7 +8,7 @@
 
 #include "tier0/memdbgon.h"
 
-static_global std::unordered_map<i32, cvarquery::Callback> pendingQueries[MAXPLAYERS];
+static_global std::unordered_map<i32, cvarquery::Callback> pendingQueries[MAX_PLAYERS];
 static_global i32 queryCookie = 0;
 static_global cvarquery::ChangeCallback changeCallback = NULL;
 
@@ -19,7 +19,7 @@ void cvarquery::SetChangeCallback(ChangeCallback callback)
 
 void cvarquery::OnCvarValueResponse(CPlayerSlot slot, i32 cookie, Status status, const char *name, const char *value)
 {
-	if (slot.Get() < 0 || slot.Get() >= MAXPLAYERS)
+	if (slot.Get() < 0 || slot.Get() >= MAX_PLAYERS)
 	{
 		return;
 	}
@@ -37,7 +37,7 @@ void cvarquery::OnCvarValueResponse(CPlayerSlot slot, i32 cookie, Status status,
 
 void cvarquery::OnClientConVar(CPlayerSlot slot, const char *name, const char *value)
 {
-	if (changeCallback && slot.Get() >= 0 && slot.Get() < MAXPLAYERS)
+	if (changeCallback && slot.Get() >= 0 && slot.Get() < MAX_PLAYERS)
 	{
 		changeCallback(slot, name, value);
 	}
@@ -46,7 +46,7 @@ void cvarquery::OnClientConVar(CPlayerSlot slot, const char *name, const char *v
 void cvarquery::Shutdown()
 {
 	changeCallback = NULL;
-	for (i32 i = 0; i < MAXPLAYERS; i++)
+	for (i32 i = 0; i < MAX_PLAYERS; i++)
 	{
 		pendingQueries[i].clear();
 	}
@@ -54,7 +54,7 @@ void cvarquery::Shutdown()
 
 bool cvarquery::Query(CPlayerSlot slot, const char *cvarName, Callback callback)
 {
-	if (!cvarName || !callback || slot.Get() < 0 || slot.Get() >= MAXPLAYERS)
+	if (!cvarName || !callback || slot.Get() < 0 || slot.Get() >= MAX_PLAYERS)
 	{
 		return false;
 	}
@@ -81,7 +81,7 @@ bool cvarquery::Query(CPlayerSlot slot, const char *cvarName, Callback callback)
 
 void cvarquery::OnClientDisconnect(CPlayerSlot slot)
 {
-	if (slot.Get() >= 0 && slot.Get() < MAXPLAYERS)
+	if (slot.Get() >= 0 && slot.Get() < MAX_PLAYERS)
 	{
 		pendingQueries[slot.Get()].clear();
 	}

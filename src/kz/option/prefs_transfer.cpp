@@ -30,7 +30,7 @@ struct ImportState
 	bool drainPending {};
 };
 
-static_global ImportState imports[MAXPLAYERS];
+static_global ImportState imports[MAX_PLAYERS];
 
 // === Import ==========================================================================
 
@@ -83,7 +83,7 @@ static_function f64 DrainImportTimer(CPlayerUserId userID)
 
 static_function void OnClientConVar(CPlayerSlot slot, const char *name, const char *value)
 {
-	if (slot.Get() < 0 || slot.Get() >= MAXPLAYERS || V_strncmp(name, KZ_PREF_CVAR_PREFIX, sizeof(KZ_PREF_CVAR_PREFIX) - 1) != 0)
+	if (slot.Get() < 0 || slot.Get() >= MAX_PLAYERS || V_strncmp(name, KZ_PREF_CVAR_PREFIX, sizeof(KZ_PREF_CVAR_PREFIX) - 1) != 0)
 	{
 		return;
 	}
@@ -208,7 +208,7 @@ void KZ::prefs::RegisterMenu(KZOptNode *node)
 
 void KZ::prefs::OnClientDisconnect(CPlayerSlot slot)
 {
-	if (slot.Get() >= 0 && slot.Get() < MAXPLAYERS)
+	if (slot.Get() >= 0 && slot.Get() < MAX_PLAYERS)
 	{
 		imports[slot.Get()] = ImportState();
 	}

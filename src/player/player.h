@@ -200,12 +200,12 @@ public:
 
 	Iterator begin() const
 	{
-		return Iterator(players, players + MAXPLAYERS, inGameOnly);
+		return Iterator(players, players + MAX_PLAYERS, inGameOnly);
 	}
 
 	Iterator end() const
 	{
-		return Iterator(players + MAXPLAYERS, players + MAXPLAYERS, inGameOnly);
+		return Iterator(players + MAX_PLAYERS, players + MAX_PLAYERS, inGameOnly);
 	}
 
 private:
@@ -218,7 +218,7 @@ class PlayerManager
 public:
 	PlayerManager()
 	{
-		for (i32 i = 0; i < MAXPLAYERS; i++)
+		for (i32 i = 0; i < MAX_PLAYERS; i++)
 		{
 			delete players[i];
 			players[i] = new Player(i + 1);
@@ -313,7 +313,7 @@ private:
 
 public:
 	// Indexed by player slot, and zero-initialized because PlayerManager's constructor deletes every slot before allocating.
-	Player *players[MAXPLAYERS] {};
+	Player *players[MAX_PLAYERS] {};
 };
 
 extern PlayerManager *g_pPlayerManager;

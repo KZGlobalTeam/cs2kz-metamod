@@ -218,7 +218,7 @@ KZPlayer *KZSpecService::GetSpectatedPlayer()
 
 KZPlayer *KZSpecService::GetNextSpectator(KZPlayer *current)
 {
-	for (i32 i = current ? current->GetPlayerSlot().Get() + 1 : 0; i < MAXPLAYERS; i++)
+	for (i32 i = current ? current->GetPlayerSlot().Get() + 1 : 0; i < MAX_PLAYERS; i++)
 	{
 		KZPlayer *player = g_pKZPlayerManager->ToPlayer(CPlayerSlot(i));
 		if (player->IsInGame() && player->specService->IsSpectating(this->player))
