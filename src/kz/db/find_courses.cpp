@@ -2,7 +2,7 @@
 #include "vendor/sql_mm/src/public/sql_mm.h"
 #include "queries/courses.h"
 
-void KZDatabaseService::FindFirstCourseByMapName(std::string mapName, TransactionSuccessCallbackFunc onSuccess,
+void KZDatabaseService::FindFirstCourseByMapName(const std::string &mapName, TransactionSuccessCallbackFunc onSuccess,
 												 TransactionFailureCallbackFunc onFailure)
 {
 	auto cleanMapName = KZDatabaseService::GetDatabaseConnection()->Escape(mapName.c_str());

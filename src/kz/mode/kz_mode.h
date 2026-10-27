@@ -255,7 +255,7 @@ namespace KZ::mode
 	void InitModeService(KZPlayer *player);
 	void InitModeManager();
 	void LoadModePlugins();
-	void UpdateModeDatabaseID(std::string name, i32 id, std::string shortName = "");
+	void UpdateModeDatabaseID(const std::string &name, i32 id, const std::string &shortName = "");
 	// clang-format off
 
 	inline const char *modeCvarNames[] = {
@@ -353,6 +353,6 @@ namespace KZ::mode
 
 	KZModeManager::ModePluginInfo GetModeInfo(KZModeService *mode);
 	KZModeManager::ModePluginInfo GetModeInfo(KZ::api::Mode mode);
-	KZModeManager::ModePluginInfo GetModeInfo(std::string modeName);
+	KZModeManager::ModePluginInfo GetModeInfo(const std::string &modeName);
 	KZModeManager::ModePluginInfo GetModeInfoFromDatabaseID(i32 id);
 }; // namespace KZ::mode

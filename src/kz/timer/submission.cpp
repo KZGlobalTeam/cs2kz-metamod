@@ -83,7 +83,7 @@ RunSubmission::RunSubmission(KZPlayer *player)
 
 	// Setup course
 	assert(player->timerService->GetCourse());
-	this->course.name = player->timerService->GetCourse()->GetName().c_str();
+	this->course.name = player->timerService->GetCourse()->GetName();
 	this->course.localID = player->timerService->GetCourse()->localDatabaseID;
 
 	if (this->apiMode.has_value())
@@ -134,7 +134,7 @@ RunSubmission::RunSubmission(KZPlayer *player)
 	}
 
 	// Metadata
-	this->metadata = player->timerService->GetCurrentRunMetadata().c_str();
+	this->metadata = player->timerService->GetCurrentRunMetadata();
 
 	// Cheaters and unauthenticated players do not submit
 	if (player->anticheatService->isBanned || !player->IsAuthenticated())

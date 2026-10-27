@@ -14,7 +14,7 @@ namespace utils
 	public:
 		static constexpr const size_t columnCount = N;
 
-		Table(std::string title, std::string headers[columnCount]) : title(title)
+		Table(const std::string &title, std::string headers[columnCount]) : title(title)
 		{
 			for (u32 i = 0; i < columnCount; i++)
 			{
@@ -105,7 +105,7 @@ namespace utils
 			return true;
 		}
 
-		bool Set(u32 row, u32 column, std::string value)
+		bool Set(u32 row, u32 column, const std::string &value)
 		{
 			return Set(row, column, value.c_str());
 		}
@@ -217,7 +217,7 @@ namespace utils
 		Table<NL> left;
 		Table<NR> right;
 
-		DualTable(std::string titleLeft, std::string headersLeft[NL], std::string titleRight, std::string headersRight[NR])
+		DualTable(const std::string &titleLeft, std::string headersLeft[NL], const std::string &titleRight, std::string headersRight[NR])
 			: left(titleLeft, headersLeft), right(titleRight, headersRight)
 		{
 		}

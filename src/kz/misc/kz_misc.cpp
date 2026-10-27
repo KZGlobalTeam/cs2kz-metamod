@@ -528,10 +528,8 @@ void KZ::misc::ProcessConCommand(ConCommandRef cmd, const CCommandContext &ctx, 
 			return;
 		}
 
-		std::string message;
-		message.assign(p, strlen(p) - wrappedInQuotes);
 		auto name = player->GetName();
-		std::string text = message.c_str();
+		std::string text(p, strlen(p) - wrappedInQuotes);
 
 		// We have to replace these CS2 quotes with normal quotes.
 		size_t pos = 0;

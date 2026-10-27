@@ -225,14 +225,12 @@ struct CourseTopRequest : public BaseRequest
 		}
 		for (const auto &record : ctop.overall)
 		{
-			std::string id = tfm::format("%s", record.id.c_str());
 			req->wrData.overallData.push_back(
-				{id, record.player.name.c_str(), record.teleports, record.time, record.player.id, (u64)floor(record.nubPoints)});
+				{record.id, record.player.name, record.teleports, record.time, record.player.id, (u64)floor(record.nubPoints)});
 		}
 		for (const auto &record : ctop.pro)
 		{
-			std::string id = tfm::format("%s", record.id.c_str());
-			req->wrData.proData.push_back({id, record.player.name.c_str(), 0, record.time, record.player.id, (u64)floor(record.proPoints)});
+			req->wrData.proData.push_back({record.id, record.player.name, 0, record.time, record.player.id, (u64)floor(record.proPoints)});
 		}
 	}
 

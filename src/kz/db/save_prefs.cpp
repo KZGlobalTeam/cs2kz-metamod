@@ -5,7 +5,7 @@
 
 #include "queries/players.h"
 
-void KZDatabaseService::SavePrefs(std::string prefs)
+void KZDatabaseService::SavePrefs(const std::string &prefs)
 {
 	if (!KZDatabaseService::IsReady() || !this->isSetUp)
 	{

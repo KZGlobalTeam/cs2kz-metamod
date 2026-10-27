@@ -20,6 +20,7 @@ class CBasePlayerController;
 class IGameEventListener2;
 class CTimerBase;
 class CServerSideClient;
+class CServerSideClientBase;
 class CCSGameRules;
 
 // temporary botprofile classes
@@ -160,7 +161,7 @@ public:
 
 	virtual void AddTimer(CTimerBase *timer, bool preserveMapChange = true);
 	virtual void RemoveTimer(CTimerBase *timer);
-	virtual CUtlVector<CServerSideClient *> *GetClientList();
+	virtual CUtlVector<CServerSideClientBase *> *GetClientList();
 
 	CServerSideClient *GetClientBySlot(CPlayerSlot slot);
 

@@ -108,7 +108,7 @@ static_function void FormatRecordRow(KZLanguageService *lang, CourseInfoText &ou
 		out.badgeClasses[row] = "hidden";
 		return;
 	}
-	out.times[row] = utils::FormatTime(time).c_str();
+	out.times[row] = utils::FormatTime(time);
 	out.badges[row] = lang->PrepareMessage(teleports ? "HUD - Course Badge TP" : "HUD - Course Badge Pro");
 	out.badgeClasses[row] = teleports ? "ci-badge-tp" : "ci-badge-pro";
 	out.names[row] = holder.empty() ? std::string() : lang->PrepareMessage("HUD - Course By", holder.c_str());

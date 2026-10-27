@@ -44,7 +44,7 @@ namespace
 
 	void ReportModeToConsole(const char *modeName, const std::string &globalChecksum)
 	{
-		KZModeManager::ModePluginInfo modeInfo = KZ::mode::GetModeInfo(std::string(modeName));
+		KZModeManager::ModePluginInfo modeInfo = KZ::mode::GetModeInfo(modeName);
 
 		if (modeInfo.id < 0)
 		{
@@ -77,7 +77,7 @@ namespace
 
 		for (const KZGlobalService::GlobalStyleChecksum &checksum : checksums)
 		{
-			KZStyleManager::StylePluginInfo styleInfo = KZ::style::GetStyleInfo(std::string(checksum.style.c_str()));
+			KZStyleManager::StylePluginInfo styleInfo = KZ::style::GetStyleInfo(checksum.style);
 
 			if (styleInfo.id <= 0)
 			{

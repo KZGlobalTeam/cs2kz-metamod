@@ -334,10 +334,10 @@ void utils::PrintHTMLCentre(CBaseEntity *entity, const char *format, ...)
 		return;
 	}
 
-	std::string buffer;
 	va_list args;
 	va_start(args, format);
-	buffer = utils::FormatV(format, args);
+	std::string buffer = utils::FormatV(format, args);
+	va_end(args);
 
 	IGameEvent *event = interfaces::pGameEventManager->CreateEvent("show_survival_respawn_status");
 	if (!event)
@@ -384,10 +384,10 @@ void utils::PrintAlertAll(const char *format, ...)
 
 void utils::PrintHTMLCentreAll(const char *format, ...)
 {
-	std::string buffer;
 	va_list args;
 	va_start(args, format);
-	buffer = utils::FormatV(format, args);
+	std::string buffer = utils::FormatV(format, args);
+	va_end(args);
 
 	IGameEvent *event = interfaces::pGameEventManager->CreateEvent("show_survival_respawn_status");
 	if (!event)

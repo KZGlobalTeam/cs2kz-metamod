@@ -123,27 +123,25 @@ void KZUtils::RemoveTimer(CTimerBase *timer)
 	}
 }
 
-CUtlVector<CServerSideClient *> *KZUtils::GetClientList()
+CUtlVector<CServerSideClientBase *> *KZUtils::GetClientList()
 {
 	// There is no game server before the first map loads.
 	if (!g_pNetworkServerService || !g_pNetworkServerService->GetIGameServer())
 	{
 		return nullptr;
 	}
-	// CServerSideClient's only base is CServerSideClientBase.
-	auto server = static_cast<CNetworkGameServerBase *>(g_pNetworkServerService->GetIGameServer());
-	return reinterpret_cast<CUtlVector<CServerSideClient *> *>(&server->m_Clients);
+	return &static_cast<CNetworkGameServerBase *>(g_pNetworkServerService->GetIGameServer())->m_Clients;
 }
 
 // The engine keeps the client object in its slot after a disconnect, so only hand it out while someone occupies the slot.
 CServerSideClient *KZUtils::GetClientBySlot(CPlayerSlot slot)
 {
-	CUtlVector<CServerSideClient *> *clients = this->GetClientList();
+	CUtlVector<CServerSideClientBase *> *clients = this->GetClientList();
 	if (!clients || slot.Get() < 0 || slot.Get() >= clients->Count())
 	{
 		return nullptr;
 	}
-	CServerSideClient *client = clients->Element(slot.Get());
+	CServerSideClient *client = static_cast<CServerSideClient *>(clients->Element(slot.Get()));
 	return client && client->IsConnected() ? client : nullptr;
 }
 
@@ -384,7 +382,7 @@ u32 KZUtils::GetPlayerCount()
 	{
 		FOR_EACH_VEC(*clients, i)
 		{
-			CServerSideClient *client = clients->Element(i);
+			CServerSideClientBase *client = clients->Element(i);
 
 			if (client && client->IsConnected() && !client->IsFakeClient() && !client->IsHLTV())
 			{

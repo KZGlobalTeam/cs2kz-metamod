@@ -14,7 +14,7 @@ public:
 	CInGameRecipientFilter()
 	{
 		MakeReliable();
-		CUtlVector<CServerSideClient *> *clients = g_pKZUtils->GetClientList();
+		CUtlVector<CServerSideClientBase *> *clients = g_pKZUtils->GetClientList();
 		if (!clients)
 		{
 			return;

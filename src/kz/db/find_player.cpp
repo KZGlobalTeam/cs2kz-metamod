@@ -3,7 +3,8 @@
 
 #include "queries/players.h"
 
-void KZDatabaseService::FindPlayerByAlias(std::string playerName, TransactionSuccessCallbackFunc onSuccess, TransactionFailureCallbackFunc onFailure)
+void KZDatabaseService::FindPlayerByAlias(const std::string &playerName, TransactionSuccessCallbackFunc onSuccess,
+										  TransactionFailureCallbackFunc onFailure)
 {
 	if (!KZDatabaseService::IsReady())
 	{

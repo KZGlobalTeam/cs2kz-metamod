@@ -140,10 +140,10 @@ void KZPlayer::PrintHTMLCentre(bool addPrefix, bool includeSpectators, const cha
 	{
 		return;
 	}
-	std::string buffer;
 	va_list args;
 	va_start(args, format);
-	buffer = utils::FormatV(format, args);
+	std::string buffer = utils::FormatV(format, args);
+	va_end(args);
 
 	if (addPrefix)
 	{

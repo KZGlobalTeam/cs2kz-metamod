@@ -1241,8 +1241,8 @@ const PBData *KZTimerService::GetGlobalCachedRecord(const KZCourseDescriptor *co
 	return KZTimerService::GetCachedRecord(ToPBDataKey(modeID, course->guid), true);
 }
 
-void KZTimerService::InsertRecordToCache(f64 time, const KZCourseDescriptor *course, PluginId modeID, bool overall, bool global, std::string metadata,
-										 const char *holder, const char *replayUUID)
+void KZTimerService::InsertRecordToCache(f64 time, const KZCourseDescriptor *course, PluginId modeID, bool overall, bool global,
+										 const std::string &metadata, const char *holder, const char *replayUUID)
 {
 	PBData &pb = global ? KZTimerService::wrCache[ToPBDataKey(modeID, course->guid)] : KZTimerService::srCache[ToPBDataKey(modeID, course->guid)];
 	const bool referenceChanged = !KZ_STREQ((overall ? pb.overall : pb.pro).replayUUID.c_str(), replayUUID ? replayUUID : "");
@@ -1324,8 +1324,8 @@ const PBData *KZTimerService::GetGlobalCachedPB(const KZCourseDescriptor *course
 	return this->GetCachedPB(ToPBDataKey(modeID, course->guid), true);
 }
 
-void KZTimerService::InsertPBToCache(f64 time, const KZCourseDescriptor *course, PluginId modeID, bool overall, bool global, std::string metadata,
-									 f64 points)
+void KZTimerService::InsertPBToCache(f64 time, const KZCourseDescriptor *course, PluginId modeID, bool overall, bool global,
+									 const std::string &metadata, f64 points)
 {
 	PBData &pb = global ? this->globalPBCache[ToPBDataKey(modeID, course->guid)] : this->localPBCache[ToPBDataKey(modeID, course->guid)];
 

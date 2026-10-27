@@ -229,7 +229,7 @@ void KZGlobalService::OnMapInfo(const std::optional<KZ::api::Map> &mapInfo, std:
 	bool mapOk = false;
 	std::string currentMapName = g_pKZUtils->GetCurrentMapName(&mapOk);
 
-	if (mapOk && currentMapName.c_str() != sentMapName)
+	if (mapOk && currentMapName != sentMapName)
 	{
 		KZ_LOG_INFO(LogChannel::Global, "Map changed since MapChange was sent (sent '%s', current '%s'); re-sending.\n", sentMapName.c_str(),
 					currentMapName.c_str());
@@ -329,9 +329,9 @@ void KZGlobalService::SendMapChange()
 	}
 
 	KZ::api::messages::MapChange message;
-	message.name = currentMapName.c_str();
+	message.name = currentMapName;
 
-	KZGlobalService::MessageCallback<std::optional<KZ::api::Map>> callback(KZGlobalService::OnMapInfo, std::string(currentMapName.c_str()));
+	KZGlobalService::MessageCallback<std::optional<KZ::api::Map>> callback(KZGlobalService::OnMapInfo, currentMapName);
 	KZGlobalService::WS::SendMessage(message, std::move(callback));
 }
 
@@ -887,7 +887,7 @@ void KZGlobalService::WS::CompleteHandshake(KZ::api::messages::handshake::HelloA
 		bool mapOk = false;
 		std::string currentMapName = g_pKZUtils->GetCurrentMapName(&mapOk);
 
-		if (mapOk && currentMapName.c_str() == KZGlobalService::WS::handshakeMapName)
+		if (mapOk && currentMapName == KZGlobalService::WS::handshakeMapName)
 		{
 			char md5[33];
 			g_pKZUtils->GetCurrentMapMD5(md5, sizeof(md5));

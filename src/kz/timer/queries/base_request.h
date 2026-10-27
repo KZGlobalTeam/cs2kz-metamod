@@ -50,7 +50,7 @@ public:
 	std::string invalidateReasonLocalized {};
 
 	template<typename... Args>
-	void Invalidate(std::string reason = "", Args &&...args)
+	void Invalidate(const std::string &reason = "", Args &&...args)
 	{
 		if (!isValid)
 		{
@@ -134,12 +134,12 @@ protected:
 	std::vector<std::string> styleList;
 
 public:
-	void SetupCourse(std::string courseName);
-	void SetupPlayer(std::string playerName);
+	void SetupCourse(const std::string &courseName);
+	void SetupPlayer(const std::string &playerName);
 
-	void SetupMode(std::string modeName);
+	void SetupMode(const std::string &modeName);
 
-	void SetupStyles(std::string styleNames);
+	void SetupStyles(const std::string &styleNames);
 
 	virtual void PrintInstructions() {}
 

@@ -14,7 +14,7 @@ public:
 	virtual void Init() {};
 	virtual void Cleanup() {};
 
-	virtual bool IsCompatibleWithStyle(std::string style)
+	virtual bool IsCompatibleWithStyle(const std::string &style)
 	{
 		return true;
 	}
@@ -209,8 +209,8 @@ namespace KZ::style
 {
 	void InitStyleManager();
 	void LoadStylePlugins();
-	void UpdateStyleDatabaseID(std::string name, i32 id);
+	void UpdateStyleDatabaseID(const std::string &name, i32 id);
 	KZStyleManager::StylePluginInfo GetStyleInfo(KZStyleService *style);
-	KZStyleManager::StylePluginInfo GetStyleInfo(std::string styleName);
+	KZStyleManager::StylePluginInfo GetStyleInfo(const std::string &styleName);
 
 }; // namespace KZ::style

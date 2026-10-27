@@ -98,7 +98,7 @@ void KZ::mode::LoadModePlugins()
 	}
 }
 
-void KZ::mode::UpdateModeDatabaseID(std::string name, i32 id, std::string shortName)
+void KZ::mode::UpdateModeDatabaseID(const std::string &name, i32 id, const std::string &shortName)
 {
 	// Check if the mode already exists in the list, if yes, we update it.
 	for (size_t i = 0; i < modeInfos.size(); i++)
@@ -415,7 +415,7 @@ KZModeManager::ModePluginInfo KZ::mode::GetModeInfo(KZ::api::Mode mode)
 	return KZModeManager::ModePluginInfo();
 }
 
-KZModeManager::ModePluginInfo KZ::mode::GetModeInfo(std::string modeName)
+KZModeManager::ModePluginInfo KZ::mode::GetModeInfo(const std::string &modeName)
 {
 	KZModeManager::ModePluginInfo emptyInfo;
 	if (modeName.empty())

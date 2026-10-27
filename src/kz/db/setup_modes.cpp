@@ -28,7 +28,7 @@ void KZDatabaseService::UpdateModeIDs()
 	// clang-format on
 }
 
-void KZDatabaseService::InsertAndUpdateModeIDs(std::string modeName, std::string shortName)
+void KZDatabaseService::InsertAndUpdateModeIDs(const std::string &modeName, const std::string &shortName)
 {
 	if (!KZDatabaseService::IsReady())
 	{

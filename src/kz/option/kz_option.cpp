@@ -265,22 +265,18 @@ bool KZOptionService::ShouldApplyPrefs(i64 incomingStamp, i32 incomingTier)
 	return incomingTier > (i32)this->dataState;
 }
 
-void KZOptionService::InitializeLocalPrefs(std::string text)
+void KZOptionService::InitializeLocalPrefs(const std::string &text)
 {
 	if (this->localLoaded)
 	{
 		return;
 	}
 	this->localLoaded = true;
-	if (text.empty())
-	{
-		text = "{\n}";
-	}
 
 	// Load the preferences from the database into a temporary KV
 	KeyValues3 loadedPrefs(KV3_TYPEEX_TABLE, KV3_SUBTYPE_UNSPECIFIED);
 	CUtlString error;
-	LoadKV3FromJSON(&loadedPrefs, &error, text.c_str(), "");
+	LoadKV3FromJSON(&loadedPrefs, &error, text.empty() ? "{\n}" : text.c_str(), "");
 	if (!error.IsEmpty())
 	{
 		KZ_LOG_WARN(LogChannel::DB, "Error fetching local preference: %s\n", error.Get());

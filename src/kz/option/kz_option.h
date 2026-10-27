@@ -110,7 +110,7 @@ public:
 		return globalLoaded && dataState != NONE;
 	}
 
-	void InitializeLocalPrefs(std::string text);
+	void InitializeLocalPrefs(const std::string &text);
 	void InitializeGlobalPrefs(std::string json);
 
 	void SaveLocalPrefs();

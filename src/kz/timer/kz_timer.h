@@ -227,13 +227,13 @@ public:
 	static void ClearRecordCache();
 	static void UpdateLocalRecordCache();
 	static void InsertRecordToCache(f64 time, const KZCourseDescriptor *courseName, PluginId modeID, bool hasTeleports, bool global,
-									std::string metadata = "", const char *holder = "", const char *replayUUID = "");
+									const std::string &metadata = "", const char *holder = "", const char *replayUUID = "");
 	static const PBData *GetGlobalCachedRecord(const KZCourseDescriptor *course, PluginId modeID);
 
 	void ClearPBCache();
 	const PBData *GetGlobalCachedPB(const KZCourseDescriptor *course, PluginId modeID);
 	void UpdateLocalPBCache();
-	void InsertPBToCache(f64 time, const KZCourseDescriptor *courseName, PluginId modeID, bool overall, bool global, std::string metadata = "",
+	void InsertPBToCache(f64 time, const KZCourseDescriptor *courseName, PluginId modeID, bool overall, bool global, const std::string &metadata = "",
 						 f64 points = 0);
 	void SetCompareTarget(const char *typeString);
 

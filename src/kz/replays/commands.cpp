@@ -121,7 +121,7 @@ namespace KZ::replaysystem::commands
 					{
 						case RPEVENT_MODE_CHANGE:
 						{
-							if (KZ::mode::GetModeInfo(std::string(event.data.modeChange.name)).id < 0)
+							if (KZ::mode::GetModeInfo(event.data.modeChange.name).id < 0)
 							{
 								player->languageService->PrintChat(true, false, "Replay - Unknown Mode", event.data.modeChange.name);
 							}
@@ -130,7 +130,7 @@ namespace KZ::replaysystem::commands
 						case RPEVENT_STYLE_CHANGE:
 						{
 							if (event.data.styleChange.name[0] != '\0'
-								&& KZ::style::GetStyleInfo(std::string(event.data.styleChange.name)).id < 0)
+								&& KZ::style::GetStyleInfo(event.data.styleChange.name).id < 0)
 							{
 								player->languageService->PrintChat(true, false, "Replay - Unknown Style", event.data.styleChange.name);
 							}
@@ -604,7 +604,7 @@ namespace KZ::replaysystem::commands
 		KZ::api::Mode apiMode;
 		u32 localModeID;
 
-		RecordContext(CPlayerUserId uid, std::string map, std::string course, KZ::api::Mode mode, u32 modeID)
+		RecordContext(CPlayerUserId uid, const std::string &map, const std::string &course, KZ::api::Mode mode, u32 modeID)
 			: playerUserID(uid), mapName(std::move(map)), courseName(std::move(course)), apiMode(mode), localModeID(modeID)
 		{
 		}
@@ -815,7 +815,7 @@ namespace KZ::replaysystem::commands
 		KZModeManager::ModePluginInfo modeInfo;
 		if (modeArg && modeArg[0] != '\0')
 		{
-			modeInfo = KZ::mode::GetModeInfo(std::string(modeArg));
+			modeInfo = KZ::mode::GetModeInfo(modeArg);
 		}
 		else
 		{

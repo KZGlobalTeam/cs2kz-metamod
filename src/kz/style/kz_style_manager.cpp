@@ -83,7 +83,7 @@ void KZ::style::LoadStylePlugins()
 	}
 }
 
-void KZ::style::UpdateStyleDatabaseID(std::string name, i32 id)
+void KZ::style::UpdateStyleDatabaseID(const std::string &name, i32 id)
 {
 	for (size_t i = 0; i < styleInfos.size(); i++)
 	{
@@ -113,7 +113,7 @@ KZStyleManager::StylePluginInfo KZ::style::GetStyleInfo(KZStyleService *style)
 	return emptyInfo;
 }
 
-KZStyleManager::StylePluginInfo KZ::style::GetStyleInfo(std::string styleName)
+KZStyleManager::StylePluginInfo KZ::style::GetStyleInfo(const std::string &styleName)
 {
 	KZStyleManager::StylePluginInfo emptyInfo;
 	if (styleName.empty())
@@ -460,12 +460,11 @@ std::string KZStyleManager::GetStylesString(KZPlayer *player)
 	std::string result;
 	for (size_t i = 0; i < player->styleServices.size(); i++)
 	{
+		if (i > 0)
+		{
+			result += ",";
+		}
 		result += player->styleServices[i]->GetStyleName();
-		result += ",";
-	}
-	while (!result.empty() && result.back() == ',')
-	{
-		result.pop_back();
 	}
 	return result;
 }

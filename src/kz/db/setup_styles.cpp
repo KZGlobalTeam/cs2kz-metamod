@@ -28,7 +28,7 @@ void KZDatabaseService::UpdateStyleIDs()
 	// clang-format on
 }
 
-void KZDatabaseService::InsertAndUpdateStyleIDs(std::string styleName, std::string shortName)
+void KZDatabaseService::InsertAndUpdateStyleIDs(const std::string &styleName, const std::string &shortName)
 {
 	if (!KZDatabaseService::IsReady())
 	{

@@ -152,7 +152,7 @@ void BaseRequest::CheckRequests()
 	When specifying a course number, it is possible that the global API will return a different course from the course
 	determined in the local database. In that case, we show both leaderboards and warns the player of potential mismatch.
 */
-void BaseRequest::SetupCourse(std::string courseName)
+void BaseRequest::SetupCourse(const std::string &courseName)
 {
 	if (!isValid || !HasFeature(RequestFeature::Course))
 	{
@@ -239,7 +239,7 @@ void BaseRequest::SetupCourse(std::string courseName)
 	}
 }
 
-void BaseRequest::SetupPlayer(std::string playerName)
+void BaseRequest::SetupPlayer(const std::string &playerName)
 {
 	if (!isValid || !HasFeature(RequestFeature::Player))
 	{
@@ -321,7 +321,7 @@ void BaseRequest::SetupPlayer(std::string playerName)
 	}
 }
 
-void BaseRequest::SetupMode(std::string modeName)
+void BaseRequest::SetupMode(const std::string &modeName)
 {
 	if (!isValid || !HasFeature(RequestFeature::Mode))
 	{
@@ -370,7 +370,7 @@ void BaseRequest::SetupMode(std::string modeName)
 	}
 }
 
-void BaseRequest::SetupStyles(std::string styleNames)
+void BaseRequest::SetupStyles(const std::string &styleNames)
 {
 	if (!isValid || !HasFeature(RequestFeature::Style))
 	{
