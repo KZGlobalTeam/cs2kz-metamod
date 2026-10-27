@@ -16,11 +16,7 @@ struct Section
 	size_t m_iSize;
 };
 
-#if defined(_WIN32)
-#define FASTCALL __fastcall
-#define THISCALL __thiscall
-#else
-#define THISCALL
+#ifndef _WIN32
 #define strtok_s strtok_r
 #endif
 

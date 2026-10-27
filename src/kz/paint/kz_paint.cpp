@@ -309,7 +309,7 @@ SCMD(kz_showpaint, SCFL_MISC | SCFL_PREFERENCE)
 SCMD(kz_cleardecals, SCFL_MISC)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
-	CSingleRecipientFilter filter(player->GetPlayerSlot());
+	CReliableSingleUserRecipientFilter filter(player->GetPlayerSlot());
 	IGameEvent *event = interfaces::pGameEventManager->CreateEvent("round_start");
 	if (!event)
 	{

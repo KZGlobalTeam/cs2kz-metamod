@@ -2,23 +2,17 @@
 #include "utils/schema.h"
 #include "utlmap.h"
 #include "utils/virtual.h"
+#include "gcsdk/soid.h"
 
 class CEconItemView;
 
 typedef uint64 itemid_t;
 
-struct SOID_t
-{
-	uint64 m_id; // CSteamID
-	uint32 m_type;
-	uint32 m_padding;
-};
-
 struct CCSPlayerInventory
 {
 	void **__vtable;
 	int m_nTargetRecipe;
-	SOID_t m_OwnerID;
+	GCSDK::SOID_t m_OwnerID;
 
 	struct
 	{

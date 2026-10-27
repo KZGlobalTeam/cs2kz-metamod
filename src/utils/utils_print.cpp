@@ -292,7 +292,7 @@ void utils::SayChat(CBaseEntity *entity, const char *format, ...)
 	msg->set_messagename(coloredBuffer);
 	msg->set_chat(false);
 
-	CBroadcastRecipientFilter filter;
+	CInGameRecipientFilter filter;
 
 	interfaces::pGameEventSystem->PostEventAbstract(0, false, &filter, netmsg, msg, 0);
 	delete msg;
@@ -301,28 +301,28 @@ void utils::SayChat(CBaseEntity *entity, const char *format, ...)
 void utils::PrintConsole(CBaseEntity *entity, const char *format, ...)
 {
 	FORMAT_STRING(buffer);
-	CSingleRecipientFilter filter(utils::GetEntityPlayerSlot(entity).Get());
+	CReliableSingleUserRecipientFilter filter(utils::GetEntityPlayerSlot(entity).Get());
 	ClientPrintFilter(&filter, HUD_PRINTCONSOLE, buffer, "", "", "", "");
 }
 
 void utils::PrintChat(CBaseEntity *entity, const char *format, ...)
 {
 	FORMAT_STRING(buffer);
-	CSingleRecipientFilter filter(utils::GetEntityPlayerSlot(entity).Get());
+	CReliableSingleUserRecipientFilter filter(utils::GetEntityPlayerSlot(entity).Get());
 	ClientPrintFilter(&filter, HUD_PRINTTALK, buffer, "", "", "", "");
 }
 
 void utils::PrintCentre(CBaseEntity *entity, const char *format, ...)
 {
 	FORMAT_STRING(buffer);
-	CSingleRecipientFilter filter(utils::GetEntityPlayerSlot(entity).Get());
+	CReliableSingleUserRecipientFilter filter(utils::GetEntityPlayerSlot(entity).Get());
 	ClientPrintFilter(&filter, HUD_PRINTCENTER, buffer, "", "", "", "");
 }
 
 void utils::PrintAlert(CBaseEntity *entity, const char *format, ...)
 {
 	FORMAT_STRING(buffer);
-	CSingleRecipientFilter filter(utils::GetEntityPlayerSlot(entity).Get());
+	CReliableSingleUserRecipientFilter filter(utils::GetEntityPlayerSlot(entity).Get());
 	ClientPrintFilter(&filter, HUD_PRINTALERT, buffer, "", "", "", "");
 }
 
@@ -357,28 +357,28 @@ void utils::PrintHTMLCentre(CBaseEntity *entity, const char *format, ...)
 void utils::PrintConsoleAll(const char *format, ...)
 {
 	FORMAT_STRING(buffer);
-	CBroadcastRecipientFilter filter;
+	CInGameRecipientFilter filter;
 	ClientPrintFilter(&filter, HUD_PRINTCONSOLE, buffer, "", "", "", "");
 }
 
 void utils::PrintChatAll(const char *format, ...)
 {
 	FORMAT_STRING(buffer);
-	CBroadcastRecipientFilter filter;
+	CInGameRecipientFilter filter;
 	ClientPrintFilter(&filter, HUD_PRINTTALK, buffer, "", "", "", "");
 }
 
 void utils::PrintCentreAll(const char *format, ...)
 {
 	FORMAT_STRING(buffer);
-	CBroadcastRecipientFilter filter;
+	CInGameRecipientFilter filter;
 	ClientPrintFilter(&filter, HUD_PRINTCENTER, buffer, "", "", "", "");
 }
 
 void utils::PrintAlertAll(const char *format, ...)
 {
 	FORMAT_STRING(buffer);
-	CBroadcastRecipientFilter filter;
+	CInGameRecipientFilter filter;
 	ClientPrintFilter(&filter, HUD_PRINTALERT, buffer, "", "", "", "");
 }
 
@@ -404,7 +404,7 @@ void utils::PrintHTMLCentreAll(const char *format, ...)
 void utils::CPrintChat(CBaseEntity *entity, const char *format, ...)
 {
 	FORMAT_STRING(buffer);
-	CSingleRecipientFilter filter(utils::GetEntityPlayerSlot(entity).Get());
+	CReliableSingleUserRecipientFilter filter(utils::GetEntityPlayerSlot(entity).Get());
 	char coloredBuffer[512];
 	if (CFormat(coloredBuffer, sizeof(coloredBuffer), buffer))
 	{
@@ -419,7 +419,7 @@ void utils::CPrintChat(CBaseEntity *entity, const char *format, ...)
 void utils::CPrintChatAll(const char *format, ...)
 {
 	FORMAT_STRING(buffer);
-	CBroadcastRecipientFilter filter;
+	CInGameRecipientFilter filter;
 	char coloredBuffer[512];
 	if (CFormat(coloredBuffer, sizeof(coloredBuffer), buffer))
 	{

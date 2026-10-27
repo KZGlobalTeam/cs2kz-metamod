@@ -291,7 +291,7 @@ void utils::PlaySoundToClient(CPlayerSlot player, const char *sound, std::option
 		msg->set_packed_params(params, sizeof(params));
 	}
 
-	CSingleRecipientFilter filter(player.Get());
+	CReliableSingleUserRecipientFilter filter(player.Get());
 	interfaces::pGameEventSystem->PostEventAbstract(0, false, &filter, netmsg, msg, 0);
 	delete msg;
 }
@@ -426,7 +426,7 @@ void utils::SendConVarValue(CPlayerSlot slot, const char *conVar, const char *va
 	CMsg_CVars_CVar *cvar = msg->mutable_convars()->add_cvars();
 	cvar->set_name(conVar);
 	cvar->set_value(value);
-	CSingleRecipientFilter filter(slot.Get());
+	CReliableSingleUserRecipientFilter filter(slot.Get());
 	interfaces::pGameEventSystem->PostEventAbstract(0, false, &filter, netmsg, msg, 0);
 	delete msg;
 }
@@ -441,7 +441,7 @@ void utils::SendMultipleConVarValues(CPlayerSlot slot, const char **cvars, const
 		cvar->set_name(cvars[i]);
 		cvar->set_value(values[i]);
 	}
-	CSingleRecipientFilter filter(slot.Get());
+	CReliableSingleUserRecipientFilter filter(slot.Get());
 	interfaces::pGameEventSystem->PostEventAbstract(0, false, &filter, netmsg, msg, 0);
 	delete msg;
 }
@@ -481,7 +481,7 @@ void utils::SendMultipleConVarValues(CPlayerSlot slot, ConVarRefAbstract **conVa
 		cvar->set_name(conVarRefs[i]->GetName());
 		cvar->set_value(values[i]);
 	}
-	CSingleRecipientFilter filter(slot.Get());
+	CReliableSingleUserRecipientFilter filter(slot.Get());
 	interfaces::pGameEventSystem->PostEventAbstract(0, false, &filter, netmsg, msg, 0);
 	delete msg;
 }
@@ -503,7 +503,7 @@ void utils::SendMultipleConVarValues(CPlayerSlot slot, ConVarRefAbstract **conVa
 		cvar->set_name(conVarRefs[i]->GetName());
 		cvar->set_value(buf.Get());
 	}
-	CSingleRecipientFilter filter(slot.Get());
+	CReliableSingleUserRecipientFilter filter(slot.Get());
 	interfaces::pGameEventSystem->PostEventAbstract(0, false, &filter, netmsg, msg, 0);
 	delete msg;
 }

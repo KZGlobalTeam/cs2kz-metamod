@@ -71,7 +71,7 @@ bool cvarquery::Query(CPlayerSlot slot, const char *cvarName, Callback callback)
 	auto msg = netmsg->AllocateMessage()->ToPB<CSVCMsg_GetCvarValue>();
 	msg->set_cookie(cookie);
 	msg->set_cvar_name(cvarName);
-	CSingleRecipientFilter filter(slot.Get());
+	CReliableSingleUserRecipientFilter filter(slot.Get());
 	interfaces::pGameEventSystem->PostEventAbstract(0, false, &filter, netmsg, msg, 0);
 	delete msg;
 

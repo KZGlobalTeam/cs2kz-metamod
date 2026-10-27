@@ -29,6 +29,7 @@ static_function bool ShouldSkipMessage(KZPlayer *targetPlayer, bool addSpectator
 
 static_function bool BuildRecipientFilter(CRecipientFilter &filter, KZPlayer *targetPlayer, bool addSpectators)
 {
+	filter.MakeReliable();
 	if (!targetPlayer->GetController())
 	{
 		return false;

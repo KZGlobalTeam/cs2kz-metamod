@@ -1,7 +1,7 @@
 #pragma once
 // from Valve's GameNetworkingSockets
 #include "common.h"
-typedef int64 SteamNetworkingMicroseconds;
+#include "steam/steamnetworkingtypes.h"
 
 typedef enum : unsigned short
 {
