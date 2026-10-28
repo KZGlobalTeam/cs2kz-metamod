@@ -597,8 +597,8 @@
 		"en"		"Overlap on axis only"
 		"chi"		"仅轴向重叠警告"
 		"zho"		"僅在重疊按鍵上警告"
-		"ua"		"Overlap лише по осі"	
-		"ru"		"Overlap только по оси"	
+		"ua"		"Overlap лише по осі"
+		"ru"		"Overlap только по оси"
 	}
 	"Menu - Keys Overlap Axis Sub"
 	{
@@ -651,14 +651,17 @@
 	"Menu - Color Deadstrafe"
 	{
 		"en"		"Deadstrafe color"
+		"ua"		"Колір Deadstrafe"
 	}
 	"Menu - Deadstrafe"
 	{
 		"en"		"Show deadstrafe"
+		"ua"		"Показати Deadstrafe"
 	}
 	"Menu - Deadstrafe Sub"
 	{
 		"en"		"Recolors the value while air acceleration is cut to a quarter, from rising slower than 140 u/s"
+		"ua"		"Змінює колір швидкості, коли прискорення в повітрі падає до чверті та при зростанні <140 u/s"
 	}
 	"Menu - Color Pro"
 	{
@@ -2176,14 +2179,17 @@
 	"Menu - Course Show Route"
 	{
 		"en"		"Route progress"
+		"ua"		"Прогрес маршруту"
 	}
 	"Menu - Course Show Route Sub"
 	{
 		"en"		"How far along the course you are, measured on the record run's route"
+		"ua"		"Як далеко ви просунулися по маршруту, вимірюється за рекордним проходженням"
 	}
 	"Menu - Course Show Route Label"
 	{
 		"en"		"Route progress label"
+		"ua"		"Надпис прогресу маршруту"
 	}
 	"Menu - Course Show Records"
 	{
@@ -2204,21 +2210,26 @@
 	"Menu - Race"
 	{
 		"en"		"Race"
+		"ua"		"Перегони"
 	}
 	"Menu - Race Time Left"
 	{
 		"en"		"Time left"
+		"ua"		"Залишок часу"
 	}
 	"Menu - Race Time Left Sub"
 	{
 		"en"		"Count down the time left instead of showing the time limit once a race starts"
+		"ua"		"Показує залишок часу, замість того, щоб показувати ліміт часу після старту перегонів"
 	}
 	"Menu - Race PB"
 	{
 		"en"		"Personal best"
+		"ua"		"Особистий рекорд"
 	}
 	"Menu - Race PB Sub"
 	{
 		"en"		"Your fastest time in the current race, in a fastest time race"
+		"ua"		"Ваш найшвидший час у поточних перегонах на швидкість"
 	}
 }

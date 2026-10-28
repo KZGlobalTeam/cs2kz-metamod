@@ -1899,6 +1899,7 @@
 	"Command Description - kz_rpcontrols"
 	{
 		"en"		"Toggle replay controls while spectating the replay bot."
+		"ua"		"Увімк./Вимк. панель керування повтором під час спостереження за ботом повтору."
 	}
 	"Command Description - kz_accept"
 	{
@@ -2002,6 +2003,7 @@
 	"Command Description - kz_hidehud"
 	{
 		"en"		"Toggle hiding game HUD elements. Without arguments, hides everything but chat and the crosshair."
+		"ua"		"Увімк./Вимк. приховування елементів HUD гри. Без додаткових аргументів приховує все, крім чату та прицілу."
 	}
 	"Command Description - kz_exportprefs"
 	{
@@ -2083,6 +2085,7 @@
 	"Command Usage - kz_hidehud"
 	{
 		"en"		"!hidehud [crosshair|weapons|notices|voice]..."
+		"ua"		"!hidehud [crosshair|weapons|notices|voice]..."
 	}
 	"Command Usage - kz_jstier"
 	{

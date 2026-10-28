@@ -376,6 +376,7 @@
 	{
 		"#format"	"name:s"
 		"en"		"{grey}Couldn't move you to spectator mode. Type {default}!spec {name}{grey} to watch the replay."
+		"ua"		"{grey}Не вдалося перевести вас у режим спостерігача. Введіть {default}!spec {name}{grey}, щоб переглянути повтор."
 	}
 	"Replay - No Loading Progress"
 	{
@@ -973,72 +974,89 @@
 	"Replay Controls - Not Watching"
 	{
 		"en"		"{grey}Spectate the replay bot in first or third person to use the replay controls."
+		"ua"		"{grey}Спостерігайте за ботом повтору від першої або третьої особи, щоб використовувати панель керування повтором."
 	}
 	"Replay Controls - Show Cursor"
 	{
 		"en"		"Show cursor"
+		"ua"		"Показати курсор"
 	}
 	"Replay Controls - Hide Cursor"
 	{
 		"en"		"Hide cursor"
+		"ua"		"Сховати курсор"
 	}
 	"Replay Controls - Skip Breather"
 	{
 		"en"		"Skip breather"
+		"ua"		"Перейти до початку"
 	}
 	"Replay Controls - Skip Pause"
 	{
 		"en"		"Skip pause"
+		"ua"		"Пропустити паузу"
 	}
 	"Replay Controls - Tick"
 	{
 		"en"		"Tick"
+		"ua"		"Тік"
 	}
 	"Replay Controls - Previous Tick"
 	{
 		"en"		"-1t"
+		"ua"		"-1t"
 	}
 	"Replay Controls - Next Tick"
 	{
 		"en"		"+1t"
+		"ua"		"+1t"
 	}
 	"Replay Controls - Split"
 	{
 		"#format"	"index:d,time:s"
 		"en"		"Split {index}  {time}"
+		"ua"		"Спліт {index}  {time}"
 	}
 	"Replay Controls - Checkpoint"
 	{
 		"#format"	"index:d,time:s"
 		"en"		"Checkpoint {index}  {time}"
+		"ua"		"Чекпоінт {index}  {time}"
 	}
 	"Replay Controls - Stage"
 	{
 		"#format"	"index:d,time:s"
 		"en"		"Stage {index}  {time}"
+		"ua"		"Етап {index}  {time}"
 	}
 	"Replay Controls - Zone Split"
 	{
 		"en"		"Split"
+		"ua"		"Спліт"
 	}
 	"Replay Controls - Zone Checkpoint"
 	{
 		"en"		"Checkpoint"
+		"ua"		"Чекпоінт"
 	}
 	"Replay Controls - Zone Stage"
 	{
 		"en"		"Stage"
+		"ua"		"Етап"
 	}
 	"Replay Controls - Zone Teleport"
 	{
 		"en"		"Teleport"
+		"ua"		"Телепорт"
 	}
 	"Replay Controls - Time"
 	{
 		"en"		"Time"
+		"ua"		"Час"
 	}
 	"Replay Controls - Hide Controls"
 	{
 		"en"		"Hide controls"
+		"ua"		"Сховати панель"
 	}
 }
