@@ -24,6 +24,7 @@ namespace
 		bool apiOnline = false;
 		bool serverConnected = false;
 		bool mapGlobal = false;
+		bool playerAuthenticated = false;
 		bool playerGlobal = false;
 		bool modeGlobal = false;
 		bool stylesGlobal = false;
@@ -39,6 +40,10 @@ namespace
 					MakeStatusString(this->modeGlobal),
 					MakeStatusString(this->stylesGlobal));
 			// clang-format on
+			if (!this->playerAuthenticated)
+			{
+				player->languageService->PrintChat(true, false, "Player Not Authenticated (Steam)", player->GetName());
+			}
 		}
 	};
 
@@ -154,13 +159,14 @@ SCMD(kz_globalcheck, SCFL_GLOBAL | SCFL_MAP | SCFL_PLAYER)
 {
 	GlobalStatus status;
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
+	status.playerAuthenticated = player->IsAuthenticated();
 
 	if (KZGlobalService::IsAvailable())
 	{
 		status.apiOnline = true;
 		status.serverConnected = true;
 		status.mapGlobal = KZGlobalService::WithCurrentMap([](const std::optional<KZ::api::Map> &mapInfo) { return mapInfo.has_value(); });
-		status.playerGlobal = !player->globalService->IsBanned();
+		status.playerGlobal = status.playerAuthenticated && !player->globalService->IsBanned();
 
 		KZGlobalService::WithGlobalModes(
 			[&](const KZGlobalService::GlobalModeChecksums &checksums)
