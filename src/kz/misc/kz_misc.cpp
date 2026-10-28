@@ -72,8 +72,7 @@ SCMD(kz_end, SCFL_MAP)
 	// If the player specify a course name, we first check if it's valid or not.
 	if (V_strlen(args->ArgS()) > 0)
 	{
-		std::string courseArg = args->ArgS();
-		utils::Trim(courseArg);
+		std::string courseArg = utils::Trim(args->ArgS());
 		const KZCourseDescriptor *course = nullptr;
 		if (utils::IsNumeric(courseArg.c_str()))
 		{
@@ -161,9 +160,8 @@ void KZ::misc::HandleTeleportToCourse(KZPlayer *player, const CCommand *args)
 	// If the player specify a course name, we first check if it's valid or not.
 	if (V_strlen(args->ArgS()) > 0)
 	{
-		std::string courseArg = args->ArgS();
 		// Trim whitespace
-		utils::Trim(courseArg);
+		std::string courseArg = utils::Trim(args->ArgS());
 		if (utils::IsNumeric(courseArg.c_str()))
 		{
 			i32 courseID = atoi(courseArg.c_str());

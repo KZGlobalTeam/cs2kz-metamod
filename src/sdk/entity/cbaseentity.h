@@ -4,7 +4,6 @@
 #include "utils/schema.h"
 #include "utils/interfaces.h"
 #include "ehandle.h"
-#include "networktransmitcomponent.h"
 
 extern CGameConfig *g_pGameConfig;
 
@@ -76,7 +75,6 @@ public:
 	SCHEMA_FIELD(CBodyComponent *, m_CBodyComponent)
 	SCHEMA_FIELD(CBitVec<64>, m_isSteadyState)
 	SCHEMA_FIELD(float, m_lastNetworkChange)
-	SCHEMA_FIELD_POINTER(CNetworkTransmitComponent, m_NetworkTransmitComponent)
 	SCHEMA_FIELD(int, m_iHealth)
 	SCHEMA_FIELD(uint8, m_lifeState)
 	SCHEMA_FIELD(int, m_iTeamNum)

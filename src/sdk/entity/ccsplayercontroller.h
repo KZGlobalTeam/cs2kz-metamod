@@ -1,7 +1,7 @@
 #pragma once
 #include "cbaseplayercontroller.h"
 #include "sdk/services.h"
-#include "utils/rng.h"
+#include "random.h"
 
 enum OverlapState : uint8
 {
@@ -98,7 +98,7 @@ public:
 		SetPawn(pawn);
 		if (this->m_iTeamNum() != CS_TEAM_CT && this->m_iTeamNum() != CS_TEAM_T)
 		{
-			SwitchTeam(utils::RandomInt(CS_TEAM_T, CS_TEAM_CT));
+			SwitchTeam(RandomInt(CS_TEAM_T, CS_TEAM_CT));
 		}
 		static_persist const int offset = g_pGameConfig->GetOffset("ControllerRespawn");
 		CALL_VIRTUAL(void, offset, this);

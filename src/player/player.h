@@ -83,8 +83,7 @@ public:
 
 	const char *GetName()
 	{
-		sanitizedName = GetClient() ? GetClient()->GetClientName() : "<blank>";
-		utils::Trim(sanitizedName);
+		sanitizedName = utils::Trim(GetClient() ? GetClient()->GetClientName() : "<blank>");
 		return sanitizedName.c_str();
 	}
 

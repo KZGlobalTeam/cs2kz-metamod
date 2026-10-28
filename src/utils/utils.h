@@ -161,10 +161,14 @@ namespace utils
 		return pieces;
 	}
 
-	inline void Trim(std::string &text, const char *targets = "\t\r\n ")
+	inline std::string Trim(std::string_view text, const char *targets = "\t\r\n ")
 	{
-		text.erase(0, text.find_first_not_of(targets));
-		text.erase(text.find_last_not_of(targets) + 1);
+		const size_t start = text.find_first_not_of(targets);
+		if (start == std::string_view::npos)
+		{
+			return {};
+		}
+		return std::string(text.substr(start, text.find_last_not_of(targets) - start + 1));
 	}
 
 	inline bool IsNumeric(const char *str)

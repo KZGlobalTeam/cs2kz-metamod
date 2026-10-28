@@ -3,11 +3,8 @@
 #include "kz/timer/kz_timer.h"
 #include "kz/language/kz_language.h"
 #include "kz/global/kz_global.h"
-#include "utils/rng.h"
 
 #include <vendor/MultiAddonManager/public/imultiaddonmanager.h>
-
-#include <algorithm>
 
 static_global KeyValues *pTipKeyValues;
 static_global std::vector<const char *> tipNames;
@@ -84,7 +81,11 @@ void KZTipService::LoadTips()
 
 void KZTipService::ShuffleTips()
 {
-	std::shuffle(tipNames.begin(), tipNames.end(), utils::randomEngine);
+	for (size_t i = tipNames.size(); i > 1; i--)
+	{
+		int j = RandomInt(0, i - 1);
+		V_swap(tipNames[i - 1], tipNames[j]);
+	}
 }
 
 SCMD(kz_tips, SCFL_MISC)
