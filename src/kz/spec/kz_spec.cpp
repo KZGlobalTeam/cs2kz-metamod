@@ -181,7 +181,7 @@ bool KZSpecService::CanSpectate()
 	return !this->player->IsAlive() || this->player->timerService->GetPaused() || this->player->timerService->CanPause();
 }
 
-void KZSpecService::GetSpectatorList(std::vector<CUtlString> &spectatorList)
+void KZSpecService::GetSpectatorList(std::vector<std::string> &spectatorList)
 {
 	KZPlayer *spectator = this->player->specService->GetNextSpectator(nullptr);
 	while (spectator)
@@ -218,7 +218,7 @@ KZPlayer *KZSpecService::GetSpectatedPlayer()
 
 KZPlayer *KZSpecService::GetNextSpectator(KZPlayer *current)
 {
-	for (i32 i = current ? current->GetPlayerSlot().Get() + 1 : 0; i < MAXPLAYERS; i++)
+	for (i32 i = current ? current->GetPlayerSlot().Get() + 1 : 0; i < MAX_PLAYERS; i++)
 	{
 		KZPlayer *player = g_pKZPlayerManager->ToPlayer(CPlayerSlot(i));
 		if (player->IsInGame() && player->specService->IsSpectating(this->player))
@@ -283,7 +283,7 @@ SCMD(kz_specs, SCFL_SPEC)
 		player->languageService->PrintChat(true, false, "Spectator List (None)");
 		return true;
 	}
-	std::vector<CUtlString> spectatorList;
+	std::vector<std::string> spectatorList;
 	targetPlayer->specService->GetSpectatorList(spectatorList);
 	if (spectatorList.empty())
 	{
@@ -298,7 +298,7 @@ SCMD(kz_specs, SCFL_SPEC)
 	}
 	else
 	{
-		CUtlString spectatorListString;
+		std::string spectatorListString;
 		for (size_t i = 0; i < spectatorList.size(); i++)
 		{
 			spectatorListString += spectatorList[i];
@@ -309,12 +309,12 @@ SCMD(kz_specs, SCFL_SPEC)
 		}
 		if (targetPlayer == player)
 		{
-			player->languageService->PrintChat(true, false, "Spectator List", spectatorList.size(), spectatorListString.Get());
+			player->languageService->PrintChat(true, false, "Spectator List", spectatorList.size(), spectatorListString.c_str());
 		}
 		else
 		{
 			player->languageService->PrintChat(true, false, "Target Spectator List", targetPlayer->GetName(), spectatorList.size(),
-											   spectatorListString.Get());
+											   spectatorListString.c_str());
 		}
 	}
 	return true;

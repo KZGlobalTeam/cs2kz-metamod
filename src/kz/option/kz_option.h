@@ -82,7 +82,7 @@ private:
 	}
 
 	KeyValues3 prefKV = KeyValues3(KV3_TYPEEX_TABLE, KV3_SUBTYPE_UNSPECIFIED);
-	std::vector<CUtlString> userSetPrefs; // Track user-modified preferences
+	std::vector<std::string> userSetPrefs; // Track user-modified preferences
 
 public:
 	void Reset()
@@ -110,7 +110,7 @@ public:
 		return globalLoaded && dataState != NONE;
 	}
 
-	void InitializeLocalPrefs(CUtlString text);
+	void InitializeLocalPrefs(const std::string &text);
 	void InitializeGlobalPrefs(std::string json);
 
 	void SaveLocalPrefs();
@@ -125,10 +125,13 @@ public:
 		SaveGlobalPrefs();
 	}
 
-	void GetPreferencesAsJSON(CUtlString *error, CUtlString *output)
+	void GetPreferencesAsJSON(std::string *error, std::string *output)
 	{
 		this->StampPreferences();
-		SaveKV3AsJSON(&this->prefKV, error, output);
+		CUtlString kv3Error, kv3Output;
+		SaveKV3AsJSON(&this->prefKV, &kv3Error, &kv3Output);
+		*error = kv3Error.Get();
+		*output = kv3Output.Get();
 	}
 
 	// True once the player has a value for this preference, as opposed to falling back to a default.

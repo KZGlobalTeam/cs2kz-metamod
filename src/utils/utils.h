@@ -4,7 +4,12 @@
 #include "sdk/datatypes.h"
 #include "igameevents.h"
 
+#include <cstdarg>
+#include <cstdio>
 #include <optional>
+#include <string>
+#include <string_view>
+#include <vector>
 
 class KZUtils;
 class CBasePlayerController;
@@ -87,6 +92,84 @@ namespace utils
 	bool IsServerSecure();
 	void UpdateServerVersion();
 	u32 GetServerVersion();
+
+	inline std::string FormatV(const char *format, va_list args)
+	{
+		va_list copy;
+		va_copy(copy, args);
+		const int length = vsnprintf(nullptr, 0, format, copy);
+		va_end(copy);
+		if (length <= 0)
+		{
+			return {};
+		}
+		std::string result(length, '\0');
+		vsnprintf(result.data(), length + 1, format, args);
+		return result;
+	}
+
+	// Through CUtlString to keep tier0's exact results.
+	inline std::string StripExtension(const std::string &path)
+	{
+		return CUtlString(path.c_str()).StripExtension().Get();
+	}
+
+	inline std::string StripFilename(const std::string &path)
+	{
+		return CUtlString(path.c_str()).StripFilename().Get();
+	}
+
+	inline std::string DirName(const std::string &path)
+	{
+		return CUtlString(path.c_str()).DirName().Get();
+	}
+
+	inline std::string GetBaseFilename(const std::string &path)
+	{
+		return CUtlString(path.c_str()).GetBaseFilename().Get();
+	}
+
+	inline std::string Replace(const std::string &text, const char *search, const char *replacement)
+	{
+		return CUtlString(text.c_str()).Replace(search, replacement).Get();
+	}
+
+	// SQL results are nullptr for NULL columns.
+	inline const char *OrEmpty(const char *str)
+	{
+		return str ? str : "";
+	}
+
+	// Skips empty pieces.
+	inline std::vector<std::string> Split(std::string_view text, char separator)
+	{
+		std::vector<std::string> pieces;
+		size_t start = 0;
+		while (start <= text.size())
+		{
+			size_t end = text.find(separator, start);
+			if (end == std::string_view::npos)
+			{
+				end = text.size();
+			}
+			if (end > start)
+			{
+				pieces.emplace_back(text.substr(start, end - start));
+			}
+			start = end + 1;
+		}
+		return pieces;
+	}
+
+	inline std::string Trim(std::string_view text, const char *targets = "\t\r\n ")
+	{
+		const size_t start = text.find_first_not_of(targets);
+		if (start == std::string_view::npos)
+		{
+			return {};
+		}
+		return std::string(text.substr(start, text.find_last_not_of(targets) - start + 1));
+	}
 
 	inline bool IsNumeric(const char *str)
 	{
@@ -205,11 +288,11 @@ namespace utils
 		}
 	}
 
-	inline CUtlString FormatTime(f64 time, bool precise = true)
+	inline std::string FormatTime(f64 time, bool precise = true)
 	{
 		char temp[32];
 		FormatTime(time, temp, sizeof(temp), precise);
-		return CUtlString(temp);
+		return std::string(temp);
 	}
 
 	inline bool ParseTimeString(const char *timeStr, f64 *outSeconds)

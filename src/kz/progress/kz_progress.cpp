@@ -210,7 +210,7 @@ static_function void StartReferenceLoad(PBDataKey key, ProgressReference &refere
 	}
 	reference.dirty = false;
 	reference.uuids = CollectReferenceUUIDs(key);
-	ReferenceLoadRequest request {key, reference.revision, {}, g_pKZUtils->GetCurrentMapName().Get(), md5, course->name, modeName, course->id};
+	ReferenceLoadRequest request {key, reference.revision, {}, g_pKZUtils->GetCurrentMapName().c_str(), md5, course->name, modeName, course->id};
 	for (const auto &uuid : reference.uuids)
 	{
 		std::string path;
@@ -275,7 +275,7 @@ void KZProgressService::OnPhysicsSimulatePost()
 	{
 		return;
 	}
-	f64 phase = this->player->GetPlayerSlot().Get() * PROGRESS_UPDATE_INTERVAL / MAXPLAYERS;
+	f64 phase = this->player->GetPlayerSlot().Get() * PROGRESS_UPDATE_INTERVAL / MAX_PLAYERS;
 	this->nextUpdate = (floor((now - phase) / PROGRESS_UPDATE_INTERVAL) + 1) * PROGRESS_UPDATE_INTERVAL + phase;
 	this->visible = false;
 	const auto *course = this->player->timerService->GetCourse();

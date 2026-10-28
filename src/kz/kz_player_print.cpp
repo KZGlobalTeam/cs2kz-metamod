@@ -29,6 +29,7 @@ static_function bool ShouldSkipMessage(KZPlayer *targetPlayer, bool addSpectator
 
 static_function bool BuildRecipientFilter(CRecipientFilter &filter, KZPlayer *targetPlayer, bool addSpectators)
 {
+	filter.MakeReliable();
 	if (!targetPlayer->GetController())
 	{
 		return false;
@@ -139,20 +140,20 @@ void KZPlayer::PrintHTMLCentre(bool addPrefix, bool includeSpectators, const cha
 	{
 		return;
 	}
-	CUtlString buffer;
 	va_list args;
 	va_start(args, format);
-	buffer.FormatV(format, args);
+	std::string buffer = utils::FormatV(format, args);
+	va_end(args);
 
 	if (addPrefix)
 	{
 		const char *prefix = KZOptionService::GetOptionStr("chatPrefix", KZ_DEFAULT_CHAT_PREFIX);
-		buffer.Format("%s %s", prefix, buffer.Get());
+		buffer = tfm::format("%s %s", prefix, buffer.c_str());
 	}
 
 	if (!includeSpectators)
 	{
-		utils::PrintHTMLCentre(this->GetController(), buffer.Get());
+		utils::PrintHTMLCentre(this->GetController(), buffer.c_str());
 		return;
 	}
 
@@ -173,7 +174,7 @@ void KZPlayer::PrintHTMLCentre(bool addPrefix, bool includeSpectators, const cha
 	{
 		return;
 	}
-	event->SetString("loc_token", buffer.Get());
+	event->SetString("loc_token", buffer.c_str());
 	event->SetInt("duration", 1);
 	event->SetInt("userid", -1);
 

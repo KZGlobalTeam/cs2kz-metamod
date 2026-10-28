@@ -114,7 +114,7 @@ const std::vector<KZLanguageService::AvailableLanguage> &KZLanguageService::GetA
 			i32 index = -1;
 			for (i32 i = 0; i < (i32)availableLanguages.size(); i++)
 			{
-				if (V_stricmp(availableLanguages[i].code.Get(), code) == 0)
+				if (V_stricmp(availableLanguages[i].code.c_str(), code) == 0)
 				{
 					index = i;
 					break;
@@ -123,7 +123,7 @@ const std::vector<KZLanguageService::AvailableLanguage> &KZLanguageService::GetA
 			if (index < 0)
 			{
 				// config.txt maps a Steam language name to each code; use the first one as the label.
-				CUtlString steamName = code;
+				std::string steamName = code;
 				for (KeyValues *named = languagesKV ? languagesKV->GetFirstSubKey() : nullptr; named; named = named->GetNextKey())
 				{
 					if (V_stricmp(named->GetString(nullptr, ""), code) == 0)

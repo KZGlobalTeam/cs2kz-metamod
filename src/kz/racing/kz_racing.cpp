@@ -185,7 +185,7 @@ void KZRacingService::DrawLegacyHud(const HudInfo &info)
 	std::string timeLimitString;
 	if (info.timeLimit > 0)
 	{
-		timeLimitString = lang->PrepareMessage("Racing - Time Limit", utils::FormatTime(info.timeLimit, false).Get());
+		timeLimitString = lang->PrepareMessage("Racing - Time Limit", utils::FormatTime(info.timeLimit, false).c_str());
 	}
 	else
 	{

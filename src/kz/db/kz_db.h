@@ -116,40 +116,42 @@ public:
 	// Course
 	static bool AreCoursesSetUp();
 	static void SetupCourses(std::vector<KZCourseDescriptor *> &courses);
-	static void FindFirstCourseByMapName(CUtlString mapName, TransactionSuccessCallbackFunc onSuccess, TransactionFailureCallbackFunc onFailure);
+	static void FindFirstCourseByMapName(const std::string &mapName, TransactionSuccessCallbackFunc onSuccess,
+										 TransactionFailureCallbackFunc onFailure);
 
 	// Client/Player
 	void SetupClient();
-	void SavePrefs(CUtlString prefs);
+	void SavePrefs(const std::string &prefs);
 
 private:
 	bool isSetUp {};
 
 public:
-	static void FindPlayerByAlias(CUtlString playerName, TransactionSuccessCallbackFunc onSuccess, TransactionFailureCallbackFunc onFailure);
+	static void FindPlayerByAlias(const std::string &playerName, TransactionSuccessCallbackFunc onSuccess, TransactionFailureCallbackFunc onFailure);
 
 	// Mode
 	static void UpdateModeIDs();
-	static void InsertAndUpdateModeIDs(CUtlString modeName, CUtlString shortName);
+	static void InsertAndUpdateModeIDs(const std::string &modeName, const std::string &shortName);
 
 	// Styles
 	static void UpdateStyleIDs();
-	static void InsertAndUpdateStyleIDs(CUtlString styleName, CUtlString shortName);
+	static void InsertAndUpdateStyleIDs(const std::string &styleName, const std::string &shortName);
 
 	// Times
 	static void SaveTime(const char *runUUID, u64 steamID, u32 courseID, i32 modeID, f64 time, u64 teleportsUsed, u64 styleIDs,
 						 std::string_view metadata, TransactionSuccessCallbackFunc onSuccess, TransactionFailureCallbackFunc onFailure);
 	static void UpdateRunUUID(const char *oldUUID, const char *newUUID, TransactionSuccessCallbackFunc onSuccess,
 							  TransactionFailureCallbackFunc onFailure);
-	static void QueryAllPBs(u64 steamID64, CUtlString mapName, TransactionSuccessCallbackFunc onSuccess, TransactionFailureCallbackFunc onFailure);
-	static void QueryPB(u64 steamID64, CUtlString mapName, CUtlString courseName, u32 modeID, TransactionSuccessCallbackFunc onSuccess,
-						TransactionFailureCallbackFunc onFailure);
-	static void QueryPBRankless(u64 steamID64, CUtlString mapName, CUtlString courseName, u32 modeID, u64 styleIDFlags,
+	static void QueryAllPBs(u64 steamID64, const std::string &mapName, TransactionSuccessCallbackFunc onSuccess,
+							TransactionFailureCallbackFunc onFailure);
+	static void QueryPB(u64 steamID64, const std::string &mapName, const std::string &courseName, u32 modeID,
+						TransactionSuccessCallbackFunc onSuccess, TransactionFailureCallbackFunc onFailure);
+	static void QueryPBRankless(u64 steamID64, const std::string &mapName, const std::string &courseName, u32 modeID, u64 styleIDFlags,
 								TransactionSuccessCallbackFunc onSuccess, TransactionFailureCallbackFunc onFailure);
 
-	static void QueryAllRecords(CUtlString mapName, TransactionSuccessCallbackFunc onSuccess, TransactionFailureCallbackFunc onFailure);
-	static void QueryRecords(CUtlString mapName, CUtlString courseName, u32 modeID, u32 count, u32 offset, TransactionSuccessCallbackFunc onSuccess,
-							 TransactionFailureCallbackFunc onFailure);
+	static void QueryAllRecords(const std::string &mapName, TransactionSuccessCallbackFunc onSuccess, TransactionFailureCallbackFunc onFailure);
+	static void QueryRecords(const std::string &mapName, const std::string &courseName, u32 modeID, u32 count, u32 offset,
+							 TransactionSuccessCallbackFunc onSuccess, TransactionFailureCallbackFunc onFailure);
 
 	static void Ban(u64 steamID64, const char *reason = nullptr, f32 duration = 0.0f, const UUID_t banId = UUID_t(false),
 					const UUID_t replayUuid = UUID_t(false), TransactionSuccessCallbackFunc onSuccess = OnGenericTxnSuccess,

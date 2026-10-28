@@ -14,7 +14,7 @@ public:
 	virtual void Init() {};
 	virtual void Cleanup() {};
 
-	virtual bool IsCompatibleWithStyle(CUtlString style)
+	virtual bool IsCompatibleWithStyle(const std::string &style)
 	{
 		return true;
 	}
@@ -182,7 +182,7 @@ public:
 		StyleServiceFactory factory {};
 		char md5[33] {};
 		i32 databaseID = -1;
-		std::vector<CUtlString> incompatibleStyles;
+		std::vector<std::string> incompatibleStyles;
 	};
 
 	virtual bool RegisterStyle(PluginId id, const char *shortName, const char *longName, StyleServiceFactory factory,
@@ -195,7 +195,7 @@ public:
 	void ToggleStyle(KZPlayer *player, const char *styleName, bool silent = false, bool updatePreference = true);
 	void ClearStyles(KZPlayer *player, bool silent = false, bool updatePreference = true);
 	void RefreshStyles(KZPlayer *player, bool updatePreference = true);
-	CUtlString GetStylesString(KZPlayer *player);
+	std::string GetStylesString(KZPlayer *player);
 	static const std::vector<StylePluginInfo> &GetStyles();
 	void PrintActiveStyles(KZPlayer *player);
 	void PrintAllStyles(KZPlayer *player);
@@ -209,8 +209,8 @@ namespace KZ::style
 {
 	void InitStyleManager();
 	void LoadStylePlugins();
-	void UpdateStyleDatabaseID(CUtlString name, i32 id);
+	void UpdateStyleDatabaseID(const std::string &name, i32 id);
 	KZStyleManager::StylePluginInfo GetStyleInfo(KZStyleService *style);
-	KZStyleManager::StylePluginInfo GetStyleInfo(CUtlString styleName);
+	KZStyleManager::StylePluginInfo GetStyleInfo(const std::string &styleName);
 
 }; // namespace KZ::style

@@ -292,7 +292,7 @@ void utils::SayChat(CBaseEntity *entity, const char *format, ...)
 	msg->set_messagename(coloredBuffer);
 	msg->set_chat(false);
 
-	CBroadcastRecipientFilter filter;
+	CInGameRecipientFilter filter;
 
 	interfaces::pGameEventSystem->PostEventAbstract(0, false, &filter, netmsg, msg, 0);
 	delete msg;
@@ -301,28 +301,28 @@ void utils::SayChat(CBaseEntity *entity, const char *format, ...)
 void utils::PrintConsole(CBaseEntity *entity, const char *format, ...)
 {
 	FORMAT_STRING(buffer);
-	CSingleRecipientFilter filter(utils::GetEntityPlayerSlot(entity).Get());
+	CReliableSingleUserRecipientFilter filter(utils::GetEntityPlayerSlot(entity).Get());
 	ClientPrintFilter(&filter, HUD_PRINTCONSOLE, buffer, "", "", "", "");
 }
 
 void utils::PrintChat(CBaseEntity *entity, const char *format, ...)
 {
 	FORMAT_STRING(buffer);
-	CSingleRecipientFilter filter(utils::GetEntityPlayerSlot(entity).Get());
+	CReliableSingleUserRecipientFilter filter(utils::GetEntityPlayerSlot(entity).Get());
 	ClientPrintFilter(&filter, HUD_PRINTTALK, buffer, "", "", "", "");
 }
 
 void utils::PrintCentre(CBaseEntity *entity, const char *format, ...)
 {
 	FORMAT_STRING(buffer);
-	CSingleRecipientFilter filter(utils::GetEntityPlayerSlot(entity).Get());
+	CReliableSingleUserRecipientFilter filter(utils::GetEntityPlayerSlot(entity).Get());
 	ClientPrintFilter(&filter, HUD_PRINTCENTER, buffer, "", "", "", "");
 }
 
 void utils::PrintAlert(CBaseEntity *entity, const char *format, ...)
 {
 	FORMAT_STRING(buffer);
-	CSingleRecipientFilter filter(utils::GetEntityPlayerSlot(entity).Get());
+	CReliableSingleUserRecipientFilter filter(utils::GetEntityPlayerSlot(entity).Get());
 	ClientPrintFilter(&filter, HUD_PRINTALERT, buffer, "", "", "", "");
 }
 
@@ -334,17 +334,17 @@ void utils::PrintHTMLCentre(CBaseEntity *entity, const char *format, ...)
 		return;
 	}
 
-	CUtlString buffer;
 	va_list args;
 	va_start(args, format);
-	buffer.FormatV(format, args);
+	std::string buffer = utils::FormatV(format, args);
+	va_end(args);
 
 	IGameEvent *event = interfaces::pGameEventManager->CreateEvent("show_survival_respawn_status");
 	if (!event)
 	{
 		return;
 	}
-	event->SetString("loc_token", buffer.Get());
+	event->SetString("loc_token", buffer.c_str());
 	event->SetInt("duration", 1);
 	event->SetInt("userid", -1);
 
@@ -357,44 +357,44 @@ void utils::PrintHTMLCentre(CBaseEntity *entity, const char *format, ...)
 void utils::PrintConsoleAll(const char *format, ...)
 {
 	FORMAT_STRING(buffer);
-	CBroadcastRecipientFilter filter;
+	CInGameRecipientFilter filter;
 	ClientPrintFilter(&filter, HUD_PRINTCONSOLE, buffer, "", "", "", "");
 }
 
 void utils::PrintChatAll(const char *format, ...)
 {
 	FORMAT_STRING(buffer);
-	CBroadcastRecipientFilter filter;
+	CInGameRecipientFilter filter;
 	ClientPrintFilter(&filter, HUD_PRINTTALK, buffer, "", "", "", "");
 }
 
 void utils::PrintCentreAll(const char *format, ...)
 {
 	FORMAT_STRING(buffer);
-	CBroadcastRecipientFilter filter;
+	CInGameRecipientFilter filter;
 	ClientPrintFilter(&filter, HUD_PRINTCENTER, buffer, "", "", "", "");
 }
 
 void utils::PrintAlertAll(const char *format, ...)
 {
 	FORMAT_STRING(buffer);
-	CBroadcastRecipientFilter filter;
+	CInGameRecipientFilter filter;
 	ClientPrintFilter(&filter, HUD_PRINTALERT, buffer, "", "", "", "");
 }
 
 void utils::PrintHTMLCentreAll(const char *format, ...)
 {
-	CUtlString buffer;
 	va_list args;
 	va_start(args, format);
-	buffer.FormatV(format, args);
+	std::string buffer = utils::FormatV(format, args);
+	va_end(args);
 
 	IGameEvent *event = interfaces::pGameEventManager->CreateEvent("show_survival_respawn_status");
 	if (!event)
 	{
 		return;
 	}
-	event->SetString("loc_token", buffer.Get());
+	event->SetString("loc_token", buffer.c_str());
 	event->SetInt("duration", 1);
 	event->SetInt("userid", -1);
 
@@ -404,7 +404,7 @@ void utils::PrintHTMLCentreAll(const char *format, ...)
 void utils::CPrintChat(CBaseEntity *entity, const char *format, ...)
 {
 	FORMAT_STRING(buffer);
-	CSingleRecipientFilter filter(utils::GetEntityPlayerSlot(entity).Get());
+	CReliableSingleUserRecipientFilter filter(utils::GetEntityPlayerSlot(entity).Get());
 	char coloredBuffer[512];
 	if (CFormat(coloredBuffer, sizeof(coloredBuffer), buffer))
 	{
@@ -419,7 +419,7 @@ void utils::CPrintChat(CBaseEntity *entity, const char *format, ...)
 void utils::CPrintChatAll(const char *format, ...)
 {
 	FORMAT_STRING(buffer);
-	CBroadcastRecipientFilter filter;
+	CInGameRecipientFilter filter;
 	char coloredBuffer[512];
 	if (CFormat(coloredBuffer, sizeof(coloredBuffer), buffer))
 	{

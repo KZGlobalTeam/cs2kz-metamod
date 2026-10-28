@@ -53,12 +53,11 @@ void KZJumpstatsService::GetFieldLayout(KZPlayer *player, JSFieldLayout &out)
 	bool placed[(i32)JSField::Count] {};
 	i32 count = 0;
 	// Unknown names are skipped, and fields missing from the list go at the end.
-	CSplitString slugs(opts->GetPreferenceStr("jsFieldOrder", JS_DEFAULT_FIELD_ORDER), ",");
-	FOR_EACH_VEC(slugs, i)
+	for (const std::string &slug : utils::Split(opts->GetPreferenceStr("jsFieldOrder", JS_DEFAULT_FIELD_ORDER), ','))
 	{
 		for (i32 f = 0; f < (i32)JSField::Count; f++)
 		{
-			if (!placed[f] && KZ_STREQ(slugs[i], JS_FIELDS[f].slug))
+			if (!placed[f] && KZ_STREQ(slug.c_str(), JS_FIELDS[f].slug))
 			{
 				placed[f] = true;
 				out.order[count++] = (JSField)f;
@@ -464,7 +463,7 @@ void KZJumpstatsService::PrintJumpToConsole(KZPlayer *target, Jump *jump, bool b
 		jump->GetDuckTime(false)
 	);
 	
-	CUtlString headers[KZ_ARRAYSIZE(columnKeys)];
+	std::string headers[KZ_ARRAYSIZE(columnKeys)];
 	for (u32 i = 0; i < KZ_ARRAYSIZE(columnKeys); i++)
 	{
 		headers[i] = target->languageService->PrepareMessage(columnKeys[i]).c_str();
@@ -528,10 +527,10 @@ void KZJumpstatsService::PrintJumpToConsole(KZPlayer *target, Jump *jump, bool b
 
 	if (!jump->strafes.empty())
 	{
-		target->PrintConsole(false, false, table.GetHeader());
+		target->PrintConsole(false, false, table.GetHeader().c_str());
 		for (u32 i = 0; i < table.GetNumEntries(); i++)
 		{
-			target->PrintConsole(false, false, table.GetLine(i));
+			target->PrintConsole(false, false, table.GetLine(i).c_str());
 		}
 	}
 

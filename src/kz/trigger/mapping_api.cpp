@@ -7,6 +7,8 @@
 #include "kz/style/kz_style.h"
 #include "kz/timer/kz_timer.h"
 
+#include <algorithm>
+
 namespace
 {
 	// Cache the cvar references for the modifier triggers.
@@ -32,7 +34,7 @@ void KZTriggerService::ResetBhopState()
 {
 	this->lastTouchedSingleBhop = CEntityHandle();
 	// all hail fixed buffers
-	this->lastTouchedSequentialBhops = CSequentialBhopBuffer();
+	this->lastTouchedSequentialBhops.clear();
 }
 
 void KZTriggerService::UpdateModifiersInternal()
@@ -189,19 +191,10 @@ bool KZTriggerService::TouchTeleportTrigger(TriggerTouchTracker tracker)
 		}
 		else if (tracker.kzTrigger->type == KZTRIGGER_SEQUENTIAL_BHOP)
 		{
-			for (i32 i = 0; i < this->lastTouchedSequentialBhops.GetReadAvailable(); i++)
+			const auto &bhops = this->lastTouchedSequentialBhops;
+			if (std::find(bhops.begin(), bhops.end(), tracker.kzTrigger->entity) != bhops.end())
 			{
-				CEntityHandle handle = CEntityHandle();
-				if (!this->lastTouchedSequentialBhops.Peek(&handle, i))
-				{
-					assert(0);
-					break;
-				}
-				if (handle == tracker.kzTrigger->entity)
-				{
-					shouldTeleport = true;
-					break;
-				}
+				shouldTeleport = true;
 			}
 		}
 	}

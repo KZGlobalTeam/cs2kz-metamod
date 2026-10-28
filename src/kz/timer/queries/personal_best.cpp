@@ -109,18 +109,16 @@ struct PBRequest : public BaseRequest
 
 		KZGlobalService::QueryPBParams params;
 
-		params.player =
-			this->targetSteamID64
-				? KZGlobalService::PlayerIdentifier::SteamID(this->targetSteamID64)
-				: KZGlobalService::PlayerIdentifier::Name(std::string_view(this->targetPlayerName.Get(), this->targetPlayerName.Length()));
+		params.player = this->targetSteamID64 ? KZGlobalService::PlayerIdentifier::SteamID(this->targetSteamID64)
+											  : KZGlobalService::PlayerIdentifier::Name(this->targetPlayerName);
 
-		params.map = std::string_view(this->mapName.Get(), this->mapName.Length());
-		params.course = std::string_view(this->courseName.Get(), this->courseName.Length());
+		params.map = this->mapName;
+		params.course = this->courseName;
 		params.mode = this->apiMode;
 
-		for (const CUtlString &style : styleList)
+		for (const std::string &style : styleList)
 		{
-			params.styles.emplace_back(style.Get(), style.Length());
+			params.styles.emplace_back(style);
 		}
 
 		KZGlobalService::MessageCallback<KZ::api::messages::PersonalBest> callback(PBRequest::OnPBQueried, this->uid);
@@ -185,18 +183,17 @@ struct PBRequest : public BaseRequest
 			return;
 		}
 
-		CUtlString combinedModeStyleText;
-		combinedModeStyleText.Format("{purple}%s{grey}", modeName.Get());
-		for (const CUtlString &style : styleList)
+		std::string combinedModeStyleText = tfm::format("{purple}%s{grey}", modeName.c_str());
+		for (const std::string &style : styleList)
 		{
 			combinedModeStyleText += " +{grey2}";
-			combinedModeStyleText.Append(style.Get());
+			combinedModeStyleText += style;
 			combinedModeStyleText += "{grey}";
 		}
 
 		// Player on kz_map (Main) [VNL]
-		player->languageService->PrintChat(true, false, "PB Header", targetPlayerName.Get(), mapName.Get(), courseName.Get(),
-										   combinedModeStyleText.Get());
+		player->languageService->PrintChat(true, false, "PB Header", targetPlayerName.c_str(), mapName.c_str(), courseName.c_str(),
+										   combinedModeStyleText.c_str());
 
 		if (!this->pbData.hasPB && !this->gpbData.hasPB)
 		{

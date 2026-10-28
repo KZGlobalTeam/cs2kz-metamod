@@ -28,8 +28,8 @@ void KZDatabaseService::SetupMap()
 
 	Transaction txn;
 	char query[2048];
-	CUtlString mapName = g_pKZUtils->GetCurrentMapName();
-	auto escapedMapName = KZDatabaseService::GetDatabaseConnection()->Escape(mapName.Get());
+	std::string mapName = g_pKZUtils->GetCurrentMapName();
+	auto escapedMapName = KZDatabaseService::GetDatabaseConnection()->Escape(mapName.c_str());
 	auto databaseType = KZDatabaseService::GetDatabaseType();
 	switch (databaseType)
 	{
@@ -62,10 +62,10 @@ void KZDatabaseService::SetupMap()
 		txn, 
 		[databaseType, mapName](std::vector<ISQLQuery *> queries) 
 		{
-			CUtlString currentMapName = g_pKZUtils->GetCurrentMapName();
-			if (!KZ_STREQ(currentMapName.Get(), mapName.Get()))
+			std::string currentMapName = g_pKZUtils->GetCurrentMapName();
+			if (!KZ_STREQ(currentMapName.c_str(), mapName.c_str()))
 			{
-				KZ_LOG_WARN(LogChannel::DB, "Failed to setup map, current map name %s doesn't match %s!\n", currentMapName.Get(), mapName.Get());
+				KZ_LOG_WARN(LogChannel::DB, "Failed to setup map, current map name %s doesn't match %s!\n", currentMapName.c_str(), mapName.c_str());
 				return;
 			}
 			switch (databaseType)
@@ -95,7 +95,7 @@ void KZDatabaseService::SetupMap()
 				}
 			}
 			mapSetUp = true;
-			KZ_LOG_INFO(LogChannel::DB, "Map setup successful for %s, current map ID: %i\n", currentMapName.Get(), KZDatabaseService::currentMapID);
+			KZ_LOG_INFO(LogChannel::DB, "Map setup successful for %s, current map ID: %i\n", currentMapName.c_str(), KZDatabaseService::currentMapID);
 			CALL_FORWARD(eventListeners, OnMapSetup);
 		},
 		OnGenericTxnFailure);

@@ -20,6 +20,7 @@ class CBasePlayerController;
 class IGameEventListener2;
 class CTimerBase;
 class CServerSideClient;
+class CServerSideClientBase;
 class CCSGameRules;
 
 // temporary botprofile classes
@@ -160,14 +161,14 @@ public:
 
 	virtual void AddTimer(CTimerBase *timer, bool preserveMapChange = true);
 	virtual void RemoveTimer(CTimerBase *timer);
-	virtual CUtlVector<CServerSideClient *> *GetClientList();
+	virtual CUtlVector<CServerSideClientBase *> *GetClientList();
 
 	CServerSideClient *GetClientBySlot(CPlayerSlot slot);
 
-	virtual CUtlString GetCurrentMapName(bool *success = NULL);
+	virtual std::string GetCurrentMapName(bool *success = NULL);
 	virtual u64 GetCurrentMapWorkshopID();
-	virtual CUtlString GetCurrentMapVPK();
-	virtual CUtlString GetCurrentMapDirectory();
+	virtual std::string GetCurrentMapVPK();
+	virtual std::string GetCurrentMapDirectory();
 	virtual u64 GetCurrentMapSize();
 	// MD5 calculation is not very fast, avoid doing this too often!
 	virtual bool UpdateCurrentMapMD5();

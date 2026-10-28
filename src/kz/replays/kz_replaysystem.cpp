@@ -258,7 +258,7 @@ namespace KZ::replaysystem
 			out.stages = out.checkpoints = out.splits = 0;
 		}
 		if (type == ReplayType::RP_RUN && replay->header.has_run() && out.course
-			&& KZ_STREQI(replay->header.run().course_name().c_str(), out.course->GetName().Get()))
+			&& KZ_STREQI(replay->header.run().course_name().c_str(), out.course->GetName().c_str()))
 		{
 			out.runTime = replay->header.run().time();
 			out.runPro = replay->header.run().num_teleports() == 0;

@@ -53,7 +53,7 @@ static_global char prefixBuffer[256];
 
 static_function KZPlayer *ResolveSlot(int slot)
 {
-	if (slot < 0 || slot >= MAXPLAYERS)
+	if (slot < 0 || slot >= MAX_PLAYERS)
 	{
 		return nullptr;
 	}

@@ -441,7 +441,7 @@ namespace KZ::replaysystem::data
 			return {};
 		}
 		UUID_t uuid(false);
-		if (!UUID_t::FromString(CUtlString(path).GetBaseFilename().StripExtension().Get(), &uuid))
+		if (!UUID_t::FromString(utils::StripExtension(utils::GetBaseFilename(path)).c_str(), &uuid))
 		{
 			return {};
 		}

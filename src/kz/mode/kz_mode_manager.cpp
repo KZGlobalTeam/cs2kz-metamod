@@ -98,15 +98,15 @@ void KZ::mode::LoadModePlugins()
 	}
 }
 
-void KZ::mode::UpdateModeDatabaseID(CUtlString name, i32 id, CUtlString shortName)
+void KZ::mode::UpdateModeDatabaseID(const std::string &name, i32 id, const std::string &shortName)
 {
 	// Check if the mode already exists in the list, if yes, we update it.
 	for (size_t i = 0; i < modeInfos.size(); i++)
 	{
-		if (!V_stricmp(modeInfos[i].longModeName, name))
+		if (!V_stricmp(modeInfos[i].longModeName.c_str(), name.c_str()))
 		{
 			modeInfos[i].databaseID = id;
-			if (!shortName.IsEmpty())
+			if (!shortName.empty())
 			{
 				modeInfos[i].shortModeName = shortName;
 			}
@@ -114,7 +114,7 @@ void KZ::mode::UpdateModeDatabaseID(CUtlString name, i32 id, CUtlString shortNam
 		}
 	}
 	// If the code reaches here, that means the mode is not in the list yet.
-	modeInfos.push_back({-1, name.Get(), shortName.Get()});
+	modeInfos.push_back({-1, name.c_str(), shortName.c_str()});
 }
 
 void KZ::mode::InitModeService(KZPlayer *player)
@@ -166,7 +166,7 @@ bool KZModeManager::RegisterMode(PluginId id, const char *shortModeName, const c
 	ModePluginInfo *info = nullptr;
 	for (size_t i = 0; i < modeInfos.size(); i++)
 	{
-		if (!V_stricmp(modeInfos[i].shortModeName, shortModeName) || !V_stricmp(modeInfos[i].longModeName, longModeName))
+		if (!V_stricmp(modeInfos[i].shortModeName.c_str(), shortModeName) || !V_stricmp(modeInfos[i].longModeName.c_str(), longModeName))
 		{
 			if (modeInfos[i].id > 0)
 			{
@@ -222,15 +222,15 @@ void KZModeManager::UnregisterMode(PluginId id)
 					KZ::mode::InitModeService(player);
 					continue;
 				}
-				if (!V_strcmp(player->modeService->GetModeName(), modeInfos[modeIdx].longModeName)
-					|| !V_strcmp(player->modeService->GetModeShortName(), modeInfos[modeIdx].shortModeName))
+				if (!V_strcmp(player->modeService->GetModeName(), modeInfos[modeIdx].longModeName.c_str())
+					|| !V_strcmp(player->modeService->GetModeShortName(), modeInfos[modeIdx].shortModeName.c_str()))
 				{
 					this->SwitchToMode(player, "VNL", false, true);
 				}
 			}
 
 			char shortModeCmd[64];
-			V_snprintf(shortModeCmd, 64, "kz_%s", modeInfos[modeIdx].shortModeName.Get());
+			V_snprintf(shortModeCmd, 64, "kz_%s", modeInfos[modeIdx].shortModeName.c_str());
 			scmd::UnregisterCmd(shortModeCmd);
 
 			modeInfos[modeIdx].id = -1;
@@ -259,9 +259,9 @@ bool KZModeManager::SwitchToMode(KZPlayer *player, const char *modeName, bool si
 			// clang-format off
 			player->PrintConsole(false, false,
 				"%s (kz_mode %s / kz_mode %s)",
-				modeInfos[i].longModeName.Get(),
-				modeInfos[i].longModeName.Get(),
-				modeInfos[i].shortModeName.Get()
+				modeInfos[i].longModeName.c_str(),
+				modeInfos[i].longModeName.c_str(),
+				modeInfos[i].shortModeName.c_str()
 			);
 			// clang-format on
 		}
@@ -283,7 +283,7 @@ bool KZModeManager::SwitchToMode(KZPlayer *player, const char *modeName, bool si
 
 	for (size_t i = 0; i < modeInfos.size(); i++)
 	{
-		if (V_stricmp(modeInfos[i].shortModeName, modeName) == 0 || V_stricmp(modeInfos[i].longModeName, modeName) == 0)
+		if (V_stricmp(modeInfos[i].shortModeName.c_str(), modeName) == 0 || V_stricmp(modeInfos[i].longModeName.c_str(), modeName) == 0)
 		{
 			factory = modeInfos[i].factory;
 			break;
@@ -391,7 +391,7 @@ KZModeManager::ModePluginInfo KZ::mode::GetModeInfo(KZModeService *mode)
 	}
 	for (size_t i = 0; i < modeInfos.size(); i++)
 	{
-		if (!V_stricmp(mode->GetModeName(), modeInfos[i].longModeName))
+		if (!V_stricmp(mode->GetModeName(), modeInfos[i].longModeName.c_str()))
 		{
 			return modeInfos[i];
 		}
@@ -415,17 +415,17 @@ KZModeManager::ModePluginInfo KZ::mode::GetModeInfo(KZ::api::Mode mode)
 	return KZModeManager::ModePluginInfo();
 }
 
-KZModeManager::ModePluginInfo KZ::mode::GetModeInfo(CUtlString modeName)
+KZModeManager::ModePluginInfo KZ::mode::GetModeInfo(const std::string &modeName)
 {
 	KZModeManager::ModePluginInfo emptyInfo;
-	if (modeName.IsEmpty())
+	if (modeName.empty())
 	{
 		KZ_LOG_WARN(LogChannel::Mode, "Warning: Getting mode info from an empty string!\n");
 		return emptyInfo;
 	}
 	for (size_t i = 0; i < modeInfos.size(); i++)
 	{
-		if (modeName.IsEqual_FastCaseInsensitive(modeInfos[i].shortModeName) || modeName.IsEqual_FastCaseInsensitive(modeInfos[i].longModeName))
+		if (KZ_STREQI(modeName.c_str(), modeInfos[i].shortModeName.c_str()) || KZ_STREQI(modeName.c_str(), modeInfos[i].longModeName.c_str()))
 		{
 			return modeInfos[i];
 		}

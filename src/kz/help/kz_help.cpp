@@ -185,7 +185,7 @@ static_global void PrintCategoryCommands(KZPlayer *player, i32 category, bool pr
 {
 	char tableName[64];
 	V_snprintf(tableName, sizeof(tableName), "Command List - %s", scmd::GetCategoryName(category));
-	CUtlString headers[KZ_ARRAYSIZE(columnKeys)];
+	std::string headers[KZ_ARRAYSIZE(columnKeys)];
 	for (u32 i = 0; i < KZ_ARRAYSIZE(columnKeys); i++)
 	{
 		headers[i] = player->languageService->PrepareMessage(columnKeys[i]).c_str();
@@ -201,15 +201,15 @@ static_global void PrintCategoryCommands(KZPlayer *player, i32 category, bool pr
 	{
 		return;
 	}
-	player->PrintConsole(false, false, table.GetSeparator("="));
-	player->PrintConsole(false, false, table.GetTitle());
-	player->PrintConsole(false, false, table.GetHeader());
+	player->PrintConsole(false, false, table.GetSeparator("=").c_str());
+	player->PrintConsole(false, false, table.GetTitle().c_str());
+	player->PrintConsole(false, false, table.GetHeader().c_str());
 
 	for (u32 i = 0; i < table.GetNumEntries(); i++)
 	{
-		player->PrintConsole(false, false, table.GetLine(i));
+		player->PrintConsole(false, false, table.GetLine(i).c_str());
 	}
-	player->PrintConsole(false, false, table.GetSeparator("="));
+	player->PrintConsole(false, false, table.GetSeparator("=").c_str());
 }
 
 SCMD(kz_help, SCFL_MISC)

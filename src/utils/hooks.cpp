@@ -300,14 +300,16 @@ static KHook::Return<void> ClientFullyConnectPre(ISource2GameClients *pThis, CPl
 
 static KHook::Virtual<ISource2GameClients, void, CPlayerSlot> clientFullyConnectHook(ClientFullyConnectPre, nullptr);
 
-static KHook::Return<void> ClientPutInServerPre(ISource2GameClients *pThis, CPlayerSlot slot, char const *pszName, int type, uint64 xuid)
+static KHook::Return<void> ClientPutInServerPre(ISource2GameClients *pThis, CPlayerSlot slot, char const *pszName, ClientPutInServerType_t type,
+												uint64 xuid)
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
 	g_pKZPlayerManager->OnClientPutInServer(slot, pszName, type, xuid);
 	return {KHook::Action::Ignore};
 }
 
-static KHook::Virtual<ISource2GameClients, void, CPlayerSlot, char const *, int, uint64> clientPutInServerHook(ClientPutInServerPre, nullptr);
+static KHook::Virtual<ISource2GameClients, void, CPlayerSlot, char const *, ClientPutInServerType_t, uint64>
+	clientPutInServerHook(ClientPutInServerPre, nullptr);
 
 static KHook::Return<void> ClientActivePost(ISource2GameClients *pThis, CPlayerSlot slot, bool bLoadGame, const char *pszName, uint64 xuid)
 {
@@ -574,7 +576,7 @@ static KHook::Return<bool> ActivateServerPost(CNetworkGameServerBase *pThis)
 	u64 id = g_pKZUtils->GetCurrentMapWorkshopID();
 	u64 size = g_pKZUtils->GetCurrentMapSize();
 
-	KZ_LOG_INFO(LogChannel::General, "Loading map %s, workshop ID %llu, size %llu\n", g_pKZUtils->GetCurrentMapVPK().Get(), id, size);
+	KZ_LOG_INFO(LogChannel::General, "Loading map %s, workshop ID %llu, size %llu\n", g_pKZUtils->GetCurrentMapVPK().c_str(), id, size);
 
 	RunSubmission::OnMapChange();
 	KZ::misc::OnActivateServer();

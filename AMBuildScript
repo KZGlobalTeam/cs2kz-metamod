@@ -300,7 +300,7 @@ const char *PLUGIN_REVISION_COUNT = \"{revision_count}\";
 		    '-Wa,--noexecstack',
       ]
 
-      cxx.cxxflags += ['-std=c++17']
+      cxx.cxxflags += ['-std=c++20']
       if (cxx.version >= 'gcc-4.0') or cxx.family == 'clang':
         cxx.cflags += ['-fvisibility=hidden']
         cxx.cxxflags += ['-fvisibility-inlines-hidden']
@@ -357,7 +357,7 @@ const char *PLUGIN_REVISION_COUNT = \"{revision_count}\";
         '/wd4146', # unary minus operator applied to unsigned type, result still unsigned
         '/wd4018', # '>=': signed/unsigned mismatch
         '/W3',
-        '/std:c++17',
+        '/std:c++20',
       ]
       cxx.cxxflags += ['/TP']
       

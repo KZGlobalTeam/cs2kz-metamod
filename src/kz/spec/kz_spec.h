@@ -25,7 +25,7 @@ public:
 	bool SpectatePlayer(KZPlayer *target, bool force = false);
 	bool CanSpectate();
 
-	void GetSpectatorList(std::vector<CUtlString> &spectatorList);
+	void GetSpectatorList(std::vector<std::string> &spectatorList);
 	KZPlayer *GetSpectatedPlayer();
 	KZPlayer *GetNextSpectator(KZPlayer *current);
 };

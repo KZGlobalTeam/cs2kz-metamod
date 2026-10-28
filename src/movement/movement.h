@@ -307,7 +307,7 @@ class MovementPlayerManager : public PlayerManager
 public:
 	MovementPlayerManager()
 	{
-		for (i32 i = 0; i < MAXPLAYERS; i++)
+		for (i32 i = 0; i < MAX_PLAYERS; i++)
 		{
 			delete players[i];
 			players[i] = new MovementPlayer(i + 1);

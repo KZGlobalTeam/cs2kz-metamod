@@ -44,7 +44,7 @@ namespace
 
 	void ReportModeToConsole(const char *modeName, const std::string &globalChecksum)
 	{
-		KZModeManager::ModePluginInfo modeInfo = KZ::mode::GetModeInfo(CUtlString(modeName));
+		KZModeManager::ModePluginInfo modeInfo = KZ::mode::GetModeInfo(modeName);
 
 		if (modeInfo.id < 0)
 		{
@@ -77,7 +77,7 @@ namespace
 
 		for (const KZGlobalService::GlobalStyleChecksum &checksum : checksums)
 		{
-			KZStyleManager::StylePluginInfo styleInfo = KZ::style::GetStyleInfo(CUtlString(checksum.style.c_str()));
+			KZStyleManager::StylePluginInfo styleInfo = KZ::style::GetStyleInfo(checksum.style);
 
 			if (styleInfo.id <= 0)
 			{
@@ -104,7 +104,7 @@ namespace
 					apiOnline ? "online" : "offline");
 		KZ_LOG_INFO(LogChannel::Global, "  Server: %s\n", serverConnected ? "connected" : "not connected");
 
-		CUtlString mapName = g_pKZUtils->GetCurrentMapName();
+		std::string mapName = g_pKZUtils->GetCurrentMapName();
 
 		KZGlobalService::WithCurrentMapState(
 			[&](const std::optional<KZ::api::Map> &mapInfo, bool confirmed)
@@ -118,11 +118,11 @@ namespace
 				}
 				else if (!confirmed && serverConnected)
 				{
-					KZ_LOG_INFO(LogChannel::Global, "  Map '%s': waiting for the API to respond\n", mapName.Get());
+					KZ_LOG_INFO(LogChannel::Global, "  Map '%s': waiting for the API to respond\n", mapName.c_str());
 				}
 				else
 				{
-					KZ_LOG_INFO(LogChannel::Global, "  Map '%s': not global\n", mapName.Get());
+					KZ_LOG_INFO(LogChannel::Global, "  Map '%s': not global\n", mapName.c_str());
 				}
 			});
 

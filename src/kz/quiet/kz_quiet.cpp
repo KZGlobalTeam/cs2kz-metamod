@@ -141,7 +141,7 @@ void KZ::quiet::OnCheckTransmit(CCheckTransmitInfo **pInfo, int infoCount)
 
 static void FilterQuietClients(const uint64 *clients, u32 emitterPlayerIndex = 0)
 {
-	for (i32 recipientSlot = 0; recipientSlot < MAXPLAYERS; recipientSlot++)
+	for (i32 recipientSlot = 0; recipientSlot < MAX_PLAYERS; recipientSlot++)
 	{
 		KZPlayer *recipient = g_pKZPlayerManager->ToPlayer(CPlayerSlot(recipientSlot));
 		if (recipient->quietService->ShouldHide() && (emitterPlayerIndex == 0 || recipient->quietService->ShouldHideIndex(emitterPlayerIndex)))
@@ -169,7 +169,7 @@ void KZ::quiet::OnPostEvent(INetworkMessageInternal *pEvent, const CNetMessage *
 			u64 currentRecipients = *(const u64 *)clients;
 
 			// Find the player who initiated this paint.
-			for (i32 i = 0; i < MAXPLAYERS; i++)
+			for (i32 i = 0; i < MAX_PLAYERS; i++)
 			{
 				KZPlayer *painter = g_pKZPlayerManager->ToPlayer(CPlayerSlot(i));
 				if (!painter || !painter->paintService || !painter->paintService->pendingPaint)
@@ -178,7 +178,7 @@ void KZ::quiet::OnPostEvent(INetworkMessageInternal *pEvent, const CNetMessage *
 				}
 
 				u64 paintRecipients = 0;
-				for (i32 recipientSlot = 0; recipientSlot < MAXPLAYERS; recipientSlot++)
+				for (i32 recipientSlot = 0; recipientSlot < MAX_PLAYERS; recipientSlot++)
 				{
 					u64 recipientBit = 1ull << recipientSlot;
 					if ((currentRecipients & recipientBit) == 0)

@@ -167,7 +167,7 @@ CBasePlayerController *utils::GetController(CBaseEntity *entity)
 		CBasePlayerPawn *pawn = static_cast<CBasePlayerPawn *>(entity);
 		if (!pawn->m_hController().IsValid() || pawn->m_hController.Get() == 0)
 		{
-			for (i32 i = 0; i < MAXPLAYERS; i++)
+			for (i32 i = 0; i < MAX_PLAYERS; i++)
 			{
 				controller = (CCSPlayerController *)utils::GetController(CPlayerSlot(i));
 				if (controller && controller->m_hObserverPawn() && controller->m_hObserverPawn().Get() == entity)
@@ -185,7 +185,7 @@ CBasePlayerController *utils::GetController(CBaseEntity *entity)
 		if (!pawn->m_hController().IsValid() || pawn->m_hController.Get() == 0)
 		{
 			// Seems like the pawn lost its controller, we can try looping through the controllers to find this pawn instead.
-			for (i32 i = 0; i < MAXPLAYERS; i++)
+			for (i32 i = 0; i < MAX_PLAYERS; i++)
 			{
 				controller = (CCSPlayerController *)utils::GetController(CPlayerSlot(i));
 				if (controller && controller->m_hPlayerPawn() && controller->m_hPlayerPawn().Get() == entity)
@@ -209,7 +209,7 @@ CBasePlayerController *utils::GetController(CBaseEntity *entity)
 
 CBasePlayerController *utils::GetController(CPlayerSlot slot)
 {
-	if (!GameEntitySystem() || slot.Get() < 0 || slot.Get() >= MAXPLAYERS)
+	if (!GameEntitySystem() || slot.Get() < 0 || slot.Get() >= MAX_PLAYERS)
 	{
 		return nullptr;
 	}
@@ -291,7 +291,7 @@ void utils::PlaySoundToClient(CPlayerSlot player, const char *sound, std::option
 		msg->set_packed_params(params, sizeof(params));
 	}
 
-	CSingleRecipientFilter filter(player.Get());
+	CReliableSingleUserRecipientFilter filter(player.Get());
 	interfaces::pGameEventSystem->PostEventAbstract(0, false, &filter, netmsg, msg, 0);
 	delete msg;
 }
@@ -426,7 +426,7 @@ void utils::SendConVarValue(CPlayerSlot slot, const char *conVar, const char *va
 	CMsg_CVars_CVar *cvar = msg->mutable_convars()->add_cvars();
 	cvar->set_name(conVar);
 	cvar->set_value(value);
-	CSingleRecipientFilter filter(slot.Get());
+	CReliableSingleUserRecipientFilter filter(slot.Get());
 	interfaces::pGameEventSystem->PostEventAbstract(0, false, &filter, netmsg, msg, 0);
 	delete msg;
 }
@@ -441,7 +441,7 @@ void utils::SendMultipleConVarValues(CPlayerSlot slot, const char **cvars, const
 		cvar->set_name(cvars[i]);
 		cvar->set_value(values[i]);
 	}
-	CSingleRecipientFilter filter(slot.Get());
+	CReliableSingleUserRecipientFilter filter(slot.Get());
 	interfaces::pGameEventSystem->PostEventAbstract(0, false, &filter, netmsg, msg, 0);
 	delete msg;
 }
@@ -481,7 +481,7 @@ void utils::SendMultipleConVarValues(CPlayerSlot slot, ConVarRefAbstract **conVa
 		cvar->set_name(conVarRefs[i]->GetName());
 		cvar->set_value(values[i]);
 	}
-	CSingleRecipientFilter filter(slot.Get());
+	CReliableSingleUserRecipientFilter filter(slot.Get());
 	interfaces::pGameEventSystem->PostEventAbstract(0, false, &filter, netmsg, msg, 0);
 	delete msg;
 }
@@ -503,7 +503,7 @@ void utils::SendMultipleConVarValues(CPlayerSlot slot, ConVarRefAbstract **conVa
 		cvar->set_name(conVarRefs[i]->GetName());
 		cvar->set_value(buf.Get());
 	}
-	CSingleRecipientFilter filter(slot.Get());
+	CReliableSingleUserRecipientFilter filter(slot.Get());
 	interfaces::pGameEventSystem->PostEventAbstract(0, false, &filter, netmsg, msg, 0);
 	delete msg;
 }
@@ -522,7 +522,7 @@ static_function void InitSpawnTraceFilter(CTraceFilter &filter)
 	filter.m_bShouldIgnoreDisabledPairs = true;
 	filter.m_nCollisionGroup = COLLISION_GROUP_DEBRIS;
 	filter.m_nInteractsWith = 0x2c3011;
-	filter.m_bUnknown = true;
+	filter.m_unk101 = true;
 	filter.m_nObjectSetMask = RNQUERY_OBJECTS_ALL;
 	filter.m_nInteractsAs = 0x40000;
 }
@@ -777,15 +777,15 @@ void utils::UpdateServerVersion()
 	FileHandle_t fp = g_pFullFileSystem->Open("steam.inf", "r");
 	if (fp)
 	{
-		CUtlString line = g_pFullFileSystem->ReadLine(fp);
-		while (!line.IsEmpty())
+		std::string line = g_pFullFileSystem->ReadLine(fp).Get();
+		while (!line.empty())
 		{
-			if (line.MatchesPattern(CUtlString(SERVER_VERSION_KEY) + "*"))
+			if (line.starts_with(SERVER_VERSION_KEY))
 			{
-				serverVersion = atoi(line.Get() + strlen(SERVER_VERSION_KEY));
+				serverVersion = atoi(line.c_str() + strlen(SERVER_VERSION_KEY));
 				break;
 			}
-			line = g_pFullFileSystem->ReadLine(fp);
+			line = g_pFullFileSystem->ReadLine(fp).Get();
 		}
 		g_pFullFileSystem->Close(fp);
 	}

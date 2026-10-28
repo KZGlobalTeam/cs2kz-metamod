@@ -2,11 +2,11 @@
 #include "vendor/sql_mm/src/public/sql_mm.h"
 #include "queries/personal_best.h"
 
-void KZDatabaseService::QueryPB(u64 steamID64, CUtlString mapName, CUtlString courseName, u32 modeID, TransactionSuccessCallbackFunc onSuccess,
-								TransactionFailureCallbackFunc onFailure)
+void KZDatabaseService::QueryPB(u64 steamID64, const std::string &mapName, const std::string &courseName, u32 modeID,
+								TransactionSuccessCallbackFunc onSuccess, TransactionFailureCallbackFunc onFailure)
 {
-	std::string cleanedMapName = KZDatabaseService::GetDatabaseConnection()->Escape(mapName.Get());
-	std::string cleanedCourseName = KZDatabaseService::GetDatabaseConnection()->Escape(courseName.Get());
+	std::string cleanedMapName = KZDatabaseService::GetDatabaseConnection()->Escape(mapName.c_str());
+	std::string cleanedCourseName = KZDatabaseService::GetDatabaseConnection()->Escape(courseName.c_str());
 
 	Transaction txn;
 
@@ -40,12 +40,12 @@ void KZDatabaseService::QueryPB(u64 steamID64, CUtlString mapName, CUtlString co
 	KZDatabaseService::GetDatabaseConnection()->ExecuteTransaction(txn, onSuccess, onFailure);
 }
 
-void KZDatabaseService::QueryPBRankless(u64 steamID64, CUtlString mapName, CUtlString courseName, u32 modeID, u64 styleIDFlags,
+void KZDatabaseService::QueryPBRankless(u64 steamID64, const std::string &mapName, const std::string &courseName, u32 modeID, u64 styleIDFlags,
 										TransactionSuccessCallbackFunc onSuccess, TransactionFailureCallbackFunc onFailure)
 {
-	std::string cleanedMapName = KZDatabaseService::GetDatabaseConnection()->Escape(mapName.Get());
+	std::string cleanedMapName = KZDatabaseService::GetDatabaseConnection()->Escape(mapName.c_str());
 
-	std::string cleanedCourseName = KZDatabaseService::GetDatabaseConnection()->Escape(courseName.Get());
+	std::string cleanedCourseName = KZDatabaseService::GetDatabaseConnection()->Escape(courseName.c_str());
 
 	char query[2048];
 	Transaction txn;
@@ -59,10 +59,10 @@ void KZDatabaseService::QueryPBRankless(u64 steamID64, CUtlString mapName, CUtlS
 	KZDatabaseService::GetDatabaseConnection()->ExecuteTransaction(txn, onSuccess, onFailure);
 }
 
-void KZDatabaseService::QueryAllPBs(u64 steamID64, CUtlString mapName, TransactionSuccessCallbackFunc onSuccess,
+void KZDatabaseService::QueryAllPBs(u64 steamID64, const std::string &mapName, TransactionSuccessCallbackFunc onSuccess,
 									TransactionFailureCallbackFunc onFailure)
 {
-	std::string cleanedMapName = KZDatabaseService::GetDatabaseConnection()->Escape(mapName.Get());
+	std::string cleanedMapName = KZDatabaseService::GetDatabaseConnection()->Escape(mapName.c_str());
 
 	Transaction txn;
 

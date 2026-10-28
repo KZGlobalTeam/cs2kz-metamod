@@ -205,7 +205,7 @@
 				"linux"		"55 48 89 E5 41 55 49 89 D5 41 54 49 89 FC 53 48 89 F3 48 83 EC 18 48 8B 7F 38"
 			}
 			// sub_7FFE47869020(a1, a2); <- this function
-			// sub_7FFE47863820(a1, a2, "FullWalkMovePreMove"); 
+			// sub_7FFE47863820(a1, a2, "FullWalkMovePreMove");
 			// sub_7FFE4787B4C0(a1, a2); <- the walkmove function
 			// cvar sv_stopspeed
 			"Friction"
@@ -384,12 +384,6 @@
 				"windows"		"78"
 				"linux"			"77"
 			}
-			// Check sv_fullupdate
-			"ClientOffset"
-			{
-				"windows"		"616"
-				"linux"			"616"
-			}
 			// teleport_trigger_debug cvar
 			"StartTouch"
 			{
@@ -417,19 +411,6 @@
 				"windows"		"52"
 				"linux"			"52"
 			}
-			// CDebugOverlayGameSystem second vtable, offset 1 (windows):
-			//   result = debugoverlay;
-			//   qword_1815F1700 = debugoverlay;
-			//   qword_1815F1708 = debugoverlay;
-			//   v6 = *(a1 + 80);
-			//   qword_1815F16E8 = debugoverlay;
-			// xref to the other read, that's where the function is
-			
-			"GetDebugOverlay"
-			{
-				"windows"		"74"
-				"linux"			"74"
-			}
 			"ClearOverlays"
 			{
 				"windows"		"2"
@@ -437,12 +418,12 @@
 			}
 			// CCSPlayer_MovementServices
 			// Check for sv_runcmds
-			"PlayerRunCommand" 
+			"PlayerRunCommand"
 			{
 				"windows"		"25"
 				"linux"			"26"
 			}
-			// The function *after* the one containing sv_subtick_movement_view_angles 
+			// The function *after* the one containing sv_subtick_movement_view_angles
 			"FinishMove"
 			{
 				"windows"		"38"

@@ -67,12 +67,6 @@ public:
 	SCHEMA_FIELD(CGameSceneNode *, m_pSceneNode)
 };
 
-class CNetworkTransmitComponent
-{
-public:
-	DECLARE_SCHEMA_CLASS_ENTITY(CNetworkTransmitComponent)
-};
-
 class CBaseEntity : public CEntityInstance
 {
 public:
@@ -81,7 +75,6 @@ public:
 	SCHEMA_FIELD(CBodyComponent *, m_CBodyComponent)
 	SCHEMA_FIELD(CBitVec<64>, m_isSteadyState)
 	SCHEMA_FIELD(float, m_lastNetworkChange)
-	SCHEMA_FIELD(CNetworkTransmitComponent, m_NetworkTransmitComponent)
 	SCHEMA_FIELD(int, m_iHealth)
 	SCHEMA_FIELD(uint8, m_lifeState)
 	SCHEMA_FIELD(int, m_iTeamNum)

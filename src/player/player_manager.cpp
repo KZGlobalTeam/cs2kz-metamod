@@ -34,7 +34,7 @@ Player *PlayerManager::ToPlayer(CBasePlayerPawn *pawn)
 
 Player *PlayerManager::ToPlayer(CPlayerSlot slot)
 {
-	if (slot.Get() < 0 || slot.Get() >= MAXPLAYERS)
+	if (slot.Get() < 0 || slot.Get() >= MAX_PLAYERS)
 	{
 		return nullptr;
 	}
@@ -66,7 +66,7 @@ Player *PlayerManager::ToPlayer(CEntityIndex entIndex)
 Player *PlayerManager::ToPlayer(CPlayerUserId userID)
 {
 	// Untested, careful!
-	for (i32 i = 0; i < MAXPLAYERS; i++)
+	for (i32 i = 0; i < MAX_PLAYERS; i++)
 	{
 		if (interfaces::pEngine->GetPlayerUserId(i) == userID.Get())
 		{

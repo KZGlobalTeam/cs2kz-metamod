@@ -47,7 +47,7 @@ void Recorder::Init(ReplayHeader &hdr, KZPlayer *player, ReplayType type)
 	hdr.set_type(static_cast<cs2kz::replay::ReplayType>(type));
 
 	// Map info
-	hdr.mutable_map()->set_name(g_pKZUtils->GetCurrentMapName().Get());
+	hdr.mutable_map()->set_name(g_pKZUtils->GetCurrentMapName().c_str());
 	char md5[33] = {};
 	g_pKZUtils->GetCurrentMapMD5(md5, sizeof(md5));
 	hdr.mutable_map()->set_md5(md5);
@@ -367,8 +367,8 @@ void KZRecordingService::CheckModeStyles()
 	if (this->lastKnownMode.shortModeName != currentModeInfo.shortModeName || !KZ_STREQI(this->lastKnownMode.md5, currentModeInfo.md5))
 	{
 		this->lastKnownMode = currentModeInfo;
-		this->InsertModeChangeEvent(currentModeInfo.longModeName.Get(), currentModeInfo.md5);
-		KZ_LOG_DEBUG(LogChannel::Recording, "Mode change event: %s\n", currentModeInfo.longModeName.Get());
+		this->InsertModeChangeEvent(currentModeInfo.longModeName.c_str(), currentModeInfo.md5);
+		KZ_LOG_DEBUG(LogChannel::Recording, "Mode change event: %s\n", currentModeInfo.longModeName.c_str());
 	}
 	bool refreshStyles = this->player->styleServices.size() != this->lastKnownStyles.size();
 	if (!refreshStyles)
@@ -415,7 +415,7 @@ void KZRecordingService::CheckModeStyles()
 	{
 		auto modeInfo = KZ::mode::GetModeInfo(this->player->modeService);
 		this->circularRecording->earliestMode = RpModeStyleInfo();
-		V_strncpy(this->circularRecording->earliestMode->name, modeInfo.longModeName.Get(), sizeof(this->circularRecording->earliestMode->name));
+		V_strncpy(this->circularRecording->earliestMode->name, modeInfo.longModeName.c_str(), sizeof(this->circularRecording->earliestMode->name));
 		V_strncpy(this->circularRecording->earliestMode->md5, modeInfo.md5, sizeof(this->circularRecording->earliestMode->md5));
 	}
 	if (!this->circularRecording->earliestStyles.has_value())
