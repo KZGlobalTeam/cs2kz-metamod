@@ -204,9 +204,9 @@ struct RpEvent
 		{
 			enum ControlEventType
 			{
-				CONTROL_AWAY = 0,     // The player's client disconnected.
-				CONTROL_SPECTATE,     // The player went to spectate.
-				CONTROL_RETURN,       // The player controls the pawn again.
+				CONTROL_AWAY = 0, // The player's client disconnected.
+				CONTROL_SPECTATE, // The player went to spectate.
+				CONTROL_RETURN,   // The player controls the pawn again.
 			} type;
 
 			f32 origin[3];
