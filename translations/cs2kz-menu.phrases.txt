@@ -1335,6 +1335,22 @@
 		"ua"		"Інтеграція оверлею мапи"
 		"ru"		"Интеграция оверлея карты"
 	}
+	"Menu - Spectate Pause"
+	{
+		"en"		"Pause while spectating"
+	}
+	"Menu - Spectate Pause Sub"
+	{
+		"en"		"Pauses the timer once your player stands still while you spectate"
+	}
+	"Menu - Spectate Resume"
+	{
+		"en"		"Resume after spectating"
+	}
+	"Menu - Spectate Resume Sub"
+	{
+		"en"		"Resumes a paused timer when you stop spectating"
+	}
 	"Menu - Timer Stop Sound"
 	{
 		"en"		"Timer stop sound"

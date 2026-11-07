@@ -89,6 +89,22 @@ Player *PlayerManager::SteamIdToPlayer(u64 steamID, bool validated)
 	return nullptr;
 }
 
+Player *PlayerManager::SessionToPlayer(u32 sessionID)
+{
+	if (sessionID == 0)
+	{
+		return nullptr;
+	}
+	for (Player *player : this->players)
+	{
+		if (player->sessionID == sessionID)
+		{
+			return player;
+		}
+	}
+	return nullptr;
+}
+
 void PlayerManager::OnConnectClient(const char *pszName, ns_address *pAddr, uint32 steam_handle, C2S_CONNECT_Message *pConnectMsg,
 									const char *pszChallenge, const byte *pAuthTicket, int nAuthTicketLength, bool bIsLowViolence)
 {
@@ -98,6 +114,11 @@ void PlayerManager::OnClientConnect(CPlayerSlot slot, const char *pszName, uint6
 									CBufferString *pRejectReason)
 {
 	Player *player = this->ToPlayer(slot);
+	// A player reconnecting into their held slot is still on the same session.
+	if (player->sessionID == 0)
+	{
+		player->sessionID = this->nextSessionID++;
+	}
 	player->OnPlayerConnect(xuid);
 
 	// The controller does not exist yet, so even a client the engine already authenticated has to wait in the queue.
@@ -126,6 +147,11 @@ void PlayerManager::OnClientPutInServer(CPlayerSlot slot, char const *pszName, i
 
 void PlayerManager::OnClientActive(CPlayerSlot slot, bool bLoadGame, const char *pszName, uint64 xuid)
 {
+	// Bots never go through ClientConnect.
+	if (this->ToPlayer(slot)->sessionID == 0)
+	{
+		this->ToPlayer(slot)->sessionID = this->nextSessionID++;
+	}
 	this->ToPlayer(slot)->SetUnauthenticatedSteamID(xuid);
 	this->ToPlayer(slot)->OnPlayerActive();
 }
@@ -164,7 +190,7 @@ void PlayerManager::OnLateLoad()
 	}
 	for (auto player : players)
 	{
-		if (player && player->IsAuthenticated())
+		if (player && player->IsEngineAuthenticated())
 		{
 			this->AuthorizeClient(player->GetPlayerSlot());
 		}
@@ -248,6 +274,7 @@ void PlayerManager::AuthorizeClient(CPlayerSlot slot)
 	}
 
 	// Mark as authorized and clear pending flag
+	player->authorizedSteamID = player->GetClient()->GetClientSteamID();
 	player->authAuthorized = true;
 	player->authPending = false;
 	this->RemoveFromAuthQueue(slot);
@@ -277,7 +304,7 @@ void PlayerManager::PerformAuthChecks()
 		}
 
 		// Check if engine has validated this player's auth identity
-		if (player->IsAuthenticated())
+		if (player->IsEngineAuthenticated())
 		{
 			this->AuthorizeClient(slot);
 		}

@@ -195,6 +195,15 @@ namespace KZ::replaysystem::parsing
 				event.data.checkpoint.type = static_cast<RpEvent::RpEventData::CheckpointEvent::CheckpointEventType>(source.checkpoint().type());
 				event.data.checkpoint.index = source.checkpoint().index();
 				return true;
+			case RPEVENT_CONTROL:
+				if (!source.has_control() || !source.control().has_type() || !source.control().has_origin()
+					|| source.control().type() > RpEvent::RpEventData::ControlEvent::CONTROL_RETURN
+					|| !ReadVector(source.control().origin(), event.data.control.origin))
+				{
+					return false;
+				}
+				event.data.control.type = static_cast<RpEvent::RpEventData::ControlEvent::ControlEventType>(source.control().type());
+				return true;
 			default:
 				return false;
 		}
@@ -358,6 +367,10 @@ namespace KZ::replaysystem::parsing
 					{
 						WriteVector(event.data.checkpoint.origin, encoded.mutable_checkpoint()->mutable_origin());
 					}
+					break;
+				case RPEVENT_CONTROL:
+					encoded.mutable_control()->set_type(event.data.control.type);
+					WriteVector(event.data.control.origin, encoded.mutable_control()->mutable_origin());
 					break;
 				default:
 					return false;

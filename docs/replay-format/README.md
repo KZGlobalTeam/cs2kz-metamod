@@ -15,9 +15,6 @@ The format is versioned. The version is stored in the file's header, and it sele
 | 6 | [v6.md](v6.md) | Events become length-prefixed protobuf messages |
 | 7 | [v7.md](v7.md) | 64-bit section headers, multi-frame sections, packed subticks |
 
-> **Version 7 is not released yet.** Its layout can still change before the first plugin release that writes it.
-> Versions 1 to 6 are frozen.
-
 Each version page lists, section by section, which layout that version uses. The layouts themselves are defined once in
 [common.md](common.md):
 

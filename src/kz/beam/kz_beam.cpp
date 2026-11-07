@@ -103,7 +103,7 @@ SCMD(kz_beamoffset, SCFL_MISC | SCFL_PREFERENCE)
 
 void KZBeamService::Update()
 {
-	KZPlayer *newTarget = this->player->IsAlive() ? this->player : this->player->specService->GetSpectatedPlayer();
+	KZPlayer *newTarget = this->player->specService->IsObserving() ? this->player->specService->GetSpectatedPlayer() : this->player;
 
 	if (this->target != newTarget)
 	{

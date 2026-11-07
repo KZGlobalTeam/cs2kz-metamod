@@ -96,6 +96,18 @@
 		"es"		"{grey}Por favor, espere antes de usar ese comando otra vez."
 		"ko"		"{grey}해당 명령어를 다시 사용하기 전에 잠시 기다려주세요."
 	}
+	"Not In Control"
+	{
+		"en"		"{darkred}You can't do that while you are not controlling your player."
+	}
+	"Away Restored"
+	{
+		"en"		"{grey}Welcome back! Your player and run were kept while you were away."
+	}
+	"Away Restored (Paused)"
+	{
+		"en"		"{grey}Welcome back! Your player and run were kept while you were away. Your timer is paused, {default}!pause {grey}to resume."
+	}
 	"Command Cooldown (Time Remaining)"
 	{
 		"#format"	"time:.2f"

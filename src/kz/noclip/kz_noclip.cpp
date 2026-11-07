@@ -3,6 +3,7 @@
 #include "kz/timer/kz_timer.h"
 #include "kz/language/kz_language.h"
 #include "kz/option/kz_option.h"
+#include "kz/away/kz_away.h"
 
 #include "utils/utils.h"
 #include "utils/simplecmds.h"
@@ -24,7 +25,8 @@ void KZNoclipService::HandleNoclip()
 		{
 			pawn->m_fFlags(pawn->m_fFlags() | FL_NOCLIP);
 		}
-		if (pawn->m_MoveType() != MOVETYPE_NOCLIP)
+		// A pause holds the player in place, and noclip picks up again once it ends.
+		if (pawn->m_MoveType() != MOVETYPE_NOCLIP && !this->player->timerService->GetPaused())
 		{
 			this->player->SetMoveType(MOVETYPE_NOCLIP);
 			this->player->timerService->TimerStop();
@@ -68,6 +70,10 @@ void KZNoclipService::HandleNoclip()
 SCMD(kz_noclip, SCFL_PLAYER)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
+	if (!player->awayService->CanControlPawn(true))
+	{
+		return true;
+	}
 	if (!player->noclipService->IsNoclipping() && !player->timerService->CheckSafeguard())
 	{
 		return true;

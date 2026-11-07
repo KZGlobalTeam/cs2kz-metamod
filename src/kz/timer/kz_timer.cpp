@@ -10,6 +10,7 @@
 #include "kz/spec/kz_spec.h"
 #include "kz/recording/kz_recording.h"
 #include "kz/hud/kz_hud.h"
+#include "kz/away/kz_away.h"
 #include "submission.h"
 
 #include "utils/utils.h"
@@ -76,7 +77,8 @@ static_global class KZOptionServiceEventListener_Timer : public KZOptionServiceE
 
 	virtual void OnPlayerPreferenceChanged(KZPlayer *player, const char *optionName)
 	{
-		if (KZ_STREQI(optionName, "preferredCompareType") || KZ_STREQI(optionName, "timerStopSound"))
+		if (KZ_STREQI(optionName, "preferredCompareType") || KZ_STREQI(optionName, "timerStopSound") || KZ_STREQI(optionName, "spectatePause")
+			|| KZ_STREQI(optionName, "spectateResume"))
 		{
 			player->timerService->ApplyPreferences();
 		}
@@ -569,9 +571,9 @@ static_function std::string GetTeleportCountText(int tpCount, const char *langua
 						: KZLanguageService::PrepareMessageWithLang(language, "2+ Teleports Text", tpCount);
 }
 
-void KZTimerService::Pause()
+void KZTimerService::Pause(bool showError)
 {
-	if (!this->CanPause(true))
+	if (!this->CanPause(showError))
 	{
 		return;
 	}
@@ -583,8 +585,11 @@ void KZTimerService::Pause()
 	}
 	if (!allowPause)
 	{
-		this->player->languageService->PrintChat(true, false, "Can't Pause (Generic)");
-		this->player->PlayErrorSound();
+		if (showError)
+		{
+			this->player->languageService->PrintChat(true, false, "Can't Pause (Generic)");
+			this->player->PlayErrorSound();
+		}
 		return;
 	}
 
@@ -741,6 +746,10 @@ bool KZTimerService::CanResume(bool showError)
 
 void KZTimerService::TogglePause()
 {
+	if (!this->player->awayService->CanControlPawn(true))
+	{
+		return;
+	}
 	if (!this->player->IsAlive())
 	{
 		KZ::misc::JoinTeam(player, CS_TEAM_CT);
@@ -1684,11 +1693,11 @@ std::string KZTimerService::GetCurrentRunMetadata()
 
 void KZTimerService::UpdateLocalPBCache()
 {
-	CPlayerUserId uid = player->GetClient()->GetUserID();
+	u32 sessionID = player->sessionID;
 
-	auto onQuerySuccess = [uid](std::vector<ISQLQuery *> queries)
+	auto onQuerySuccess = [sessionID](std::vector<ISQLQuery *> queries)
 	{
-		KZPlayer *pl = g_pKZPlayerManager->ToPlayer(uid);
+		KZPlayer *pl = g_pKZPlayerManager->SessionToPlayer(sessionID);
 		if (!pl)
 		{
 			return;
@@ -1749,6 +1758,8 @@ void KZTimerService::ApplyPreferences()
 	}
 	this->preferredCompareType = (CompareType)this->player->optionService->GetPreferenceInt("preferredCompareType", COMPARE_GPB);
 	this->shouldPlayTimerStopSound = this->player->optionService->GetPreferenceBool("timerStopSound", true);
+	this->autoPauseWhileSpectating = this->player->optionService->GetPreferenceBool("spectatePause", true);
+	this->autoResumeAfterSpectating = this->player->optionService->GetPreferenceBool("spectateResume", true);
 }
 
 void KZDatabaseServiceEventListener_Timer::OnMapSetup()

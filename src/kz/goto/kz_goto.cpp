@@ -5,10 +5,34 @@
 
 #include "../language/kz_language.h"
 #include "../timer/kz_timer.h"
+#include "kz/away/kz_away.h"
 
 void KZGotoService::Init() {}
 
 void KZGotoService::Reset() {}
+
+// The first player other than the given one whose name matches. An away player's pawn stays in the world and can be gone to.
+static_function KZPlayer *FindGotoTarget(KZPlayer *player, const char *namePart, bool exact, bool persistentPawn)
+{
+	for (KZPlayer *otherPlayer : g_pKZPlayerManager->GetAllSlots())
+	{
+		if (player == otherPlayer || !(otherPlayer->IsInGame() || otherPlayer->IsAway())
+			|| otherPlayer->awayService->CanControlPawn() == persistentPawn)
+		{
+			continue;
+		}
+		if (exact ? !KZ_STREQI(otherPlayer->GetName(), namePart) : !V_stristr(otherPlayer->GetName(), namePart))
+		{
+			continue;
+		}
+		if (otherPlayer->GetController()->GetTeam() == CS_TEAM_SPECTATOR && !otherPlayer->awayService->IsObservingWithPersistentPawn())
+		{
+			continue;
+		}
+		return otherPlayer;
+	}
+	return nullptr;
+}
 
 bool KZGotoService::GotoPlayer(const char *playerNamePart)
 {
@@ -24,47 +48,11 @@ bool KZGotoService::GotoPlayer(const char *playerNamePart)
 		return false;
 	}
 
+	// Prefer exact matches over partial matches, and players in control of their pawn over pawns that persist on their own.
 	KZPlayer *targetPlayer = nullptr;
-
-	// Prefer exact matches over partial matches.
-	for (KZPlayer *otherPlayer : g_pKZPlayerManager->GetInGamePlayers())
+	for (i32 pass = 0; pass < 4 && !targetPlayer; pass++)
 	{
-		if (this->player == otherPlayer)
-		{
-			continue;
-		}
-
-		if (KZ_STREQI(otherPlayer->GetName(), playerNamePart))
-		{
-			if (otherPlayer->GetController()->GetTeam() == CS_TEAM_SPECTATOR)
-			{
-				continue;
-			}
-			targetPlayer = otherPlayer;
-			break;
-		}
-	}
-
-	// If no exact match was found, try partial matches.
-	if (!targetPlayer)
-	{
-		for (KZPlayer *otherPlayer : g_pKZPlayerManager->GetInGamePlayers())
-		{
-			if (this->player == otherPlayer)
-			{
-				continue;
-			}
-
-			if (V_stristr(otherPlayer->GetName(), playerNamePart))
-			{
-				if (otherPlayer->GetController()->GetTeam() == CS_TEAM_SPECTATOR)
-				{
-					continue;
-				}
-				targetPlayer = otherPlayer;
-				break;
-			}
-		}
+		targetPlayer = FindGotoTarget(this->player, playerNamePart, pass % 2 == 0, pass >= 2);
 	}
 
 	if (!targetPlayer)
@@ -73,6 +61,7 @@ bool KZGotoService::GotoPlayer(const char *playerNamePart)
 		return false;
 	}
 
+	this->player->awayService->RestorePersistentPawn();
 	if (this->player->GetController()->GetTeam() == CS_TEAM_SPECTATOR)
 	{
 		this->player->GetController()->SwitchTeam(CS_TEAM_CT);

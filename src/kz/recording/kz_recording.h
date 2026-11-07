@@ -307,6 +307,8 @@ public:
 	void OnTeleportEnd();
 	void OnCheckpointSave(i32 index, const Vector &origin);
 	void OnCheckpointReset();
+	// The player stops or starts controlling their pawn: away, spectating, or back.
+	void OnControlChange(RpEvent::RpEventData::ControlEvent::ControlEventType type);
 
 	// Identifies teleports at their source. Restores the enclosing reason on exit.
 	class ScopedTeleport

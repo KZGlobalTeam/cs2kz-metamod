@@ -60,6 +60,10 @@ namespace KZ::replaysystem::events
 				case RPEVENT_CHECKPOINT:
 					// Playback uses the tick's checkpoint counters and the associated teleport event.
 					break;
+
+				case RPEVENT_CONTROL:
+					// The ticks already show the pawn running on its own, the controls use these to skip that stretch.
+					break;
 			}
 
 			replay->currentEvent++;
@@ -487,6 +491,7 @@ namespace KZ::replaysystem::events
 					break;
 				}
 				case RPEVENT_CHECKPOINT:
+				case RPEVENT_CONTROL:
 					break;
 			}
 

@@ -16,6 +16,7 @@
 #include "kz/option/kz_option.h"
 #include "kz/paint/kz_paint.h"
 #include "kz/language/kz_language.h"
+#include "kz/away/kz_away.h"
 
 #include "utils/utils.h"
 #include "utils/simplecmds.h"
@@ -36,6 +37,36 @@ static_global class KZOptionServiceEventListener_Quiet : public KZOptionServiceE
 	}
 } optionEventListener;
 
+// The pawn of a player who is away or spectating is kept out of sight. A client takes a pawn linked to its own
+// controller for its own body and predicts it, so its owner would see it frozen.
+static_function bool ShouldHidePersistentPawn(KZPlayer *owner, KZPlayer *viewer)
+{
+	return !owner->awayService->CanControlPawn() && (owner != viewer || owner->awayService->IsObservingWithPersistentPawn());
+}
+
+// A pawn's weapons are sent on their own, and a client that spectated the pawn can show one as a first person model.
+static_function void HidePersistentPawnWeapons(CCheckTransmitInfo *pTransmitInfo, KZPlayer *viewer)
+{
+	for (KZPlayer *owner : g_pKZPlayerManager->GetAllSlots())
+	{
+		CCSPlayerPawn *pawn = ShouldHidePersistentPawn(owner, viewer) ? owner->GetPlayerPawn() : nullptr;
+		CPlayer_WeaponServices *weaponServices = pawn ? pawn->m_pWeaponServices() : nullptr;
+		if (!weaponServices)
+		{
+			continue;
+		}
+		CUtlVector<CHandle<CBasePlayerWeapon>> *weapons = weaponServices->m_hMyWeapons();
+		for (i32 i = 0; i < weapons->Count(); i++)
+		{
+			CBasePlayerWeapon *weapon = weapons->Element(i).Get();
+			if (weapon)
+			{
+				pTransmitInfo->m_pTransmitEntity->Clear(weapon->GetEntityIndex().Get());
+			}
+		}
+	}
+}
+
 void KZ::quiet::OnCheckTransmit(CCheckTransmitInfo **pInfo, int infoCount)
 {
 	for (int i = 0; i < infoCount; i++)
@@ -52,6 +83,7 @@ void KZ::quiet::OnCheckTransmit(CCheckTransmitInfo **pInfo, int infoCount)
 			continue;
 		}
 		targetPlayer->quietService->UpdateHideState();
+		HidePersistentPawnWeapons(pTransmitInfo, targetPlayer);
 
 		EntityInstanceByClassIter_t iterParticleSystem(NULL, "info_particle_system");
 
@@ -119,16 +151,21 @@ void KZ::quiet::OnCheckTransmit(CCheckTransmitInfo **pInfo, int infoCount)
 				continue;
 			}
 #endif
-			// Finally check if player is using !hide.
-			if (!targetPlayer->quietService->ShouldHide())
-			{
-				continue;
-			}
 			KZPlayer *otherPlayer = g_pKZPlayerManager->ToPlayer(pawn);
 			// The controller handle can be stale, treat the pawn as if it had no controller.
 			if (!otherPlayer)
 			{
 				pTransmitInfo->m_pTransmitEntity->Clear(pawn->entindex());
+				continue;
+			}
+			if (ShouldHidePersistentPawn(otherPlayer, targetPlayer))
+			{
+				pTransmitInfo->m_pTransmitEntity->Clear(pawn->entindex());
+				continue;
+			}
+			// Finally check if player is using !hide.
+			if (!targetPlayer->quietService->ShouldHide())
+			{
 				continue;
 			}
 			if (targetPlayer->quietService->ShouldHideIndex(otherPlayer->index))
@@ -342,7 +379,7 @@ bool KZQuietService::ShouldHide()
 	}
 
 	// If the player is not alive and not spectating another player, don't hide other players.
-	if (!this->player->IsAlive() && !this->player->specService->GetSpectatedPlayer())
+	if (this->player->specService->IsObserving() && !this->player->specService->GetSpectatedPlayer())
 	{
 		return false;
 	}

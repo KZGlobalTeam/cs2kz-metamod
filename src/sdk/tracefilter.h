@@ -18,7 +18,6 @@ struct CTraceFilterPlayerMovementCS : public CTraceFilter
 		m_bShouldIgnoreDisabledPairs = true;
 		m_bIgnoreIfBothInteractWithHitboxes = false;
 		m_bForceHitEverything = false;
-		m_unk101 = true;
 	}
 
 	static inline void **vTable {};

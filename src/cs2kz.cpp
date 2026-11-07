@@ -13,6 +13,7 @@
 
 #include "movement/movement.h"
 #include "kz/kz.h"
+#include "kz/away/kz_away.h"
 #include "kz/option/menu/kz_menu.h"
 #include "kz/ui/kz_ui.h"
 #include "kz/anticheat/kz_anticheat.h"
@@ -143,6 +144,7 @@ bool KZPlugin::Unload(char *error, size_t maxlen)
 		return true;
 	}
 	this->unloading = true;
+	KZAwayService::Shutdown();
 	KZUIService::Cleanup();
 	KZProgressService::Cleanup();
 	KZHUDService::Cleanup();
@@ -158,8 +160,6 @@ bool KZPlugin::Unload(char *error, size_t maxlen)
 	g_pPlayerManager->Cleanup();
 	KZDatabaseService::Cleanup();
 	KZGlobalService::Cleanup();
-	// Not in KZGlobalService::Cleanup(): ReloadConfig() calls that at runtime and keeps using the refs.
-	KZGlobalService::CleanupConVars();
 	KZLanguageService::Cleanup();
 	KZOptionService::Cleanup();
 	KZ::replaysystem::Cleanup();
@@ -168,12 +168,15 @@ bool KZPlugin::Unload(char *error, size_t maxlen)
 	hooks::Cleanup();
 	HTTP::Cleanup();
 	RemoveAllTimers();
-	KZ::mode::CleanupModeCvarRefs();
 	utils::Cleanup();
 	LoggingSystem_UnregisterLoggingListener(&g_KZLoggingListener);
 	kz_log_to_file.Set(false);
 	g_KZLoggingListener.CheckFile();
 	ConVar_Unregister();
+	// The heap-allocated CConVarRefs are in the SDK's registration list until ConVar_Unregister() walks it, so they must outlive it.
+	// Not in KZGlobalService::Cleanup(): ReloadConfig() calls that at runtime and keeps using the refs.
+	KZGlobalService::CleanupConVars();
+	KZ::mode::CleanupModeCvarRefs();
 	return true;
 }
 

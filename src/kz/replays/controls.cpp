@@ -110,7 +110,8 @@ static_global std::vector<u32> jumpTicks[KZ_REPLAY_CONTROLS_ZONE_KINDS];
 static_global i64 runStartTick = -1;
 static_global i64 runEndTick = -1;
 
-// The ticks from a timer pause up to where skipping it lands: a tick before its resume, or the last tick when it never resumes.
+// The ticks from a timer pause, or from the player leaving the pawn to itself (away or spectating), up to where skipping it
+// lands: a tick before its resume or return, or the last tick when there is none.
 struct PauseSegment
 {
 	u32 start;
@@ -125,17 +126,24 @@ static_function u32 GetEventSeekTick(i64 eventTick)
 	return eventTick > 0 ? (u32)(eventTick - 1) : 0;
 }
 
-// Where skipping the pause the current tick is in lands, or -1 outside a pause.
+// Where skipping the pause the current tick is in lands, or -1 outside a pause. Pauses inside a stretch without control
+// overlap it, so the furthest end wins.
 static_function i64 FindPauseSkipTick(u32 currentTick)
 {
+	i64 skipTick = -1;
 	for (const PauseSegment &pause : pauseSegments)
 	{
-		if (pause.start <= currentTick && currentTick < pause.skipTick)
+		if (pause.start <= currentTick && currentTick < pause.skipTick && (i64)pause.skipTick > skipTick)
 		{
-			return pause.skipTick;
+			skipTick = pause.skipTick;
 		}
 	}
-	return -1;
+	return skipTick;
+}
+
+static_function bool IsControlEvent(const RpEvent &event, RpEvent::RpEventData::ControlEvent::ControlEventType type)
+{
+	return event.type == RPEVENT_CONTROL && event.data.control.type == type;
 }
 
 static_global u32 currentReplayId;
@@ -312,6 +320,7 @@ namespace KZ::replaysystem::controls
 			return;
 		}
 		i64 pauseStart = -1;
+		i64 detachedStart = -1;
 		for (u32 i = 0; i < replay->numEvents; i++)
 		{
 			const RpEvent &event = replay->events[i];
@@ -324,10 +333,25 @@ namespace KZ::replaysystem::controls
 				pauseSegments.push_back({(u32)pauseStart, GetEventSeekTick(GetTickAtServerTick(replay, event.serverTick))});
 				pauseStart = -1;
 			}
+			else if (detachedStart < 0
+					 && (IsControlEvent(event, RpEvent::RpEventData::ControlEvent::CONTROL_AWAY)
+						 || IsControlEvent(event, RpEvent::RpEventData::ControlEvent::CONTROL_SPECTATE)))
+			{
+				detachedStart = GetTickAtServerTick(replay, event.serverTick);
+			}
+			else if (detachedStart >= 0 && IsControlEvent(event, RpEvent::RpEventData::ControlEvent::CONTROL_RETURN))
+			{
+				pauseSegments.push_back({(u32)detachedStart, GetEventSeekTick(GetTickAtServerTick(replay, event.serverTick))});
+				detachedStart = -1;
+			}
 		}
 		if (pauseStart >= 0)
 		{
 			pauseSegments.push_back({(u32)pauseStart, replay->tickCount - 1});
+		}
+		if (detachedStart >= 0)
+		{
+			pauseSegments.push_back({(u32)detachedStart, replay->tickCount - 1});
 		}
 		if (const RpEvent *start = FindRunStart(replay))
 		{

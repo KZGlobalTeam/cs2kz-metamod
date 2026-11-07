@@ -31,7 +31,7 @@ static void BuildReplayPath(char *buf, int bufLen, const UUID_t &uuid)
 
 RunSubmission::RunSubmission(KZPlayer *player)
 	: uid(RunSubmission::idCount++), timestamp(g_pKZUtils->GetServerGlobals()->realtime), mapGeneration(RunSubmission::currentMapGeneration),
-	  userID(player->GetClient()->GetUserID()), localUUID(player->recordingService->GetCurrentRunUUID()),
+	  sessionID(player->sessionID), localUUID(player->recordingService->GetCurrentRunUUID()),
 	  finalUUID(player->recordingService->GetCurrentRunUUID()), time(player->timerService->GetTime()),
 	  teleports(player->checkpointService->GetTeleportCount())
 {
@@ -212,7 +212,7 @@ bool RunSubmission::ResolveGlobalFilterID(const KZ::api::Map &mapInfo)
 
 void RunSubmission::SubmitGlobal()
 {
-	KZPlayer *player = g_pKZPlayerManager->ToPlayer(this->userID);
+	KZPlayer *player = g_pKZPlayerManager->SessionToPlayer(this->sessionID);
 	if (!player || player->anticheatService->isBanned)
 	{
 		this->global = false;
@@ -332,7 +332,7 @@ void RunSubmission::OnReplayReady(std::vector<char> &&buffer)
 											}
 										});
 		// Notify the player now (write is async but fire-and-forget, effectively always succeeds).
-		KZPlayer *callbackPlayer = this->IsFromPreviousMap() ? nullptr : g_pKZPlayerManager->ToPlayer(userID);
+		KZPlayer *callbackPlayer = this->IsFromPreviousMap() ? nullptr : g_pKZPlayerManager->SessionToPlayer(sessionID);
 		if (callbackPlayer)
 		{
 			callbackPlayer->languageService->PrintChat(true, false, "Replay - Run Replay Saved", finalUUID.ToString().c_str());
@@ -675,7 +675,7 @@ void RunSubmission::SubmitLocal(const char *uuid)
 void RunSubmission::UpdateGlobalCache()
 {
 	KZGlobalService::UpdateRecordCache();
-	KZPlayer *player = g_pKZPlayerManager->ToPlayer(this->userID);
+	KZPlayer *player = g_pKZPlayerManager->SessionToPlayer(this->sessionID);
 	if (player && this->globalResponse.received)
 	{
 		const KZCourseDescriptor *course = KZ::course::GetCourse(this->course.name.c_str());
@@ -698,7 +698,7 @@ void RunSubmission::UpdateGlobalCache()
 
 void RunSubmission::UpdateLocalCache()
 {
-	KZPlayer *player = g_pKZPlayerManager->ToPlayer(this->userID);
+	KZPlayer *player = g_pKZPlayerManager->SessionToPlayer(this->sessionID);
 	if (player)
 	{
 		player->timerService->UpdateLocalPBCache();

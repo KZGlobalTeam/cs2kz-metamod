@@ -230,6 +230,8 @@ def configure_main(sdk_target, sdk, cxx):
     os.path.join(builder.sourcePath, 'src', 'kz', 'timer', 'queries', 'personal_best.cpp'),
     
     os.path.join(builder.sourcePath, 'src', 'kz', 'tip', 'kz_tip.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'away', 'kz_away.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'away', 'events.cpp'),
     
     os.path.join(builder.sourcePath, 'src', 'kz', 'mappingapi', 'kz_mappingapi.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'trigger', 'callbacks.cpp'),

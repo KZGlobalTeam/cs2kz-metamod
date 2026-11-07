@@ -36,6 +36,7 @@ enum RpEventType
 	RPEVENT_STYLE_CHANGE,
 	RPEVENT_TELEPORT,
 	RPEVENT_CHECKPOINT,
+	RPEVENT_CONTROL,
 	RPEVENT_COUNT,
 };
 
@@ -197,6 +198,19 @@ struct RpEvent
 			i32 index; // One-based saved checkpoint index; zero for reset.
 			f32 origin[3];
 		} checkpoint;
+
+		// The player stops or starts controlling the pawn. In between, the pawn runs on its own without input.
+		struct ControlEvent
+		{
+			enum ControlEventType
+			{
+				CONTROL_AWAY = 0, // The player's client disconnected.
+				CONTROL_SPECTATE, // The player went to spectate.
+				CONTROL_RETURN,   // The player controls the pawn again.
+			} type;
+
+			f32 origin[3];
+		} control;
 
 		struct
 		{

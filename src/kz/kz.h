@@ -29,6 +29,7 @@ enum KzModeCvars : int; // defined in mode/kz_mode.h
 
 class KZPlayer;
 class KZAnticheatService;
+class KZAwayService;
 class KZBeamService;
 class KZCheckpointService;
 class KZDatabaseService;
@@ -82,6 +83,10 @@ public:
 	virtual void OnPlayerFullyConnect() override;
 	virtual void OnAuthorized() override;
 	virtual void OnPrimeStatusConfirmed() override;
+	virtual bool IsAway() override;
+	// Tears down what belongs to the player being on the server, once they are gone for good.
+	void CleanupPlayer();
+	void CleanupClient();
 
 	virtual void OnPhysicsSimulate() override;
 	virtual void OnPhysicsSimulatePost() override;
@@ -173,6 +178,7 @@ private:
 
 public:
 	KZAnticheatService *anticheatService {};
+	KZAwayService *awayService {};
 	KZBeamService *beamService {};
 	KZCheckpointService *checkpointService {};
 	KZDatabaseService *databaseService {};
@@ -272,6 +278,7 @@ public:
 	KZPlayer *ToPlayer(CEntityIndex entIndex);
 	KZPlayer *ToPlayer(CPlayerUserId userID);
 	KZPlayer *SteamIdToPlayer(u64 steamID, bool validated = true);
+	KZPlayer *SessionToPlayer(u32 sessionID);
 
 	PlayerSlotRange<KZPlayer> GetAllSlots()
 	{

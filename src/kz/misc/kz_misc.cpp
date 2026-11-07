@@ -23,6 +23,7 @@
 #include "kz/profile/kz_profile.h"
 #include "kz/pistol/kz_pistol.h"
 #include "kz/racing/kz_racing.h"
+#include "kz/away/kz_away.h"
 
 #include "sdk/gamerules.h"
 #include "sdk/physicsgamesystem.h"
@@ -137,6 +138,7 @@ SCMD(kz_end, SCFL_MAP)
 			return true;
 		}
 		player->timerService->TimerStop();
+		player->awayService->RestorePersistentPawn();
 		if (player->GetPlayerPawn()->IsAlive())
 		{
 			if (player->noclipService->IsNoclipping())
@@ -185,6 +187,7 @@ void KZ::misc::HandleTeleportToCourse(KZPlayer *player, const CCommand *args)
 	}
 
 	player->timerService->OnTeleportToStart();
+	player->awayService->RestorePersistentPawn();
 	if (player->GetPlayerPawn()->IsAlive())
 	{
 		// Fix players spawning 500u under spawn positions.
@@ -339,20 +342,28 @@ SCMD(jointeam, SCFL_HIDDEN)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	int newTeam = atoi(args->Arg(1));
-	if (newTeam == CS_TEAM_SPECTATOR || newTeam == CS_TEAM_NONE)
+	bool spectating = newTeam == CS_TEAM_SPECTATOR || newTeam == CS_TEAM_NONE;
+	if (spectating)
 	{
-		if (!player->timerService->GetPaused() && !player->timerService->CanPause())
+		if (!player->awayService->CanSpectateWithPersistentPawn() && !player->timerService->GetPaused() && !player->timerService->CanPause())
 		{
 			CloseTeamMenu(player);
 			return true;
 		}
 	}
-	else if (player->IsAlive() && !player->timerService->CheckSafeguard())
+	// Leaving spectate keeps the run, as it does for a spectator without a pawn.
+	else if (player->IsAlive() && !player->awayService->IsObservingWithPersistentPawn() && !player->timerService->CheckSafeguard())
 	{
 		CloseTeamMenu(player);
 		return true;
 	}
+	bool wasSpectating = player->awayService->IsObservingWithPersistentPawn();
 	KZ::misc::JoinTeam(player, newTeam, true);
+	// Without a target, a spectator with a persistent pawn starts with a free camera where the player was.
+	if (spectating && !wasSpectating && player->awayService->IsObservingWithPersistentPawn())
+	{
+		player->specService->SpectatePlayer(player, true);
+	}
 	return true;
 }
 
@@ -388,8 +399,6 @@ void KZ::misc::Init()
 	}
 }
 
-// TODO: Fullupdate spectators on spec_mode/spec_next/spec_player/spec_prev
-
 void KZ::misc::JoinTeam(KZPlayer *player, int newTeam, bool restorePos)
 {
 	int currentTeam = player->GetController()->GetTeam();
@@ -400,7 +409,30 @@ void KZ::misc::JoinTeam(KZPlayer *player, int newTeam, bool restorePos)
 		newTeam = CS_TEAM_SPECTATOR;
 	}
 
-	if (newTeam == CS_TEAM_SPECTATOR && currentTeam != CS_TEAM_SPECTATOR)
+	if (player->awayService->IsObservingWithPersistentPawn())
+	{
+		if (newTeam == CS_TEAM_SPECTATOR)
+		{
+			return;
+		}
+		// Coming back picks the persistent pawn up again. The other team takes the pawn over alive instead of respawning it, so nothing
+		// the map did to it is undone.
+		player->awayService->RestorePersistentPawn();
+		if (newTeam != player->GetController()->GetTeam())
+		{
+			player->GetController()->SwitchTeam(newTeam);
+		}
+		player->quietService->SendFullUpdate();
+		player->tipService->OnPlayerJoinTeam(newTeam);
+		return;
+	}
+
+	if (newTeam == CS_TEAM_SPECTATOR && currentTeam != CS_TEAM_SPECTATOR && player->awayService->CanSpectateWithPersistentPawn())
+	{
+		player->awayService->StartSpectating();
+		player->quietService->SendFullUpdate();
+	}
+	else if (newTeam == CS_TEAM_SPECTATOR && currentTeam != CS_TEAM_SPECTATOR)
 	{
 		if (currentTeam != CS_TEAM_NONE)
 		{
@@ -413,7 +445,6 @@ void KZ::misc::JoinTeam(KZPlayer *player, int newTeam, bool restorePos)
 		}
 		player->GetController()->ChangeTeam(CS_TEAM_SPECTATOR);
 		player->quietService->SendFullUpdate();
-		// TODO: put spectators of this player to freecam, and send them full updates
 	}
 	else if (newTeam == CS_TEAM_CT && currentTeam != CS_TEAM_CT || newTeam == CS_TEAM_T && currentTeam != CS_TEAM_T)
 	{

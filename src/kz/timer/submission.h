@@ -31,7 +31,8 @@ struct RunSubmission
 	// has happened since, and this submission belongs to a map nobody is on anymore.
 	const u32 mapGeneration;
 
-	const CPlayerUserId userID;
+	// The player's session, which survives a reconnect into a held slot unlike the userid.
+	const u32 sessionID;
 
 	// -------------------------------------------------------------------------
 	// Submission state

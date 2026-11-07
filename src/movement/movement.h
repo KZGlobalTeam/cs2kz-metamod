@@ -262,6 +262,8 @@ public:
 	CMoveData moveDataPre;
 	CMoveData moveDataPost;
 	QAngle oldAngles;
+	// The view angles SetAngles is applying, while its teleport of the pawn runs. That teleport leaves the pitch out.
+	const QAngle *settingViewAngles {};
 
 	bool processingDuck {};
 	bool duckBugged {};

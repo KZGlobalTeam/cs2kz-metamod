@@ -40,3 +40,8 @@ KZPlayer *KZPlayerManager::SteamIdToPlayer(u64 steamID, bool validated)
 {
 	return static_cast<KZPlayer *>(PlayerManager::SteamIdToPlayer(steamID, validated));
 }
+
+KZPlayer *KZPlayerManager::SessionToPlayer(u32 sessionID)
+{
+	return static_cast<KZPlayer *>(PlayerManager::SessionToPlayer(sessionID));
+}

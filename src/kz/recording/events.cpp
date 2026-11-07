@@ -342,6 +342,24 @@ void KZRecordingService::OnCheckpointReset()
 	}
 }
 
+void KZRecordingService::OnControlChange(RpEvent::RpEventData::ControlEvent::ControlEventType type)
+{
+	if (this->player->IsFakeClient() || KZ::replaysystem::IsReplayBot(this->player))
+	{
+		return;
+	}
+	KZ_LOG_DEBUG(LogChannel::Recording, "Control change %d\n", type);
+	RpEvent event = this->CreateEvent(RPEVENT_CONTROL);
+	event.data.control.type = type;
+	Vector origin;
+	this->player->GetOrigin(&origin);
+	for (i32 i = 0; i < 3; i++)
+	{
+		event.data.control.origin[i] = origin[i];
+	}
+	this->InsertEvent(event);
+}
+
 void KZRecordingService::OnClientDisconnect()
 {
 	for (auto &recorder : this->runRecorders)

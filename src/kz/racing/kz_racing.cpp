@@ -263,6 +263,11 @@ bool KZRacingService::IsRaceFinisher()
 	return false;
 }
 
+bool KZRacingService::IsRacing()
+{
+	return KZRacingService::currentRace.state == RaceInfo::State::Ongoing && this->IsRaceParticipant() && !this->IsRaceFinisher();
+}
+
 void KZRacingService::RemoveLocalRaceParticipant(u64 steamID)
 {
 	auto &participants = KZRacingService::currentRace.localParticipants;

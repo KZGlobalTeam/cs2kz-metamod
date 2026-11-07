@@ -288,7 +288,7 @@ void KZRecordingService::CheckRecorders()
 						RunSubmission *sub = RunSubmission::GetByUUID(localUUID);
 						if (sub)
 						{
-							KZPlayer *callbackPlayer = g_pKZPlayerManager->ToPlayer(sub->userID);
+							KZPlayer *callbackPlayer = g_pKZPlayerManager->SessionToPlayer(sub->sessionID);
 							if (callbackPlayer)
 							{
 								callbackPlayer->languageService->PrintChat(true, false, "Replay - Run Replay Failed");
@@ -631,7 +631,7 @@ SCMD(kz_rpsave, SCFL_REPLAY)
 		return true;
 	}
 
-	KZPlayer *target = player->IsAlive() ? player : player->specService->GetSpectatedPlayer();
+	KZPlayer *target = player->specService->IsObserving() ? player->specService->GetSpectatedPlayer() : player;
 	if (!target)
 	{
 		return true;
