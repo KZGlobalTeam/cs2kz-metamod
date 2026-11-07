@@ -46,7 +46,6 @@ static_function bool IsKickOrBan(ENetworkDisconnectionReason reason)
 	}
 }
 
-// Slots the engine can still give a new connection: ones it has not created yet, and ones nobody uses or holds.
 static_function i32 CountFreeSlots()
 {
 	CUtlVector<CServerSideClientBase *> *clients = g_pKZUtils->GetClientList();
@@ -90,8 +89,7 @@ void KZAwayService::ReleaseHeldSlot(CPlayerSlot slot)
 	reinterpret_cast<netadr_t *>(&client->m_Addr)->Clear();
 }
 
-// The engine turns a connection away once every slot is used or held, before any plugin hears of it. Keeping one slot free
-// lets the player who has been away the longest go only when the server fills up.
+// Make sure to leave space for new players.
 void KZAwayService::KeepSlotFree()
 {
 	if (CountFreeSlots() > 0)
