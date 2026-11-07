@@ -45,8 +45,6 @@ They are warned, and `!gc` shows them as not global.
 ## Spectate
 
 A player goes to spectate with `jointeam 1` or `!spec`.
-A human on T or CT with an alive pawn keeps it, anyone else becomes an ordinary spectator.
-
 The controller views through its observer pawn and joins the spectator team's player list, while the pawn keeps its team.
 Every client rebuilds its scoreboard at that point, which would otherwise hide the first spectator it sees.
 The plugin keeps the pawn alive and simulates it by hand, the way CS2 runs an away player's pawn.
@@ -92,7 +90,7 @@ The skip button in the replay controls jumps over such a stretch, the same way i
 - When someone else on the same IP connects, the engine hands them the held slot, and the away state is let go because the SteamID does not match.
 - A player who spectates mid-air leaves the pawn falling and touching triggers, and gets it back mid-air.
 
-## Not handled
+## Notes
 
 - While spectating, the free camera's commands are still recorded as command data.
 - A reconnect from a different address while the old connection is still alive loses the run. Once the old connection has timed out, any address works.
