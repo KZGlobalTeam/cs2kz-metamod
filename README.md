@@ -9,29 +9,29 @@ Automated translation linter reports for cs2kz-metamod.
 | **Linter Errors** | 0 |
 | **Linter Warnings** | 0 |
 | **Total Languages** | 15 |
-| **Total Phrases** | 1130 |
-| **Phrases Missing Translations** | 1130 |
-| **Total Missing Entries** | 7963 |
+| **Total Phrases** | 1138 |
+| **Phrases Missing Translations** | 1138 |
+| **Total Missing Entries** | 8075 |
 | **Menu Files** | 11 |
 
 ## Language Coverage (Phrases)
 
 ```
-  chi (schinese)       [█████████████████░░░]  89.8% (1015/1130)
-  de (german)          [█████████░░░░░░░░░░░]  46.2% (522/1130)
-  en (english)         [████████████████████] 100.0% (1130/1130)
-  es (spanish)         [████████░░░░░░░░░░░░]  43.0% (486/1130)
-  fi (finnish)         [████░░░░░░░░░░░░░░░░]  20.8% (235/1130)
-  it (italian)         [████░░░░░░░░░░░░░░░░]  20.1% (227/1130)
-  ko (koreana)         [███████████░░░░░░░░░]  58.1% (656/1130)
-  lv (latvian)         [█████░░░░░░░░░░░░░░░]  29.2% (330/1130)
-  nl (dutch)           [░░░░░░░░░░░░░░░░░░░░]   0.4% (5/1130)
-  pl (polish)          [█████████░░░░░░░░░░░]  46.4% (524/1130)
-  ru (russian)         [█████████████████░░░]  88.3% (998/1130)
-  sv (swedish)         [██████░░░░░░░░░░░░░░]  34.9% (394/1130)
-  tr (turkish)         [████░░░░░░░░░░░░░░░░]  23.4% (264/1130)
-  ua (ukrainian)       [████████████████████] 100.0% (1130/1130)
-  zho (tchinese)       [██████████████████░░]  94.8% (1071/1130)
+  chi (schinese)       [█████████████████░░░]  89.2% (1015/1138)
+  de (german)          [█████████░░░░░░░░░░░]  45.9% (522/1138)
+  en (english)         [████████████████████] 100.0% (1138/1138)
+  es (spanish)         [████████░░░░░░░░░░░░]  42.7% (486/1138)
+  fi (finnish)         [████░░░░░░░░░░░░░░░░]  20.7% (235/1138)
+  it (italian)         [███░░░░░░░░░░░░░░░░░]  19.9% (227/1138)
+  ko (koreana)         [███████████░░░░░░░░░]  57.6% (656/1138)
+  lv (latvian)         [█████░░░░░░░░░░░░░░░]  29.0% (330/1138)
+  nl (dutch)           [░░░░░░░░░░░░░░░░░░░░]   0.4% (5/1138)
+  pl (polish)          [█████████░░░░░░░░░░░]  46.0% (524/1138)
+  ru (russian)         [█████████████████░░░]  87.7% (998/1138)
+  sv (swedish)         [██████░░░░░░░░░░░░░░]  34.6% (394/1138)
+  tr (turkish)         [████░░░░░░░░░░░░░░░░]  23.2% (264/1138)
+  ua (ukrainian)       [███████████████████░]  99.3% (1130/1138)
+  zho (tchinese)       [██████████████████░░]  94.1% (1071/1138)
 ```
 
 ## Menu Translation Status
@@ -81,9 +81,9 @@ Automated translation linter reports for cs2kz-metamod.
 
 ## Last Updated
 
-- **Commit:** [`c7e04da`](https://github.com/KZGlobalTeam/cs2kz-metamod/commit/c7e04da2cbc242ba2344ca2b8f989bde48748b09)
-- **Time:** 2026-10-28 13:48:47 UTC
-- **Message:** Ukrainian translation upd. (#670)
+- **Commit:** [`317449d`](https://github.com/KZGlobalTeam/cs2kz-metamod/commit/317449dfa79daf958343fd115676ed4c296b57f7)
+- **Time:** 2026-11-07 01:20:37 UTC
+- **Message:** Keep the timer running while the player is disconnected or is spectating (#674)
 
 ---
 
