@@ -17,7 +17,7 @@ static_global f64 unhealthySince;
 
 static_function f64 GetRealTime()
 {
-	return g_pKZUtils->GetGlobals()->realtime;
+	return Plat_FloatTime();
 }
 
 static_function void OnHealthCheckSuccess(std::vector<ISQLQuery *> queries)

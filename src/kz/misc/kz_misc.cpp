@@ -31,6 +31,7 @@
 #include "sdk/cskeletoninstance.h"
 
 #define RESTART_CHECK_INTERVAL 1800.0f
+#define AWAY_RESTART_DELAY     3600.0
 static_global CTimer<> *mapRestartTimer;
 
 SCMD(kz_hidelegs, SCFL_PLAYER | SCFL_PREFERENCE)
@@ -378,6 +379,12 @@ SCMD_LINK(switchhandsright, switchhands);
 
 static_function f64 CheckRestart()
 {
+	// Away players do not count as connected, so an empty server keeps its map until each of them has been gone an hour.
+	f64 awayTimeLeft = KZAwayService::GetAwayTimeLeft(AWAY_RESTART_DELAY);
+	if (awayTimeLeft > 0.0)
+	{
+		return Min(awayTimeLeft, (f64)RESTART_CHECK_INTERVAL);
+	}
 	utils::ResetMapIfEmpty();
 	return RESTART_CHECK_INTERVAL;
 }

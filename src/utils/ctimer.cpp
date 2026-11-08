@@ -8,8 +8,9 @@ static_function void ProcessTimerList(std::vector<CTimerBase *> &timers)
 	for (size_t i = timers.size(); i-- > 0;)
 	{
 		auto timer = timers[i];
-		f64 currentTime = timer->useRealTime ? g_pKZUtils->GetGlobals()->realtime : g_pKZUtils->GetGlobals()->curtime;
-		if (timer->lastExecute == -1)
+		// The server's realtime and curtime both start over with each map, which a persistent timer would otherwise wait out.
+		f64 currentTime = timer->useRealTime ? Plat_FloatTime() : g_pKZUtils->GetGlobals()->curtime;
+		if (timer->lastExecute == -1 || currentTime < timer->lastExecute)
 		{
 			timer->lastExecute = currentTime;
 		}

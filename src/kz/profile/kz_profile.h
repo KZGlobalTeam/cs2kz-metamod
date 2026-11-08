@@ -22,7 +22,7 @@ public:
 	static inline bool isDirty = false;
 	char clanTag[32] {};
 	u8 desiredMode {};
-	f32 timeToNextRatingRefresh = 0.0f;
+	f64 timeToNextRatingRefresh {};
 	f64 currentRating = -1.0f;
 
 	// Overrides set through the public plugin interface (see src/public/ics2kz.h).

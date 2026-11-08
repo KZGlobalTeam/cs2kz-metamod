@@ -12,7 +12,7 @@ private:
 
 	struct ActiveStats
 	{
-		f32 lastActionTime {};
+		f64 lastActionTime {};
 		f64 activeTime {};
 		f64 afkDuration {};
 		f64 timeSpentInServer {};

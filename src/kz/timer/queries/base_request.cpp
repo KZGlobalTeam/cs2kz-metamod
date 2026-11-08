@@ -9,7 +9,7 @@
 #include "vendor/sql_mm/src/public/sql_mm.h"
 
 BaseRequest::BaseRequest(u64 uid, KZPlayer *player)
-	: uid(uid), userID(player->GetClient()->GetUserID()), timestamp(g_pKZUtils->GetServerGlobals()->realtime)
+	: uid(uid), userID(player->GetClient()->GetUserID()), timestamp(Plat_FloatTime())
 {
 }
 
@@ -130,7 +130,7 @@ void BaseRequest::CheckRequests()
 				delete instance;
 				return true;
 			}
-			else if (instance->timestamp + instance->timeout < g_pKZUtils->GetServerGlobals()->realtime)
+			else if (instance->timestamp + instance->timeout < Plat_FloatTime())
 			{
 				// Force a reply with whatever data the instance has obtained.
 				instance->Reply();

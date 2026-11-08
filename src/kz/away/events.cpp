@@ -318,6 +318,19 @@ void KZAwayService::OnServerGamePostSimulate()
 	}
 }
 
+f64 KZAwayService::GetAwayTimeLeft(f64 limit)
+{
+	f64 timeLeft = 0.0;
+	for (KZPlayer *player : g_pKZPlayerManager->GetAllSlots())
+	{
+		if (player->IsAway())
+		{
+			timeLeft = Max(timeLeft, player->awayService->awaySince + limit - g_pKZUtils->GetServerGlobals()->realtime);
+		}
+	}
+	return timeLeft;
+}
+
 void KZAwayService::ReleaseAwayPlayers()
 {
 	for (KZPlayer *player : g_pKZPlayerManager->GetAllSlots())

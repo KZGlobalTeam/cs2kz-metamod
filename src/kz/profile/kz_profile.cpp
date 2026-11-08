@@ -130,7 +130,7 @@ void KZProfileService::RequestRating()
 		KZ_LOG_DEBUG(LogChannel::Profile, "Player %s has styles enabled, skipping rating request.\n", this->player->GetName());
 		return;
 	}
-	this->timeToNextRatingRefresh = g_pKZUtils->GetServerGlobals()->realtime + RATING_REFRESH_PERIOD + RandomFloat(-30.0f, 30.0f);
+	this->timeToNextRatingRefresh = Plat_FloatTime() + RATING_REFRESH_PERIOD + RandomFloat(-30.0f, 30.0f);
 	std::string apiURL = std::string(KZOptionService::GetOptionStr("apiUrl", "https://api.cs2kz.org"));
 	// Removing trailing slash if present to avoid double slashes in the URL.
 	if (!apiURL.empty() && apiURL.back() == '/')
@@ -267,7 +267,7 @@ void KZProfileService::UpdateClantag()
 
 void KZProfileService::OnPhysicsSimulatePost()
 {
-	if (g_pKZUtils->GetServerGlobals()->realtime >= this->timeToNextRatingRefresh)
+	if (Plat_FloatTime() >= this->timeToNextRatingRefresh)
 	{
 		this->RequestRating();
 	}

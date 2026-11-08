@@ -25,7 +25,7 @@ struct RunSubmission
 	// -------------------------------------------------------------------------
 
 	const u32 uid;       // unique ID for callbacks to look up this submission
-	const f64 timestamp; // realtime at creation, used for timeouts
+	const f64 timestamp; // Plat_FloatTime at creation, used for timeouts
 
 	// Value of currentMapGeneration when this run finished. If it no longer matches, a map change
 	// has happened since, and this submission belongs to a map nobody is on anymore.

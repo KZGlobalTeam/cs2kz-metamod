@@ -155,14 +155,14 @@ void KZTelemetryService::OnPhysicsSimulatePost()
 	if (this->player->GetMoveServices()->m_nButtons().m_pButtonStates[1] != 0
 		|| this->player->GetMoveServices()->m_nButtons().m_pButtonStates[2] != 0)
 	{
-		this->activeStats.lastActionTime = g_pKZUtils->GetServerGlobals()->realtime;
+		this->activeStats.lastActionTime = Plat_FloatTime();
 		return;
 	}
 }
 
 void KZTelemetryService::ActiveCheck()
 {
-	f64 currentTime = g_pKZUtils->GetServerGlobals()->realtime;
+	f64 currentTime = Plat_FloatTime();
 	f64 duration = currentTime - KZTelemetryService::lastActiveCheckTime;
 	for (KZPlayer *player : g_pKZPlayerManager->GetInGamePlayers())
 	{

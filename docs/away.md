@@ -16,8 +16,8 @@ This away state stays until one of the following happens:
 - Someone else connects into the held slot
 - The same SteamID joins another slot
 - The map changes
+- Nobody is connected and every away player has been gone for an hour, which makes the server reload the map
 
-There is no time limit otherwise.
 When the state is let go, the plugin runs the normal leave and frees the slot.
 Kicks and bans never stay.
 
@@ -85,7 +85,7 @@ The skip button in the replay controls jumps over such a stretch, the same way i
 - A player whose game crashes and who reconnects a minute later resumes where the pawn is, paused if allowed.
 - A player whose game restarts before the server timed out the old connection resumes in the same slot, after the engine kicks the old connection.
 - A player who reconnects from a different address while the old connection is still alive gets another slot and loses the run, since the SteamID is playing elsewhere.
-- A player who reconnects an hour later on the same map resumes like after a minute, unless a map change let the state go.
+- A player who reconnects an hour later on the same map resumes like after a minute, as long as someone else stayed connected.
 - When the server fills up, the player away the longest is let go so the next connection succeeds.
 - When someone else on the same IP connects, the engine hands them the held slot, and the away state is let go because the SteamID does not match.
 - A player who spectates mid-air leaves the pawn falling and touching triggers, and gets it back mid-air.

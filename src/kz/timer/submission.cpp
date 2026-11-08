@@ -30,7 +30,7 @@ static void BuildReplayPath(char *buf, int bufLen, const UUID_t &uuid)
 // ---------------------------------------------------------------------------
 
 RunSubmission::RunSubmission(KZPlayer *player)
-	: uid(RunSubmission::idCount++), timestamp(g_pKZUtils->GetServerGlobals()->realtime), mapGeneration(RunSubmission::currentMapGeneration),
+	: uid(RunSubmission::idCount++), timestamp(Plat_FloatTime()), mapGeneration(RunSubmission::currentMapGeneration),
 	  sessionID(player->sessionID), localUUID(player->recordingService->GetCurrentRunUUID()),
 	  finalUUID(player->recordingService->GetCurrentRunUUID()), time(player->timerService->GetTime()),
 	  teleports(player->checkpointService->GetTeleportCount())
@@ -397,7 +397,7 @@ void RunSubmission::TryFinalize()
 		return;
 	}
 
-	const f64 now = g_pKZUtils->GetServerGlobals()->realtime;
+	const f64 now = Plat_FloatTime();
 
 	if (mapResolutionPending)
 	{
@@ -717,7 +717,7 @@ void RunSubmission::CheckAll()
 	submissions.erase(std::remove_if(submissions.begin(), submissions.end(),
 		[](RunSubmission *sub)
 		{
-			const f64 now = g_pKZUtils->GetServerGlobals()->realtime;
+			const f64 now = Plat_FloatTime();
 
 			// Try to finalize on each frame until it commits
 			sub->TryFinalize();

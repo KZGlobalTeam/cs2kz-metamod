@@ -117,6 +117,8 @@ public:
 	static void OnGameFrame();
 	static void OnServerGamePostSimulate();
 
+	// Seconds until every away player has been away for the given time, 0 once they all have.
+	static f64 GetAwayTimeLeft(f64 limit);
 	// Lets go of every away player, whose pawns do not survive a map change.
 	static void ReleaseAwayPlayers();
 	static void Shutdown();
