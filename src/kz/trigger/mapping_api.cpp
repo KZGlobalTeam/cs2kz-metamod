@@ -79,6 +79,46 @@ void KZTriggerService::UpdateModifiersInternal()
 	}
 }
 
+void KZTriggerService::UpdateModifierCounts()
+{
+	Modifiers counts {};
+	counts.jumpFactor = this->modifiers.jumpFactor;
+	i32 bhopCount = 0;
+	for (const TriggerTouchTracker &tracker : this->triggerTrackers)
+	{
+		// Round restarts can hand the table slot to another trigger.
+		if (!tracker.kzTrigger || !tracker.mappingApiStartedTouch || tracker.kzTrigger->entity != tracker.triggerHandle)
+		{
+			continue;
+		}
+		if (KZ::mapapi::IsBhopTrigger(tracker.kzTrigger->type))
+		{
+			bhopCount++;
+			continue;
+		}
+		if (tracker.kzTrigger->type != KZTRIGGER_MODIFIER)
+		{
+			continue;
+		}
+		const KzMapModifier &modifier = tracker.kzTrigger->modifier;
+		counts.disablePausingCount += modifier.disablePausing ? 1 : 0;
+		counts.disableCheckpointsCount += modifier.disableCheckpoints ? 1 : 0;
+		counts.disableTeleportsCount += modifier.disableTeleports ? 1 : 0;
+		counts.disableJumpstatsCount += modifier.disableJumpstats ? 1 : 0;
+		// Enabling slide will also disable jumpstats.
+		counts.disableJumpstatsCount += modifier.enableSlide ? 1 : 0;
+		counts.enableSlideCount += modifier.enableSlide ? 1 : 0;
+		// Modifying jump velocity will also disable jumpstats.
+		counts.disableJumpstatsCount += modifier.jumpFactor != 1.0f ? 1 : 0;
+		// Modifying force (un)duck will also disable jumpstats.
+		counts.disableJumpstatsCount += modifier.forceDuck || modifier.forceUnduck ? 1 : 0;
+		counts.forcedDuckCount += modifier.forceDuck ? 1 : 0;
+		counts.forcedUnduckCount += modifier.forceUnduck ? 1 : 0;
+	}
+	this->modifiers = counts;
+	this->bhopTouchCount = bhopCount;
+}
+
 bool KZTriggerService::InAntiPauseArea()
 {
 	return this->modifiers.disablePausingCount > 0;

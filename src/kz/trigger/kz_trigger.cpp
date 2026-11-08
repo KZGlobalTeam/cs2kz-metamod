@@ -35,13 +35,7 @@ void KZTriggerService::OnPhysicsSimulate()
 		// The trigger mysteriously disappeared...
 		if (!trigger)
 		{
-			const KzTrigger *kzTrigger = this->triggerTrackers[i].kzTrigger;
-			if (kzTrigger)
-			{
-				this->OnMappingApiTriggerEndTouchPost(this->triggerTrackers[i]);
-			}
-
-			this->triggerTrackers.erase(this->triggerTrackers.begin() + i);
+			this->EndTouchRemovedTrigger(i);
 			i--;
 			continue;
 		}
@@ -219,13 +213,7 @@ void KZTriggerService::UpdateTriggerTouchList()
 		// The trigger mysteriously disappeared...
 		if (!trigger)
 		{
-			const KzTrigger *kzTrigger = this->triggerTrackers[i].kzTrigger;
-			if (kzTrigger)
-			{
-				this->OnMappingApiTriggerEndTouchPost(this->triggerTrackers[i]);
-			}
-
-			this->triggerTrackers.erase(this->triggerTrackers.begin() + i);
+			this->EndTouchRemovedTrigger(i);
 			continue;
 		}
 		if (std::find(filter.hitTriggerHandles.begin(), filter.hitTriggerHandles.end(), handle) == filter.hitTriggerHandles.end())
@@ -260,21 +248,15 @@ void KZTriggerService::UpdateTriggerTouchList()
 
 void KZTriggerService::EndTouchAll()
 {
-	for (size_t i = 0; i < this->triggerTrackers.size(); i++)
+	// Backwards, because EndTouch removes the tracker it ends.
+	for (size_t i = this->triggerTrackers.size(); i-- > 0;)
 	{
 		CEntityHandle handle = this->triggerTrackers[i].triggerHandle;
 		CBaseTrigger *trigger = dynamic_cast<CBaseTrigger *>(GameEntitySystem()->GetEntityInstance(handle));
 		// The trigger mysteriously disappeared...
 		if (!trigger)
 		{
-			const KzTrigger *kzTrigger = this->triggerTrackers[i].kzTrigger;
-			if (kzTrigger)
-			{
-				this->OnMappingApiTriggerEndTouchPost(this->triggerTrackers[i]);
-			}
-
-			this->triggerTrackers.erase(this->triggerTrackers.begin() + i);
-			i--;
+			this->EndTouchRemovedTrigger(i);
 			continue;
 		}
 		this->EndTouch(trigger);
@@ -322,13 +304,7 @@ void KZTriggerService::TouchAll()
 		// The trigger mysteriously disappeared...
 		if (!trigger)
 		{
-			const KzTrigger *kzTrigger = this->triggerTrackers[i].kzTrigger;
-			if (kzTrigger)
-			{
-				this->OnMappingApiTriggerEndTouchPost(this->triggerTrackers[i]);
-			}
-
-			this->triggerTrackers.erase(this->triggerTrackers.begin() + i);
+			this->EndTouchRemovedTrigger(i);
 			i--;
 			continue;
 		}
@@ -510,6 +486,17 @@ void KZTriggerService::EndTouch(CBaseTrigger *trigger)
 			this->triggerTrackers.erase(it);
 		}
 	}
+}
+
+void KZTriggerService::EndTouchRemovedTrigger(size_t trackerIndex)
+{
+	TriggerTouchTracker &tracker = this->triggerTrackers[trackerIndex];
+	if (tracker.kzTrigger && tracker.mappingApiStartedTouch)
+	{
+		tracker.mappingApiStartedTouch = false;
+		this->OnMappingApiTriggerEndTouchPost(tracker);
+	}
+	this->triggerTrackers.erase(this->triggerTrackers.begin() + trackerIndex);
 }
 
 void KZTriggerService::UpdatePreTouchData()

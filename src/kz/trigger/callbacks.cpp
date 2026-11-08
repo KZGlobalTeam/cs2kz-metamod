@@ -88,11 +88,13 @@ void KZTriggerService::OnTriggerTouchPost(CBaseTrigger *trigger, TriggerTouchTra
 void KZTriggerService::OnTriggerEndTouchPost(CBaseTrigger *trigger, TriggerTouchTracker &tracker)
 {
 	// Only fire the mapping API end touch if the mapping API start touch was actually fired,
-	// so that counter increments/decrements stay symmetric regardless of when the filter became active.
+	// so that start and end touch effects stay symmetric regardless of when the filter became active.
 	if (!tracker.kzTrigger || !tracker.mappingApiStartedTouch)
 	{
 		return;
 	}
+	// Cleared before the end touch so that the recount leaves this tracker out.
+	tracker.mappingApiStartedTouch = false;
 	this->OnMappingApiTriggerEndTouchPost(tracker);
 }
 
@@ -214,6 +216,8 @@ void KZTriggerService::ApplyPushes()
 
 void KZTriggerService::OnMappingApiTriggerStartTouchPost(TriggerTouchTracker tracker)
 {
+	// Always recount, the trigger type below might be stale.
+	this->UpdateModifierCounts();
 	const KzTrigger *trigger = tracker.kzTrigger;
 	const KZCourseDescriptor *course = KZ::mapapi::GetCourseDescriptorFromTrigger(trigger);
 	if (KZ::mapapi::IsTimerTrigger(trigger->type) && !course)
@@ -225,21 +229,7 @@ void KZTriggerService::OnMappingApiTriggerStartTouchPost(TriggerTouchTracker tra
 	{
 		case KZTRIGGER_MODIFIER:
 		{
-			KzMapModifier modifier = trigger->modifier;
-			this->modifiers.disablePausingCount += modifier.disablePausing ? 1 : 0;
-			this->modifiers.disableCheckpointsCount += modifier.disableCheckpoints ? 1 : 0;
-			this->modifiers.disableTeleportsCount += modifier.disableTeleports ? 1 : 0;
-			this->modifiers.disableJumpstatsCount += modifier.disableJumpstats ? 1 : 0;
-			// Enabling slide will also disable jumpstats.
-			this->modifiers.disableJumpstatsCount += modifier.enableSlide ? 1 : 0;
-			this->modifiers.enableSlideCount += modifier.enableSlide ? 1 : 0;
-			// Modifying jump velocity will also disable jumpstats.
-			this->modifiers.disableJumpstatsCount += modifier.jumpFactor != 1.0f ? 1 : 0;
-			this->modifiers.jumpFactor = modifier.jumpFactor;
-			// Modifying force (un)duck will also disable jumpstats.
-			this->modifiers.disableJumpstatsCount += modifier.forceDuck || modifier.forceUnduck ? 1 : 0;
-			this->modifiers.forcedDuckCount += modifier.forceDuck ? 1 : 0;
-			this->modifiers.forcedUnduckCount += modifier.forceUnduck ? 1 : 0;
+			this->modifiers.jumpFactor = trigger->modifier.jumpFactor;
 		}
 		break;
 
@@ -293,17 +283,6 @@ void KZTriggerService::OnMappingApiTriggerStartTouchPost(TriggerTouchTracker tra
 		}
 		break;
 
-		case KZTRIGGER_TELEPORT:
-		case KZTRIGGER_MULTI_BHOP:
-		case KZTRIGGER_SINGLE_BHOP:
-		case KZTRIGGER_SEQUENTIAL_BHOP:
-		{
-			if (KZ::mapapi::IsBhopTrigger(trigger->type))
-			{
-				this->bhopTouchCount++;
-			}
-		}
-		break;
 		case KZTRIGGER_PUSH:
 		{
 			if (tracker.kzTrigger->push.pushConditions & KzMapPush::KZ_PUSH_START_TOUCH)
@@ -352,6 +331,8 @@ void KZTriggerService::OnMappingApiTriggerTouchPost(TriggerTouchTracker tracker)
 
 void KZTriggerService::OnMappingApiTriggerEndTouchPost(TriggerTouchTracker tracker)
 {
+	// Always recount, the trigger type below might be stale.
+	this->UpdateModifierCounts();
 	const KZCourseDescriptor *course = KZ::mapapi::GetCourseDescriptorFromTrigger(tracker.kzTrigger);
 	if (KZ::mapapi::IsTimerTrigger(tracker.kzTrigger->type) && !course)
 	{
@@ -360,33 +341,6 @@ void KZTriggerService::OnMappingApiTriggerEndTouchPost(TriggerTouchTracker track
 
 	switch (tracker.kzTrigger->type)
 	{
-		case KZTRIGGER_MODIFIER:
-		{
-			KzMapModifier modifier = tracker.kzTrigger->modifier;
-			this->modifiers.disablePausingCount -= modifier.disablePausing ? 1 : 0;
-			this->modifiers.disableCheckpointsCount -= modifier.disableCheckpoints ? 1 : 0;
-			this->modifiers.disableTeleportsCount -= modifier.disableTeleports ? 1 : 0;
-			this->modifiers.disableJumpstatsCount -= modifier.disableJumpstats ? 1 : 0;
-			// Enabling slide will also disable jumpstats.
-			this->modifiers.disableJumpstatsCount -= modifier.enableSlide ? 1 : 0;
-			this->modifiers.enableSlideCount -= modifier.enableSlide ? 1 : 0;
-			// Modifying jump factor will also disable jumpstats.
-			this->modifiers.disableJumpstatsCount -= modifier.jumpFactor != 1.0f ? 1 : 0;
-
-			// Modifying force (un)duck will also disable jumpstats.
-			this->modifiers.disableJumpstatsCount -= modifier.forceDuck || modifier.forceUnduck ? 1 : 0;
-			this->modifiers.forcedDuckCount -= modifier.forceDuck ? 1 : 0;
-			this->modifiers.forcedUnduckCount -= modifier.forceUnduck ? 1 : 0;
-			assert(this->modifiers.disablePausingCount >= 0);
-			assert(this->modifiers.disableCheckpointsCount >= 0);
-			assert(this->modifiers.disableTeleportsCount >= 0);
-			assert(this->modifiers.disableJumpstatsCount >= 0);
-			assert(this->modifiers.enableSlideCount >= 0);
-			assert(this->modifiers.forcedDuckCount >= 0);
-			assert(this->modifiers.forcedUnduckCount >= 0);
-		}
-		break;
-
 		case KZTRIGGER_ZONE_START:
 		{
 			this->player->checkpointService->ResetCheckpoints();
@@ -394,17 +348,6 @@ void KZTriggerService::OnMappingApiTriggerEndTouchPost(TriggerTouchTracker track
 		}
 		break;
 
-		case KZTRIGGER_TELEPORT:
-		case KZTRIGGER_MULTI_BHOP:
-		case KZTRIGGER_SINGLE_BHOP:
-		case KZTRIGGER_SEQUENTIAL_BHOP:
-		{
-			if (KZ::mapapi::IsBhopTrigger(tracker.kzTrigger->type))
-			{
-				this->bhopTouchCount--;
-			}
-		}
-		break;
 		case KZTRIGGER_PUSH:
 		{
 			if (tracker.kzTrigger->push.pushConditions & KzMapPush::KZ_PUSH_END_TOUCH)

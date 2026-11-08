@@ -43,7 +43,7 @@ public:
 		bool startedTouch {};
 		// Player to trigger.
 		bool touchedThisTick {};
-		// Whether OnMappingApiTriggerStartTouchPost was fired for this tracker.
+		// Whether the mapping API start touch is in effect for this tracker.
 		// This is false when the player entered the trigger without the correct filter active.
 		bool mappingApiStartedTouch {};
 
@@ -94,6 +94,7 @@ private:
 	void OnTriggerTouchPost(CBaseTrigger *trigger, TriggerTouchTracker &tracker);
 	bool OnTriggerEndTouchPre(CBaseTrigger *trigger, TriggerTouchTracker tracker);
 	void OnTriggerEndTouchPost(CBaseTrigger *trigger, TriggerTouchTracker &tracker);
+	void EndTouchRemovedTrigger(size_t trackerIndex);
 
 	// Mapping API stuff.
 	struct Modifiers
@@ -126,6 +127,7 @@ private:
 	void ResetBhopState();
 
 	void UpdateModifiersInternal();
+	void UpdateModifierCounts();
 
 	// Prevents the slide/antibhop cvar overrides from being applied multiple times in a row which can cause performance issues.
 	bool slideApplied {};
