@@ -206,7 +206,7 @@ private:
 	/**
 	 * API information about the current map.
 	 */
-	static inline struct
+	static inline struct CurrentMap
 	{
 		std::mutex mutex;
 		std::optional<KZ::api::Map> info;
@@ -221,7 +221,7 @@ private:
 	 * These are used for lifecycle management and state transitions that need to happen on the main thread
 	 * (e.g. because we need to get the curren map name).
 	 */
-	static inline struct
+	static inline struct Callbacks
 	{
 		std::mutex mutex;
 		std::optional<KZ::api::messages::handshake::HelloAck> helloAck;
@@ -274,7 +274,7 @@ private:
 		 * These are processed on the main thread, and potentially passed into callbacks stored in
 		 * `messageCallbacks.queue`.
 		 */
-		static inline struct
+		static inline struct ReceivedMessages
 		{
 			std::mutex mutex;
 			std::vector<ReceivedMessage> queue;
@@ -286,7 +286,7 @@ private:
 		 * The key is the message ID we used to send the original message, and the API will respond with a message that
 		 * has the same ID. The callback itself is given the message data extracted when we received the message.
 		 */
-		static inline struct
+		static inline struct MessageCallbacks
 		{
 			std::mutex mutex;
 			std::unordered_map<u32, std::unique_ptr<MessageCallbackInternal>> callbacks;
@@ -709,7 +709,7 @@ private:
 	/**
 	 * API information about modes.
 	 */
-	static inline struct
+	static inline struct GlobalModes
 	{
 		std::mutex mutex;
 		GlobalModeChecksums checksums;
@@ -718,7 +718,7 @@ private:
 	/**
 	 * API information about styles.
 	 */
-	static inline struct
+	static inline struct GlobalStyles
 	{
 		std::mutex mutex;
 		std::vector<GlobalStyleChecksum> checksums;
@@ -727,7 +727,7 @@ private:
 	/**
 	 * API announcements.
 	 */
-	static inline struct
+	static inline struct GlobalAnnouncements
 	{
 		std::mutex mutex;
 		std::vector<KZ::api::messages::handshake::HelloAck::Announcement> announcements;

@@ -376,7 +376,7 @@ private:
 	/**
 	 * Callbacks to execute on the main thread as soon as possible.
 	 */
-	static inline struct
+	static inline struct MainThreadCallbacks
 	{
 		std::mutex mutex;
 		std::vector<std::function<void()>> queue;
