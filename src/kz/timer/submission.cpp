@@ -30,10 +30,9 @@ static void BuildReplayPath(char *buf, int bufLen, const UUID_t &uuid)
 // ---------------------------------------------------------------------------
 
 RunSubmission::RunSubmission(KZPlayer *player)
-	: uid(RunSubmission::idCount++), timestamp(Plat_FloatTime()), mapGeneration(RunSubmission::currentMapGeneration),
-	  sessionID(player->sessionID), localUUID(player->recordingService->GetCurrentRunUUID()),
-	  finalUUID(player->recordingService->GetCurrentRunUUID()), time(player->timerService->GetTime()),
-	  teleports(player->checkpointService->GetTeleportCount())
+	: uid(RunSubmission::idCount++), timestamp(Plat_FloatTime()), mapGeneration(RunSubmission::currentMapGeneration), sessionID(player->sessionID),
+	  localUUID(player->recordingService->GetCurrentRunUUID()), finalUUID(player->recordingService->GetCurrentRunUUID()),
+	  time(player->timerService->GetTime()), teleports(player->checkpointService->GetTeleportCount())
 {
 	this->local = KZDatabaseService::IsReady() && KZDatabaseService::IsMapSetUp();
 

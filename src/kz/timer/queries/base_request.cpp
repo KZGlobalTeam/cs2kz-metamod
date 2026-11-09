@@ -8,10 +8,7 @@
 
 #include "vendor/sql_mm/src/public/sql_mm.h"
 
-BaseRequest::BaseRequest(u64 uid, KZPlayer *player)
-	: uid(uid), userID(player->GetClient()->GetUserID()), timestamp(Plat_FloatTime())
-{
-}
+BaseRequest::BaseRequest(u64 uid, KZPlayer *player) : uid(uid), userID(player->GetClient()->GetUserID()), timestamp(Plat_FloatTime()) {}
 
 BaseRequest::~BaseRequest()
 {
