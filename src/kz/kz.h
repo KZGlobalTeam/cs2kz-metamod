@@ -166,7 +166,10 @@ public:
 private:
 	f64 lastTeleportTime {};
 	f32 lastValidYaw {};
-	bool oldUsingTurnbinds {};
+	// 1 for left, -1 for right, 0 for none.
+	i32 lastTurnbindDirection {};
+	// Left first, then right.
+	f32 turnbindStartTimes[2] {-FLT_MAX, -FLT_MAX};
 
 	// Deletes and nulls every service this player owns.
 	void DestroyServices();
@@ -212,7 +215,7 @@ public:
 	// Timestamp (curtime) of the last accepted scmd command, used for the per-command cooldown.
 	f32 lastCommandTime {};
 
-	void DisableTurnbinds();
+	void LimitTurnbinds();
 	void EnableGodMode();
 
 	// Leg stuff

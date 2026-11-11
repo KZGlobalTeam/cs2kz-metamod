@@ -1088,6 +1088,20 @@ void KZJumpstatsService::InvalidateJumpstats(const char *reason)
 	}
 }
 
+void KZJumpstatsService::InvalidateTurnbindJump(bool external)
+{
+	if (this->jumps.empty() || this->jumps.back().AlreadyEnded())
+	{
+		return;
+	}
+	Jump &jump = this->jumps.back();
+	if (jump.valid)
+	{
+		jump.Invalidate("Turnbinds");
+	}
+	jump.usedExternalTurnbind |= external;
+}
+
 void KZJumpstatsService::MarkExternalVelocity(const char *reason)
 {
 	this->lastExternalVelocityTime = g_pKZUtils->GetGlobals()->curtime;

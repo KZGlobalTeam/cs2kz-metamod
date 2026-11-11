@@ -251,10 +251,33 @@ void KZRecordingService::OnTeleport(const Vector *origin, const QAngle *angles, 
 	}
 }
 
+void KZRecordingService::SaveTurnbindJump(Jump *jump)
+{
+	if (jump->IsFailstat() || jump->GetOffset() < -JS_EPSILON || jump->airtime < 0.5f || !this->player->styleServices.empty()
+		|| jump->jumpType < JumpType_LongJump || jump->jumpType > JumpType_Fall
+		|| this->player->modeService->GetDistanceTier(jump->jumpType, jump->GetDistance()) < kz_replay_recording_min_jump_tier.Get())
+	{
+		return;
+	}
+	this->EnsureCircularRecorderInitialized();
+	RpJumpStats rpJump;
+	RpJumpStats::FromJump(rpJump, jump);
+	JumpRecorder &recorder = this->jumpRecorders.emplace_back(jump);
+	recorder.uuid = UUID_t(true);
+	recorder.PushData(rpJump);
+	KZ_LOG_INFO(LogChannel::AC, "Recording turn bind jump replay %s for player %s (%llu): %s %.4f\n", recorder.uuid.ToString().c_str(),
+				this->player->GetName(), this->player->GetSteamId64(), jumpTypeShortStr[jump->jumpType], jump->GetDistance());
+}
+
 void KZRecordingService::OnJumpFinish(Jump *jump)
 {
 	if (KZ::replaysystem::IsReplayBot(this->player))
 	{
+		return;
+	}
+	if (jump->usedExternalTurnbind)
+	{
+		this->SaveTurnbindJump(jump);
 		return;
 	}
 	if (jump->IsFailstat() || !jump->IsValid() || jump->GetOffset() < -JS_EPSILON)

@@ -326,6 +326,8 @@ public:
 	};
 
 	void OnJumpFinish(Jump *jump);
+	// Invalid, but kept for review.
+	void SaveTurnbindJump(Jump *jump);
 
 	void OnClientDisconnect();
 

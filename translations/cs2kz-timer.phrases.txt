@@ -451,20 +451,6 @@
 		"lv"		"{darkred}Jumpstatu zona šajā kartē netika atrasta!"
 		"de"		"{darkred}Jumpstat-Bereich auf dieser Map wurde nicht gefunden!"
 	}
-	"Turnbinds Disabled"
-	{
-		"en"		"{darkred}Turnbinds are disabled."
-		"ua"		"{darkred}Turnbinds команди вимкнено."
-		"chi"		"{darkred}旋转绑定已禁用."
-		"zho"		"{darkred}旋轉綁定已停用."
-		"pl"		"{darkred}Turnbindy są wyłączone."
-		"ru"		"{darkred}Turnbind команды выключены."
-		"sv"		"{darkred}Turnbinds är inaktiverade."
-		"ko"		"{darkred}턴 바인딩이 비활성화되었습니다."
-		"es"		"{darkred}Binds de giros desactivados."
-		"lv"		"{darkred}Pagrieziena taustiņi ir atspējoti."
-		"de"		"{darkred}Turnbinds sind deaktiviert."
-	}
 
 	// Split #1: 12:34.56 (+12.34) | SPB +12.12 | PRO SPB +23.45
 	"Course Split Reached"

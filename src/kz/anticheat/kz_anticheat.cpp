@@ -100,8 +100,16 @@ void KZAnticheatService::OnSetupMove(CUserCmd *cmd)
 	{
 		return;
 	}
+	if (!this->ShouldRunDetections())
+	{
+		this->ClearDetectionBuffers();
+		this->ClearTurnTracking();
+		return;
+	}
+	// Turn binds aren't an infraction, so track them for everyone.
+	this->TrackTurn(cmd);
 	// Running detections on players that can't receive another infraction only spams the logs.
-	if (!this->ShouldRunDetections() || !this->CanReceiveInfraction())
+	if (!this->CanReceiveInfraction())
 	{
 		this->ClearDetectionBuffers();
 		return;
@@ -113,7 +121,6 @@ void KZAnticheatService::OnSetupMove(CUserCmd *cmd)
 	this->CreateInputEvents(cmd);
 	this->ParseCommandForJump(cmd);
 	this->DetectOptimization(cmd);
-	this->TrackTurn(cmd);
 }
 
 void KZAnticheatService::OnPhysicsSimulatePost()
@@ -155,11 +162,6 @@ void KZAnticheatService::ClearDetectionBuffers()
 	this->lastValidMoveTypeTime = -1.0f;
 	this->angleFrameHistory.clear();
 	this->yawAccelPercent = 0.0f;
-	this->currentTurn.clear();
-	this->lastTurnCmdNum = -1;
-	this->turnWindowRates.clear();
-	this->strafeTurnRates.clear();
-	this->numExactTurnWindows = 0;
 }
 
 void KZAnticheatService::OnGlobalAuthFinished(BanInfo *banInfo)

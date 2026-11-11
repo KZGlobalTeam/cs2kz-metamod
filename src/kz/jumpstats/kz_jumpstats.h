@@ -326,6 +326,7 @@ public:
 	bool hitHead {};
 	bool valid = true;
 	bool ended {};
+	bool usedExternalTurnbind {};
 
 	f32 release;
 
@@ -619,6 +620,7 @@ public:
 	void EndJump(bool landed);
 	void HandleTeleport();
 	void InvalidateJumpstats(const char *reason = NULL);
+	void InvalidateTurnbindJump(bool external);
 	// Also invalidates a jump that takes off right after the push.
 	void MarkExternalVelocity(const char *reason);
 	void OnAirAccelerate();

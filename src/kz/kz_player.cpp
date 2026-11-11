@@ -43,6 +43,9 @@
 #include "steam/isteamgameserver.h"
 #include "tier0/memdbgon.h"
 
+// Same as GOKZ.
+#define KZ_TURNBIND_COOLDOWN 0.3f
+
 void KZPlayer::DestroyServices()
 {
 	// First, so no window stack outlives the services whose windows it points at.
@@ -158,6 +161,8 @@ void KZPlayer::Reset()
 	MovementPlayer::Reset();
 
 	this->lastCommandTime = 0.0f;
+	this->lastTurnbindDirection = 0;
+	this->turnbindStartTimes[0] = this->turnbindStartTimes[1] = -FLT_MAX;
 
 	// Reset services that should not persist across player sessions.
 	this->uiService->Reset();
@@ -429,7 +434,7 @@ void KZPlayer::OnProcessMovement()
 	KZ::mode::ApplyModeSettings(this);
 	KZ::replaysystem::OnProcessMovement(this);
 
-	this->DisableTurnbinds();
+	this->LimitTurnbinds();
 	this->anticheatService->OnProcessMovement();
 	this->triggerService->OnProcessMovement();
 	this->modeService->OnProcessMovement();
@@ -1052,7 +1057,7 @@ void KZPlayer::OnTeleport(const Vector *origin, const QAngle *angles, const Vect
 	this->triggerService->OnTeleport();
 }
 
-void KZPlayer::DisableTurnbinds()
+void KZPlayer::LimitTurnbinds()
 {
 	CCSPlayerPawn *pawn = this->GetPlayerPawn();
 	if (!pawn)
@@ -1061,24 +1066,39 @@ void KZPlayer::DisableTurnbinds()
 	}
 
 	// holding both doesn't do anything. xor(1, 1) == 0
-	bool usingTurnbinds = (this->IsButtonPressed(IN_TURNLEFT) ^ this->IsButtonPressed(IN_TURNRIGHT));
+	i32 direction = 0;
+	bool external = false;
+	if (this->IsButtonPressed(IN_TURNLEFT) ^ this->IsButtonPressed(IN_TURNRIGHT))
+	{
+		direction = this->IsButtonPressed(IN_TURNLEFT) ? 1 : -1;
+	}
+	else
+	{
+		direction = this->anticheatService->GetExternalTurnDirection();
+		external = direction != 0;
+	}
+	if (direction != 0)
+	{
+		this->jumpstatsService->InvalidateTurnbindJump(external);
+	}
+
+	f32 time = g_pKZUtils->GetServerGlobals()->curtime;
+	i32 index = direction > 0 ? 0 : 1;
 	QAngle angles;
 	this->GetAngles(&angles);
-	if (usingTurnbinds)
+	if (direction != 0 && time < this->turnbindStartTimes[1 - index] + KZ_TURNBIND_COOLDOWN)
 	{
 		angles.y = this->lastValidYaw;
 		// NOTE(GameChaos): Using SetAngles, which uses Teleport makes player movement really weird
 		g_pKZUtils->SnapViewAngles(pawn, angles);
-		if (!this->oldUsingTurnbinds)
-		{
-			this->languageService->PrintChat(true, false, "Turnbinds Disabled");
-		}
+		return;
 	}
-	else
+	this->lastValidYaw = angles.y;
+	if (direction != 0 && direction != this->lastTurnbindDirection)
 	{
-		this->lastValidYaw = angles.y;
+		this->turnbindStartTimes[index] = time;
 	}
-	this->oldUsingTurnbinds = usingTurnbinds;
+	this->lastTurnbindDirection = direction;
 }
 
 void KZPlayer::EnableGodMode()

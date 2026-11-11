@@ -1,6 +1,8 @@
 /*
-	Detect turn binds: mouse input generated at a fixed rate in counts per second, which shows up as many turns sharing one rate.
+	Turn bind detection.
+	Doesn't actually ban, this just tries to put a cooldown on external turn binds.
 */
+#include "kz/kz.h"
 #include "kz/anticheat/kz_anticheat.h"
 #include "sdk/usercmd.h"
 #include "utils/utils.h"
@@ -32,10 +34,19 @@
 
 #define TURN_RATE_HISTORY 512
 // Widths are in log space, so the peak is +-2% and its surroundings +-10% of the rate.
-#define TURN_PEAK_WIDTH    0.04f
-#define TURN_AROUND_WIDTH  0.2f
-#define TURN_MIN_PEAK      10
+#define TURN_PEAK_WIDTH   0.04f
+#define TURN_AROUND_WIDTH 0.2f
+// Consistent players can reach 10 with normal turns early in a session.
+#define TURN_MIN_PEAK      15
 #define TURN_MIN_PEAKINESS 0.75f
+
+// Frame timing makes each command of a turn bind turn a bit more or less than its rate.
+#define TURN_EXTERNAL_MIN_RATIO    0.75f
+#define TURN_EXTERNAL_MAX_RATIO    1.33f
+#define TURN_EXTERNAL_MIN_COMMANDS 2
+// Turning the same way again this soon is still the turn bind, eg. after a cooldown snap.
+#define TURN_EXTERNAL_RESUME_COMMANDS 8
+#define TURN_EXTERNAL_SAME_RATE       0.05f
 
 CConVar<bool> kz_ac_turnbind_debug("kz_ac_turnbind_debug", FCVAR_NONE, "Enable turn bind detector debug messages", false);
 
@@ -94,6 +105,7 @@ void KZAnticheatService::TrackTurn(CUserCmd *cmd)
 	{
 		return;
 	}
+	this->externalTurnDirection = 0;
 	bool consecutive = cmd->cmdNum == this->lastTurnCmdNum + 1;
 	f32 yaw = cmd->base().viewangles().y();
 	f32 delta = yaw - this->lastTurnYaw;
@@ -109,7 +121,7 @@ void KZAnticheatService::TrackTurn(CUserCmd *cmd)
 	this->lastTurnYaw = yaw;
 	if (g_pKZUtils->GetServerGlobals()->curtime < this->ignoreTurnsUntil)
 	{
-		this->currentTurn.clear();
+		this->ClearCurrentTurn();
 		return;
 	}
 
@@ -138,11 +150,74 @@ void KZAnticheatService::TrackTurn(CUserCmd *cmd)
 		this->FinishTurn();
 	}
 	this->currentTurnSign = sign;
-	this->currentTurn.push_back({fabsf(delta) / yawPerCount, frametime});
+	f32 counts = fabsf(delta) / yawPerCount;
+	this->currentTurn.push_back({counts, frametime});
+	this->ClassifyExternalTurn(counts, cmd->cmdNum);
 	if (this->currentTurn.size() >= TURN_MAX_LENGTH)
 	{
 		this->FinishTurn();
 	}
+}
+
+void KZAnticheatService::ClassifyExternalTurn(f32 counts, i32 cmdNum)
+{
+	if (this->externalTurnRates.empty())
+	{
+		return;
+	}
+	if (!this->currentTurnExternal)
+	{
+		bool nearRate = false;
+		for (f32 rate : this->externalTurnRates)
+		{
+			nearRate |= counts >= rate * TURN_EXTERNAL_MIN_RATIO && counts <= rate * TURN_EXTERNAL_MAX_RATIO;
+		}
+		this->numExternalTurnCommands = nearRate ? this->numExternalTurnCommands + 1 : 0;
+		bool resumed = this->currentTurnSign == this->lastExternalTurnSign && cmdNum - this->lastExternalTurnCmdNum <= TURN_EXTERNAL_RESUME_COMMANDS;
+		this->currentTurnExternal = this->numExternalTurnCommands >= TURN_EXTERNAL_MIN_COMMANDS || (nearRate && resumed);
+	}
+	if (this->currentTurnExternal)
+	{
+		this->externalTurnDirection = this->currentTurnSign;
+		this->lastExternalTurnSign = this->currentTurnSign;
+		this->lastExternalTurnCmdNum = cmdNum;
+	}
+}
+
+void KZAnticheatService::AddExternalTurnRate(f32 rate, const std::string &reason)
+{
+	for (f32 known : this->externalTurnRates)
+	{
+		if (fabsf(logf(rate / known)) < TURN_EXTERNAL_SAME_RATE)
+		{
+			return;
+		}
+	}
+	this->externalTurnRates.push_back(rate);
+	KZ_LOG_INFO(LogChannel::AC, "Turn bind found for player %s (%llu): %s\n", this->player->GetName(), this->player->GetSteamId64(), reason.c_str());
+}
+
+void KZAnticheatService::ClearCurrentTurn()
+{
+	this->currentTurn.clear();
+	this->currentTurnExternal = false;
+	this->numExternalTurnCommands = 0;
+}
+
+void KZAnticheatService::ClearTurnTracking()
+{
+	this->ClearCurrentTurn();
+	this->currentTurnSign = 0;
+	this->lastTurnCmdNum = -1;
+	this->lastTurnYaw = 0.0f;
+	this->ignoreTurnsUntil = 0.0;
+	this->turnWindowRates.clear();
+	this->strafeTurnRates.clear();
+	this->numExactTurnWindows = 0;
+	this->externalTurnRates.clear();
+	this->lastExternalTurnSign = 0;
+	this->lastExternalTurnCmdNum = 0;
+	this->externalTurnDirection = 0;
 }
 
 void KZAnticheatService::OnTeleport(const QAngle *angles)
@@ -157,7 +232,7 @@ void KZAnticheatService::OnTeleport(const QAngle *angles)
 	{
 		return;
 	}
-	this->currentTurn.clear();
+	this->ClearCurrentTurn();
 	this->ignoreTurnsUntil = g_pKZUtils->GetServerGlobals()->curtime + TURN_TELEPORT_IGNORE_DURATION;
 }
 
@@ -199,8 +274,8 @@ void KZAnticheatService::FinishTurn()
 			{
 				if (!saturated && ++this->numExactTurnWindows >= TURN_NUM_EXACT_WINDOWS_FOR_DETECTION)
 				{
-					this->MarkInfraction(Infraction::Type::TurnBind,
-										 tfm::format("Turned by exactly %.1f counts every tick %d times", best.rate, this->numExactTurnWindows));
+					this->AddExternalTurnRate(best.rate,
+											  tfm::format("Turned by exactly %.1f counts every tick %d times", best.rate, this->numExactTurnWindows));
 				}
 			}
 			else if (best.bandRatio < 1.0f && best.drift < TURN_MAX_DRIFT)
@@ -210,7 +285,7 @@ void KZAnticheatService::FinishTurn()
 			}
 		}
 	}
-	this->currentTurn.clear();
+	this->ClearCurrentTurn();
 }
 
 void KZAnticheatService::CheckTurnRates(std::deque<f32> &rates, const char *kind)
@@ -219,7 +294,7 @@ void KZAnticheatService::CheckTurnRates(std::deque<f32> &rates, const char *kind
 	{
 		rates.pop_front();
 	}
-	if (rates.size() < TURN_MIN_PEAK)
+	if ((i32)rates.size() < TURN_MIN_PEAK)
 	{
 		return;
 	}
@@ -254,7 +329,7 @@ void KZAnticheatService::CheckTurnRates(std::deque<f32> &rates, const char *kind
 	}
 	if (peak >= TURN_MIN_PEAK && peak >= TURN_MIN_PEAKINESS * around)
 	{
-		this->MarkInfraction(Infraction::Type::TurnBind,
-							 tfm::format("%d of %d %s within 2%% of %.0f counts/s, %d within 10%%", peak, (i32)rates.size(), kind, peakRate, around));
+		this->AddExternalTurnRate(expf(peakCentre), tfm::format("%d of %d %s within 2%% of %.0f counts/s, %d within 10%%", peak, (i32)rates.size(),
+																kind, peakRate, around));
 	}
 }
