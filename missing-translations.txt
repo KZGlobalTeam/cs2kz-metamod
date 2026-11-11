@@ -6,28 +6,28 @@ Generated for: /home/runner/work/cs2kz-metamod/cs2kz-metamod
 SUMMARY
 ----------------------------------------------------------------------
 Total languages: 15
-Total phrases: 1138
-Phrases with missing translations: 1138
-Total missing translation entries: 8075
+Total phrases: 1137
+Phrases with missing translations: 1137
+Total missing translation entries: 8071
 
 LANGUAGE COVERAGE (Phrases)
 ----------------------------------------------------------------------
 
-  chi (schinese)       [█████████████████░░░]  89.2% (1015/1138)
-  de (german)          [█████████░░░░░░░░░░░]  45.9% (522/1138)
-  en (english)         [████████████████████] 100.0% (1138/1138)
-  es (spanish)         [████████░░░░░░░░░░░░]  42.7% (486/1138)
-  fi (finnish)         [████░░░░░░░░░░░░░░░░]  20.7% (235/1138)
-  it (italian)         [███░░░░░░░░░░░░░░░░░]  19.9% (227/1138)
-  ko (koreana)         [███████████░░░░░░░░░]  57.6% (656/1138)
-  lv (latvian)         [█████░░░░░░░░░░░░░░░]  29.0% (330/1138)
-  nl (dutch)           [░░░░░░░░░░░░░░░░░░░░]   0.4% (5/1138)
-  pl (polish)          [█████████░░░░░░░░░░░]  46.0% (524/1138)
-  ru (russian)         [█████████████████░░░]  87.7% (998/1138)
-  sv (swedish)         [██████░░░░░░░░░░░░░░]  34.6% (394/1138)
-  tr (turkish)         [████░░░░░░░░░░░░░░░░]  23.2% (264/1138)
-  ua (ukrainian)       [███████████████████░]  99.3% (1130/1138)
-  zho (tchinese)       [██████████████████░░]  94.1% (1071/1138)
+  chi (schinese)       [█████████████████░░░]  89.2% (1014/1137)
+  de (german)          [█████████░░░░░░░░░░░]  45.8% (521/1137)
+  en (english)         [████████████████████] 100.0% (1137/1137)
+  es (spanish)         [████████░░░░░░░░░░░░]  42.7% (485/1137)
+  fi (finnish)         [████░░░░░░░░░░░░░░░░]  20.7% (235/1137)
+  it (italian)         [███░░░░░░░░░░░░░░░░░]  20.0% (227/1137)
+  ko (koreana)         [███████████░░░░░░░░░]  57.6% (655/1137)
+  lv (latvian)         [█████░░░░░░░░░░░░░░░]  28.9% (329/1137)
+  nl (dutch)           [░░░░░░░░░░░░░░░░░░░░]   0.4% (5/1137)
+  pl (polish)          [█████████░░░░░░░░░░░]  46.0% (523/1137)
+  ru (russian)         [█████████████████░░░]  87.7% (997/1137)
+  sv (swedish)         [██████░░░░░░░░░░░░░░]  34.6% (393/1137)
+  tr (turkish)         [████░░░░░░░░░░░░░░░░]  23.2% (264/1137)
+  ua (ukrainian)       [███████████████████░]  99.3% (1129/1137)
+  zho (tchinese)       [██████████████████░░]  94.1% (1070/1137)
 
 Global languages (15): chi, de, en, es, fi, it, ko, lv, nl, pl, ru, sv, tr, ua, zho
 
@@ -2218,95 +2218,93 @@ translations/cs2kz-timer.phrases.txt
     Missing (8): de, fi, it, lv, nl, pl, sv, tr
   Line 439: "No Jumpstat Area Found"
     Missing (3): fi, it, nl
-  Line 454: "Turnbinds Disabled"
+  Line 456: "Course Split Reached"
+    Missing (3): fi, it, nl
+  Line 472: "Course Checkpoint Reached"
     Missing (4): fi, it, nl, tr
-  Line 470: "Course Split Reached"
+  Line 487: "Course Stage Reached"
     Missing (3): fi, it, nl
-  Line 486: "Course Checkpoint Reached"
+  Line 505: "Server PB Diff (Overall)"
     Missing (4): fi, it, nl, tr
-  Line 501: "Course Stage Reached"
-    Missing (3): fi, it, nl
-  Line 519: "Server PB Diff (Overall)"
+  Line 520: "Global PB Diff (Overall)"
     Missing (4): fi, it, nl, tr
-  Line 534: "Global PB Diff (Overall)"
+  Line 535: "SR Diff (Overall)"
     Missing (4): fi, it, nl, tr
-  Line 549: "SR Diff (Overall)"
+  Line 550: "WR Diff (Overall)"
     Missing (4): fi, it, nl, tr
-  Line 564: "WR Diff (Overall)"
+  Line 565: "Server PB Diff (Pro)"
     Missing (4): fi, it, nl, tr
-  Line 579: "Server PB Diff (Pro)"
+  Line 580: "Global PB Diff (Pro)"
     Missing (4): fi, it, nl, tr
-  Line 594: "Global PB Diff (Pro)"
+  Line 595: "SR Diff (Pro)"
     Missing (4): fi, it, nl, tr
-  Line 609: "SR Diff (Pro)"
+  Line 610: "WR Diff (Pro)"
     Missing (4): fi, it, nl, tr
-  Line 624: "WR Diff (Pro)"
+  Line 627: "Missed Server PB (Overall)"
+    Missing (3): fi, it, nl
+  Line 643: "Missed Global PB (Overall)"
+    Missing (3): fi, it, nl
+  Line 659: "Missed SR (Overall)"
+    Missing (3): fi, it, nl
+  Line 675: "Missed WR (Overall)"
+    Missing (3): fi, it, nl
+  Line 691: "Missed Server PB (Pro)"
+    Missing (3): fi, it, nl
+  Line 707: "Missed Global PB (Pro)"
+    Missing (3): fi, it, nl
+  Line 723: "Missed SR (Pro)"
+    Missing (3): fi, it, nl
+  Line 739: "Missed WR (Pro)"
+    Missing (3): fi, it, nl
+  Line 755: "Missed Server PB (Overall+Pro)"
+    Missing (3): fi, it, nl
+  Line 771: "Missed Global PB (Overall+Pro)"
+    Missing (3): fi, it, nl
+  Line 787: "Missed SR (Overall+Pro)"
+    Missing (3): fi, it, nl
+  Line 803: "Missed WR (Overall+Pro)"
+    Missing (3): fi, it, nl
+  Line 820: "Compare Command Usage"
+    Missing (3): fi, it, nl
+  Line 835: "Compare Disabled"
+    Missing (3): fi, it, nl
+  Line 850: "Compare Server PB"
+    Missing (3): fi, it, nl
+  Line 865: "Compare Global PB"
+    Missing (3): fi, it, nl
+  Line 880: "Compare Server Record"
+    Missing (3): fi, it, nl
+  Line 895: "Compare World Record"
+    Missing (3): fi, it, nl
+  Line 911: "Request - Failed (Invalid Map)"
     Missing (4): fi, it, nl, tr
-  Line 641: "Missed Server PB (Overall)"
-    Missing (3): fi, it, nl
-  Line 657: "Missed Global PB (Overall)"
-    Missing (3): fi, it, nl
-  Line 673: "Missed SR (Overall)"
-    Missing (3): fi, it, nl
-  Line 689: "Missed WR (Overall)"
-    Missing (3): fi, it, nl
-  Line 705: "Missed Server PB (Pro)"
-    Missing (3): fi, it, nl
-  Line 721: "Missed Global PB (Pro)"
-    Missing (3): fi, it, nl
-  Line 737: "Missed SR (Pro)"
-    Missing (3): fi, it, nl
-  Line 753: "Missed WR (Pro)"
-    Missing (3): fi, it, nl
-  Line 769: "Missed Server PB (Overall+Pro)"
-    Missing (3): fi, it, nl
-  Line 785: "Missed Global PB (Overall+Pro)"
-    Missing (3): fi, it, nl
-  Line 801: "Missed SR (Overall+Pro)"
-    Missing (3): fi, it, nl
-  Line 817: "Missed WR (Overall+Pro)"
-    Missing (3): fi, it, nl
-  Line 834: "Compare Command Usage"
-    Missing (3): fi, it, nl
-  Line 849: "Compare Disabled"
-    Missing (3): fi, it, nl
-  Line 864: "Compare Server PB"
-    Missing (3): fi, it, nl
-  Line 879: "Compare Global PB"
-    Missing (3): fi, it, nl
-  Line 894: "Compare Server Record"
-    Missing (3): fi, it, nl
-  Line 909: "Compare World Record"
-    Missing (3): fi, it, nl
-  Line 925: "Request - Failed (Invalid Map)"
+  Line 925: "Request - Failed (Generic)"
     Missing (4): fi, it, nl, tr
-  Line 939: "Request - Failed (Generic)"
+  Line 939: "Request - Failed (No Course in Current Map)"
     Missing (4): fi, it, nl, tr
-  Line 953: "Request - Failed (No Course in Current Map)"
-    Missing (4): fi, it, nl, tr
-  Line 969: "Timer Stop Sound Enabled"
+  Line 955: "Timer Stop Sound Enabled"
     Missing (5): fi, it, lv, nl, tr
-  Line 982: "Timer Stop Sound Disabled"
+  Line 968: "Timer Stop Sound Disabled"
     Missing (5): fi, it, lv, nl, tr
-  Line 995: "Record Volume Set"
+  Line 981: "Record Volume Set"
     Missing (6): fi, it, lv, nl, sv, tr
-  Line 1008: "Map Overlay Enabled"
+  Line 994: "Map Overlay Enabled"
     Missing (9): de, es, fi, it, lv, nl, pl, sv, tr
-  Line 1017: "Map Overlay Disabled"
+  Line 1003: "Map Overlay Disabled"
     Missing (9): de, es, fi, it, lv, nl, pl, sv, tr
-  Line 1026: "Started Run on Course"
+  Line 1012: "Started Run on Course"
     Missing (8): de, fi, it, lv, nl, pl, sv, tr
-  Line 1038: "Started Run on Non Ranked Course"
+  Line 1024: "Started Run on Non Ranked Course"
     Missing (8): de, fi, it, lv, nl, pl, sv, tr
-  Line 1050: "Safeguard - Disable"
+  Line 1036: "Safeguard - Disable"
     Missing (9): de, es, fi, it, lv, nl, pl, sv, tr
-  Line 1059: "Safeguard - Enable"
+  Line 1045: "Safeguard - Enable"
     Missing (9): de, es, fi, it, lv, nl, pl, sv, tr
-  Line 1068: "Safeguard - Enable (PRO)"
+  Line 1054: "Safeguard - Enable (PRO)"
     Missing (9): de, es, fi, it, lv, nl, pl, sv, tr
-  Line 1077: "Safeguard - Blocked"
+  Line 1063: "Safeguard - Blocked"
     Missing (9): de, es, fi, it, lv, nl, pl, sv, tr
-  Line 1086: "Safeguard - Blocked (Restart)"
+  Line 1072: "Safeguard - Blocked (Restart)"
     Missing (9): de, es, fi, it, lv, nl, pl, sv, tr
 
 translations/cs2kz-tips-general.phrases.txt

@@ -1,9 +1,9 @@
 {
   "summary": {
     "total_languages": 15,
-    "total_phrases": 1138,
-    "phrases_with_missing": 1138,
-    "total_missing_entries": 8075,
+    "total_phrases": 1137,
+    "phrases_with_missing": 1137,
+    "total_missing_entries": 8071,
     "all_languages": [
       "chi",
       "de",
@@ -59,8 +59,8 @@
   "languages": {
     "chi": {
       "name": "schinese",
-      "coverage_percent": 89.19,
-      "translated": 1015,
+      "coverage_percent": 89.18,
+      "translated": 1014,
       "missing": 123,
       "missing_phrases": [
         {
@@ -815,8 +815,8 @@
     },
     "de": {
       "name": "german",
-      "coverage_percent": 45.87,
-      "translated": 522,
+      "coverage_percent": 45.82,
+      "translated": 521,
       "missing": 616,
       "missing_phrases": [
         {
@@ -4302,55 +4302,55 @@
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Map Overlay Enabled",
-          "line": 1008,
+          "line": 994,
           "english_text": "{grey}Helpers for map overlay enabled. Relevant timer events will be printed to console."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Map Overlay Disabled",
-          "line": 1017,
+          "line": 1003,
           "english_text": "{grey}Helpers for map overlay disabled. Relevant timer events will no longer be printed to console."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Course",
-          "line": 1026,
+          "line": 1012,
           "english_text": "{grey}You have started a run on a new course: {default}{course_name}{grey}"
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Non Ranked Course",
-          "line": 1038,
+          "line": 1024,
           "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked for the current mode. Runs on this course will not affect your global player rating."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Disable",
-          "line": 1050,
+          "line": 1036,
           "english_text": "{grey}Safeguard disabled."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable",
-          "line": 1059,
+          "line": 1045,
           "english_text": "{grey}Safeguard enabled. You can no longer issue any command that would stop your timer during a valid run."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable (PRO)",
-          "line": 1068,
+          "line": 1054,
           "english_text": "{grey}Safeguard for {blue}PRO {grey}runs enabled. You can no longer use teleports or issue any command that would stop your timer during a valid run."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked",
-          "line": 1077,
+          "line": 1063,
           "english_text": "{darkred}You can't perform this action because safeguard is enabled."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked (Restart)",
-          "line": 1086,
+          "line": 1072,
           "english_text": "{grey}Action is blocked by safeguard. Please wait {default}{cooldown} {grey}seconds then reissue the command again."
         },
         {
@@ -4525,7 +4525,7 @@
     "en": {
       "name": "english",
       "coverage_percent": 100.0,
-      "translated": 1138,
+      "translated": 1137,
       "missing": 0,
       "missing_phrases": [],
       "menu": {
@@ -4536,8 +4536,8 @@
     },
     "es": {
       "name": "spanish",
-      "coverage_percent": 42.71,
-      "translated": 486,
+      "coverage_percent": 42.66,
+      "translated": 485,
       "missing": 652,
       "missing_phrases": [
         {
@@ -8197,43 +8197,43 @@
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Map Overlay Enabled",
-          "line": 1008,
+          "line": 994,
           "english_text": "{grey}Helpers for map overlay enabled. Relevant timer events will be printed to console."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Map Overlay Disabled",
-          "line": 1017,
+          "line": 1003,
           "english_text": "{grey}Helpers for map overlay disabled. Relevant timer events will no longer be printed to console."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Disable",
-          "line": 1050,
+          "line": 1036,
           "english_text": "{grey}Safeguard disabled."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable",
-          "line": 1059,
+          "line": 1045,
           "english_text": "{grey}Safeguard enabled. You can no longer issue any command that would stop your timer during a valid run."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable (PRO)",
-          "line": 1068,
+          "line": 1054,
           "english_text": "{grey}Safeguard for {blue}PRO {grey}runs enabled. You can no longer use teleports or issue any command that would stop your timer during a valid run."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked",
-          "line": 1077,
+          "line": 1063,
           "english_text": "{darkred}You can't perform this action because safeguard is enabled."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked (Restart)",
-          "line": 1086,
+          "line": 1072,
           "english_text": "{grey}Action is blocked by safeguard. Please wait {default}{cooldown} {grey}seconds then reissue the command again."
         },
         {
@@ -8461,9 +8461,9 @@
     },
     "fi": {
       "name": "finnish",
-      "coverage_percent": 20.65,
+      "coverage_percent": 20.67,
       "translated": 235,
-      "missing": 903,
+      "missing": 902,
       "missing_phrases": [
         {
           "file": "translations/cs2kz-anticheat.phrases.txt",
@@ -13357,272 +13357,266 @@
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
-          "phrase": "Turnbinds Disabled",
-          "line": 454,
-          "english_text": "{darkred}Turnbinds are disabled."
-        },
-        {
-          "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Course Split Reached",
-          "line": 470,
+          "line": 456,
           "english_text": "{grey}Split {default}#{number}{grey}: {lime}{time_text}{grey}{diff_text}{diff_text_pro}"
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Course Checkpoint Reached",
-          "line": 486,
+          "line": 472,
           "english_text": "{grey}CP {default}#{number}{grey}: {lime}{time_text}{grey}{diff_text}{diff_text_pro}"
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Course Stage Reached",
-          "line": 501,
+          "line": 487,
           "english_text": "{grey}Stage {default}#{number}{grey}: {lime}{time_text}{grey}{diff_text}{diff_text_pro}"
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Server PB Diff (Overall)",
-          "line": 519,
+          "line": 505,
           "english_text": " | SPB {diff_time}"
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Global PB Diff (Overall)",
-          "line": 534,
+          "line": 520,
           "english_text": " | GPB {diff_time}"
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "SR Diff (Overall)",
-          "line": 549,
+          "line": 535,
           "english_text": " | SR {diff_time}"
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "WR Diff (Overall)",
-          "line": 564,
+          "line": 550,
           "english_text": " | WR {diff_time}"
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Server PB Diff (Pro)",
-          "line": 579,
+          "line": 565,
           "english_text": " | PRO SPB {diff_time}"
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Global PB Diff (Pro)",
-          "line": 594,
+          "line": 580,
           "english_text": " | PRO GPB {diff_time}"
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "SR Diff (Pro)",
-          "line": 609,
+          "line": 595,
           "english_text": " | PRO SR {diff_time}"
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "WR Diff (Pro)",
-          "line": 624,
+          "line": 610,
           "english_text": " | PRO WR {diff_time}"
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Missed Server PB (Overall)",
-          "line": 641,
+          "line": 627,
           "english_text": "{grey}You missed your best server {yellow}Overall{grey} time ({lightred}{time}{grey})."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Missed Global PB (Overall)",
-          "line": 657,
+          "line": 643,
           "english_text": "{grey}You missed your best global {yellow}Overall{grey} time ({lightred}{time}{grey})."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Missed SR (Overall)",
-          "line": 673,
+          "line": 659,
           "english_text": "{grey}You missed the {yellow}Overall{grey} server record time ({lightred}{time}{grey})."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Missed WR (Overall)",
-          "line": 689,
+          "line": 675,
           "english_text": "{grey}You missed the {yellow}Overall{grey} global record time ({lightred}{time}{grey})."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Missed Server PB (Pro)",
-          "line": 705,
+          "line": 691,
           "english_text": "{grey}You missed your best server {blue}PRO{grey} time ({lightred}{time}{grey})."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Missed Global PB (Pro)",
-          "line": 721,
+          "line": 707,
           "english_text": "{grey}You missed your best global {blue}PRO{grey} time ({lightred}{time}{grey})."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Missed SR (Pro)",
-          "line": 737,
+          "line": 723,
           "english_text": "{grey}You missed the {blue}PRO{grey} server record time ({lightred}{time}{grey})."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Missed WR (Pro)",
-          "line": 753,
+          "line": 739,
           "english_text": "{grey}You missed the {blue}PRO{grey} global record time ({lightred}{time}{grey})."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Missed Server PB (Overall+Pro)",
-          "line": 769,
+          "line": 755,
           "english_text": "{grey}You missed your best server {yellow}Overall{grey}/{blue}PRO{grey} time ({lightred}{time}{grey})."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Missed Global PB (Overall+Pro)",
-          "line": 785,
+          "line": 771,
           "english_text": "{grey}You missed your best global {yellow}Overall{grey}/{blue}PRO{grey} time ({lightred}{time}{grey})."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Missed SR (Overall+Pro)",
-          "line": 801,
+          "line": 787,
           "english_text": "{grey}You missed the {yellow}Overall{grey}/{blue}PRO{grey} server record time ({lightred}{time}{grey})."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Missed WR (Overall+Pro)",
-          "line": 817,
+          "line": 803,
           "english_text": "{grey}You missed the {yellow}Overall{grey}/{blue}PRO{grey} global record time ({lightred}{time}{grey})."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Compare Command Usage",
-          "line": 834,
+          "line": 820,
           "english_text": "{grey}Usage: {default}kz_comparelevel <none/off/spb/pb/gpb/sr/wr>{grey}."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Compare Disabled",
-          "line": 849,
+          "line": 835,
           "english_text": "{grey}Run comparison disabled."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Compare Server PB",
-          "line": 864,
+          "line": 850,
           "english_text": "{grey}You will now compare your run to your server personal best."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Compare Global PB",
-          "line": 879,
+          "line": 865,
           "english_text": "{grey}You will now compare your run to up to your global personal best."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Compare Server Record",
-          "line": 894,
+          "line": 880,
           "english_text": "{grey}You will now compare your run to up to the server record."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Compare World Record",
-          "line": 909,
+          "line": 895,
           "english_text": "{grey}You will now compare your run to up to the world record."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Request - Failed (Invalid Map)",
-          "line": 925,
+          "line": 911,
           "english_text": "{darkred}Failed to process current request. (Invalid map)"
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Request - Failed (Generic)",
-          "line": 939,
+          "line": 925,
           "english_text": "{darkred}Failed to process current request."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Request - Failed (No Course in Current Map)",
-          "line": 953,
+          "line": 939,
           "english_text": "{darkred}Failed to process current request. (No course exists in map {map_name})"
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Timer Stop Sound Enabled",
-          "line": 969,
+          "line": 955,
           "english_text": "{grey}You have enabled the timer stop sound."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Timer Stop Sound Disabled",
-          "line": 982,
+          "line": 968,
           "english_text": "{grey}You have disabled the timer stop sound."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Record Volume Set",
-          "line": 995,
+          "line": 981,
           "english_text": "{grey}You have set the world record announcement volume to {default}{volume}%%%%{grey}."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Map Overlay Enabled",
-          "line": 1008,
+          "line": 994,
           "english_text": "{grey}Helpers for map overlay enabled. Relevant timer events will be printed to console."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Map Overlay Disabled",
-          "line": 1017,
+          "line": 1003,
           "english_text": "{grey}Helpers for map overlay disabled. Relevant timer events will no longer be printed to console."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Course",
-          "line": 1026,
+          "line": 1012,
           "english_text": "{grey}You have started a run on a new course: {default}{course_name}{grey}"
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Non Ranked Course",
-          "line": 1038,
+          "line": 1024,
           "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked for the current mode. Runs on this course will not affect your global player rating."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Disable",
-          "line": 1050,
+          "line": 1036,
           "english_text": "{grey}Safeguard disabled."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable",
-          "line": 1059,
+          "line": 1045,
           "english_text": "{grey}Safeguard enabled. You can no longer issue any command that would stop your timer during a valid run."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable (PRO)",
-          "line": 1068,
+          "line": 1054,
           "english_text": "{grey}Safeguard for {blue}PRO {grey}runs enabled. You can no longer use teleports or issue any command that would stop your timer during a valid run."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked",
-          "line": 1077,
+          "line": 1063,
           "english_text": "{darkred}You can't perform this action because safeguard is enabled."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked (Restart)",
-          "line": 1086,
+          "line": 1072,
           "english_text": "{grey}Action is blocked by safeguard. Please wait {default}{cooldown} {grey}seconds then reissue the command again."
         },
         {
@@ -13897,9 +13891,9 @@
     },
     "it": {
       "name": "italian",
-      "coverage_percent": 19.95,
+      "coverage_percent": 19.96,
       "translated": 227,
-      "missing": 911,
+      "missing": 910,
       "missing_phrases": [
         {
           "file": "translations/cs2kz-anticheat.phrases.txt",
@@ -18841,272 +18835,266 @@
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
-          "phrase": "Turnbinds Disabled",
-          "line": 454,
-          "english_text": "{darkred}Turnbinds are disabled."
-        },
-        {
-          "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Course Split Reached",
-          "line": 470,
+          "line": 456,
           "english_text": "{grey}Split {default}#{number}{grey}: {lime}{time_text}{grey}{diff_text}{diff_text_pro}"
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Course Checkpoint Reached",
-          "line": 486,
+          "line": 472,
           "english_text": "{grey}CP {default}#{number}{grey}: {lime}{time_text}{grey}{diff_text}{diff_text_pro}"
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Course Stage Reached",
-          "line": 501,
+          "line": 487,
           "english_text": "{grey}Stage {default}#{number}{grey}: {lime}{time_text}{grey}{diff_text}{diff_text_pro}"
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Server PB Diff (Overall)",
-          "line": 519,
+          "line": 505,
           "english_text": " | SPB {diff_time}"
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Global PB Diff (Overall)",
-          "line": 534,
+          "line": 520,
           "english_text": " | GPB {diff_time}"
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "SR Diff (Overall)",
-          "line": 549,
+          "line": 535,
           "english_text": " | SR {diff_time}"
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "WR Diff (Overall)",
-          "line": 564,
+          "line": 550,
           "english_text": " | WR {diff_time}"
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Server PB Diff (Pro)",
-          "line": 579,
+          "line": 565,
           "english_text": " | PRO SPB {diff_time}"
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Global PB Diff (Pro)",
-          "line": 594,
+          "line": 580,
           "english_text": " | PRO GPB {diff_time}"
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "SR Diff (Pro)",
-          "line": 609,
+          "line": 595,
           "english_text": " | PRO SR {diff_time}"
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "WR Diff (Pro)",
-          "line": 624,
+          "line": 610,
           "english_text": " | PRO WR {diff_time}"
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Missed Server PB (Overall)",
-          "line": 641,
+          "line": 627,
           "english_text": "{grey}You missed your best server {yellow}Overall{grey} time ({lightred}{time}{grey})."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Missed Global PB (Overall)",
-          "line": 657,
+          "line": 643,
           "english_text": "{grey}You missed your best global {yellow}Overall{grey} time ({lightred}{time}{grey})."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Missed SR (Overall)",
-          "line": 673,
+          "line": 659,
           "english_text": "{grey}You missed the {yellow}Overall{grey} server record time ({lightred}{time}{grey})."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Missed WR (Overall)",
-          "line": 689,
+          "line": 675,
           "english_text": "{grey}You missed the {yellow}Overall{grey} global record time ({lightred}{time}{grey})."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Missed Server PB (Pro)",
-          "line": 705,
+          "line": 691,
           "english_text": "{grey}You missed your best server {blue}PRO{grey} time ({lightred}{time}{grey})."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Missed Global PB (Pro)",
-          "line": 721,
+          "line": 707,
           "english_text": "{grey}You missed your best global {blue}PRO{grey} time ({lightred}{time}{grey})."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Missed SR (Pro)",
-          "line": 737,
+          "line": 723,
           "english_text": "{grey}You missed the {blue}PRO{grey} server record time ({lightred}{time}{grey})."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Missed WR (Pro)",
-          "line": 753,
+          "line": 739,
           "english_text": "{grey}You missed the {blue}PRO{grey} global record time ({lightred}{time}{grey})."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Missed Server PB (Overall+Pro)",
-          "line": 769,
+          "line": 755,
           "english_text": "{grey}You missed your best server {yellow}Overall{grey}/{blue}PRO{grey} time ({lightred}{time}{grey})."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Missed Global PB (Overall+Pro)",
-          "line": 785,
+          "line": 771,
           "english_text": "{grey}You missed your best global {yellow}Overall{grey}/{blue}PRO{grey} time ({lightred}{time}{grey})."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Missed SR (Overall+Pro)",
-          "line": 801,
+          "line": 787,
           "english_text": "{grey}You missed the {yellow}Overall{grey}/{blue}PRO{grey} server record time ({lightred}{time}{grey})."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Missed WR (Overall+Pro)",
-          "line": 817,
+          "line": 803,
           "english_text": "{grey}You missed the {yellow}Overall{grey}/{blue}PRO{grey} global record time ({lightred}{time}{grey})."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Compare Command Usage",
-          "line": 834,
+          "line": 820,
           "english_text": "{grey}Usage: {default}kz_comparelevel <none/off/spb/pb/gpb/sr/wr>{grey}."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Compare Disabled",
-          "line": 849,
+          "line": 835,
           "english_text": "{grey}Run comparison disabled."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Compare Server PB",
-          "line": 864,
+          "line": 850,
           "english_text": "{grey}You will now compare your run to your server personal best."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Compare Global PB",
-          "line": 879,
+          "line": 865,
           "english_text": "{grey}You will now compare your run to up to your global personal best."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Compare Server Record",
-          "line": 894,
+          "line": 880,
           "english_text": "{grey}You will now compare your run to up to the server record."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Compare World Record",
-          "line": 909,
+          "line": 895,
           "english_text": "{grey}You will now compare your run to up to the world record."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Request - Failed (Invalid Map)",
-          "line": 925,
+          "line": 911,
           "english_text": "{darkred}Failed to process current request. (Invalid map)"
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Request - Failed (Generic)",
-          "line": 939,
+          "line": 925,
           "english_text": "{darkred}Failed to process current request."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Request - Failed (No Course in Current Map)",
-          "line": 953,
+          "line": 939,
           "english_text": "{darkred}Failed to process current request. (No course exists in map {map_name})"
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Timer Stop Sound Enabled",
-          "line": 969,
+          "line": 955,
           "english_text": "{grey}You have enabled the timer stop sound."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Timer Stop Sound Disabled",
-          "line": 982,
+          "line": 968,
           "english_text": "{grey}You have disabled the timer stop sound."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Record Volume Set",
-          "line": 995,
+          "line": 981,
           "english_text": "{grey}You have set the world record announcement volume to {default}{volume}%%%%{grey}."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Map Overlay Enabled",
-          "line": 1008,
+          "line": 994,
           "english_text": "{grey}Helpers for map overlay enabled. Relevant timer events will be printed to console."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Map Overlay Disabled",
-          "line": 1017,
+          "line": 1003,
           "english_text": "{grey}Helpers for map overlay disabled. Relevant timer events will no longer be printed to console."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Course",
-          "line": 1026,
+          "line": 1012,
           "english_text": "{grey}You have started a run on a new course: {default}{course_name}{grey}"
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Non Ranked Course",
-          "line": 1038,
+          "line": 1024,
           "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked for the current mode. Runs on this course will not affect your global player rating."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Disable",
-          "line": 1050,
+          "line": 1036,
           "english_text": "{grey}Safeguard disabled."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable",
-          "line": 1059,
+          "line": 1045,
           "english_text": "{grey}Safeguard enabled. You can no longer issue any command that would stop your timer during a valid run."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable (PRO)",
-          "line": 1068,
+          "line": 1054,
           "english_text": "{grey}Safeguard for {blue}PRO {grey}runs enabled. You can no longer use teleports or issue any command that would stop your timer during a valid run."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked",
-          "line": 1077,
+          "line": 1063,
           "english_text": "{darkred}You can't perform this action because safeguard is enabled."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked (Restart)",
-          "line": 1086,
+          "line": 1072,
           "english_text": "{grey}Action is blocked by safeguard. Please wait {default}{cooldown} {grey}seconds then reissue the command again."
         },
         {
@@ -19381,8 +19369,8 @@
     },
     "ko": {
       "name": "koreana",
-      "coverage_percent": 57.64,
-      "translated": 656,
+      "coverage_percent": 57.61,
+      "translated": 655,
       "missing": 482,
       "missing_phrases": [
         {
@@ -22286,8 +22274,8 @@
     },
     "lv": {
       "name": "latvian",
-      "coverage_percent": 29.0,
-      "translated": 330,
+      "coverage_percent": 28.94,
+      "translated": 329,
       "missing": 808,
       "missing_phrases": [
         {
@@ -26817,73 +26805,73 @@
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Timer Stop Sound Enabled",
-          "line": 969,
+          "line": 955,
           "english_text": "{grey}You have enabled the timer stop sound."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Timer Stop Sound Disabled",
-          "line": 982,
+          "line": 968,
           "english_text": "{grey}You have disabled the timer stop sound."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Record Volume Set",
-          "line": 995,
+          "line": 981,
           "english_text": "{grey}You have set the world record announcement volume to {default}{volume}%%%%{grey}."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Map Overlay Enabled",
-          "line": 1008,
+          "line": 994,
           "english_text": "{grey}Helpers for map overlay enabled. Relevant timer events will be printed to console."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Map Overlay Disabled",
-          "line": 1017,
+          "line": 1003,
           "english_text": "{grey}Helpers for map overlay disabled. Relevant timer events will no longer be printed to console."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Course",
-          "line": 1026,
+          "line": 1012,
           "english_text": "{grey}You have started a run on a new course: {default}{course_name}{grey}"
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Non Ranked Course",
-          "line": 1038,
+          "line": 1024,
           "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked for the current mode. Runs on this course will not affect your global player rating."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Disable",
-          "line": 1050,
+          "line": 1036,
           "english_text": "{grey}Safeguard disabled."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable",
-          "line": 1059,
+          "line": 1045,
           "english_text": "{grey}Safeguard enabled. You can no longer issue any command that would stop your timer during a valid run."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable (PRO)",
-          "line": 1068,
+          "line": 1054,
           "english_text": "{grey}Safeguard for {blue}PRO {grey}runs enabled. You can no longer use teleports or issue any command that would stop your timer during a valid run."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked",
-          "line": 1077,
+          "line": 1063,
           "english_text": "{darkred}You can't perform this action because safeguard is enabled."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked (Restart)",
-          "line": 1086,
+          "line": 1072,
           "english_text": "{grey}Action is blocked by safeguard. Please wait {default}{cooldown} {grey}seconds then reissue the command again."
         },
         {
@@ -27149,7 +27137,7 @@
       "name": "dutch",
       "coverage_percent": 0.44,
       "translated": 5,
-      "missing": 1133,
+      "missing": 1132,
       "missing_phrases": [
         {
           "file": "translations/cs2kz-anticheat.phrases.txt",
@@ -33303,272 +33291,266 @@
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
-          "phrase": "Turnbinds Disabled",
-          "line": 454,
-          "english_text": "{darkred}Turnbinds are disabled."
-        },
-        {
-          "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Course Split Reached",
-          "line": 470,
+          "line": 456,
           "english_text": "{grey}Split {default}#{number}{grey}: {lime}{time_text}{grey}{diff_text}{diff_text_pro}"
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Course Checkpoint Reached",
-          "line": 486,
+          "line": 472,
           "english_text": "{grey}CP {default}#{number}{grey}: {lime}{time_text}{grey}{diff_text}{diff_text_pro}"
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Course Stage Reached",
-          "line": 501,
+          "line": 487,
           "english_text": "{grey}Stage {default}#{number}{grey}: {lime}{time_text}{grey}{diff_text}{diff_text_pro}"
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Server PB Diff (Overall)",
-          "line": 519,
+          "line": 505,
           "english_text": " | SPB {diff_time}"
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Global PB Diff (Overall)",
-          "line": 534,
+          "line": 520,
           "english_text": " | GPB {diff_time}"
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "SR Diff (Overall)",
-          "line": 549,
+          "line": 535,
           "english_text": " | SR {diff_time}"
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "WR Diff (Overall)",
-          "line": 564,
+          "line": 550,
           "english_text": " | WR {diff_time}"
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Server PB Diff (Pro)",
-          "line": 579,
+          "line": 565,
           "english_text": " | PRO SPB {diff_time}"
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Global PB Diff (Pro)",
-          "line": 594,
+          "line": 580,
           "english_text": " | PRO GPB {diff_time}"
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "SR Diff (Pro)",
-          "line": 609,
+          "line": 595,
           "english_text": " | PRO SR {diff_time}"
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "WR Diff (Pro)",
-          "line": 624,
+          "line": 610,
           "english_text": " | PRO WR {diff_time}"
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Missed Server PB (Overall)",
-          "line": 641,
+          "line": 627,
           "english_text": "{grey}You missed your best server {yellow}Overall{grey} time ({lightred}{time}{grey})."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Missed Global PB (Overall)",
-          "line": 657,
+          "line": 643,
           "english_text": "{grey}You missed your best global {yellow}Overall{grey} time ({lightred}{time}{grey})."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Missed SR (Overall)",
-          "line": 673,
+          "line": 659,
           "english_text": "{grey}You missed the {yellow}Overall{grey} server record time ({lightred}{time}{grey})."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Missed WR (Overall)",
-          "line": 689,
+          "line": 675,
           "english_text": "{grey}You missed the {yellow}Overall{grey} global record time ({lightred}{time}{grey})."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Missed Server PB (Pro)",
-          "line": 705,
+          "line": 691,
           "english_text": "{grey}You missed your best server {blue}PRO{grey} time ({lightred}{time}{grey})."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Missed Global PB (Pro)",
-          "line": 721,
+          "line": 707,
           "english_text": "{grey}You missed your best global {blue}PRO{grey} time ({lightred}{time}{grey})."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Missed SR (Pro)",
-          "line": 737,
+          "line": 723,
           "english_text": "{grey}You missed the {blue}PRO{grey} server record time ({lightred}{time}{grey})."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Missed WR (Pro)",
-          "line": 753,
+          "line": 739,
           "english_text": "{grey}You missed the {blue}PRO{grey} global record time ({lightred}{time}{grey})."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Missed Server PB (Overall+Pro)",
-          "line": 769,
+          "line": 755,
           "english_text": "{grey}You missed your best server {yellow}Overall{grey}/{blue}PRO{grey} time ({lightred}{time}{grey})."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Missed Global PB (Overall+Pro)",
-          "line": 785,
+          "line": 771,
           "english_text": "{grey}You missed your best global {yellow}Overall{grey}/{blue}PRO{grey} time ({lightred}{time}{grey})."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Missed SR (Overall+Pro)",
-          "line": 801,
+          "line": 787,
           "english_text": "{grey}You missed the {yellow}Overall{grey}/{blue}PRO{grey} server record time ({lightred}{time}{grey})."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Missed WR (Overall+Pro)",
-          "line": 817,
+          "line": 803,
           "english_text": "{grey}You missed the {yellow}Overall{grey}/{blue}PRO{grey} global record time ({lightred}{time}{grey})."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Compare Command Usage",
-          "line": 834,
+          "line": 820,
           "english_text": "{grey}Usage: {default}kz_comparelevel <none/off/spb/pb/gpb/sr/wr>{grey}."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Compare Disabled",
-          "line": 849,
+          "line": 835,
           "english_text": "{grey}Run comparison disabled."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Compare Server PB",
-          "line": 864,
+          "line": 850,
           "english_text": "{grey}You will now compare your run to your server personal best."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Compare Global PB",
-          "line": 879,
+          "line": 865,
           "english_text": "{grey}You will now compare your run to up to your global personal best."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Compare Server Record",
-          "line": 894,
+          "line": 880,
           "english_text": "{grey}You will now compare your run to up to the server record."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Compare World Record",
-          "line": 909,
+          "line": 895,
           "english_text": "{grey}You will now compare your run to up to the world record."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Request - Failed (Invalid Map)",
-          "line": 925,
+          "line": 911,
           "english_text": "{darkred}Failed to process current request. (Invalid map)"
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Request - Failed (Generic)",
-          "line": 939,
+          "line": 925,
           "english_text": "{darkred}Failed to process current request."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Request - Failed (No Course in Current Map)",
-          "line": 953,
+          "line": 939,
           "english_text": "{darkred}Failed to process current request. (No course exists in map {map_name})"
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Timer Stop Sound Enabled",
-          "line": 969,
+          "line": 955,
           "english_text": "{grey}You have enabled the timer stop sound."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Timer Stop Sound Disabled",
-          "line": 982,
+          "line": 968,
           "english_text": "{grey}You have disabled the timer stop sound."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Record Volume Set",
-          "line": 995,
+          "line": 981,
           "english_text": "{grey}You have set the world record announcement volume to {default}{volume}%%%%{grey}."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Map Overlay Enabled",
-          "line": 1008,
+          "line": 994,
           "english_text": "{grey}Helpers for map overlay enabled. Relevant timer events will be printed to console."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Map Overlay Disabled",
-          "line": 1017,
+          "line": 1003,
           "english_text": "{grey}Helpers for map overlay disabled. Relevant timer events will no longer be printed to console."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Course",
-          "line": 1026,
+          "line": 1012,
           "english_text": "{grey}You have started a run on a new course: {default}{course_name}{grey}"
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Non Ranked Course",
-          "line": 1038,
+          "line": 1024,
           "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked for the current mode. Runs on this course will not affect your global player rating."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Disable",
-          "line": 1050,
+          "line": 1036,
           "english_text": "{grey}Safeguard disabled."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable",
-          "line": 1059,
+          "line": 1045,
           "english_text": "{grey}Safeguard enabled. You can no longer issue any command that would stop your timer during a valid run."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable (PRO)",
-          "line": 1068,
+          "line": 1054,
           "english_text": "{grey}Safeguard for {blue}PRO {grey}runs enabled. You can no longer use teleports or issue any command that would stop your timer during a valid run."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked",
-          "line": 1077,
+          "line": 1063,
           "english_text": "{darkred}You can't perform this action because safeguard is enabled."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked (Restart)",
-          "line": 1086,
+          "line": 1072,
           "english_text": "{grey}Action is blocked by safeguard. Please wait {default}{cooldown} {grey}seconds then reissue the command again."
         },
         {
@@ -33958,8 +33940,8 @@
     },
     "pl": {
       "name": "polish",
-      "coverage_percent": 46.05,
-      "translated": 524,
+      "coverage_percent": 46.0,
+      "translated": 523,
       "missing": 614,
       "missing_phrases": [
         {
@@ -37433,55 +37415,55 @@
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Map Overlay Enabled",
-          "line": 1008,
+          "line": 994,
           "english_text": "{grey}Helpers for map overlay enabled. Relevant timer events will be printed to console."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Map Overlay Disabled",
-          "line": 1017,
+          "line": 1003,
           "english_text": "{grey}Helpers for map overlay disabled. Relevant timer events will no longer be printed to console."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Course",
-          "line": 1026,
+          "line": 1012,
           "english_text": "{grey}You have started a run on a new course: {default}{course_name}{grey}"
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Non Ranked Course",
-          "line": 1038,
+          "line": 1024,
           "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked for the current mode. Runs on this course will not affect your global player rating."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Disable",
-          "line": 1050,
+          "line": 1036,
           "english_text": "{grey}Safeguard disabled."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable",
-          "line": 1059,
+          "line": 1045,
           "english_text": "{grey}Safeguard enabled. You can no longer issue any command that would stop your timer during a valid run."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable (PRO)",
-          "line": 1068,
+          "line": 1054,
           "english_text": "{grey}Safeguard for {blue}PRO {grey}runs enabled. You can no longer use teleports or issue any command that would stop your timer during a valid run."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked",
-          "line": 1077,
+          "line": 1063,
           "english_text": "{darkred}You can't perform this action because safeguard is enabled."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked (Restart)",
-          "line": 1086,
+          "line": 1072,
           "english_text": "{grey}Action is blocked by safeguard. Please wait {default}{cooldown} {grey}seconds then reissue the command again."
         },
         {
@@ -37655,8 +37637,8 @@
     },
     "ru": {
       "name": "russian",
-      "coverage_percent": 87.7,
-      "translated": 998,
+      "coverage_percent": 87.69,
+      "translated": 997,
       "missing": 140,
       "missing_phrases": [
         {
@@ -38508,8 +38490,8 @@
     },
     "sv": {
       "name": "swedish",
-      "coverage_percent": 34.62,
-      "translated": 394,
+      "coverage_percent": 34.56,
+      "translated": 393,
       "missing": 744,
       "missing_phrases": [
         {
@@ -42673,61 +42655,61 @@
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Record Volume Set",
-          "line": 995,
+          "line": 981,
           "english_text": "{grey}You have set the world record announcement volume to {default}{volume}%%%%{grey}."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Map Overlay Enabled",
-          "line": 1008,
+          "line": 994,
           "english_text": "{grey}Helpers for map overlay enabled. Relevant timer events will be printed to console."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Map Overlay Disabled",
-          "line": 1017,
+          "line": 1003,
           "english_text": "{grey}Helpers for map overlay disabled. Relevant timer events will no longer be printed to console."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Course",
-          "line": 1026,
+          "line": 1012,
           "english_text": "{grey}You have started a run on a new course: {default}{course_name}{grey}"
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Non Ranked Course",
-          "line": 1038,
+          "line": 1024,
           "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked for the current mode. Runs on this course will not affect your global player rating."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Disable",
-          "line": 1050,
+          "line": 1036,
           "english_text": "{grey}Safeguard disabled."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable",
-          "line": 1059,
+          "line": 1045,
           "english_text": "{grey}Safeguard enabled. You can no longer issue any command that would stop your timer during a valid run."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable (PRO)",
-          "line": 1068,
+          "line": 1054,
           "english_text": "{grey}Safeguard for {blue}PRO {grey}runs enabled. You can no longer use teleports or issue any command that would stop your timer during a valid run."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked",
-          "line": 1077,
+          "line": 1063,
           "english_text": "{darkred}You can't perform this action because safeguard is enabled."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked (Restart)",
-          "line": 1086,
+          "line": 1072,
           "english_text": "{grey}Action is blocked by safeguard. Please wait {default}{cooldown} {grey}seconds then reissue the command again."
         },
         {
@@ -42985,9 +42967,9 @@
     },
     "tr": {
       "name": "turkish",
-      "coverage_percent": 23.2,
+      "coverage_percent": 23.22,
       "translated": 264,
-      "missing": 874,
+      "missing": 873,
       "missing_phrases": [
         {
           "file": "translations/cs2kz-anticheat.phrases.txt",
@@ -47833,152 +47815,146 @@
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
-          "phrase": "Turnbinds Disabled",
-          "line": 454,
-          "english_text": "{darkred}Turnbinds are disabled."
-        },
-        {
-          "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Course Checkpoint Reached",
-          "line": 486,
+          "line": 472,
           "english_text": "{grey}CP {default}#{number}{grey}: {lime}{time_text}{grey}{diff_text}{diff_text_pro}"
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Server PB Diff (Overall)",
-          "line": 519,
+          "line": 505,
           "english_text": " | SPB {diff_time}"
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Global PB Diff (Overall)",
-          "line": 534,
+          "line": 520,
           "english_text": " | GPB {diff_time}"
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "SR Diff (Overall)",
-          "line": 549,
+          "line": 535,
           "english_text": " | SR {diff_time}"
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "WR Diff (Overall)",
-          "line": 564,
+          "line": 550,
           "english_text": " | WR {diff_time}"
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Server PB Diff (Pro)",
-          "line": 579,
+          "line": 565,
           "english_text": " | PRO SPB {diff_time}"
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Global PB Diff (Pro)",
-          "line": 594,
+          "line": 580,
           "english_text": " | PRO GPB {diff_time}"
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "SR Diff (Pro)",
-          "line": 609,
+          "line": 595,
           "english_text": " | PRO SR {diff_time}"
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "WR Diff (Pro)",
-          "line": 624,
+          "line": 610,
           "english_text": " | PRO WR {diff_time}"
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Request - Failed (Invalid Map)",
-          "line": 925,
+          "line": 911,
           "english_text": "{darkred}Failed to process current request. (Invalid map)"
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Request - Failed (Generic)",
-          "line": 939,
+          "line": 925,
           "english_text": "{darkred}Failed to process current request."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Request - Failed (No Course in Current Map)",
-          "line": 953,
+          "line": 939,
           "english_text": "{darkred}Failed to process current request. (No course exists in map {map_name})"
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Timer Stop Sound Enabled",
-          "line": 969,
+          "line": 955,
           "english_text": "{grey}You have enabled the timer stop sound."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Timer Stop Sound Disabled",
-          "line": 982,
+          "line": 968,
           "english_text": "{grey}You have disabled the timer stop sound."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Record Volume Set",
-          "line": 995,
+          "line": 981,
           "english_text": "{grey}You have set the world record announcement volume to {default}{volume}%%%%{grey}."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Map Overlay Enabled",
-          "line": 1008,
+          "line": 994,
           "english_text": "{grey}Helpers for map overlay enabled. Relevant timer events will be printed to console."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Map Overlay Disabled",
-          "line": 1017,
+          "line": 1003,
           "english_text": "{grey}Helpers for map overlay disabled. Relevant timer events will no longer be printed to console."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Course",
-          "line": 1026,
+          "line": 1012,
           "english_text": "{grey}You have started a run on a new course: {default}{course_name}{grey}"
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Started Run on Non Ranked Course",
-          "line": 1038,
+          "line": 1024,
           "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked for the current mode. Runs on this course will not affect your global player rating."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Disable",
-          "line": 1050,
+          "line": 1036,
           "english_text": "{grey}Safeguard disabled."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable",
-          "line": 1059,
+          "line": 1045,
           "english_text": "{grey}Safeguard enabled. You can no longer issue any command that would stop your timer during a valid run."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Enable (PRO)",
-          "line": 1068,
+          "line": 1054,
           "english_text": "{grey}Safeguard for {blue}PRO {grey}runs enabled. You can no longer use teleports or issue any command that would stop your timer during a valid run."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked",
-          "line": 1077,
+          "line": 1063,
           "english_text": "{darkred}You can't perform this action because safeguard is enabled."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Safeguard - Blocked (Restart)",
-          "line": 1086,
+          "line": 1072,
           "english_text": "{grey}Action is blocked by safeguard. Please wait {default}{cooldown} {grey}seconds then reissue the command again."
         },
         {
@@ -48248,7 +48224,7 @@
     "ua": {
       "name": "ukrainian",
       "coverage_percent": 99.3,
-      "translated": 1130,
+      "translated": 1129,
       "missing": 8,
       "missing_phrases": [
         {
@@ -48309,7 +48285,7 @@
     "zho": {
       "name": "tchinese",
       "coverage_percent": 94.11,
-      "translated": 1071,
+      "translated": 1070,
       "missing": 67,
       "missing_phrases": [
         {
@@ -72917,7 +72893,7 @@
       ]
     },
     "translations/cs2kz-timer.phrases.txt": {
-      "phrases_with_missing": 73,
+      "phrases_with_missing": 72,
       "phrases": [
         {
           "name": "1 Teleport Text",
@@ -73592,32 +73568,8 @@
           ]
         },
         {
-          "name": "Turnbinds Disabled",
-          "line": 454,
-          "english_text": "{darkred}Turnbinds are disabled.",
-          "existing_languages": [
-            "chi",
-            "de",
-            "en",
-            "es",
-            "ko",
-            "lv",
-            "pl",
-            "ru",
-            "sv",
-            "ua",
-            "zho"
-          ],
-          "missing_languages": [
-            "fi",
-            "it",
-            "nl",
-            "tr"
-          ]
-        },
-        {
           "name": "Course Split Reached",
-          "line": 470,
+          "line": 456,
           "english_text": "{grey}Split {default}#{number}{grey}: {lime}{time_text}{grey}{diff_text}{diff_text_pro}",
           "existing_languages": [
             "chi",
@@ -73641,7 +73593,7 @@
         },
         {
           "name": "Course Checkpoint Reached",
-          "line": 486,
+          "line": 472,
           "english_text": "{grey}CP {default}#{number}{grey}: {lime}{time_text}{grey}{diff_text}{diff_text_pro}",
           "existing_languages": [
             "chi",
@@ -73665,7 +73617,7 @@
         },
         {
           "name": "Course Stage Reached",
-          "line": 501,
+          "line": 487,
           "english_text": "{grey}Stage {default}#{number}{grey}: {lime}{time_text}{grey}{diff_text}{diff_text_pro}",
           "existing_languages": [
             "chi",
@@ -73689,7 +73641,7 @@
         },
         {
           "name": "Server PB Diff (Overall)",
-          "line": 519,
+          "line": 505,
           "english_text": " | SPB {diff_time}",
           "existing_languages": [
             "chi",
@@ -73713,7 +73665,7 @@
         },
         {
           "name": "Global PB Diff (Overall)",
-          "line": 534,
+          "line": 520,
           "english_text": " | GPB {diff_time}",
           "existing_languages": [
             "chi",
@@ -73737,7 +73689,7 @@
         },
         {
           "name": "SR Diff (Overall)",
-          "line": 549,
+          "line": 535,
           "english_text": " | SR {diff_time}",
           "existing_languages": [
             "chi",
@@ -73761,7 +73713,7 @@
         },
         {
           "name": "WR Diff (Overall)",
-          "line": 564,
+          "line": 550,
           "english_text": " | WR {diff_time}",
           "existing_languages": [
             "chi",
@@ -73785,7 +73737,7 @@
         },
         {
           "name": "Server PB Diff (Pro)",
-          "line": 579,
+          "line": 565,
           "english_text": " | PRO SPB {diff_time}",
           "existing_languages": [
             "chi",
@@ -73809,7 +73761,7 @@
         },
         {
           "name": "Global PB Diff (Pro)",
-          "line": 594,
+          "line": 580,
           "english_text": " | PRO GPB {diff_time}",
           "existing_languages": [
             "chi",
@@ -73833,7 +73785,7 @@
         },
         {
           "name": "SR Diff (Pro)",
-          "line": 609,
+          "line": 595,
           "english_text": " | PRO SR {diff_time}",
           "existing_languages": [
             "chi",
@@ -73857,7 +73809,7 @@
         },
         {
           "name": "WR Diff (Pro)",
-          "line": 624,
+          "line": 610,
           "english_text": " | PRO WR {diff_time}",
           "existing_languages": [
             "chi",
@@ -73881,7 +73833,7 @@
         },
         {
           "name": "Missed Server PB (Overall)",
-          "line": 641,
+          "line": 627,
           "english_text": "{grey}You missed your best server {yellow}Overall{grey} time ({lightred}{time}{grey}).",
           "existing_languages": [
             "chi",
@@ -73905,7 +73857,7 @@
         },
         {
           "name": "Missed Global PB (Overall)",
-          "line": 657,
+          "line": 643,
           "english_text": "{grey}You missed your best global {yellow}Overall{grey} time ({lightred}{time}{grey}).",
           "existing_languages": [
             "chi",
@@ -73929,7 +73881,7 @@
         },
         {
           "name": "Missed SR (Overall)",
-          "line": 673,
+          "line": 659,
           "english_text": "{grey}You missed the {yellow}Overall{grey} server record time ({lightred}{time}{grey}).",
           "existing_languages": [
             "chi",
@@ -73953,7 +73905,7 @@
         },
         {
           "name": "Missed WR (Overall)",
-          "line": 689,
+          "line": 675,
           "english_text": "{grey}You missed the {yellow}Overall{grey} global record time ({lightred}{time}{grey}).",
           "existing_languages": [
             "chi",
@@ -73977,7 +73929,7 @@
         },
         {
           "name": "Missed Server PB (Pro)",
-          "line": 705,
+          "line": 691,
           "english_text": "{grey}You missed your best server {blue}PRO{grey} time ({lightred}{time}{grey}).",
           "existing_languages": [
             "chi",
@@ -74001,7 +73953,7 @@
         },
         {
           "name": "Missed Global PB (Pro)",
-          "line": 721,
+          "line": 707,
           "english_text": "{grey}You missed your best global {blue}PRO{grey} time ({lightred}{time}{grey}).",
           "existing_languages": [
             "chi",
@@ -74025,7 +73977,7 @@
         },
         {
           "name": "Missed SR (Pro)",
-          "line": 737,
+          "line": 723,
           "english_text": "{grey}You missed the {blue}PRO{grey} server record time ({lightred}{time}{grey}).",
           "existing_languages": [
             "chi",
@@ -74049,7 +74001,7 @@
         },
         {
           "name": "Missed WR (Pro)",
-          "line": 753,
+          "line": 739,
           "english_text": "{grey}You missed the {blue}PRO{grey} global record time ({lightred}{time}{grey}).",
           "existing_languages": [
             "chi",
@@ -74073,7 +74025,7 @@
         },
         {
           "name": "Missed Server PB (Overall+Pro)",
-          "line": 769,
+          "line": 755,
           "english_text": "{grey}You missed your best server {yellow}Overall{grey}/{blue}PRO{grey} time ({lightred}{time}{grey}).",
           "existing_languages": [
             "chi",
@@ -74097,7 +74049,7 @@
         },
         {
           "name": "Missed Global PB (Overall+Pro)",
-          "line": 785,
+          "line": 771,
           "english_text": "{grey}You missed your best global {yellow}Overall{grey}/{blue}PRO{grey} time ({lightred}{time}{grey}).",
           "existing_languages": [
             "chi",
@@ -74121,7 +74073,7 @@
         },
         {
           "name": "Missed SR (Overall+Pro)",
-          "line": 801,
+          "line": 787,
           "english_text": "{grey}You missed the {yellow}Overall{grey}/{blue}PRO{grey} server record time ({lightred}{time}{grey}).",
           "existing_languages": [
             "chi",
@@ -74145,7 +74097,7 @@
         },
         {
           "name": "Missed WR (Overall+Pro)",
-          "line": 817,
+          "line": 803,
           "english_text": "{grey}You missed the {yellow}Overall{grey}/{blue}PRO{grey} global record time ({lightred}{time}{grey}).",
           "existing_languages": [
             "chi",
@@ -74169,7 +74121,7 @@
         },
         {
           "name": "Compare Command Usage",
-          "line": 834,
+          "line": 820,
           "english_text": "{grey}Usage: {default}kz_comparelevel <none/off/spb/pb/gpb/sr/wr>{grey}.",
           "existing_languages": [
             "chi",
@@ -74193,7 +74145,7 @@
         },
         {
           "name": "Compare Disabled",
-          "line": 849,
+          "line": 835,
           "english_text": "{grey}Run comparison disabled.",
           "existing_languages": [
             "chi",
@@ -74217,7 +74169,7 @@
         },
         {
           "name": "Compare Server PB",
-          "line": 864,
+          "line": 850,
           "english_text": "{grey}You will now compare your run to your server personal best.",
           "existing_languages": [
             "chi",
@@ -74241,7 +74193,7 @@
         },
         {
           "name": "Compare Global PB",
-          "line": 879,
+          "line": 865,
           "english_text": "{grey}You will now compare your run to up to your global personal best.",
           "existing_languages": [
             "chi",
@@ -74265,7 +74217,7 @@
         },
         {
           "name": "Compare Server Record",
-          "line": 894,
+          "line": 880,
           "english_text": "{grey}You will now compare your run to up to the server record.",
           "existing_languages": [
             "chi",
@@ -74289,7 +74241,7 @@
         },
         {
           "name": "Compare World Record",
-          "line": 909,
+          "line": 895,
           "english_text": "{grey}You will now compare your run to up to the world record.",
           "existing_languages": [
             "chi",
@@ -74313,7 +74265,7 @@
         },
         {
           "name": "Request - Failed (Invalid Map)",
-          "line": 925,
+          "line": 911,
           "english_text": "{darkred}Failed to process current request. (Invalid map)",
           "existing_languages": [
             "chi",
@@ -74337,7 +74289,7 @@
         },
         {
           "name": "Request - Failed (Generic)",
-          "line": 939,
+          "line": 925,
           "english_text": "{darkred}Failed to process current request.",
           "existing_languages": [
             "chi",
@@ -74361,7 +74313,7 @@
         },
         {
           "name": "Request - Failed (No Course in Current Map)",
-          "line": 953,
+          "line": 939,
           "english_text": "{darkred}Failed to process current request. (No course exists in map {map_name})",
           "existing_languages": [
             "chi",
@@ -74385,7 +74337,7 @@
         },
         {
           "name": "Timer Stop Sound Enabled",
-          "line": 969,
+          "line": 955,
           "english_text": "{grey}You have enabled the timer stop sound.",
           "existing_languages": [
             "chi",
@@ -74409,7 +74361,7 @@
         },
         {
           "name": "Timer Stop Sound Disabled",
-          "line": 982,
+          "line": 968,
           "english_text": "{grey}You have disabled the timer stop sound.",
           "existing_languages": [
             "chi",
@@ -74433,7 +74385,7 @@
         },
         {
           "name": "Record Volume Set",
-          "line": 995,
+          "line": 981,
           "english_text": "{grey}You have set the world record announcement volume to {default}{volume}%%%%{grey}.",
           "existing_languages": [
             "chi",
@@ -74457,7 +74409,7 @@
         },
         {
           "name": "Map Overlay Enabled",
-          "line": 1008,
+          "line": 994,
           "english_text": "{grey}Helpers for map overlay enabled. Relevant timer events will be printed to console.",
           "existing_languages": [
             "chi",
@@ -74481,7 +74433,7 @@
         },
         {
           "name": "Map Overlay Disabled",
-          "line": 1017,
+          "line": 1003,
           "english_text": "{grey}Helpers for map overlay disabled. Relevant timer events will no longer be printed to console.",
           "existing_languages": [
             "chi",
@@ -74505,7 +74457,7 @@
         },
         {
           "name": "Started Run on Course",
-          "line": 1026,
+          "line": 1012,
           "english_text": "{grey}You have started a run on a new course: {default}{course_name}{grey}",
           "existing_languages": [
             "chi",
@@ -74529,7 +74481,7 @@
         },
         {
           "name": "Started Run on Non Ranked Course",
-          "line": 1038,
+          "line": 1024,
           "english_text": "{yellow}Warning: {grey} Course {default}{course_name}{grey} is not ranked for the current mode. Runs on this course will not affect your global player rating.",
           "existing_languages": [
             "chi",
@@ -74553,7 +74505,7 @@
         },
         {
           "name": "Safeguard - Disable",
-          "line": 1050,
+          "line": 1036,
           "english_text": "{grey}Safeguard disabled.",
           "existing_languages": [
             "chi",
@@ -74577,7 +74529,7 @@
         },
         {
           "name": "Safeguard - Enable",
-          "line": 1059,
+          "line": 1045,
           "english_text": "{grey}Safeguard enabled. You can no longer issue any command that would stop your timer during a valid run.",
           "existing_languages": [
             "chi",
@@ -74601,7 +74553,7 @@
         },
         {
           "name": "Safeguard - Enable (PRO)",
-          "line": 1068,
+          "line": 1054,
           "english_text": "{grey}Safeguard for {blue}PRO {grey}runs enabled. You can no longer use teleports or issue any command that would stop your timer during a valid run.",
           "existing_languages": [
             "chi",
@@ -74625,7 +74577,7 @@
         },
         {
           "name": "Safeguard - Blocked",
-          "line": 1077,
+          "line": 1063,
           "english_text": "{darkred}You can't perform this action because safeguard is enabled.",
           "existing_languages": [
             "chi",
@@ -74649,7 +74601,7 @@
         },
         {
           "name": "Safeguard - Blocked (Restart)",
-          "line": 1086,
+          "line": 1072,
           "english_text": "{grey}Action is blocked by safeguard. Please wait {default}{cooldown} {grey}seconds then reissue the command again.",
           "existing_languages": [
             "chi",
