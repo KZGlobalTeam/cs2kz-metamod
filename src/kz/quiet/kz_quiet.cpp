@@ -190,10 +190,8 @@ static void FilterQuietClients(const uint64 *clients, u32 emitterPlayerIndex = 0
 
 void KZ::quiet::OnPostEvent(INetworkMessageInternal *pEvent, const CNetMessage *pData, const uint64 *clients)
 {
-	NetMessageInfo_t *info = pEvent->GetNetMessageInfo();
-
 	u32 emitterEntIndex = 0;
-	switch (info->m_MessageId)
+	switch (pEvent->m_MessageId)
 	{
 		case GE_PlaceDecalEvent:
 		{
