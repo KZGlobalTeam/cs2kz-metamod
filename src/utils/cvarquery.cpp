@@ -62,7 +62,7 @@ bool cvarquery::Query(CPlayerSlot slot, const char *cvarName, Callback callback)
 	{
 		return false;
 	}
-	INetworkMessageInternal *netmsg = g_pNetworkMessages->FindNetworkMessagePartial("CSVCMsg_GetCvarValue");
+	NetMessageInfo_t *netmsg = g_pNetworkMessages->FindNetworkMessagePartial("CSVCMsg_GetCvarValue");
 	if (!netmsg)
 	{
 		return false;

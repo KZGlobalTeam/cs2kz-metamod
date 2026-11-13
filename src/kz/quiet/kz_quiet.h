@@ -7,7 +7,7 @@ namespace KZ::quiet
 {
 	void OnCheckTransmit(CCheckTransmitInfo **pInfo, int infoCount);
 
-	void OnPostEvent(INetworkMessageInternal *pEvent, const CNetMessage *pData, const uint64 *clients);
+	void OnPostEvent(NetMessageInfo_t *pEvent, const CNetMessage *pData, const uint64 *clients);
 } // namespace KZ::quiet
 
 class KZQuietService : public KZBaseService

@@ -82,7 +82,7 @@ CConVar<bool> kz_profile_clantag_enabled("kz_profile_clantag_enabled", FCVAR_NON
 void KZProfileService::OnPlayerActive()
 {
 	CReliableSingleUserRecipientFilter filter(this->player->GetPlayerSlot());
-	INetworkMessageInternal *netmsg = g_pNetworkMessages->FindNetworkMessagePartial("CCSUsrMsg_ServerRankRevealAll");
+	NetMessageInfo_t *netmsg = g_pNetworkMessages->FindNetworkMessagePartial("CCSUsrMsg_ServerRankRevealAll");
 	CNetMessage *msg = netmsg->AllocateMessage();
 	interfaces::pGameEventSystem->PostEventAbstract(0, false, &filter, netmsg, msg, 0);
 	delete msg;
@@ -174,7 +174,7 @@ void KZProfileService::RequestRating()
 		if (oldRating <= 0.0f && player->profileService->currentRating > 0.0f)
 		{
 			CInGameRecipientFilter filter;
-			INetworkMessageInternal *netmsg = g_pNetworkMessages->FindNetworkMessagePartial("CCSUsrMsg_ServerRankRevealAll");
+			NetMessageInfo_t *netmsg = g_pNetworkMessages->FindNetworkMessagePartial("CCSUsrMsg_ServerRankRevealAll");
 			CNetMessage *msg = netmsg->AllocateMessage();
 			interfaces::pGameEventSystem->PostEventAbstract(0, false, &filter, netmsg, msg, 0);
 			delete msg;

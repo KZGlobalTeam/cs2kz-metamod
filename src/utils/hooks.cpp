@@ -542,15 +542,15 @@ static KHook::Virtual<ICvar, void, ConCommandRef, const CCommandContext &, const
 // ============================================================
 
 static KHook::Return<void> PostEventPre(IGameEventSystem *pThis, CSplitScreenSlot nSlot, bool bLocalOnly, int nClientCount, const uint64 *clients,
-										INetworkMessageInternal *pEvent, const CNetMessage *pData, unsigned long nSize, NetChannelBufType_t bufType)
+										NetMessageInfo_t *pEvent, const CNetMessage *pData, unsigned long nSize, NetChannelBufType_t bufType)
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
 	KZ::quiet::OnPostEvent(pEvent, pData, clients);
 	return {KHook::Action::Ignore};
 }
 
-static KHook::Virtual<IGameEventSystem, void, CSplitScreenSlot, bool, int, const uint64 *, INetworkMessageInternal *, const CNetMessage *,
-					  unsigned long, NetChannelBufType_t>
+static KHook::Virtual<IGameEventSystem, void, CSplitScreenSlot, bool, int, const uint64 *, NetMessageInfo_t *, const CNetMessage *, unsigned long,
+					  NetChannelBufType_t>
 	postEventHook(PostEventPre, nullptr);
 
 // ============================================================
