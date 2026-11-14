@@ -6,12 +6,15 @@
 #include "utils/simplecmds.h"
 
 #include "kz/option/kz_option.h"
+#include "kz/mode/kz_mode.h"
 #include "kz/hud/layout/layout.h"
 #include "kz/timer/kz_timer.h"
 #include "kz/checkpoint/kz_checkpoint.h"
 #include "kz/spec/kz_spec.h"
 #include "kz/language/kz_language.h"
 #include "kz/replays/kz_replaysystem.h"
+#include "kz/jumpstats/kz_jumpstats.h"
+#include "kz/jumpstats/distance_prediction.h"
 #include "sdk/entity/ccscustomhudlayout.h"
 #include "sdk/usercmd.h"
 
@@ -89,6 +92,8 @@ void KZHUDService::Reset()
 	this->jumpInputExpireTime = 0;
 	this->fromDuckbug = false;
 	this->crouchJumping = false;
+	this->potential = PotentialState();
+	this->potentialJump = PotentialJumpState();
 }
 
 void KZHUDService::OnSetupMove(CUserCmd *cmd)
@@ -143,6 +148,69 @@ KZHUDService::SpeedInfo KZHUDService::GetSpeedInfo(const MHUDPrefs &prefs)
 	this->player->GetBaseVelocity(&baseVelocity);
 	velocity += baseVelocity;
 	info.speed = velocity.Length2D();
+
+	{
+		const bool onGround = (pawn->m_fFlags & FL_ONGROUND) || pawn->m_MoveType == MOVETYPE_LADDER;
+		Jump *jump = this->player->jumpstatsService->jumps.empty() ? NULL : &this->player->jumpstatsService->jumps.back();
+		if (onGround)
+		{
+			if (this->potential.active)
+			{
+				this->potential = PotentialState();
+			}
+		}
+		else
+		{
+			if (!this->potential.active)
+			{
+				this->potentialJump = PotentialJumpState();
+				this->potentialJump.active = true;
+			}
+			const bool crouching = KZ::DistancePrediction::IsCrouching(this->player);
+			const Vector &takeoff = this->player->takeoffOrigin;
+			Vector origin = pawn->m_CBodyComponent()->m_pSceneNode()->m_vecAbsOrigin();
+			const bool ladderJump = jump && jump->GetJumpType() == JumpType_LadderJump;
+			info.predictedDistance = KZ::DistancePrediction::ComputePredictedDistance(takeoff.x, takeoff.y, takeoff.z, origin.x, origin.y, origin.z,
+																					  velocity.x, velocity.y, velocity.z, crouching, ladderJump);
+
+			if (jump)
+			{
+				const f32 potentialDistance = jump->potentialDistance;
+				info.potentialDiff = this->potential.active ? potentialDistance - this->potential.lastPotential : 0.0f;
+				info.potentialDistance = potentialDistance;
+				info.jumpProgress = jump->potentialProgress;
+				this->potentialJump.distance = potentialDistance;
+				for (i32 t = 0; t < (i32)POTENTIALTIER_COUNT; t++)
+				{
+					this->potentialJump.thresholdHit[t] = jump->potentialCrossings.hit[t];
+					this->potentialJump.thresholdPct[t] = jump->potentialCrossings.pct[t];
+				}
+				this->potential.lastPotential = potentialDistance;
+				this->potential.active = true;
+				this->potentialJump.exhausted = jump->potentialExhausted;
+				if (this->potentialJump.exhausted)
+				{
+					info.predictedDistance = 0.0f;
+					info.potentialDistance = 0.0f;
+				}
+			}
+		}
+		info.potentialShown = this->potentialJump.active;
+		info.potentialAirborne = !onGround && this->potentialJump.active && !this->potentialJump.exhausted;
+		info.potentialDistance = this->potentialJump.exhausted ? 0.0f : this->potentialJump.distance;
+		i32 hitCount = 0;
+		for (i32 t = 0; t < (i32)POTENTIALTIER_COUNT; t++)
+		{
+			info.tierHitPct[t] = this->potentialJump.thresholdPct[t];
+			info.tierHit[t] = this->potentialJump.thresholdHit[t];
+			if (this->potentialJump.thresholdHit[t])
+			{
+				hitCount++;
+			}
+		}
+		info.tierHitCount = hitCount;
+	}
+
 	// CategorizePosition sets this when it finds no ground while rising at up to NON_JUMP_VELOCITY.
 	info.deadstrafe =
 		!(pawn->m_fFlags & FL_ONGROUND) && pawn->m_MoveType == MOVETYPE_WALK && this->player->GetMoveServices()->m_flSurfaceFriction() == 0.25f;

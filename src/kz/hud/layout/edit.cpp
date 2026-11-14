@@ -48,6 +48,10 @@
 #define MHUD_EDIT_RACE_HEAD_HEIGHT 29.0f
 #define MHUD_EDIT_RACE_SAMPLE_ROWS 5
 
+#define MHUD_EDIT_POTENTIAL_WIDTH       280.0f
+#define MHUD_EDIT_POTENTIAL_HEAD_HEIGHT 36.0f
+#define MHUD_EDIT_POTENTIAL_ROW_HEIGHT  30.0f
+
 // The buttons inside each element's edit box, after its id. Corners are in EditState::corner order.
 #define MHUD_EDIT_MOVE_SUFFIX "_move"
 static_global const char *const EDIT_CORNER_SUFFIXES[] = {"_tl", "_tr", "_bl", "_br"};
@@ -565,7 +569,7 @@ void KZHUDService::UpdateResize(u64 newlyPressed, f32 unitsX, f32 unitsY)
 	const f32 top = dirY > 0.0f ? this->edit.fixedY : this->edit.fixedY - height;
 	const MHUDAlign align = this->GetOwnPrefs().elements[(i32)this->edit.element].align;
 	f32 x = align == MHUDAlign::Left ? left : (align == MHUDAlign::Right ? left + width : left + width * 0.5f);
-	f32 y = IsMHUDElementTopAnchored(this->edit.element) ? top : top + height * 0.5f;
+	f32 y = (IsMHUDElementTopAnchored(this->edit.element) || this->edit.element == MHUDElement::Potential) ? top : top + height * 0.5f;
 	this->ClampEditBox(this->edit.element, x, y);
 	this->edit.dragX = RoundFloatToInt(x * 10.0f) / 10.0f;
 	this->edit.dragY = RoundFloatToInt(y * 10.0f) / 10.0f;
@@ -697,6 +701,14 @@ void KZHUDService::GetEditBoxSize(MHUDElement element, f32 &width, f32 &height)
 				 + MHUD_EDIT_BOX_PADDING;
 		return;
 	}
+	if (element == MHUDElement::Potential)
+	{
+		const f32 scale = Clamp((i32)size, MHUD_JS_SIZE_MIN, MHUD_JS_SIZE_MAX) / 100.0f;
+		width = MHUD_EDIT_POTENTIAL_WIDTH * scale + MHUD_EDIT_BOX_PADDING;
+		height = (MHUD_EDIT_COURSE_PADDING + MHUD_EDIT_POTENTIAL_HEAD_HEIGHT + POTENTIALTIER_COUNT * MHUD_EDIT_POTENTIAL_ROW_HEIGHT) * scale
+				 + MHUD_EDIT_BOX_PADDING;
+		return;
+	}
 	if (element == MHUDElement::Keys)
 	{
 		// Mirrors keys-size.css, where the size-20 boxes (55x35 wide, 40x40 square, 10px gaps) scale with the size.
@@ -731,7 +743,7 @@ void KZHUDService::GetEditBox(MHUDElement element, f32 x, f32 y, f32 box[4])
 	const MHUDAlign align = element == MHUDElement::Keys ? MHUDAlign::Center : this->GetOwnPrefs().elements[(i32)element].align;
 	box[0] = align == MHUDAlign::Left ? x : (align == MHUDAlign::Right ? x - width : x - width * 0.5f);
 	box[1] = box[0] + width;
-	box[2] = IsMHUDElementTopAnchored(element) ? y : y - height * 0.5f;
+	box[2] = (IsMHUDElementTopAnchored(element) || element == MHUDElement::Potential) ? y : y - height * 0.5f;
 	box[3] = box[2] + height;
 }
 
