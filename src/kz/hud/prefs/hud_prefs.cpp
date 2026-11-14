@@ -8,8 +8,8 @@
 #include "tier0/memdbgon.h"
 
 static_global constexpr const char *elementPhrase[(i32)MHUDElement::Count] = {
-	"Menu - Timer", "Speed", "Menu - Prespeed", "Menu - Keys", "Menu - Checkpoint", "Menu - Jumpstats", "Menu - Course Info", "Menu - W Release",
-	"Menu - Race",
+	"Menu - Timer", "Speed", "Menu - Prespeed", "Menu - Keys", "Menu - Checkpoint", "Menu - Jumpstats", "Menu - Predicted", "Menu - Potential",
+	"Menu - Course Info", "Menu - W Release", "Menu - Race",
 	// The indicators share one flattened page and these entries only name them.
 	"Menu - Ind Perf", "Menu - Ind CJ", "Menu - Ind JB"};
 
@@ -305,7 +305,7 @@ void KZHUDService::RegisterMenu()
 			KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
 		}
 		KZ::menu::AddSize(sub, "Menu - Size", def.sizeKey, def.sizeDefault, def.sizeMin, def.sizeMax, e);
-		if (IsMHUDElementScaled((MHUDElement)e))
+		if (IsMHUDElementScaled((MHUDElement)e) || (MHUDElement)e == MHUDElement::Potential)
 		{
 			KZ::menu::SetItemUnit(sub, "%");
 		}
@@ -318,12 +318,14 @@ void KZHUDService::RegisterMenu()
 			KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
 		}
 		const char *bgOpacityKey = GetMHUDBackgroundOpacityKey((MHUDElement)e);
-		KZ::menu::AddSize(sub, bgOpacityKey ? "Menu - Text Opacity" : "Menu - Opacity", def.opacityKey, 100, 0, 100, e);
+		const bool hasBgOpacity = bgOpacityKey || (MHUDElement)e == MHUDElement::Potential;
+		KZ::menu::AddSize(sub, hasBgOpacity ? "Menu - Text Opacity" : "Menu - Opacity", def.opacityKey, 100, 0, 100, e);
 		KZ::menu::SetItemUnit(sub, "%");
 		KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
-		if (bgOpacityKey)
+		if (hasBgOpacity)
 		{
-			KZ::menu::AddSize(sub, "Menu - Background Opacity", bgOpacityKey, MHUD_DEF_BG_OPACITY, 0, 100, e);
+			KZ::menu::AddSize(sub, "Menu - Background Opacity", bgOpacityKey ? bgOpacityKey : "mhudPotentialBgOpacity", MHUD_DEF_BG_OPACITY, 0, 100,
+							  e);
 			KZ::menu::SetItemUnit(sub, "%");
 			KZ::menu::SetItemEnabledBy(sub, def.enabledKey);
 		}

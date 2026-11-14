@@ -172,6 +172,7 @@ def configure_main(sdk_target, sdk, cxx):
     os.path.join(builder.sourcePath, 'src', 'kz', 'jumpstats', 'commands.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'jumpstats', 'hud', 'jump_top.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'jumpstats', 'prefs.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'jumpstats', 'distance_prediction.cpp'),
 
     os.path.join(builder.sourcePath, 'src', 'kz', 'language', 'kz_language.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'measure', 'kz_measure.cpp'),

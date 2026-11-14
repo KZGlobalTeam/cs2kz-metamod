@@ -778,6 +778,53 @@
 	color: kz-gray-100;
 }
 
+.potential-stack {
+	width: 280px;
+	flow-children: down;
+	horizontal-align: center;
+}
+
+.potential-panel {
+	opacity: 1;
+}
+
+.potential-panel .js-header {
+	height: 30px;
+	vertical-align: bottom;
+}
+
+.potential-title {
+	color: kz-yellow-400;
+	font-size: 19px;
+	vertical-align: bottom;
+	margin-bottom: 0px;
+}
+
+.potential-dist {
+	color: kz-white;
+	font-size: 26px;
+	font-weight: bold;
+	text-transform: none;
+	vertical-align: bottom;
+	margin-top: 4px;
+	text-shadow: 0px 0px 4px 2 #000000ff;
+}
+
+.potential-row {
+	height: 30px;
+}
+
+.potential-label {
+	width: 76px;
+	font-size: 24px;
+}
+
+.potential-value {
+	horizontal-align: right;
+	font-size: 24px;
+	text-shadow: 0px 0px 4px 2 #000000ff;
+}
+
 /* Centred a fifth of the screen above the crosshair. */
 .race-countdown {
 	horizontal-align: center;
@@ -791,6 +838,9 @@
 }
 
 /* The chat colors of distanceTierColors (grey, grey, blue, green, darkred, gold, orchid). */
+.js-tier-none {
+	color: #ffffff;
+}
 .js-tier-0 {
 	color: #c5cad0;
 }

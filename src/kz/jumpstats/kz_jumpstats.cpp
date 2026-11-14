@@ -11,6 +11,7 @@
 #include "kz/trigger/kz_trigger.h"
 #include "kz/recording/kz_recording.h"
 #include "kz/replays/kz_replaysystem.h"
+#include "kz/jumpstats/distance_prediction.h"
 #include <algorithm>
 #include "tier0/memdbgon.h"
 
@@ -419,6 +420,17 @@ void Jump::Init()
 	{
 		this->release = 0;
 	}
+
+	// Initial Distance Prediction
+	const bool crouching = KZ::DistancePrediction::IsCrouching(this->player);
+	const bool ladderJump = this->GetReportJumpType() == JumpType_LadderJump;
+	const f32 initialDistance = KZ::DistancePrediction::ComputePredictedDistance(
+		this->takeoffOrigin.x, this->takeoffOrigin.y, this->takeoffOrigin.z, this->takeoffOrigin.x, this->takeoffOrigin.y, this->takeoffOrigin.z,
+		this->takeoffVelocity.x, this->takeoffVelocity.y, this->takeoffVelocity.z, crouching, ladderJump);
+	if (initialDistance > 0.0f)
+	{
+		this->GetCurrentStrafe()->initialPredictedDistance = initialDistance;
+	}
 }
 
 void Jump::UpdateAACallPost(Vector wishdir, f32 wishspeed, f32 accel)
@@ -471,6 +483,8 @@ void Jump::Update()
 	this->currentMaxHeight = MAX(this->player->currentMoveData->m_vecAbsOrigin.z - this->adjustedTakeoffOrigin.z, this->currentMaxHeight);
 
 	this->valid = this->valid && this->GetJumpPlayer()->styleServices.empty();
+
+	this->TrackPotentialDistance();
 
 	this->RecordPose();
 	this->UpdateFailstat();
@@ -633,6 +647,65 @@ void Jump::End()
 	this->airtime = this->player->landingTimeActual - this->player->takeoffTime;
 }
 
+void Jump::TrackPredictedDistance()
+{
+	if (this->AlreadyEnded())
+	{
+		return;
+	}
+
+	const bool crouching = KZ::DistancePrediction::IsCrouching(this->player);
+	const Vector &origin = this->player->currentMoveData->m_vecAbsOrigin;
+	const Vector &velocity = this->player->currentMoveData->m_vecVelocity;
+	const bool ladderJump = this->GetReportJumpType() == JumpType_LadderJump;
+	const f32 distance =
+		KZ::DistancePrediction::ComputePredictedDistance(this->takeoffOrigin.x, this->takeoffOrigin.y, this->takeoffOrigin.z, origin.x, origin.y,
+														 origin.z, velocity.x, velocity.y, velocity.z, crouching, ladderJump);
+	if (distance > 0.0f)
+	{
+		this->GetCurrentStrafe()->UpdateBestPredictedDistance(distance);
+	}
+}
+
+void Jump::TrackPotentialDistance()
+{
+	if (this->AlreadyEnded())
+	{
+		return;
+	}
+
+	CCSPlayerPawn *pawn = this->player->GetPlayerPawn();
+	if (!pawn || !this->player->currentMoveData || (pawn->m_fFlags & FL_ONGROUND))
+	{
+		return;
+	}
+	const bool crouching = KZ::DistancePrediction::IsCrouching(this->player);
+	const Vector &origin = this->player->currentMoveData->m_vecAbsOrigin;
+	const Vector &velocity = this->player->currentMoveData->m_vecVelocity;
+	const JumpType jumpType = this->GetReportJumpType();
+	const bool ladderJump = jumpType == JumpType_LadderJump;
+
+	KZ::DistancePrediction::PotentialSample sample;
+	if (!KZ::DistancePrediction::ComputePotentialSample(this->takeoffOrigin.x, this->takeoffOrigin.y, this->takeoffOrigin.z, this->takeoffVelocity.z,
+														origin.x, origin.y, origin.z, velocity.x, velocity.y, velocity.z, crouching, ladderJump,
+														sample))
+	{
+		this->potentialExhausted = true;
+		return;
+	}
+
+	const f32 potentialDistance = sample.distance;
+	const f32 jumpProgress = sample.progress;
+
+	this->potentialDistance = potentialDistance;
+	this->potentialProgress = jumpProgress;
+	this->potentialActive = true;
+
+	// Record the progress at which each tier threshold is first crossed, interpolating between the last 2 frames
+	const char *modeShortName = this->player->modeService ? this->player->modeService->GetModeShortName() : nullptr;
+	KZ::DistancePrediction::UpdatePotentialCrossings(modeShortName, jumpType, potentialDistance, jumpProgress, this->potentialCrossings);
+}
+
 Strafe *Jump::GetCurrentStrafe()
 {
 	// Always start with 1 strafe.
@@ -654,6 +727,8 @@ Strafe *Jump::GetCurrentStrafe()
 		// Finish the previous strafe before adding a new strafe.
 		Strafe strafe = Strafe(this);
 		strafe.turnstate = this->player->GetTurning();
+		// Carried over so the report can show how much this strafe improved on the one before it.
+		strafe.previousBestPredictedDistance = this->strafes.back().GetBestPredictedDistance();
 		this->strafes.push_back(strafe);
 	}
 	// The turn state didn't change and it's the same strafe.
@@ -956,6 +1031,9 @@ void KZJumpstatsService::OnAirAccelerate()
 	{
 		return;
 	}
+	// Sampled here rather than in OnAirAcceleratePost so the strafe it lands in is the one the AA call below joins:
+	// the strafe only splits on a turn change, which is already known at this point.
+	this->jumps.back().TrackPredictedDistance();
 	AACall call;
 	this->player->GetMoveServices()->m_nButtons().GetButtons(call.buttons);
 	this->player->GetVelocity(&call.velocityPre);
