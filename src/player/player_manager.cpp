@@ -120,6 +120,7 @@ void PlayerManager::OnClientConnect(CPlayerSlot slot, const char *pszName, uint6
 		player->sessionID = this->nextSessionID++;
 	}
 	player->OnPlayerConnect(xuid);
+	player->SetOriginalName(pszName);
 
 	// The controller does not exist yet, so even a client the engine already authenticated has to wait in the queue.
 	if (!player->IsFakeClient())

@@ -587,7 +587,7 @@ void KZGlobalService::OnPlayerAuthorized()
 
 	KZ::api::messages::PlayerJoin message;
 	message.id = stringifiedSteamID;
-	message.name = this->player->GetName();
+	message.name = this->player->GetOriginalName();
 	const char *ipAddress = this->player->GetIpAddress();
 	if (ipAddress && !KZ_STREQI(ipAddress, "unknown"))
 	{
@@ -628,7 +628,7 @@ void KZGlobalService::OnClientDisconnect()
 
 	KZ::api::messages::PlayerLeave message;
 	message.id = stringifiedSteamID;
-	message.name = this->player->GetName();
+	message.name = this->player->GetOriginalName();
 
 	std::string getPrefsError;
 	std::string getPrefsResult;
@@ -863,7 +863,7 @@ void KZGlobalService::WS::InitiateHandshake()
 	{
 		if (player->IsAuthenticated())
 		{
-			hello.AddPlayer(player->GetSteamId64(), player->GetName());
+			hello.AddPlayer(player->GetSteamId64(), player->GetOriginalName());
 		}
 	}
 

@@ -29,6 +29,7 @@ public:
 		authPending = false;
 		authAuthorized = false;
 		sessionID = 0;
+		originalName.clear();
 	}
 
 	virtual CCSPlayerController *GetController();
@@ -115,6 +116,18 @@ public:
 	}
 
 	void SetName(const char *name);
+
+	std::string originalName;
+
+	void SetOriginalName(const char *name)
+	{
+		originalName = name ? utils::Trim(name) : "";
+	}
+
+	const char *GetOriginalName()
+	{
+		return originalName.empty() ? GetName() : originalName.c_str();
+	}
 
 	void SetClan(const char *clan);
 

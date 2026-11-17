@@ -62,7 +62,7 @@ void Recorder::Init(ReplayHeader &hdr, KZPlayer *player, ReplayType type)
 
 	// Player info
 	auto *playerMsg = hdr.mutable_player();
-	playerMsg->set_name(player->GetName());
+	playerMsg->set_name(player->GetOriginalName());
 	playerMsg->set_steamid64(player->GetSteamId64());
 
 	// Model name

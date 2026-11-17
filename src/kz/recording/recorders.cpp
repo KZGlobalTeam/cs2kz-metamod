@@ -17,7 +17,7 @@ ManualRecorder::ManualRecorder(KZPlayer *player, f32 duration, KZPlayer *savedBy
 	{
 		auto *manual = replayHeader.mutable_manual();
 		auto *savedByMsg = manual->mutable_saved_by();
-		savedByMsg->set_name(savedBy->GetName());
+		savedByMsg->set_name(savedBy->GetOriginalName());
 		savedByMsg->set_steamid64(savedBy->GetSteamId64());
 	}
 }
@@ -30,7 +30,7 @@ CheaterRecorder::CheaterRecorder(KZPlayer *player, const char *reason, KZPlayer 
 	if (savedBy)
 	{
 		auto *reporter = cheater->mutable_reporter();
-		reporter->set_name(savedBy->GetName());
+		reporter->set_name(savedBy->GetOriginalName());
 		reporter->set_steamid64(savedBy->GetSteamId64());
 	}
 }
