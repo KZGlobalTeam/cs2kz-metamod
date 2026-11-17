@@ -724,6 +724,10 @@ static KHook::Return<void> PlayerRunCommandPre(CCSPlayer_MovementServices *pThis
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(pThis);
+	if (!player)
+	{
+		return {KHook::Action::Ignore};
+	}
 	player->awayService->OnPlayerRunCommandPre(pCmd);
 	if (!player->OnPlayerRunCommand(pCmd))
 	{
@@ -735,7 +739,12 @@ static KHook::Return<void> PlayerRunCommandPre(CCSPlayer_MovementServices *pThis
 static KHook::Return<void> PlayerRunCommandPost(CCSPlayer_MovementServices *pThis, CUserCmd *pCmd)
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
-	g_pKZPlayerManager->ToPlayer(pThis)->awayService->OnPlayerRunCommandPost();
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(pThis);
+	if (!player)
+	{
+		return {KHook::Action::Ignore};
+	}
+	player->awayService->OnPlayerRunCommandPost();
 	return {KHook::Action::Ignore};
 }
 
