@@ -27,7 +27,7 @@ void KZHUDService::RefreshPrefs()
 		element.x = Clamp((f32)opts->GetPreferenceFloat(def.xKey, def.xDefault), -50.0f, 50.0f);
 		element.y = Clamp((f32)opts->GetPreferenceFloat(def.yKey, def.yDefault), -50.0f, 50.0f);
 		element.size = (f32)opts->GetPreferenceFloat(def.sizeKey, def.sizeDefault);
-		if (IsMHUDElementScaled((MHUDElement)e))
+		if (IsMHUDElementScaled((MHUDElement)e) || (MHUDElement)e == MHUDElement::Potential)
 		{
 			// Only the scales js-scale.css defines.
 			element.size = Clamp(element.size, (f32)def.sizeMin, (f32)def.sizeMax);
@@ -36,6 +36,10 @@ void KZHUDService::RefreshPrefs()
 		element.outline = def.outlineKey ? opts->GetPreferenceBool(def.outlineKey, true) : false;
 		element.opacity = (i32)opts->GetPreferenceInt(def.opacityKey, 100);
 		const char *bgOpacityKey = GetMHUDBackgroundOpacityKey((MHUDElement)e);
+		if ((MHUDElement)e == MHUDElement::Potential)
+		{
+			bgOpacityKey = "mhudPotentialBgOpacity";
+		}
 		element.bgOpacity = bgOpacityKey ? (i32)opts->GetPreferenceInt(bgOpacityKey, MHUD_DEF_BG_OPACITY) : MHUD_DEF_BG_OPACITY;
 		const i64 alignDefault = (i64)GetMHUDDefaultAlign((MHUDElement)e);
 		const i64 align = def.alignKey ? opts->GetPreferenceInt(def.alignKey, alignDefault) : alignDefault;

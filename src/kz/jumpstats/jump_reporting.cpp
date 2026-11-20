@@ -5,6 +5,7 @@
 #include "kz/option/kz_option.h"
 #include "kz/language/kz_language.h"
 #include "kz/hud/kz_hud.h"
+#include "kz/jumpstats/distance_prediction.h"
 
 #include "utils/utils.h"
 #include "utils/simplecmds.h"
@@ -24,7 +25,8 @@ static_global const char *columnKeys[] = {"#.",
 										  "Width (Short)",
 										  "Average Gain (Short)",
 										  "Gain Efficiency (Short)",
-										  "Angle Ratio"};
+										  "Angle Ratio",
+										  "DistPred (Best)"};
 
 // clang-format off
 extern const JSFieldDef JS_FIELDS[(i32)JSField::Count] =
@@ -462,6 +464,35 @@ void KZJumpstatsService::PrintJumpToConsole(KZPlayer *target, Jump *jump, bool b
 		jump->GetDuckTime(true),
 		jump->GetDuckTime(false)
 	);
+
+	if (jump->potentialActive)
+	{
+		std::string potentialLine = "Potential Distance (Time%%) | ";
+		bool firstTier = true;
+		KZModeService *modeService = jump->GetJumpPlayer()->modeService;
+		const char *modeShortName = modeService ? modeService->GetModeShortName() : nullptr;
+		KZ::DistancePrediction::PotentialTierRow rows[POTENTIALTIER_COUNT];
+		const i32 rowCount = KZ::DistancePrediction::CollectPotentialTierRows(modeShortName, reportType, jump->potentialCrossings, rows);
+		for (i32 i = 0; i < rowCount; i++)
+		{
+			const KZ::DistancePrediction::PotentialTierRow &row = rows[i];
+			char segment[64];
+			if (row.hit)
+			{
+				V_snprintf(segment, sizeof(segment), "%s%.0f: %.2f%%%%", firstTier ? "" : " | ", row.threshold, row.pct);
+			}
+			else
+			{
+				V_snprintf(segment, sizeof(segment), "%s%.0f: N/A", firstTier ? "" : " | ", row.threshold);
+			}
+			potentialLine += segment;
+			firstTier = false;
+		}
+		if (!firstTier)
+		{
+			target->PrintConsole(false, false, potentialLine.c_str());
+		}
+	}
 	
 	std::string headers[KZ_ARRAYSIZE(columnKeys)];
 	for (u32 i = 0; i < KZ_ARRAYSIZE(columnKeys); i++)
@@ -475,7 +506,7 @@ void KZJumpstatsService::PrintJumpToConsole(KZPlayer *target, Jump *jump, bool b
 		char strafeNumberString[5];
 		char syncString[16], gainString[16], lossString[16], externalGainString[16], externalLossString[16], maxString[16], durationString[16];
 		char badAngleString[16], overlapString[16], deadAirString[16], widthString[16], avgGainString[16], gainEffString[16];
-		char angRatioString[32];
+		char angRatioString[32], distPredString[32];
 		V_snprintf(strafeNumberString, sizeof(strafeNumberString), "%zu.", i + 1);
 		V_snprintf(syncString, sizeof(syncString), "%.0f%%%%", jump->strafes[i].GetSync() * 100.0f);
 		V_snprintf(gainString, sizeof(gainString), "%.2f", jump->strafes[i].GetGain());
@@ -505,6 +536,29 @@ void KZJumpstatsService::PrintJumpToConsole(KZPlayer *target, Jump *jump, bool b
 			V_snprintf(angRatioString, sizeof(angRatioString), "N/A");
 		}
 
+		const f32 bestPredicted = jump->strafes[i].GetBestPredictedDistance();
+		if (bestPredicted >= 0.0f)
+		{
+			f32 previousBestPredicted = jump->strafes[i].GetPreviousBestPredictedDistance();
+			if (previousBestPredicted < 0.0f)
+			{
+				previousBestPredicted = jump->strafes[i].GetInitialPredictedDistance();
+			}
+			if (previousBestPredicted >= 0.0f)
+			{
+				const f32 delta = bestPredicted - previousBestPredicted;
+				V_snprintf(distPredString, sizeof(distPredString), "%.2f (%+.2f)", bestPredicted, delta);
+			}
+			else
+			{
+				V_snprintf(distPredString, sizeof(distPredString), "%.2f", bestPredicted);
+			}
+		}
+		else
+		{
+			V_snprintf(distPredString, sizeof(distPredString), "N/A");
+		}
+
 		table.SetRow(i,
 			strafeNumberString,
 			syncString,
@@ -520,7 +574,8 @@ void KZJumpstatsService::PrintJumpToConsole(KZPlayer *target, Jump *jump, bool b
 			widthString,
 			avgGainString,
 			gainEffString,
-			angRatioString
+			angRatioString,
+			distPredString
 		);
 	}
 	// clang-format on

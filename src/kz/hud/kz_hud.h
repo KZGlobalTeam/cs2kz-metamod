@@ -59,6 +59,10 @@ enum class MHUDElement
 	Keys,
 	Checkpoint,
 	Jumpstats,
+	// Predicted Distance
+	Predicted,
+	// Potential Distance
+	Potential,
 	Course,
 	Release,
 	// Only drawn while a race is configured or running.
@@ -495,6 +499,15 @@ private:
 	{
 		f32 speed {};
 		f32 takeoffSpeed {};
+		f32 predictedDistance {};
+		f32 potentialDistance {};
+		f32 potentialDiff {};      // per frame change of potential distance
+		bool potentialShown {};    // whether the potential panel has a jump to show, airborne or just landed
+		bool potentialAirborne {}; // whether that jump is still in the air, the header distance is hidden after landing
+		f32 jumpProgress {};
+		f32 tierHitPct[POTENTIALTIER_COUNT] {}; // jump progress when each potential tier threshold was reached
+		bool tierHit[POTENTIALTIER_COUNT] {};   // whether that tier was reached at all this jump
+		i32 tierHitCount {};                    // how many tiers have been hit this jump
 		bool showTakeoff {};
 		bool perf {};
 		bool jumpbug {};
@@ -687,6 +700,57 @@ private:
 	// The W release element's last value, so its text is only rebuilt when that changes.
 	f32 releaseTicks {NAN};
 	std::string releaseText {};
+
+	struct PotentialState
+	{
+		bool active {};
+		f32 lastPotential {};
+	};
+
+	PotentialState potential {};
+
+	struct PotentialJumpState
+	{
+		bool active {};
+		bool exhausted {};
+		bool thresholdHit[POTENTIALTIER_COUNT] {};
+		f32 thresholdPct[POTENTIALTIER_COUNT] {};
+		f32 distance {};
+	};
+
+	PotentialJumpState potentialJump {};
+
+#define MHUD_POTENTIAL_TEXT_LEN 24
+
+	struct LayoutPotentialState
+	{
+		i32 scale {INT_MIN};
+		const char *fontClass {};
+		char distance[MHUD_POTENTIAL_TEXT_LEN] {};
+		const char *distanceClass {};
+		i32 rowHidden[POTENTIALTIER_COUNT] {-1, -1, -1, -1, -1, -1, -1, -1, -1};
+		char rowLabel[POTENTIALTIER_COUNT][MHUD_POTENTIAL_TEXT_LEN] {};
+		char rowValue[POTENTIALTIER_COUNT][MHUD_POTENTIAL_TEXT_LEN] {};
+		const char *rowClass[POTENTIALTIER_COUNT] {};
+	};
+
+	inline void ResetLayoutPotentialState(LayoutPotentialState &state)
+	{
+		state.scale = INT_MIN;
+		state.fontClass = NULL;
+		state.distance[0] = '\0';
+		state.distanceClass = NULL;
+		for (i32 i = 0; i < (i32)POTENTIALTIER_COUNT; i++)
+		{
+			state.rowHidden[i] = -1;
+			state.rowLabel[i][0] = '\0';
+			state.rowValue[i][0] = '\0';
+			state.rowClass[i] = NULL;
+		}
+	}
+
+	LayoutPotentialState layoutPotential {};
+
 	LayoutEditState layoutEdit {};
 
 	CCSCustomHudLayout *EnsureOwnedLayout(bool &created);
@@ -796,10 +860,12 @@ private:
 	void UpdateTimerElement(CCSCustomHudLayout *layout, KZPlayer *source, bool force);
 	void UpdateSpeedElement(CCSCustomHudLayout *layout, const SpeedInfo &info, bool force);
 	void UpdatePrespeedElement(CCSCustomHudLayout *layout, const SpeedInfo &info, bool force);
+	void UpdatePotentialElement(CCSCustomHudLayout *layout, const SpeedInfo &info, bool force, bool preview = false);
 	void UpdateKeysElement(CCSCustomHudLayout *layout, KZPlayer *source, bool force, bool preview = false);
 	void UpdateCheckpointElement(CCSCustomHudLayout *layout, KZPlayer *source, bool force);
 	void UpdateIndicatorElements(CCSCustomHudLayout *layout, const SpeedInfo &info, bool force);
 	void UpdateReleaseElement(CCSCustomHudLayout *layout, KZPlayer *source, const SpeedInfo &info, bool force);
+	void UpdatePredictedElement(CCSCustomHudLayout *layout, const SpeedInfo &info, bool force);
 	// preview fills every row and the history with sample values, for edit mode.
 	void UpdateCourseElement(CCSCustomHudLayout *layout, KZPlayer *source, bool show, bool force, bool preview = false);
 	void ClearCoursePreview(CCSCustomHudLayout *layout);
