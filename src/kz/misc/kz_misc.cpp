@@ -181,7 +181,11 @@ void KZ::misc::HandleTeleportToCourse(KZPlayer *player, const CCommand *args)
 			return;
 		}
 	}
+	KZ::misc::TeleportToCourse(player, startPosCourse);
+}
 
+void KZ::misc::TeleportToCourse(KZPlayer *player, const KZCourseDescriptor *startPosCourse)
+{
 	if (!player->timerService->CheckSafeguardRestart())
 	{
 		return;
