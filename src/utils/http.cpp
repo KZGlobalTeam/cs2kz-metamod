@@ -2,7 +2,6 @@
 
 namespace HTTP
 {
-	ISteamHTTP *g_pHTTP = nullptr;
 	std::vector<InFlightRequest *> g_InFlightRequests;
 
 	void Request::SetQuery(std::string key, std::string value)
@@ -27,19 +26,15 @@ namespace HTTP
 
 	void Request::Send(ResponseCallback onResponse, ErrorCallback onError) const
 	{
-		if (!g_pHTTP)
+		ISteamHTTP *http = SteamGameServerHTTP();
+		if (!http)
 		{
-			KZ_LOG_INFO(LogChannel::General, "[HTTP] Initializing HTTP client...\n");
-			g_pHTTP = SteamGameServerHTTP();
-			if (!g_pHTTP)
+			KZ_LOG_WARN(LogChannel::General, "[HTTP] Failed to send HTTP request as the steam API is not yet initialized.\n");
+			if (onError)
 			{
-				KZ_LOG_WARN(LogChannel::General, "[HTTP] Failed to send HTTP request as the steam API is not yet initialized.\n");
-				if (onError)
-				{
-					onError();
-				}
-				return;
+				onError();
 			}
+			return;
 		}
 
 		EHTTPMethod volvoMethod;
@@ -60,14 +55,14 @@ namespace HTTP
 				break;
 		}
 
-		auto handle = g_pHTTP->CreateHTTPRequest(volvoMethod, url.c_str());
+		auto handle = http->CreateHTTPRequest(volvoMethod, url.c_str());
 
 		if (method >= Method::POST)
 		{
-			if (!g_pHTTP->SetHTTPRequestRawPostBody(handle, contentType.c_str(), (u8 *)body.data(), body.size()))
+			if (!http->SetHTTPRequestRawPostBody(handle, contentType.c_str(), (u8 *)body.data(), body.size()))
 			{
 				KZ_LOG_WARN(LogChannel::General, "[HTTP] Failed to set request body.\n");
-				g_pHTTP->ReleaseHTTPRequest(handle);
+				http->ReleaseHTTPRequest(handle);
 				if (onError)
 				{
 					onError();
@@ -78,16 +73,16 @@ namespace HTTP
 
 		for (const auto &[name, value] : headers)
 		{
-			g_pHTTP->SetHTTPRequestHeaderValue(handle, name.c_str(), value.c_str());
+			http->SetHTTPRequestHeaderValue(handle, name.c_str(), value.c_str());
 		}
 
 		SteamAPICall_t steamCallHandle = k_uAPICallInvalid;
 
-		if (!g_pHTTP->SendHTTPRequest(handle, &steamCallHandle))
+		if (!http->SendHTTPRequest(handle, &steamCallHandle))
 		{
 			KZ_LOG_WARN(LogChannel::General, "[HTTP] Failed to send HTTP request.\n");
-			// No call handle means the completion callback will never fire, so clean up here.
-			g_pHTTP->ReleaseHTTPRequest(handle);
+			// Clean up here because the completion callback will never fire without a call handle.
+			http->ReleaseHTTPRequest(handle);
 			if (onError)
 			{
 				onError();
@@ -136,16 +131,17 @@ namespace HTTP
 
 	std::optional<std::string> Response::Header(const char *name) const
 	{
+		ISteamHTTP *http = SteamGameServerHTTP();
 		u32 headerValueSize;
 
-		if (!g_pHTTP->GetHTTPResponseHeaderSize(requestHandle, name, &headerValueSize))
+		if (!http || !http->GetHTTPResponseHeaderSize(requestHandle, name, &headerValueSize))
 		{
 			return std::nullopt;
 		}
 
 		u8 *rawHeaderValue = new u8[headerValueSize + 1];
 
-		if (!g_pHTTP->GetHTTPResponseHeaderValue(requestHandle, name, rawHeaderValue, headerValueSize))
+		if (!http->GetHTTPResponseHeaderValue(requestHandle, name, rawHeaderValue, headerValueSize))
 		{
 			delete[] rawHeaderValue;
 			return std::nullopt;
@@ -173,16 +169,17 @@ namespace HTTP
 
 	std::optional<std::vector<char>> Response::RawBody() const
 	{
+		ISteamHTTP *http = SteamGameServerHTTP();
 		u32 responseBodySize;
 
-		if (!g_pHTTP->GetHTTPResponseBodySize(requestHandle, &responseBodySize))
+		if (!http || !http->GetHTTPResponseBodySize(requestHandle, &responseBodySize))
 		{
 			return std::nullopt;
 		}
 
 		std::vector<char> rawResponseBody(responseBodySize);
 
-		if (!g_pHTTP->GetHTTPResponseBodyData(requestHandle, (u8 *)rawResponseBody.data(), responseBodySize))
+		if (!http->GetHTTPResponseBodyData(requestHandle, (u8 *)rawResponseBody.data(), responseBodySize))
 		{
 			return std::nullopt;
 		}
@@ -222,8 +219,8 @@ namespace HTTP
 			onResponse(response);
 		}
 
-		// ~InFlightRequest releases the underlying HTTP request. It has to outlive onResponse
-		// because Response reads the body lazily through that handle.
+		// ~InFlightRequest releases the underlying HTTP request.
+		// It has to outlive onResponse because Response reads the body lazily through that handle.
 		delete this;
 	}
 

@@ -17,6 +17,7 @@
 #include "engine2/networkgameserverbase.h"
 #include "igamesystem.h"
 #include "utils/async_file_io.h"
+#include "utils/http.h"
 
 #include "sdk/steamnetworkingsockets.h"
 
@@ -276,6 +277,7 @@ static KHook::Virtual<ISource2Server, void> gameServerSteamAPIActivatedHook(Game
 static KHook::Return<void> GameServerSteamAPIDeactivatedPre(ISource2Server *pThis)
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
+	HTTP::Cleanup();
 	return {KHook::Action::Ignore};
 }
 

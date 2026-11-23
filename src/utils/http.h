@@ -22,9 +22,9 @@ namespace HTTP
 	typedef std::function<void()> ErrorCallback;
 
 	extern std::vector<InFlightRequest *> g_InFlightRequests;
-	extern ISteamHTTP *g_pHTTP;
 
-	// Drops every outstanding request. Call on plugin unload, before the callbacks can be unmapped.
+	// Drops every outstanding request.
+	// Call on plugin unload before the callbacks can be unmapped and when the Steam API deactivates.
 	void Cleanup();
 
 	// HTTP methods we care about.
@@ -48,7 +48,8 @@ namespace HTTP
 		// Set a header.
 		void SetHeader(std::string name, std::string value);
 
-		// Set the request body. Only JSON bodies are printed by the debug log.
+		// Set the request body.
+		// Only JSON bodies are printed by the debug log.
 		void SetBody(std::string body, std::string contentType = "application/json");
 
 		// Send the request.
@@ -107,9 +108,11 @@ namespace HTTP
 					break;
 				}
 			}
-			if (g_pHTTP && handle != INVALID_HTTPREQUEST_HANDLE)
+
+			ISteamHTTP *http = SteamGameServerHTTP();
+			if (http && handle != INVALID_HTTPREQUEST_HANDLE)
 			{
-				g_pHTTP->ReleaseHTTPRequest(handle);
+				http->ReleaseHTTPRequest(handle);
 			}
 		}
 
