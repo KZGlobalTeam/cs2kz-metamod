@@ -19,33 +19,22 @@ namespace
 		return checkmark ? "{green}✓{default}"sv : "{darkred}✗{default}"sv;
 	}
 
-	struct GlobalStatus
+	void ReportGlobalCheck(KZPlayer *player, const KZGlobalService::GlobalCheck &status)
 	{
-		bool apiOnline = false;
-		bool serverConnected = false;
-		bool mapGlobal = false;
-		bool playerAuthenticated = false;
-		bool playerGlobal = false;
-		bool modeGlobal = false;
-		bool stylesGlobal = false;
-
-		void Report(KZPlayer *player) const
+		// clang-format off
+		player->languageService->PrintChat(true, false, "Global Check",
+				MakeStatusString(status.apiOnline),
+				MakeStatusString(status.serverConnected),
+				MakeStatusString(status.mapGlobal),
+				MakeStatusString(status.playerGlobal),
+				MakeStatusString(status.modeGlobal),
+				MakeStatusString(status.stylesGlobal));
+		// clang-format on
+		if (!status.playerAuthenticated)
 		{
-			// clang-format off
-			player->languageService->PrintChat(true, false, "Global Check",
-					MakeStatusString(this->apiOnline),
-					MakeStatusString(this->serverConnected),
-					MakeStatusString(this->mapGlobal),
-					MakeStatusString(this->playerGlobal),
-					MakeStatusString(this->modeGlobal),
-					MakeStatusString(this->stylesGlobal));
-			// clang-format on
-			if (!this->playerAuthenticated)
-			{
-				player->languageService->PrintChat(true, false, "Player Not Authenticated (Steam)", player->GetName());
-			}
+			player->languageService->PrintChat(true, false, "Player Not Authenticated (Steam)", player->GetName());
 		}
-	};
+	}
 
 	void ReportModeToConsole(const char *modeName, const std::string &globalChecksum)
 	{
@@ -155,65 +144,76 @@ namespace
 	}
 }; // namespace
 
-SCMD(kz_globalcheck, SCFL_GLOBAL | SCFL_MAP | SCFL_PLAYER)
+KZGlobalService::GlobalCheck KZGlobalService::CheckGlobalStatus(KZPlayer *player)
 {
-	GlobalStatus status;
-	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
+	GlobalCheck status;
 	status.playerAuthenticated = player->IsAuthenticated();
-
-	if (KZGlobalService::IsAvailable())
+	if (!KZGlobalService::IsAvailable())
 	{
-		status.apiOnline = true;
-		status.serverConnected = true;
-		status.mapGlobal = KZGlobalService::WithCurrentMap([](const std::optional<KZ::api::Map> &mapInfo) { return mapInfo.has_value(); });
-		status.playerGlobal = status.playerAuthenticated && !player->globalService->IsBanned();
+		return status;
+	}
 
-		KZGlobalService::WithGlobalModes(
-			[&](const KZGlobalService::GlobalModeChecksums &checksums)
+	status.apiOnline = true;
+	status.serverConnected = true;
+	status.mapGlobal = KZGlobalService::WithCurrentMap([](const std::optional<KZ::api::Map> &mapInfo) { return mapInfo.has_value(); });
+	status.playerGlobal = status.playerAuthenticated && !player->globalService->IsBanned();
+
+	KZGlobalService::WithGlobalModes(
+		[&](const KZGlobalService::GlobalModeChecksums &checksums)
+		{
+			const char *modeName = player->modeService->GetModeShortName();
+			KZModeManager::ModePluginInfo modeInfo = KZ::mode::GetModeInfo(modeName);
+
+			if (KZ_STREQ(modeName, "VNL"))
 			{
-				const char *modeName = player->modeService->GetModeShortName();
-				KZModeManager::ModePluginInfo modeInfo = KZ::mode::GetModeInfo(modeName);
-
-				if (KZ_STREQ(modeName, "VNL"))
-				{
-					status.modeGlobal = KZ_STREQ(modeInfo.md5, checksums.vanilla.c_str());
-				}
-				else if (KZ_STREQ(modeName, "CKZ"))
-				{
-					status.modeGlobal = KZ_STREQ(modeInfo.md5, checksums.classic.c_str());
-				}
-			});
-
-		KZGlobalService::WithGlobalStyles(
-			[&](const std::vector<KZGlobalService::GlobalStyleChecksum> &checksums)
+				status.modeGlobal = KZ_STREQ(modeInfo.md5, checksums.vanilla.c_str());
+			}
+			else if (KZ_STREQ(modeName, "CKZ"))
 			{
-				bool allValid = true;
+				status.modeGlobal = KZ_STREQ(modeInfo.md5, checksums.classic.c_str());
+			}
+		});
 
-				for (size_t i = 0; i < player->styleServices.size(); i++)
+	KZGlobalService::WithGlobalStyles(
+		[&](const std::vector<KZGlobalService::GlobalStyleChecksum> &checksums)
+		{
+			bool allValid = true;
+
+			for (size_t i = 0; i < player->styleServices.size(); i++)
+			{
+				bool isValid = false;
+
+				for (const KZGlobalService::GlobalStyleChecksum &checksum : checksums)
 				{
-					bool isValid = false;
-
-					for (const KZGlobalService::GlobalStyleChecksum &checksum : checksums)
+					if (KZ_STREQ(player->styleServices[i]->GetStyleShortName(), checksum.style.c_str()))
 					{
-						if (KZ_STREQ(player->styleServices[i]->GetStyleShortName(), checksum.style.c_str()))
-						{
-							auto styleInfo = KZ::style::GetStyleInfo(player->styleServices[i]);
-							isValid = KZ_STREQ(styleInfo.md5, checksum.checksum.c_str());
-							break;
-						}
-					}
-
-					if (!isValid)
-					{
-						allValid = false;
+						auto styleInfo = KZ::style::GetStyleInfo(player->styleServices[i]);
+						isValid = KZ_STREQ(styleInfo.md5, checksum.checksum.c_str());
 						break;
 					}
 				}
 
-				status.stylesGlobal = allValid;
-			});
+				if (!isValid)
+				{
+					allValid = false;
+					break;
+				}
+			}
 
-		status.Report(player);
+			status.stylesGlobal = allValid;
+		});
+
+	return status;
+}
+
+SCMD(kz_globalcheck, SCFL_GLOBAL | SCFL_MAP | SCFL_PLAYER)
+{
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
+	KZGlobalService::GlobalCheck status = KZGlobalService::CheckGlobalStatus(player);
+
+	if (status.apiOnline)
+	{
+		ReportGlobalCheck(player, status);
 	}
 	else
 	{
@@ -224,7 +224,7 @@ SCMD(kz_globalcheck, SCFL_GLOBAL | SCFL_MAP | SCFL_PLAYER)
 
 			if (player)
 			{
-				status.Report(player);
+				ReportGlobalCheck(player, status);
 			}
 		};
 

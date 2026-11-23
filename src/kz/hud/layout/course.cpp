@@ -144,14 +144,18 @@ static_function void GetCourseInfo(KZPlayer *viewer, KZPlayer *source, CourseInf
 	// Any other mode shows CKZ's tiers and states because the API only rates VNL and CKZ.
 	const bool classic = modeInfo.id != KZ::mode::GetModeInfo(KZ::api::Mode::Vanilla).id;
 
+	// The badge also checks the watched player's mode, styles and account like !gc does.
+	// A replay only depends on the map.
+	// Checked out here because the check takes the current map's lock.
+	const bool playerGlobal = replay || KZGlobalService::CheckGlobalStatus(source).RunsGlobal();
 	i32 nubTier = 0, proTier = 0;
 	KZGlobalService::WithCurrentMapState(
 		[&](const std::optional<KZ::api::Map> &map, bool confirmed)
 		{
-			// A map is non-global until the API confirms it like on the overlay.
+			// A map is non-global until the API confirms it.
 			const bool global = confirmed && map;
-			out.status = lang->PrepareMessage(global ? "HUD - Course Global" : "HUD - Course Non Global");
-			out.statusClass = global ? "ci-global" : "ci-nonglobal";
+			out.status = lang->PrepareMessage(global && playerGlobal ? "HUD - Course Global" : "HUD - Course Non Global");
+			out.statusClass = global && playerGlobal ? "ci-global" : "ci-nonglobal";
 			if (!global || !course)
 			{
 				return;
