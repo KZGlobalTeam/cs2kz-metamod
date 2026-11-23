@@ -7,7 +7,7 @@
 
 // Fixed slot counts in 5% steps (see replay.xml).
 #define KZ_REPLAY_CONTROLS_PERCENT_MARKERS 20
-// KZ_MAX_REPLAY_MARKED_ZONES that the mapping API warns about.
+// KZ_MAX_REPLAY_MARKED_ZONES (the mapping API warns about it).
 #define KZ_REPLAY_CONTROLS_ZONE_MARKERS 64
 #define KZ_REPLAY_CONTROLS_SPEEDS       6
 #define KZ_REPLAY_CONTROLS_SKIPS        6
@@ -75,7 +75,7 @@ namespace KZ::replaysystem::controls
 		bool textMark {};
 		// Hidden by the viewer across replays until they show it again.
 		bool controlsHidden {};
-		// The viewer had the cursor when they hid the bar so showing it gives the cursor back.
+		// The viewer had the cursor when they hid the bar and showing it gives the cursor back.
 		bool cursorWhenHidden {};
 		// The replay to open the cursor for or 0.
 		u32 cursorReplayId {};

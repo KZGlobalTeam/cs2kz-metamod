@@ -9,7 +9,7 @@
 #include "kz/replays/data.h"
 #include "kz/replays/bot.h"
 #include "kz/replays/playback.h"
-#include "kz/replays/controls.h"
+#include "kz/replays/hud/controls.h"
 #include "utils/async_file_io.h"
 #include "utils/http.h"
 #include "utils/utils.h"
