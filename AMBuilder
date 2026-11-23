@@ -238,6 +238,7 @@ def configure_main(sdk_target, sdk, cxx):
     os.path.join(builder.sourcePath, 'src', 'kz', 'away', 'events.cpp'),
     
     os.path.join(builder.sourcePath, 'src', 'kz', 'mappingapi', 'kz_mappingapi.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'mappingapi', 'hud', 'courses.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'mappingapi', 'hud', 'course_chips.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'trigger', 'callbacks.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'trigger', 'kz_trigger.cpp'),

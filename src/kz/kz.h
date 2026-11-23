@@ -61,6 +61,7 @@ class KZPistolService;
 class KZRecordingService;
 class KZFOVService;
 class KZZtopwatchService;
+struct KZCourseDescriptor;
 
 class KZPlayer : public MovementPlayer
 {
@@ -321,5 +322,7 @@ namespace KZ
 		void UnrestrictTimeLimit();
 		void OnPhysicsGameSystemFrameBoundary(void *pThis);
 		void HandleTeleportToCourse(KZPlayer *player, const CCommand *args);
+		// Teleports the player to the custom start position if `startPosCourse` is null.
+		void TeleportToCourse(KZPlayer *player, const KZCourseDescriptor *startPosCourse);
 	} // namespace misc
 }; // namespace KZ

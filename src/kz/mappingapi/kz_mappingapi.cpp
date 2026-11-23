@@ -8,6 +8,7 @@
 #include "kz/global/kz_global.h"
 #include "movement/movement.h"
 #include "kz_mappingapi.h"
+#include "kz/mappingapi/hud/courses.h"
 #include "entity2/entitykeyvalues.h"
 #include "sdk/entity/cbasetrigger.h"
 #include "utils/ctimer.h"
@@ -982,8 +983,14 @@ bool KZ::course::UpdateCourseGlobalID(const char *courseName, u32 globalID)
 	return false;
 }
 
-static void ListCourses(KZPlayer *player)
+static void ListCourses(KZPlayer *player, const CCommand *args)
 {
+	// Prefer using the custom HUD if it's a chat command unless the addon is unavailable.
+	const bool chat = args->Arg(0)[0] == SCMD_CHAT_TRIGGER || args->Arg(0)[0] == SCMD_CHAT_SILENT_TRIGGER;
+	if (chat && player->uiService->GetWindow<CoursesWindow>()->Toggle())
+	{
+		return;
+	}
 	if (player->timerService->GetCourse())
 	{
 		player->languageService->PrintChat(true, false, "Current Course", player->timerService->GetCourse()->name);
@@ -998,7 +1005,7 @@ static void ListCourses(KZPlayer *player)
 SCMD(kz_courses, SCFL_MAP)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
-	ListCourses(player);
+	ListCourses(player, args);
 	return true;
 }
 
@@ -1007,7 +1014,7 @@ SCMD(kz_course, SCFL_MAP)
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	if (args->ArgC() < 2)
 	{
-		ListCourses(player);
+		ListCourses(player, args);
 	}
 	else
 	{
@@ -1248,6 +1255,12 @@ static_function void PrintCurrentMapCoursesInfo(KZPlayer *player)
 SCMD(kz_mapinfo, SCFL_MAP | SCFL_GLOBAL)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
+	// Prefer using the courses window if it's a chat command unless the addon is unavailable.
+	const bool chat = args->Arg(0)[0] == SCMD_CHAT_TRIGGER || args->Arg(0)[0] == SCMD_CHAT_SILENT_TRIGGER;
+	if (chat && player->uiService->GetWindow<CoursesWindow>()->Toggle())
+	{
+		return true;
+	}
 	PrintCurrentMapCoursesInfo(player);
 	return true;
 }

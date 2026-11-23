@@ -226,6 +226,11 @@
 		"es"		"Caminos"
 		"ko"		"코스"
 	}
+	"Courses - Hint"
+	{
+		"#format"	"mode:s"
+		"en"		"Click a course to go to its start. Tiers and ranked states are for {mode}."
+	}
 	"Courses - Ranked"
 	{
 		"en"		"Ranked Courses:"
@@ -233,6 +238,32 @@
 	"Courses - Unranked"
 	{
 		"en"		"Unranked Courses:"
+	}
+	"Courses - Made By"
+	{
+		"en"		"Made by:"
+	}
+	"Courses - Description"
+	{
+		"en"		"Description:"
+	}
+	"Courses - State Approved"
+	{
+		"en"		"Approved"
+	}
+	"Courses - State Invalid"
+	{
+		"en"		"Invalid"
+	}
+	"Courses - Workshop"
+	{
+		"#format"	"id:s"
+		"en"		"Workshop ID {id}"
+	}
+	"Courses - Workshop Approved"
+	{
+		"#format"	"id:s,date:s"
+		"en"		"Workshop ID {id}, approved {date}"
 	}
 	"Course Info Header - Name"
 	{

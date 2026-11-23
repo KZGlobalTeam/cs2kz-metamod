@@ -1,0 +1,550 @@
+<!-- Every chip slot is written out because layouts have no loops.
+     The slot count must match KZ_COURSE_CHIPS in course_chips.h. -->
+<root>
+  <styles>
+    <include src="file://{resources}/styles/custom_game/cs2kz/courses.css" />
+  </styles>
+  <Panel class="root" hittest="false">
+    <Panel id="courses_root" class="kz-window-root hidden" hittest="false">
+      <Panel id="courses_window" class="kz-window courses-window">
+        <Panel class="kz-window-header">
+          <Label id="courses_window_title" class="kz-window-title" text="{s:courses_window_title}" />
+          <Button id="courses_window_close" class="kz-window-close" />
+        </Panel>
+        <Panel id="courses_meta" class="courses-meta hidden">
+          <Label id="courses_state" class="courses-state" text="{s:courses_state}" />
+          <Label id="courses_workshop" class="courses-workshop" text="{s:courses_workshop}" />
+        </Panel>
+        <Panel id="courses_credit" class="kz-credit courses-credit">
+          <Label id="courses_credit_label" class="kz-credit-label" text="{s:courses_credit_label}" />
+          <Label id="courses_credit_names" class="kz-credit-names" text="{s:courses_credit_names}" />
+        </Panel>
+        <Panel id="courses_description" class="kz-credit courses-description hidden">
+          <Label id="courses_description_label" class="kz-credit-label" text="{s:courses_description_label}" />
+          <Label id="courses_description_text" class="courses-description-text" text="{s:courses_description_text}" />
+        </Panel>
+        <Panel class="courses-scroll">
+          <Panel id="courses_ranked" class="kz-course-group">
+            <Label id="courses_ranked_label" class="kz-course-group-label" text="{s:courses_ranked_label}" />
+            <Button id="courses_ranked_chip0" class="kz-course-chip hidden">
+              <Label id="courses_ranked_chip0_name" class="kz-course-chip-name" text="{s:courses_ranked_chip0_name}" hittest="false" />
+              <Label id="courses_ranked_chip0_tier" class="kz-course-chip-tier" text="T{s:courses_ranked_chip0_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_ranked_chip1" class="kz-course-chip hidden">
+              <Label id="courses_ranked_chip1_name" class="kz-course-chip-name" text="{s:courses_ranked_chip1_name}" hittest="false" />
+              <Label id="courses_ranked_chip1_tier" class="kz-course-chip-tier" text="T{s:courses_ranked_chip1_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_ranked_chip2" class="kz-course-chip hidden">
+              <Label id="courses_ranked_chip2_name" class="kz-course-chip-name" text="{s:courses_ranked_chip2_name}" hittest="false" />
+              <Label id="courses_ranked_chip2_tier" class="kz-course-chip-tier" text="T{s:courses_ranked_chip2_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_ranked_chip3" class="kz-course-chip hidden">
+              <Label id="courses_ranked_chip3_name" class="kz-course-chip-name" text="{s:courses_ranked_chip3_name}" hittest="false" />
+              <Label id="courses_ranked_chip3_tier" class="kz-course-chip-tier" text="T{s:courses_ranked_chip3_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_ranked_chip4" class="kz-course-chip hidden">
+              <Label id="courses_ranked_chip4_name" class="kz-course-chip-name" text="{s:courses_ranked_chip4_name}" hittest="false" />
+              <Label id="courses_ranked_chip4_tier" class="kz-course-chip-tier" text="T{s:courses_ranked_chip4_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_ranked_chip5" class="kz-course-chip hidden">
+              <Label id="courses_ranked_chip5_name" class="kz-course-chip-name" text="{s:courses_ranked_chip5_name}" hittest="false" />
+              <Label id="courses_ranked_chip5_tier" class="kz-course-chip-tier" text="T{s:courses_ranked_chip5_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_ranked_chip6" class="kz-course-chip hidden">
+              <Label id="courses_ranked_chip6_name" class="kz-course-chip-name" text="{s:courses_ranked_chip6_name}" hittest="false" />
+              <Label id="courses_ranked_chip6_tier" class="kz-course-chip-tier" text="T{s:courses_ranked_chip6_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_ranked_chip7" class="kz-course-chip hidden">
+              <Label id="courses_ranked_chip7_name" class="kz-course-chip-name" text="{s:courses_ranked_chip7_name}" hittest="false" />
+              <Label id="courses_ranked_chip7_tier" class="kz-course-chip-tier" text="T{s:courses_ranked_chip7_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_ranked_chip8" class="kz-course-chip hidden">
+              <Label id="courses_ranked_chip8_name" class="kz-course-chip-name" text="{s:courses_ranked_chip8_name}" hittest="false" />
+              <Label id="courses_ranked_chip8_tier" class="kz-course-chip-tier" text="T{s:courses_ranked_chip8_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_ranked_chip9" class="kz-course-chip hidden">
+              <Label id="courses_ranked_chip9_name" class="kz-course-chip-name" text="{s:courses_ranked_chip9_name}" hittest="false" />
+              <Label id="courses_ranked_chip9_tier" class="kz-course-chip-tier" text="T{s:courses_ranked_chip9_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_ranked_chip10" class="kz-course-chip hidden">
+              <Label id="courses_ranked_chip10_name" class="kz-course-chip-name" text="{s:courses_ranked_chip10_name}" hittest="false" />
+              <Label id="courses_ranked_chip10_tier" class="kz-course-chip-tier" text="T{s:courses_ranked_chip10_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_ranked_chip11" class="kz-course-chip hidden">
+              <Label id="courses_ranked_chip11_name" class="kz-course-chip-name" text="{s:courses_ranked_chip11_name}" hittest="false" />
+              <Label id="courses_ranked_chip11_tier" class="kz-course-chip-tier" text="T{s:courses_ranked_chip11_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_ranked_chip12" class="kz-course-chip hidden">
+              <Label id="courses_ranked_chip12_name" class="kz-course-chip-name" text="{s:courses_ranked_chip12_name}" hittest="false" />
+              <Label id="courses_ranked_chip12_tier" class="kz-course-chip-tier" text="T{s:courses_ranked_chip12_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_ranked_chip13" class="kz-course-chip hidden">
+              <Label id="courses_ranked_chip13_name" class="kz-course-chip-name" text="{s:courses_ranked_chip13_name}" hittest="false" />
+              <Label id="courses_ranked_chip13_tier" class="kz-course-chip-tier" text="T{s:courses_ranked_chip13_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_ranked_chip14" class="kz-course-chip hidden">
+              <Label id="courses_ranked_chip14_name" class="kz-course-chip-name" text="{s:courses_ranked_chip14_name}" hittest="false" />
+              <Label id="courses_ranked_chip14_tier" class="kz-course-chip-tier" text="T{s:courses_ranked_chip14_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_ranked_chip15" class="kz-course-chip hidden">
+              <Label id="courses_ranked_chip15_name" class="kz-course-chip-name" text="{s:courses_ranked_chip15_name}" hittest="false" />
+              <Label id="courses_ranked_chip15_tier" class="kz-course-chip-tier" text="T{s:courses_ranked_chip15_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_ranked_chip16" class="kz-course-chip hidden">
+              <Label id="courses_ranked_chip16_name" class="kz-course-chip-name" text="{s:courses_ranked_chip16_name}" hittest="false" />
+              <Label id="courses_ranked_chip16_tier" class="kz-course-chip-tier" text="T{s:courses_ranked_chip16_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_ranked_chip17" class="kz-course-chip hidden">
+              <Label id="courses_ranked_chip17_name" class="kz-course-chip-name" text="{s:courses_ranked_chip17_name}" hittest="false" />
+              <Label id="courses_ranked_chip17_tier" class="kz-course-chip-tier" text="T{s:courses_ranked_chip17_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_ranked_chip18" class="kz-course-chip hidden">
+              <Label id="courses_ranked_chip18_name" class="kz-course-chip-name" text="{s:courses_ranked_chip18_name}" hittest="false" />
+              <Label id="courses_ranked_chip18_tier" class="kz-course-chip-tier" text="T{s:courses_ranked_chip18_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_ranked_chip19" class="kz-course-chip hidden">
+              <Label id="courses_ranked_chip19_name" class="kz-course-chip-name" text="{s:courses_ranked_chip19_name}" hittest="false" />
+              <Label id="courses_ranked_chip19_tier" class="kz-course-chip-tier" text="T{s:courses_ranked_chip19_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_ranked_chip20" class="kz-course-chip hidden">
+              <Label id="courses_ranked_chip20_name" class="kz-course-chip-name" text="{s:courses_ranked_chip20_name}" hittest="false" />
+              <Label id="courses_ranked_chip20_tier" class="kz-course-chip-tier" text="T{s:courses_ranked_chip20_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_ranked_chip21" class="kz-course-chip hidden">
+              <Label id="courses_ranked_chip21_name" class="kz-course-chip-name" text="{s:courses_ranked_chip21_name}" hittest="false" />
+              <Label id="courses_ranked_chip21_tier" class="kz-course-chip-tier" text="T{s:courses_ranked_chip21_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_ranked_chip22" class="kz-course-chip hidden">
+              <Label id="courses_ranked_chip22_name" class="kz-course-chip-name" text="{s:courses_ranked_chip22_name}" hittest="false" />
+              <Label id="courses_ranked_chip22_tier" class="kz-course-chip-tier" text="T{s:courses_ranked_chip22_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_ranked_chip23" class="kz-course-chip hidden">
+              <Label id="courses_ranked_chip23_name" class="kz-course-chip-name" text="{s:courses_ranked_chip23_name}" hittest="false" />
+              <Label id="courses_ranked_chip23_tier" class="kz-course-chip-tier" text="T{s:courses_ranked_chip23_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_ranked_chip24" class="kz-course-chip hidden">
+              <Label id="courses_ranked_chip24_name" class="kz-course-chip-name" text="{s:courses_ranked_chip24_name}" hittest="false" />
+              <Label id="courses_ranked_chip24_tier" class="kz-course-chip-tier" text="T{s:courses_ranked_chip24_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_ranked_chip25" class="kz-course-chip hidden">
+              <Label id="courses_ranked_chip25_name" class="kz-course-chip-name" text="{s:courses_ranked_chip25_name}" hittest="false" />
+              <Label id="courses_ranked_chip25_tier" class="kz-course-chip-tier" text="T{s:courses_ranked_chip25_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_ranked_chip26" class="kz-course-chip hidden">
+              <Label id="courses_ranked_chip26_name" class="kz-course-chip-name" text="{s:courses_ranked_chip26_name}" hittest="false" />
+              <Label id="courses_ranked_chip26_tier" class="kz-course-chip-tier" text="T{s:courses_ranked_chip26_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_ranked_chip27" class="kz-course-chip hidden">
+              <Label id="courses_ranked_chip27_name" class="kz-course-chip-name" text="{s:courses_ranked_chip27_name}" hittest="false" />
+              <Label id="courses_ranked_chip27_tier" class="kz-course-chip-tier" text="T{s:courses_ranked_chip27_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_ranked_chip28" class="kz-course-chip hidden">
+              <Label id="courses_ranked_chip28_name" class="kz-course-chip-name" text="{s:courses_ranked_chip28_name}" hittest="false" />
+              <Label id="courses_ranked_chip28_tier" class="kz-course-chip-tier" text="T{s:courses_ranked_chip28_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_ranked_chip29" class="kz-course-chip hidden">
+              <Label id="courses_ranked_chip29_name" class="kz-course-chip-name" text="{s:courses_ranked_chip29_name}" hittest="false" />
+              <Label id="courses_ranked_chip29_tier" class="kz-course-chip-tier" text="T{s:courses_ranked_chip29_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_ranked_chip30" class="kz-course-chip hidden">
+              <Label id="courses_ranked_chip30_name" class="kz-course-chip-name" text="{s:courses_ranked_chip30_name}" hittest="false" />
+              <Label id="courses_ranked_chip30_tier" class="kz-course-chip-tier" text="T{s:courses_ranked_chip30_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_ranked_chip31" class="kz-course-chip hidden">
+              <Label id="courses_ranked_chip31_name" class="kz-course-chip-name" text="{s:courses_ranked_chip31_name}" hittest="false" />
+              <Label id="courses_ranked_chip31_tier" class="kz-course-chip-tier" text="T{s:courses_ranked_chip31_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_ranked_chip32" class="kz-course-chip hidden">
+              <Label id="courses_ranked_chip32_name" class="kz-course-chip-name" text="{s:courses_ranked_chip32_name}" hittest="false" />
+              <Label id="courses_ranked_chip32_tier" class="kz-course-chip-tier" text="T{s:courses_ranked_chip32_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_ranked_chip33" class="kz-course-chip hidden">
+              <Label id="courses_ranked_chip33_name" class="kz-course-chip-name" text="{s:courses_ranked_chip33_name}" hittest="false" />
+              <Label id="courses_ranked_chip33_tier" class="kz-course-chip-tier" text="T{s:courses_ranked_chip33_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_ranked_chip34" class="kz-course-chip hidden">
+              <Label id="courses_ranked_chip34_name" class="kz-course-chip-name" text="{s:courses_ranked_chip34_name}" hittest="false" />
+              <Label id="courses_ranked_chip34_tier" class="kz-course-chip-tier" text="T{s:courses_ranked_chip34_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_ranked_chip35" class="kz-course-chip hidden">
+              <Label id="courses_ranked_chip35_name" class="kz-course-chip-name" text="{s:courses_ranked_chip35_name}" hittest="false" />
+              <Label id="courses_ranked_chip35_tier" class="kz-course-chip-tier" text="T{s:courses_ranked_chip35_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_ranked_chip36" class="kz-course-chip hidden">
+              <Label id="courses_ranked_chip36_name" class="kz-course-chip-name" text="{s:courses_ranked_chip36_name}" hittest="false" />
+              <Label id="courses_ranked_chip36_tier" class="kz-course-chip-tier" text="T{s:courses_ranked_chip36_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_ranked_chip37" class="kz-course-chip hidden">
+              <Label id="courses_ranked_chip37_name" class="kz-course-chip-name" text="{s:courses_ranked_chip37_name}" hittest="false" />
+              <Label id="courses_ranked_chip37_tier" class="kz-course-chip-tier" text="T{s:courses_ranked_chip37_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_ranked_chip38" class="kz-course-chip hidden">
+              <Label id="courses_ranked_chip38_name" class="kz-course-chip-name" text="{s:courses_ranked_chip38_name}" hittest="false" />
+              <Label id="courses_ranked_chip38_tier" class="kz-course-chip-tier" text="T{s:courses_ranked_chip38_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_ranked_chip39" class="kz-course-chip hidden">
+              <Label id="courses_ranked_chip39_name" class="kz-course-chip-name" text="{s:courses_ranked_chip39_name}" hittest="false" />
+              <Label id="courses_ranked_chip39_tier" class="kz-course-chip-tier" text="T{s:courses_ranked_chip39_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_ranked_chip40" class="kz-course-chip hidden">
+              <Label id="courses_ranked_chip40_name" class="kz-course-chip-name" text="{s:courses_ranked_chip40_name}" hittest="false" />
+              <Label id="courses_ranked_chip40_tier" class="kz-course-chip-tier" text="T{s:courses_ranked_chip40_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_ranked_chip41" class="kz-course-chip hidden">
+              <Label id="courses_ranked_chip41_name" class="kz-course-chip-name" text="{s:courses_ranked_chip41_name}" hittest="false" />
+              <Label id="courses_ranked_chip41_tier" class="kz-course-chip-tier" text="T{s:courses_ranked_chip41_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_ranked_chip42" class="kz-course-chip hidden">
+              <Label id="courses_ranked_chip42_name" class="kz-course-chip-name" text="{s:courses_ranked_chip42_name}" hittest="false" />
+              <Label id="courses_ranked_chip42_tier" class="kz-course-chip-tier" text="T{s:courses_ranked_chip42_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_ranked_chip43" class="kz-course-chip hidden">
+              <Label id="courses_ranked_chip43_name" class="kz-course-chip-name" text="{s:courses_ranked_chip43_name}" hittest="false" />
+              <Label id="courses_ranked_chip43_tier" class="kz-course-chip-tier" text="T{s:courses_ranked_chip43_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_ranked_chip44" class="kz-course-chip hidden">
+              <Label id="courses_ranked_chip44_name" class="kz-course-chip-name" text="{s:courses_ranked_chip44_name}" hittest="false" />
+              <Label id="courses_ranked_chip44_tier" class="kz-course-chip-tier" text="T{s:courses_ranked_chip44_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_ranked_chip45" class="kz-course-chip hidden">
+              <Label id="courses_ranked_chip45_name" class="kz-course-chip-name" text="{s:courses_ranked_chip45_name}" hittest="false" />
+              <Label id="courses_ranked_chip45_tier" class="kz-course-chip-tier" text="T{s:courses_ranked_chip45_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_ranked_chip46" class="kz-course-chip hidden">
+              <Label id="courses_ranked_chip46_name" class="kz-course-chip-name" text="{s:courses_ranked_chip46_name}" hittest="false" />
+              <Label id="courses_ranked_chip46_tier" class="kz-course-chip-tier" text="T{s:courses_ranked_chip46_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_ranked_chip47" class="kz-course-chip hidden">
+              <Label id="courses_ranked_chip47_name" class="kz-course-chip-name" text="{s:courses_ranked_chip47_name}" hittest="false" />
+              <Label id="courses_ranked_chip47_tier" class="kz-course-chip-tier" text="T{s:courses_ranked_chip47_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_ranked_chip48" class="kz-course-chip hidden">
+              <Label id="courses_ranked_chip48_name" class="kz-course-chip-name" text="{s:courses_ranked_chip48_name}" hittest="false" />
+              <Label id="courses_ranked_chip48_tier" class="kz-course-chip-tier" text="T{s:courses_ranked_chip48_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_ranked_chip49" class="kz-course-chip hidden">
+              <Label id="courses_ranked_chip49_name" class="kz-course-chip-name" text="{s:courses_ranked_chip49_name}" hittest="false" />
+              <Label id="courses_ranked_chip49_tier" class="kz-course-chip-tier" text="T{s:courses_ranked_chip49_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_ranked_chip50" class="kz-course-chip hidden">
+              <Label id="courses_ranked_chip50_name" class="kz-course-chip-name" text="{s:courses_ranked_chip50_name}" hittest="false" />
+              <Label id="courses_ranked_chip50_tier" class="kz-course-chip-tier" text="T{s:courses_ranked_chip50_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_ranked_chip51" class="kz-course-chip hidden">
+              <Label id="courses_ranked_chip51_name" class="kz-course-chip-name" text="{s:courses_ranked_chip51_name}" hittest="false" />
+              <Label id="courses_ranked_chip51_tier" class="kz-course-chip-tier" text="T{s:courses_ranked_chip51_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_ranked_chip52" class="kz-course-chip hidden">
+              <Label id="courses_ranked_chip52_name" class="kz-course-chip-name" text="{s:courses_ranked_chip52_name}" hittest="false" />
+              <Label id="courses_ranked_chip52_tier" class="kz-course-chip-tier" text="T{s:courses_ranked_chip52_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_ranked_chip53" class="kz-course-chip hidden">
+              <Label id="courses_ranked_chip53_name" class="kz-course-chip-name" text="{s:courses_ranked_chip53_name}" hittest="false" />
+              <Label id="courses_ranked_chip53_tier" class="kz-course-chip-tier" text="T{s:courses_ranked_chip53_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_ranked_chip54" class="kz-course-chip hidden">
+              <Label id="courses_ranked_chip54_name" class="kz-course-chip-name" text="{s:courses_ranked_chip54_name}" hittest="false" />
+              <Label id="courses_ranked_chip54_tier" class="kz-course-chip-tier" text="T{s:courses_ranked_chip54_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_ranked_chip55" class="kz-course-chip hidden">
+              <Label id="courses_ranked_chip55_name" class="kz-course-chip-name" text="{s:courses_ranked_chip55_name}" hittest="false" />
+              <Label id="courses_ranked_chip55_tier" class="kz-course-chip-tier" text="T{s:courses_ranked_chip55_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_ranked_chip56" class="kz-course-chip hidden">
+              <Label id="courses_ranked_chip56_name" class="kz-course-chip-name" text="{s:courses_ranked_chip56_name}" hittest="false" />
+              <Label id="courses_ranked_chip56_tier" class="kz-course-chip-tier" text="T{s:courses_ranked_chip56_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_ranked_chip57" class="kz-course-chip hidden">
+              <Label id="courses_ranked_chip57_name" class="kz-course-chip-name" text="{s:courses_ranked_chip57_name}" hittest="false" />
+              <Label id="courses_ranked_chip57_tier" class="kz-course-chip-tier" text="T{s:courses_ranked_chip57_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_ranked_chip58" class="kz-course-chip hidden">
+              <Label id="courses_ranked_chip58_name" class="kz-course-chip-name" text="{s:courses_ranked_chip58_name}" hittest="false" />
+              <Label id="courses_ranked_chip58_tier" class="kz-course-chip-tier" text="T{s:courses_ranked_chip58_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_ranked_chip59" class="kz-course-chip hidden">
+              <Label id="courses_ranked_chip59_name" class="kz-course-chip-name" text="{s:courses_ranked_chip59_name}" hittest="false" />
+              <Label id="courses_ranked_chip59_tier" class="kz-course-chip-tier" text="T{s:courses_ranked_chip59_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_ranked_chip60" class="kz-course-chip hidden">
+              <Label id="courses_ranked_chip60_name" class="kz-course-chip-name" text="{s:courses_ranked_chip60_name}" hittest="false" />
+              <Label id="courses_ranked_chip60_tier" class="kz-course-chip-tier" text="T{s:courses_ranked_chip60_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_ranked_chip61" class="kz-course-chip hidden">
+              <Label id="courses_ranked_chip61_name" class="kz-course-chip-name" text="{s:courses_ranked_chip61_name}" hittest="false" />
+              <Label id="courses_ranked_chip61_tier" class="kz-course-chip-tier" text="T{s:courses_ranked_chip61_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_ranked_chip62" class="kz-course-chip hidden">
+              <Label id="courses_ranked_chip62_name" class="kz-course-chip-name" text="{s:courses_ranked_chip62_name}" hittest="false" />
+              <Label id="courses_ranked_chip62_tier" class="kz-course-chip-tier" text="T{s:courses_ranked_chip62_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_ranked_chip63" class="kz-course-chip hidden">
+              <Label id="courses_ranked_chip63_name" class="kz-course-chip-name" text="{s:courses_ranked_chip63_name}" hittest="false" />
+              <Label id="courses_ranked_chip63_tier" class="kz-course-chip-tier" text="T{s:courses_ranked_chip63_tier}" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel id="courses_unranked" class="kz-course-group">
+            <Label id="courses_unranked_label" class="kz-course-group-label" text="{s:courses_unranked_label}" />
+            <Button id="courses_unranked_chip0" class="kz-course-chip hidden">
+              <Label id="courses_unranked_chip0_name" class="kz-course-chip-name" text="{s:courses_unranked_chip0_name}" hittest="false" />
+              <Label id="courses_unranked_chip0_tier" class="kz-course-chip-tier" text="T{s:courses_unranked_chip0_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_unranked_chip1" class="kz-course-chip hidden">
+              <Label id="courses_unranked_chip1_name" class="kz-course-chip-name" text="{s:courses_unranked_chip1_name}" hittest="false" />
+              <Label id="courses_unranked_chip1_tier" class="kz-course-chip-tier" text="T{s:courses_unranked_chip1_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_unranked_chip2" class="kz-course-chip hidden">
+              <Label id="courses_unranked_chip2_name" class="kz-course-chip-name" text="{s:courses_unranked_chip2_name}" hittest="false" />
+              <Label id="courses_unranked_chip2_tier" class="kz-course-chip-tier" text="T{s:courses_unranked_chip2_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_unranked_chip3" class="kz-course-chip hidden">
+              <Label id="courses_unranked_chip3_name" class="kz-course-chip-name" text="{s:courses_unranked_chip3_name}" hittest="false" />
+              <Label id="courses_unranked_chip3_tier" class="kz-course-chip-tier" text="T{s:courses_unranked_chip3_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_unranked_chip4" class="kz-course-chip hidden">
+              <Label id="courses_unranked_chip4_name" class="kz-course-chip-name" text="{s:courses_unranked_chip4_name}" hittest="false" />
+              <Label id="courses_unranked_chip4_tier" class="kz-course-chip-tier" text="T{s:courses_unranked_chip4_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_unranked_chip5" class="kz-course-chip hidden">
+              <Label id="courses_unranked_chip5_name" class="kz-course-chip-name" text="{s:courses_unranked_chip5_name}" hittest="false" />
+              <Label id="courses_unranked_chip5_tier" class="kz-course-chip-tier" text="T{s:courses_unranked_chip5_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_unranked_chip6" class="kz-course-chip hidden">
+              <Label id="courses_unranked_chip6_name" class="kz-course-chip-name" text="{s:courses_unranked_chip6_name}" hittest="false" />
+              <Label id="courses_unranked_chip6_tier" class="kz-course-chip-tier" text="T{s:courses_unranked_chip6_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_unranked_chip7" class="kz-course-chip hidden">
+              <Label id="courses_unranked_chip7_name" class="kz-course-chip-name" text="{s:courses_unranked_chip7_name}" hittest="false" />
+              <Label id="courses_unranked_chip7_tier" class="kz-course-chip-tier" text="T{s:courses_unranked_chip7_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_unranked_chip8" class="kz-course-chip hidden">
+              <Label id="courses_unranked_chip8_name" class="kz-course-chip-name" text="{s:courses_unranked_chip8_name}" hittest="false" />
+              <Label id="courses_unranked_chip8_tier" class="kz-course-chip-tier" text="T{s:courses_unranked_chip8_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_unranked_chip9" class="kz-course-chip hidden">
+              <Label id="courses_unranked_chip9_name" class="kz-course-chip-name" text="{s:courses_unranked_chip9_name}" hittest="false" />
+              <Label id="courses_unranked_chip9_tier" class="kz-course-chip-tier" text="T{s:courses_unranked_chip9_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_unranked_chip10" class="kz-course-chip hidden">
+              <Label id="courses_unranked_chip10_name" class="kz-course-chip-name" text="{s:courses_unranked_chip10_name}" hittest="false" />
+              <Label id="courses_unranked_chip10_tier" class="kz-course-chip-tier" text="T{s:courses_unranked_chip10_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_unranked_chip11" class="kz-course-chip hidden">
+              <Label id="courses_unranked_chip11_name" class="kz-course-chip-name" text="{s:courses_unranked_chip11_name}" hittest="false" />
+              <Label id="courses_unranked_chip11_tier" class="kz-course-chip-tier" text="T{s:courses_unranked_chip11_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_unranked_chip12" class="kz-course-chip hidden">
+              <Label id="courses_unranked_chip12_name" class="kz-course-chip-name" text="{s:courses_unranked_chip12_name}" hittest="false" />
+              <Label id="courses_unranked_chip12_tier" class="kz-course-chip-tier" text="T{s:courses_unranked_chip12_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_unranked_chip13" class="kz-course-chip hidden">
+              <Label id="courses_unranked_chip13_name" class="kz-course-chip-name" text="{s:courses_unranked_chip13_name}" hittest="false" />
+              <Label id="courses_unranked_chip13_tier" class="kz-course-chip-tier" text="T{s:courses_unranked_chip13_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_unranked_chip14" class="kz-course-chip hidden">
+              <Label id="courses_unranked_chip14_name" class="kz-course-chip-name" text="{s:courses_unranked_chip14_name}" hittest="false" />
+              <Label id="courses_unranked_chip14_tier" class="kz-course-chip-tier" text="T{s:courses_unranked_chip14_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_unranked_chip15" class="kz-course-chip hidden">
+              <Label id="courses_unranked_chip15_name" class="kz-course-chip-name" text="{s:courses_unranked_chip15_name}" hittest="false" />
+              <Label id="courses_unranked_chip15_tier" class="kz-course-chip-tier" text="T{s:courses_unranked_chip15_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_unranked_chip16" class="kz-course-chip hidden">
+              <Label id="courses_unranked_chip16_name" class="kz-course-chip-name" text="{s:courses_unranked_chip16_name}" hittest="false" />
+              <Label id="courses_unranked_chip16_tier" class="kz-course-chip-tier" text="T{s:courses_unranked_chip16_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_unranked_chip17" class="kz-course-chip hidden">
+              <Label id="courses_unranked_chip17_name" class="kz-course-chip-name" text="{s:courses_unranked_chip17_name}" hittest="false" />
+              <Label id="courses_unranked_chip17_tier" class="kz-course-chip-tier" text="T{s:courses_unranked_chip17_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_unranked_chip18" class="kz-course-chip hidden">
+              <Label id="courses_unranked_chip18_name" class="kz-course-chip-name" text="{s:courses_unranked_chip18_name}" hittest="false" />
+              <Label id="courses_unranked_chip18_tier" class="kz-course-chip-tier" text="T{s:courses_unranked_chip18_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_unranked_chip19" class="kz-course-chip hidden">
+              <Label id="courses_unranked_chip19_name" class="kz-course-chip-name" text="{s:courses_unranked_chip19_name}" hittest="false" />
+              <Label id="courses_unranked_chip19_tier" class="kz-course-chip-tier" text="T{s:courses_unranked_chip19_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_unranked_chip20" class="kz-course-chip hidden">
+              <Label id="courses_unranked_chip20_name" class="kz-course-chip-name" text="{s:courses_unranked_chip20_name}" hittest="false" />
+              <Label id="courses_unranked_chip20_tier" class="kz-course-chip-tier" text="T{s:courses_unranked_chip20_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_unranked_chip21" class="kz-course-chip hidden">
+              <Label id="courses_unranked_chip21_name" class="kz-course-chip-name" text="{s:courses_unranked_chip21_name}" hittest="false" />
+              <Label id="courses_unranked_chip21_tier" class="kz-course-chip-tier" text="T{s:courses_unranked_chip21_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_unranked_chip22" class="kz-course-chip hidden">
+              <Label id="courses_unranked_chip22_name" class="kz-course-chip-name" text="{s:courses_unranked_chip22_name}" hittest="false" />
+              <Label id="courses_unranked_chip22_tier" class="kz-course-chip-tier" text="T{s:courses_unranked_chip22_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_unranked_chip23" class="kz-course-chip hidden">
+              <Label id="courses_unranked_chip23_name" class="kz-course-chip-name" text="{s:courses_unranked_chip23_name}" hittest="false" />
+              <Label id="courses_unranked_chip23_tier" class="kz-course-chip-tier" text="T{s:courses_unranked_chip23_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_unranked_chip24" class="kz-course-chip hidden">
+              <Label id="courses_unranked_chip24_name" class="kz-course-chip-name" text="{s:courses_unranked_chip24_name}" hittest="false" />
+              <Label id="courses_unranked_chip24_tier" class="kz-course-chip-tier" text="T{s:courses_unranked_chip24_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_unranked_chip25" class="kz-course-chip hidden">
+              <Label id="courses_unranked_chip25_name" class="kz-course-chip-name" text="{s:courses_unranked_chip25_name}" hittest="false" />
+              <Label id="courses_unranked_chip25_tier" class="kz-course-chip-tier" text="T{s:courses_unranked_chip25_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_unranked_chip26" class="kz-course-chip hidden">
+              <Label id="courses_unranked_chip26_name" class="kz-course-chip-name" text="{s:courses_unranked_chip26_name}" hittest="false" />
+              <Label id="courses_unranked_chip26_tier" class="kz-course-chip-tier" text="T{s:courses_unranked_chip26_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_unranked_chip27" class="kz-course-chip hidden">
+              <Label id="courses_unranked_chip27_name" class="kz-course-chip-name" text="{s:courses_unranked_chip27_name}" hittest="false" />
+              <Label id="courses_unranked_chip27_tier" class="kz-course-chip-tier" text="T{s:courses_unranked_chip27_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_unranked_chip28" class="kz-course-chip hidden">
+              <Label id="courses_unranked_chip28_name" class="kz-course-chip-name" text="{s:courses_unranked_chip28_name}" hittest="false" />
+              <Label id="courses_unranked_chip28_tier" class="kz-course-chip-tier" text="T{s:courses_unranked_chip28_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_unranked_chip29" class="kz-course-chip hidden">
+              <Label id="courses_unranked_chip29_name" class="kz-course-chip-name" text="{s:courses_unranked_chip29_name}" hittest="false" />
+              <Label id="courses_unranked_chip29_tier" class="kz-course-chip-tier" text="T{s:courses_unranked_chip29_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_unranked_chip30" class="kz-course-chip hidden">
+              <Label id="courses_unranked_chip30_name" class="kz-course-chip-name" text="{s:courses_unranked_chip30_name}" hittest="false" />
+              <Label id="courses_unranked_chip30_tier" class="kz-course-chip-tier" text="T{s:courses_unranked_chip30_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_unranked_chip31" class="kz-course-chip hidden">
+              <Label id="courses_unranked_chip31_name" class="kz-course-chip-name" text="{s:courses_unranked_chip31_name}" hittest="false" />
+              <Label id="courses_unranked_chip31_tier" class="kz-course-chip-tier" text="T{s:courses_unranked_chip31_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_unranked_chip32" class="kz-course-chip hidden">
+              <Label id="courses_unranked_chip32_name" class="kz-course-chip-name" text="{s:courses_unranked_chip32_name}" hittest="false" />
+              <Label id="courses_unranked_chip32_tier" class="kz-course-chip-tier" text="T{s:courses_unranked_chip32_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_unranked_chip33" class="kz-course-chip hidden">
+              <Label id="courses_unranked_chip33_name" class="kz-course-chip-name" text="{s:courses_unranked_chip33_name}" hittest="false" />
+              <Label id="courses_unranked_chip33_tier" class="kz-course-chip-tier" text="T{s:courses_unranked_chip33_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_unranked_chip34" class="kz-course-chip hidden">
+              <Label id="courses_unranked_chip34_name" class="kz-course-chip-name" text="{s:courses_unranked_chip34_name}" hittest="false" />
+              <Label id="courses_unranked_chip34_tier" class="kz-course-chip-tier" text="T{s:courses_unranked_chip34_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_unranked_chip35" class="kz-course-chip hidden">
+              <Label id="courses_unranked_chip35_name" class="kz-course-chip-name" text="{s:courses_unranked_chip35_name}" hittest="false" />
+              <Label id="courses_unranked_chip35_tier" class="kz-course-chip-tier" text="T{s:courses_unranked_chip35_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_unranked_chip36" class="kz-course-chip hidden">
+              <Label id="courses_unranked_chip36_name" class="kz-course-chip-name" text="{s:courses_unranked_chip36_name}" hittest="false" />
+              <Label id="courses_unranked_chip36_tier" class="kz-course-chip-tier" text="T{s:courses_unranked_chip36_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_unranked_chip37" class="kz-course-chip hidden">
+              <Label id="courses_unranked_chip37_name" class="kz-course-chip-name" text="{s:courses_unranked_chip37_name}" hittest="false" />
+              <Label id="courses_unranked_chip37_tier" class="kz-course-chip-tier" text="T{s:courses_unranked_chip37_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_unranked_chip38" class="kz-course-chip hidden">
+              <Label id="courses_unranked_chip38_name" class="kz-course-chip-name" text="{s:courses_unranked_chip38_name}" hittest="false" />
+              <Label id="courses_unranked_chip38_tier" class="kz-course-chip-tier" text="T{s:courses_unranked_chip38_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_unranked_chip39" class="kz-course-chip hidden">
+              <Label id="courses_unranked_chip39_name" class="kz-course-chip-name" text="{s:courses_unranked_chip39_name}" hittest="false" />
+              <Label id="courses_unranked_chip39_tier" class="kz-course-chip-tier" text="T{s:courses_unranked_chip39_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_unranked_chip40" class="kz-course-chip hidden">
+              <Label id="courses_unranked_chip40_name" class="kz-course-chip-name" text="{s:courses_unranked_chip40_name}" hittest="false" />
+              <Label id="courses_unranked_chip40_tier" class="kz-course-chip-tier" text="T{s:courses_unranked_chip40_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_unranked_chip41" class="kz-course-chip hidden">
+              <Label id="courses_unranked_chip41_name" class="kz-course-chip-name" text="{s:courses_unranked_chip41_name}" hittest="false" />
+              <Label id="courses_unranked_chip41_tier" class="kz-course-chip-tier" text="T{s:courses_unranked_chip41_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_unranked_chip42" class="kz-course-chip hidden">
+              <Label id="courses_unranked_chip42_name" class="kz-course-chip-name" text="{s:courses_unranked_chip42_name}" hittest="false" />
+              <Label id="courses_unranked_chip42_tier" class="kz-course-chip-tier" text="T{s:courses_unranked_chip42_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_unranked_chip43" class="kz-course-chip hidden">
+              <Label id="courses_unranked_chip43_name" class="kz-course-chip-name" text="{s:courses_unranked_chip43_name}" hittest="false" />
+              <Label id="courses_unranked_chip43_tier" class="kz-course-chip-tier" text="T{s:courses_unranked_chip43_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_unranked_chip44" class="kz-course-chip hidden">
+              <Label id="courses_unranked_chip44_name" class="kz-course-chip-name" text="{s:courses_unranked_chip44_name}" hittest="false" />
+              <Label id="courses_unranked_chip44_tier" class="kz-course-chip-tier" text="T{s:courses_unranked_chip44_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_unranked_chip45" class="kz-course-chip hidden">
+              <Label id="courses_unranked_chip45_name" class="kz-course-chip-name" text="{s:courses_unranked_chip45_name}" hittest="false" />
+              <Label id="courses_unranked_chip45_tier" class="kz-course-chip-tier" text="T{s:courses_unranked_chip45_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_unranked_chip46" class="kz-course-chip hidden">
+              <Label id="courses_unranked_chip46_name" class="kz-course-chip-name" text="{s:courses_unranked_chip46_name}" hittest="false" />
+              <Label id="courses_unranked_chip46_tier" class="kz-course-chip-tier" text="T{s:courses_unranked_chip46_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_unranked_chip47" class="kz-course-chip hidden">
+              <Label id="courses_unranked_chip47_name" class="kz-course-chip-name" text="{s:courses_unranked_chip47_name}" hittest="false" />
+              <Label id="courses_unranked_chip47_tier" class="kz-course-chip-tier" text="T{s:courses_unranked_chip47_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_unranked_chip48" class="kz-course-chip hidden">
+              <Label id="courses_unranked_chip48_name" class="kz-course-chip-name" text="{s:courses_unranked_chip48_name}" hittest="false" />
+              <Label id="courses_unranked_chip48_tier" class="kz-course-chip-tier" text="T{s:courses_unranked_chip48_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_unranked_chip49" class="kz-course-chip hidden">
+              <Label id="courses_unranked_chip49_name" class="kz-course-chip-name" text="{s:courses_unranked_chip49_name}" hittest="false" />
+              <Label id="courses_unranked_chip49_tier" class="kz-course-chip-tier" text="T{s:courses_unranked_chip49_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_unranked_chip50" class="kz-course-chip hidden">
+              <Label id="courses_unranked_chip50_name" class="kz-course-chip-name" text="{s:courses_unranked_chip50_name}" hittest="false" />
+              <Label id="courses_unranked_chip50_tier" class="kz-course-chip-tier" text="T{s:courses_unranked_chip50_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_unranked_chip51" class="kz-course-chip hidden">
+              <Label id="courses_unranked_chip51_name" class="kz-course-chip-name" text="{s:courses_unranked_chip51_name}" hittest="false" />
+              <Label id="courses_unranked_chip51_tier" class="kz-course-chip-tier" text="T{s:courses_unranked_chip51_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_unranked_chip52" class="kz-course-chip hidden">
+              <Label id="courses_unranked_chip52_name" class="kz-course-chip-name" text="{s:courses_unranked_chip52_name}" hittest="false" />
+              <Label id="courses_unranked_chip52_tier" class="kz-course-chip-tier" text="T{s:courses_unranked_chip52_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_unranked_chip53" class="kz-course-chip hidden">
+              <Label id="courses_unranked_chip53_name" class="kz-course-chip-name" text="{s:courses_unranked_chip53_name}" hittest="false" />
+              <Label id="courses_unranked_chip53_tier" class="kz-course-chip-tier" text="T{s:courses_unranked_chip53_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_unranked_chip54" class="kz-course-chip hidden">
+              <Label id="courses_unranked_chip54_name" class="kz-course-chip-name" text="{s:courses_unranked_chip54_name}" hittest="false" />
+              <Label id="courses_unranked_chip54_tier" class="kz-course-chip-tier" text="T{s:courses_unranked_chip54_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_unranked_chip55" class="kz-course-chip hidden">
+              <Label id="courses_unranked_chip55_name" class="kz-course-chip-name" text="{s:courses_unranked_chip55_name}" hittest="false" />
+              <Label id="courses_unranked_chip55_tier" class="kz-course-chip-tier" text="T{s:courses_unranked_chip55_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_unranked_chip56" class="kz-course-chip hidden">
+              <Label id="courses_unranked_chip56_name" class="kz-course-chip-name" text="{s:courses_unranked_chip56_name}" hittest="false" />
+              <Label id="courses_unranked_chip56_tier" class="kz-course-chip-tier" text="T{s:courses_unranked_chip56_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_unranked_chip57" class="kz-course-chip hidden">
+              <Label id="courses_unranked_chip57_name" class="kz-course-chip-name" text="{s:courses_unranked_chip57_name}" hittest="false" />
+              <Label id="courses_unranked_chip57_tier" class="kz-course-chip-tier" text="T{s:courses_unranked_chip57_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_unranked_chip58" class="kz-course-chip hidden">
+              <Label id="courses_unranked_chip58_name" class="kz-course-chip-name" text="{s:courses_unranked_chip58_name}" hittest="false" />
+              <Label id="courses_unranked_chip58_tier" class="kz-course-chip-tier" text="T{s:courses_unranked_chip58_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_unranked_chip59" class="kz-course-chip hidden">
+              <Label id="courses_unranked_chip59_name" class="kz-course-chip-name" text="{s:courses_unranked_chip59_name}" hittest="false" />
+              <Label id="courses_unranked_chip59_tier" class="kz-course-chip-tier" text="T{s:courses_unranked_chip59_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_unranked_chip60" class="kz-course-chip hidden">
+              <Label id="courses_unranked_chip60_name" class="kz-course-chip-name" text="{s:courses_unranked_chip60_name}" hittest="false" />
+              <Label id="courses_unranked_chip60_tier" class="kz-course-chip-tier" text="T{s:courses_unranked_chip60_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_unranked_chip61" class="kz-course-chip hidden">
+              <Label id="courses_unranked_chip61_name" class="kz-course-chip-name" text="{s:courses_unranked_chip61_name}" hittest="false" />
+              <Label id="courses_unranked_chip61_tier" class="kz-course-chip-tier" text="T{s:courses_unranked_chip61_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_unranked_chip62" class="kz-course-chip hidden">
+              <Label id="courses_unranked_chip62_name" class="kz-course-chip-name" text="{s:courses_unranked_chip62_name}" hittest="false" />
+              <Label id="courses_unranked_chip62_tier" class="kz-course-chip-tier" text="T{s:courses_unranked_chip62_tier}" hittest="false" />
+            </Button>
+            <Button id="courses_unranked_chip63" class="kz-course-chip hidden">
+              <Label id="courses_unranked_chip63_name" class="kz-course-chip-name" text="{s:courses_unranked_chip63_name}" hittest="false" />
+              <Label id="courses_unranked_chip63_tier" class="kz-course-chip-tier" text="T{s:courses_unranked_chip63_tier}" hittest="false" />
+            </Button>
+          </Panel>
+        </Panel>
+        <Label id="courses_hint" class="courses-hint" text="{s:courses_hint}" />
+      </Panel>
+    </Panel>
+  </Panel>
+</root>

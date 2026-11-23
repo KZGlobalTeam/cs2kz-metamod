@@ -1,0 +1,126 @@
+@import url("file://{resources}/styles/custom_game/cs2kz/tokens.css");
+@import url("file://{resources}/styles/custom_game/cs2kz/palette.css");
+@import url("file://{resources}/styles/custom_game/cs2kz/fonts.css");
+@import url("file://{resources}/styles/custom_game/cs2kz/components.css");
+
+.kz-credit {
+	flow-children: right;
+	font-size: kz-text-base;
+	font-weight: normal;
+}
+
+.kz-credit-label {
+	vertical-align: center;
+	margin-right: 4px;
+	font-size: kz-text-base;
+	font-weight: normal;
+	color: kz-zinc-400;
+}
+
+.font-reflow .kz-credit-label {
+	padding-right: 1px;
+	margin-right: 3px;
+}
+
+.kz-credit-names {
+	vertical-align: center;
+	width: fill-parent-flow( 1 );
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	font-size: kz-text-base;
+	font-weight: normal;
+	color: kz-cyan-500;
+}
+
+.font-reflow .kz-credit-names {
+	padding-right: 1px;
+	margin-right: -1px;
+}
+
+.courses-window {
+	width: 860px;
+}
+
+/* The workshop ID is plain text because the game can't open links.
+   The state is an outlined tag because a tinted fill was hard to read in game. */
+.courses-meta {
+	flow-children: right;
+	width: 100%;
+	margin-bottom: 8px;
+}
+
+.courses-state {
+	vertical-align: center;
+	padding: 0px 6px;
+	border-radius: kz-radius-sm;
+	font-size: kz-text-base;
+}
+
+.courses-state.state-approved {
+	color: kz-green-400;
+	border: 1px solid kz-approved-border;
+}
+
+.courses-state.state-testing {
+	color: kz-orange-400;
+	border: 1px solid kz-testing-border;
+}
+
+.courses-state.state-invalid {
+	color: kz-gray-400;
+	border: 1px solid kz-invalid-border;
+}
+
+.courses-workshop {
+	vertical-align: center;
+	margin-left: 8px;
+	white-space: nowrap;
+	font-size: kz-text-base;
+	color: kz-zinc-400;
+}
+
+.font-reflow .courses-state {
+	padding: 0px 7px 0px 6px;
+}
+
+.font-reflow .courses-workshop,
+.font-reflow .courses-description-text {
+	padding-right: 1px;
+	margin-right: -1px;
+}
+
+.courses-credit {
+	width: 100%;
+}
+
+/* The label stays on the first line when the description wraps. */
+.courses-description {
+	width: 100%;
+	margin-top: 8px;
+}
+
+.courses-description .kz-credit-label {
+	vertical-align: top;
+}
+
+.courses-description-text {
+	width: fill-parent-flow( 1 );
+	font-size: kz-text-base;
+	color: kz-zinc-300;
+}
+
+/* Scrolls past about a dozen rows of chips. */
+.courses-scroll {
+	flow-children: down;
+	width: 100%;
+	max-height: 480px;
+	margin-top: 12px;
+	overflow: squish scroll;
+}
+
+.courses-hint {
+	width: 100%;
+	margin-top: 12px;
+	font-size: 13px;
+	color: kz-zinc-400;
+}
