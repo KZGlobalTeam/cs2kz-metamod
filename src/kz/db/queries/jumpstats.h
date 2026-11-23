@@ -237,3 +237,97 @@ constexpr char sql_jumpstats_ranking_getblockpbs[] = R"(
         WHERE b.SteamID64=c.SteamID64 AND b.Mode=c.Mode AND c.IsBlockJump 
         ORDER BY c.JumpType
 )";
+
+constexpr char sqlite_jumpstats_add_uuid[] = R"(
+    ALTER TABLE Jumpstats ADD COLUMN UUID TEXT NULL
+)";
+
+constexpr char mysql_jumpstats_add_uuid[] = R"(
+    ALTER TABLE Jumpstats ADD COLUMN UUID CHAR(36) NULL
+)";
+
+// The UUID is the one the jump shares with its replay.
+constexpr char sql_jumpstats_insert_uuid[] = R"(
+    INSERT INTO Jumpstats (SteamID64, JumpType, Mode, Distance, IsBlockJump, Block, Strafes, Sync, Pre, Max, Airtime, UUID)
+        VALUES (%llu, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d, '%s')
+)";
+
+constexpr char sql_jumpstats_getpb[] = R"(
+    SELECT Distance
+        FROM Jumpstats
+        WHERE SteamID64=%llu AND JumpType=%d AND Mode=%d
+        ORDER BY Distance DESC
+        LIMIT 1
+)";
+
+constexpr char sql_jumpstats_getblockpb[] = R"(
+    SELECT Block, Distance
+        FROM Jumpstats
+        WHERE SteamID64=%llu AND JumpType=%d AND Mode=%d AND IsBlockJump=1
+        ORDER BY Block DESC, Distance DESC
+        LIMIT 1
+)";
+
+// Keeps a player's best jumps of a type and mode by distance and their best block jumps.
+// The derived tables let MySQL read the table it deletes from.
+constexpr char sql_jumpstats_prune[] = R"(
+    DELETE FROM Jumpstats
+        WHERE SteamID64=%llu AND JumpType=%d AND Mode=%d
+            AND ID NOT IN (
+                SELECT ID FROM (
+                    SELECT ID FROM Jumpstats
+                        WHERE SteamID64=%llu AND JumpType=%d AND Mode=%d
+                        ORDER BY Distance DESC, ID
+                        LIMIT %d
+                ) best
+            )
+            AND ID NOT IN (
+                SELECT ID FROM (
+                    SELECT ID FROM Jumpstats
+                        WHERE SteamID64=%llu AND JumpType=%d AND Mode=%d AND IsBlockJump=1
+                        ORDER BY Block DESC, Distance DESC, ID
+                        LIMIT %d
+                ) bestBlock
+            )
+)";
+
+// A page of each unbanned player's best jump of a type and mode.
+// The %s slots take the block filter and the order of the inner and outer query.
+constexpr char sql_jumpstats_gettop[] = R"(
+    SELECT j.ID, j.SteamID64, p.Alias, j.Distance, j.IsBlockJump, j.Block, j.Strafes, j.Sync, j.Pre, j.Max, j.Airtime, j.UUID
+        FROM Jumpstats j
+        INNER JOIN Players p ON p.SteamID64=j.SteamID64
+        LEFT JOIN Bans b ON b.SteamID64=j.SteamID64 AND (b.ExpiresAt IS NULL OR b.ExpiresAt > CURRENT_TIMESTAMP)
+        WHERE j.JumpType=%d AND j.Mode=%d AND b.ID IS NULL%s
+            AND j.ID = (
+                SELECT j2.ID FROM Jumpstats j2
+                    WHERE j2.SteamID64=j.SteamID64 AND j2.JumpType=j.JumpType AND j2.Mode=j.Mode%s
+                    ORDER BY %s
+                    LIMIT 1
+            )
+        ORDER BY %s
+        LIMIT %d OFFSET %llu
+)";
+
+// Counts the players on the list above.
+constexpr char sql_jumpstats_gettopcount[] = R"(
+    SELECT COUNT(DISTINCT j.SteamID64)
+        FROM Jumpstats j
+        LEFT JOIN Bans b ON b.SteamID64=j.SteamID64 AND (b.ExpiresAt IS NULL OR b.ExpiresAt > CURRENT_TIMESTAMP)
+        WHERE j.JumpType=%d AND j.Mode=%d AND b.ID IS NULL%s
+)";
+
+constexpr char sql_jumpstats_getplayerjumps[] = R"(
+    SELECT ID, JumpType, Mode, Distance, IsBlockJump, Block, Created, UUID
+        FROM Jumpstats
+        WHERE SteamID64=%llu
+        ORDER BY JumpType, Mode, Distance DESC
+)";
+
+constexpr char sql_jumpstats_getuuid[] = R"(
+    SELECT UUID FROM Jumpstats WHERE ID=%u
+)";
+
+constexpr char sql_jumpstats_getplayeruuids[] = R"(
+    SELECT UUID FROM Jumpstats WHERE SteamID64=%llu
+)";
