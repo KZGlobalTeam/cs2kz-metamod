@@ -515,6 +515,26 @@ public:
 		return f(checksums);
 	}
 
+	struct GlobalCheck
+	{
+		bool apiOnline = false;
+		bool serverConnected = false;
+		bool mapGlobal = false;
+		bool playerAuthenticated = false;
+		bool playerGlobal = false;
+		bool modeGlobal = false;
+		bool stylesGlobal = false;
+
+		bool RunsGlobal() const
+		{
+			return this->serverConnected && this->mapGlobal && this->playerGlobal && this->modeGlobal && this->stylesGlobal;
+		}
+	};
+
+	// Runs the checks of !gc for the player's mode and styles.
+	// Everything but the player's authentication fails while the server isn't connected to the API.
+	static GlobalCheck CheckGlobalStatus(KZPlayer *player);
+
 	static void UpdateRecordCache();
 	// Fetches this player's global records on the current map into their PB cache.
 	void UpdatePlayerRecordCache();
