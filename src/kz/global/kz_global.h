@@ -666,6 +666,22 @@ public:
 		return KZGlobalService::WS::SendMessage(std::move(message), std::move(callback));
 	}
 
+	// Fetches any map's details.
+	// The callback receives a std::optional<KZ::api::Map>.
+	template<typename CB>
+	static bool QueryMapInfo(std::string_view map, CB &&callback)
+	{
+		if (!KZGlobalService::IsAvailable())
+		{
+			return false;
+		}
+
+		KZ::api::messages::WantMapInfo message;
+		message.map = map;
+
+		return KZGlobalService::WS::SendMessage(std::move(message), std::move(callback));
+	}
+
 	template<typename CB>
 	static bool QueryWorldRecords(std::string_view map, std::string_view course, KZ::api::Mode mode, CB &&callback)
 	{

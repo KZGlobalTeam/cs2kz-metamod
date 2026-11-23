@@ -1,0 +1,68 @@
+"Phrases"
+{
+	"Profile - Joined On"
+	{
+		"en"		"Joined On:"
+	}
+	"Profile - Global Rank"
+	{
+		"en"		"Global Rank:"
+	}
+	"Profile - Rating"
+	{
+		"en"		"Rating:"
+	}
+	"Profile - Runs"
+	{
+		"en"		"Runs"
+	}
+	"Profile - Map"
+	{
+		"en"		"Map"
+	}
+	"Profile - Course"
+	{
+		"en"		"Course"
+	}
+	"Profile - Tier"
+	{
+		"en"		"Tier"
+	}
+	"Profile - Pro Tier"
+	{
+		"en"		"Pro Tier"
+	}
+	"Profile - Overall Rank"
+	{
+		"en"		"Overall Rank"
+	}
+	"Profile - Pro Rank"
+	{
+		"en"		"Pro Rank"
+	}
+	"Profile - Not Found"
+	{
+		"en"		"Player not found."
+	}
+	"Profile - Failed"
+	{
+		"en"		"Couldn't load the profile."
+	}
+	"Profile - Copy Steam ID"
+	{
+		"en"		"Print Steam ID to chat and console"
+	}
+	"Profile - Steam ID"
+	{
+		"#format"	"name:s,steamid64:s,steamid:s"
+		"en"		"{grey}Steam ID of {default}{name}{grey}: {default}{steamid64} {grey}({default}{steamid}{grey})"
+	}
+	"Profile - Unavailable"
+	{
+		"en"		"{grey}Profiles need the global API or the server's database, and neither is available."
+	}
+	"Profile - Window Unavailable"
+	{
+		"en"		"{grey}The profile window couldn't open."
+	}
+}

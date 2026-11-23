@@ -249,4 +249,172 @@
 		"fi"		"Käyttö: kz_ctop/kz_coursetop/kz_maptop/ <c/course/map/mode=...>\nEsimerkki: \"kz_ctop map=kz_map c=Main o=10 l=20\". Lisää 'g' tai 's' alkuun ennen 'top'-päätettä  määrittääksesi globaalin/palvelimen tulokset (esim. kz_gctop)."
 		"lv"		"Pielietojums: kz_ctop/kz_coursetop/kz_maptop/ <c/course/map/mode=...>\nPiemērs: \"kz_ctop map=kz_map c=Main o=10 l=20\". Pievieno 'g' vai 's' pirms 'top' sufiksa, lai norādītu tikai globālo/servera (piem., kz_gctop)."
 	}
+	"Course Top - Window Ranking"
+	{
+		"en"		"Course Ranking"
+	}
+	"Course Top - Window Overall"
+	{
+		"en"		"Overall"
+	}
+	"Course Top - Window Pro"
+	{
+		"en"		"Pro"
+	}
+	"Course Top - Window Global"
+	{
+		"en"		"Global"
+	}
+	"Course Top - Window Server"
+	{
+		"en"		"Server"
+	}
+	"Course Top - Window Rank"
+	{
+		"en"		"Rank"
+	}
+	"Course Top - Window Player"
+	{
+		"en"		"Player"
+	}
+	"Course Top - Window Time"
+	{
+		"en"		"Time"
+	}
+	"Course Top - Window Overall Points"
+	{
+		"en"		"Overall Pts"
+	}
+	"Course Top - Window Pro Points"
+	{
+		"en"		"Pro Pts"
+	}
+	"Course Top - Window Date"
+	{
+		"en"		"Date"
+	}
+	"Course Top - Window Replay"
+	{
+		"en"		"Replay"
+	}
+	"Course Top - Window Watch Replay"
+	{
+		"en"		"Watch Replay"
+	}
+	"Course Top - Window Copy ID"
+	{
+		"en"		"Print ID to chat and console"
+	}
+	"Course Top - Record ID"
+	{
+		"#format"	"name:s,id:s"
+		"en"		"{grey}Record ID of {default}{name}{grey}: {default}{id}"
+	}
+	"Course Top - Window Copy Workshop ID"
+	{
+		"en"		"Print workshop ID to chat and console"
+	}
+	"Course Top - Workshop ID"
+	{
+		"#format"	"map:s,id:s"
+		"en"		"{grey}Workshop ID of {default}{map}{grey}: {default}{id}"
+	}
+	"Course Top - Window Previous"
+	{
+		"en"		"Previous"
+	}
+	"Course Top - Window Next"
+	{
+		"en"		"Next"
+	}
+	"Course Top - Window Loading"
+	{
+		"en"		"Loading..."
+	}
+	"Course Top - Window No Data"
+	{
+		"en"		"No Data"
+	}
+	"Course Top - Window Failed"
+	{
+		"en"		"Couldn't load the records."
+	}
+	"Course Top - Window Count"
+	{
+		"#format"	"first:s,last:s,total:s"
+		"en"		"{first} - {last} of {total}"
+	}
+	"Course Top - Window Count (No Total)"
+	{
+		"#format"	"first:s,last:s"
+		"en"		"{first} - {last}"
+	}
+	"Course Top - Year Ago"
+	{
+		"#format"	"count:i"
+		"en"		"{count} year ago"
+	}
+	"Course Top - Years Ago"
+	{
+		"#format"	"count:i"
+		"en"		"{count} years ago"
+	}
+	"Course Top - Month Ago"
+	{
+		"#format"	"count:i"
+		"en"		"{count} month ago"
+	}
+	"Course Top - Months Ago"
+	{
+		"#format"	"count:i"
+		"en"		"{count} months ago"
+	}
+	"Course Top - Day Ago"
+	{
+		"#format"	"count:i"
+		"en"		"{count} day ago"
+	}
+	"Course Top - Days Ago"
+	{
+		"#format"	"count:i"
+		"en"		"{count} days ago"
+	}
+	"Course Top - Hour Ago"
+	{
+		"#format"	"count:i"
+		"en"		"{count} hour ago"
+	}
+	"Course Top - Hours Ago"
+	{
+		"#format"	"count:i"
+		"en"		"{count} hours ago"
+	}
+	"Course Top - Minute Ago"
+	{
+		"#format"	"count:i"
+		"en"		"{count} minute ago"
+	}
+	"Course Top - Minutes Ago"
+	{
+		"#format"	"count:i"
+		"en"		"{count} minutes ago"
+	}
+	"Course Top - Second Ago"
+	{
+		"#format"	"count:i"
+		"en"		"{count} second ago"
+	}
+	"Course Top - Seconds Ago"
+	{
+		"#format"	"count:i"
+		"en"		"{count} seconds ago"
+	}
+	"Course Top - Window No Replay"
+	{
+		"en"		"No replay on this server"
+	}
+	"Course Top - Window Other Map"
+	{
+		"en"		"Only replays of the current map can be watched"
+	}
 }

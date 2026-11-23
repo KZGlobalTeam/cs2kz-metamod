@@ -1,6 +1,7 @@
 #include "kz_db.h"
 #include "vendor/sql_mm/src/public/sql_mm.h"
 #include "queries/course_top.h"
+#include "queries/personal_best.h"
 
 void KZDatabaseService::QueryAllRecords(const std::string &mapName, TransactionSuccessCallbackFunc onSuccess,
 										TransactionFailureCallbackFunc onFailure)
@@ -22,7 +23,7 @@ void KZDatabaseService::QueryAllRecords(const std::string &mapName, TransactionS
 }
 
 void KZDatabaseService::QueryRecords(const std::string &mapName, const std::string &courseName, u32 modeID, u32 count, u32 offset,
-									 TransactionSuccessCallbackFunc onSuccess, TransactionFailureCallbackFunc onFailure)
+									 TransactionSuccessCallbackFunc onSuccess, TransactionFailureCallbackFunc onFailure, bool withTotals)
 {
 	std::string cleanedMapName = KZDatabaseService::GetDatabaseConnection()->Escape(mapName.c_str());
 	std::string cleanedCourseName = KZDatabaseService::GetDatabaseConnection()->Escape(courseName.c_str());
@@ -36,6 +37,29 @@ void KZDatabaseService::QueryRecords(const std::string &mapName, const std::stri
 
 	// Get Rank
 	V_snprintf(query, sizeof(query), sql_getcoursetoppro, cleanedMapName.c_str(), cleanedCourseName.c_str(), modeID, count, offset);
+	txn.queries.push_back(query);
+
+	if (withTotals)
+	{
+		V_snprintf(query, sizeof(query), sql_getcoursetopcount, cleanedMapName.c_str(), cleanedCourseName.c_str(), modeID);
+		txn.queries.push_back(query);
+
+		V_snprintf(query, sizeof(query), sql_getcoursetopcountpro, cleanedMapName.c_str(), cleanedCourseName.c_str(), modeID);
+		txn.queries.push_back(query);
+	}
+
+	KZDatabaseService::GetDatabaseConnection()->ExecuteTransaction(txn, onSuccess, onFailure);
+}
+
+void KZDatabaseService::QueryPlayerPBs(u64 steamID64, u32 modeID, bool pro, u32 count, u64 offset, TransactionSuccessCallbackFunc onSuccess,
+									   TransactionFailureCallbackFunc onFailure)
+{
+	Transaction txn;
+	char query[4096];
+	V_snprintf(query, sizeof(query), sql_getplayerpbs, pro ? " AND t3.Teleports=0" : "", pro ? " AND t2.Teleports=0" : "", steamID64, modeID,
+			   pro ? " AND t.Teleports=0" : "", count, offset);
+	txn.queries.push_back(query);
+	V_snprintf(query, sizeof(query), sql_getplayerpbcount, steamID64, modeID, pro ? " AND t.Teleports=0" : "");
 	txn.queries.push_back(query);
 
 	KZDatabaseService::GetDatabaseConnection()->ExecuteTransaction(txn, onSuccess, onFailure);

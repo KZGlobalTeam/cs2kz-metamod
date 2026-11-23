@@ -7,13 +7,24 @@
 namespace utils
 {
 	// Return false if a non whitelisted key is found.
-	inline bool ParseArgsToKV3(std::string input, KeyValues3 &kv, const char **wlKeys = NULL, u32 wlKeysLength = 0)
+	// A first word that isn't a key=value pair is stored under bareKey if it is set ("kz_ctop kz_grotto" means "kz_ctop map=kz_grotto").
+	inline bool ParseArgsToKV3(std::string input, KeyValues3 &kv, const char **wlKeys = NULL, u32 wlKeysLength = 0, const char *bareKey = NULL)
 	{
 		bool allValid = true;
 		// Regex for "key=value"
 		const static std::regex pattern(R"((\w+)=(.*?)(?=\s+\w+=|$))");
 		auto words_begin = std::sregex_iterator(input.begin(), input.end(), pattern);
 		auto words_end = std::sregex_iterator();
+
+		if (bareKey)
+		{
+			const static std::regex bareWord(R"(^\s*([^\s=]+)(?=\s|$))");
+			std::smatch match;
+			if (std::regex_search(input, match, bareWord))
+			{
+				kv.FindOrCreateMember(bareKey)->SetString(std::string(match[1]).c_str());
+			}
+		}
 
 		for (std::sregex_iterator i = words_begin; i != words_end; i++)
 		{

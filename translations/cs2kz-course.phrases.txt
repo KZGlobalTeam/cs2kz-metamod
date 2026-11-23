@@ -226,6 +226,14 @@
 		"es"		"Caminos"
 		"ko"		"코스"
 	}
+	"Courses - Ranked"
+	{
+		"en"		"Ranked Courses:"
+	}
+	"Courses - Unranked"
+	{
+		"en"		"Unranked Courses:"
+	}
 	"Course Info Header - Name"
 	{
 		"en"		"Name"

@@ -1,7 +1,9 @@
 #include "base_request.h"
+#include "kz/timer/hud/course_top.h"
 #include "kz/timer/kz_timer.h"
 #include "kz/db/kz_db.h"
 #include "kz/global/kz_global.h"
+#include "kz/replays/kz_replaysystem.h"
 
 #include "utils/simplecmds.h"
 
@@ -56,6 +58,12 @@ struct CourseTopRequest : public BaseRequest
 	static constexpr u64 ctopFeatures =
 		RequestFeature::Course | RequestFeature::Map | RequestFeature::Mode | RequestFeature::Offset | RequestFeature::Limit;
 
+	// "!ctop kz_grotto" asks for that map.
+	virtual const char *GetBareKey() override
+	{
+		return "map";
+	}
+
 	struct RunStats
 	{
 		std::string runID;
@@ -64,6 +72,7 @@ struct CourseTopRequest : public BaseRequest
 		f64 time;
 		u64 steamid64;
 		u64 points {}; // 0 for local database
+		u32 maxRank {};
 
 		std::string GetName()
 		{
@@ -104,6 +113,54 @@ struct CourseTopRequest : public BaseRequest
 		std::vector<RunStats> overallData;
 		std::vector<RunStats> proData;
 	} srData, wrData;
+
+	// Set if the reply goes to the player's CourseTopWindow instead of the console.
+	bool toWindow {};
+	u32 windowSerial {};
+
+	CourseTopWindow::Query GetWindowQuery()
+	{
+		return {this->mapName,
+				this->courseName,
+				this->modeName,
+				this->offset,
+				this->localStatus != ResponseStatus::DISABLED,
+				this->globalStatus != ResponseStatus::DISABLED};
+	}
+
+	// Sends the reply to the player's leaderboard window instead of printing tables if the window can open.
+	void UseWindow(KZPlayer *player, bool queryGlobal)
+	{
+		// The window shows CKZ for any other current mode unless a mode was requested because the API only rates VNL and CKZ.
+		KZ::api::Mode apiMode;
+		if (!this->modeGiven && queryGlobal && KZGlobalService::IsAvailable() && !KZ::api::DecodeModeString(this->modeName, apiMode))
+		{
+			this->SetupMode("CKZ");
+			this->globalStatus = ResponseStatus::ENABLED;
+		}
+		this->windowSerial = player->uiService->GetWindow<CourseTopWindow>()->Begin(this->GetWindowQuery());
+		if (this->windowSerial)
+		{
+			this->toWindow = true;
+			this->limit = KZ_COURSE_TOP_ROWS;
+		}
+	}
+
+	static void CreateForWindow(KZPlayer *player, const CourseTopWindow::Query &query, u32 serial)
+	{
+		CourseTopRequest *req = new CourseTopRequest(idCount++, player);
+		req->features = ctopFeatures;
+		req->localStatus = query.local && KZDatabaseService::IsReady() ? ResponseStatus::ENABLED : ResponseStatus::DISABLED;
+		req->globalStatus = query.global && KZGlobalService::IsAvailable() ? ResponseStatus::ENABLED : ResponseStatus::DISABLED;
+		req->mapName = query.map;
+		req->courseName = query.course;
+		req->SetupMode(query.mode);
+		req->offset = query.offset;
+		req->limit = KZ_COURSE_TOP_ROWS;
+		req->toWindow = true;
+		req->windowSerial = serial;
+		instances.push_back(req);
+	}
 
 	virtual void PrintInstructions() override
 	{
@@ -164,6 +221,21 @@ struct CourseTopRequest : public BaseRequest
 													   result->GetFloat(3), (u64)result->GetInt64(1)});
 					}
 				}
+
+				// Each run carries the size of its leaderboard like the API's records.
+				std::vector<RunStats> *boards[] = {&req->srData.overallData, &req->srData.proData};
+				for (u32 i = 0; i < KZ_ARRAYSIZE(boards) && 2 + i < queries.size(); i++)
+				{
+					if (!(result = queries[2 + i]->GetResultSet()) || !result->FetchRow())
+					{
+						continue;
+					}
+					const u32 total = (u32)result->GetInt64(0);
+					for (RunStats &run : *boards[i])
+					{
+						run.maxRank = total;
+					}
+				}
 			};
 
 			auto onQueryFailure = [uid](std::string, int)
@@ -176,7 +248,7 @@ struct CourseTopRequest : public BaseRequest
 			};
 
 			KZDatabaseService::QueryRecords(this->mapName, this->courseName, this->localModeID, this->limit, this->offset, onQuerySuccess,
-											onQueryFailure);
+											onQueryFailure, this->toWindow);
 		}
 	}
 
@@ -226,11 +298,12 @@ struct CourseTopRequest : public BaseRequest
 		for (const auto &record : ctop.overall)
 		{
 			req->wrData.overallData.push_back(
-				{record.id, record.player.name, record.teleports, record.time, record.player.id, (u64)floor(record.nubPoints)});
+				{record.id, record.player.name, record.teleports, record.time, record.player.id, (u64)floor(record.nubPoints), record.nubMaxRank});
 		}
 		for (const auto &record : ctop.pro)
 		{
-			req->wrData.proData.push_back({record.id, record.player.name, 0, record.time, record.player.id, (u64)floor(record.proPoints)});
+			req->wrData.proData.push_back(
+				{record.id, record.player.name, 0, record.time, record.player.id, (u64)floor(record.proPoints), record.proMaxRank});
 		}
 	}
 
@@ -239,6 +312,11 @@ struct CourseTopRequest : public BaseRequest
 		KZPlayer *player = g_pKZPlayerManager->ToPlayer(userID);
 		if (!player)
 		{
+			return;
+		}
+		if (this->toWindow)
+		{
+			this->ReplyWindow(player);
 			return;
 		}
 
@@ -257,6 +335,33 @@ struct CourseTopRequest : public BaseRequest
 		{
 			this->ReplyGlobal();
 		}
+	}
+
+	void ReplyWindow(KZPlayer *player)
+	{
+		CourseTopWindow::Result result;
+		result.received[CourseTopWindow::Global] = this->globalStatus == ResponseStatus::RECEIVED;
+		result.received[CourseTopWindow::Server] = this->localStatus == ResponseStatus::RECEIVED;
+		result.map = this->mapName;
+		result.course = this->courseName;
+		result.mode = this->modeName;
+		result.offset = this->offset;
+		// A server run's ID is its UUID but its replay only exists if this server kept the file.
+		auto copyRuns = [](const std::vector<RunStats> &from, std::vector<CourseTopWindow::Run> &to, bool global)
+		{
+			for (const RunStats &stats : from)
+			{
+				std::string path;
+				const bool replay = global || (!stats.runID.empty() && KZ::replaysystem::FindReplayPath(stats.runID.c_str(), path));
+				to.push_back({stats.runID, replay, stats.name, stats.time, stats.teleportsUsed, global ? (f64)stats.points : -1, stats.maxRank,
+							  stats.steamid64});
+			}
+		};
+		copyRuns(this->wrData.overallData, result.runs[CourseTopWindow::Global][CourseTopWindow::Overall], true);
+		copyRuns(this->wrData.proData, result.runs[CourseTopWindow::Global][CourseTopWindow::Pro], true);
+		copyRuns(this->srData.overallData, result.runs[CourseTopWindow::Server][CourseTopWindow::Overall], false);
+		copyRuns(this->srData.proData, result.runs[CourseTopWindow::Server][CourseTopWindow::Pro], false);
+		player->uiService->GetWindow<CourseTopWindow>()->OnResult(this->windowSerial, result);
 	}
 
 	void ReplyGlobal()
@@ -369,10 +474,27 @@ struct CourseTopRequest : public BaseRequest
 	}
 };
 
+void CourseTopWindow::SendQuery(KZPlayer *player, const Query &query, u32 serial)
+{
+	CourseTopRequest::CreateForWindow(player, query, serial);
+}
+
+static void RequestCourseTop(KZPlayer *player, const CCommand *args, bool queryLocal, bool queryGlobal)
+{
+	CourseTopRequest *req = CourseTopRequest::Create<CourseTopRequest>(player, CourseTopRequest::ctopFeatures, queryLocal, queryGlobal, args);
+	// Prefer using the custom HUD if it's a chat command unless the addon is unavailable.
+	const bool chat = args->Arg(0)[0] == SCMD_CHAT_TRIGGER || args->Arg(0)[0] == SCMD_CHAT_SILENT_TRIGGER;
+	if (!chat || !req->isValid)
+	{
+		return;
+	}
+	req->UseWindow(player, queryGlobal);
+}
+
 SCMD(kz_ctop, SCFL_RECORD | SCFL_GLOBAL)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
-	CourseTopRequest::Create<CourseTopRequest>(player, CourseTopRequest::ctopFeatures, true, true, args);
+	RequestCourseTop(player, args, true, true);
 	return true;
 }
 
@@ -382,7 +504,7 @@ SCMD_LINK(kz_maptop, kz_ctop);
 SCMD(kz_gctop, SCFL_RECORD | SCFL_GLOBAL)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
-	CourseTopRequest::Create<CourseTopRequest>(player, CourseTopRequest::ctopFeatures, false, true, args);
+	RequestCourseTop(player, args, false, true);
 	return true;
 }
 
@@ -392,7 +514,7 @@ SCMD_LINK(kz_gmaptop, kz_gctop);
 SCMD(kz_sctop, SCFL_TIMER)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
-	CourseTopRequest::Create<CourseTopRequest>(player, CourseTopRequest::ctopFeatures, true, false, args);
+	RequestCourseTop(player, args, true, false);
 	return true;
 }
 

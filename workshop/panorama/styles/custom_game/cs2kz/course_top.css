@@ -1,0 +1,180 @@
+@import url("file://{resources}/styles/custom_game/cs2kz/tokens.css");
+@import url("file://{resources}/styles/custom_game/cs2kz/palette.css");
+@import url("file://{resources}/styles/custom_game/cs2kz/fonts.css");
+@import url("file://{resources}/styles/custom_game/cs2kz/components.css");
+
+.maptop-window {
+	width: 860px;
+}
+
+/* The map name sizes to its text so the workshop button sits right after it. */
+.kz-window-title.maptop-title {
+	width: fit-children;
+	max-width: 740px;
+}
+
+#maptop_workshop {
+	margin-left: 8px;
+}
+
+/* Shows two rows of chips and scrolls past that. */
+.maptop-courses {
+	flow-children: down;
+	width: 100%;
+	max-height: 88px;
+	overflow: squish scroll;
+}
+
+.maptop-heading-row {
+	flow-children: right;
+	width: 100%;
+	margin-top: 8px;
+	margin-bottom: 8px;
+}
+
+.maptop-heading {
+	vertical-align: center;
+	font-size: 30px;
+	font-weight: bold;
+	color: kz-zinc-200;
+}
+
+.kz-rank-card {
+	flow-children: right;
+	width: 100%;
+	margin-bottom: 8px;
+	padding: 8px;
+	border: 2px solid #ffffff1a;
+	border-radius: kz-radius-md;
+	background-color: #1f2937cc;
+}
+
+.kz-rank-card.wr {
+	border: 2px solid #ffffff66;
+	background-color: #5d5d5db3;
+	box-shadow: #ff880066 0px 0px 8px 0px;
+}
+
+.kz-rank-card-who {
+	flow-children: down;
+	width: 192px;
+	vertical-align: center;
+}
+
+.kz-rank-card-name-btn {
+	height: fit-children;
+}
+
+.kz-rank-card-name {
+	max-width: 192px;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	font-size: kz-text-xl;
+	font-weight: bold;
+	color: kz-cyan-600;
+}
+
+.kz-rank-card.wr .kz-rank-card-name {
+	color: kz-yellow-400;
+}
+
+.kz-name-btn:not(.static):hover .kz-rank-card-name {
+	color: kz-cyan-400;
+}
+
+.kz-rank-card.wr .kz-name-btn:not(.static):hover .kz-rank-card-name {
+	color: kz-yellow-300;
+}
+
+.kz-rank-card-place {
+	flow-children: right;
+}
+
+.kz-rank-card-rank {
+	font-size: kz-text-lg;
+	font-weight: bold;
+	color: kz-slate-300;
+}
+
+.kz-rank-card-slash {
+	margin: 0px 4px;
+	font-size: kz-text-xl;
+	font-weight: bold;
+	color: kz-slate-500;
+}
+
+.kz-rank-card.wr .kz-rank-card-slash {
+	color: kz-slate-400;
+}
+
+.kz-rank-card-stats {
+	flow-children: right;
+	margin-left: 40px;
+	vertical-align: center;
+}
+
+.kz-rank-card-stat {
+	flow-children: down;
+	width: 80px;
+	margin-right: 16px;
+}
+
+.kz-rank-card-stat.date {
+	width: 128px;
+}
+
+.kz-rank-card-stat-label {
+	font-size: kz-text-base;
+	color: kz-gray-300;
+}
+
+.kz-rank-card-stat-value {
+	white-space: nowrap;
+	font-size: kz-text-base;
+	color: kz-gray-100;
+}
+
+.kz-rank-card-stat.date .kz-rank-card-stat-value {
+	font-style: italic;
+	color: kz-gray-200;
+}
+
+.font-reflow .kz-rank-card-rank,
+.font-reflow .kz-rank-card-stat-label,
+.font-reflow .kz-rank-card-stat-value {
+	padding-right: 1px;
+	margin-right: -1px;
+}
+
+.font-reflow .kz-rank-card-name {
+	padding-right: 1px;
+}
+
+.kz-col-rank {
+	width: 72px;
+}
+
+.kz-col-player {
+	width: fill-parent-flow(1);
+}
+
+.kz-col-time {
+	width: 150px;
+}
+
+.kz-col-points {
+	width: 120px;
+}
+
+.kz-col-date {
+	width: 150px;
+}
+
+.kz-record-cell.kz-record-name {
+	max-width: 228px;
+}
+
+.font-reflow .maptop-heading {
+	padding-right: 1px;
+	margin-right: -1px;
+}

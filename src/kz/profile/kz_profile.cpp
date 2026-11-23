@@ -5,6 +5,10 @@
 #include "kz/mode/kz_mode.h"
 #include "kz/style/kz_style.h"
 #include "kz/option/kz_option.h"
+#include "kz/global/kz_global.h"
+#include "kz/language/kz_language.h"
+#include "kz/profile/hud/profile.h"
+#include "utils/simplecmds.h"
 
 #include "sdk/recipientfilters.h"
 #include "public/networksystem/inetworkmessages.h"
@@ -322,4 +326,20 @@ std::string KZProfileService::GetPrefix(bool colors)
 		return std::string(colors ? "{default}[" : "[") + this->player->modeService->GetModeShortName()
 			   + (!this->player->styleServices.empty() ? "*" : "") + (colors ? "]{default}" : "]");
 	}
+}
+
+// Opens the caller's profile or the one named by the argument in a window.
+SCMD(kz_profile, SCFL_PLAYER | SCFL_GLOBAL)
+{
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
+	if (!ProfileWindow::IsAvailable())
+	{
+		player->languageService->PrintChat(true, false, "Profile - Unavailable");
+		return true;
+	}
+	if (!player->uiService->GetWindow<ProfileWindow>()->ShowQuery(args->ArgS()))
+	{
+		player->languageService->PrintChat(true, false, "Profile - Window Unavailable");
+	}
+	return true;
 }

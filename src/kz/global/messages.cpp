@@ -56,6 +56,11 @@ bool KZ::api::messages::MapChange::ToJson(Json &json) const
 	return json.Set("new_map", this->name);
 }
 
+bool KZ::api::messages::WantMapInfo::ToJson(Json &json) const
+{
+	return json.Set("map", this->map);
+}
+
 bool KZ::api::messages::PlayerJoin::ToJson(Json &json) const
 {
 	if (!(json.Set("id", this->id) && json.Set("name", this->name) && json.Set("has_prime", this->hasPrime)))

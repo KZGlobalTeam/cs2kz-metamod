@@ -15,3 +15,17 @@ void KZDatabaseService::FindFirstCourseByMapName(const std::string &mapName, Tra
 
 	KZDatabaseService::GetDatabaseConnection()->ExecuteTransaction(txn, onSuccess, onFailure);
 }
+
+void KZDatabaseService::FindCoursesByMapName(const std::string &mapName, TransactionSuccessCallbackFunc onSuccess,
+											 TransactionFailureCallbackFunc onFailure)
+{
+	auto cleanMapName = KZDatabaseService::GetDatabaseConnection()->Escape(mapName.c_str());
+
+	char query[2048];
+	V_snprintf(query, sizeof(query), sql_mapcourses_findall_mapname, cleanMapName.c_str());
+
+	Transaction txn;
+	txn.queries.push_back(query);
+
+	KZDatabaseService::GetDatabaseConnection()->ExecuteTransaction(txn, onSuccess, onFailure);
+}

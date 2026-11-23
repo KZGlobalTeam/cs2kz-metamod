@@ -117,6 +117,12 @@ bool KZUIService::IsOpen(const Window *window) const
 	return std::find(this->stack.begin(), this->stack.end(), window) != this->stack.end();
 }
 
+bool KZUIService::HasWindowBelow(const Window *window) const
+{
+	auto it = std::find(this->stack.begin(), this->stack.end(), window);
+	return it != this->stack.end() && it != this->stack.begin();
+}
+
 void KZUIService::PruneStale()
 {
 	for (size_t i = 0; i < this->stack.size(); i++)

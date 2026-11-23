@@ -78,6 +78,8 @@ public:
 	void CloseAll(KZ::ui::CloseReason reason);
 
 	bool IsOpen(const KZ::ui::Window *window) const;
+	// True if closing the window goes back to another window.
+	bool HasWindowBelow(const KZ::ui::Window *window) const;
 
 	KZ::ui::Window *GetTop() const
 	{

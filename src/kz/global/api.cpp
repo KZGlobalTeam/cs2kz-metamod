@@ -20,6 +20,11 @@ bool KZ::api::DecodeModeString(std::string_view modeString, Mode &mode)
 	}
 }
 
+const char *KZ::api::GetModeShortName(Mode mode)
+{
+	return mode == Mode::Vanilla ? "VNL" : "CKZ";
+}
+
 bool KZ::api::PlayerInfo::FromJson(const Json &json)
 {
 	if (!json.Get("id", this->id))
@@ -339,10 +344,7 @@ bool KZ::api::Record::FromJson(const Json &json)
 		{
 			return false;
 		}
-		if (!json.Get("nub_max_rank", this->nubMaxRank))
-		{
-			return false;
-		}
+		json.Get("nub_max_rank", this->nubMaxRank);
 	}
 
 	if (json.Get("pro_rank", this->proRank))
@@ -351,10 +353,7 @@ bool KZ::api::Record::FromJson(const Json &json)
 		{
 			return false;
 		}
-		if (!json.Get("pro_max_rank", this->proMaxRank))
-		{
-			return false;
-		}
+		json.Get("pro_max_rank", this->proMaxRank);
 	}
 
 	return true;
@@ -367,5 +366,19 @@ bool KZ::api::Record::MapInfo::FromJson(const Json &json)
 
 bool KZ::api::Record::CourseInfo::FromJson(const Json &json)
 {
-	return json.Get("id", this->id) && json.Get("name", this->name);
+	if (!(json.Get("id", this->id) && json.Get("name", this->name)))
+	{
+		return false;
+	}
+	std::string tier;
+	Map::Course::Filter::Tier decoded;
+	if (json.Get("nub_tier", tier) && Map::Course::Filter::DecodeTierString(tier, decoded))
+	{
+		this->nubTier = decoded;
+	}
+	if (json.Get("pro_tier", tier) && Map::Course::Filter::DecodeTierString(tier, decoded))
+	{
+		this->proTier = decoded;
+	}
+	return true;
 }

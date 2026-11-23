@@ -52,6 +52,14 @@ constexpr char sql_mapcourses_findfirst_mapname[] = R"(
         LIMIT 1
 )";
 
+constexpr char sql_mapcourses_findall_mapname[] = R"(
+    SELECT MapCourses.Name
+        FROM MapCourses
+        INNER JOIN Maps ON Maps.ID = MapCourses.MapID
+        WHERE Maps.Name='%s'
+        ORDER BY StageID ASC
+)";
+
 constexpr char sql_mapcourses_findname[] = R"(
     SELECT ID 
         FROM MapCourses 

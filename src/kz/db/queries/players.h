@@ -70,3 +70,19 @@ constexpr char sql_players_searchbyalias[] = R"(
         ORDER BY (Bans.ID IS NULL) DESC, (LOWER(Players.Alias)='%s') DESC, Players.LastPlayed DESC 
         LIMIT 1
 )";
+
+// Finds a player by SteamID or the best name match like sql_players_searchbyalias.
+constexpr char sql_players_getprofile[] = R"(
+    SELECT SteamID64, Alias, Created
+        FROM Players
+        WHERE SteamID64=%llu
+)";
+
+constexpr char sql_players_getprofile_byalias[] = R"(
+    SELECT Players.SteamID64, Players.Alias, Players.Created
+        FROM Players
+        LEFT JOIN Bans ON Bans.SteamID64=Players.SteamID64 AND (Bans.ExpiresAt IS NULL OR Bans.ExpiresAt > CURRENT_TIMESTAMP)
+        WHERE LOWER(Players.Alias) LIKE '%%%s%%'
+        ORDER BY (Bans.ID IS NULL) DESC, (LOWER(Players.Alias)='%s') DESC, Players.LastPlayed DESC
+        LIMIT 1
+)";
