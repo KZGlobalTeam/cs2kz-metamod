@@ -189,7 +189,7 @@ struct KzTrigger
 
 namespace KZ::mapapi
 {
-	// These namespace'd functions are called when relevant game events happen, and are somewhat in order.
+	// These namespace'd functions are called when relevant game events happen and are somewhat in order.
 	void Init();
 	void OnCreateLoadingSpawnGroupHook(const CUtlVector<const CEntityKeyValues *> *pKeyValues);
 	void OnSpawn(int count, const EntitySpawnInfo_t *info);
@@ -197,7 +197,7 @@ namespace KZ::mapapi
 	void OnRoundStart();
 
 	void CheckEndTimerTrigger(CBaseTrigger *trigger);
-	// This is const, unlike the trigger returned from Mapi_FindKzTrigger.
+	// This is const unlike the trigger returned from Mapi_FindKzTrigger.
 	const KzTrigger *GetKzTrigger(CBaseTrigger *trigger);
 
 	const KZCourseDescriptor *GetCourseDescriptorFromTrigger(CBaseTrigger *trigger);

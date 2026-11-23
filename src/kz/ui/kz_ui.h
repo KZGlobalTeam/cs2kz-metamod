@@ -24,12 +24,12 @@ namespace KZ::ui
 	{
 		// Closes every open window first.
 		Replace,
-		// Suspends the window on top, which resumes once this one closes.
+		// Suspends the window on top until this one closes.
 		Push,
 	};
 
-	// Something that takes the player's cursor. Only the window on top of the player's stack captures input and gets
-	// clicks.
+	// Something that takes the player's cursor.
+	// Only the window on top of the player's stack captures input and gets clicks.
 	class Window
 	{
 	public:
@@ -37,7 +37,8 @@ namespace KZ::ui
 
 		// The layout whose clicks this window handles and whose input capture it holds while on top.
 		virtual PlayerLayout *GetLayout() = 0;
-		// Spawns what the window needs. Returning false leaves the open windows as they were.
+		// Spawns what the window needs.
+		// Returning false leaves the open windows as they were.
 		virtual bool CanOpen() = 0;
 		virtual void OnOpen() = 0;
 		virtual void OnClose(CloseReason reason) = 0;
@@ -48,7 +49,7 @@ namespace KZ::ui
 
 		virtual void OnClick(const char *buttonId) = 0;
 
-		// Bumped on every open, so an async result can tell whether it still belongs to the window it was requested for.
+		// Bumped on every open so an async result can tell whether it still belongs to the window it was requested for.
 		u32 GetOpenId() const
 		{
 			return this->openId;
@@ -60,7 +61,8 @@ namespace KZ::ui
 	};
 } // namespace KZ::ui
 
-// The player's stack of open windows. It alone decides input capture and the cs2menus busy state.
+// The player's stack of open windows.
+// It alone decides input capture and the cs2menus busy state.
 class KZUIService : public KZBaseService
 {
 	using KZBaseService::KZBaseService;
@@ -82,7 +84,7 @@ public:
 		return this->stack.empty() ? nullptr : this->stack.back();
 	}
 
-	// Windows that no service owns, created on first use and destroyed when the player leaves.
+	// Windows that no service owns (created on first use and destroyed when the player leaves).
 	template<class T>
 	T *GetWindow()
 	{
@@ -119,9 +121,9 @@ private:
 		std::unique_ptr<KZ::ui::Window> window;
 	};
 
-	// Drops windows whose layout entity is gone, which happens on a map change.
+	// Drops windows whose layout entity is gone (that happens on a map change).
 	void PruneStale();
-	// Applies input capture to every layout in touched and on the stack, then updates the cs2menus busy state.
+	// Applies input capture to every layout in touched and on the stack and then updates the cs2menus busy state.
 	void ApplyInputState(const std::vector<KZ::ui::Window *> &touched);
 	void DestroyOwnedWindows();
 

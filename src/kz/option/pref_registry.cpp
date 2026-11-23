@@ -68,9 +68,8 @@ const KZ::prefs::Entry *KZ::prefs::FindEntry(const char *key)
 	return NULL;
 }
 
-// The value the preference reads as while the player has never set it, as the same console token
-// ReadValue writes. Exporting these is what lets a pasted block replace a recipient's whole set
-// instead of only the keys the sender happened to touch.
+// The value the preference reads as while the player has never set it (the same console token ReadValue writes).
+// Exporting these lets a pasted block replace a recipient's whole set instead of only the keys the sender happened to touch.
 static_function bool ReadDefaultValue(const KZ::prefs::Entry &entry, char *out, i32 outLen)
 {
 	const KZOptItem *item = entry.item;
@@ -118,7 +117,7 @@ static_function bool ReadDefaultValue(const KZ::prefs::Entry &entry, char *out, 
 			V_snprintf(out, outLen, "%i", item->idef);
 			return true;
 		case KZOptStorage::Str:
-			// An empty value cannot travel: setinfo with one is how a player clears the convar.
+			// An empty value cannot travel because setinfo with one is how a player clears the convar.
 			if (!item->sdef || !item->sdef[0])
 			{
 				return false;
@@ -166,8 +165,8 @@ bool KZ::prefs::ReadValue(KZPlayer *player, const KZ::prefs::Entry &entry, char 
 	}
 }
 
-// The range the menu steps a value inside, in the units the preference is stored in. Imported values
-// come straight from client convars, so they get held to the same bounds.
+// The range the menu steps a value inside in the units the preference is stored in.
+// Imported values come straight from client convars and get held to the same bounds.
 static_function bool GetValueRange(const KZ::prefs::Entry &entry, f64 &lo, f64 &hi)
 {
 	const KZOptItem *item = entry.item;

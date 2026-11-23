@@ -30,7 +30,7 @@ void MovementPlayer::OnProcessMovement()
 
 void MovementPlayer::OnProcessMovementPost()
 {
-	// On ground or a ladder, definitely not in a perf.
+	// Definitely not in a perf on ground or a ladder.
 	if (this->GetPlayerPawn()->m_fFlags() & FL_ONGROUND || this->GetMoveType() != MOVETYPE_WALK)
 	{
 		this->inRealPerf = false;
@@ -276,7 +276,7 @@ f32 MovementPlayer::GetGroundPosition()
 
 	INavPhysicsInterface::TraceShape(Ray_t(bounds.mins, bounds.maxs), mv->m_vecAbsOrigin, ground, &filter, &trace);
 
-	// Doesn't hit anything, fall back to the original ground
+	// Fall back to the original ground if it doesn't hit anything
 	if (trace.m_bStartInSolid || trace.m_flFraction == 1.0f)
 	{
 		return mv->m_vecAbsOrigin.z;
@@ -331,7 +331,7 @@ void MovementPlayer::RegisterLanding(const Vector &landingVelocity, bool distbug
 	// Distbug shenanigans
 	if (mv->m_TouchList.Count() > 0) // bugged
 	{
-		// The true landing origin from TryPlayerMove, use this whenever you can
+		// Use this true landing origin from TryPlayerMove whenever you can
 		f32 normal = 0.7;
 
 		CConVarRef<float> sv_walkable_normal("sv_walkable_normal");
@@ -354,15 +354,15 @@ void MovementPlayer::RegisterLanding(const Vector &landingVelocity, bool distbug
 	}
 	// reverse bugged
 	f32 diffZ = mv->m_vecAbsOrigin.z - this->GetGroundPosition();
-	if (diffZ <= 0.03125f) // Ledgegrabbed, just use the current origin.
+	if (diffZ <= 0.03125f) // Just use the current origin if ledgegrabbed.
 	{
 		this->landingOriginActual = mv->m_vecAbsOrigin;
 		this->landingTimeActual = this->landingTime;
 	}
 	else
 	{
-		// Predicts the landing origin if reverse bug happens
-		// Doesn't match the theoretical values for probably floating point limitation reasons, but it's good enough
+		// Predicts the landing origin if reverse bug happens.
+		// It doesn't match the theoretical values (probably floating point limitations) but it's good enough.
 
 		Vector gravity = {0, 0, -800};
 		CConVarRef<float> sv_gravity("sv_gravity");

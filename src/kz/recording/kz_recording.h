@@ -32,7 +32,7 @@ struct CircularRecorder
 	std::optional<std::vector<RpModeStyleInfo>> earliestStyles;
 	// Extra 20 seconds for commands in case of network issues
 	// Note that command data is tracked regardless of whether the player is alive or not.
-	// This means if the player goes to spectator, the command data will no longer match the tick data.
+	// This means the command data will no longer match the tick data if the player goes to spectator.
 	CFIFOCircularBuffer<CmdData, 64 * (60 * 2 + 20)> *cmdData;
 	CFIFOCircularBuffer<SubtickData, 64 * (60 * 2 + 20)> *cmdSubtickData;
 	CFIFOCircularBuffer<RpEvent, 64 * (60 * 2 + 20)> *rpEvents;
@@ -94,14 +94,14 @@ struct Recorder
 	std::vector<SubtickData::RpSubtickMove> cmdSubtickMoves;
 
 	// --- Incremental disk flushing for long runs ---
-	// Every 15 minutes, in-memory data is written to a temp file on disk to keep memory bounded during long runs.
+	// In-memory data is written to a temp file on disk every 15 minutes to keep memory bounded during long runs.
 	static constexpr u32 FLUSH_INTERVAL_TICKS = 57600; // 15 minutes at 64 ticks/sec
 	u32 numFlushedChunks = 0;
 	u32 totalTicksRecorded = 0;  // Total across all flushed chunks + in-memory
 	u32 totalEventsRecorded = 0; // Preserves run event indices across disk flushes.
 	std::string tempFileBase;    // Set on first flush; empty means no flushing has occurred
 
-	// Flush in-memory recording data to a temp chunk file on disk, then clear in-memory vectors.
+	// Flush in-memory recording data to a temp chunk file on disk and then clear the in-memory vectors.
 	void FlushChunkToDisk();
 
 	// The recording data of one flushed chunk.
@@ -117,7 +117,8 @@ struct Recorder
 		std::vector<SubtickData::RpSubtickMove> cmdSubtickMoves;
 	};
 
-	// Read one flushed chunk back from disk. Pending async writes must have been drained.
+	// Read one flushed chunk back from disk.
+	// Pending async writes must have been drained.
 	bool ReadFlushedChunk(u32 chunk, Chunk &out);
 	void CleanupTempFiles();
 
@@ -210,7 +211,7 @@ class KZPlayer;
 // All callbacks are invoked on the main thread via ReplayFileWriter::RunFrame().
 // Buffer path: recorder is serialized to memory and the buffer is delivered to the callback.
 using BufferSuccessCallback = std::function<void(const UUID_t &uuid, f32 duration, std::vector<char> &&buffer)>;
-// Disk path: recorder is written to disk; callback receives only uuid and duration.
+// The recorder is written to disk and the callback receives only the uuid and duration.
 using DiskWriteSuccessCallback = std::function<void(const UUID_t &uuid, f32 duration)>;
 using WriteFailureCallback = std::function<void(const char *error)>;
 
@@ -307,10 +308,11 @@ public:
 	void OnTeleportEnd();
 	void OnCheckpointSave(i32 index, const Vector &origin);
 	void OnCheckpointReset();
-	// The player stops or starts controlling their pawn: away, spectating, or back.
+	// The player stops or starts controlling their pawn (away, spectating or back).
 	void OnControlChange(RpEvent::RpEventData::ControlEvent::ControlEventType type);
 
-	// Identifies teleports at their source. Restores the enclosing reason on exit.
+	// Identifies teleports at their source.
+	// Restores the enclosing reason on exit.
 	class ScopedTeleport
 	{
 	public:
@@ -326,7 +328,7 @@ public:
 	};
 
 	void OnJumpFinish(Jump *jump);
-	// Invalid, but kept for review.
+	// Invalid but kept for review.
 	void SaveTurnbindJump(Jump *jump);
 
 	void OnClientDisconnect();
@@ -341,10 +343,12 @@ public:
 	// Check all active recorders and stop those that have reached their desired stop time.
 	void CheckRecorders();
 
-	// Check the player's currently held weapons and record weapon switch events. Also tracks the earliest weapon for circular recorder.
+	// Check the player's currently held weapons and record weapon switch events.
+	// Also tracks the earliest weapon for the circular recorder.
 	void CheckWeapons();
 
-	// Check the player's current mode and styles and record mode/style change events. Also tracks the earliest mode/styles for circular recorder.
+	// Check the player's current mode and styles and record mode/style change events.
+	// Also tracks the earliest mode and styles for the circular recorder.
 	void CheckModeStyles();
 
 	// Check the player's checkpoints/teleports and embed in tick data.
@@ -364,8 +368,8 @@ private:
 	void InsertModeChangeEvent(const char *name, const char *md5);
 	void InsertStyleChangeEvent(const char *name, const char *md5, bool firstStyle);
 	void InsertCheckpointEvent(RpEvent::RpEventData::CheckpointEvent::CheckpointEventType type, i32 index, const Vector &origin);
-	// PhysicsSimulate includes trigger work outside ProcessMovement. Its phase
-	// cannot be inferred from MovementPlayer::processingMovement alone.
+	// PhysicsSimulate includes trigger work outside ProcessMovement.
+	// Its phase cannot be inferred from MovementPlayer::processingMovement alone.
 	bool physicsSimulationActive {};
 	bool hasRecordedTick {};
 	RpTeleportReason teleportReason {RPTELEPORT_UNKNOWN};

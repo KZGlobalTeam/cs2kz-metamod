@@ -28,8 +28,8 @@ namespace utils
 	bool SetConVarValue(CPlayerSlot slot, ConVarRefAbstract conVarRef, const CVValue_t *value, bool replicate, bool triggerCallback = false);
 
 	void SendConVarValue(CPlayerSlot slot, const char *cvar, const char *value);
-	// These two functions require a valid server convar reference, unlike the first one when you can send arbitrary convars,
-	// which can be useful for client-only convars with replicate flag.
+	// These two functions require a valid server convar reference.
+	// The first one can send arbitrary convars and that can be useful for client-only convars with the replicate flag.
 	void SendConVarValue(CPlayerSlot slot, const ConVarRefAbstract conVarRef, const char *value);
 	void SendConVarValue(CPlayerSlot slot, const ConVarRefAbstract conVarRef, const CVValue_t *value);
 
@@ -76,7 +76,7 @@ namespace utils
 
 	// Sounds
 	// Volume is a perceived loudness multiplier (2 = twice as loud).
-	// Without a volume, the sound plays at the volume authored in its sound event.
+	// The sound plays at the volume authored in its sound event without a volume.
 	void PlaySoundToClient(CPlayerSlot player, const char *sound, std::optional<f32> volume = std::nullopt);
 
 	// Return true if the spawn found is truly valid (not in the ground or out of bounds)
@@ -184,7 +184,8 @@ namespace utils
 	bool ParseSteamID2(std::string_view steamID, u64 &out);
 
 	// Parse "R G B [A]" from a command's arguments starting at startIdx.
-	// Values are clamped to 0-255. Returns false if fewer than 3 integer args are present.
+	// Values are clamped to 0-255.
+	// Returns false if fewer than 3 integer args are present.
 	bool ParseColorArgs(const CCommand *args, i32 startIdx, Color &out);
 
 	// Parse a predefined color name (case-insensitive).
@@ -192,7 +193,8 @@ namespace utils
 	// Returns false if name is not recognized.
 	bool ParseColorName(const char *name, Color &out);
 
-	// File I/O operations. All paths are relative to the game directory (game/csgo)
+	// File I/O operations.
+	// All paths are relative to the game directory (game/csgo).
 	bool WriteBufferToFile(const char *relativePath, const std::vector<char> &buffer);
 	// Note: This function does NOT work with internal VPK content. Use IFileSystem directly instead for that.
 	bool ReadBufferFromFile(const char *relativePath, std::vector<char> &outBuffer);

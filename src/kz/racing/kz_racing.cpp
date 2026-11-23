@@ -94,7 +94,7 @@ void KZRacingService::GetHudInfo(KZPlayer *viewer, HudInfo &out)
 		source = viewer;
 	}
 	const bool participant = source->racingService->IsRaceParticipant();
-	// Once the race has started, it is only shown for the players in it.
+	// It is only shown for the players in the race once it has started.
 	if (race.state == RaceInfo::State::Ongoing && !participant)
 	{
 		return;
@@ -132,7 +132,7 @@ void KZRacingService::GetHudInfo(KZPlayer *viewer, HudInfo &out)
 	{
 		const f64 elapsed = Max(tick - race.earliestStartTick, 0) * ENGINE_FIXED_TICK_INTERVAL;
 		out.showTimeLeft = true;
-		// Rounded up, so it only reads 0:00 once the race is over.
+		// Rounded up so it only reads 0:00 once the race is over.
 		out.timeLeft = ceil(Max(out.timeLimit - elapsed, 0.0));
 	}
 
@@ -152,7 +152,7 @@ void KZRacingService::GetHudInfo(KZPlayer *viewer, HudInfo &out)
 		}
 	}
 
-	// Only the first finish counts in a first to finish race, so a best time says nothing there.
+	// A best time says nothing in a first to finish race because only the first finish counts there.
 	if (prefs.racePB && race.conf.format == KZ::racing::RaceConfig::Format::FastestTime)
 	{
 		out.pb = source->racingService->racePB;
@@ -351,8 +351,9 @@ void KZRacingService::OnTimerEndPost(u32 courseGUID, f32 time, u32 teleportsUsed
 	{
 		return;
 	}
-	// First to finish is decided on who crosses the finish line first, so the time spent before starting the run counts
-	// towards it. Fastest time only cares about the run itself.
+	// First to finish is decided on who crosses the finish line first.
+	// The time spent before starting the run counts towards it.
+	// Fastest time only cares about the run itself.
 	f32 reportedTime = time;
 
 	if (KZRacingService::currentRace.conf.format == KZ::racing::RaceConfig::Format::FirstToFinish)

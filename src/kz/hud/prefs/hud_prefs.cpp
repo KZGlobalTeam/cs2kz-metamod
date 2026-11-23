@@ -1,4 +1,4 @@
-// The HUD's categories in the options menu: one subcategory per movement-HUD element, plus General.
+// The HUD's categories in the options menu are one subcategory per movement-HUD element plus General.
 #include "kz/hud/layout/layout.h"
 #include "kz/hud/kz_hud.h"
 #include "kz/option/kz_option.h"
@@ -10,7 +10,7 @@
 static_global constexpr const char *ELEMENT_PHRASE[(i32)MHUDElement::Count] = {
 	"Menu - Timer", "Speed", "Menu - Prespeed", "Menu - Keys", "Menu - Checkpoint", "Menu - Jumpstats", "Menu - Course Info", "Menu - W Release",
 	"Menu - Race",
-	// The indicators share one flattened page, so these only name them; they are not sub titles.
+	// The indicators share one flattened page and these entries only name them.
 	"Menu - Ind Perf", "Menu - Ind CJ", "Menu - Ind JB"};
 
 // Kept from registration so the reset buttons hand the nodes straight back to the model.
@@ -55,7 +55,7 @@ static_function void TogglePanelState(KZPlayer *player, i64)
 struct ScreenAspectDef
 {
 	const char *label;
-	i32 width; // layout units, 1080 * aspect
+	i32 width; // layout units (1080 * aspect)
 };
 
 static_global const ScreenAspectDef SCREEN_ASPECTS[] = {
@@ -85,7 +85,7 @@ static_function void MoveElements(KZPlayer *player, i64)
 	player->hudService->StartHudEdit();
 }
 
-// tag is the element index, as on every other row of an element's page.
+// tag is the element index like on every other row of an element's page.
 static_function void MoveElement(KZPlayer *player, i64 tag)
 {
 	player->hudService->StartHudEdit((MHUDElement)tag);
@@ -111,7 +111,7 @@ static_function void ResetGameHud(KZPlayer *player, i64)
 	KZ::menu::ResetNode(player, gameHudNode);
 }
 
-// Indexed by MHUDKeysIdle, so a picked row id is the stored value.
+// Indexed by MHUDKeysIdle so a picked row id is the stored value.
 static_global const char *const KEYS_IDLE_LABELS[] = {"Menu - Keys Unpressed Show", "Menu - Keys Unpressed Hide", "Menu - Keys Unpressed Underscore"};
 
 static_function void GetKeysIdleChoices(KZPlayer *player, i64, std::vector<KZChoice> &out)
@@ -132,7 +132,7 @@ static_function void PickKeysIdle(KZPlayer *player, i64, i64 id)
 	player->optionService->SetPreferenceInt("mhudKeysIdle", Clamp(id, (i64)MHUDKeysIdle::Show, (i64)MHUDKeysIdle::Underscore));
 }
 
-// Indexed by MHUDPrespeedShow, so a picked row id is the stored value.
+// Indexed by MHUDPrespeedShow so a picked row id is the stored value.
 static_global const char *const PRESPEED_SHOW_LABELS[] = {"Menu - Prespeed Show Brief", "Menu - Prespeed Show Jump Only",
 														  "Menu - Prespeed Show Always"};
 
@@ -163,7 +163,7 @@ static_function void GetBorderChoices(KZPlayer *player, i64, std::vector<KZChoic
 	}
 }
 
-// tag is the element index, the same one every other row on the page carries.
+// tag is the element index that every other row on the page carries too.
 static_function i64 GetCurrentBorder(KZPlayer *player, i64 tag)
 {
 	return (i64)player->hudService->GetOwnPrefs().elements[tag].border;
@@ -174,7 +174,7 @@ static_function void PickBorder(KZPlayer *player, i64 tag, i64 id)
 	player->optionService->SetPreferenceInt(MHUD_ELEMENTS[tag].borderKey, Clamp(id, (i64)MHUDBorder::None, (i64)MHUDBorder::Count - 1));
 }
 
-// Indexed by MHUDAlign, so a picked row id is the stored value.
+// Indexed by MHUDAlign so a picked row id is the stored value.
 static_global const char *const ALIGN_LABELS[] = {"Menu - Align Left", "Menu - Align Center", "Menu - Align Right"};
 
 static_function void GetAlignChoices(KZPlayer *player, i64, std::vector<KZChoice> &out)
@@ -195,11 +195,11 @@ static_function void PickAlign(KZPlayer *player, i64 tag, i64 id)
 	player->optionService->SetPreferenceInt(MHUD_ELEMENTS[tag].alignKey, Clamp(id, (i64)MHUDAlign::Left, (i64)MHUDAlign::Right));
 }
 
-// All three indicators share one page, so every row carries the indicator's own label.
+// Every row carries the indicator's own label because all three indicators share one page.
 static_function void RegisterIndicators(KZOptNode *hud)
 {
 	KZOptNode *sub = KZ::menu::AddSub(hud, "Menu - Indicators");
-	// Only the first index points at the shared node, so ResetAll resets the page once, not three times.
+	// Only the first index points at the shared node so ResetAll resets the page once and not three times.
 	elementNodes[(i32)MHUDElement::Perf] = sub;
 
 	for (i32 i = 0; i < MHUD_INDICATOR_COUNT; i++)
@@ -252,7 +252,7 @@ void KZHUDService::RegisterMenu()
 	KZOptNode *general = KZ::menu::AddSub(hud, "Menu - General");
 	generalNode = general;
 	KZ::menu::AddChoice(general, "Menu - Style", GetStyleChoices, GetCurrentStyle, PickStyle);
-	// Both run through callbacks, so naming the preference is what makes them transferable.
+	// Both run through callbacks and naming the preference is what makes them transferable.
 	KZ::menu::SetItemPref(general, "hudLegacyStyle", KZOptStorage::Bool);
 	KZ::menu::AddActionToggle(general, "Menu - Panel", GetPanelState, TogglePanelState);
 	KZ::menu::SetItemPref(general, "showPanel", KZOptStorage::Bool, 1);
@@ -289,8 +289,8 @@ void KZHUDService::RegisterMenu()
 		KZOptNode *sub = KZ::menu::AddSub(hud, ELEMENT_PHRASE[e]);
 		elementNodes[e] = sub;
 
-		// Everything below the Enabled toggle only affects a visible element, so it greys out with it. The jumpstats panel
-		// has no toggle of its own, since the report type under Jumpstats decides whether it shows.
+		// Everything below the Enabled toggle only affects a visible element and greys out with it.
+		// The jumpstats panel has no toggle of its own because the report type under Jumpstats decides whether it shows.
 		if (def.enabledKey)
 		{
 			KZ::menu::AddToggle(sub, "Menu - Enabled", def.enabledKey, IsMHUDElementOnByDefault((MHUDElement)e));

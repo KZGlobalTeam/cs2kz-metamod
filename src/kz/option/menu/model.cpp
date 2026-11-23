@@ -67,8 +67,9 @@ namespace KZ::menu
 		{
 			return;
 		}
-		// The gate is read with the default of the toggle that owns it, so an off-by-default toggle
-		// greys its rows out before the player ever flips it. No such toggle on this page: on.
+		// The gate is read with the default of the toggle that owns it.
+		// An off-by-default toggle therefore greys its rows out before the player ever flips it.
+		// Pages without such a toggle stay on.
 		bool def = true;
 		for (const KZOptItem &other : node->items)
 		{
@@ -180,7 +181,7 @@ namespace KZ::menu
 		item.storage = KZOptStorage::Float;
 		item.prefKey = xKey;
 		item.yKey = yKey;
-		// Offsets are from the screen centre, so past +-50 the anchor is off screen.
+		// Offsets are from the screen centre and the anchor is off screen past +-50.
 		item.lo = -50;
 		item.hi = 50;
 		item.idef = xDef;
@@ -301,7 +302,7 @@ namespace KZ::menu
 						opts->SetPreferenceFloat(item.prefKey, (f64)item.idef / MAX(1, item.scale));
 					}
 					break;
-				// A choice or an order keeps its default wherever SetItemPref put it, and has no other one.
+				// A choice or an order keeps its default wherever SetItemPref put it and has no other one.
 				case KZOptItemType::Choice:
 				case KZOptItemType::Order:
 					if (item.storage == KZOptStorage::Bool)

@@ -27,7 +27,8 @@ struct ReplayFilterCriteria
 
 	// Used by cheater replays
 	std::optional<std::string> reasonSubString;
-	// Used by run/jump replays. Current mode by default.
+	// Used by run and jump replays.
+	// Current mode by default.
 	std::string modeNameSubString;
 
 	// Run-specific filters
@@ -67,7 +68,7 @@ class ReplayWatcher
 	std::map<UUID_t, ReplayHeader> runReplays;
 	std::map<UUID_t, ReplayHeader> jumpReplays;
 	std::unordered_map<UUID_t, ReplayHeader> downloadedReplays;
-	// External archival index: uuid -> archived unix timestamp
+	// External archival index mapping a uuid to its archived unix timestamp.
 	std::unordered_map<UUID_t, u64> archivedIndex;
 	bool archiveDirty = false;
 	std::unordered_map<UUID_t, CachedReplayEntry> replayCache;
@@ -127,6 +128,7 @@ public:
 
 	void FindReplaysMatchingCriteria(const char *inputs, KZPlayer *player);
 
-	// Find replays by UUID substring. Returns matching UUIDs.
+	// Find replays by UUID substring.
+	// Returns matching UUIDs.
 	std::vector<UUID_t> FindReplaysByUUIDSubstring(const char *uuidSubstring);
 };

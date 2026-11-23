@@ -24,7 +24,8 @@ static_function i32 GetTotalAACallCount(const Jump &jump)
 // Trace helpers
 // ============================================================
 
-// Hull sweep from start to end with the given bounding box. Returns true if hit.
+// Hull sweep from start to end with the given bounding box.
+// Returns true if hit.
 static_function bool TraceHullPosition(KZPlayer *player, const Vector &start, const Vector &end, const Vector &mins, const Vector &maxs,
 									   Vector &position)
 {
@@ -45,7 +46,8 @@ static_function bool TraceHullPosition(KZPlayer *player, const Vector &start, co
 	return false;
 }
 
-// Point (ray) trace from start to end. Returns true if hit.
+// Point (ray) trace from start to end.
+// Returns true if hit.
 static_function bool TraceRayPosition(KZPlayer *player, const Vector &start, const Vector &end, Vector &position)
 {
 	CCSPlayerPawnBase *pawn = player->GetPlayerPawn();
@@ -110,15 +112,15 @@ static_function f32 FindBlockHeight(KZPlayer *player, const Vector &origin, f32 
 	return hitPos.z;
 }
 
-// 3-step 54-unit vertical scan. Used by AlwaysFailstat to find the block surface
-// when the block has a roof (headbanger geometry).
+// 3-step 54-unit vertical scan.
+// Used by AlwaysFailstat to find the block surface if the block has a roof (headbanger geometry).
 static_function bool TryFindBlockHeight(KZPlayer *player, const Vector &position, Vector &result, i32 coordDist, i32 distSign)
 {
 	Vector traceStart = position;
 	traceStart[coordDist] += (f32)distSign;
 	Vector traceEnd = traceStart;
 	traceStart.z += 54.0f;
-	// traceEnd.z stays at position.z (below, so ray goes downward)
+	// traceEnd.z stays at position.z (below, so the ray goes downward)
 
 	for (i32 i = 0; i < 3; i++)
 	{
@@ -197,7 +199,7 @@ f32 Jump::GetEdge(bool landing)
 }
 
 // ============================================================
-// RecordPose - ring-buffer snapshot, used only by AlwaysFailstat
+// RecordPose - ring-buffer snapshot used only by AlwaysFailstat
 // ============================================================
 
 void Jump::RecordPose()
@@ -222,11 +224,10 @@ void Jump::RecordPose()
 }
 
 // ============================================================
-// GetFailOrigin - position-based linear interpolation
-//
-// offset indexes the pose buffer oldest-first. The older sample sits at offset
-// (at or above planeHeight), the next newer sample at offset + 1 (below planeHeight).
-// offset + 1 past the newest pose returns null, meaning there is nothing to interpolate against.
+// GetFailOrigin does a position-based linear interpolation.
+// offset indexes the pose buffer oldest-first.
+// The older sample sits at offset (at or above planeHeight) and the next newer sample at offset + 1 (below planeHeight).
+// offset + 1 past the newest pose returns null because there is nothing to interpolate against.
 // ============================================================
 
 bool Jump::GetFailOrigin(f32 planeHeight, Vector &result, i32 offset)
@@ -256,16 +257,12 @@ bool Jump::GetFailOrigin(f32 planeHeight, Vector &result, i32 offset)
 }
 
 // ============================================================
-// UpdateFailstat - called per-subtick during flight
-//
-// For LadderJumps: detects the destination block when the player
-// is 10+ units above takeoff in their arc (before they start
-// descending back to block Z), then fires once they cross below.
-//
-// For all other types: failstatBlockHeight = adjustedTakeoffOrigin.z
-// is set at Init(), so as soon as the player drops below that Z
-// this function interpolates the crossing position and calls
-// CalcBlockStats to find block + edge.
+// UpdateFailstat is called per subtick during flight.
+// For ladderjumps it detects the destination block once the player is 10+ units above takeoff in their arc.
+// That happens before they start descending back to block Z and it fires once they cross below.
+// For all other types Init() sets failstatBlockHeight = adjustedTakeoffOrigin.z.
+// As soon as the player drops below that Z this function interpolates the crossing position.
+// It then calls CalcBlockStats to find the block and edge.
 // ============================================================
 
 void Jump::UpdateFailstat()
@@ -281,7 +278,7 @@ void Jump::UpdateFailstat()
 	i32 coordDist, distSign;
 	GetCoordOrientation(currentPos, this->adjustedTakeoffOrigin, coordDist, distSign);
 
-	// For LAJs, detect the destination block on the way up
+	// Detect the destination block on the way up for LAJs
 	if (!this->failstatBlockDetected)
 	{
 		// Fire when player has peaked above 10 units and is now descending back toward takeoff Z
@@ -315,7 +312,7 @@ void Jump::UpdateFailstat()
 	}
 
 	// Latch the first valid fail-crossing sample while staying below the plane.
-	// If the player rises back above failstatBlockHeight, failstatValid is cleared above.
+	// failstatValid is cleared above if the player rises back above failstatBlockHeight.
 	if (this->failstatValid)
 	{
 		return;
@@ -447,23 +444,23 @@ void Jump::CalcBlockStats(Vector landingOrigin, bool checkOffset)
 
 	f32 deviation = fabsf(landingOrigin[coordDev] - this->adjustedTakeoffOrigin[coordDev]);
 
-	// Midpoint of the jump gap - assumed to be over open air, not inside a block
+	// Midpoint of the jump gap - assumed to be over open air rather than inside a block
 	Vector middle;
 	middle[coordDist] = (this->adjustedTakeoffOrigin[coordDist] + landingOrigin[coordDist]) / 2.0f;
 	middle[coordDev] = (this->adjustedTakeoffOrigin[coordDev] + landingOrigin[coordDev]) / 2.0f;
 	middle.z = this->adjustedTakeoffOrigin.z - 1.0f;
 
-	// Sweep line perpendicular to jump direction, wide enough to catch the blocks despite deviation
+	// Sweep line perpendicular to jump direction and wide enough to catch the blocks despite deviation
 	Vector sweepMin = vec3_origin;
 	Vector sweepMax = vec3_origin;
 	sweepMin[coordDev] = -(deviation + 16.0f);
 	sweepMax[coordDev] = deviation + 16.0f;
 
-	// Start of the gap (takeoff side): player bounding box places the wall 16 units back
+	// The gap starts on the takeoff side where the player bounding box places the wall 16 units back.
 	Vector startBlock = middle;
 	startBlock[coordDist] = this->adjustedTakeoffOrigin[coordDist] - distSign * 16.0f;
 
-	// End of the gap (landing side): extend slightly past block face to catch the JS_OFFSET_EPSILON case
+	// The gap ends on the landing side slightly past the block face to catch the JS_OFFSET_EPSILON case.
 	Vector endBlock = middle;
 	endBlock[coordDist] = landingOrigin[coordDist] + distSign * (16.0f + JS_OFFSET_EPSILON);
 
@@ -481,7 +478,7 @@ void Jump::CalcBlockStats(Vector landingOrigin, bool checkOffset)
 		return;
 	}
 
-	// For failstats: verify that the block surface is actually at failstatBlockHeight
+	// For failstats verify that the block surface is actually at failstatBlockHeight.
 	if (checkOffset)
 	{
 		Vector checkPos = endBlock;
@@ -557,7 +554,7 @@ void Jump::CalcLadderBlockStats(Vector landingOrigin, bool checkOffset)
 		checkPos.z += 1.0f;
 		f32 blockSurfZ = FindBlockHeight(this->player, checkPos, (f32)distSign, coordDist, 1.0f) - JS_OFFSET_EPSILON;
 
-		// TraceLadderOffset: verify the ladder top is at blockSurfZ
+		// TraceLadderOffset verifies the ladder top is at blockSurfZ.
 		Vector traceOrigin, traceEnd, ladderTop;
 		traceOrigin.x = this->adjustedTakeoffOrigin.x - 10.0f * ladderNormal.x;
 		traceOrigin.y = this->adjustedTakeoffOrigin.y - 10.0f * ladderNormal.y;
@@ -592,7 +589,7 @@ void Jump::CalcAlwaysEdge()
 {
 	if (this->jumpType == JumpType_LadderJump)
 	{
-		// Ladder: edge = distance from player center to ladder surface
+		// The ladder edge is the distance from the player center to the ladder surface.
 		Vector ladderNormal = this->player->GetMoveServices()->m_vecLadderNormal();
 		i32 coordDist = fabsf(ladderNormal.x) > fabsf(ladderNormal.y) ? 0 : 1;
 
@@ -612,7 +609,7 @@ void Jump::CalcAlwaysEdge()
 	}
 	else
 	{
-		// Standard: trace backward along takeoff velocity to find the block face
+		// The standard edge traces backward along the takeoff velocity to find the block face.
 		Vector vel = this->takeoffVelocity;
 		i32 coordDist = fabsf(vel.x) < fabsf(vel.y) ? 1 : 0;
 		i32 distSign = vel[coordDist] > 0.0f ? 1 : -1;
@@ -639,7 +636,7 @@ void Jump::CalcAlwaysEdge()
 }
 
 // ============================================================
-// AlwaysFailstat - always-on miss calculation, called at End()
+// AlwaysFailstat - always-on miss calculation called at End()
 // ============================================================
 
 void Jump::AlwaysFailstat()
@@ -704,7 +701,7 @@ void Jump::AlwaysFailstat()
 	}
 	else
 	{
-		// Non-ladder: destination block is at the same Z as the takeoff floor
+		// Outside ladders the destination block is at the same Z as the takeoff floor.
 		foundHeight = TryFindBlockHeight(this->player, tracePos, landingPos, coordDist, distSign);
 		if (!foundHeight)
 		{

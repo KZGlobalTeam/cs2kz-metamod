@@ -29,7 +29,7 @@ public:
 
 	u32 GetFOV()
 	{
-		// Preferences can also arrive through an import, so hold them to the server's bounds here too.
+		// Hold preferences to the server's bounds here too because they can also arrive through an import.
 		i64 fov = this->player->optionService->GetPreferenceInt("fov", this->GetDefaultFOV());
 		return (u32)Clamp(fov, (i64)GetMinFOV(), (i64)GetMaxFOV());
 	}

@@ -459,7 +459,7 @@
 	}
 	"HUD - Course Tier"
 	{
-		//  · T3
+		// T3, the tier tag beside the All and Pro rows
 		"#format"	"tier:i"
 		"en"		" · T{tier}"
 		"zho"		" · T{tier}"

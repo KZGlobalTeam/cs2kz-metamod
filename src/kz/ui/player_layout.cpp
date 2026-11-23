@@ -12,8 +12,8 @@
 
 #include "tier0/memdbgon.h"
 
-// Players are built during static initialisation, so the list has to exist before its first use rather than in static
-// order.
+// Players are built during static initialisation.
+// The list has to exist before its first use rather than in static order.
 static_function std::vector<KZ::ui::PlayerLayout *> &GetPlayerLayouts()
 {
 	static_persist std::vector<KZ::ui::PlayerLayout *> playerLayouts;
@@ -106,7 +106,7 @@ namespace KZ::ui
 		{
 			return;
 		}
-		// Keyed by panel too, so two panels sharing a variable name don't suppress each other's writes.
+		// Keyed by panel too so two panels sharing a variable name don't suppress each other's writes.
 		std::string key = std::string(panelId) + '/' + var;
 		auto [it, inserted] = this->writtenVars.try_emplace(std::move(key), value);
 		if (!inserted)
@@ -200,7 +200,7 @@ namespace KZ::ui
 		const char *font = panorama::ResolveFontClass(opts->GetPreferenceStr("menuFont", KZ_UI_DEFAULT_FONT), KZ_UI_DEFAULT_FONT);
 		const char *color = panorama::ResolveColorClass(opts->GetPreferenceColor("menuColor", KZ_UI_DEFAULT_COLOR));
 
-		// Labels keep their old font until their text or width changes, so a font change also flips font-reflow.
+		// A font change also flips font-reflow because labels keep their old font until their text or width changes.
 		if (cache.font != font)
 		{
 			SetBoolClass(layout, rootPanelId, "font-reflow", cache.fontReflow, !cache.fontReflow);

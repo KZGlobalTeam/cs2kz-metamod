@@ -170,19 +170,20 @@ public:
 	virtual std::string GetCurrentMapVPK();
 	virtual std::string GetCurrentMapDirectory();
 	virtual u64 GetCurrentMapSize();
-	// MD5 calculation is not very fast, avoid doing this too often!
+	// MD5 calculation is not very fast so avoid doing this too often!
 	virtual bool UpdateCurrentMapMD5();
 	virtual bool GetCurrentMapMD5(char *buffer, i32 size);
 	// Must be absolute path.
 	virtual bool GetFileMD5(const char *filePath, char *buffer, i32 size);
 
-	// Getting the entity could be expensive, do not spam this function!
+	// Getting the entity could be expensive so do not spam this function!
 	virtual CCSGameRules *GetGameRules();
 
 	// Get the real and connected player count.
 	virtual u32 GetPlayerCount();
 
-	// Draw debug overlays. Listen server only.
+	// Draw debug overlays.
+	// Listen server only.
 	virtual void AddTriangleOverlay(Vector const &p1, Vector const &p2, Vector const &p3, u8 r, u8 g, u8 b, u8 a, bool noDepthTest, f64 flDuration);
 	virtual void ClearOverlays();
 

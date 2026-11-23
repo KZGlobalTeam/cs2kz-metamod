@@ -65,7 +65,7 @@ Player *PlayerManager::ToPlayer(CEntityIndex entIndex)
 
 Player *PlayerManager::ToPlayer(CPlayerUserId userID)
 {
-	// Untested, careful!
+	// Untested so be careful!
 	for (i32 i = 0; i < MAX_PLAYERS; i++)
 	{
 		if (interfaces::pEngine->GetPlayerUserId(i) == userID.Get())
@@ -122,7 +122,8 @@ void PlayerManager::OnClientConnect(CPlayerSlot slot, const char *pszName, uint6
 	player->OnPlayerConnect(xuid);
 	player->SetOriginalName(pszName);
 
-	// The controller does not exist yet, so even a client the engine already authenticated has to wait in the queue.
+	// The controller does not exist yet.
+	// Even a client the engine already authenticated has to wait in the queue.
 	if (!player->IsFakeClient())
 	{
 		this->AddToAuthQueue(slot);
@@ -267,7 +268,7 @@ void PlayerManager::AuthorizeClient(CPlayerSlot slot)
 		return;
 	}
 
-	// A connected client has no controller until the game handles ClientConnect, and OnAuthorized needs one.
+	// A connected client has no controller until the game handles ClientConnect and OnAuthorized needs one.
 	if (!player->GetController())
 	{
 		this->AddToAuthQueue(slot);
@@ -297,7 +298,7 @@ void PlayerManager::PerformAuthChecks()
 			continue;
 		}
 
-		// If disconnected, mark for removal from queue
+		// Mark for removal from queue if disconnected
 		if (!player->IsConnected())
 		{
 			this->RemoveFromAuthQueue(slot);

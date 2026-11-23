@@ -243,7 +243,7 @@ VerticalScrollBar:hover .ScrollThumb {
 	background-color: #ffffff14;
 }
 
-/* enabledBy off: still readable, but inert. */
+/* enabledBy off: still readable but inert. */
 .item.disabled {
 	opacity: 0.35;
 }
@@ -267,7 +267,7 @@ VerticalScrollBar:hover .ScrollThumb {
 	vertical-align: middle;
 }
 
-/* The label and its subtext stay on one line, so a long value cuts them short instead of making the row taller. */
+/* The label and its subtext stay on one line so a long value cuts them short instead of making the row taller. */
 .item-label {
 	width: 100%;
 	font-size: 18px;
@@ -304,7 +304,7 @@ VerticalScrollBar:hover .ScrollThumb {
 	max-width: 100%;
 }
 
-/* Capped so the label keeps room beside a long value, such as a list of styles. */
+/* Capped so the label keeps room beside a long value (such as a list of styles). */
 .item-value {
 	vertical-align: middle;
 	max-width: 320px;
@@ -365,15 +365,15 @@ VerticalScrollBar:hover .ScrollThumb {
 	world-blur: gaussian(2, 2, 2);
 }
 
-/* .popup's padding comes out of this width, leaving the grid 308px. Centring happens before x, so
-   the extra 40px of width needs half of it back in x to keep the gap from the menu box. */
+/* .popup's padding comes out of this width and leaves the grid 308px.
+   Centring happens before x so the extra 40px of width needs half of it back in x to keep the gap from the menu box. */
 .color-popup {
 	width: 340px;
 	x: 614px;
 }
 
-/* A swatch occupies 24 + 2 border + 4 margin = 30px, so 10 columns need 300. Keep in step with
-   KZ_MENU_SWATCH. */
+/* A swatch occupies 24 + 2 border + 4 margin = 30px so 10 columns need 300.
+   Keep in step with KZ_MENU_SWATCH. */
 .swatch-grid {
 	flow-children: right-wrap;
 	width: 300px;
@@ -479,7 +479,7 @@ VerticalScrollBar:hover .ScrollThumb {
 
 // --- stepper popup -----------------------------------------------------------------
 
-/* Wider than the other popups, so it needs its own offset to keep the same gap. */
+/* Wider than the other popups so it needs its own offset to keep the same gap. */
 /* The z row reuses the readout slot for an axis label; the main readout shows all three. */
 .step-axis {
 	opacity: 0.5;
@@ -536,8 +536,9 @@ VerticalScrollBar:hover .ScrollThumb {
 	font-size: 19px;
 }
 
-/* Positions step in tenths too, so the row trades its centre readout for the fine buttons and a gap;
-   the readout moves above the cross. Sizes and vectors keep the centre readout. */
+/* Positions step in tenths too so the row trades its centre readout for the fine buttons and a gap.
+   The readout moves above the cross.
+   Sizes and vectors keep the centre readout. */
 .step-readout.step-readout-top {
 	width: 100%;
 	margin-bottom: 4px;
@@ -575,7 +576,8 @@ VerticalScrollBar:hover .ScrollThumb {
 	x: 634px;
 }
 
-/* One row per shown entry, with buttons that move it past its neighbour. The ends grey out the way they cannot go. */
+/* One row per shown entry with buttons that move it past its neighbour.
+   The ends grey out the way they cannot go. */
 .order-rows {
 	flow-children: down;
 	width: 100%;

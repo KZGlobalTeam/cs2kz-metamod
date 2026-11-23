@@ -1,6 +1,7 @@
 /*
 	Detector for invalid cvar values on clients.
-	Some of them will only result in kicks, while the ones that can only be changed via cheats will result in bans.
+	Some of them will only result in kicks.
+	The ones that can only be changed via cheats will result in bans.
 */
 #include "common.h"
 #include "convar.h"
@@ -33,8 +34,8 @@ bool KZAnticheatService::ShouldRunDetections() const
 #define SV_CHEATS_MAX_PROPAGATION_DELAY 30.0f
 
 static_global const char *cvarNames[] = {
-	"m_yaw",          // not capped, but should kick if it goes out of bounds
-	"fps_max",        // This can never change during gameplay, also should kick if it goes under 64
+	"m_yaw",          // not capped but should kick if it goes out of bounds
+	"fps_max",        // This can never change during gameplay and should also kick if it goes under 64
 	"sv_cheats",      // replicated
 	"sensitivity",    // capped (0.0001f => 8.0f)
 	"cl_showpos",     // cheat (default 0)
@@ -151,7 +152,7 @@ static_function void ValidateQueriedCvar(CPlayerSlot nSlot, cvarquery::Status eS
 		}
 		else if (fabs(fps - player->anticheatService->currentMaxFps) > 0.01f)
 		{
-			// Player shouldn't be able to normally change fps_max during gameplay, so they must be using a cheat.
+			// Players shouldn't be able to change fps_max during gameplay and must be using a cheat.
 			// It seems to be somehow possible upon joining a server?
 			if (player->telemetryService->GetTimeInServer() < 60.0f)
 			{
@@ -171,8 +172,8 @@ static_function void ValidateQueriedCvar(CPlayerSlot nSlot, cvarquery::Status eS
 		{
 			return;
 		}
-		// Cvar should have been turned off for the client, but isn't.
-		// It's possible that they might have a very, very bad internet, but it's most likely a cheat.
+		// The cvar should have been turned off for the client but isn't.
+		// A very bad connection could explain it but it's most likely a cheat.
 		if (KZ_STREQI(pszCvarValue, "1") || KZ_STREQI(pszCvarValue, "true"))
 		{
 			player->anticheatService->MarkHasInvalidCvars();

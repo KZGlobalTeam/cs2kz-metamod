@@ -2,7 +2,7 @@
 #include "kz/language/kz_language.h"
 #include "kz/timer/kz_timer.h"
 
-// The points follow the line, so each recipient gets both in their own language.
+// Each recipient gets both in their own language because the points follow the line.
 template<typename... Args>
 static_function void PrintRaceResult(const KZ::racing::RaceResult &result, const char *message, Args &&...args)
 {
@@ -19,7 +19,7 @@ static_function void PrintRaceResult(const KZ::racing::RaceResult &result, const
 
 void KZRacingService::OnChatMessage(const KZ::racing::events::ChatMessage &message)
 {
-	// If the message starts with a '/' or '!', ignore it.
+	// Ignore the message if it starts with a '/' or '!'.
 	if (!message.content.empty() && (message.content[0] == '/' || message.content[0] == '!'))
 	{
 		return;
@@ -121,7 +121,7 @@ void KZRacingService::OnRaceCompleted(const KZ::racing::events::RaceCompleted &m
 		}
 	}
 
-	// Print first place to last place, then non-finishers.
+	// Print first place to last place and then non-finishers.
 	u32 position = 1;
 	for (const KZ::racing::RaceResult &result : message.results)
 	{

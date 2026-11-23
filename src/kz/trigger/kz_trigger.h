@@ -170,11 +170,10 @@ public:
 
 	// Touchlist related functions (public)
 
-	// Hit all triggers from start to end with the specified bounds,
-	// and call Touch/StartTouch on triggers that the player is touching.
+	// Hit all triggers from start to end with the specified bounds and call Touch/StartTouch on triggers that the player is touching.
 	void TouchTriggersAlongPath(const Vector &start, const Vector &end, const bbox_t &bounds);
 
-	// Update the list of triggers that the player is touching, and call StartTouch/EndTouch appropriately.
+	// Update the list of triggers that the player is touching and call StartTouch/EndTouch appropriately.
 	void UpdateTriggerTouchList();
 
 	// Call Touch() on all currently touched triggers.

@@ -59,7 +59,7 @@ void *CModule::FindVirtualTable(const std::string &name)
 	while (void *completeObjectLocator = sigIt2.FindNext(false))
 	{
 		auto completeObjectLocatorHeader = (uintptr_t)completeObjectLocator - 0xC;
-		// check RTTI Complete Object Locator header, always 0x1
+		// check RTTI Complete Object Locator header (always 0x1)
 		if (*(int32_t *)(completeObjectLocatorHeader) != 1)
 		{
 			continue;

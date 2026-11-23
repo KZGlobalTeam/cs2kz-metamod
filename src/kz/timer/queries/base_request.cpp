@@ -43,7 +43,7 @@ void BaseRequest::Init(u64 features, const CCommand *args, bool queryLocal, bool
 	{
 		kv = params.FindMember("map");
 		this->mapName = kv ? kv->GetString() : "";
-		// If a map is not specified, use the current map.
+		// Use the current map if a map is not specified.
 		if (this->mapName.empty())
 		{
 			bool gotCurrentMap = false;
@@ -141,13 +141,13 @@ void BaseRequest::CheckRequests()
 }
 
 /*
-	A few scenarios can happen here, this depends on:
+	A few scenarios can happen here depending on:
 	1. If the specified map is the current map,
 	2. If the player specified a course (and whether the player specifies a course name or a course number if yes),
 	3. If the player has a current course,
 	4. If the local database exists and whether the course exists in the local database.
-	When specifying a course number, it is possible that the global API will return a different course from the course
-	determined in the local database. In that case, we show both leaderboards and warns the player of potential mismatch.
+	The global API might return a different course from the course determined in the local database when specifying a course number.
+	We show both leaderboards and warn the player of potential mismatch in that case.
 */
 void BaseRequest::SetupCourse(const std::string &courseName)
 {
@@ -162,7 +162,7 @@ void BaseRequest::SetupCourse(const std::string &courseName)
 	}
 
 	KZPlayer *callingPlayer = g_pKZPlayerManager->ToPlayer(userID);
-	if (!callingPlayer) // Shouldn't happen, but just to be sure...
+	if (!callingPlayer) // Shouldn't happen but just to be sure...
 	{
 		this->Invalidate();
 		return;
@@ -193,8 +193,9 @@ void BaseRequest::SetupCourse(const std::string &courseName)
 		}
 		this->courseName = course->GetName();
 	}
-	// The caller specified a map name but not a course name. Try to find the first course locally.
-	// If that fails as well, we just query course "1".
+	// The caller specified a map name but not a course name.
+	// Try to find the first course locally.
+	// If that fails as well we just query course "1".
 	else if (this->localStatus == ResponseStatus::ENABLED)
 	{
 		this->requestingFirstCourse = true;
@@ -248,10 +249,10 @@ void BaseRequest::SetupPlayer(const std::string &playerName)
 		this->Invalidate();
 		return;
 	}
-	// If the caller doesn't specify a name, then the target is the caller.
-	// Otherwise, players that are currently in the server is prioritized.
-	// If there is no player matching the name in the server, first query the local database to get the player's SteamID.
-	// If there's no local database/player is not found, query the global API to get the player's maptop.
+	// The target is the caller if they don't specify a name.
+	// Otherwise players that are currently in the server are prioritized.
+	// The local database is queried for the player's SteamID next if no player in the server matches the name.
+	// Query the global API for the player's maptop if there is no local database or the player is not found.
 	if (playerName.empty())
 	{
 		this->targetPlayerName = callingPlayer->GetName();
@@ -326,7 +327,7 @@ void BaseRequest::SetupMode(const std::string &modeName)
 	}
 
 	KZPlayer *callingPlayer = g_pKZPlayerManager->ToPlayer(userID);
-	if (!callingPlayer) // Shouldn't happen, but just to be sure...
+	if (!callingPlayer) // Shouldn't happen but just to be sure...
 	{
 		this->Invalidate();
 		return;
@@ -375,13 +376,13 @@ void BaseRequest::SetupStyles(const std::string &styleNames)
 	}
 
 	KZPlayer *callingPlayer = g_pKZPlayerManager->ToPlayer(userID);
-	if (!callingPlayer) // Shouldn't happen, but just to be sure...
+	if (!callingPlayer) // Shouldn't happen but just to be sure...
 	{
 		this->Invalidate();
 		return;
 	}
 
-	// If the style name is empty, take the calling player's styles.
+	// Take the calling player's styles if the style name is empty.
 	if (styleNames.empty())
 	{
 		this->localStyleIDs = 0;
@@ -403,7 +404,7 @@ void BaseRequest::SetupStyles(const std::string &styleNames)
 	{
 		this->localStyleIDs = 0;
 	}
-	// Example: VNL,CKZ
+	// For example VNL,CKZ
 	else
 	{
 		for (const std::string &style : utils::Split(styleNames, ','))

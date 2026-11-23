@@ -959,7 +959,6 @@
 	background-color: #3e3e3e;
 }
 
-// --- Gradients (text color + swatch background); linear + radial ---
 .grad-0 {
 	color: gradient(linear, 0% 0%, 0% 100%, from(#ff0000), to(#8c0000));
 }

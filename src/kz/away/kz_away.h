@@ -5,8 +5,8 @@
 class CUserCmd;
 
 // A player who loses their connection or goes to spectate keeps a persistent pawn.
-// That way, interactions with the world and other players can continue, and the player can come back to it.
-// Member functions are in kz_away.cpp, the static ones that handle server-wide events in events.cpp.
+// That way interactions with the world and other players can continue and the player can come back to it.
+// Member functions are in kz_away.cpp and the static ones that handle server-wide events are in events.cpp.
 class KZAwayService : public KZBaseService
 {
 	using KZBaseService::KZBaseService;
@@ -16,7 +16,7 @@ private:
 	inline static i32 leavingSlot = -1;
 	// Whether that player's pawn was marked as not alive.
 	inline static bool protectedPawn {};
-	// Slot of the returning player whose team is hidden while CS2 activates their client, and that team.
+	// Slot of the returning player whose team is hidden while CS2 activates their client and that team.
 	inline static i32 activatingSlot = -1;
 	inline static i32 activatingTeam {};
 	// Whether KZ's per-tick logic runs around the command of a pawn the controller did not drive.
@@ -25,30 +25,36 @@ private:
 	// same player coming back from the same address.
 	inline static bool connectingClient {};
 
-	// Away only. The realtime at which the client left, 0 while the player is here.
+	// Away only.
+	// The realtime at which the client left or 0 while the player is here.
 	f64 awaySince {};
-	// Away only. Set when an away player's client comes back, until the client is active again.
+	// Away only.
+	// Set if an away player's client comes back until the client is active again.
 	bool reconnecting {};
-	// Spectate only. Set while the player views through their observer pawn and their own pawn persists, which makes KZ
-	// simulate and revive that pawn and hide it from its owner.
+	// Spectate only.
+	// Set while the player views through their observer pawn and their own pawn persists.
+	// KZ then simulates and revives that pawn and hides it from its owner.
 	bool observingWithPersistentPawn {};
 
-	// What the game takes off a leaving player's pawn, given back as it was.
+	// What the game takes off a leaving player's pawn to give back as it was.
 	QAngle persistentAngles {0.0f, 0.0f, 0.0f};
 	bool leftHanded {};
 	// Away only. CS2 strips the weapons of a leaving player.
 	std::vector<EconInfo> weapons;
 	i32 activeWeapon = -1;
-	// The weapon the pawn holds, selected by the commands it runs while the player is not controlling it.
+	// The weapon the pawn holds as selected by the commands it runs while the player is not controlling it.
 	CHandle<CBasePlayerWeapon> heldWeapon;
 	// The angles still have to reach the client once the player controls the pawn again.
 	bool snapAngles {};
-	// Spectate only. The team of the persistent pawn, while the controller shows as a spectator.
+	// Spectate only.
+	// The team of the persistent pawn while the controller shows as a spectator.
 	i32 persistentTeam {};
-	// Spectate only. Until the client applies the view angle snap with this index, its commands still come from the observer
-	// camera, which is right-handed. -1 until the snap is sent.
+	// Spectate only.
+	// The client's commands come from the right-handed observer camera until it applies the view angle snap with this index.
+	// -1 until the snap is sent.
 	i64 snapIndex = -1;
-	// Spectate only. Commands that still keep the pawn's hand, in case the client never reports the snap.
+	// Spectate only.
+	// Commands that still keep the pawn's hand in case the client never reports the snap.
 	i32 holdHandCommands {};
 	// Server frame in which KZ's per-tick logic last ran for the player.
 	i32 simulatedFrame {};
@@ -58,7 +64,7 @@ private:
 	void RevivePersistentPawn();
 	// Whether the player's pawn and state persist when their client leaves.
 	bool CanStayAway();
-	// Lets go of the persistent pawn and state, and the slot held for the player.
+	// Lets go of the persistent pawn, its state and the slot held for the player.
 	void ReleasePersistentState();
 	static void ReleaseHeldSlot(CPlayerSlot slot);
 	static void KeepSlotFree();
@@ -66,7 +72,7 @@ private:
 public:
 	virtual void Reset() override;
 
-	// The client left, but the pawn and the player's state persist for a reconnect.
+	// The client left but the pawn and the player's state persist for a reconnect.
 	bool IsAway()
 	{
 		return this->awaySince != 0.0;
@@ -77,7 +83,7 @@ public:
 		return this->observingWithPersistentPawn;
 	}
 
-	// Whether the player controls their pawn, rather than it persisting while they are away or spectating.
+	// Whether the player controls their pawn rather than it persisting while they are away or spectating.
 	bool CanControlPawn(bool showError = false);
 	// Whether going to spectate leaves the player's pawn in the world instead of removing it.
 	bool CanSpectateWithPersistentPawn();
@@ -86,7 +92,8 @@ public:
 	// Gives a spectating player control of their persistent pawn back. leaving is set when the player disconnects instead.
 	void RestorePersistentPawn(bool leaving = false);
 
-	// Returns whether the player's client came back and is now active, after handing the persistent pawn to it.
+	// Hands the persistent pawn to the player's client if it came back.
+	// Returns whether that client is now active.
 	bool OnReconnect();
 	// Returns whether KZ's per-tick logic runs around the controller's commands this tick.
 	bool OnControllerSimulatePre();
@@ -111,15 +118,16 @@ public:
 	static bool OnClientDisconnectPost(CPlayerSlot slot);
 	// Returns whether the team change is blocked.
 	static bool OnChangeTeamPre(CCSPlayerController *controller, i32 team);
-	// Hides a returning player's team while CS2 activates their client, which would otherwise respawn the persistent pawn.
+	// Hides a returning player's team while CS2 activates their client.
+	// CS2 would otherwise respawn the persistent pawn.
 	static void OnClientActivePre(CPlayerSlot slot);
 	static void OnClientActivePost(CPlayerSlot slot);
 	static void OnGameFrame();
 	static void OnServerGamePostSimulate();
 
-	// Seconds until every away player has been away for the given time, 0 once they all have.
+	// Seconds until every away player has been away for the given time (0 once they all have).
 	static f64 GetAwayTimeLeft(f64 limit);
-	// Lets go of every away player, whose pawns do not survive a map change.
+	// Lets go of every away player because their pawns do not survive a map change.
 	static void ReleaseAwayPlayers();
 	static void Shutdown();
 };

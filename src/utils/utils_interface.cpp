@@ -133,7 +133,8 @@ CUtlVector<CServerSideClientBase *> *KZUtils::GetClientList()
 	return &static_cast<CNetworkGameServerBase *>(g_pNetworkServerService->GetIGameServer())->m_Clients;
 }
 
-// The engine keeps the client object in its slot after a disconnect, so only hand it out while someone occupies the slot.
+// The engine keeps the client object in its slot after a disconnect.
+// Only hand it out while someone occupies the slot.
 CServerSideClient *KZUtils::GetClientBySlot(CPlayerSlot slot)
 {
 	CUtlVector<CServerSideClientBase *> *clients = this->GetClientList();

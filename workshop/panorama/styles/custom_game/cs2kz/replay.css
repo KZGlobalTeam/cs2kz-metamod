@@ -43,7 +43,7 @@
 	flow-children: right;
 }
 
-/* Titles and values in two columns, so a value that changes width never moves the line below it. */
+/* Titles and values in two columns so a value that changes width never moves the line below it. */
 .rp-info-titles,
 .rp-info-values {
 	height: 100%;
@@ -54,7 +54,7 @@
 	margin-right: 8px;
 }
 
-/* The spectated player's name on the game's player card (.HudSpecplayer__player-name), without its team colour wash.
+/* The spectated player's name on the game's player card (.HudSpecplayer__player-name) without its team colour wash.
    Narrow enough to stay clear of the times and the speeds. */
 .rp-player {
 	max-width: 360px;
@@ -115,7 +115,7 @@
 	background-color: #ffffffb3;
 }
 
-/* A spacer as wide as the marker's position goes first, sized like the fill. */
+/* A spacer as wide as the marker's position goes first and is sized like the fill. */
 .rp-marker-row {
 	width: 960px;
 	height: 100%;
@@ -182,7 +182,7 @@
 
 /*
 	This has to overlap the marker by at least a pixel.
-	Panorama does not paint a child that lies wholly outside its parent, noclip or not. 
+	Panorama does not paint a child that lies wholly outside its parent whether it is noclip or not. 
 */
 .rp-zone-label {
 	opacity: 0;
@@ -258,7 +258,8 @@
 	horizontal-align: center;
 	vertical-align: center;
 	font-size: 14px;
-	/* The default text is off center by 1px. If you see transform: translateY(1px);, it's most likely because of it. */
+	/* The default text is off center by 1px.
+	   A transform: translateY(1px); is most likely because of it. */
 	transform: translateY(1px);
 	text-align: center;
 }
@@ -306,7 +307,8 @@
 	margin-left: 5px;
 }
 
-/* Previous and next split, checkpoint, stage and teleport. Zones show their marker's diamond; teleports have no marker. */
+/* Previous and next split, checkpoint, stage and teleport.
+   Zones show their marker's diamond; teleports have no marker. */
 .rp-bottom {
 	width: 960px;
 	height: 28px;
@@ -377,7 +379,7 @@
 	background-image: url("s2r://panorama/images/icons/ui/play.vsvg");
 }
 
-/* The buttons at either end of the controls share a width, with their content centred in it. */
+/* The buttons at either end of the controls share a width with their content centred in it. */
 .rp-side-btn {
 	width: 120px;
 	height: 26px;
@@ -411,7 +413,7 @@
 	horizontal-align: right;
 }
 
-/* The HUD edit bar's key chips, with the border on a panel of its own so the label centres inside it. */
+/* The HUD edit bar's key chips with the border on a panel of its own so the label centres inside it. */
 .rp-key {
 	height: 18px;
 	margin-right: 7px;

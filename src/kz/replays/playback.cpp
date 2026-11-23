@@ -25,7 +25,7 @@ namespace KZ::replaysystem::playback
 	static_global bool botTimeApplied;
 	static_global i32 serverTickCount;
 	static_global f32 serverCurtime;
-	// The bot stamps its view punch with its own clock, but clients decay it by the time since that tick on the server's.
+	// The bot stamps its view punch with its own clock but clients decay it by the time since that tick on the server's.
 	// The networked stamp is moved to the server's clock after each replay tick and back before the next one.
 	static_global i32 botPunchTick;
 	static_global i32 serverPunchTick;
@@ -41,7 +41,7 @@ namespace KZ::replaysystem::playback
 		punchOnServerClock = false;
 	}
 
-	// Only a new punch gets a new server stamp, so the client keeps decaying an old one in real time through hold ticks.
+	// Only a new punch gets a new server stamp and the client keeps decaying an old one in real time through hold ticks.
 	static_function void PutPunchOnServerClock(KZPlayer *player, i32 serverTick)
 	{
 		CPlayer_CameraServices *camera = player->GetPlayerPawn() ? player->GetPlayerPawn()->m_pCameraServices() : nullptr;
@@ -61,7 +61,7 @@ namespace KZ::replaysystem::playback
 
 	static_function bool IsTeleportInTick(const data::ReplayPlayback *replay, const TickData *tickData)
 	{
-		// The tick has not been played yet, so its events start at currentEvent.
+		// The tick has not been played yet and its events start at currentEvent.
 		for (u32 i = replay->currentEvent; i < replay->numEvents && replay->events[i].serverTick <= tickData->serverTick; i++)
 		{
 			if (replay->events[i].type == RPEVENT_TELEPORT && replay->events[i].serverTick == tickData->serverTick)
@@ -72,14 +72,15 @@ namespace KZ::replaysystem::playback
 		return false;
 	}
 
-	// The bot's state part of the way through currentTick, shown on server ticks that do not simulate a replay tick.
+	// The bot's state part of the way through currentTick for server ticks that do not simulate a replay tick.
 	static_function HeldState GetHeldState(const data::ReplayPlayback *replay, const TickData *tickData)
 	{
-		// A teleport during the tick cannot be interpolated across, so the bot waits where the tick starts.
+		// The bot waits where the tick starts because a teleport during the tick cannot be interpolated across.
 		f32 fraction = IsTeleportInTick(replay, tickData) ? 0.0f : replay->tickProgress;
 		const TickData::MovementData &pre = tickData->pre;
 		const TickData::MovementData &post = tickData->post;
-		// A tick's pre angles are already the ones its command asks for, so the turn is from where the last tick ended.
+		// A tick's pre angles are already the ones its command asks for.
+		// The turn is therefore from where the last tick ended.
 		const QAngle from = replay->currentTick > 0 ? data::GetTick(replay, replay->currentTick - 1).post.angles : pre.angles;
 
 		HeldState state;
@@ -91,8 +92,9 @@ namespace KZ::replaysystem::playback
 		return state;
 	}
 
-	// The bot's clock only moves when a replay tick is simulated. While it simulates, the plugin's copy of the server
-	// globals holds that clock, the same way PlayerRunCommand puts it in the engine's globals.
+	// The bot's clock only moves if a replay tick is simulated.
+	// While it simulates the plugin's copy of the server globals holds that clock.
+	// PlayerRunCommand puts it in the engine's globals the same way.
 	static_function void ApplyBotTime()
 	{
 		if (!botTimeApplied)
@@ -139,18 +141,18 @@ namespace KZ::replaysystem::playback
 		replay->tickProgress -= (f32)ticks;
 		if (replay->stepTicks > 0)
 		{
-			// A stepped tick ends with the bot on the next tick's pre state, not part of the way into it.
+			// A stepped tick ends with the bot on the next tick's pre state rather than part of the way into it.
 			ticks += replay->stepTicks;
 			replay->stepTicks = 0;
 			replay->tickProgress = 0.0f;
 		}
 		if (!replay->hasLastMoveData && ticks == 0)
 		{
-			// Holding reuses the move data of a simulated tick, so the bot has to simulate one first.
+			// The bot has to simulate a tick first because holding reuses the move data of a simulated tick.
 			ticks = 1;
 			replay->tickProgress = 0.0f;
 		}
-		// The replay must not end in the middle of a command, so its last tick is always the one the engine runs.
+		// The replay must not end in the middle of a command and its last tick is always the one the engine runs.
 		replay->pendingTicks = MIN(ticks, replay->tickCount - replay->currentTick);
 		replay->holdingTick = replay->pendingTicks == 0;
 		if (replay->holdingTick)
@@ -208,13 +210,14 @@ namespace KZ::replaysystem::playback
 		const TickData tickData = data::GetTick(replay, replay->currentTick);
 		auto pawn = player->GetPlayerPawn();
 
-		// Setting the origin via teleport will break client interp, set the values directly
+		// Set the values directly because setting the origin via teleport will break client interp
 		pawn->m_CBodyComponent()->m_pSceneNode()->m_vecAbsOrigin(tickData.pre.origin);
 		pawn->m_angEyeAngles(tickData.pre.angles);
 		pawn->m_vecAbsVelocity(tickData.pre.velocity);
 
 		auto moveServices = player->GetMoveServices();
-		// The bot's clock is the one the replay was recorded on, so recorded times can be used directly instead of being adjusted.
+		// The bot's clock is the one the replay was recorded on.
+		// Recorded times can be used directly instead of being adjusted.
 		moveServices->m_LegacyJump().m_flJumpPressedTime = tickData.pre.jumpPressedTime;
 
 		moveServices->m_flDuckSpeed = tickData.pre.duckSpeed;
@@ -288,7 +291,7 @@ namespace KZ::replaysystem::playback
 			return;
 		}
 
-		// Setting the origin via teleport will break client interp, set the values directly.
+		// Set the values directly because setting the origin via teleport will break client interp.
 		// We have to do it here to be ahead of SetAbsOrigin calls in FinishMove.
 		const TickData tickData = data::GetTick(replay, replay->currentTick);
 		if (replay->holdingTick)
@@ -379,7 +382,7 @@ namespace KZ::replaysystem::playback
 		}
 	}
 
-	// Moves the bot between two replay ticks without simulating, so that nothing but where it is changes.
+	// Moves the bot between two replay ticks without simulating so nothing but its position changes.
 	static_function void MoveHeldBot(KZPlayer *player, CUserCmd *command)
 	{
 		auto replay = data::GetCurrentReplay();
@@ -397,11 +400,11 @@ namespace KZ::replaysystem::playback
 		static_persist const i32 offset = g_pGameConfig->GetOffset("FinishMove");
 		CALL_VIRTUAL(void, offset, moveServices, command, mv);
 		moveServices->m_flFallVelocity = fallVelocity;
-		// The engine resets a bot's tick base every server tick, and GetCurtime reads it.
+		// The engine resets a bot's tick base every server tick and GetCurtime reads it.
 		player->GetController()->m_nTickBase(data::GetBotTickcount());
 
 		pawn->m_angEyeAngles(mv->m_vecViewAngles);
-		// Freezes the pose on clients until the next replay tick, so slow playback also slows the animations.
+		// Freezes the pose on clients until the next replay tick so slow playback also slows the animations.
 		pawn->SetAnimGraphUpdateEnabled(false);
 	}
 
@@ -449,7 +452,8 @@ namespace KZ::replaysystem::playback
 			command->mutable_base()->mutable_viewangles()->set_z(tickData.pre.angles.z);
 		}
 
-		// Fast playback runs the same command object for several replay ticks, so nothing may be left over from the last one.
+		// Fast playback runs the same command object for several replay ticks.
+		// Nothing may be left over from the last one.
 		command->mutable_base()->mutable_buttons_pb()->Clear();
 		command->mutable_base()->clear_weaponselect();
 		command->clear_left_hand_desired();
@@ -475,7 +479,7 @@ namespace KZ::replaysystem::playback
 		}
 		player->SetMoveType(tickData.pre.moveType);
 
-		// Bots should never have any subtick move, but who knows?
+		// Bots should never have any subtick move but who knows?
 		command->mutable_base()->clear_subtick_moves();
 		for (u64 i = replay->subtickOffsets[replay->currentTick]; i < replay->subtickOffsets[replay->currentTick + 1]; i++)
 		{
@@ -542,10 +546,10 @@ namespace KZ::replaysystem::playback
 		gear_slot_t desiredGearSlot = KZ::replaysystem::item::GetWeaponGearSlot(desiredWeapon.mainInfo.itemDef);
 		if (desiredGearSlot == gear_slot_t::GEAR_SLOT_C4)
 		{
-			// The bot can't keep hold of the C4: the game takes it straight back off it and the dropped
-			// entity is never destroyed, so replaying it verbatim spawns one world entity per tick.
-			// Play it back as a knife instead, preferring one the bot already carries so that nothing
-			// has to be given at all.
+			// The bot can't keep hold of the C4.
+			// The game takes it straight back off it and the dropped entity is never destroyed.
+			// Replaying it verbatim therefore spawns one world entity per tick.
+			// Play it back as a knife instead and prefer one the bot already carries so nothing has to be given at all.
 			desiredGearSlot = gear_slot_t::GEAR_SLOT_KNIFE;
 			desiredWeapon = EconInfo();
 			desiredWeapon.mainInfo.itemDef = KZ::replaysystem::item::GetDefaultKnifeItemDef();
@@ -570,7 +574,7 @@ namespace KZ::replaysystem::playback
 		{
 			if (desiredWeapon.mainInfo.itemDef == 0)
 			{
-				// If weapon is 0, then remove the active weapon from the player.
+				// Remove the active weapon from the player if weapon is 0.
 				player.GetPlayerPawn()->m_pWeaponServices()->m_hActiveWeapon(nullptr);
 				return;
 			}
@@ -601,7 +605,7 @@ namespace KZ::replaysystem::playback
 					KZ::replaysystem::item::GetWeaponGearSlot(invWeapon->m_AttributeManager().m_Item().m_iItemDefinitionIndex());
 				if (invGearSlot == desiredGearSlot)
 				{
-					// We have a weapon in the same gear slot, so we need to strip all weapons to avoid conflicts.
+					// We have a weapon in the same gear slot and need to strip all weapons to avoid conflicts.
 					player.GetPlayerPawn()->m_pItemServices()->RemoveAllItems(false);
 					break;
 				}
@@ -610,7 +614,7 @@ namespace KZ::replaysystem::playback
 			CBasePlayerWeapon *newWeapon = player.GetPlayerPawn()->m_pItemServices()->GiveNamedItem(weaponName.c_str());
 			if (newWeapon)
 			{
-				// The weapon stamps its attack timers with server time when it is given, but they run on the bot's clock.
+				// The weapon stamps its attack timers with server time when it is given but they run on the bot's clock.
 				i32 clockOffset = data::GetBotTickcount() - g_pKZUtils->GetGlobals()->tickcount;
 				newWeapon->m_nNextPrimaryAttackTick(newWeapon->m_nNextPrimaryAttackTick() + clockOffset);
 				newWeapon->m_nNextSecondaryAttackTick(newWeapon->m_nNextSecondaryAttackTick() + clockOffset);
@@ -654,7 +658,7 @@ namespace KZ::replaysystem::playback
 	{
 		auto replay = data::GetCurrentReplay();
 		replay->replayPaused = true;
-		// Playing the last replay tick ends the replay, so a step never reaches it.
+		// Playing the last replay tick ends the replay and a step never reaches it.
 		if (replay->currentTick + replay->stepTicks + 1 < replay->tickCount)
 		{
 			replay->stepTicks++;

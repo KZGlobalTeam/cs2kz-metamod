@@ -249,7 +249,7 @@ void KZCheckpointService::DoTeleport(const Checkpoint cp, bool stayOnGround, i32
 
 	Vector currentOrigin;
 	this->player->GetOrigin(&currentOrigin);
-	// Custom start positions use this path too, but are not saved checkpoints.
+	// Custom start positions use this path too but are not saved checkpoints.
 	RpTeleportReason reason = undo ? RPTELEPORT_CHECKPOINT_UNDO : checkpointIndex > 0 ? RPTELEPORT_CHECKPOINT : RPTELEPORT_UNKNOWN;
 	KZRecordingService::ScopedTeleport replayTeleport(*this->player->recordingService, reason, checkpointIndex);
 
@@ -269,9 +269,8 @@ void KZCheckpointService::DoTeleport(const Checkpoint cp, bool stayOnGround, i32
 
 	this->player->noclipService->DisableNoclip();
 
-	// If we teleport the player to the same origin,
-	// the player ends just a slightly bit off from where they are supposed to be...
-	// If we teleport the player to this origin every tick, they will end up NOT on this origin in the end somehow.
+	// The player ends just a slightly bit off from where they are supposed to be if we teleport them to the same origin...
+	// They will end up NOT on this origin in the end somehow if we teleport the player to this origin every tick.
 	// So we only set the player origin if it doesn't match.
 	if (currentOrigin != cp.origin)
 	{
@@ -288,8 +287,8 @@ void KZCheckpointService::DoTeleport(const Checkpoint cp, bool stayOnGround, i32
 		this->player->Teleport(NULL, &cp.angles, &NULL_VECTOR);
 	}
 	CBaseEntity *groundEntity = static_cast<CBaseEntity *>(GameEntitySystem()->GetEntityInstance(cp.groundEnt));
-	// Don't attach the player onto moving platform (because they might not be there anymore). World doesn't move
-	// though.
+	// Don't attach the player onto a moving platform because they might not be there anymore.
+	// The world doesn't move though.
 	if (groundEntity
 		&& (groundEntity->entindex() == 0
 			|| (groundEntity->m_vecBaseVelocity().Length() == 0.0f && groundEntity->m_vecAbsVelocity().Length() == 0.0f)))
@@ -372,7 +371,7 @@ void KZCheckpointService::TpHoldPlayerStill()
 	Vector currentOrigin;
 	this->player->GetOrigin(&currentOrigin);
 
-	// If we teleport the player to this origin every tick, they will end up NOT on this origin in the end somehow.
+	// They will end up NOT on this origin in the end somehow if we teleport the player to this origin every tick.
 	if (currentOrigin != this->lastTeleportedCheckpoint.origin)
 	{
 		this->player->SetOrigin(this->lastTeleportedCheckpoint.origin);

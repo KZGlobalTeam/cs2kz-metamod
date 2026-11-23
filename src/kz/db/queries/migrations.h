@@ -18,7 +18,7 @@ constexpr char sqlite_migrations_create[] = R"(
 )";
 
 // Advisory lock so servers sharing a database don't apply the same migrations concurrently.
-// Held by the session, released explicitly or when the connection closes.
+// Held by the session and released explicitly or when the connection closes.
 // The wait is kept short so it stays under the client read timeout; longer waits go through retries.
 constexpr char mysql_migrations_lock[] = R"(
     SELECT GET_LOCK('cs2kz_migrations', 10)

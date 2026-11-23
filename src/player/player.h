@@ -65,7 +65,7 @@ public:
 		return authAuthorized && (IsAway() || IsConnected());
 	}
 
-	// The client left, but the pawn and the player's state persist for a reconnect.
+	// The client left but the pawn and the player's state persist for a reconnect.
 	virtual bool IsAway()
 	{
 		return false;
@@ -96,7 +96,8 @@ public:
 
 	std::string sanitizedName;
 
-	// Takes the name from the client. An away player has no client and keeps the last name it had.
+	// Takes the name from the client.
+	// An away player has no client and keeps the last name it had.
 	void RefreshName()
 	{
 		if (GetClient())
@@ -181,14 +182,15 @@ public:
 	bool authPending {};    // True if in auth queue waiting for validation
 	bool authAuthorized {}; // True if authorization completed
 	CSteamID authorizedSteamID = k_steamIDNil;
-	// Identifies one stay on the server, which survives a reconnect into the held slot.
+	// Identifies one stay on the server.
+	// It survives a reconnect into the held slot.
 	u32 sessionID {};
 
 private:
 	CSteamID unauthenticatedSteamID = k_steamIDNil;
 };
 
-// Iterates every player slot, or only the slots whose player is in game.
+// Iterates every player slot or only the slots whose player is in game.
 template<typename T>
 class PlayerSlotRange
 {
@@ -350,7 +352,7 @@ private:
 	std::vector<CPlayerSlot> authQueue; // Queue of players pending auth validation
 
 public:
-	// Indexed by player slot, and zero-initialized because PlayerManager's constructor deletes every slot before allocating.
+	// Indexed by player slot and zero-initialized because PlayerManager's constructor deletes every slot before allocating.
 	Player *players[MAX_PLAYERS] {};
 };
 

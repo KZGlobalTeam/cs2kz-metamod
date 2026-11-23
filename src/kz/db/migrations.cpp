@@ -67,7 +67,7 @@ static_global const std::string sqliteMigrations[] =
 // clang-format on
 
 static_global constexpr f64 migrationRetryInterval = 5.0;
-// With the 10s lock wait, roughly 15 minutes before giving up.
+// Roughly 15 minutes before giving up with the 10s lock wait.
 static_global constexpr u32 maxMigrationAttempts = 60;
 static_global u32 migrationAttempts;
 
@@ -115,7 +115,7 @@ void KZDatabaseService::RunMigrations()
 	auto onFailure = [](std::string error, int failIndex)
 	{
 		KZ_LOG_WARN(LogChannel::DB, "Failed to read database migrations at %i (%s).\n", failIndex, error.c_str());
-		// The lock may have been acquired before the failing query, and a rollback doesn't release it.
+		// The lock may have been acquired before the failing query and a rollback doesn't release it.
 		ReleaseMigrationLock();
 		ScheduleMigrationRetry();
 	};
@@ -207,7 +207,7 @@ void KZDatabaseService::CheckMigrations(std::vector<ISQLQuery *> queries)
 		}
 	}
 
-	// The failure paths destroy the connection, which drops the lock with it.
+	// The failure paths destroy the connection and drop the lock with it.
 	auto onSuccess = []()
 	{
 		KZ_LOG_INFO(LogChannel::DB, "Database migration successful.\n");
@@ -225,7 +225,7 @@ void KZDatabaseService::CheckMigrations(std::vector<ISQLQuery *> queries)
 		databaseConnection = nullptr;
 	};
 
-	// If there's no migration needed, the database is already fully setup.
+	// The database is already fully setup if there's no migration needed.
 	if (current == max)
 	{
 		onSuccess();

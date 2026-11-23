@@ -26,7 +26,8 @@ public:
 	f64 currentRating = -1.0f;
 
 	// Overrides set through the public plugin interface (see src/public/ics2kz.h).
-	// Empty means "use the kz-computed value". They are independent of each other.
+	// Empty means "use the kz-computed value".
+	// They are independent of each other.
 	char clanTagOverride[32] {};
 	char chatPrefixOverride[128] {};
 

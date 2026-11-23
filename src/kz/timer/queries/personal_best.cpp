@@ -239,7 +239,7 @@ struct PBRequest : public BaseRequest
 				player->languageService->PrintChat(true, false, "PB Time - Overall (Global)", overallTime, tpText, this->gpbData.rank,
 												   this->gpbData.maxRank, this->gpbData.points);
 			}
-			// Their MAP PB has 0 teleports, and is therefore also their PRO PB
+			// Their MAP PB has 0 teleports and is therefore also their PRO PB
 			else if (this->gpbData.teleportsUsed == 0)
 			{
 				// KZ | Global: 12.34 [#1/24 Overall / 10000 pts] [#1/2 PRO / 10000 pts]
@@ -261,7 +261,7 @@ struct PBRequest : public BaseRequest
 				// KZ | Global: 12.34 (5 TPs) [Overall]
 				player->languageService->PrintChat(true, false, "PB Time - Overall Rankless (Global)", overallTime, tpText);
 			}
-			// Their MAP PB has 0 teleports, and is therefore also their PRO PB
+			// Their MAP PB has 0 teleports and is therefore also their PRO PB
 			else if (this->gpbData.teleportsUsed == 0)
 			{
 				// KZ | Global: 12.34 [Overall/PRO]
@@ -302,7 +302,7 @@ struct PBRequest : public BaseRequest
 				player->languageService->PrintChat(true, false, "PB Time - Overall (Server)", overallTime, tpText, this->pbData.rank,
 												   this->pbData.maxRank);
 			}
-			// Their MAP PB has 0 teleports, and is therefore also their PRO PB
+			// Their MAP PB has 0 teleports and is therefore also their PRO PB
 			else if (this->pbData.teleportsUsed == 0)
 			{
 				// KZ | Server: 12.34 [#1/24 Overall] [#1/2 PRO]
@@ -323,7 +323,7 @@ struct PBRequest : public BaseRequest
 				// KZ | Server: 12.34 (5 TPs) [Overall]
 				player->languageService->PrintChat(true, false, "PB Time - Overall Rankless (Server)", overallTime, tpText);
 			}
-			// Their MAP PB has 0 teleports, and is therefore also their PRO PB
+			// Their MAP PB has 0 teleports and is therefore also their PRO PB
 			else if (this->pbData.teleportsUsed == 0)
 			{
 				// KZ | Server: 12.34 [Overall/PRO]

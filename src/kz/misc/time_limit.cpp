@@ -62,7 +62,7 @@ static_global void OnCvarChanged(ConVarRefAbstract *ref, CSplitScreenSlot nSlot,
 
 	if (nextlevel.GetAccessIndex() == ref->GetAccessIndex() && nextlevel.Get().IsEmpty())
 	{
-		// The addon will be unloaded upon map change, so we need to set a valid nextlevel.
+		// We need to set a valid nextlevel because the addon will be unloaded on map change.
 		nextlevel.Set(GetDefaultMapName().c_str());
 		return;
 	}

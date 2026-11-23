@@ -92,9 +92,9 @@ RunSubmission::RunSubmission(KZPlayer *player)
 		{
 			if (!confirmed)
 			{
-				// map_change reply still pending, or the API connection itself is down/
-				// reconnecting. Defer instead of assuming non-global; TryFinalize() polls for
-				// this to be confirmed later (for this run's own map, never a different one).
+				// The map_change reply is still pending or the API connection itself is down or reconnecting.
+				// Defer instead of assuming non-global.
+				// TryFinalize() polls for this to be confirmed later (for this run's own map and never a different one).
 				this->mapResolutionPending = true;
 				return;
 			}
@@ -162,7 +162,7 @@ RunSubmission::RunSubmission(KZPlayer *player)
 	// Exception: non-global runs insert to DB immediately (no UUID synchronization needed).
 	if (mapResolutionPending)
 	{
-		// We don't know how long the API will take to respond, so we don't want to block the local insert on it.
+		// We don't know how long the API will take to respond and don't want to block the local insert on it.
 		if (local)
 		{
 			SubmitLocal(localUUID.ToString().c_str());
@@ -249,9 +249,9 @@ void RunSubmission::SubmitGlobal()
 		}
 		case KZGlobalService::SubmitRecordResult::Queued:
 		{
-			// The message will be sent once the API reconnects. TryFinalize() commits the local
-			// row with localUUID right away (it doesn't wait on pendingQueuedSubmission); once the
-			// late ack arrives, DoLateAPIResponse() reconciles the UUID and uploads the replay.
+			// The message will be sent once the API reconnects.
+			// TryFinalize() commits the local row with localUUID right away (it doesn't wait on pendingQueuedSubmission).
+			// DoLateAPIResponse() reconciles the UUID and uploads the replay once the late ack arrives.
 			// CheckAll() keeps this submission alive until that ack arrives.
 			this->pendingQueuedSubmission = true;
 			break;
@@ -308,16 +308,16 @@ void RunSubmission::OnReplayReady(std::vector<char> &&buffer)
 	replayBuffer = std::move(buffer);
 	replayReady = true;
 
-	// Eagerly resolve finalUUID if the API already responded, so the disk write uses the
-	// right path. If the API responds later, DoLateAPIResponse handles the rename.
+	// Eagerly resolve finalUUID if the API already responded so the disk write uses the right path.
+	// DoLateAPIResponse handles the rename if the API responds later.
 	if (apiResponseReceived && !globalResponse.recordId.empty())
 	{
 		finalUUID = UUID_t(globalResponse.recordId.c_str());
 	}
 
-	// Write replay to disk and notify the player regardless of local/global state.
-	//    QueueWriteBuffer takes the buffer by value, so replayBuffer is copy-constructed
-	//    and the original remains available for QueueReplayUpload below.
+	// Write the replay to disk and notify the player regardless of local/global state.
+	// QueueWriteBuffer takes the buffer by value.
+	// replayBuffer is copy-constructed and the original remains available for QueueReplayUpload below.
 	char replayPath[512];
 	BuildReplayPath(replayPath, sizeof(replayPath), finalUUID);
 	if (g_asyncFileIO)
@@ -358,7 +358,7 @@ void RunSubmission::OnReplayReady(std::vector<char> &&buffer)
 		TryFinalize();
 	}
 
-	// A queued submission parks here until its ack arrives, which can be minutes away or never.
+	// A queued submission parks here until its ack arrives and that can be minutes away or never.
 	// Holding the whole replay in RAM for that entire time is a waste of memory.
 	// DoLateAPIResponse() should take care of reading it back from disk later.
 	if (pendingQueuedSubmission && g_asyncFileIO)
@@ -375,8 +375,8 @@ void RunSubmission::OnReplayFailed()
 		return;
 	}
 
-	// There is no buffer and there never will be one, but the rest of the submission still has to
-	// finish. Mark the replay side done so CheckAll() stops holding this submission alive forever.
+	// There is no buffer and there never will be one but the rest of the submission still has to finish.
+	// Mark the replay side done so CheckAll() stops holding this submission alive forever.
 	replayReady = true;
 
 	if (!finalized)
@@ -413,9 +413,9 @@ void RunSubmission::TryFinalize()
 			}
 			resolved = true;
 
-			// Confirmed not-global, or confirmed for a DIFFERENT map than this run was played on
-			// (the map changed after the run and the API confirmed the new one); never submit
-			// globally in that case. 
+			// The map is confirmed not global or confirmed for a DIFFERENT map than this run was played on.
+			// That happens if the map changed after the run and the API confirmed the new one.
+			// Never submit globally in that case.
 			if (!currentMapInfo.has_value() || currentMapInfo->name != this->map.name)
 			{
 				return;
@@ -439,8 +439,8 @@ void RunSubmission::TryFinalize()
 						this->global ? "true" : "false", resolved ? "true" : "false", giveUp ? "true" : "false");
 		}
 
-		// Nothing to do for the local side here: deferring always commits the local row in the
-		// constructor, so it is already in flight regardless of how this resolves.
+		// Nothing to do for the local side here.
+		// Deferring always commits the local row in the constructor and it is already in flight regardless of how this resolves.
 		if (this->global)
 		{
 			SubmitGlobal();
@@ -472,16 +472,16 @@ void RunSubmission::TryFinalize()
 	}
 	// else: finalUUID stays equal to localUUID (set in constructor)
 
-	// 1. Local DB insert with the final UUID. This is the only place a global run's local row is
-	// written: the constructor deliberately defers it so the API has a chance to supply the
-	// canonical UUID first. Runs that already inserted with localUUID in the constructor
-	// (non-global, or deferred map resolution) are skipped by the localSubmitted guard.
+	// 1. Local DB insert with the final UUID.
+	// This is the only place a global run's local row is written.
+	// The constructor deliberately defers it so the API has a chance to supply the canonical UUID first.
+	// The localSubmitted guard skips runs that already inserted with localUUID in the constructor (non-global or deferred map resolution).
 	if (local && !localSubmitted)
 	{
 		SubmitLocal(finalUUID.ToString().c_str());
 	}
 
-	// 2. Upload replay to the global API if the run was accepted.
+	// 2. Upload the replay to the global API if the run was accepted.
 	if (global && apiResponseReceived && !globalResponse.recordId.empty() && !replayBuffer.empty())
 	{
 		KZGlobalService::QueueReplayUpload(finalUUID, globalResponse.replayUploadKey, std::vector<char>(replayBuffer));
@@ -524,7 +524,7 @@ void RunSubmission::DoLateAPIResponse(const std::string &apiUUID)
 								   }
 							   });
 
-	// Update DB row, then reload the record cache, which still holds the old UUID.
+	// Update the DB row and then reload the record cache because it still holds the old UUID.
 	KZDatabaseService::UpdateRunUUID(
 		localUUID.ToString().c_str(), apiUUID.c_str(), [](std::vector<ISQLQuery *>) { KZTimerService::UpdateLocalRecordCache(); }, nullptr);
 
@@ -546,8 +546,8 @@ void RunSubmission::DoLateAPIResponse(const std::string &apiUUID)
 	}
 	else
 	{
-		// The buffer was released while this submission was parked waiting for the ack (see
-		// OnReplayReady), so read it back from disk.
+		// The buffer was released while this submission was parked waiting for the ack (see OnReplayReady).
+		// Read it back from disk.
 		std::string uploadPath(newPath);
 		// clang-format off
 		g_asyncFileIO->QueueRead(uploadPath,
@@ -721,8 +721,7 @@ void RunSubmission::CheckAll()
 			// Try to finalize on each frame until it commits
 			sub->TryFinalize();
 
-			// Wait for all pending responses before announcing rank info, so local and
-			// global messages arrive together in a single burst.
+			// Wait for all pending responses before announcing rank info so local and global messages arrive together in a single burst.
 			bool localReady = !sub->local || sub->localResponse.received;
 			bool globalReady =
 				!sub->mapResolutionPending && (!sub->global || sub->globalResponse.received || sub->pendingQueuedSubmission);
@@ -732,10 +731,10 @@ void RunSubmission::CheckAll()
 				sub->Announce();
 			}
 
-			// Keep alive until the queued submission gets its API response. 
-			// TODO: WS::OnCloseMessage() clears callbacks.queue without notifying anyone, so
-			// a queued message destroyed before it flushes means the ack never arrives and this
-			// submission parks forever. Should fix that in the next global rewrite.
+			// Keep alive until the queued submission gets its API response.
+			// TODO: WS::OnCloseMessage() clears callbacks.queue without notifying anyone.
+			// A queued message destroyed before it flushes means the ack never arrives and this submission parks forever.
+			// Should fix that in the next global rewrite.
 			if (sub->pendingQueuedSubmission)
 			{
 				return false;
@@ -764,8 +763,7 @@ void RunSubmission::CheckAll()
 				}
 			}
 
-			// Keep alive until the replay breather ends and OnReplayReady fires,
-			// so the disk write and player notification are not lost.
+			// Keep alive until the replay breather ends and OnReplayReady fires so the disk write and player notification are not lost.
 			if (!sub->replayReady)
 			{
 				return false;
@@ -811,7 +809,7 @@ bool RunSubmission::IsNewServerRecord(bool pro) const
 	{
 		return false;
 	}
-	// The rank is that of the player's PB, so a slower run by the current record holder is also rank 1.
+	// The rank is that of the player's PB and a slower run by the current record holder is also rank 1.
 	auto &data = pro ? this->localResponse.pro : this->localResponse.overall;
 	return data.rank == 1 && (data.firstTime || data.pbDiff < 0);
 }

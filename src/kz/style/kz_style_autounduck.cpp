@@ -157,7 +157,7 @@ void KZAutoUnduckStyleService::OnProcessMovement()
 {
 	this->UpdateDuckTime();
 	CMoveData *mv = this->player->currentMoveData;
-	// If already applying unduck and the player is still holding duck, keep forced unduck state
+	// Keep forced unduck state if already applying unduck and the player is still holding duck
 	if (this->applyingUnduck && this->player->GetMoveServices()->m_nButtons().GetButtonState(IN_DUCK) == IN_BUTTON_DOWN)
 	{
 		this->ApplyForcedUnduck();
@@ -200,7 +200,7 @@ void KZAutoUnduckStyleService::OnProcessMovement()
 	ground -= 2.0f;
 	INavPhysicsInterface::TraceShape(Ray_t(bounds.mins, bounds.maxs), mv->m_vecAbsOrigin, ground, &filter, &trace);
 
-	// Doesn't hit anything, fall back to the original ground
+	// Fall back to the original ground if it doesn't hit anything
 	if (!trace.DidHit() || trace.m_vHitNormal.z < standableZ)
 	{
 		this->CancelForcedUnduck();

@@ -39,7 +39,7 @@ static_global class KZOptionServiceEventListener_HUD : public KZOptionServiceEve
 	virtual void OnPlayerPreferenceChanged(KZPlayer *player, const char *optionName)
 	{
 		player->hudService->InvalidatePrefs();
-		// Cached outside MHUDPrefs, so a reset or an import has to refresh it here.
+		// A reset or an import has to refresh it here because it is cached outside MHUDPrefs.
 		if (KZ_STREQI(optionName, "showPanel"))
 		{
 			player->hudService->ResetShowPanel();
@@ -128,7 +128,7 @@ KZHUDService::SpeedInfo KZHUDService::GetSpeedInfo(const MHUDPrefs &prefs)
 {
 	SpeedInfo info {};
 	CCSPlayerPawn *pawn = this->player->GetPlayerPawn();
-	// A spectator in free camera sees the camera's speed, even while their own pawn persists.
+	// A spectator in free camera sees the camera's speed even while their own pawn persists.
 	if (!pawn || this->player->specService->IsObserving())
 	{
 		CCSPlayerPawnBase *observer = this->player->GetObserverPawn();
@@ -147,7 +147,7 @@ KZHUDService::SpeedInfo KZHUDService::GetSpeedInfo(const MHUDPrefs &prefs)
 	info.deadstrafe =
 		!(pawn->m_fFlags & FL_ONGROUND) && pawn->m_MoveType == MOVETYPE_WALK && this->player->GetMoveServices()->m_flSurfaceFriction() == 0.25f;
 	// Keep the takeoff velocity on for a while after landing so the speed values flicker less.
-	// mhudPrespeedShow == Always skips this timeout, so the last takeoff speed keeps showing while grounded.
+	// mhudPrespeedShow == Always skips this timeout and keeps the last takeoff speed showing while grounded.
 	const bool pastGraceWindow =
 		this->player->GetPlayerPawn()->m_fFlags & FL_ONGROUND && this->player->GetCurtime() - this->player->landingTime > KZ_HUD_ON_GROUND_THRESHOLD;
 	if ((pastGraceWindow && prefs.prespeedShow != MHUDPrespeedShow::Always)
@@ -176,7 +176,7 @@ CPlayer_MovementServices *KZHUDService::GetHudMoveServices()
 	{
 		return this->player->GetMoveServices();
 	}
-	// Dead or spectating, the keys are the observer camera's.
+	// The keys are the observer camera's while dead or spectating.
 	CCSPlayerPawnBase *observer = this->player->GetObserverPawn();
 	return observer ? observer->m_pMovementServices() : nullptr;
 }
@@ -351,7 +351,7 @@ SCMD(kz_hudedit, SCFL_HUD)
 SCMD(kz_hidehud, SCFL_HUD)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
-	// Without arguments, everything the command can toggle except the crosshair.
+	// Everything the command can toggle except the crosshair if there are no arguments.
 	u32 bits = 0;
 	if (args->ArgC() < 2)
 	{

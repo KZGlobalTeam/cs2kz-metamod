@@ -468,7 +468,8 @@ namespace KZ::replaysystem::commands
 			return;
 		}
 
-		// A timescale of 0 is a pause, so resuming goes back to the speed the replay had before.
+		// A timescale of 0 is a pause.
+		// Resuming goes back to the speed the replay had before.
 		if (timescale == 0.0f)
 		{
 			replay->replayPaused = true;

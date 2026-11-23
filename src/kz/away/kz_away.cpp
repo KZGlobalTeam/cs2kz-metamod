@@ -27,7 +27,7 @@ void KZAwayService::Reset()
 	this->simulatedFrame = 0;
 }
 
-// CS2 itself keeps the controller and pawn of a player on a team, unless they were still loading.
+// CS2 itself keeps the controller and pawn of a player on a team unless they were still loading.
 bool KZAwayService::CanStayAway()
 {
 	if (this->player->IsFakeClient() || this->player->IsCSTV() || !this->player->IsAlive())
@@ -95,7 +95,8 @@ void KZAwayService::RestoreLoadout()
 	}
 }
 
-// The controller kills the pawn it switches away from and puts it to sleep, which also stops it from touching triggers.
+// The controller kills the pawn it switches away from and puts it to sleep.
+// That also stops it from touching triggers.
 void KZAwayService::RevivePersistentPawn()
 {
 	CCSPlayerPawn *pawn = this->player->GetPlayerPawn();
@@ -104,7 +105,8 @@ void KZAwayService::RevivePersistentPawn()
 	{
 		return;
 	}
-	// The switch also takes the controller away from the pawn, and the game runs no command for a pawn without one.
+	// The switch also takes the controller away from the pawn.
+	// The game runs no command for a pawn without one.
 	if (pawn->m_hController().Get() != controller)
 	{
 		pawn->m_hController(controller);
@@ -115,7 +117,8 @@ void KZAwayService::RevivePersistentPawn()
 	}
 	pawn->m_lifeState(LIFE_ALIVE);
 	pawn->SetPlayerState(PLAYER_STATE_ACTIVE);
-	// Entering the active state copies the pawn's team to the controller, and a round restart would then move it to that team.
+	// Entering the active state copies the pawn's team to the controller.
+	// A round restart would then move it to that team.
 	controller->m_iPendingTeamNum(CS_TEAM_SPECTATOR);
 	// Entering the active state makes the pawn walk again.
 	if (this->player->timerService->GetPaused())
@@ -159,8 +162,9 @@ bool KZAwayService::CanSpectateWithPersistentPawn()
 	return team == CS_TEAM_T || team == CS_TEAM_CT;
 }
 
-// A scoreboard row hides until its next team change if it reaches a team table the scoreboard has not created yet, and the spectator table is
-// only created after the scoreboard has seen a spectator. Clients drop all rows on this event, so the tables come first when they are rebuilt.
+// A scoreboard row hides until its next team change if it reaches a team table the scoreboard has not created yet.
+// The spectator table is only created after the scoreboard has seen a spectator.
+// The tables come first when clients rebuild the rows they drop on this event.
 static_function void RebuildScoreboards()
 {
 	IGameEvent *event = interfaces::pGameEventManager->CreateEvent("nextlevel_changed");
@@ -186,12 +190,13 @@ void KZAwayService::StartSpectating()
 {
 	this->SaveLoadout();
 	this->observingWithPersistentPawn = true;
-	// The controller views through its observer pawn whenever a desired observer mode is set, whatever its team.
+	// The controller views through its observer pawn whenever a desired observer mode is set regardless of its team.
 	CCSPlayerController *controller = this->player->GetController();
 	controller->m_DesiredObserverMode(OBS_MODE_ROAMING);
 	controller->m_hDesiredObserverTarget(this->player->GetPlayerPawn());
-	// The client's team menu only sends a team the client is not already on, so the controller shows as a spectator.
-	// The team is written directly, a team change would kill the pawn.
+	// The client's team menu only sends a team the client is not already on.
+	// The controller therefore shows as a spectator.
+	// The team is written directly because a team change would kill the pawn.
 	this->persistentTeam = controller->m_iTeamNum();
 	CTeam::MovePlayer(controller, this->persistentTeam, CS_TEAM_SPECTATOR);
 	controller->m_iTeamNum(CS_TEAM_SPECTATOR);
@@ -214,13 +219,14 @@ void KZAwayService::RestorePersistentPawn(bool leaving)
 	controller->m_iPendingTeamNum(this->persistentTeam);
 	controller->m_DesiredObserverMode(OBS_MODE_NONE);
 	controller->m_hDesiredObserverTarget(CHandle<CCSPlayerPawn>());
-	// The controller would only switch back on its next tick, and whatever the caller does next (a teleport, a team change) has
-	// to happen to the pawn the controller uses. This switches the same way the game does.
+	// The controller would only switch back on its next tick.
+	// Whatever the caller does next (a teleport, a team change) has to happen to the pawn the controller uses.
+	// This switches the same way the game does.
 	CCSPlayerPawn *pawn = this->player->GetPlayerPawn();
 	CCSPlayerPawnBase *observerPawn = controller->m_hObserverPawn().Get();
 	if (pawn && controller->GetCurrentPawn() != pawn)
 	{
-		// SetPawn takes the new pawn away from the controller it points to first, which would be this one.
+		// SetPawn first takes the new pawn away from the controller it points to (this one).
 		pawn->m_hController(CHandle<CBasePlayerController>());
 		g_pKZUtils->SetPawn(controller, pawn, true, false, false, true);
 		if (observerPawn)
@@ -229,10 +235,12 @@ void KZAwayService::RestorePersistentPawn(bool leaving)
 			observerPawn->m_lifeState(LIFE_DEAD);
 		}
 	}
-	// The client keeps its observer view angles until it uses the pawn, so the view is set once the player's commands drive it.
+	// The client keeps its observer view angles until it uses the pawn.
+	// The view is therefore set once the player's commands drive it.
 	this->snapAngles = true;
 	this->snapIndex = -1;
-	// About a second of commands, the client normally applies the snap within its latency.
+	// About a second of commands.
+	// The client normally applies the snap within its latency.
 	this->holdHandCommands = 64;
 	// A player who leaves while spectating stays paused and keeps going without control.
 	if (leaving)
@@ -240,7 +248,7 @@ void KZAwayService::RestorePersistentPawn(bool leaving)
 		return;
 	}
 	this->player->recordingService->OnControlChange(RpEvent::RpEventData::ControlEvent::CONTROL_RETURN);
-	// The run picks up again with the player, unless they turned that off.
+	// The run picks up again with the player unless they turned that off.
 	if (this->player->timerService->GetPaused() && this->player->timerService->GetAutoResumeAfterSpectating())
 	{
 		this->player->timerService->Resume();
@@ -261,15 +269,16 @@ bool KZAwayService::OnReconnect()
 	// The new client numbers its commands from 1 again.
 	this->player->recordingService->lastCmdNumReceived = 0;
 	this->player->recordingService->OnControlChange(RpEvent::RpEventData::ControlEvent::CONTROL_RETURN);
-	// A returning player gets a moment to settle in, if the pawn did not come to rest while they were away.
+	// A returning player gets a moment to settle in if the pawn did not come to rest while they were away.
 	KZTimerService *timer = this->player->timerService;
 	if (timer->GetTimerRunning() && !timer->GetPaused() && timer->CanPause())
 	{
 		timer->Pause(false);
 	}
 	this->player->languageService->PrintChat(true, false, timer->GetPaused() ? "Away Restored (Paused)" : "Away Restored");
-	// The resumed run never started under the new connection, so this is the only warning that Steam has not confirmed it yet,
-	// for example while Steam is down. Until it does, the run is not saved.
+	// The resumed run never started under the new connection.
+	// This is the only warning that Steam has not confirmed it yet (for example while Steam is down).
+	// Until it does the run is not saved.
 	if (!this->player->IsAuthenticated())
 	{
 		this->player->languageService->PrintChat(true, false, "No Steam Authentication Warning");
@@ -279,7 +288,8 @@ bool KZAwayService::OnReconnect()
 
 bool KZAwayService::OnControllerSimulatePre()
 {
-	// The persistent pawn of a spectator runs its own command, and the per-tick logic runs around that one instead.
+	// The persistent pawn of a spectator runs its own command.
+	// The per-tick logic runs around that one instead.
 	if (this->observingWithPersistentPawn)
 	{
 		return false;
@@ -296,8 +306,9 @@ void KZAwayService::OnControllerSimulatePost()
 	{
 		return;
 	}
-	// The game only simulates the pawn a connected controller uses. The pawn's own simulation runs an empty command when the
-	// controller counts as not connected, the way it does for a player who is away, and puts the clock where the game would.
+	// The game only simulates the pawn a connected controller uses.
+	// The pawn's own simulation runs an empty command if the controller counts as not connected.
+	// The game does the same for an away player and also puts the clock where the game would.
 	this->RevivePersistentPawn();
 	static_persist const i32 offset = g_pGameConfig->GetOffset("EntityPhysicsSimulate");
 	u32 tickBase = controller->m_nTickBase();
@@ -316,8 +327,9 @@ void KZAwayService::OnPlayerRunCommandPre(CUserCmd *cmd)
 {
 	CBaseUserCmdPB *base = cmd->mutable_base();
 	CCSPlayerPawn *pawn = this->player->GetPlayerPawn();
-	// The commands a client sends run inside the controller's simulation. A pawn that runs a command outside of it is one the
-	// controller did not drive this tick: a player who is away, loading back in or spectating.
+	// The commands a client sends run inside the controller's simulation.
+	// A pawn that runs a command outside of it is one the controller did not drive this tick.
+	// That is a player who is away, loading back in or spectating.
 	if (g_KZPlugin.simulatingPhysics)
 	{
 		if (!this->CanControlPawn() || !pawn)
@@ -349,7 +361,8 @@ void KZAwayService::OnPlayerRunCommandPre(CUserCmd *cmd)
 		return;
 	}
 
-	// The command the pawn builds for itself carries no input, this keeps it that way and adds what the player last had.
+	// The command the pawn builds for itself carries no input.
+	// This keeps it that way and adds what the player last had.
 	base->set_forwardmove(0.0f);
 	base->set_leftmove(0.0f);
 	base->set_upmove(0.0f);
@@ -373,7 +386,8 @@ void KZAwayService::OnPlayerRunCommandPre(CUserCmd *cmd)
 	cmd->buttonstates.m_pButtonStates[1] = 0;
 	cmd->buttonstates.m_pButtonStates[2] = 0;
 
-	// The controller hook carries the player's tick only while the controller drives the pawn, otherwise this command does.
+	// The controller hook carries the player's tick only while the controller drives the pawn.
+	// Otherwise this command does.
 	i32 frame = g_pKZUtils->GetServerGlobals(true)->tickcount;
 	if (this->simulatedFrame != frame)
 	{
@@ -397,8 +411,7 @@ void KZAwayService::OnPlayerRunCommandPost()
 
 void KZAwayService::OnTeleport(const QAngle *angles)
 {
-	// When it comes from MovementPlayer::SetAngles, the teleport carries no pitch, since that would tilt the pawn's player model
-	// instead of the camera.
+	// A teleport from MovementPlayer::SetAngles carries no pitch because that would tilt the pawn's player model instead of the camera.
 	const QAngle *viewAngles = this->player->settingViewAngles ? this->player->settingViewAngles : angles;
 	if (viewAngles && (!this->CanControlPawn() || this->snapAngles))
 	{

@@ -2,8 +2,9 @@
 
 #include "tier0/memdbgon.h"
 
-// One curated palette swatch: the class that tints text (pal-fg-N), the class that fills a swatch
-// panel (pal-bg-N), and the color both draw. Private to this file - callers use the functions below.
+// One curated palette swatch.
+// It holds the class that tints text (pal-fg-N), the class that fills a swatch panel (pal-bg-N) and the color both draw.
+// Private to this file because callers use the functions below.
 struct PanoramaColorDef
 {
 	const char *fgClass;
@@ -11,7 +12,8 @@ struct PanoramaColorDef
 	u8 r, g, b;
 };
 
-// A gradient text/swatch pair. The color stops live only in palette.css; C++ needs the class names.
+// A gradient text/swatch pair.
+// The color stops live only in palette.css and C++ needs the class names.
 struct PanoramaGradientDef
 {
 	const char *fgClass; // color: gradient(...) applied to HUD/menu text
@@ -78,8 +80,8 @@ extern const PanoramaFontDef PANORAMA_FONTS[] =
 	{"noto-sans-thai-light", "font-family--noto-sans-thai-light", "Noto Sans Thai Light", "Noto Sans Thai", "Light"},
 	{"noto-sans-thai", "font-family--noto-sans-thai", "Noto Sans Thai", "Noto Sans Thai", "Regular"},
 	{"noto-sans-thai-bold", "font-family--noto-sans-thai-bold", "Noto Sans Thai Bold", "Noto Sans Thai", "Bold"},
-	// System fonts: Panorama falls back to whatever the player has installed, so these may not render.
-	// The * carries through to the picker, where a footer explains it.
+	// System fonts may not render because Panorama falls back to whatever the player has installed.
+	// The * carries through to the picker where a footer explains it.
 	{"quicksand-light", "font-family--quicksand-light", "Quicksand Light*", "Quicksand*", "Light"},
 	{"quicksand", "font-family--quicksand", "Quicksand*", "Quicksand*", "Regular"},
 	{"quicksand-medium", "font-family--quicksand-medium", "Quicksand Medium*", "Quicksand*", "Medium"},
@@ -266,7 +268,8 @@ static_global const PanoramaColorDef PANORAMA_COLORS[] =
 
 static_global const i32 PANORAMA_COLOR_COUNT = KZ_ARRAYSIZE(PANORAMA_COLORS);
 
-// Nearest by squared RGB distance. Alpha is dropped: no palette class carries one.
+// Nearest by squared RGB distance.
+// Alpha is dropped because no palette class carries one.
 static_function i32 GetNearestColorIndex(const Color &c)
 {
 	i32 best = 0;
@@ -422,7 +425,7 @@ const char *panorama::ResolveFontSlug(const char *name, const char *fallback)
 	return fallback;
 }
 
-// Static storage, so callers may cache it by pointer.
+// Static storage so callers may cache it by pointer.
 const char *panorama::ResolveFontClass(const char *name, const char *fallback)
 {
 	const char *slug = ResolveFontSlug(name, fallback);
@@ -449,9 +452,11 @@ const char *panorama::GetFontDisplayName(const char *name, const char *fallback)
 	return PANORAMA_FONTS[0].displayName;
 }
 
-// The sheets do not define every value: positions step by 1 inside +/-100 and by 5 out to +/-500,
-// sizes by 1 up to 100 and by 5 above. Snapping keeps a preference from naming a missing class.
-// TODO: Nuke this function when dyanmic font sizes are supported
+// The sheets do not define every value.
+// Positions step by 1 inside +/-100 and by 5 out to +/-500.
+// Sizes step by 1 up to 100 and by 5 above.
+// Snapping keeps a preference from naming a missing class.
+// TODO: Nuke this function when dynamic font sizes are supported
 i32 panorama::SnapToStep(i32 value, i32 lo, i32 hi)
 {
 	value = Clamp(value, lo, hi);

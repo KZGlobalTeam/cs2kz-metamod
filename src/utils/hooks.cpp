@@ -109,7 +109,7 @@ static KHook::Virtual<CBaseEntity, void, CBaseEntity *> startTouchHook(StartTouc
 static KHook::Return<void> TouchPre(CBaseEntity *pThis, CBaseEntity *pOther)
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
-	// If it's a player touching trigger_push, we still need to disable jumpstats.
+	// We still need to disable jumpstats if it's a player touching trigger_push.
 	KZPlayer *player = nullptr;
 	if (KZ_STREQI(pThis->GetClassname(), "trigger_push") && KZ_STREQI(pOther->GetClassname(), "player"))
 	{
@@ -208,7 +208,7 @@ static KHook::Return<void> ChangeTeamPost(CCSPlayerController *pThis, i32 team)
 
 static KHook::Virtual<CCSPlayerController, void, i32> changeTeamHook(nullptr, ChangeTeamPost);
 
-// Detours the function itself, gamerules calls it directly when a player disconnects.
+// Detours the function itself because gamerules calls it directly when a player disconnects.
 static KHook::Return<void> ChangeTeamFunctionPre(CCSPlayerController *pThis, i32 team)
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
@@ -662,7 +662,8 @@ static KHook::Return<bool> ProcessRespondCvarValuePre(CServerSideClientBase *pTh
 static KHook::Virtual<CServerSideClientBase, bool, const CNetMessagePB<CCLCMsg_RespondCvarValue> &> respondCvarValueHook(ProcessRespondCvarValuePre,
 																														 nullptr);
 
-// Every convar a client reports: the full userinfo set on connect, and each setinfo afterwards.
+// Every convar a client reports.
+// That is the full userinfo set on connect and each setinfo afterwards.
 static KHook::Return<bool> ProcessSetConVarPre(CServerSideClientBase *pThis, const CNetMessagePB<CNETMsg_SetConVar> &msg)
 {
 	VPROF_BUDGET(__func__, "CS2KZ");
@@ -1490,7 +1491,7 @@ static_global void *signatureAddresses[KZ_ARRAYSIZE(SIGNATURE_HOOKS)];
 // ============================================================
 bool hooks::ResolveSignatures(char *error, size_t maxlen)
 {
-	// Resolve every signature before anything is hooked, so outdated gamedata aborts the load instead of running with missing detours.
+	// Resolve every signature before anything is hooked so outdated gamedata aborts the load instead of running with missing detours.
 	std::string missingSignatures;
 	for (u32 i = 0; i < KZ_ARRAYSIZE(SIGNATURE_HOOKS); i++)
 	{

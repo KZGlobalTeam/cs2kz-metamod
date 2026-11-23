@@ -10,7 +10,7 @@
 #include <algorithm>
 #include <ctime>
 
-// Written into the set whenever it is saved, so the most recently written copy can be identified.
+// Written into the set whenever it is saved so the most recently written copy can be identified.
 #define KZ_PREF_UPDATED_AT "prefsUpdatedAt"
 // A server with a badly wrong clock would otherwise write a stamp that wins everywhere forever.
 #define KZ_PREF_STAMP_MAX_SKEW 86400
@@ -57,13 +57,14 @@ private:
 		GLOBAL
 	} dataState, currentState;
 
-	// The stamp of the set currently applied, and per-source arrival guards. Sources can arrive in
-	// either order, so which one is newest is not the same question as which one got here first.
+	// The stamp of the set currently applied and per-source arrival guards.
+	// Sources can arrive in either order.
+	// Which one is newest is therefore not the same question as which one got here first.
 	i64 loadedStamp {};
 	bool localLoaded {};
 	bool globalLoaded {};
 
-	// When this session last changed a preference, 0 if it has not.
+	// When this session last changed a preference (0 if it has not).
 	i64 modifiedAt {};
 
 	// True when a set carrying this stamp should replace what is already applied.
@@ -97,9 +98,10 @@ public:
 		userSetPrefs.clear();
 	}
 
-	// Saving replaces the whole stored set, so it is only safe once this session has read that set. Before then prefKV
-	// holds nothing but this session's changes. A client that drops before its preferences arrive (the reconnect
-	// Multi Addon Manager forces to download the addon does this) would otherwise wipe every stored preference.
+	// Saving replaces the whole stored set and is only safe once this session has read that set.
+	// Before then prefKV holds nothing but this session's changes.
+	// A client that drops before its preferences arrive would otherwise wipe every stored preference.
+	// Multi Addon Manager forces such a reconnect to download the addon.
 	bool CanSaveLocalPrefs()
 	{
 		return localLoaded && dataState != NONE;
@@ -134,13 +136,13 @@ public:
 		*output = kv3Output.Get();
 	}
 
-	// True once the player has a value for this preference, as opposed to falling back to a default.
+	// True once the player has a value for this preference instead of falling back to a default.
 	bool HasPreference(const char *optionName)
 	{
 		return prefKV.FindMember(optionName) != NULL;
 	}
 
-	// Due to the way keyvalues3.h is written, we can't template these functions.
+	// We can't template these functions due to the way keyvalues3.h is written.
 	void SetPreferenceBool(const char *optionName, bool value)
 	{
 		MarkUserSet(optionName);

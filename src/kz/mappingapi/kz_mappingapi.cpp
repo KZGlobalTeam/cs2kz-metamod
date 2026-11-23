@@ -1,5 +1,5 @@
 /*
-	Keeps track of course descriptors along with various types of triggers, applying effects to player when necessary.
+	Keeps track of course descriptors along with various types of triggers and applies effects to player when necessary.
 */
 
 #include "kz/kz.h"
@@ -73,7 +73,7 @@ static_function void InsertSortedCourse(KZCourseDescriptor *course)
 
 // TODO: add error check to make sure a course has at least 1 start zone and 1 end zone
 
-// Errors and warnings share one list, each message stored with its prefix.
+// Errors and warnings share one list and each message is stored with its prefix.
 static_function void Mapi_AddMessage(const char *prefix, const char *format, va_list args)
 {
 	i32 errorIndex = g_mappingApi.errorCount;
@@ -90,7 +90,7 @@ static_function void Mapi_AddMessage(const char *prefix, const char *format, va_
 	char message[sizeof(g_mappingApi.errors[0])];
 	vsnprintf(message, sizeof(message), format, args);
 	snprintf(g_mappingApi.errors[errorIndex], sizeof(g_mappingApi.errors[errorIndex]), "%s%s", prefix, message);
-	// Courses are checked again every round, and a course that passes keeps any warning it gets.
+	// Courses are checked again every round and a course that passes keeps any warning it gets.
 	for (i32 i = 0; i < errorIndex; i++)
 	{
 		if (KZ_STREQ(g_mappingApi.errors[i], g_mappingApi.errors[errorIndex]))
@@ -110,7 +110,7 @@ static_function void Mapi_Error(const char *format, ...)
 	va_end(args);
 }
 
-// For maps that still work, but not fully.
+// For maps that still work but not fully.
 static_function void Mapi_Warning(const char *format, ...)
 {
 	va_list args;
@@ -141,7 +141,7 @@ static_function bool Mapi_CreateCourse(i32 courseNumber = 1, const char *courseN
 									   const char *targetName = KZ_NO_MAPAPI_COURSE_DESCRIPTOR, bool disableCheckpoints = false)
 {
 	// Make sure we don't exceed this ridiculous value.
-	// If we do, it is most likely that something went wrong, or it is caused by the mapper.
+	// Exceeding it most likely means something went wrong or the mapper caused it.
 	if (g_mappingApi.courseDescriptorCount >= KZ_MAX_COURSE_COUNT)
 	{
 		assert(0);
@@ -154,7 +154,8 @@ static_function bool Mapi_CreateCourse(i32 courseNumber = 1, const char *courseN
 	{
 		if (currentCourses[i].hammerId == hammerId)
 		{
-			// This should only happen during start/end zone backwards compat where hammer IDs are KZ_NO_MAPAPI_VERSION, so this is not an error.
+			// This should only happen during start/end zone backwards compat where hammer IDs are KZ_NO_MAPAPI_VERSION.
+			// It is not an error.
 			return false;
 		}
 		if (KZ_STREQI(targetName, currentCourses[i].entityTargetname))
@@ -367,7 +368,7 @@ static_function void Mapi_OnTriggerMultipleSpawn(const EntitySpawnInfo_t *info)
 		}
 		default:
 		{
-			// technically impossible to happen, leave an assert here anyway for debug builds.
+			// technically impossible to happen but leave an assert here anyway for debug builds.
 			assert(0);
 			return;
 		}
@@ -769,7 +770,7 @@ void KZ::mapapi::OnRoundStart()
 		courseDescriptor->stageCount = stageCount;
 	}
 
-	// FastRemove moves elements around, so the sorted pointers have to be rebuilt.
+	// The sorted pointers have to be rebuilt because FastRemove moves elements around.
 	g_sortedCourses.clear();
 	for (u32 courseInd = 0; courseInd < g_mappingApi.courseDescriptorCount; courseInd++)
 	{
@@ -1130,8 +1131,8 @@ static_function void PrintCoursesWithoutMap(KZPlayer *player)
 
 void KZ::course::PrintCourses(KZPlayer *player)
 {
-	// If we have API map data, that means we have information about individual mappers for each course, along with tiers for both modes.
-	// Otherwise, the only course information we have is the course ID and the course name.
+	// API map data means we have information about individual mappers for each course along with tiers for both modes.
+	// Otherwise the only course information we have is the course ID and the course name.
 	bool hasMap = false;
 	std::vector<KZ::api::Map::Course> courses;
 	hasMap = KZGlobalService::WithCurrentMap(
@@ -1306,7 +1307,7 @@ static_function void PrintCourseTier(KZPlayer *player, const CCommand *args)
 			break;
 		}
 	}
-	// If the course isn't found in the API map data or the player's current mode isn't Classic or Vanilla, we can't show tier info.
+	// We can't show tier info if the course isn't found in the API map data or the player's current mode isn't Classic or Vanilla.
 	if (!apiCourse || (!KZ_STREQI(player->modeService->GetModeName(), "Classic") && (!KZ_STREQI(player->modeService->GetModeName(), "Vanilla"))))
 	{
 		player->languageService->PrintChat(true, false, "Course Data Unavailable", courseName);

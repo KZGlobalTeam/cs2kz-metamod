@@ -164,7 +164,7 @@ private:
 		Uninitialized,
 
 		/**
-		 * The state after `Init()` has been called, when the WebSocket has been configured, but not yet started.
+		 * The state after `Init()` has been called when the WebSocket has been configured but not yet started.
 		 */
 		Configured,
 
@@ -250,17 +250,17 @@ private:
 			/**
 			 * The message ID.
 			 *
-			 * This is either the same ID as a message we sent earlier, indicating a response, or 0.
+			 * This is either the same ID as a message we sent earlier (indicating a response) or 0.
 			 */
 			u32 id;
 
 			/**
-			 * The message we sent earlier, to which this is the reply, triggered an error.
+			 * The message we sent earlier (to which this is the reply) triggered an error.
 			 */
 			bool isError;
 
 			/**
-			 * The rest of the payload, which will be parsed according to `MessageType` later.
+			 * The rest of the payload to be parsed according to `MessageType` later.
 			 */
 			Json payload;
 		};
@@ -269,9 +269,9 @@ private:
 		static inline std::unique_ptr<ix::WebSocket> socket = nullptr;
 
 		/**
-		 * WebSocket messages we have received, but not yet processed.
+		 * WebSocket messages we have received but not yet processed.
 		 *
-		 * These are processed on the main thread, and potentially passed into callbacks stored in
+		 * These are processed on the main thread and potentially passed into callbacks stored in
 		 * `messageCallbacks.queue`.
 		 */
 		static inline struct ReceivedMessages
@@ -283,8 +283,9 @@ private:
 		/**
 		 * Callbacks for sent messages we expect to get a reply to.
 		 *
-		 * The key is the message ID we used to send the original message, and the API will respond with a message that
-		 * has the same ID. The callback itself is given the message data extracted when we received the message.
+		 * The key is the message ID we used to send the original message.
+		 * The API will respond with a message that has the same ID.
+		 * The callback itself is given the message data extracted when we received the message.
 		 */
 		static inline struct MessageCallbacks
 		{
@@ -313,7 +314,7 @@ private:
 		static void OnErrorMessage(const ix::WebSocketErrorInfo &errorInfo);
 
 		/**
-		 * The map name sent in the `hello` message, used to validate the `hello_ack` response.
+		 * The map name sent in the `hello` message to validate the `hello_ack` response.
 		 */
 		static inline std::string handshakeMapName;
 
@@ -459,10 +460,9 @@ public:
 	}
 
 	/**
-	 * Like WithCurrentMap(), but also exposes whether the current map has been confirmed yet.
-	 * WithCurrentMap() alone can't distinguish "confirmed not-global" from "not yet known" —
-	 * both look like an empty optional. Use this when that distinction matters (e.g. deciding
-	 * whether to keep waiting instead of assuming non-global).
+	 * Like WithCurrentMap() but also exposes whether the current map has been confirmed yet.
+	 * WithCurrentMap() alone can't distinguish "confirmed not-global" from "not yet known" because both look like an empty optional.
+	 * Use this when that distinction matters (e.g. deciding whether to keep waiting instead of assuming non-global).
 	 */
 	template<typename F>
 	inline static auto WithCurrentMapState(F &&f)
@@ -474,9 +474,8 @@ public:
 
 	/**
 	 * Returns true only when the API has confirmed the current map is NOT global.
-	 * Returns false if the map IS global, or if the API response is still pending.
-	 * Also returns true when the service is permanently disconnected, since a global
-	 * confirmation will never arrive in that case.
+	 * Returns false if the map IS global or if the API response is still pending.
+	 * Also returns true when the service is permanently disconnected because a global confirmation will never arrive in that case.
 	 */
 	inline static bool IsCurrentMapConfirmedNotGlobal()
 	{
@@ -548,7 +547,7 @@ public:
 		MapNotGlobal,
 
 		/**
-		 * We are not currently connected to the API, but we queued up the record to be submitted later (if possible).
+		 * We are not currently connected to the API but we queued up the record to be submitted later (if possible).
 		 */
 		Queued,
 
@@ -691,7 +690,8 @@ public:
 	static void EnforceConVars();
 	static void RestoreConVars();
 
-	// Frees the heap-allocated ConVar references. Plugin unload only.
+	// Frees the heap-allocated ConVar references.
+	// Plugin unload only.
 	static void CleanupConVars();
 
 	void OnPlayerAuthorized();
@@ -741,8 +741,8 @@ private:
 
 	static inline struct ReplayManager
 	{
-		// Replays are uploaded with `POST {apiUrl}/records/{record_id}/replay`, authorized by the
-		// single-use key from the record's `new-record` ack.
+		// Replays are uploaded with `POST {apiUrl}/records/{record_id}/replay`.
+		// The single-use key from the record's `new-record` ack authorizes them.
 		struct PendingUpload
 		{
 			UUID_t recordID;

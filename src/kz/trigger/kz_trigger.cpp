@@ -73,7 +73,7 @@ void KZTriggerService::OnPhysicsSimulatePost()
 	}
 
 	this->ApplyJumpFactor(this->modifiers.jumpFactor != this->lastModifiers.jumpFactor);
-	// Try to apply pushes one last time on this tick, to catch all the buttons that were not set during movement processing (attack+attack2).
+	// Try to apply pushes one last time on this tick to catch all the buttons that were not set during movement processing (attack+attack2).
 	this->ApplyPushes();
 	this->CleanupPushEvents();
 
@@ -93,8 +93,7 @@ void KZTriggerService::OnProcessMovement()
 
 void KZTriggerService::OnProcessMovementPost()
 {
-	// if the player isn't touching any bhop triggers on ground/a ladder, then
-	// reset the singlebhop and sequential bhop state.
+	// Reset the singlebhop and sequential bhop state if the player isn't touching any bhop triggers on ground or a ladder.
 	if ((this->player->GetPlayerPawn()->m_fFlags & FL_ONGROUND || this->player->GetMoveType() == MOVETYPE_LADDER) && this->bhopTouchCount == 0)
 	{
 		this->ResetBhopState();
@@ -222,7 +221,7 @@ void KZTriggerService::UpdateTriggerTouchList()
 		}
 	}
 
-	// Reset antibhop state, we will re-evaluate it again inside touch events.
+	// Reset antibhop state because we will re-evaluate it again inside touch events.
 	this->antiBhopActive = false;
 
 	for (CEntityHandle handle : filter.hitTriggerHandles)
@@ -248,7 +247,7 @@ void KZTriggerService::UpdateTriggerTouchList()
 
 void KZTriggerService::EndTouchAll()
 {
-	// Backwards, because EndTouch removes the tracker it ends.
+	// Backwards because EndTouch removes the tracker it ends.
 	for (size_t i = this->triggerTrackers.size(); i-- > 0;)
 	{
 		CEntityHandle handle = this->triggerTrackers[i].triggerHandle;
@@ -517,7 +516,7 @@ void KZTriggerService::UpdatePlayerPostTouch()
 	{
 		return;
 	}
-	// Player has a modified velocity through trigger touching, take this into account.
+	// Take into account that the player has a modified velocity through trigger touching.
 	Vector pawnAbsVel = pawn->m_vecAbsVelocity();
 	bool modifiedVelocity = this->preTouchVelocity != pawnAbsVel;
 	if (player->processingMovement && modifiedVelocity)

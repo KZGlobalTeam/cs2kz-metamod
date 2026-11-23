@@ -103,7 +103,7 @@ void KZGlobalService::ReplayManager::ProcessUploads()
 				return;
 			}
 
-			// 4xx: the key is invalid, expired or already used, so a retry cannot succeed.
+			// A 4xx means the key is invalid, expired or already used and a retry cannot succeed.
 			KZ_LOG_WARN(LogChannel::Global, "API rejected replay %s with status %d.\n", recordID.c_str(), response.status);
 		};
 

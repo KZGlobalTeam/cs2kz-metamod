@@ -16,8 +16,8 @@
 #include <algorithm>
 #include <vector>
 
-// The public button enum must keep matching the game's input bitmask. If a game update
-// moves a bit, this breaks the build instead of silently handing consumers wrong data.
+// The public button enum must keep matching the game's input bitmask.
+// If a game update moves a bit this breaks the build instead of silently handing consumers wrong data.
 static_assert((uint64)KZButton::Attack == IN_ATTACK);
 static_assert((uint64)KZButton::Jump == IN_JUMP);
 static_assert((uint64)KZButton::Duck == IN_DUCK);
@@ -35,7 +35,7 @@ static_assert((uint64)KZButton::Score == IN_SCORE);
 static_assert((uint64)KZButton::Zoom == IN_ZOOM);
 static_assert((uint64)KZButton::LookAtWeapon == IN_LOOK_AT_WEAPON);
 
-// Same deal for the ban sources: the public enum is a copy, keep the two in step.
+// The public ban source enum is a copy too and the two have to stay in step.
 static_assert((int)KZBanSource::Detection == (int)KZAnticheatBanSource::Detection);
 static_assert((int)KZBanSource::GlobalDatabase == (int)KZAnticheatBanSource::GlobalDatabase);
 static_assert((int)KZBanSource::LocalDatabase == (int)KZAnticheatBanSource::LocalDatabase);
@@ -47,8 +47,8 @@ static_global const KZButton allButtons[] = {KZButton::Attack,   KZButton::Jump,
 
 static_global std::vector<ICS2KZEventListener *> externalListeners;
 
-// GetChatPrefix hands out a pointer, but KZProfileService::GetPrefix builds a std::string.
-// Main thread only, so one shared buffer is enough - documented as "copy it, don't cache".
+// GetChatPrefix hands out a pointer but KZProfileService::GetPrefix builds a std::string.
+// One shared buffer is enough because this is main thread only (documented as "copy it, don't cache").
 static_global char prefixBuffer[256];
 
 static_function KZPlayer *ResolveSlot(int slot)
@@ -71,7 +71,7 @@ static_function KZProfileService *ResolveProfile(int slot)
 	return player ? player->profileService : nullptr;
 }
 
-// A listener may unregister itself from inside its own callback, so dispatch over a copy.
+// Dispatch over a copy because a listener may unregister itself from inside its own callback.
 template<typename Fn>
 static_function void ForEachListener(Fn &&fn)
 {
@@ -91,8 +91,8 @@ static_function i32 SlotOf(KZPlayer *player)
 	return player ? player->GetPlayerSlot().Get() : -1;
 }
 
-// Course GUIDs are an internal identity, consumers get the description instead.
-// The descriptor is looked up against the current map, so it goes away on a map change.
+// Course GUIDs are an internal identity and consumers get the description instead.
+// The descriptor is looked up against the current map and goes away on a map change.
 static_function KZCourseInfo DescribeCourse(const KZCourseDescriptor *course)
 {
 	KZCourseInfo info {};
@@ -211,11 +211,12 @@ static_global class : public KZTimerServiceEventListener
 
 	virtual void OnRunSubmittedPost(const RunSubmission &submission) override
 	{
-		// The player may have left by now, in which case the slot could already belong to someone else.
+		// The player may have left by now and the slot could then already belong to someone else.
 		KZPlayer *player = g_pKZPlayerManager->SessionToPlayer(submission.sessionID);
 		i32 slot = player && player->IsInGame() ? SlotOf(player) : -1;
 
-		// Everything comes from the submission's own snapshot, not the live map, so this still works after a map change.
+		// Everything comes from the submission's own snapshot instead of the live map.
+		// This still works after a map change.
 		KZRunResult result {};
 		result.steamID64 = submission.player.steamid64;
 		result.playerName = submission.player.name.c_str();
@@ -307,8 +308,8 @@ public:
 	virtual const char *GetPlayerName(int slot) override
 	{
 		KZPlayer *player = ResolveSlot(slot);
-		// GetName() rewrites the player's own sanitizedName buffer, hence the "copy it"
-		// note on the interface.
+		// GetName() rewrites the player's own sanitizedName buffer.
+		// That is the reason for the "copy it" note on the interface.
 		return player ? player->GetName() : "";
 	}
 
@@ -325,8 +326,8 @@ public:
 		{
 			return -1;
 		}
-		// GetSpectatedPlayer already returns null for an alive player and for someone
-		// watching their own corpse, which is what "not spectating anyone" should mean.
+		// GetSpectatedPlayer already returns null for an alive player and for someone watching their own corpse.
+		// That is what "not spectating anyone" should mean.
 		KZPlayer *target = player->specService->GetSpectatedPlayer();
 		return target ? SlotOf(target) : -1;
 	}
@@ -334,8 +335,8 @@ public:
 	virtual double GetRating(int slot) override
 	{
 		KZProfileService *profile = ResolveProfile(slot);
-		// currentRating is already -1 until the API answers, so an invalid slot returning
-		// the same value keeps a single "no rating" case for consumers.
+		// currentRating is already -1 until the API answers.
+		// An invalid slot returning the same value keeps a single "no rating" case for consumers.
 		return profile ? profile->currentRating : -1.0;
 	}
 
@@ -367,9 +368,9 @@ public:
 		{
 			return "";
 		}
-		// Handed over with the color tokens intact. Stripping them here would have to
-		// re-implement the token grammar in utils_print.cpp, and a consumer that wants
-		// them gone knows its own output format better than this does.
+		// Handed over with the color tokens intact.
+		// Stripping them here would have to re-implement the token grammar in utils_print.cpp.
+		// A consumer that wants them gone knows its own output format better than this does.
 		V_strncpy(prefixBuffer, profile->GetPrefix().c_str(), sizeof(prefixBuffer));
 		return prefixBuffer;
 	}
@@ -433,9 +434,9 @@ public:
 			state.duckAmount = moveServices->m_flDuckAmount();
 		}
 
-		// Mirrors what the speed HUD tints with (KZHUDService::GetSpeedText): a ladder
-		// takeoff is not a perf, and a jumpbug is a perf whose duckbug landed on the same
-		// frame - the duckbug flag alone would also fire on non-perf duckbugs.
+		// Mirrors what the speed HUD tints with (KZHUDService::GetSpeedText).
+		// A ladder takeoff is not a perf and a jumpbug is a perf whose duckbug landed on the same frame.
+		// The duckbug flag alone would also fire on non-perf duckbugs.
 		state.perf = player->IsPerfing() && !player->possibleLadderHop && !player->takeoffFromLadder;
 		if (player->hudService)
 		{
@@ -488,8 +489,8 @@ public:
 			status.time = timerService->GetTime();
 			status.teleportsUsed = player->checkpointService->GetTeleportCount();
 
-			// GetCourse resolves the GUID against the current map's course list, so it comes
-			// back null once the map changes out from under a stale run.
+			// GetCourse resolves the GUID against the current map's course list.
+			// It comes back null once the map changes out from under a stale run.
 			const KZCourseDescriptor *course = timerService->GetCourse();
 			status.onCourse = course != nullptr;
 			status.course = DescribeCourse(course);
@@ -525,8 +526,8 @@ public:
 			return false;
 		}
 
-		// Both names are the style plugin's own string literals, so they stay valid as long as
-		// the style is loaded - which is exactly as long as the player can have it enabled.
+		// Both names are the style plugin's own string literals.
+		// They stay valid exactly as long as the style is loaded and that is as long as the player can have it enabled.
 		KZStyleService *style = player->styleServices[index];
 		KZStyleInfo info {};
 		info.shortName = style->GetStyleShortName();

@@ -21,30 +21,32 @@
 #define MHUD_DEF_CHECKPOINT_Y    30
 #define MHUD_DEF_CHECKPOINT_SIZE 20
 
-// Right of the crosshair, where movementhub draws it. Its size is a scale in percent rather than a font size.
+// Right of the crosshair where movementhub draws it.
+// Its size is a scale in percent rather than a font size.
 #define MHUD_DEF_JS_X    40
 #define MHUD_DEF_JS_Y    0
 #define MHUD_DEF_JS_SIZE 100
 #define MHUD_JS_SIZE_MIN 50
 #define MHUD_JS_SIZE_MAX 200
 
-// Top left, with its left edge 2% in from the screen's and its top 5% down. Its size is a scale in percent, like the
-// jumpstats panel's.
+// Top left with its left edge 2% in from the screen's and its top 5% down.
+// Its size is a scale in percent like the jumpstats panel's.
 #define MHUD_DEF_COURSE_X    -48
 #define MHUD_DEF_COURSE_Y    -45
 #define MHUD_DEF_COURSE_SIZE 125
 
-// Under the course panel's default spot, below its zone history. A scale in percent, like the course panel's.
+// Under the course panel's default spot below its zone history.
+// A scale in percent like the course panel's.
 #define MHUD_DEF_RACE_X    -48
 #define MHUD_DEF_RACE_Y    -5
 #define MHUD_DEF_RACE_SIZE 125
 
-// Right of the prespeed, at its size.
+// Right of the prespeed at its size.
 #define MHUD_DEF_RELEASE_X    5
 #define MHUD_DEF_RELEASE_Y    12
 #define MHUD_DEF_RELEASE_SIZE 22
 
-// The indicators stack to the right of the speed readout, in the order movementhud draws them.
+// The indicators stack to the right of the speed readout in the order movementhud draws them.
 #define MHUD_DEF_JUMPBUG_X    12
 #define MHUD_DEF_JUMPBUG_Y    5
 #define MHUD_DEF_JUMPBUG_SIZE 18

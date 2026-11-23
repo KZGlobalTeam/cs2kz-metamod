@@ -252,7 +252,7 @@ namespace KZ::replaysystem
 				}
 			}
 		}
-		// Like a live timer, a run that is not going has reached nothing.
+		// A run that is not going has reached nothing just like with a live timer.
 		if (!out.running)
 		{
 			out.stages = out.checkpoints = out.splits = 0;

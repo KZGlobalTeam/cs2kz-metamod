@@ -29,7 +29,7 @@ bool KZUIService::Open(Window *window, OpenMode mode)
 		return false;
 	}
 
-	// The stack is settled before any callback runs, so a callback that opens or closes a window acts on the new state.
+	// The stack is settled before any callback runs so a callback that opens or closes a window acts on the new state.
 	std::vector<Window *> closed;
 	Window *suspended = nullptr;
 	if (mode == OpenMode::Replace)

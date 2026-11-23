@@ -52,7 +52,7 @@ void KZJumpstatsService::GetFieldLayout(KZPlayer *player, JSFieldLayout &out)
 	auto *opts = player->optionService;
 	bool placed[(i32)JSField::Count] {};
 	i32 count = 0;
-	// Unknown names are skipped, and fields missing from the list go at the end.
+	// Unknown names are skipped and fields missing from the list go at the end.
 	for (const std::string &slug : utils::Split(opts->GetPreferenceStr("jsFieldOrder", JS_DEFAULT_FIELD_ORDER), ','))
 	{
 		for (i32 f = 0; f < (i32)JSField::Count; f++)
@@ -103,7 +103,7 @@ void Jump::FormatField(JSField field, bool chat, bool greyTier, JSFieldText &out
 	{
 		case JSField::Block:
 		{
-			// Colored by the block's own tier, the way the distance is by the distance's.
+			// Colored by the block's own tier the way the distance is by the distance's.
 			out.present = this->GetBlock() > 0.0f;
 			out.color = JSFieldColor::Tier;
 			out.tier = greyTier ? DistanceTier_Meh : this->GetJumpPlayer()->modeService->GetDistanceTier(this->GetReportJumpType(), this->GetBlock());
@@ -168,7 +168,8 @@ void Jump::FormatField(JSField field, bool chat, bool greyTier, JSFieldText &out
 		case JSField::Deviation:
 		{
 			out.present = this->GetBlock() > 0.0f;
-			// Which side of the jump direction the landing is on. Nothing is added at zero.
+			// Which side of the jump direction the landing is on.
+			// Nothing is added at zero.
 			const f32 deviation = this->GetSignedDeviation();
 			const f32 rounded = roundf(fabsf(deviation) * 10.0f) / 10.0f;
 			AddFieldValue(out, "%.1f%s", rounded, rounded == 0.0f ? "" : deviation > 0.0f ? " L" : " R");
@@ -182,7 +183,8 @@ void Jump::FormatField(JSField field, bool chat, bool greyTier, JSFieldText &out
 		}
 		case JSField::Release:
 		{
-			// Same cases and colors as GetReleaseString. Where it does not apply, the chat leaves it out and the HUD greys it.
+			// Same cases and colors as GetReleaseString.
+			// The chat leaves it out and the HUD greys it where it does not apply.
 			const JumpType type = this->GetReportJumpType();
 			const f32 release = this->GetReleaseInTick();
 			if ((type != JumpType_LongJump && type != JumpType_LadderJump && type != JumpType_WeirdJump) || release < -20)
@@ -224,10 +226,11 @@ void Jump::FormatField(JSField field, bool chat, bool greyTier, JSFieldText &out
 	}
 }
 
-// Indexed by JSFieldColor. Tier takes the tier's own color instead.
+// Indexed by JSFieldColor.
+// Tier takes the tier's own color instead.
 static_global const char *const JS_CHAT_COLORS[] = {"{olive}", "{grey}", "{red}", "{green}", "{blue}", "{grey}"};
 
-// Leaves room for the chat prefix and for the color codes to expand, inside the 512 bytes a chat message gets.
+// Leaves room for the chat prefix and for the color codes to expand inside the 512 bytes a chat message gets.
 #define JS_CHAT_LINE_MAX 380
 
 std::string Jump::GetInvalidationReasonString(const char *reason, const char *language)
@@ -273,7 +276,7 @@ void KZJumpstatsService::PrintJumpToChat(KZPlayer *target, Jump *jump, bool exte
 	{
 		color = DistanceTier_Meh;
 	}
-	// type "HUD" wont show the chat ones, "Both" will show both :aga:
+	// type "HUD" wont show the chat ones and "Both" will show both :aga:
 	const i64 reportTo = target->optionService->GetPreferenceInt("jsReportType", JSReportType_Hud);
 	bool toChat = reportTo != JSReportType_Hud;
 	// A jump the HUD panel cannot show goes to chat instead.
@@ -293,7 +296,7 @@ void KZJumpstatsService::PrintJumpToChat(KZPlayer *target, Jump *jump, bool exte
 		jumpTypeShort += "-F";
 	}
 
-	// Basic fields go on the first line and extended ones on a second, in the player's order.
+	// Basic fields go on the first line and extended ones on a second in the player's order.
 	std::vector<std::string> lines[2];
 	lines[0].push_back(KZLanguageService::PrepareMessageWithLang(language, "Jumpstats Report - Chat Header", jumpColor, jumpTypeShort.c_str(),
 																 jump->GetDistance(true, false, 1)));
@@ -326,7 +329,8 @@ void KZJumpstatsService::PrintJumpToChat(KZPlayer *target, Jump *jump, bool exte
 			const std::string label = KZLanguageService::PrepareMessageWithLang(language, labelKey);
 			const std::string segment = KZLanguageService::PrepareMessageWithLang(language, "Jumpstats Report - Chat Segment", valueColor,
 																				  text.values[i].c_str(), label.c_str());
-			// Chat messages have a fixed size, so a line that would outgrow one carries on in another.
+			// Chat messages have a fixed size.
+			// A line that would outgrow one carries on in another.
 			std::vector<std::string> &group = lines[def.extended ? 1 : 0];
 			if (group.empty() || group.back().size() + segment.size() > JS_CHAT_LINE_MAX)
 			{
@@ -339,7 +343,7 @@ void KZJumpstatsService::PrintJumpToChat(KZPlayer *target, Jump *jump, bool exte
 		}
 	}
 
-	// Only the first line gets the chat prefix, as the others carry on from it.
+	// Only the first line gets the chat prefix because the others carry on from it.
 	bool first = true;
 	for (const std::vector<std::string> &group : lines)
 	{
@@ -632,7 +636,7 @@ void KZJumpstatsService::AnnounceJump(Jump *jump)
 	bool isFailstat = jump->IsFailstat();
 	for (KZPlayer *player : g_pKZPlayerManager->GetInGamePlayers())
 	{
-		// If the player is the one who did the jump or is spectating the jumper, we show more details in chat.
+		// We show more details in chat if the player is the one who did the jump or is spectating the jumper.
 		if (player == jump->GetJumpPlayer() || player->specService->GetSpectatedPlayer() == jump->GetJumpPlayer())
 		{
 			if ((jump->GetOffset() <= -JS_EPSILON || !jump->IsValid()) && !isFailstat && !player->optionService->GetPreferenceBool("jsAlways", false))
@@ -650,13 +654,13 @@ void KZJumpstatsService::AnnounceJump(Jump *jump)
 			KZJumpstatsService::PrintJumpToConsole(player, jump);
 			KZJumpstatsService::PlayJumpstatSound(player, jump);
 		}
-		// If the player is a CSTV bot, we only display console output.
+		// We only display console output if the player is a CSTV bot.
 		else if (player->IsCSTV())
 		{
 			// CSTV bots see all jumps.
 			KZJumpstatsService::PrintJumpToConsole(player, jump);
 		}
-		// If the player has broadcasting enabled, we show a brief summary in chat and play a sound.
+		// We show a brief summary in chat and play a sound if the player has broadcasting enabled.
 		else
 		{
 			if (!jump->IsValid() || jump->IsFailstat() || jump->GetOffset() <= -JS_EPSILON)

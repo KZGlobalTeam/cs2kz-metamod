@@ -48,7 +48,7 @@ void KZAnticheatService::MarkInfraction(Infraction::Type type, const std::string
 	}
 	if (!this->player->IsAuthenticated())
 	{
-		// Cannot mark infraction for unauthenticated players, so we just kick them.
+		// Unauthenticated players are kicked because infractions can't be marked for them.
 		this->player->Kick("Invalid Steam Logon", NETWORK_DISCONNECT_STEAM_LOGON);
 		return;
 	}
@@ -168,7 +168,7 @@ void KZAnticheatService::Infraction::SaveReplay()
 	// clang-format off
 	KZRecordingService::fileWriter->QueueWrite(
 		std::move(this->replay),
-		// Success: write to disk.
+		// Write to disk on success.
 		[name, steamID](const UUID_t &uuid, f32 replayDuration, std::vector<char> &&buf)
 		{
 			char replayPath[512];

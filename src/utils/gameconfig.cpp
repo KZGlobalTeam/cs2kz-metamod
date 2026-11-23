@@ -204,7 +204,8 @@ void *CGameConfig::ResolveSignature(const char *name)
 		size_t sigBytes = std::count(signature, signature + strlen(signature), ' ') + 1;
 		size_t scanSize = (*module)->m_size - sigBytes + 1;
 		address = KHook::LookupSignature(base, scanSize, signature);
-		// LookupSignature stops at the first match, so scan the rest of the module to reject ambiguous signatures.
+		// LookupSignature stops at the first match.
+		// Scan the rest of the module to reject ambiguous signatures.
 		auto multiMatch = m_umAllowMultiMatch.find(name);
 		if (address && (multiMatch == m_umAllowMultiMatch.end() || !multiMatch->second))
 		{
@@ -239,7 +240,7 @@ void *CGameConfig::ResolveSignatureFromMov(const char *name)
 	// Grab the offset as 4 bytes
 	u32 offset = *(u32 *)ptr;
 
-	// Go to the next instruction, which is the starting point of the relative jump
+	// Go to the next instruction (the starting point of the relative jump).
 	ptr += 4;
 
 	// Now grab our pointer

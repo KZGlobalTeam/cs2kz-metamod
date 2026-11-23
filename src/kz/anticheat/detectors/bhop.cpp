@@ -15,15 +15,15 @@
 #define OLD_JUMP_PURGE_THRESHOLD (0.25f * ENGINE_FIXED_TICK_RATE)    // Purge jump attempts older than 0.25s
 #define MIN_SAMPLE_COUNT         20                                  // Minimum number of samples before we start checking for bhop hacks
 #define WINDOW_SIZE              30                                  // Number of recent jumps to consider for bhop hack detection
-// Number of consecutive perfect bhops in the window to trigger a bhop hack infraction, regardless of ratio
+// Number of consecutive perfect bhops in the window to trigger a bhop hack infraction regardless of ratio
 #define NUM_CONSECUTIVE_PERFS_FOR_INFRACTION 25
-// Number of consecutive perfs in the window to trigger a pattern check for bhop hack detection, regardless of ratio.
+// Number of consecutive perfs in the window to trigger a pattern check for bhop hack detection regardless of ratio.
 #define NUM_CONSECUTIVE_PERFS_FOR_PATTERN_CHECK 18
-// Ratio of perfs to total jumps in the window to trigger a bhop hack infraction, once the window size is sufficiently large.
+// Ratio of perfs to total jumps in the window to trigger a bhop hack infraction once the window size is sufficiently large.
 #define PERF_RATIO_FOR_BHOP_HACK_INFRACTION   0.9f
 #define PERF_RATIO_FOR_HYPERSCROLL_INFRACTION 0.6f
 
-#define REPETITIVE_PATTERN_THRESHOLD 0.9f // If 90% of the perfs are the same pattern, it might be a cheat...
+#define REPETITIVE_PATTERN_THRESHOLD 0.9f // It might be a cheat if 90% of the perfs are the same pattern...
 #define LOW_PATTERN_THRESHOLD        4    // ...if the most common pattern is smaller than 4.
 #define HIGH_PATTERN_THRESHOLD       16.0f
 
@@ -50,7 +50,8 @@ void KZAnticheatService::ParseCommandForJump(CUserCmd *cmd)
 	}
 	else // Has subtick moves
 	{
-		// Assume that the +jump inputs are all legit. Faking +jump's wouldn't really help with anything.
+		// Assume that the +jump inputs are all legit.
+		// Faking +jump's wouldn't really help with anything.
 		for (i32 i = 0; i < cmd->base().subtick_moves_size(); i++)
 		{
 			const CSubtickMoveStep &step = cmd->base().subtick_moves(i);

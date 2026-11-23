@@ -1,5 +1,6 @@
 /* date = October 12th 2023 8:02 pm */
-// This only creates client commands. If you want to create server-only commands, use CON_COMMAND_* macros instead.
+// This only creates client commands.
+// Use the CON_COMMAND_* macros instead to create server-only commands.
 // Note: Commands register through this system will have higher priority over console commands.
 #pragma once
 
@@ -48,13 +49,14 @@ namespace scmd
 	{
 		std::string names;
 		std::string descriptionKey;
-		// Phrase holding the command's arguments, only present for commands that take any.
+		// Phrase holding the command's arguments only present for commands that take any.
 		std::string usageKey;
 	};
 
 	i32 GetCategoryCount();
 	const char *GetCategoryName(i32 category);
-	// Groups aliases by their shared description. Cached until commands are registered or unregistered.
+	// Groups aliases by their shared description.
+	// Cached until commands are registered or unregistered.
 	const std::vector<CommandInfo> &GetCategoryCommands(i32 category, bool chatNames = false);
 
 	bool OnClientCommand(CPlayerSlot &slot, const CCommand &args);

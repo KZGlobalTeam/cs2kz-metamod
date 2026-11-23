@@ -5,13 +5,13 @@
 
 #define KZ_REPLAY_CONTROLS_LAYOUT "panorama/layout/custom_game/cs2kz/replay.xml"
 
-// Fixed slot counts (5% steps), see replay.xml.
+// Fixed slot counts in 5% steps (see replay.xml).
 #define KZ_REPLAY_CONTROLS_PERCENT_MARKERS 20
-// KZ_MAX_REPLAY_MARKED_ZONES, which the mapping API warns about.
+// KZ_MAX_REPLAY_MARKED_ZONES that the mapping API warns about.
 #define KZ_REPLAY_CONTROLS_ZONE_MARKERS 64
 #define KZ_REPLAY_CONTROLS_SPEEDS       6
 #define KZ_REPLAY_CONTROLS_SKIPS        6
-// The bar's width in layout pixels, see replay.css.
+// The bar's width in layout pixels (see replay.css).
 #define KZ_REPLAY_CONTROLS_BAR_WIDTH 960
 // Splits, checkpoints, stages and teleports.
 #define KZ_REPLAY_CONTROLS_ZONE_KINDS 4
@@ -22,7 +22,7 @@ namespace KZ::replaysystem::controls
 {
 	// The playback bar everyone watching the replay bot in first or third person sees.
 	// Update draws it every tick whether or not the window is on the UI stack.
-	// The window is only on the stack while the viewer has the cursor (E), which is what lets them click the bar.
+	// The window is only on the stack while the viewer has the cursor (E) and that is what lets them click the bar.
 	class ControlsWindow : public KZ::ui::Window
 	{
 	public:
@@ -73,11 +73,11 @@ namespace KZ::replaysystem::controls
 		bool styleChanged {true};
 		bool textsChanged {};
 		bool textMark {};
-		// Hidden by the viewer, which lasts until they show it again, across replays.
+		// Hidden by the viewer across replays until they show it again.
 		bool controlsHidden {};
-		// The viewer had the cursor when they hid the bar, so showing it gives the cursor back.
+		// The viewer had the cursor when they hid the bar so showing it gives the cursor back.
 		bool cursorWhenHidden {};
-		// The replay to open the cursor for, or 0.
+		// The replay to open the cursor for or 0.
 		u32 cursorReplayId {};
 
 		struct Applied

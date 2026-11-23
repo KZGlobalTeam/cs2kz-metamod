@@ -9,7 +9,7 @@
 
 #include "tier0/memdbgon.h"
 
-// Only a client that dropped or quit on its own gets to come back, never one the server removed.
+// Only a client that dropped or quit on its own gets to come back and never one the server removed.
 static_function bool IsClientSideDisconnect(ENetworkDisconnectionReason reason)
 {
 	switch (reason)
@@ -84,7 +84,8 @@ void KZAwayService::ReleaseHeldSlot(CPlayerSlot slot)
 	{
 		return;
 	}
-	// The slot counts as held while it still has an address, the engine clears it the same way for a recyclable slot.
+	// The slot counts as held while it still has an address.
+	// The engine clears it the same way for a recyclable slot.
 	client->m_Addr = ns_address();
 	reinterpret_cast<netadr_t *>(&client->m_Addr)->Clear();
 }
@@ -135,7 +136,8 @@ void KZAwayService::OnClientConnect(CPlayerSlot slot, u64 xuid)
 	}
 	player->awayService->awaySince = 0.0;
 	player->awayService->reconnecting = true;
-	// The new client is authorized like any other, which joins the API again. Preferences already loaded are kept.
+	// The new client is authorized like any other and joins the API again.
+	// Preferences already loaded are kept.
 	player->authAuthorized = false;
 	KZ_LOG_INFO(LogChannel::Player, "Player %s (slot %d) came back, resuming their persistent pawn and state\n", player->GetName(), slot.Get());
 }
@@ -150,17 +152,19 @@ void KZAwayService::OnClientDisconnectPre(CPlayerSlot slot, ENetworkDisconnectio
 		return;
 	}
 	KZAwayService *away = player->awayService;
-	// CS2 removes the pawn of a leaving spectator, a spectating player leaves as the player of their persistent pawn.
+	// CS2 removes the pawn of a leaving spectator.
+	// A spectating player leaves as the player of their persistent pawn.
 	away->RestorePersistentPawn(true);
-	// The engine kicks the old connection of a player who connects again from the same address and SteamID before it notices
-	// the old one is gone, then hands the slot to the new one.
+	// The engine kicks the old connection of a player who connects again from the same address and SteamID.
+	// It does so before it notices the old one is gone and then hands the slot to the new one.
 	if (KZAwayService::connectingClient && reason == NETWORK_DISCONNECT_KICKED)
 	{
 		KZ_LOG_INFO(LogChannel::Player, "Player %s (slot %d) is replaced by a new connection of their own\n", player->GetName(), slot.Get());
 		reason = NETWORK_DISCONNECT_RECONNECTION;
 	}
-	// A reconnecting client is reported as disconnecting twice, the second time with a reason that would not keep the player.
-	// A client that is coming back can also drop again while it loads, for example to load an addon.
+	// A reconnecting client is reported as disconnecting twice.
+	// The second report has a reason that would not keep the player.
+	// A client that is coming back can also drop again while it loads (for example to load an addon).
 	bool stayAway = away->IsAway() || (away->reconnecting && !IsKickOrBan(reason)) || (IsClientSideDisconnect(reason) && away->CanStayAway());
 	// A player who already plays in another slot under the same SteamID has nothing to come back to.
 	for (KZPlayer *other : g_pKZPlayerManager->GetAllSlots())
@@ -175,7 +179,7 @@ void KZAwayService::OnClientDisconnectPre(CPlayerSlot slot, ENetworkDisconnectio
 	KZAwayService::leavingSlot = slot.Get();
 	// Protecting the pawn makes it count as dead.
 	bool alive = player->IsAlive();
-	// CS2 kills the alive pawn of a leaving player, but leaves one alone that already counts as dead.
+	// CS2 kills the alive pawn of a leaving player but leaves one alone that already counts as dead.
 	if (alive)
 	{
 		player->GetPlayerPawn()->m_lifeState(LIFE_DYING);
@@ -190,7 +194,8 @@ void KZAwayService::OnClientDisconnectPre(CPlayerSlot slot, ENetworkDisconnectio
 	{
 		KZ_LOG_INFO(LogChannel::Player, "Player %s (slot %d) disconnected with reason %d, keeping their pawn and state\n", player->GetName(),
 					slot.Get(), reason);
-		// The API keeps the preferences a leave carries, so the player leaves it now instead of when the persistent state goes.
+		// The API keeps the preferences a leave carries.
+		// The player therefore leaves it now instead of when the persistent state goes.
 		player->globalService->OnClientDisconnect();
 	}
 }
@@ -235,7 +240,7 @@ bool KZAwayService::OnClientDisconnectPost(CPlayerSlot slot)
 	g_pKZPlayerManager->RemoveFromAuthQueue(slot);
 	player->authPending = false;
 	away->reconnecting = false;
-	// Persists until the player comes back, the map changes, or the server needs the slot.
+	// Persists until the player comes back, the map changes or the server needs the slot.
 	if (!away->IsAway())
 	{
 		away->awaySince = g_pKZUtils->GetServerGlobals()->realtime;
@@ -245,7 +250,8 @@ bool KZAwayService::OnClientDisconnectPost(CPlayerSlot slot)
 
 bool KZAwayService::OnChangeTeamPre(CCSPlayerController *controller, i32 team)
 {
-	// Outside competitive modes CS2 moves a leaving player to unassigned, and moving the player back would respawn the pawn.
+	// Outside competitive modes CS2 moves a leaving player to unassigned.
+	// Moving the player back would respawn the pawn.
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	return team == CS_TEAM_NONE && player && KZAwayService::leavingSlot == player->GetPlayerSlot().Get();
 }
@@ -258,7 +264,8 @@ void KZAwayService::OnClientActivePre(CPlayerSlot slot)
 	{
 		return;
 	}
-	// Activating a client respawns the pawn of a controller on a team, which would undo everything the persistent pawn did.
+	// Activating a client respawns the pawn of a controller on a team.
+	// That would undo everything the persistent pawn did.
 	CCSPlayerController *controller = player->GetController();
 	KZAwayService::activatingSlot = slot.Get();
 	KZAwayService::activatingTeam = controller->m_iTeamNum();
@@ -292,7 +299,8 @@ void KZAwayService::OnGameFrame()
 			player->GetController()->ChangeTeam(CS_TEAM_SPECTATOR);
 			continue;
 		}
-		// The run is paused once the pawn stands completely still and the rules allow it, until then the pawn keeps going.
+		// The run is paused once the pawn stands completely still and the rules allow it.
+		// Until then the pawn keeps going.
 		// A spectator can turn that off.
 		if (away->CanControlPawn() || !player->IsAlive() || player->timerService->GetPaused()
 			|| (away->observingWithPersistentPawn && !player->timerService->GetAutoPauseWhileSpectating()))
@@ -310,8 +318,9 @@ void KZAwayService::OnGameFrame()
 
 void KZAwayService::OnServerGamePostSimulate()
 {
-	// The switch to the observer pawn happens during the controller's simulation. Reviving the persistent pawn before the tick is
-	// networked keeps CSTV from ever seeing it dead or without a controller, which it would treat as a death.
+	// The switch to the observer pawn happens during the controller's simulation.
+	// Reviving the persistent pawn before the tick is networked keeps CSTV from ever seeing it dead or without a controller.
+	// CSTV would treat either as a death.
 	for (KZPlayer *player : g_pKZPlayerManager->GetAllSlots())
 	{
 		player->awayService->RevivePersistentPawn();
@@ -344,7 +353,7 @@ void KZAwayService::ReleaseAwayPlayers()
 
 void KZAwayService::Shutdown()
 {
-	// The player state goes away with the plugin, the held slots must not outlive it.
+	// The player state goes away with the plugin so the held slots must not outlive it.
 	for (KZPlayer *player : g_pKZPlayerManager->GetAllSlots())
 	{
 		if (player->IsAway())

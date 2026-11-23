@@ -1,11 +1,12 @@
 #pragma once
 #include "kz/kz.h"
 
-// Curated Panorama utility sheets, as tables. Only the font table is shared; the color and gradient
-// tables live in tables.cpp, reached through the functions declared here.
+// Curated Panorama utility sheets as tables.
+// Only the font table is shared.
+// The color and gradient tables live in tables.cpp and are reached through the functions declared here.
 struct PanoramaFontDef
 {
-	const char *slug; // stored preference value, and the class suffix
+	const char *slug; // stored preference value and the class suffix
 	const char *className;
 	const char *displayName;
 	const char *family;
@@ -17,8 +18,8 @@ extern const i32 PANORAMA_FONT_COUNT;
 
 namespace panorama
 {
-	// A gradient is stored as a marker Color: alpha == 1, red == gradient index. Solids always store
-	// alpha 255.
+	// A gradient is stored as a marker Color with alpha == 1 and red == gradient index.
+	// Solids always store alpha 255.
 	inline bool IsGradient(const Color &c)
 	{
 		return c.a() == 1;
@@ -34,26 +35,26 @@ namespace panorama
 		return c.r();
 	}
 
-	// A gradient has no single RGB, so callers that need a real color get the fallback.
+	// Callers that need a real color get the fallback because a gradient has no single RGB.
 	inline Color ResolveSolidColor(const Color &c, const Color &fallback)
 	{
 		return IsGradient(c) ? fallback : c;
 	}
 
-	// Gradient-aware resolvers: return the grad-* class for a stored gradient, else the nearest solid.
+	// Gradient-aware resolvers return the grad-* class for a stored gradient and the nearest solid otherwise.
 	const char *ResolveColorClass(const Color &color);  // text (color)
 	const char *ResolveSwatchClass(const Color &color); // swatch (background-color)
 
-	// Index into the palette, for class families keyed by it (key-glow-N).
+	// Index into the palette for class families keyed by it (key-glow-N).
 	i32 GetNearestSolidIndex(const Color &color);
 
-	// The color picker's combined entry space: solids first, then gradients.
+	// The color picker's combined entry space with solids first and gradients after them.
 	i32 GetColorEntryCount();
-	// Just the solids, for items whose consumer cannot render a gradient.
+	// Just the solids for items whose consumer cannot render a gradient.
 	i32 GetSolidColorCount();
 	const char *GetColorEntryBgClass(i32 entry);
 	Color GetColorEntryValue(i32 entry);    // the color to store when this entry is picked
-	i32 FindColorEntry(const Color &color); // which entry a stored color matches, -1 if none
+	i32 FindColorEntry(const Color &color); // which entry a stored color matches (-1 if none)
 
 	const char *ResolveFontSlug(const char *name, const char *fallback);
 	const char *ResolveFontClass(const char *name, const char *fallback);

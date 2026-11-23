@@ -19,7 +19,7 @@ extern const MHUDElementDef MHUD_ELEMENTS[(i32)MHUDElement::Count] =
 	{"mhud_jumpbug",    "mhud_jumpbug_pos",    "mhud_jumpbug_hit",    "jumpbug",    "mhudJumpbugEnabled",    "mhudJumpbugX",    "mhudJumpbugY",    "mhudJumpbugSize",    "mhudJumpbugFont",    "mhudJumpbugOutline",    "mhudJumpbugOpacity",    "mhudJumpbugAlign",    NULL,                  MHUD_DEF_JUMPBUG_X,    MHUD_DEF_JUMPBUG_Y,    MHUD_DEF_JUMPBUG_SIZE,    MHUD_SIZE_MIN,    MHUD_SIZE_MAX},
 };
 
-// A sample value inside each pair, so the picker shows the symbols themselves and needs no phrases.
+// A sample value inside each pair so the picker shows the symbols themselves and needs no phrases.
 extern const MHUDBorderDef MHUD_BORDERS[(i32)MHUDBorder::Count] =
 {
 	{"",   "",   NULL},
@@ -34,10 +34,10 @@ extern const MHUDBorderDef MHUD_BORDERS[(i32)MHUDBorder::Count] =
 	{"|",  "|",  "|0|"},
 };
 
-// What each bit hides, from the client's HUD element constructors.
+// What each bit hides according to the client's HUD element constructors.
 extern const GameHudPartDef GAME_HUD_PARTS[GAME_HUD_PART_COUNT] =
 {
-	// HIDEHUD_ALL also stops the chat input from opening, so kz_hidehud from chat could never undo it.
+	// HIDEHUD_ALL also stops the chat input from opening and kz_hidehud from chat could never undo it.
 	{"Menu - Game HUD All", "hideGameHudAll", KZ_HIDEHUD_ALL, nullptr},
 	{"Menu - Game HUD Crosshair", "hideGameHudCrosshair", KZ_HIDEHUD_CROSSHAIR, "crosshair"},
 	{"Menu - Game HUD Weapons", "hideGameHudWeapons", KZ_HIDEHUD_WEAPONSELECTION, "weapons"},

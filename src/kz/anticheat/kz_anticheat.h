@@ -6,8 +6,9 @@
 class KZBaseService;
 class Jump;
 
-// Where a ban came from. A player can only be marked banned once per session, so this is
-// whichever source got there first.
+// Where a ban came from.
+// A player can only be marked banned once per session.
+// This is whichever source got there first.
 enum class KZAnticheatBanSource : u8
 {
 	Detection = 0,  // the anticheat flagged them during this session
@@ -18,9 +19,9 @@ enum class KZAnticheatBanSource : u8
 class KZAnticheatServiceEventListener
 {
 public:
-	// Fired once, when the player is first marked as banned. `reason` is "" when the source
-	// didn't provide one. The player may be kicked right after this returns, depending on
-	// kz_ac_autokick.
+	// Fired once when the player is first marked as banned.
+	// `reason` is "" if the source didn't provide one.
+	// The player may be kicked right after this returns depending on kz_ac_autokick.
 	virtual void OnPlayerBannedPost(KZPlayer *player, KZAnticheatBanSource source, const char *reason) {}
 };
 
@@ -62,14 +63,14 @@ public:
 
 		/*
 			Ban durations in seconds
-			Note that the API might not agree with these durations, and the API will always take precedence.
-			Big ban for players using hacked clients, medium ban for minor infractions.
-			Note that the ban durations are not supposed to be long during beta, since we want to avoid banning players for false positives.
-			The ban durations will be increased after the beta, preferably with API having the final say on the ban durations.
+			Note that the API might not agree with these durations and the API will always take precedence.
+			Big ban for players using hacked clients and medium ban for minor infractions.
+			Note that the ban durations are not supposed to be long during beta because we want to avoid banning players for false positives.
+			The ban durations will be increased after the beta (preferably with API having the final say on the ban durations).
 			Ban durations here are the minimum durations.
 		*/
 		static constexpr f32 banDurations[] = {
-			-1.0f,                // Other - no ban, just kick
+			-1.0f,                // Other - kick without a ban
 			60.0f * 24 * 60 * 30, // StrafeHack - 30 days
 			60.0f * 24 * 60 * 30, // BhopHack - 30 days
 			60.0f * 24 * 60 * 7,  // Hyperscroll - 7 days
@@ -117,7 +118,7 @@ public:
 		UUID_t id {};
 		u64 steamID {};
 		std::string details;
-		f32 banDuration = -1.0f; // in seconds, -1 = no ban
+		f32 banDuration = -1.0f; // in seconds (-1 = no ban)
 
 		// This will be wiped after the replay is saved.
 		std::unique_ptr<CheaterRecorder> replay = nullptr;
@@ -128,7 +129,7 @@ public:
 		void SubmitGlobalInfraction();
 		// Callbacks for global infraction submission
 		void OnGlobalSubmitSuccess(const UUID_t &infractionId, const UUID_t &replayUUID, f32 banDuration);
-		// This will fire if the global infraction submission fails, or if the threshold
+		// Fires if the global infraction submission fails.
 		void OnGlobalSubmitFailure();
 
 		void SubmitLocalInfraction();
@@ -173,7 +174,7 @@ public:
 	static void Init();
 	static void CleanupSvCheatsWatcher();
 
-	// What happens to players that join with an existing ban, see kz_ac_autokick.
+	// What happens to players that join with an existing ban (see kz_ac_autokick).
 	enum class AutokickMode : i32
 	{
 		Never = 0,
@@ -227,14 +228,16 @@ public:
 		bool pressed;
 		bool analog = false;
 		f32 airSpeed = -1.0f;
-		// A nonzero whole-number analog delta. A stick sweeps continuously and never lands exactly on 1.0,
-		// so this only ever comes from a key bound to an analog command.
+		// A nonzero whole-number analog delta.
+		// A stick sweeps continuously and never lands exactly on 1.0.
+		// This only ever comes from a key bound to an analog command.
 		bool synthetic = false;
 	};
 
 	std::deque<InputEvent> recentForwardBackwardEvents;
 	std::deque<InputEvent> recentLeftRightEvents;
-	// Direction keys the input events say are down. Both directions of an axis can be down at once.
+	// Direction keys the input events say are down.
+	// Both directions of an axis can be down at once.
 	u64 heldMovementButtons;
 	std::vector<f32> nullsFramerateBuffer;
 
@@ -253,8 +256,8 @@ public:
 		f32 landingTime;
 		bool pendingPerf = true;
 		bool hasPerfectBhop;
-		// This is true if the jump penalty is smaller than the tick interval, in which case we should not be counting this towards perf chains
-		// since the player can legitimately hit 100% perfs with desubticks.
+		// This is true if the jump penalty is smaller than the tick interval.
+		// We should not be counting this towards perf chains then because the player can legitimately hit 100% perfs with desubticks.
 		bool shouldCountTowardsPerfChains = false;
 		u32 numJumpBefore;
 		u32 numJumpAfter;
@@ -284,14 +287,13 @@ public:
 	// ===========[ Subtick abuses ]===========
 
 	// Why the engine would throw away a command's entire subtick move list.
-	// When that happens it falls back to the final button state for the whole tick,
-	// effectively desubticking the command.
+	// If that happens it falls back to the final button state for the whole tick and effectively desubticks the command.
 	enum class SubtickRejection : u8
 	{
 		None = 0,
 		MoveCount,    // more moves than the engine accepts
-		When,         // out of order, or outside the tick
-		Button,       // more than one button at once, or a button the engine does not apply
+		When,         // out of order or outside the tick
+		Button,       // more than one button at once or a button the engine does not apply
 		ImpulseLimit, // the accumulated movement axis left the range a real input can reach
 	};
 
@@ -346,18 +348,18 @@ public:
 		f32 frametime;
 	};
 
-	// One entry per command of the turn in progress, all turning the same way.
+	// One entry per command of the turn in progress with all of them turning the same way.
 	std::vector<TurnStep> currentTurn;
 	i32 currentTurnSign {};
 	i32 lastTurnCmdNum = -1;
 	f32 lastTurnYaw {};
 	f64 ignoreTurnsUntil {};
-	// Rates in counts per tick of turns that held one speed, from long turns and from single strafes.
+	// Rates in counts per tick of turns that held one speed (from long turns and single strafes).
 	std::deque<f32> turnWindowRates;
 	std::deque<f32> strafeTurnRates;
 	std::vector<f32> turnRateBuffer;
 	u32 numExactTurnWindows {};
-	// Rates of the turn binds found this session, in counts per tick.
+	// Rates of the turn binds found this session (in counts per tick).
 	std::vector<f32> externalTurnRates;
 	bool currentTurnExternal {};
 	i32 numExternalTurnCommands {};
@@ -423,6 +425,7 @@ public:
 	void MarkInfraction(Infraction::Type type, const std::string &reason);
 
 private:
-	// Mark the player as banned and broadcast the event. Does nothing if the player is already marked.
+	// Mark the player as banned and broadcast the event.
+	// Does nothing if the player is already marked.
 	void MarkBanned(KZAnticheatBanSource source, const char *reason);
 };

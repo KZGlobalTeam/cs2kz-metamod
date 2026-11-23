@@ -199,7 +199,8 @@ namespace KZ::api::messages
 		};
 
 		std::string recordId {};
-		// Single-use bearer token for `POST /records/{record_id}/replay`. Expires shortly after the ack is sent.
+		// Single-use bearer token for `POST /records/{record_id}/replay`.
+		// Expires shortly after the ack is sent.
 		std::string replayUploadKey {};
 		RecordData overallData {};
 		RecordData proData {};

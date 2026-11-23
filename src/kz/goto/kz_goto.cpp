@@ -11,7 +11,8 @@ void KZGotoService::Init() {}
 
 void KZGotoService::Reset() {}
 
-// The first player other than the given one whose name matches. An away player's pawn stays in the world and can be gone to.
+// The first player other than the given one whose name matches.
+// An away player's pawn stays in the world and can be gone to.
 static_function KZPlayer *FindGotoTarget(KZPlayer *player, const char *namePart, bool exact, bool persistentPawn)
 {
 	for (KZPlayer *otherPlayer : g_pKZPlayerManager->GetAllSlots())
@@ -48,7 +49,7 @@ bool KZGotoService::GotoPlayer(const char *playerNamePart)
 		return false;
 	}
 
-	// Prefer exact matches over partial matches, and players in control of their pawn over pawns that persist on their own.
+	// Prefer exact matches over partial matches and players in control of their pawn over pawns that persist on their own.
 	KZPlayer *targetPlayer = nullptr;
 	for (i32 pass = 0; pass < 4 && !targetPlayer; pass++)
 	{

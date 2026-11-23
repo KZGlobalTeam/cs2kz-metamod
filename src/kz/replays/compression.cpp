@@ -47,10 +47,11 @@ static_function bool ReadIfFlag(u64 flags, u64 flag, const char *&ptr, const cha
 
 using RpSubtickMove = SubtickData::RpSubtickMove;
 
-// Subtick moves are stored as raw structs, so their layout is part of the file format.
+// Subtick moves are stored as raw structs and their layout is part of the file format.
 static_assert(sizeof(RpSubtickMove) == 24);
 
-// v1-6 section header. Its u32 sizes wrapped once a subtick section passed 4 GiB (about 4.95M ticks).
+// v1-6 section header.
+// Its u32 sizes wrapped once a subtick section passed 4 GiB (about 4.95M ticks).
 struct LegacySectionHeader
 {
 	u32 compressedSize;
@@ -100,12 +101,13 @@ static_function bool ReadSectionHeader(const char *&cursor, const char *end, con
 		cursor += sizeof(legacy);
 		header = {legacy.compressedSize, legacy.uncompressedSize, legacy.elementCount};
 	}
-	// Decoded element counts and tick indices are u32, the same width as the server tick.
+	// Decoded element counts and tick indices are u32 like the server tick.
 	if (header.elementCount > UINT32_MAX || header.compressedSize > (size_t)(end - cursor))
 	{
 		return false;
 	}
-	// ZSTD_compress always records the content size, so a mismatch means a corrupt header or frame.
+	// ZSTD_compress always records the content size.
+	// A mismatch therefore means a corrupt header or frame.
 	u64 contentSize;
 	return GetSectionContentSize(cursor, header.compressedSize, contentSize) && contentSize == header.uncompressedSize;
 }
@@ -134,7 +136,7 @@ static_function bool AddSectionFrame(SectionBuilder &section, const void *data, 
 
 static_function bool AppendSection(std::vector<char> &outBuffer, SectionBuilder &section)
 {
-	// An empty section still holds one frame, which records its content size of zero.
+	// An empty section still holds one frame that records its content size of zero.
 	if (section.frames.empty() && !AddSectionFrame(section, nullptr, 0, 0))
 	{
 		return false;
@@ -142,7 +144,7 @@ static_function bool AppendSection(std::vector<char> &outBuffer, SectionBuilder 
 	CompressedSectionHeader header {section.frames.size(), section.uncompressedSize, section.elementCount};
 	AppendToBuffer(outBuffer, &header, sizeof(header));
 	AppendToBuffer(outBuffer, section.frames.data(), section.frames.size());
-	// The section is now in outBuffer, so it need not be held twice while later sections are appended.
+	// The section is now in outBuffer and need not be held twice while later sections are appended.
 	std::vector<char>().swap(section.frames);
 	return true;
 }
@@ -191,7 +193,8 @@ static_function bool ReadPackedSubticks(const char *src, const CompressedSection
 		return false;
 	}
 
-	// Moves take 24 bytes against 1 byte per count, so the moves fill at most this share of the section.
+	// Moves take 24 bytes against 1 byte per count.
+	// The moves therefore fill at most this share of the section.
 	outCounts.clear();
 	outCounts.reserve(header.elementCount);
 	outMoves.clear();
@@ -218,8 +221,9 @@ static_function bool ReadPackedSubticks(const char *src, const CompressedSection
 	return readPtr == endPtr;
 }
 
-// v1-6 subtick sections hold one fixed-size SubtickData per element, almost all of it empty.
-// The section is streamed through a small window and packed on the fly, so it is never expanded in full.
+// v1-6 subtick sections hold one fixed-size SubtickData per element and almost all of it is empty.
+// The section is streamed through a small window and packed on the fly.
+// It is never expanded in full.
 static_function bool ReadFixedSubticks(const char *src, const CompressedSectionHeader &header, const parsing::VersionParser &parser,
 									   std::vector<u8> &outCounts, std::vector<RpSubtickMove> &outMoves)
 {
@@ -268,7 +272,7 @@ static_function bool ReadFixedSubticks(const char *src, const CompressedSectionH
 			{
 				RpSubtickMove move;
 				memcpy(&move, entry + sizeof(u32) + j * sizeof(move), sizeof(move));
-				// Older versions left the angle deltas of analog steps unwritten, so they hold garbage.
+				// Older versions left the angle deltas of analog steps unwritten and they hold garbage.
 				if (!parser.analogSubtickAngles && move.IsAnalogInput())
 				{
 					move.analogMove.pitch_delta = 0.0f;
@@ -445,8 +449,8 @@ static_function u64 BuildPostChangeFlags(const TickData::MovementData &current, 
 	return flags;
 }
 
-// Delta-encodes tick data into a std::vector<char>, or into a ByteCounter to measure it.
-// last is the tick before tickData[0] when a recording is encoded in pieces, nullptr for the first piece.
+// Delta-encodes tick data into a std::vector<char> or into a ByteCounter to measure it.
+// last is the tick before tickData[0] if a recording is encoded in pieces and nullptr for the first piece.
 template<typename Buffer>
 static_function void EncodeTickData(Buffer &buffer, const std::vector<TickData> &tickData, const TickData *last)
 {
@@ -463,12 +467,12 @@ static_function void EncodeTickData(Buffer &buffer, const std::vector<TickData> 
 
 		if (!previous)
 		{
-			// First tick: prevPre is zero, prevPost is current.pre
+			// On the first tick prevPre is zero and prevPost is current.pre.
 			prevPost = current.pre;
 		}
 		else
 		{
-			// N-th tick: prevPre is previous.post, prevPost is current.pre
+			// On later ticks prevPre is previous.post and prevPost is current.pre.
 			prevPre = previous->post;
 			prevPost = current.pre;
 		}
@@ -476,7 +480,7 @@ static_function void EncodeTickData(Buffer &buffer, const std::vector<TickData> 
 		// Build change flags for top-level fields
 		u64 flags = 0;
 
-		// Server tick: only write if difference is not 1
+		// Only write the server tick if the difference is not 1.
 		u32 expectedServerTick = (!previous) ? 0 : previous->serverTick + 1;
 		if (current.serverTick != expectedServerTick)
 		{
@@ -611,7 +615,7 @@ bool RecordingWriter::AddTicks(const std::vector<TickData> &ticks, const std::ve
 	if (!ticks.empty())
 	{
 		const TickData *last = hasLastTick ? &lastTick : nullptr;
-		// A sizing pass first, so the delta buffer is allocated once at its exact size.
+		// A sizing pass runs first so the delta buffer is allocated once at its exact size.
 		ByteCounter counter;
 		EncodeTickData(counter, ticks, last);
 		std::vector<char> buffer;
@@ -629,7 +633,7 @@ bool RecordingWriter::AddTicks(const std::vector<TickData> &ticks, const std::ve
 
 bool RecordingWriter::AppendTickSections(std::vector<char> &outBuffer)
 {
-	// The reader expects the subtick section to follow, so a failure there fails the whole write.
+	// A failure here fails the whole write because the reader expects the subtick section to follow.
 	return AppendSection(outBuffer, tickSection) && AppendSection(outBuffer, subtickSection);
 }
 
@@ -640,7 +644,8 @@ bool KZ::replaysystem::compression::WriteTickDataCompressed(std::vector<char> &o
 	return writer.AddTicks(tickData, subtickCounts, subtickMoves) && writer.AppendTickSections(outBuffer);
 }
 
-// Decodes the tick after tick in the delta stream, in place. first marks the replay's first tick.
+// Decodes the tick after tick in the delta stream in place.
+// first marks the replay's first tick.
 static_function bool DecodeNextTick(const char *&readPtr, const char *endPtr, bool first, const parsing::VersionParser &parser, TickData &tick)
 {
 	const u64 weaponFlag = parser.weaponFlag;
@@ -650,7 +655,7 @@ static_function bool DecodeNextTick(const char *&readPtr, const char *endPtr, bo
 
 	if (first)
 	{
-		// Vector's default constructor leaves it uninitialized, and v1 replays never write this field.
+		// Vector's default constructor leaves it uninitialized and v1 replays never write this field.
 		tick.modernJump.lastLandedVelocity.Init();
 	}
 
@@ -678,7 +683,7 @@ static_function bool DecodeNextTick(const char *&readPtr, const char *endPtr, bo
 	if (!ReadIfFlag(flags, CHANGED_LEFT_HANDED, readPtr, endPtr, &tick.leftHanded, sizeof(tick.leftHanded))) return false;
 	if (!ReadIfFlag(flags, weaponFlag, readPtr, endPtr, &tick.weapon, sizeof(tick.weapon))) return false;
 
-	// Pre movement inherits the preceding post, then post inherits this pre.
+	// Pre movement inherits the preceding post and post then inherits this pre.
 	tick.pre = !first ? tick.post : TickData::MovementData {};
 
 	if (!ReadIfFlag(flags, CHANGED_PRE_ORIGIN, readPtr, endPtr, &tick.pre.origin, sizeof(tick.pre.origin))) return false;
@@ -754,7 +759,7 @@ static_function bool ReadTickSection(const char *&cursor, const char *end, const
 	{
 		return false;
 	}
-	// Each tick starts with a u64 change mask, which bounds the tick count by the checked size.
+	// Each tick starts with a u64 change mask and that bounds the tick count by the checked size.
 	if (header.elementCount > header.uncompressedSize / sizeof(u64))
 	{
 		return false;
@@ -846,7 +851,7 @@ bool KZ::replaysystem::compression::ReadTickStore(const char *&cursor, const cha
 	outTicks.hasCurrent = false;
 	outTicks.hasPrevious = false;
 
-	// Every tick is decoded once here, which checks the whole stream, so later reads need not.
+	// Every tick is decoded once here to check the whole stream so later reads need not.
 	const char *start = outTicks.deltas.data();
 	const char *readPtr = start;
 	const char *endPtr = start + outTicks.deltas.size();
@@ -881,7 +886,7 @@ TickData TickStore::Get(u32 index)
 	{
 		return previous;
 	}
-	// Continue from the last read tick when it lies between the keyframe and index, otherwise restart at the keyframe.
+	// Continue from the last read tick if it lies between the keyframe and index and restart at the keyframe otherwise.
 	u32 keyframeIndex = index - index % KEYFRAME_INTERVAL;
 	if (!hasCurrent || currentIndex > index || currentIndex < keyframeIndex)
 	{
@@ -1286,7 +1291,7 @@ bool KZ::replaysystem::compression::ReadCmdDataCompressed(const char *&cursor, c
 	{
 		return false;
 	}
-	// Each cmd starts with a u64 change mask, which bounds the cmd allocation by the checked size.
+	// Each cmd starts with a u64 change mask and that bounds the cmd allocation by the checked size.
 	if (header.elementCount > header.uncompressedSize / sizeof(u64))
 	{
 		return false;
@@ -1422,8 +1427,8 @@ bool KZ::replaysystem::compression::WriteWeaponsCompressed(std::vector<char> &ou
 	return AppendCompressedSection(outBuffer, buffer.data(), buffer.size(), weaponTable.size());
 }
 
-// Delta-encodes cmd data into a std::vector<char>, or into a ByteCounter to measure it.
-// last is the cmd before cmdData[0] when a recording is encoded in pieces, nullptr for the first piece.
+// Delta-encodes cmd data into a std::vector<char> or into a ByteCounter to measure it.
+// last is the cmd before cmdData[0] if a recording is encoded in pieces and nullptr for the first piece.
 template<typename Buffer>
 static_function void EncodeCmdData(Buffer &buffer, const std::vector<CmdData> &cmdData, const CmdData *last)
 {
@@ -1497,7 +1502,7 @@ bool RecordingWriter::AddCmds(const std::vector<CmdData> &cmds, const std::vecto
 	if (!cmds.empty())
 	{
 		const CmdData *last = hasLastCmd ? &lastCmd : nullptr;
-		// A sizing pass first, so the delta buffer is allocated once at its exact size.
+		// A sizing pass runs first so the delta buffer is allocated once at its exact size.
 		ByteCounter counter;
 		EncodeCmdData(counter, cmds, last);
 		std::vector<char> buffer;
@@ -1515,7 +1520,7 @@ bool RecordingWriter::AddCmds(const std::vector<CmdData> &cmds, const std::vecto
 
 bool RecordingWriter::AppendCmdSections(std::vector<char> &outBuffer)
 {
-	// The reader expects the cmd subtick section to follow, so a failure there fails the whole write.
+	// A failure here fails the whole write because the reader expects the cmd subtick section to follow.
 	return AppendSection(outBuffer, cmdSection) && AppendSection(outBuffer, cmdSubtickSection);
 }
 

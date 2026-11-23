@@ -27,10 +27,10 @@ struct TraceHistory
 	Vector m_vStartPos;  // start position
 	Vector m_vEndPos;    // final position
 	Vector m_vHitNormal; // surface normal at impact
-	Vector m_vHitPoint;  // exact hit point if m_bExactHitPoint is true, otherwise equal to m_vEndPos
+	Vector m_vHitPoint;  // exact hit point if m_bExactHitPoint is true and equal to m_vEndPos otherwise
 
 	float m_flHitOffset; // surface normal hit offset
-	float m_flFraction;  // time completed, 1.0 = didn't hit anything
+	float m_flFraction;  // time completed (1.0 = didn't hit anything)
 
 	f32 error;
 	Vector velocity;
@@ -62,14 +62,15 @@ public:
 	virtual void GetBaseVelocity(Vector *velocity);
 	virtual void SetBaseVelocity(const Vector &velocity);
 	virtual void GetAngles(QAngle *angles);
-	// It is not recommended use this to change the angle inside movement processing, it might not work!
+	// It is not recommended use this to change the angle inside movement processing because it might not work!
 	virtual void SetAngles(const QAngle &angles);
 
 	virtual void GetBBoxBounds(bbox_t *bounds, bbox_t *offset = nullptr);
 
 	virtual TurnState GetTurning();
 
-	// The time of this player's last command, which is the clock takeoffTime and landingTime are on.
+	// The time of this player's last command.
+	// takeoffTime and landingTime are on this clock.
 	f32 GetCurtime();
 
 	virtual bool IsButtonPressed(InputBitMask_t button, bool onlyDown = false);
@@ -262,7 +263,8 @@ public:
 	CMoveData moveDataPre;
 	CMoveData moveDataPost;
 	QAngle oldAngles;
-	// The view angles SetAngles is applying, while its teleport of the pawn runs. That teleport leaves the pitch out.
+	// The view angles SetAngles is applying while its teleport of the pawn runs.
+	// That teleport leaves the pitch out.
 	const QAngle *settingViewAngles {};
 
 	bool processingDuck {};

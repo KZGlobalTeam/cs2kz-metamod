@@ -254,10 +254,10 @@ bool KZTimerService::TimerStart(const KZCourseDescriptor *courseDesc, bool playS
 		return false;
 	}
 
-	// In CKZ you can touch trigger in half tick intervals, but here we are incrementing by full tick intervals only.
-	// Since the player was still in the trigger for half a tick, we need to offset by half a tick if we started in a half tick.
-	// So the current time should be subtracted by the difference between server curtime and client curtime at the moment of starting the timer,
-	// That way when we increment by full tick intervals in OnPhysicsSimulatePost, the time will be correct.
+	// In CKZ you can touch triggers in half tick intervals but here we only increment by full tick intervals.
+	// We need to offset by half a tick if we started in a half tick because the player was still in the trigger for that half tick.
+	// The current time therefore starts at the difference between client curtime and server curtime at the moment of starting the timer.
+	// The time is then correct as we increment by full tick intervals in OnPhysicsSimulatePost.
 	this->currentTime = g_pKZUtils->GetGlobals()->curtime - g_pKZUtils->GetServerGlobals()->curtime;
 	assert(this->currentTime <= 0 && this->currentTime > -ENGINE_FIXED_TICK_INTERVAL);
 	this->timerRunning = true;
@@ -307,7 +307,8 @@ bool KZTimerService::TimerStart(const KZCourseDescriptor *courseDesc, bool playS
 				});
 			if (!mapApproved)
 			{
-				// First run of a course on any map. Print a one-time message if the map is not global.
+				// First run of a course on any map.
+				// Print a one-time message if the map is not global.
 				if (this->currentCourseGUID == 0)
 				{
 					this->player->languageService->PrintChat(true, false, "Non Global Map Warning");
@@ -709,7 +710,7 @@ void KZTimerService::Resume(bool force)
 		this->player->SetMoveType(MOVETYPE_WALK);
 	}
 
-	// GOKZ: prevent noclip exploit
+	// Prevents a noclip exploit (taken from GOKZ).
 	this->player->GetPlayerPawn()->m_Collision().m_CollisionGroup() = KZ_COLLISION_GROUP_STANDARD;
 	this->player->GetPlayerPawn()->CollisionRulesChanged();
 
@@ -984,7 +985,7 @@ void KZTimerService::OnPlayerSpawn()
 		return;
 	}
 
-	// Player has left paused state by spawning in, so resume
+	// The player has left the paused state by spawning in and the timer resumes.
 	this->paused = false;
 	if (this->GetTimerRunning())
 	{
@@ -1627,7 +1628,7 @@ void KZTimerService::ReportZone(ZoneKind kind, i32 number, f64 time, f64 overall
 	report.number = number;
 	report.time = time;
 	report.compareType = this->currentCompareType;
-	// A run without teleports is compared with the pro time, which is the one it can still beat.
+	// A run without teleports is compared with the pro time because that is the one it can still beat.
 	report.pro = this->player->checkpointService->GetTeleportCount() == 0 && proTarget > 0;
 	const f64 target = report.pro ? proTarget : overallTarget;
 	report.hasDiff = target > 0;

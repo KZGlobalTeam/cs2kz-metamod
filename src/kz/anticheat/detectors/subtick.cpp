@@ -18,30 +18,32 @@
 #define SUBTICK_SUBTICK_INPUTS_THRESHOLD   30
 #define SUBTICK_ZERO_WHEN_RATIO_THRESHOLD  0.9f
 
-// Scrolling into and out of a jump is normal, so about 0.1s at each end of a jump is left out.
+// About 0.1s at each end of a jump is left out because scrolling into and out of a jump is normal.
 #define SUBTICK_SPLIT_EDGE_TICKS    7
 #define SUBTICK_SPLIT_HISTORY_TICKS 256
-// Scrolling in place gains nothing, so splits only count above this speed.
+// Splits only count above this speed because scrolling in place gains nothing.
 #define SUBTICK_SPLIT_MIN_SPEED 100.0f
-// Drilling keeps up its rate for the whole jump while a scroll lasts a fraction of it, so the rate is taken over the busiest 0.5s.
+// Drilling keeps up its rate for the whole jump while a scroll lasts a fraction of it.
+// The rate is therefore taken over the busiest 0.5s.
 #define SUBTICK_SPLIT_SUSTAIN_TICKS 32
-// Splits per second. It takes five jumps at the drill rate to mark an infraction, and one at the instant rate.
+// Splits per second.
+// It takes five jumps at the drill rate to mark an infraction and one at the instant rate.
 #define SUBTICK_SPLIT_DRILL_RATE    48.0f
 #define SUBTICK_SPLIT_DRILL_JUMPS   5
 #define SUBTICK_SPLIT_INSTANT_RATE  96.0f
 #define SUBTICK_SPLIT_DRILL_HISTORY 10
 #define SUBTICK_SPLIT_BUTTON_MASK   (IN_ATTACK | IN_ATTACK2 | IN_JUMP | IN_DUCK)
 
-// The engine's own limits on a subtick move list, from CCSPlayer_MovementServices.
-// Not to be confused with MAX_SUBTICK_MOVES, which is how many the replay format stores.
+// The engine's own limits on a subtick move list (from CCSPlayer_MovementServices).
+// Not to be confused with MAX_SUBTICK_MOVES (the number of moves the replay format stores).
 #define ENGINE_MAX_SUBTICK_MOVES 32
 #define MAX_SUBTICK_MOVE_IMPULSE 2.0f
-// One button per subtick move, and only the ones the engine knows how to apply.
+// One button per subtick move and only the ones the engine knows how to apply.
 #define SUBTICK_MOVE_BUTTON_MASK (IN_ATTACK | IN_ATTACK2 | IN_JUMP | IN_DUCK | IN_FORWARD | IN_BACK | IN_MOVELEFT | IN_MOVERIGHT)
 
 CConVar<bool> kz_ac_subtick_debug("kz_ac_subtick_debug", FCVAR_NONE, "Enable subtick abuse detector debug messages", false);
 
-// Every command should have all button presses/releases accounted for in subtick moves.
+// Every command should have all button presses and releases accounted for in subtick moves.
 // Only cheats that modify buttons without updating subtick moves would fail this.
 static_global bool VerifyCommand(const CUserCmd &cmd)
 {
@@ -79,8 +81,9 @@ static_global bool VerifyCommand(const CUserCmd &cmd)
 	return expectedButtons == 0;
 }
 
-// Yaw alias abuse detection: A legitimate client only produces a handful of angle changes per command, unless they are scrolling to jump.
-// If there's more than SUBTICK_YAW_DELTA_THRESHOLD subtick moves carrying an actual yaw change in a single tick, flag it.
+// Detects yaw alias abuse.
+// A legitimate client only produces a handful of angle changes per command unless they are scrolling to jump.
+// Flag it if more than SUBTICK_YAW_DELTA_THRESHOLD subtick moves carry an actual yaw change in a single tick.
 static_global bool HasExcessiveSubtickMovesWithAngles(const CUserCmd &cmd)
 {
 	i32 numYawDeltas = 0;
@@ -106,7 +109,7 @@ static_global bool HasExcessiveSubtickMovesWithAngles(const CUserCmd &cmd)
 	return false;
 }
 
-// The client adds at most one move without a button or analog input to a command, to carry the view angles of a single frame.
+// The client adds at most one move without a button or analog input to a command to carry the view angles of a single frame.
 static_function bool HasMultipleAngleOnlyMoves(const CUserCmd &cmd)
 {
 	i32 numAngleOnlyMoves = 0;
@@ -121,7 +124,7 @@ static_function bool HasMultipleAngleOnlyMoves(const CUserCmd &cmd)
 	return numAngleOnlyMoves > 1;
 }
 
-// The client keeps any input that lands at the end of the tick for the next command, where it happens at the start.
+// The client keeps any input that lands at the end of the tick for the next command where it happens at the start.
 static_function bool HasEndOfTickMove(const CUserCmd &cmd)
 {
 	for (i32 i = 0; i < cmd.base().subtick_moves_size(); i++)
@@ -134,7 +137,8 @@ static_function bool HasEndOfTickMove(const CUserCmd &cmd)
 	return false;
 }
 
-// A subtick move steers with the view angles of the frame it happened in, and the input history holds every frame the client rendered.
+// A subtick move steers with the view angles of the frame it happened in.
+// The input history holds every frame the client rendered.
 // Returns how many degrees the furthest move turned past all of those frames.
 static_function f32 GetMoveYawOutsideFrames(const CUserCmd &cmd, f32 previousFrameYaw, bool hasPreviousFrame)
 {
@@ -164,9 +168,9 @@ static_function f32 GetMoveYawOutsideFrames(const CUserCmd &cmd, f32 previousFra
 	return outside;
 }
 
-// The engine validates the whole subtick move list before it applies any of it, and throws all of it away if
-// any move fails. A command that fails this moves the player from its final button state for the whole tick,
-// the same as a command that carried no subtick moves at all.
+// The engine validates the whole subtick move list before it applies any of it and throws all of it away if any move fails.
+// A command that fails this moves the player from its final button state for the whole tick.
+// This is the same as a command that carried no subtick moves at all.
 KZAnticheatService::SubtickRejection KZAnticheatService::VerifySubtickMoves(const CUserCmd *cmd, f32 forwardAxis, f32 sideAxis)
 {
 	if (cmd->base().subtick_moves_size() > ENGINE_MAX_SUBTICK_MOVES)
@@ -186,7 +190,7 @@ KZAnticheatService::SubtickRejection KZAnticheatService::VerifySubtickMoves(cons
 		u64 button = step.button();
 		if (button)
 		{
-			// Only one button can be pressed at a time, and it must be a valid button.
+			// Only one button can be pressed at a time and it must be a valid button.
 			if ((button & (button - 1)) != 0 || (button & SUBTICK_MOVE_BUTTON_MASK) == 0)
 			{
 				return SubtickRejection::Button;
@@ -231,7 +235,7 @@ static_global bool PossibleDesubtickedCommand(const CUserCmd &cmd, const Vector 
 		return false;
 	}
 
-	// An oversized analog delta makes the engine discard the whole list, and falls back to the buttonstates alone.
+	// An oversized analog delta makes the engine discard the whole list and fall back to the button states alone.
 	// This can be achieved by using `forwardback 5 0 0` for instance.
 	// See KZAnticheatService::CreateInputEvents for more details.
 	if (KZAnticheatService::VerifySubtickMoves(&cmd, impulses.x, impulses.y) == KZAnticheatService::SubtickRejection::ImpulseLimit)
@@ -239,7 +243,7 @@ static_global bool PossibleDesubtickedCommand(const CUserCmd &cmd, const Vector 
 		return true;
 	}
 
-	// If there are subtick moves but the timing is at exactly 0, it's suspicious... unless it's controller-issued commands.
+	// It's suspicious if there are subtick moves but the timing is at exactly 0... unless it's controller-issued commands.
 	bool hasZeroWhen = true;
 	bool hasNonAnalogMove = false;
 	for (i32 i = 0; i < cmd.base().subtick_moves_size(); i++)
@@ -252,12 +256,13 @@ static_global bool PossibleDesubtickedCommand(const CUserCmd &cmd, const Vector 
 		hasNonAnalogMove = true;
 		hasZeroWhen &= (step.when() == 0.0f);
 	}
-	// If every move was analog, we have no non-analog evidence to call this suspicious.
+	// We have no non-analog evidence to call this suspicious if every move was analog.
 	return hasNonAnalogMove && hasZeroWhen;
 }
 
 // Every subtick move splits the tick and runs air acceleration again with the newest view angles.
-// Strafing splits on movement keys, so only presses that don't steer and moves with no input at all are counted.
+// Strafing splits on movement keys.
+// Only presses that don't steer and moves with no input at all are counted.
 static_function u32 CountSubtickSplits(const CUserCmd &cmd)
 {
 	u32 numSplits = 0;
@@ -285,14 +290,15 @@ void KZAnticheatService::RecordSubtickSplits(CUserCmd *cmd)
 	{
 		return;
 	}
-	// Late commands run without moving the player, and the substitute that ran in place of the last one already carries its moves.
+	// Late commands run without moving the player.
+	// The substitute that ran in place of the last one already carries its moves.
 	if (cmd->IsLate())
 	{
 		return;
 	}
 	u32 currentTick = g_pKZUtils->GetServerGlobals()->tickcount;
 	u32 numSplits = 0;
-	// Without subtick view angles every part of the tick moves with the same angles, so splitting it changes nothing.
+	// Without subtick view angles every part of the tick moves with the same angles and splitting it changes nothing.
 	if (this->player->GetCvarValueFromModeStyles(MODECVAR_SV_SUBTICK_MOVEMENT_VIEW_ANGLES)->m_bValue
 		&& this->player->moveDataPost.m_vecVelocity.Length2D() >= SUBTICK_SPLIT_MIN_SPEED)
 	{
@@ -384,7 +390,7 @@ void KZAnticheatService::CheckSubtickAbuse(CUserCmd *cmd)
 	{
 		this->suspiciousSubtickMoveTimes.push_back(g_pKZUtils->GetServerGlobals()->curtime);
 	}
-	// Late commands can get condensed together, so only on-time commands are checked.
+	// Only on-time commands are checked because late commands can get condensed together.
 	if (!cmd->IsLate() && HasMultipleAngleOnlyMoves(*cmd))
 	{
 		this->angleOnlyMoveCommandTimes.push_back(g_pKZUtils->GetServerGlobals()->curtime);
@@ -472,7 +478,7 @@ void KZAnticheatService::CheckSuspiciousSubtickCommands()
 	{
 		this->suspiciousSubtickMoveTimes.pop_front();
 	}
-	// If there are too many within the timeframe, ban
+	// Ban if there are too many within the timeframe
 	if (this->suspiciousSubtickMoveTimes.size() >= SUBTICK_SUSPICIOUS_MOVES_THRESHOLD)
 	{
 		this->MarkInfraction(Infraction::Type::SubtickSpam, "Excessive subtick moves detected");
@@ -488,7 +494,7 @@ void KZAnticheatService::CheckSuspiciousSubtickCommands()
 	{
 		this->zeroWhenCommandTimes.pop_front();
 	}
-	// If the vast majority of commands in the timeframe have subtick inputs with zero 'when', kick.
+	// Kick if the vast majority of commands in the timeframe have subtick inputs with zero 'when'.
 	if (this->numCommandsWithSubtickInputs.size() >= SUBTICK_SUBTICK_INPUTS_THRESHOLD)
 	{
 		f32 ratio = (f32)this->zeroWhenCommandTimes.size() / (f32)this->numCommandsWithSubtickInputs.size();

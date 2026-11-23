@@ -3,14 +3,14 @@
 #include <playerslot.h>
 #include <functional>
 
-// Queries the value of a convar on a client: CSVCMsg_GetCvarValue out, CCLCMsg_RespondCvarValue back.
+// Queries the value of a convar on a client with CSVCMsg_GetCvarValue out and CCLCMsg_RespondCvarValue back.
 namespace cvarquery
 {
 	enum class Status
 	{
 		ValueIntact = 0, // It got the value fine.
 		CvarNotFound = 1,
-		NotACvar = 2,     // There's a ConCommand, but it's not a ConVar.
+		NotACvar = 2,     // There's a ConCommand but it's not a ConVar.
 		CvarProtected = 3 // The cvar was marked with FCVAR_SERVER_CAN_NOT_QUERY.
 	};
 
@@ -19,12 +19,14 @@ namespace cvarquery
 	// The hooks that feed this live in hooks.cpp.
 	void Shutdown();
 
-	// The callback runs once, when the client answers; a client that never answers never calls back.
+	// The callback runs once when the client answers.
+	// A client that never answers never calls back.
 	bool Query(CPlayerSlot slot, const char *cvarName, Callback callback);
 
 	void OnClientDisconnect(CPlayerSlot slot);
 
-	// Every convar a client reports: the full userinfo set on connect, and each setinfo afterwards.
+	// Every convar a client reports.
+	// That is the full userinfo set on connect and each setinfo afterwards.
 	using ChangeCallback = void (*)(CPlayerSlot slot, const char *name, const char *value);
 	void SetChangeCallback(ChangeCallback callback);
 

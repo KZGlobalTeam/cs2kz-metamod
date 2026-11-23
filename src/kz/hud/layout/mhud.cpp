@@ -11,7 +11,7 @@
 
 #include "tier0/memdbgon.h"
 
-// Drop the fraction, keeping any (STOPPED)/(PAUSED) suffix.
+// Drop the fraction but keep any (STOPPED)/(PAUSED) suffix.
 static_function void StripTimerFraction(std::string &text)
 {
 	const size_t dot = text.find('.');
@@ -58,7 +58,7 @@ void KZHUDService::UpdateTimerElement(CCSCustomHudLayout *layout, KZPlayer *sour
 	this->UpdateLayoutElement(layout, MHUDElement::Timer, show, text.c_str(), color, force);
 }
 
-// The border never enters a format string, so the table stays inert data.
+// The border never enters a format string and the table stays inert data.
 static_function void FormatBordered(char *out, i32 outLen, const MHUDPrefs::Element &element, bool precise, f32 value)
 {
 	char number[16];
@@ -87,17 +87,17 @@ void KZHUDService::UpdatePrespeedElement(CCSCustomHudLayout *layout, const Speed
 	this->UpdateLayoutElement(layout, MHUDElement::Prespeed, show, text, color, force);
 }
 
-// Order matches the panels in mhud.xml: C W J on the top row, A S D on the bottom.
+// Order matches the panels in mhud.xml with C W J on the top row and A S D on the bottom.
 static_global const char *KEY_PANELS[] = {"mhud_key_c", "mhud_key_w", "mhud_key_j", "mhud_key_a", "mhud_key_s", "mhud_key_d"};
 
-// The glyph labels inside those buttons. A child only restyles when it is touched itself, so the
-// font class goes on these rather than on the buttons.
+// The glyph labels inside those buttons.
+// The font class goes on these rather than on the buttons because a child only restyles if it is touched itself.
 static_global const char *KEY_GLYPHS[] = {"mhud_kg_c_main", "mhud_kg_c_idle",   "mhud_kg_w_main", "mhud_kg_w_letter", "mhud_kg_w_idle",
 										  "mhud_kg_j_main", "mhud_kg_j_idle",   "mhud_kg_a_main", "mhud_kg_a_letter", "mhud_kg_a_idle",
 										  "mhud_kg_s_main", "mhud_kg_s_letter", "mhud_kg_s_idle", "mhud_kg_d_main",   "mhud_kg_d_letter",
 										  "mhud_kg_d_idle", "mhud_kg_j_count"};
 
-// The movement axis each panel sits on, so an overlap can be shown on just the keys causing it.
+// The movement axis each panel sits on so an overlap can be shown on just the keys causing it.
 enum KeyAxis
 {
 	KEY_AXIS_NONE = -1,
@@ -117,7 +117,7 @@ void KZHUDService::UpdateKeysElement(CCSCustomHudLayout *layout, KZPlayer *sourc
 	const bool keys[] = {pressed(IN_DUCK), forward, preview || source->hudService->JumpedThisTick(), left, back, right};
 
 	const MHUDPrefs &prefs = this->GetPrefs();
-	// Edit mode shows every key held, without the overlap tint that would imply.
+	// Edit mode shows every key held without the overlap tint that would imply.
 	const bool overlap = !preview && ((forward && back) || (left && right)) && prefs.keysOverlapEnabled;
 	bool overlapped[KZ_ARRAYSIZE(KEY_PANELS)] {};
 	for (i32 i = 0; overlap && i < KZ_ARRAYSIZE(KEY_PANELS); i++)
@@ -184,7 +184,7 @@ void KZHUDService::UpdateKeysElement(CCSCustomHudLayout *layout, KZPlayer *sourc
 	const char *overlapClass = prefs.keysOverlapAxis ? panorama::ResolveColorClass(prefs.keysOverlap) : NULL;
 	for (i32 i = 0; i < KZ_ARRAYSIZE(KEY_PANELS); i++)
 	{
-		// The element's own color is inherited, so a class here overrides it for this key alone.
+		// A class here overrides the inherited element color for this key alone.
 		this->SetLayoutClass(layout, KEY_PANELS[i], this->layoutKeys.overlapClass[i], overlapped[i] ? overlapClass : NULL);
 
 		const i32 wanted = overlapped[i] ? glowOverlap : glow;
@@ -213,7 +213,7 @@ void KZHUDService::UpdateKeysElement(CCSCustomHudLayout *layout, KZPlayer *sourc
 		layout->SetHasClass(KEY_PANELS[i], "pressed", keys[i] ? k_eHudPanelClassStatus_HasClass : k_eHudPanelClassStatus_DoesNotHaveClass);
 	}
 
-	// A count replaces the J while the presses keep coming, the way NohBoard shows scroll notches.
+	// A count replaces the J while the presses keep coming the way NohBoard shows scroll notches.
 	i32 jumpCount = 0;
 	if (prefs.keysJumpCount)
 	{
@@ -307,8 +307,9 @@ void KZHUDService::UpdateCheckpointElement(CCSCustomHudLayout *layout, KZPlayer 
 void KZHUDService::UpdateIndicatorElements(CCSCustomHudLayout *layout, const SpeedInfo &info, bool force)
 {
 	const MHUDPrefs &prefs = this->GetPrefs();
-	// A jumpbug is a crouchbug plus a perf, so it lights the perf indicator too. MHUDSpeedState has to
-	// settle on one color for the speed number and keeps them exclusive; indicators are separate lamps.
+	// A jumpbug is a crouchbug plus a perf and lights the perf indicator too.
+	// MHUDSpeedState has to settle on one color for the speed number and keeps them exclusive.
+	// Indicators are separate lamps.
 	const bool active[MHUD_INDICATOR_COUNT] = {info.perf || info.jumpbug, info.crouchJump, info.jumpbug};
 
 	for (i32 i = 0; i < MHUD_INDICATOR_COUNT; i++)
@@ -317,7 +318,7 @@ void KZHUDService::UpdateIndicatorElements(CCSCustomHudLayout *layout, const Spe
 		const bool show = this->IsMHUDElementEnabled(indicator.element) && info.recentTakeoff && active[i];
 		if (!show)
 		{
-			// A hidden element keeps its last text, so there is nothing to resolve.
+			// A hidden element keeps its last text and there is nothing to resolve.
 			this->UpdateLayoutElement(layout, indicator.element, false, NULL, prefs.indicator[i], force);
 			continue;
 		}
@@ -327,13 +328,14 @@ void KZHUDService::UpdateIndicatorElements(CCSCustomHudLayout *layout, const Spe
 	}
 }
 
-// The W release of the source's latest jump, once it is known, for as long as the indicators would show.
+// The W release of the source's latest jump once it is known (for as long as the indicators would show).
 void KZHUDService::UpdateReleaseElement(CCSCustomHudLayout *layout, KZPlayer *source, const SpeedInfo &info, bool force)
 {
 	const MHUDPrefs &prefs = this->GetPrefs();
 	std::vector<Jump> &jumps = source->jumpstatsService->jumps;
 	Jump *jump = !jumps.empty() ? &jumps.back() : NULL;
-	// Same jumps as the chat. The takeoff's type is used, because the reported one reads a preference.
+	// Same jumps as the chat.
+	// The takeoff's type is used because the reported one reads a preference.
 	const JumpType type = jump ? jump->originalJumpType : JumpType_Invalid;
 	const bool known = jump && (!jump->trackingRelease || jump->AlreadyEnded());
 	const f32 ticks = known ? jump->GetReleaseInTick() : 0.0f;
@@ -366,7 +368,7 @@ void KZHUDService::UpdateReleaseElement(CCSCustomHudLayout *layout, KZPlayer *so
 	this->UpdateLayoutElement(layout, MHUDElement::Release, true, this->releaseText.c_str(), color, force);
 }
 
-// The widest value each element can realistically show, drawn in the player's own formatting.
+// The widest value each element can realistically show in the player's own formatting.
 std::string KZHUDService::GetEditSampleText(MHUDElement element)
 {
 	const MHUDPrefs &prefs = this->GetOwnPrefs();
@@ -375,7 +377,7 @@ std::string KZHUDService::GetEditSampleText(MHUDElement element)
 	{
 		case MHUDElement::Timer:
 		{
-			// Whole seconds, because FormatTime rounds through a float and 359999.999 would come out as 100:00:00.000.
+			// Whole seconds because FormatTime rounds through a float and 359999.999 would come out as 100:00:00.000.
 			char time[32];
 			utils::FormatTime(359999.0, time, sizeof(time));
 			std::string state;
@@ -395,7 +397,7 @@ std::string KZHUDService::GetEditSampleText(MHUDElement element)
 		case MHUDElement::Speed:
 		case MHUDElement::Prespeed:
 		{
-			// sv_maxvelocity clamps each axis, so horizontal speed tops out near 3500 * sqrt(2).
+			// sv_maxvelocity clamps each axis and horizontal speed tops out near 3500 * sqrt(2).
 			char text[24];
 			const bool precise = element == MHUDElement::Speed ? prefs.speedPrecise : prefs.prespeedPrecise;
 			FormatBordered(text, sizeof(text), prefs.elements[(i32)element], precise, 4950.0f);
@@ -468,7 +470,8 @@ void KZHUDService::UpdateEditElements(CCSCustomHudLayout *layout, bool force)
 	}
 }
 
-// Indexed by DistanceTier. The colors match the chat's tier colors.
+// Indexed by DistanceTier.
+// The colors match the chat's tier colors.
 static_global const char *const JS_TIER_CLASSES[DISTANCETIER_COUNT] = {"js-tier-0", "js-tier-1", "js-tier-2", "js-tier-3",
 																	   "js-tier-4", "js-tier-5", "js-tier-6"};
 static_global const char *const JS_TIER_PHRASES[DISTANCETIER_COUNT] = {
@@ -483,7 +486,7 @@ static_global const char *const JS_PILL_PANELS[MHUD_JS_PILL_COUNT][4] = {{"mhud_
 																		 {"mhud_js_h3", "mhud_js_h3_t", "mhud_js_h3_i", "mhud_js_h3_d"},
 																		 {"mhud_js_h4", "mhud_js_h4_t", "mhud_js_h4_i", "mhud_js_h4_d"}};
 
-// The row slots under the distance, each a row, its label and its value.
+// The row slots under the distance (each a row, its label and its value).
 static_global const char *const JS_ROWS[(i32)JSField::Count][3] = {
 	{"mhud_js_r0", "mhud_js_l0", "mhud_js_v0"},    {"mhud_js_r1", "mhud_js_l1", "mhud_js_v1"},    {"mhud_js_r2", "mhud_js_l2", "mhud_js_v2"},
 	{"mhud_js_r3", "mhud_js_l3", "mhud_js_v3"},    {"mhud_js_r4", "mhud_js_l4", "mhud_js_v4"},    {"mhud_js_r5", "mhud_js_l5", "mhud_js_v5"},
@@ -492,7 +495,8 @@ static_global const char *const JS_ROWS[(i32)JSField::Count][3] = {
 	{"mhud_js_r12", "mhud_js_l12", "mhud_js_v12"}, {"mhud_js_r13", "mhud_js_l13", "mhud_js_v13"}, {"mhud_js_r14", "mhud_js_l14", "mhud_js_v14"},
 };
 
-// Indexed by JSFieldColor, in the chat's colors. NULL keeps the default olive, and Tier takes the tier's class instead.
+// Indexed by JSFieldColor in the chat's colors.
+// NULL keeps the default olive and Tier takes the tier's class instead.
 static_global const char *const JS_VALUE_CLASSES[] = {NULL, "js-c-grey", "js-c-red", "js-c-green", "js-c-blue", NULL};
 
 // Everything the panel shows for one jump.
@@ -513,7 +517,7 @@ struct KZHUDService::JumpstatText
 	i32 rowCount {};
 };
 
-// A field's own label, or the labels of its values joined, such as PRE / MAX.
+// A field's own label or the labels of its values joined (such as PRE / MAX).
 static_function std::string GetJumpstatLabel(KZLanguageService *lang, JSField field)
 {
 	const JSFieldDef &def = JS_FIELDS[(i32)field];
@@ -563,7 +567,7 @@ void KZHUDService::ApplyJumpstatText(CCSCustomHudLayout *layout, const JumpstatT
 
 bool KZHUDService::ShowJumpstat(Jump *jump, i32 colorTier)
 {
-	// Edit mode has the panel showing its sample, so the jump goes to chat instead.
+	// Edit mode has the panel showing its sample and the jump goes to chat instead.
 	if (!this->IsShowingPanel() || !this->IsUsingLayoutStyle() || this->IsEditingHud()
 		|| !this->GetOwnPrefs().elements[(i32)MHUDElement::Jumpstats].enabled)
 	{
@@ -589,7 +593,7 @@ bool KZHUDService::ShowJumpstat(Jump *jump, i32 colorTier)
 
 	if (this->GetPrefs().jsCompact)
 	{
-		// No panel, the jump goes straight in as the newest pill.
+		// Without a panel the jump goes straight in as the newest pill.
 		js.shownType = jumpTypeShortStr[type];
 		if (jump->IsFailstat())
 		{
@@ -640,7 +644,7 @@ bool KZHUDService::ShowJumpstat(Jump *jump, i32 colorTier)
 	js.shownDist = text.dist;
 	js.shownTier = colorTier;
 	js.hasShown = true;
-	// Unmodified, because the replay bot's clock stands in for curtime while its jumps and zones are reported.
+	// Unmodified because the replay bot's clock stands in for curtime while its jumps and zones are reported.
 	js.hideTime = g_pKZUtils->GetServerGlobals(true)->curtime + this->GetPrefs().jsDuration;
 	return true;
 }
@@ -661,7 +665,7 @@ i32 KZHUDService::AdvancePills(LayoutPill (&pills)[MHUD_JS_PILL_COUNT])
 			index = i;
 		}
 	}
-	// everything moves up in the hist pill stack, oldest one gon
+	// everything moves up in the hist pill stack and the oldest one is gone
 	for (LayoutPill &pill : pills)
 	{
 		if (pill.live && ++pill.rank >= MHUD_JS_PILL_GONE_RANK)
@@ -727,13 +731,13 @@ void KZHUDService::PushJumpstatHistory(CCSCustomHudLayout *layout)
 	this->SetLayoutClass(layout, ids[3], pill.distTierClass, JS_TIER_CLASSES[js.shownTier]);
 }
 
-// The widest value of each field, indexed by JSField.
+// The widest value of each field indexed by JSField.
 static_global const char *const JS_SAMPLE_VALUES[] = {"299",    "99",   "100%", "299.9 / 399.9",      "99.99",  "66.6",  "0.781s",
 													  "999.9°", "100%", "0.99", "100% / 100% / 100%", "99.9 L", "99.99", "+10.0",
 													  "-99.99"};
 static_assert(KZ_ARRAYSIZE(JS_SAMPLE_VALUES) == (i32)JSField::Count, "one sample per field");
 
-// A widest-case jump for edit mode, with every field the player has on and a full history.
+// A widest-case jump for edit mode with every field the player has on and a full history.
 static_function void GetJumpstatSample(KZLanguageService *lang, const JSFieldLayout &fields, KZHUDService::JumpstatText &text)
 {
 	text.type = lang->PrepareMessage(jumpTypeStr[JumpType_MultiBhop]);
@@ -776,11 +780,11 @@ void KZHUDService::UpdateJumpstatsElement(CCSCustomHudLayout *layout, bool show,
 	{
 		js = LayoutJumpstatsState();
 	}
-	// The labels carry no color of their own from this, so the base color only fills the call.
+	// The labels carry no color of their own from this and the base color only fills the call.
 	this->UpdateLayoutElement(layout, MHUDElement::Jumpstats, show, NULL, MHUD_DEF_BASE_COLOR, force);
 
 	const MHUDPrefs &prefs = this->GetPrefs();
-	// js-scale.css scales the whole panel, history included, by the element's size in percent.
+	// js-scale.css scales the whole panel (history included) by the element's size in percent.
 	const i32 scale = Clamp((i32)this->GetLayoutSize(MHUDElement::Jumpstats), MHUD_JS_SIZE_MIN, MHUD_JS_SIZE_MAX);
 	if (js.scale != scale)
 	{
@@ -796,7 +800,7 @@ void KZHUDService::UpdateJumpstatsElement(CCSCustomHudLayout *layout, bool show,
 		js.scale = scale;
 	}
 
-	// A label only picks up a new font when it is restyled itself, so the class goes on every label.
+	// The class goes on every label because a label only picks up a new font if it is restyled itself.
 	const char *fontClass = KZHUDService::GetMHUDFontClass(this->player, MHUDElement::Jumpstats);
 	if (js.fontClass != fontClass)
 	{
@@ -826,7 +830,7 @@ void KZHUDService::UpdateJumpstatsElement(CCSCustomHudLayout *layout, bool show,
 		js.fontClass = fontClass;
 	}
 
-	// Compact mode is the pills alone, so the history is always on there.
+	// Compact mode is the pills alone and always has the history on.
 	const bool historyHidden = !prefs.jsHistory && !prefs.jsCompact;
 	if (js.historyHidden != historyHidden)
 	{
@@ -903,7 +907,8 @@ bool KZHUDService::UpdateHudLayout(KZPlayer *source)
 
 	if (!show)
 	{
-		// show=false applies the hidden class and returns, so the text and color here are ignored.
+		// show=false applies the hidden class and returns.
+		// The text and color here are ignored.
 		for (i32 i = 0; i < (i32)MHUDElement::Count; i++)
 		{
 			if (i != (i32)MHUDElement::Jumpstats && i != (i32)MHUDElement::Course && i != (i32)MHUDElement::Race)
@@ -931,7 +936,7 @@ bool KZHUDService::UpdateHudLayout(KZPlayer *source)
 		this->UpdateReleaseElement(layout, source, info, force);
 		this->UpdateCourseElement(layout, source, this->IsMHUDElementEnabled(MHUDElement::Course), force);
 		this->UpdateRaceElements(layout, this->IsMHUDElementEnabled(MHUDElement::Race), true, force);
-		// Whether jumpstats go to the HUD is the viewer's own setting, even while mimicking.
+		// Whether jumpstats go to the HUD is the viewer's own setting even while mimicking.
 		this->UpdateJumpstatsElement(layout, this->GetOwnPrefs().elements[(i32)MHUDElement::Jumpstats].enabled, force);
 	}
 	this->UpdateEditLayout(layout, force);

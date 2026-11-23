@@ -76,7 +76,7 @@ static_function const char *GetTypeClass(KZOptItemType type)
 	return "type-button";
 }
 
-// A Size item backs either an int or a float preference, so both ends go through these.
+// Both ends go through these because a Size item backs either an int or a float preference.
 static_function i32 GetSizeValue(KZOptionService *opts, const KZOptItem &item)
 {
 	if (item.storage == KZOptStorage::Int)
@@ -182,8 +182,7 @@ const KZOptItem *KZMenuService::PopupItem()
 	{
 		return NULL;
 	}
-	// Only hand back an item whose type matches the open popup, so a stale index cannot feed a
-	// mismatched item into rendering.
+	// Only hand back an item whose type matches the open popup so a stale index cannot feed a mismatched item into rendering.
 	const KZOptItem &it = node->items[this->popupItemIndex];
 	const bool ok =
 		(this->popup == Popup::Color && it.type == KZOptItemType::Color)
@@ -270,8 +269,8 @@ void KZMenuService::RenderLeft(CCSCustomHudLayout *layout)
 		if (used)
 		{
 			const LeftEntry &e = this->leftSlots[i];
-			// Every top-level category is styled as a header, and one that owns subs is inert once a sub
-			// of it is active.
+			// Every top-level category is styled as a header.
+			// One that owns subs is inert once a sub of it is active.
 			const bool isParent = !e.isSub;
 			const bool disabled = isParent && !e.node->subs.empty() && e.categoryIndex == this->selectedCategory;
 			this->menuLayout.SetVar(CatLbl(i), CatVar(i), KZMenuService::GetPhrase(this->player, e.node->phraseKey).c_str());
@@ -359,7 +358,7 @@ void KZMenuService::RenderItems(CCSCustomHudLayout *layout)
 						}
 						else
 						{
-							// A multi-select list has no single current row, so the value lists what is on.
+							// A multi-select list has no single current row and its value lists what is on.
 							for (const KZChoice &c : choices)
 							{
 								if (c.selected)
@@ -388,7 +387,7 @@ void KZMenuService::RenderItems(CCSCustomHudLayout *layout)
 
 void KZMenuService::RenderColorPopup(CCSCustomHudLayout *layout)
 {
-	// Highlight the entry matching the item's current color, if it is on this page.
+	// Highlight the entry matching the item's current color if it is on this page.
 	const KZOptItem *it = this->PopupItem();
 	i32 curIdx = -1;
 	if (it)
@@ -465,7 +464,7 @@ void KZMenuService::RenderListPopup(CCSCustomHudLayout *layout)
 		}
 		KZ::ui::SetBoolClass(layout, LiPanel(i), "hidden", this->applied.liHidden[i], !used);
 	}
-	// The header names the family being browsed, or the item for a plain choice list.
+	// The header names the family being browsed or the item for a plain choice list.
 	const char *title = "";
 	if (this->popupFont && count > 0)
 	{
@@ -479,7 +478,7 @@ void KZMenuService::RenderListPopup(CCSCustomHudLayout *layout)
 	char page[16];
 	V_snprintf(page, sizeof(page), "%i/%i", this->popupPage + 1, pages);
 	this->menuLayout.SetVar("lp_page", "lppage", page);
-	// Only the font list carries the * marker, so only it needs the footnote.
+	// Only the font list carries the * marker and needs the footnote.
 	KZ::ui::SetBoolClass(layout, "lp_note", "hidden", this->applied.noteHidden, !this->popupFont);
 	if (this->popupFont)
 	{
@@ -563,8 +562,8 @@ void KZMenuService::SelectLeft(i32 slot)
 	{
 		return;
 	}
-	// The panes stay live while a picker is open, so close it first: it must never be left pointing
-	// at an item the node change removed.
+	// The panes stay live while a picker is open.
+	// Close it first because it must never be left pointing at an item the node change removed.
 	if (this->popup != Popup::None)
 	{
 		this->ClosePopup();
@@ -606,7 +605,7 @@ void KZMenuService::ActivateItem(i32 slot)
 	{
 		return;
 	}
-	// Clicking any item closes an open picker first, then acts (which may open a new one).
+	// Clicking any item closes an open picker first and then acts (which may open a new one).
 	if (this->popup != Popup::None)
 	{
 		this->ClosePopup();
@@ -673,7 +672,7 @@ void KZMenuService::OpenPopup(Popup kind, i32 itemIdx)
 		this->fontPageStart.clear();
 		if (this->popupFont)
 		{
-			// The table is already ordered by family, so a single pass finds the page boundaries.
+			// The table is already ordered by family and a single pass finds the page boundaries.
 			const char *family = NULL;
 			for (i32 f = 0; f < PANORAMA_FONT_COUNT; f++)
 			{
@@ -781,7 +780,7 @@ void KZMenuService::PopupPick(i32 slot)
 		const i32 pages = (i32)this->fontPageStart.size();
 		const bool byFamily = this->popupFont && this->popupPage < pages;
 		const i32 first = byFamily ? this->fontPageStart[this->popupPage] : this->popupPage * KZ_MENU_LIST;
-		// A click must stay inside this page, or it would spill into the next family.
+		// A click must stay inside this page or it would spill into the next family.
 		const i32 end = byFamily ? (this->popupPage + 1 < pages ? this->fontPageStart[this->popupPage + 1] : n) : MIN(first + KZ_MENU_LIST, n);
 		const i32 idx = first + slot;
 		if (idx < 0 || idx >= end)
@@ -796,8 +795,8 @@ void KZMenuService::PopupPick(i32 slot)
 		else if (it->onPick)
 		{
 			it->onPick(this->player, it->tag, choiceId);
-			// A multi-select list keeps each row's state in the row, so rebuild for the highlight to
-			// follow the pick. A single-select one re-reads getCurrent every render.
+			// A multi-select list keeps each row's state in the row and has to be rebuilt for the highlight to follow the pick.
+			// A single-select one re-reads getCurrent every render.
 			this->listChoices.clear();
 			if (it->getChoices)
 			{
@@ -820,7 +819,7 @@ void KZMenuService::Step(i32 axis, f32 delta)
 	{
 		const char *key = axis == 1 ? it->yKey : it->prefKey;
 		const i32 def = axis == 1 ? it->iydef : it->idef;
-		// Dragging stores tenths of a percent, so step without truncating them.
+		// Dragging stores tenths of a percent and stepping must not truncate them.
 		const f32 value = Clamp((f32)opts->GetPreferenceFloat(key, def) + delta, (f32)it->lo, (f32)it->hi);
 		opts->SetPreferenceFloat(key, RoundFloatToInt(value * 10.0f) / 10.0f);
 	}
@@ -983,12 +982,12 @@ void KZMenuService::OnClick(const char *buttonId)
 void KZMenuService::Hide()
 {
 	this->shown = false;
-	// The already-spawned entity, not EnsureLayout(): that one hands nothing back while the plugin is unloading.
+	// The already-spawned entity rather than EnsureLayout() because that one hands nothing back while the plugin is unloading.
 	if (CCSCustomHudLayout *layout = this->menuLayout.Get())
 	{
 		KZ::ui::SetClass(layout, "menu_root", "hidden", true);
 		this->applied.rootHidden = true;
-		// Undo the popup shift here too, or the next open animates the whole menu back from the left.
+		// Undo the popup shift here too or the next open animates the whole menu back from the left.
 		KZ::ui::SetClass(layout, "menu_root", "shift", false);
 		this->applied.shift = false;
 	}

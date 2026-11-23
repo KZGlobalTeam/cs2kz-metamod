@@ -4,14 +4,16 @@
 #include <cmath>
 #include <float.h>
 
-// A route is the reference run's path without its discarded checkpoint branches. The run is found by its recorded event
-// indices, its checkpoint saves and teleports are replayed into a tree, and the branch that reached the end is kept.
+// A route is the reference run's path without its discarded checkpoint branches.
+// The run is found by its recorded event indices.
+// Its checkpoint saves and teleports are replayed into a tree and the branch that reached the end is kept.
 // Recorded bhop fails cut their failed attempt where the destination lies on the earlier path.
 //
-// A player is followed along the route instead of being matched to the nearest geometry every time, since players stray
-// from the reference line and routes overlap themselves. The whole route is only searched after a teleport or after
-// losing the route. A jump is only displayed once it has lasted, so a fall or a wrong match where the route overlaps
-// itself does not move the displayed progress.
+// A player is followed along the route instead of being matched to the nearest geometry every time.
+// Players stray from the reference line and routes overlap themselves.
+// The whole route is only searched after a teleport or after losing the route.
+// A jump is only displayed once it has lasted.
+// A fall or a wrong match where the route overlaps itself therefore does not move the displayed progress.
 
 namespace KZ::progress
 {
@@ -24,16 +26,16 @@ namespace KZ::progress
 	static constexpr f32 POSITION_EPSILON = 0.001f;
 	// Furthest a player can be from the route and still be placed on it.
 	static constexpr f32 MAX_POSITION_ERROR = 256.0f;
-	// Further than this from the route, the displayed value is marked as approximate.
+	// The displayed value is marked as approximate further than this from the route.
 	static constexpr f32 APPROXIMATE_POSITION_ERROR = 64.0f;
-	// When searching the whole route, parts this much further than the nearest one are still candidates.
+	// Parts this much further than the nearest one are still candidates when searching the whole route.
 	static constexpr f32 NEAREST_ERROR_TOLERANCE = 32.0f;
 	// Candidates spread over more route distance than this are different parts of the route.
 	static constexpr f64 MAX_UNAMBIGUOUS_ROUTE_SPAN = 256.0;
 	static constexpr u32 MAX_PROJECTIONS = 8192;
 	static constexpr u32 MAX_CELL_LOOKUPS = 4096;
-	// How far a followed player may move along the route per update. Moving ahead allows more, as the reference can take
-	// a longer line than the player.
+	// How far a followed player may move along the route per update.
+	// Moving ahead allows more because the reference can take a longer line than the player.
 	static constexpr f32 FOLLOW_AHEAD_SCALE = 3.0f;
 	static constexpr f32 FOLLOW_AHEAD_SLACK = 128.0f;
 	static constexpr f32 FOLLOW_BEHIND_SLACK = 64.0f;
@@ -41,7 +43,7 @@ namespace KZ::progress
 	static constexpr f64 JUMP_SLACK = 128.0;
 	// How long a jump has to last before it is displayed.
 	static constexpr f64 DIVERGENCE_TIME = 1.5;
-	// How fast the displayed value may move towards its target per update, relative to the distance travelled.
+	// How fast the displayed value may move towards its target per update relative to the distance travelled.
 	static constexpr f64 GLIDE_TRAVEL_SCALE = 2.0;
 	static constexpr f64 GLIDE_SLACK = 64.0;
 	// How long the last value stays displayed after the route is lost.
@@ -153,7 +155,7 @@ namespace KZ::progress
 		return {origin, fraction, (position - origin).Length()};
 	}
 
-	// The pre-run buffer can hold other completions of a short course, so the run is taken from the recorded event indices.
+	// The run is taken from the recorded event indices because the pre-run buffer can hold other completions of a short course.
 	static_function bool FindCompletedRun(const replaysystem::data::ReplayMovement &replay, i32 courseID, RunInterval &run,
 										  const std::atomic<bool> &cancel)
 	{
@@ -308,7 +310,7 @@ namespace KZ::progress
 			}
 			else
 			{
-				// Some teleports during movement are recorded with the destination as the previous origin, leaving the source unknown.
+				// Some teleports during movement are recorded with the destination as the previous origin and leave the source unknown.
 				if (source != destination)
 				{
 					Append(source, false);
@@ -443,7 +445,7 @@ namespace KZ::progress
 		f64 lastDistance {-1};
 	};
 
-	// Finds where a failure teleport destination lies on the earlier path, if it lies there exactly once.
+	// Finds where a failure teleport destination lies on the earlier path if it lies there exactly once.
 	static_function FailureReturn FindFailureReturn(const std::vector<PathPoint> &path, const PathPoint &restart, const std::atomic<bool> &cancel)
 	{
 		FailureReturn result;
@@ -577,7 +579,7 @@ namespace KZ::progress
 			return false;
 		}
 		const f64 low = from - behind, high = from + ahead;
-		// Segments are ordered by distance, so the window is the run of segments starting before its end.
+		// Segments are ordered by distance and the window is the run of segments starting before its end.
 		auto last =
 			std::upper_bound(segments.begin(), segments.end(), high, [](f64 value, const Segment &segment) { return value < segment.distance; });
 		error = FLT_MAX;
@@ -738,7 +740,7 @@ namespace KZ::progress
 
 		if (this->target < 0 || this->acceptNext)
 		{
-			// A teleport destination is displayed as is, so a checkpoint shows the progress it was saved with.
+			// A teleport destination is displayed as is and a checkpoint shows the progress it was saved with.
 			this->target = this->shown = found;
 			this->acceptNext = false;
 			this->divergedSince = -1;

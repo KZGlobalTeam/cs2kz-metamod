@@ -127,7 +127,7 @@ void utils::UnlockConVars()
 
 	ConVarRefAbstract ref(ConVarRef((u16)0));
 
-	// Can't use FOR_EACH_CONVAR here (?) as it would skip cvars with certain flags, so just loop through the handles
+	// Loop through the handles because FOR_EACH_CONVAR (?) would skip cvars with certain flags.
 	while (ref.IsValidRef())
 	{
 		if (ref.IsConVarDataAvailable())
@@ -184,7 +184,8 @@ CBasePlayerController *utils::GetController(CBaseEntity *entity)
 		CBasePlayerPawn *pawn = static_cast<CBasePlayerPawn *>(entity);
 		if (!pawn->m_hController().IsValid() || pawn->m_hController.Get() == 0)
 		{
-			// Seems like the pawn lost its controller, we can try looping through the controllers to find this pawn instead.
+			// Seems like the pawn lost its controller.
+			// We can try looping through the controllers to find this pawn instead.
 			for (i32 i = 0; i < MAX_PLAYERS; i++)
 			{
 				controller = (CCSPlayerController *)utils::GetController(CPlayerSlot(i));
@@ -270,16 +271,16 @@ void utils::PlaySoundToClient(CPlayerSlot player, const char *sound, std::option
 	msg->set_soundevent_hash(MurmurHash2LowerCase(sound, 0x53524332));
 	msg->set_soundevent_guid(guid);
 	msg->set_seed(guid);
-	// No source entity, so the sound plays at the listener without distance falloff.
+	// No source entity so the sound plays at the listener without distance falloff.
 	msg->set_source_entity_index(-1);
 
-	// EmitSound_t::m_flVolume ends up in "public.volume_atten", which csgo_mega sound events don't have.
+	// EmitSound_t::m_flVolume ends up in "public.volume_atten" and csgo_mega sound events don't have that.
 	// "public.volume" replaces the volume authored in the sound event.
 	if (volume.has_value())
 	{
 		static_persist const u32 volumeField = MurmurHash2LowerCase("public.volume", 0x31415926);
-		// "public.volume" is a linear gain, but perceived loudness doubles every +10 dB (x3.16 gain),
-		// so raise to log2(3.16) to make 0.5 sound half as loud and 2 twice as loud.
+		// "public.volume" is a linear gain but perceived loudness doubles every +10 dB (x3.16 gain).
+		// Raise it to log2(3.16) to make 0.5 sound half as loud and 2 twice as loud.
 		f32 value = powf(volume.value(), 1.661f);
 		// Field hash, field type (float), data size, array index, data.
 		u8 params[11] = {};
@@ -366,7 +367,7 @@ bool utils::SetConVarValue(CPlayerSlot slot, ConVarRefAbstract conVarRef, const 
 	if (!conVarRef.IsValidRef() || !conVarRef.IsConVarDataAvailable())
 	{
 		assert(0);
-		// If the ref is not valid, then the name is not available here, so this will silently fail.
+		// The name is not available here if the ref is not valid and this will silently fail.
 		return false;
 	}
 
@@ -396,7 +397,7 @@ bool utils::SetConVarValue(CPlayerSlot slot, ConVarRefAbstract conVarRef, const 
 	if (!conVarRef.IsValidRef() || !conVarRef.IsConVarDataAvailable())
 	{
 		assert(0);
-		// If the ref is not valid, then the name is not available here, so this will silently fail.
+		// The name is not available here if the ref is not valid and this will silently fail.
 		return false;
 	}
 
@@ -510,9 +511,9 @@ void utils::SendMultipleConVarValues(CPlayerSlot slot, ConVarRefAbstract **conVa
 
 static_global const bbox_t PLAYER_BOUNDS = {{-16.0f, -16.0f, 0.0f}, {16.0f, 16.0f, 72.0f}};
 static_global const f32 PLAYER_EYE_HEIGHT = 64.0f;
-// Player half width along the axes of a trigger with any yaw, plus some room.
+// Player half width along the axes of a trigger with any yaw plus some room.
 static_global const f32 WALL_PROBE_DISTANCE = 16.0f * 1.41421356f + 1.0f;
-// Edges first, then corners.
+// Edges first and then corners.
 static_global const i32 WALL_PROBE_DIRECTIONS[8][2] = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}, {1, 1}, {1, -1}, {-1, 1}, {-1, -1}};
 
 static_function void InitSpawnTraceFilter(CTraceFilter &filter)
@@ -526,7 +527,7 @@ static_function void InitSpawnTraceFilter(CTraceFilter &filter)
 	filter.m_nInteractsAs = 0x40000;
 }
 
-// Put the player on the trigger's floor at the given local position, or on whatever is above that floor.
+// Put the player on the trigger's floor at the given local position or on whatever is above that floor.
 static_function bool FindFloorPosition(CBaseTrigger *trigger, const CTransform &transform, const Vector &local, Vector &feet)
 {
 	Vector mins = trigger->m_pCollision()->m_vecMins();
@@ -631,7 +632,7 @@ bool utils::FindValidSpawn(Vector &origin, QAngle &angles, bool ignoreStuckCheck
 				foundValidSpawn = true;
 				break;
 			}
-			// Just set the spawn to a found spawn even if it's stuck, if we're ignoring stuck checks.
+			// Just set the spawn to a found spawn even if it's stuck if we're ignoring stuck checks.
 			if (ignoreStuckCheck)
 			{
 				origin = spawnOrigin;
@@ -681,7 +682,7 @@ bool utils::FindValidPositionForTrigger(CBaseTrigger *trigger, Vector &originDes
 		}
 	}
 
-	// The whole trigger is obstructed (e.g. covered by a brush), try right outside of it.
+	// Try right outside of it if the whole trigger is obstructed (e.g. covered by a brush).
 	for (i32 probe = 0; probe < 8; probe++)
 	{
 		if (FindFloorPosition(trigger, transform, GetWallProbe(trigger, probe, true), feet)
@@ -693,7 +694,7 @@ bool utils::FindValidPositionForTrigger(CBaseTrigger *trigger, Vector &originDes
 		}
 	}
 
-	// Lastly, on top of whatever covers it.
+	// Lastly on top of whatever covers it.
 	Vector top = utils::TransformPoint(transform, Vector(center.x, center.y, maxs.z)) + Vector(0.0f, 0.0f, 0.03125f);
 	Vector above = top + Vector(0.0f, 0.0f, PLAYER_BOUNDS.maxs.z);
 	if (!utils::IsSpawnValid(above))
@@ -711,7 +712,7 @@ bool utils::FindValidPositionForTrigger(CBaseTrigger *trigger, Vector &originDes
 
 void utils::ResetMapIfEmpty()
 {
-	// There are players in the server already, do not restart
+	// Do not restart if there are players in the server already
 	if (g_pKZUtils->GetPlayerCount() > 0)
 	{
 		KZ_LOG_DEBUG(LogChannel::General, "Server has %d players, not restarting map.\n", g_pKZUtils->GetPlayerCount());
@@ -849,7 +850,7 @@ bool utils::ReadBufferFromFile(const char *relativePath, std::vector<char> &outB
 		KZ_LOG_WARN(LogChannel::General, "Failed to open file for reading: %s\n", absPath);
 		return false;
 	}
-	// ftell returns a 32-bit long on Windows, which breaks past 2 GiB.
+	// ftell returns a 32-bit long on Windows and that breaks past 2 GiB.
 	std::error_code error;
 	uintmax_t size = std::filesystem::file_size(absPath, error);
 	if (error)

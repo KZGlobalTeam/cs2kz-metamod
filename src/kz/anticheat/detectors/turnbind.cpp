@@ -1,6 +1,6 @@
 /*
 	Turn bind detection.
-	Doesn't actually ban, this just tries to put a cooldown on external turn binds.
+	This doesn't actually ban and just tries to put a cooldown on external turn binds.
 */
 #include "kz/kz.h"
 #include "kz/anticheat/kz_anticheat.h"
@@ -18,22 +18,24 @@
 #define TURN_WINDOW_LENGTH 16
 #define TURN_WINDOW_STEP   2
 #define TURN_MAX_DRIFT     0.05f
-// A resting hand or a drifting sensor turns slower than this, in counts per tick.
+// A resting hand or a drifting sensor turns slower than this (in counts per tick).
 #define TURN_MIN_COUNTS 8.0f
 
-// Shortest strafe worth measuring, partial first and last command included.
+// Shortest strafe worth measuring with the partial first and last command included.
 #define TURN_MIN_STRAFE_LENGTH     6
 #define TURN_MIN_STRAFE_COUNTS     20.0f
 #define TURN_MAX_STRAFE_RATE_ERROR 0.03f
 
-// Below this, the turn is identical every tick, which mouse input sampled once per frame never is.
+// Below this the turn is identical every tick.
+// Mouse input sampled once per frame never is.
 #define TURN_EXACT_RATIO                     0.1f
 #define TURN_NUM_EXACT_WINDOWS_FOR_DETECTION 2
-// A hard flick saturates the mouse report at 127 counts, which also turns by the same amount every tick.
+// A hard flick saturates the mouse report at 127 counts and also turns by the same amount every tick.
 #define TURN_SATURATED_COUNTS 127.0f
 
 #define TURN_RATE_HISTORY 512
-// Widths are in log space, so the peak is +-2% and its surroundings +-10% of the rate.
+// Widths are in log space.
+// The peak is +-2% and its surroundings +-10% of the rate.
 #define TURN_PEAK_WIDTH   0.04f
 #define TURN_AROUND_WIDTH 0.2f
 // Consistent players can reach 10 with normal turns early in a session.
@@ -44,7 +46,7 @@
 #define TURN_EXTERNAL_MIN_RATIO    0.75f
 #define TURN_EXTERNAL_MAX_RATIO    1.33f
 #define TURN_EXTERNAL_MIN_COMMANDS 2
-// Turning the same way again this soon is still the turn bind, eg. after a cooldown snap.
+// Turning the same way again this soon is still the turn bind (eg. after a cooldown snap).
 #define TURN_EXTERNAL_RESUME_COMMANDS 8
 #define TURN_EXTERNAL_SAME_RATE       0.05f
 
@@ -53,7 +55,7 @@ CConVar<bool> kz_ac_turnbind_debug("kz_ac_turnbind_debug", FCVAR_NONE, "Enable t
 struct TurnFit
 {
 	f32 rate;
-	// Spread of the cumulative counts around a constant rate, relative to what frame timing alone can cause.
+	// Spread of the cumulative counts around a constant rate relative to what frame timing alone can cause.
 	f32 bandRatio;
 	f32 drift;
 	f32 meanFrametime;
@@ -92,7 +94,8 @@ static_function TurnFit FitTurn(const KZAnticheatService::TurnStep *steps, i32 c
 	fit.rate = (f32)fabs(slope);
 	fit.meanFrametime = (f32)(frametimeSum / count);
 	fit.drift = (f32)(fabs(firstHalf / half - secondHalf / (count - half)) / (cumulative / count));
-	// Each command may hold one frame more or less than the next, so a constant rate strays by up to one frame of motion.
+	// Each command may hold one frame more or less than the next.
+	// A constant rate therefore strays by up to one frame of motion.
 	f32 allowance = fit.rate * fit.meanFrametime / ENGINE_FIXED_TICK_INTERVAL + 2.0f;
 	// A frame spike moves a single command further than the mean frame accounts for.
 	fit.bandRatio = maxFrametime > 3.0f * fit.meanFrametime ? FLT_MAX : (f32)(maxResidual - minResidual) / allowance;
@@ -125,7 +128,7 @@ void KZAnticheatService::TrackTurn(CUserCmd *cmd)
 		return;
 	}
 
-	// +turnleft and +turnright turn at cl_yawspeed, which the cvar check already pins.
+	// +turnleft and +turnright turn at cl_yawspeed and the cvar check already pins it.
 	u64 buttons = cmd->base().buttons_pb().buttonstate1();
 	if (!consecutive || (buttons & (IN_TURNLEFT | IN_TURNRIGHT)) || fabsf(delta) < TURN_MIN_DEGREES || fabsf(delta) >= TURN_MAX_DEGREES)
 	{

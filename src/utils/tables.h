@@ -133,7 +133,7 @@ namespace utils
 
 		u32 GetTableWidth()
 		{
-			// N-1 gap, but there are two spaces between each column.
+			// N-1 gaps but there are two spaces between each column.
 			u32 result = (columnCount - 1) * 2;
 			for (u32 i = 0; i < columnCount; i++)
 			{

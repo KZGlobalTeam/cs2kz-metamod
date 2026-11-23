@@ -29,7 +29,7 @@ void cvarquery::OnCvarValueResponse(CPlayerSlot slot, i32 cookie, Status status,
 	{
 		return;
 	}
-	// Taken out before running: the callback is free to start another query.
+	// Taken out before running because the callback is free to start another query.
 	Callback callback = std::move(it->second);
 	pending.erase(it);
 	callback(slot, status, name, value);

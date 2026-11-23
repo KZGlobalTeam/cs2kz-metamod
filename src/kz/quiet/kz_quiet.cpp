@@ -37,14 +37,16 @@ static_global class KZOptionServiceEventListener_Quiet : public KZOptionServiceE
 	}
 } optionEventListener;
 
-// The pawn of a player who is away or spectating is kept out of sight. A client takes a pawn linked to its own
-// controller for its own body and predicts it, so its owner would see it frozen.
+// The pawn of a player who is away or spectating is kept out of sight.
+// A client takes a pawn linked to its own controller for its own body and predicts it.
+// Its owner would see it frozen.
 static_function bool ShouldHidePersistentPawn(KZPlayer *owner, KZPlayer *viewer)
 {
 	return !owner->awayService->CanControlPawn() && (owner != viewer || owner->awayService->IsObservingWithPersistentPawn());
 }
 
-// A pawn's weapons are sent on their own, and a client that spectated the pawn can show one as a first person model.
+// A pawn's weapons are sent on their own.
+// A client that spectated the pawn can show one as a first person model.
 static_function void HidePersistentPawnWeapons(CCheckTransmitInfo *pTransmitInfo, KZPlayer *viewer)
 {
 	for (KZPlayer *owner : g_pKZPlayerManager->GetAllSlots())
@@ -131,7 +133,7 @@ void KZ::quiet::OnCheckTransmit(CCheckTransmitInfo **pInfo, int infoCount)
 			 pawn = pawn->m_pEntity->m_pNextByClass ? static_cast<CCSPlayerPawn *>(pawn->m_pEntity->m_pNextByClass->m_pInstance) : nullptr)
 		// clang-format on
 		{
-			// Bit is not even set, don't bother.
+			// Don't bother if the bit is not even set.
 			if (!pTransmitInfo->m_pTransmitEntity->IsBitSet(pawn->entindex()))
 			{
 				continue;
@@ -152,7 +154,7 @@ void KZ::quiet::OnCheckTransmit(CCheckTransmitInfo **pInfo, int infoCount)
 			}
 #endif
 			KZPlayer *otherPlayer = g_pKZPlayerManager->ToPlayer(pawn);
-			// The controller handle can be stale, treat the pawn as if it had no controller.
+			// The controller handle can be stale so treat the pawn as if it had no controller.
 			if (!otherPlayer)
 			{
 				pTransmitInfo->m_pTransmitEntity->Clear(pawn->entindex());
@@ -248,7 +250,7 @@ void KZ::quiet::OnPostEvent(NetMessageInfo_t *pEvent, const CNetMessage *pData, 
 			*(uint64 *)clients = 0;
 			return;
 		}
-		// Hide bullet decals, and sound.
+		// Hide bullet decals and sound.
 		case GE_FireBulletsId:
 		{
 			auto msg = const_cast<CNetMessage *>(pData)->ToPB<CMsgTEFireBullets>();
@@ -320,7 +322,7 @@ void KZ::quiet::OnPostEvent(NetMessageInfo_t *pEvent, const CNetMessage *pData, 
 	if (emitterEnt->IsPawn())
 	{
 		CBasePlayerPawn *pawn = static_cast<CBasePlayerPawn *>(emitterEnt);
-		// Without a player, the index stays 0 and the event is hidden from everyone having !hide enabled.
+		// The index stays 0 without a player and the event is hidden from everyone having !hide enabled.
 		KZPlayer *emitter = g_pKZPlayerManager->ToPlayer(utils::GetController(pawn));
 		FilterQuietClients(clients, emitter ? emitter->index : 0);
 	}
@@ -339,7 +341,7 @@ void KZ::quiet::OnPostEvent(NetMessageInfo_t *pEvent, const CNetMessage *pData, 
 			FilterQuietClients(clients);
 		}
 	}
-	// Special case for the armor sound upon spawning/respawning, because the emitter player is not yet known.
+	// Special case for the armor sound on spawning or respawning because the emitter player is not yet known.
 	else if (V_strcmp(emitterEnt->GetClassname(), "item_assaultsuit") == 0)
 	{
 		FilterQuietClients(clients);
@@ -376,7 +378,7 @@ bool KZQuietService::ShouldHide()
 		return false;
 	}
 
-	// If the player is not alive and not spectating another player, don't hide other players.
+	// Don't hide other players if the player is not alive and not spectating another player.
 	if (this->player->specService->IsObserving() && !this->player->specService->GetSpectatedPlayer())
 	{
 		return false;
@@ -422,8 +424,9 @@ void KZQuietService::OnPhysicsSimulatePost()
 	this->UpdateWeaponCamera();
 }
 
-// A custom camera that follows the eyes is still the pawn's view entity, and the client skips the viewmodel
-// while one is set. The weapon itself stays networked, so the native crosshair keeps working.
+// A custom camera that follows the eyes is still the pawn's view entity.
+// The client skips the viewmodel while one is set.
+// The weapon itself stays networked and the native crosshair keeps working.
 void KZQuietService::UpdateWeaponCamera()
 {
 	CCSPlayerPawn *pawn = this->player->GetPlayerPawn();
@@ -441,8 +444,8 @@ void KZQuietService::UpdateWeaponCamera()
 		{
 			return;
 		}
-		// GetCustomCamera() finds a pawn's camera by designer name, so a map script never gets handed this one
-		// and spawns its own instead.
+		// GetCustomCamera() finds a pawn's camera by designer name.
+		// A map script therefore never gets handed this one and spawns its own instead.
 		camera->m_pEntity->m_designerName = GameEntitySystem()->AllocPooledString("kz_weapon_camera");
 		camera->SetFollowConfig(pawn, true);
 		this->weaponCamera = camera->GetRefEHandle();
@@ -452,8 +455,8 @@ void KZQuietService::UpdateWeaponCamera()
 	{
 		return;
 	}
-	// Only take the view while nothing else holds it: a map camera or point_viewcontrol keeps priority, and
-	// the weapon is hidden again as soon as it lets go.
+	// Only take the view while nothing else holds it because a map camera or point_viewcontrol keeps priority.
+	// The weapon is hidden again as soon as it lets go.
 	CBaseEntity *viewEntity = cameraServices->m_hViewEntity().Get();
 	if (!viewEntity || viewEntity == pawn)
 	{
@@ -518,7 +521,7 @@ void KZQuietService::UpdateHideState()
 		this->lastObserverTarget.Term();
 		return;
 	}
-	// Nuclear option, define this if things crash still!
+	// Define this as the nuclear option if things crash still!
 #if 0
 	if (obsServices->m_iObserverMode() != this->lastObserverMode || obsServices->m_hObserverTarget() != this->lastObserverTarget)
 	{

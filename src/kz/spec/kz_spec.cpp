@@ -61,13 +61,13 @@ bool KZSpecService::IsObserving()
 	return !this->player->IsAlive() || this->player->awayService->IsObservingWithPersistentPawn();
 }
 
-// An away player is still found by name, to tell why they cannot be spectated.
+// An away player is still found by name to tell why they cannot be spectated.
 static_function bool CanBeFound(KZPlayer *player)
 {
 	return player->IsInGame() || player->IsAway();
 }
 
-// Only a pawn its player controls is sent to other players, a persistent pawn would show frozen in place.
+// Only a pawn its player controls is sent to other players because a persistent pawn would show frozen in place.
 static_function bool CanBeSpectated(KZPlayer *player)
 {
 	return player->IsInGame() && player->IsAlive() && player->awayService->CanControlPawn();
@@ -111,7 +111,7 @@ bool KZSpecService::SpectatePlayer(const char *playerName)
 				break;
 			}
 		}
-		// If no exact match was found, try partial matches.
+		// Try partial matches if no exact match was found.
 		if (!targetPlayer)
 		{
 			for (KZPlayer *otherPlayer : g_pKZPlayerManager->GetAllSlots())
@@ -213,7 +213,7 @@ void KZSpecService::GetSpectatorList(std::vector<std::string> &spectatorList)
 	KZPlayer *spectator = this->player->specService->GetNextSpectator(nullptr);
 	while (spectator)
 	{
-		// Only someone watching through the player's eyes or following them counts, not a free camera that still has a target.
+		// Only someone watching through the player's eyes or following them counts rather than a free camera that still has a target.
 		CPlayer_ObserverServices *obsService = spectator->GetController()->m_hObserverPawn()->m_pObserverServices;
 		u8 mode = obsService ? obsService->m_iObserverMode() : OBS_MODE_NONE;
 		if (mode == OBS_MODE_IN_EYE || mode == OBS_MODE_CHASE)
@@ -245,7 +245,7 @@ KZPlayer *KZSpecService::GetSpectatedPlayer()
 	}
 	CCSPlayerPawn *pawn = this->player->GetPlayerPawn();
 	CBasePlayerPawn *target = (CBasePlayerPawn *)obsService->m_hObserverTarget().Get();
-	// If the player is spectating their own corpse, consider that as not spectating anyone.
+	// Consider a player spectating their own corpse as not spectating anyone.
 	return target == pawn ? nullptr : g_pKZPlayerManager->ToPlayer(target);
 }
 
@@ -287,7 +287,7 @@ SCMD(kz_spec, SCFL_SPEC)
 		return true;
 	}
 
-	// Handle explicit target, this always takes priority over automatic spectating.
+	// Handle explicit target because this always takes priority over automatic spectating.
 	if (args->ArgC() >= 2)
 	{
 		player->specService->SpectatePlayer(args->Arg(1));
@@ -305,14 +305,14 @@ SCMD(kz_spec, SCFL_SPEC)
 		}
 	}
 
-	// If no other player is alive, spectate themselves instead.
+	// Spectate themselves instead if no other player is alive.
 	if (!firstAlivePlayer)
 	{
 		player->specService->SpectatePlayer("@me");
 		return true;
 	}
 
-	// If no target is provided, default to the first alive player.
+	// Default to the first alive player if no target is provided.
 	player->specService->SpectatePlayer(firstAlivePlayer);
 	return true;
 }

@@ -39,9 +39,10 @@ void KZTriggerService::ResetBhopState()
 
 void KZTriggerService::UpdateModifiersInternal()
 {
-	// The apply paths have to run every time because KZ::mode::ApplyModeSettings resets the underlying cvars to the
-	// mode values on every ProcessMovement. The cancel paths only need to run on the transition out of the modifier:
-	// once cancelled, ApplyModeSettings is what keeps those cvars at the mode values.
+	// The apply paths have to run every time.
+	// KZ::mode::ApplyModeSettings resets the underlying cvars to the mode values on every ProcessMovement.
+	// The cancel paths only need to run on the transition out of the modifier.
+	// Once cancelled ApplyModeSettings is what keeps those cvars at the mode values.
 	if (this->modifiers.enableSlideCount > 0)
 	{
 		this->ApplySlide();
@@ -248,8 +249,8 @@ bool KZTriggerService::TouchTeleportTrigger(TriggerTouchTracker tracker)
 	{
 		return false;
 	}
-	// The mapping API explicitly distinguishes failed bhop teleports from normal
-	// map teleports. Position proximity alone cannot identify a failed section.
+	// The mapping API explicitly distinguishes failed bhop teleports from normal map teleports.
+	// Position proximity alone cannot identify a failed section.
 	KZRecordingService::ScopedTeleport replayTeleport(*this->player->recordingService, isBhopTrigger ? RPTELEPORT_BHOP_FAIL : RPTELEPORT_MAP_TRIGGER);
 
 	bool shouldReorientPlayer = tracker.kzTrigger->teleport.reorientPlayer && destAngles[YAW] != 0;

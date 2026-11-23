@@ -279,8 +279,9 @@ void KZRacingService::ProcessMainThreadCallbacks()
 
 void KZRacingService::OnWebSocketMessage(KZWebSocket &socket, const ix::WebSocketMessagePtr &message)
 {
-	// Runs on the ixwebsocket thread. Every event handler below parses JSON and allocates a
-	// std::function onto the main-thread queue, so one scope here covers all of them.
+	// Runs on the ixwebsocket thread.
+	// Every event handler below parses JSON and allocates a std::function onto the main-thread queue.
+	// One scope here covers all of them.
 
 	socket.OnMessage(message);
 

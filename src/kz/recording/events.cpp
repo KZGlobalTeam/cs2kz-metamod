@@ -119,7 +119,7 @@ void KZRecordingService::OnTimerStart()
 	}
 
 	// Skip recording run replays only when the API has confirmed the map is not global.
-	// If the API response is still pending, we record anyway to avoid missing replays on global maps.
+	// We record anyway if the API response is still pending to avoid missing replays on global maps.
 	if (!KZOptionService::GetOptionInt("recordNonGlobalRuns", true) && KZGlobalService::IsCurrentMapConfirmedNotGlobal())
 	{
 		KZ_LOG_DEBUG(LogChannel::Recording, "Skipping run recorder: map is not global and kz_replay_record_nonglobal_runs is false\n");
@@ -147,7 +147,7 @@ void KZRecordingService::OnTimerStop()
 	KZ_LOG_DEBUG(LogChannel::Recording, "Timer stop\n");
 	this->InsertTimerEvent(RpEvent::RpEventData::TimerEvent::TIMER_STOP, this->player->timerService->GetTime());
 
-	// Remove all active run recorders, which are the ones without desired stop time set.
+	// Remove all active run recorders (the ones without a desired stop time set).
 	auto it = this->runRecorders.begin();
 	while (it != this->runRecorders.end())
 	{
@@ -243,8 +243,8 @@ void KZRecordingService::OnTeleport(const Vector *origin, const QAngle *angles, 
 	{
 		return;
 	}
-	// Logical teleports may use separate engine calls for angles, velocity and
-	// position. Their begin/end pair owns one event; raw teleports are recorded here.
+	// Logical teleports may use separate engine calls for angles, velocity and position.
+	// Their begin/end pair owns one event and raw teleports are recorded here.
 	if (this->teleportDepth == 0)
 	{
 		this->InsertTeleportEvent(origin, angles, velocity);
@@ -285,12 +285,12 @@ void KZRecordingService::OnJumpFinish(Jump *jump)
 		return;
 	}
 	this->lastJumpUUID = UUID_t(true);
-	// If the player has a style, ignore it.
+	// Ignore it if the player has a style.
 	if (!this->player->styleServices.empty())
 	{
 		return;
 	}
-	// If a jump is way too short, ignore it.
+	// Ignore a jump that is way too short.
 	if (jump->airtime < 0.5f)
 	{
 		return;
@@ -333,8 +333,8 @@ void KZRecordingService::OnTeleportBegin(const Vector *origin, const QAngle *ang
 	}
 	if (this->teleportDepth++ == 0)
 	{
-		// SetAngles sends a zero pitch to the entity teleport and snaps view angles
-		// separately. The merged event must retain that entity-angle behavior.
+		// SetAngles sends a zero pitch to the entity teleport and snaps view angles separately.
+		// The merged event must retain that entity-angle behavior.
 		QAngle absoluteAngles = angles ? *angles : vec3_angle;
 		absoluteAngles.x = 0;
 		this->teleportEvent = this->CreateTeleportEvent(origin, angles ? &absoluteAngles : nullptr, velocity);

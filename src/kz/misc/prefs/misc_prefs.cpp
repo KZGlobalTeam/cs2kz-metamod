@@ -12,7 +12,7 @@
 
 #include "tier0/memdbgon.h"
 
-// Indexed by KZBeamService::BeamType, so a picked row id is the stored value.
+// Indexed by KZBeamService::BeamType so a picked row id is the stored value.
 static_global const char *const BEAM_LABELS[] = {"Menu - Beam None", "Menu - Beam Ground", "Menu - Beam Feet"};
 
 static_function void GetBeamChoices(KZPlayer *player, i64, std::vector<KZChoice> &out)
@@ -45,7 +45,7 @@ static_function void GetPistolChoices(KZPlayer *, i64, std::vector<KZChoice> &ou
 
 static_function i64 GetCurrentPistol(KZPlayer *player, i64)
 {
-	// The pistol in hand, for the same reason the mode row reads the live mode.
+	// The pistol in hand for the same reason the mode row reads the live mode.
 	return player->pistolService->preferredPistol;
 }
 
@@ -60,8 +60,8 @@ static_function void PickPistol(KZPlayer *player, i64, i64 id)
 	player->optionService->SetPreferenceStr("preferredPistol", KZPistolService::pistols[id].className);
 }
 
-// Only the modes registered on this server are offered, so the row id is an index into that list
-// and the current mode is matched by name.
+// Only the modes registered on this server are offered.
+// The row id is an index into that list and the current mode is matched by name.
 static_function void GetModeChoices(KZPlayer *, i64, std::vector<KZChoice> &out)
 {
 	const std::vector<KZModeManager::ModePluginInfo> &modes = KZModeManager::GetModes();
@@ -73,7 +73,7 @@ static_function void GetModeChoices(KZPlayer *, i64, std::vector<KZChoice> &out)
 
 static_function i64 GetCurrentMode(KZPlayer *player, i64)
 {
-	// The live mode, not the stored preference: someone who never picked one is on the server default.
+	// The live mode rather than the stored preference because someone who never picked one is on the server default.
 	const char *current = player->modeService->GetModeName();
 	const std::vector<KZModeManager::ModePluginInfo> &modes = KZModeManager::GetModes();
 	for (size_t i = 0; i < modes.size(); i++)
@@ -95,7 +95,7 @@ static_function void PickMode(KZPlayer *player, i64, i64 id)
 	}
 }
 
-// Styles stack, so picking one toggles it rather than replacing the selection.
+// Picking a style toggles it rather than replacing the selection because styles stack.
 static_function void GetStyleChoices(KZPlayer *player, i64, std::vector<KZChoice> &out)
 {
 	const std::string current = g_pKZStyleManager->GetStylesString(player);
@@ -122,8 +122,8 @@ static_function void GetLanguageChoices(KZPlayer *player, i64, std::vector<KZCho
 	const auto &languages = KZLanguageService::GetAvailableLanguages();
 	for (i32 i = 0; i < (i32)languages.size(); i++)
 	{
-		// Each language names itself. A missing phrase comes back as its own key, which is the cue to
-		// fall back to the Steam name from config.txt.
+		// Each language names itself.
+		// A missing phrase comes back as its own key and that is the cue to fall back to the Steam name from config.txt.
 		char key[64];
 		V_snprintf(key, sizeof(key), "Menu - Lang %s", languages[i].code.c_str());
 		std::string name = KZMenuService::GetPhrase(player, key);
@@ -206,7 +206,7 @@ void KZ::misc::RegisterMenu()
 	KZ::menu::SetItemPref(cat, "hideWeapon", KZOptStorage::Bool);
 	KZ::menu::AddToggle(cat, "Menu - Hide Legs", "hideLegs", false);
 	KZ::menu::AddToggle(cat, "Menu - Show Tips", "showTips", true);
-	// The bounds come from the server config, which is already loaded by the time services register.
+	// The bounds come from the server config and it is already loaded by the time services register.
 	KZ::menu::AddSize(cat, "Menu - FOV", "fov", KZFOVService::GetDefaultFOV(), KZFOVService::GetMinFOV(), KZFOVService::GetMaxFOV());
 	KZ::menu::SetItemPref(cat, "fov", KZOptStorage::Int);
 	KZ::menu::SetItemUnit(cat, "");
