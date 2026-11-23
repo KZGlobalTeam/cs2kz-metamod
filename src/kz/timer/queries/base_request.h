@@ -19,6 +19,12 @@ public:
 	virtual ~BaseRequest();
 	virtual void Init(u64 features, const CCommand *args, bool queryLocal, bool queryGlobal);
 
+	// The key a bare first argument is stored under or null if there is none.
+	virtual const char *GetBareKey()
+	{
+		return nullptr;
+	}
+
 protected:
 	static inline u64 idCount = 0;
 	static inline std::vector<BaseRequest *> instances;
@@ -129,6 +135,8 @@ protected:
 	u64 localModeID;
 	std::string modeName;
 	KZ::api::Mode apiMode;
+	// Set if the caller named a mode instead of using their current one.
+	bool modeGiven = false;
 
 	u64 localStyleIDs;
 	std::vector<std::string> styleList;

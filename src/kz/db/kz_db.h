@@ -118,6 +118,8 @@ public:
 	static void SetupCourses(std::vector<KZCourseDescriptor *> &courses);
 	static void FindFirstCourseByMapName(const std::string &mapName, TransactionSuccessCallbackFunc onSuccess,
 										 TransactionFailureCallbackFunc onFailure);
+	// Finds the names of a map's courses known to this server in stage order.
+	static void FindCoursesByMapName(const std::string &mapName, TransactionSuccessCallbackFunc onSuccess, TransactionFailureCallbackFunc onFailure);
 
 	// Client/Player
 	void SetupClient();
@@ -128,6 +130,10 @@ private:
 
 public:
 	static void FindPlayerByAlias(const std::string &playerName, TransactionSuccessCallbackFunc onSuccess, TransactionFailureCallbackFunc onFailure);
+	// Finds the SteamID64, alias and first visit of a player by SteamID.
+	// The alias that best matches the name is used instead if the SteamID is 0.
+	static void FindServerProfile(u64 steamID64, const std::string &playerName, TransactionSuccessCallbackFunc onSuccess,
+								  TransactionFailureCallbackFunc onFailure);
 
 	// Mode
 	static void UpdateModeIDs();
@@ -150,8 +156,13 @@ public:
 								TransactionSuccessCallbackFunc onSuccess, TransactionFailureCallbackFunc onFailure);
 
 	static void QueryAllRecords(const std::string &mapName, TransactionSuccessCallbackFunc onSuccess, TransactionFailureCallbackFunc onFailure);
+	// Queries a page of the player's personal bests in a mode with server ranks from newest to oldest.
+	// A second query counts the player's personal bests.
+	static void QueryPlayerPBs(u64 steamID64, u32 modeID, bool pro, u32 count, u64 offset, TransactionSuccessCallbackFunc onSuccess,
+							   TransactionFailureCallbackFunc onFailure);
+	// Queries 2 and 3 count the players on the overall and pro leaderboards if withTotals is set.
 	static void QueryRecords(const std::string &mapName, const std::string &courseName, u32 modeID, u32 count, u32 offset,
-							 TransactionSuccessCallbackFunc onSuccess, TransactionFailureCallbackFunc onFailure);
+							 TransactionSuccessCallbackFunc onSuccess, TransactionFailureCallbackFunc onFailure, bool withTotals = false);
 
 	static void Ban(u64 steamID64, const char *reason = nullptr, f32 duration = 0.0f, const UUID_t banId = UUID_t(false),
 					const UUID_t replayUuid = UUID_t(false), TransactionSuccessCallbackFunc onSuccess = OnGenericTxnSuccess,

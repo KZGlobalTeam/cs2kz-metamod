@@ -943,6 +943,11 @@ const KZCourseDescriptor *KZ::course::GetFirstCourse()
 	return nullptr;
 }
 
+const KZCourseDescriptor *KZ::course::GetCourseByIndex(u32 index)
+{
+	return index < g_sortedCourses.size() ? g_sortedCourses[index] : nullptr;
+}
+
 void KZ::course::SetupLocalCourses()
 {
 	if (KZDatabaseService::IsMapSetUp())

@@ -1,0 +1,534 @@
+<!-- Every run row is written out because layouts have no loops.
+     The count must match KZ_PROFILE_ROWS in profile.h. -->
+<root>
+  <styles>
+    <include src="file://{resources}/styles/custom_game/cs2kz/profile.css" />
+  </styles>
+  <Panel class="root" hittest="false">
+    <Panel id="profile_root" class="kz-window-root hidden" hittest="false">
+      <Panel id="profile_window" class="kz-window profile-window">
+        <Panel class="kz-filters">
+          <Panel id="profile_mode" class="kz-segment">
+            <Panel class="kz-segment-thumb" hittest="false" />
+            <Panel class="kz-segment-options">
+              <Button id="profile_mode_0" class="kz-segment-option">
+                <Label class="kz-segment-label" text="CKZ" hittest="false" />
+              </Button>
+              <Button id="profile_mode_1" class="kz-segment-option">
+                <Label class="kz-segment-label" text="VNL" hittest="false" />
+              </Button>
+            </Panel>
+          </Panel>
+          <Panel class="kz-rule-v" />
+          <Panel id="profile_type" class="kz-segment tones">
+            <Panel class="kz-segment-thumb" hittest="false" />
+            <Panel class="kz-segment-options">
+              <Button id="profile_type_0" class="kz-segment-option">
+                <Label id="profile_type_0_label" class="kz-segment-label" text="{s:profile_type_0_label}" hittest="false" />
+              </Button>
+              <Button id="profile_type_1" class="kz-segment-option">
+                <Label id="profile_type_1_label" class="kz-segment-label" text="{s:profile_type_1_label}" hittest="false" />
+              </Button>
+            </Panel>
+          </Panel>
+          <Panel class="fill" />
+          <Panel id="profile_scope" class="kz-segment hidden">
+            <Panel class="kz-segment-thumb" hittest="false" />
+            <Panel class="kz-segment-options">
+              <Button id="profile_scope_0" class="kz-segment-option">
+                <Label id="profile_scope_0_label" class="kz-segment-label" text="{s:profile_scope_0_label}" hittest="false" />
+              </Button>
+              <Button id="profile_scope_1" class="kz-segment-option">
+                <Label id="profile_scope_1_label" class="kz-segment-label" text="{s:profile_scope_1_label}" hittest="false" />
+              </Button>
+            </Panel>
+          </Panel>
+          <Button id="profile_window_close" class="kz-window-close" />
+        </Panel>
+        <Label id="profile_status" class="kz-table-status" text="{s:profile_status}" />
+        <Panel id="profile_card" class="profile-card hidden">
+          <Panel class="profile-name-row">
+            <Label id="profile_name" class="profile-name" text="{s:profile_name}" />
+            <Button id="profile_steamid" class="kz-icon-btn icon-copy tip-right">
+              <Panel class="kz-icon-btn-face" hittest="false" />
+              <Panel class="kz-icon-btn-icon" hittest="false" />
+              <Panel class="kz-tooltip-anchor" hittest="false">
+                <Label id="profile_steamid_tip" class="kz-tooltip" text="{s:profile_steamid_tip}" hittest="false" />
+              </Panel>
+            </Button>
+          </Panel>
+          <Panel class="profile-line">
+            <Label id="profile_joined_label" class="profile-joined-label" text="{s:profile_joined_label}" />
+            <Label id="profile_joined" class="profile-joined" text="{s:profile_joined}" />
+          </Panel>
+          <Panel id="profile_global_line" class="profile-line hidden">
+            <Label id="profile_global_label" class="profile-rank-label" text="{s:profile_global_label}" />
+            <Label id="profile_global_rank" class="profile-global-rank" text="{s:profile_global_rank}" />
+          </Panel>
+          <Panel id="profile_rank_line" class="profile-line">
+            <Label id="profile_rank_label" class="profile-rank-label" text="{s:profile_rank_label}" />
+            <Label id="profile_rank" class="profile-rank-badge" text="{s:profile_rank}" />
+            <Label class="profile-slash" text="/" />
+            <Label id="profile_rating" class="profile-rating" text="{s:profile_rating}" />
+          </Panel>
+        </Panel>
+        <Panel id="profile_runs" class="profile-runs hidden">
+          <Label id="profile_runs_title" class="profile-runs-title" text="{s:profile_runs_title}" />
+          <Panel class="kz-record-table">
+            <Panel class="kz-record-head">
+              <Label id="profile_th_map" class="kz-record-th profile-col-map" text="{s:profile_th_map}" />
+              <Label id="profile_th_course" class="kz-record-th profile-col-course" text="{s:profile_th_course}" />
+              <Label id="profile_th_tier" class="kz-record-th profile-col-tier" text="{s:profile_th_tier}" />
+              <Label id="profile_th_time" class="kz-record-th profile-col-time" text="{s:profile_th_time}" />
+              <Label id="profile_th_points" class="kz-record-th profile-col-points" text="{s:profile_th_points}" />
+              <Label id="profile_th_rank" class="kz-record-th profile-col-rank" text="{s:profile_th_rank}" />
+              <Label id="profile_th_date" class="kz-record-th profile-col-date" text="{s:profile_th_date}" />
+              <Label id="profile_th_replay" class="kz-record-th kz-col-replay" text="{s:profile_th_replay}" />
+            </Panel>
+            <Panel id="profile_row0" class="kz-record-row first hidden">
+              <Panel class="profile-col-map kz-link-cell">
+                <Button id="profile_row0_map_btn" class="kz-name-btn">
+                  <Label id="profile_row0_map" class="kz-record-cell profile-map" text="{s:profile_row0_map}" hittest="false" />
+                </Button>
+              </Panel>
+              <Panel class="profile-col-course kz-link-cell">
+                <Button id="profile_row0_course_btn" class="kz-name-btn">
+                  <Label id="profile_row0_course" class="kz-record-cell profile-course" text="{s:profile_row0_course}" hittest="false" />
+                </Button>
+              </Panel>
+              <Label id="profile_row0_tier" class="kz-record-cell profile-col-tier profile-tier" text="{s:profile_row0_tier}" />
+              <Panel class="kz-record-time profile-col-time">
+                <Label id="profile_row0_time" class="kz-record-time-value" text="{s:profile_row0_time}" />
+                <Label id="profile_row0_badge" class="kz-run-badge" text="{s:profile_row0_badge}" />
+              </Panel>
+              <Label id="profile_row0_points" class="kz-record-cell profile-col-points" text="{s:profile_row0_points}" />
+              <Label id="profile_row0_rank" class="kz-record-cell profile-col-rank" text="{s:profile_row0_rank}" />
+              <Panel class="profile-col-date kz-date-cell">
+                <Button id="profile_row0_date_btn" class="kz-date-btn">
+                  <Label id="profile_row0_date" class="kz-record-cell" text="{s:profile_row0_date}" hittest="false" />
+                  <Panel class="kz-tooltip-anchor" hittest="false">
+                    <Label id="profile_row0_date_tip" class="kz-tooltip" text="{s:profile_row0_date_tip}" hittest="false" />
+                  </Panel>
+                </Button>
+              </Panel>
+              <Panel class="kz-col-replay kz-record-actions">
+                <Button id="profile_row0_replay" class="kz-icon-btn icon-play">
+                  <Panel class="kz-icon-btn-face" hittest="false" />
+                  <Panel class="kz-icon-btn-icon" hittest="false" />
+                  <Panel class="kz-tooltip-anchor" hittest="false">
+                    <Label id="profile_row0_replay_tip" class="kz-tooltip" text="{s:profile_row0_replay_tip}" hittest="false" />
+                  </Panel>
+                </Button>
+                <Button id="profile_row0_copy" class="kz-icon-btn icon-copy tip-end">
+                  <Panel class="kz-icon-btn-face" hittest="false" />
+                  <Panel class="kz-icon-btn-icon" hittest="false" />
+                  <Panel class="kz-tooltip-anchor" hittest="false">
+                    <Label id="profile_row0_copy_tip" class="kz-tooltip" text="{s:profile_row0_copy_tip}" hittest="false" />
+                  </Panel>
+                </Button>
+              </Panel>
+            </Panel>
+            <Panel id="profile_row1" class="kz-record-row hidden">
+              <Panel class="profile-col-map kz-link-cell">
+                <Button id="profile_row1_map_btn" class="kz-name-btn">
+                  <Label id="profile_row1_map" class="kz-record-cell profile-map" text="{s:profile_row1_map}" hittest="false" />
+                </Button>
+              </Panel>
+              <Panel class="profile-col-course kz-link-cell">
+                <Button id="profile_row1_course_btn" class="kz-name-btn">
+                  <Label id="profile_row1_course" class="kz-record-cell profile-course" text="{s:profile_row1_course}" hittest="false" />
+                </Button>
+              </Panel>
+              <Label id="profile_row1_tier" class="kz-record-cell profile-col-tier profile-tier" text="{s:profile_row1_tier}" />
+              <Panel class="kz-record-time profile-col-time">
+                <Label id="profile_row1_time" class="kz-record-time-value" text="{s:profile_row1_time}" />
+                <Label id="profile_row1_badge" class="kz-run-badge" text="{s:profile_row1_badge}" />
+              </Panel>
+              <Label id="profile_row1_points" class="kz-record-cell profile-col-points" text="{s:profile_row1_points}" />
+              <Label id="profile_row1_rank" class="kz-record-cell profile-col-rank" text="{s:profile_row1_rank}" />
+              <Panel class="profile-col-date kz-date-cell">
+                <Button id="profile_row1_date_btn" class="kz-date-btn">
+                  <Label id="profile_row1_date" class="kz-record-cell" text="{s:profile_row1_date}" hittest="false" />
+                  <Panel class="kz-tooltip-anchor" hittest="false">
+                    <Label id="profile_row1_date_tip" class="kz-tooltip" text="{s:profile_row1_date_tip}" hittest="false" />
+                  </Panel>
+                </Button>
+              </Panel>
+              <Panel class="kz-col-replay kz-record-actions">
+                <Button id="profile_row1_replay" class="kz-icon-btn icon-play">
+                  <Panel class="kz-icon-btn-face" hittest="false" />
+                  <Panel class="kz-icon-btn-icon" hittest="false" />
+                  <Panel class="kz-tooltip-anchor" hittest="false">
+                    <Label id="profile_row1_replay_tip" class="kz-tooltip" text="{s:profile_row1_replay_tip}" hittest="false" />
+                  </Panel>
+                </Button>
+                <Button id="profile_row1_copy" class="kz-icon-btn icon-copy tip-end">
+                  <Panel class="kz-icon-btn-face" hittest="false" />
+                  <Panel class="kz-icon-btn-icon" hittest="false" />
+                  <Panel class="kz-tooltip-anchor" hittest="false">
+                    <Label id="profile_row1_copy_tip" class="kz-tooltip" text="{s:profile_row1_copy_tip}" hittest="false" />
+                  </Panel>
+                </Button>
+              </Panel>
+            </Panel>
+            <Panel id="profile_row2" class="kz-record-row hidden">
+              <Panel class="profile-col-map kz-link-cell">
+                <Button id="profile_row2_map_btn" class="kz-name-btn">
+                  <Label id="profile_row2_map" class="kz-record-cell profile-map" text="{s:profile_row2_map}" hittest="false" />
+                </Button>
+              </Panel>
+              <Panel class="profile-col-course kz-link-cell">
+                <Button id="profile_row2_course_btn" class="kz-name-btn">
+                  <Label id="profile_row2_course" class="kz-record-cell profile-course" text="{s:profile_row2_course}" hittest="false" />
+                </Button>
+              </Panel>
+              <Label id="profile_row2_tier" class="kz-record-cell profile-col-tier profile-tier" text="{s:profile_row2_tier}" />
+              <Panel class="kz-record-time profile-col-time">
+                <Label id="profile_row2_time" class="kz-record-time-value" text="{s:profile_row2_time}" />
+                <Label id="profile_row2_badge" class="kz-run-badge" text="{s:profile_row2_badge}" />
+              </Panel>
+              <Label id="profile_row2_points" class="kz-record-cell profile-col-points" text="{s:profile_row2_points}" />
+              <Label id="profile_row2_rank" class="kz-record-cell profile-col-rank" text="{s:profile_row2_rank}" />
+              <Panel class="profile-col-date kz-date-cell">
+                <Button id="profile_row2_date_btn" class="kz-date-btn">
+                  <Label id="profile_row2_date" class="kz-record-cell" text="{s:profile_row2_date}" hittest="false" />
+                  <Panel class="kz-tooltip-anchor" hittest="false">
+                    <Label id="profile_row2_date_tip" class="kz-tooltip" text="{s:profile_row2_date_tip}" hittest="false" />
+                  </Panel>
+                </Button>
+              </Panel>
+              <Panel class="kz-col-replay kz-record-actions">
+                <Button id="profile_row2_replay" class="kz-icon-btn icon-play">
+                  <Panel class="kz-icon-btn-face" hittest="false" />
+                  <Panel class="kz-icon-btn-icon" hittest="false" />
+                  <Panel class="kz-tooltip-anchor" hittest="false">
+                    <Label id="profile_row2_replay_tip" class="kz-tooltip" text="{s:profile_row2_replay_tip}" hittest="false" />
+                  </Panel>
+                </Button>
+                <Button id="profile_row2_copy" class="kz-icon-btn icon-copy tip-end">
+                  <Panel class="kz-icon-btn-face" hittest="false" />
+                  <Panel class="kz-icon-btn-icon" hittest="false" />
+                  <Panel class="kz-tooltip-anchor" hittest="false">
+                    <Label id="profile_row2_copy_tip" class="kz-tooltip" text="{s:profile_row2_copy_tip}" hittest="false" />
+                  </Panel>
+                </Button>
+              </Panel>
+            </Panel>
+            <Panel id="profile_row3" class="kz-record-row hidden">
+              <Panel class="profile-col-map kz-link-cell">
+                <Button id="profile_row3_map_btn" class="kz-name-btn">
+                  <Label id="profile_row3_map" class="kz-record-cell profile-map" text="{s:profile_row3_map}" hittest="false" />
+                </Button>
+              </Panel>
+              <Panel class="profile-col-course kz-link-cell">
+                <Button id="profile_row3_course_btn" class="kz-name-btn">
+                  <Label id="profile_row3_course" class="kz-record-cell profile-course" text="{s:profile_row3_course}" hittest="false" />
+                </Button>
+              </Panel>
+              <Label id="profile_row3_tier" class="kz-record-cell profile-col-tier profile-tier" text="{s:profile_row3_tier}" />
+              <Panel class="kz-record-time profile-col-time">
+                <Label id="profile_row3_time" class="kz-record-time-value" text="{s:profile_row3_time}" />
+                <Label id="profile_row3_badge" class="kz-run-badge" text="{s:profile_row3_badge}" />
+              </Panel>
+              <Label id="profile_row3_points" class="kz-record-cell profile-col-points" text="{s:profile_row3_points}" />
+              <Label id="profile_row3_rank" class="kz-record-cell profile-col-rank" text="{s:profile_row3_rank}" />
+              <Panel class="profile-col-date kz-date-cell">
+                <Button id="profile_row3_date_btn" class="kz-date-btn">
+                  <Label id="profile_row3_date" class="kz-record-cell" text="{s:profile_row3_date}" hittest="false" />
+                  <Panel class="kz-tooltip-anchor" hittest="false">
+                    <Label id="profile_row3_date_tip" class="kz-tooltip" text="{s:profile_row3_date_tip}" hittest="false" />
+                  </Panel>
+                </Button>
+              </Panel>
+              <Panel class="kz-col-replay kz-record-actions">
+                <Button id="profile_row3_replay" class="kz-icon-btn icon-play">
+                  <Panel class="kz-icon-btn-face" hittest="false" />
+                  <Panel class="kz-icon-btn-icon" hittest="false" />
+                  <Panel class="kz-tooltip-anchor" hittest="false">
+                    <Label id="profile_row3_replay_tip" class="kz-tooltip" text="{s:profile_row3_replay_tip}" hittest="false" />
+                  </Panel>
+                </Button>
+                <Button id="profile_row3_copy" class="kz-icon-btn icon-copy tip-end">
+                  <Panel class="kz-icon-btn-face" hittest="false" />
+                  <Panel class="kz-icon-btn-icon" hittest="false" />
+                  <Panel class="kz-tooltip-anchor" hittest="false">
+                    <Label id="profile_row3_copy_tip" class="kz-tooltip" text="{s:profile_row3_copy_tip}" hittest="false" />
+                  </Panel>
+                </Button>
+              </Panel>
+            </Panel>
+            <Panel id="profile_row4" class="kz-record-row hidden">
+              <Panel class="profile-col-map kz-link-cell">
+                <Button id="profile_row4_map_btn" class="kz-name-btn">
+                  <Label id="profile_row4_map" class="kz-record-cell profile-map" text="{s:profile_row4_map}" hittest="false" />
+                </Button>
+              </Panel>
+              <Panel class="profile-col-course kz-link-cell">
+                <Button id="profile_row4_course_btn" class="kz-name-btn">
+                  <Label id="profile_row4_course" class="kz-record-cell profile-course" text="{s:profile_row4_course}" hittest="false" />
+                </Button>
+              </Panel>
+              <Label id="profile_row4_tier" class="kz-record-cell profile-col-tier profile-tier" text="{s:profile_row4_tier}" />
+              <Panel class="kz-record-time profile-col-time">
+                <Label id="profile_row4_time" class="kz-record-time-value" text="{s:profile_row4_time}" />
+                <Label id="profile_row4_badge" class="kz-run-badge" text="{s:profile_row4_badge}" />
+              </Panel>
+              <Label id="profile_row4_points" class="kz-record-cell profile-col-points" text="{s:profile_row4_points}" />
+              <Label id="profile_row4_rank" class="kz-record-cell profile-col-rank" text="{s:profile_row4_rank}" />
+              <Panel class="profile-col-date kz-date-cell">
+                <Button id="profile_row4_date_btn" class="kz-date-btn">
+                  <Label id="profile_row4_date" class="kz-record-cell" text="{s:profile_row4_date}" hittest="false" />
+                  <Panel class="kz-tooltip-anchor" hittest="false">
+                    <Label id="profile_row4_date_tip" class="kz-tooltip" text="{s:profile_row4_date_tip}" hittest="false" />
+                  </Panel>
+                </Button>
+              </Panel>
+              <Panel class="kz-col-replay kz-record-actions">
+                <Button id="profile_row4_replay" class="kz-icon-btn icon-play">
+                  <Panel class="kz-icon-btn-face" hittest="false" />
+                  <Panel class="kz-icon-btn-icon" hittest="false" />
+                  <Panel class="kz-tooltip-anchor" hittest="false">
+                    <Label id="profile_row4_replay_tip" class="kz-tooltip" text="{s:profile_row4_replay_tip}" hittest="false" />
+                  </Panel>
+                </Button>
+                <Button id="profile_row4_copy" class="kz-icon-btn icon-copy tip-end">
+                  <Panel class="kz-icon-btn-face" hittest="false" />
+                  <Panel class="kz-icon-btn-icon" hittest="false" />
+                  <Panel class="kz-tooltip-anchor" hittest="false">
+                    <Label id="profile_row4_copy_tip" class="kz-tooltip" text="{s:profile_row4_copy_tip}" hittest="false" />
+                  </Panel>
+                </Button>
+              </Panel>
+            </Panel>
+            <Panel id="profile_row5" class="kz-record-row hidden">
+              <Panel class="profile-col-map kz-link-cell">
+                <Button id="profile_row5_map_btn" class="kz-name-btn">
+                  <Label id="profile_row5_map" class="kz-record-cell profile-map" text="{s:profile_row5_map}" hittest="false" />
+                </Button>
+              </Panel>
+              <Panel class="profile-col-course kz-link-cell">
+                <Button id="profile_row5_course_btn" class="kz-name-btn">
+                  <Label id="profile_row5_course" class="kz-record-cell profile-course" text="{s:profile_row5_course}" hittest="false" />
+                </Button>
+              </Panel>
+              <Label id="profile_row5_tier" class="kz-record-cell profile-col-tier profile-tier" text="{s:profile_row5_tier}" />
+              <Panel class="kz-record-time profile-col-time">
+                <Label id="profile_row5_time" class="kz-record-time-value" text="{s:profile_row5_time}" />
+                <Label id="profile_row5_badge" class="kz-run-badge" text="{s:profile_row5_badge}" />
+              </Panel>
+              <Label id="profile_row5_points" class="kz-record-cell profile-col-points" text="{s:profile_row5_points}" />
+              <Label id="profile_row5_rank" class="kz-record-cell profile-col-rank" text="{s:profile_row5_rank}" />
+              <Panel class="profile-col-date kz-date-cell">
+                <Button id="profile_row5_date_btn" class="kz-date-btn">
+                  <Label id="profile_row5_date" class="kz-record-cell" text="{s:profile_row5_date}" hittest="false" />
+                  <Panel class="kz-tooltip-anchor" hittest="false">
+                    <Label id="profile_row5_date_tip" class="kz-tooltip" text="{s:profile_row5_date_tip}" hittest="false" />
+                  </Panel>
+                </Button>
+              </Panel>
+              <Panel class="kz-col-replay kz-record-actions">
+                <Button id="profile_row5_replay" class="kz-icon-btn icon-play">
+                  <Panel class="kz-icon-btn-face" hittest="false" />
+                  <Panel class="kz-icon-btn-icon" hittest="false" />
+                  <Panel class="kz-tooltip-anchor" hittest="false">
+                    <Label id="profile_row5_replay_tip" class="kz-tooltip" text="{s:profile_row5_replay_tip}" hittest="false" />
+                  </Panel>
+                </Button>
+                <Button id="profile_row5_copy" class="kz-icon-btn icon-copy tip-end">
+                  <Panel class="kz-icon-btn-face" hittest="false" />
+                  <Panel class="kz-icon-btn-icon" hittest="false" />
+                  <Panel class="kz-tooltip-anchor" hittest="false">
+                    <Label id="profile_row5_copy_tip" class="kz-tooltip" text="{s:profile_row5_copy_tip}" hittest="false" />
+                  </Panel>
+                </Button>
+              </Panel>
+            </Panel>
+            <Panel id="profile_row6" class="kz-record-row hidden">
+              <Panel class="profile-col-map kz-link-cell">
+                <Button id="profile_row6_map_btn" class="kz-name-btn">
+                  <Label id="profile_row6_map" class="kz-record-cell profile-map" text="{s:profile_row6_map}" hittest="false" />
+                </Button>
+              </Panel>
+              <Panel class="profile-col-course kz-link-cell">
+                <Button id="profile_row6_course_btn" class="kz-name-btn">
+                  <Label id="profile_row6_course" class="kz-record-cell profile-course" text="{s:profile_row6_course}" hittest="false" />
+                </Button>
+              </Panel>
+              <Label id="profile_row6_tier" class="kz-record-cell profile-col-tier profile-tier" text="{s:profile_row6_tier}" />
+              <Panel class="kz-record-time profile-col-time">
+                <Label id="profile_row6_time" class="kz-record-time-value" text="{s:profile_row6_time}" />
+                <Label id="profile_row6_badge" class="kz-run-badge" text="{s:profile_row6_badge}" />
+              </Panel>
+              <Label id="profile_row6_points" class="kz-record-cell profile-col-points" text="{s:profile_row6_points}" />
+              <Label id="profile_row6_rank" class="kz-record-cell profile-col-rank" text="{s:profile_row6_rank}" />
+              <Panel class="profile-col-date kz-date-cell">
+                <Button id="profile_row6_date_btn" class="kz-date-btn">
+                  <Label id="profile_row6_date" class="kz-record-cell" text="{s:profile_row6_date}" hittest="false" />
+                  <Panel class="kz-tooltip-anchor" hittest="false">
+                    <Label id="profile_row6_date_tip" class="kz-tooltip" text="{s:profile_row6_date_tip}" hittest="false" />
+                  </Panel>
+                </Button>
+              </Panel>
+              <Panel class="kz-col-replay kz-record-actions">
+                <Button id="profile_row6_replay" class="kz-icon-btn icon-play">
+                  <Panel class="kz-icon-btn-face" hittest="false" />
+                  <Panel class="kz-icon-btn-icon" hittest="false" />
+                  <Panel class="kz-tooltip-anchor" hittest="false">
+                    <Label id="profile_row6_replay_tip" class="kz-tooltip" text="{s:profile_row6_replay_tip}" hittest="false" />
+                  </Panel>
+                </Button>
+                <Button id="profile_row6_copy" class="kz-icon-btn icon-copy tip-end">
+                  <Panel class="kz-icon-btn-face" hittest="false" />
+                  <Panel class="kz-icon-btn-icon" hittest="false" />
+                  <Panel class="kz-tooltip-anchor" hittest="false">
+                    <Label id="profile_row6_copy_tip" class="kz-tooltip" text="{s:profile_row6_copy_tip}" hittest="false" />
+                  </Panel>
+                </Button>
+              </Panel>
+            </Panel>
+            <Panel id="profile_row7" class="kz-record-row hidden">
+              <Panel class="profile-col-map kz-link-cell">
+                <Button id="profile_row7_map_btn" class="kz-name-btn">
+                  <Label id="profile_row7_map" class="kz-record-cell profile-map" text="{s:profile_row7_map}" hittest="false" />
+                </Button>
+              </Panel>
+              <Panel class="profile-col-course kz-link-cell">
+                <Button id="profile_row7_course_btn" class="kz-name-btn">
+                  <Label id="profile_row7_course" class="kz-record-cell profile-course" text="{s:profile_row7_course}" hittest="false" />
+                </Button>
+              </Panel>
+              <Label id="profile_row7_tier" class="kz-record-cell profile-col-tier profile-tier" text="{s:profile_row7_tier}" />
+              <Panel class="kz-record-time profile-col-time">
+                <Label id="profile_row7_time" class="kz-record-time-value" text="{s:profile_row7_time}" />
+                <Label id="profile_row7_badge" class="kz-run-badge" text="{s:profile_row7_badge}" />
+              </Panel>
+              <Label id="profile_row7_points" class="kz-record-cell profile-col-points" text="{s:profile_row7_points}" />
+              <Label id="profile_row7_rank" class="kz-record-cell profile-col-rank" text="{s:profile_row7_rank}" />
+              <Panel class="profile-col-date kz-date-cell">
+                <Button id="profile_row7_date_btn" class="kz-date-btn">
+                  <Label id="profile_row7_date" class="kz-record-cell" text="{s:profile_row7_date}" hittest="false" />
+                  <Panel class="kz-tooltip-anchor" hittest="false">
+                    <Label id="profile_row7_date_tip" class="kz-tooltip" text="{s:profile_row7_date_tip}" hittest="false" />
+                  </Panel>
+                </Button>
+              </Panel>
+              <Panel class="kz-col-replay kz-record-actions">
+                <Button id="profile_row7_replay" class="kz-icon-btn icon-play">
+                  <Panel class="kz-icon-btn-face" hittest="false" />
+                  <Panel class="kz-icon-btn-icon" hittest="false" />
+                  <Panel class="kz-tooltip-anchor" hittest="false">
+                    <Label id="profile_row7_replay_tip" class="kz-tooltip" text="{s:profile_row7_replay_tip}" hittest="false" />
+                  </Panel>
+                </Button>
+                <Button id="profile_row7_copy" class="kz-icon-btn icon-copy tip-end">
+                  <Panel class="kz-icon-btn-face" hittest="false" />
+                  <Panel class="kz-icon-btn-icon" hittest="false" />
+                  <Panel class="kz-tooltip-anchor" hittest="false">
+                    <Label id="profile_row7_copy_tip" class="kz-tooltip" text="{s:profile_row7_copy_tip}" hittest="false" />
+                  </Panel>
+                </Button>
+              </Panel>
+            </Panel>
+            <Panel id="profile_row8" class="kz-record-row hidden">
+              <Panel class="profile-col-map kz-link-cell">
+                <Button id="profile_row8_map_btn" class="kz-name-btn">
+                  <Label id="profile_row8_map" class="kz-record-cell profile-map" text="{s:profile_row8_map}" hittest="false" />
+                </Button>
+              </Panel>
+              <Panel class="profile-col-course kz-link-cell">
+                <Button id="profile_row8_course_btn" class="kz-name-btn">
+                  <Label id="profile_row8_course" class="kz-record-cell profile-course" text="{s:profile_row8_course}" hittest="false" />
+                </Button>
+              </Panel>
+              <Label id="profile_row8_tier" class="kz-record-cell profile-col-tier profile-tier" text="{s:profile_row8_tier}" />
+              <Panel class="kz-record-time profile-col-time">
+                <Label id="profile_row8_time" class="kz-record-time-value" text="{s:profile_row8_time}" />
+                <Label id="profile_row8_badge" class="kz-run-badge" text="{s:profile_row8_badge}" />
+              </Panel>
+              <Label id="profile_row8_points" class="kz-record-cell profile-col-points" text="{s:profile_row8_points}" />
+              <Label id="profile_row8_rank" class="kz-record-cell profile-col-rank" text="{s:profile_row8_rank}" />
+              <Panel class="profile-col-date kz-date-cell">
+                <Button id="profile_row8_date_btn" class="kz-date-btn">
+                  <Label id="profile_row8_date" class="kz-record-cell" text="{s:profile_row8_date}" hittest="false" />
+                  <Panel class="kz-tooltip-anchor" hittest="false">
+                    <Label id="profile_row8_date_tip" class="kz-tooltip" text="{s:profile_row8_date_tip}" hittest="false" />
+                  </Panel>
+                </Button>
+              </Panel>
+              <Panel class="kz-col-replay kz-record-actions">
+                <Button id="profile_row8_replay" class="kz-icon-btn icon-play">
+                  <Panel class="kz-icon-btn-face" hittest="false" />
+                  <Panel class="kz-icon-btn-icon" hittest="false" />
+                  <Panel class="kz-tooltip-anchor" hittest="false">
+                    <Label id="profile_row8_replay_tip" class="kz-tooltip" text="{s:profile_row8_replay_tip}" hittest="false" />
+                  </Panel>
+                </Button>
+                <Button id="profile_row8_copy" class="kz-icon-btn icon-copy tip-end">
+                  <Panel class="kz-icon-btn-face" hittest="false" />
+                  <Panel class="kz-icon-btn-icon" hittest="false" />
+                  <Panel class="kz-tooltip-anchor" hittest="false">
+                    <Label id="profile_row8_copy_tip" class="kz-tooltip" text="{s:profile_row8_copy_tip}" hittest="false" />
+                  </Panel>
+                </Button>
+              </Panel>
+            </Panel>
+            <Panel id="profile_row9" class="kz-record-row hidden">
+              <Panel class="profile-col-map kz-link-cell">
+                <Button id="profile_row9_map_btn" class="kz-name-btn">
+                  <Label id="profile_row9_map" class="kz-record-cell profile-map" text="{s:profile_row9_map}" hittest="false" />
+                </Button>
+              </Panel>
+              <Panel class="profile-col-course kz-link-cell">
+                <Button id="profile_row9_course_btn" class="kz-name-btn">
+                  <Label id="profile_row9_course" class="kz-record-cell profile-course" text="{s:profile_row9_course}" hittest="false" />
+                </Button>
+              </Panel>
+              <Label id="profile_row9_tier" class="kz-record-cell profile-col-tier profile-tier" text="{s:profile_row9_tier}" />
+              <Panel class="kz-record-time profile-col-time">
+                <Label id="profile_row9_time" class="kz-record-time-value" text="{s:profile_row9_time}" />
+                <Label id="profile_row9_badge" class="kz-run-badge" text="{s:profile_row9_badge}" />
+              </Panel>
+              <Label id="profile_row9_points" class="kz-record-cell profile-col-points" text="{s:profile_row9_points}" />
+              <Label id="profile_row9_rank" class="kz-record-cell profile-col-rank" text="{s:profile_row9_rank}" />
+              <Panel class="profile-col-date kz-date-cell">
+                <Button id="profile_row9_date_btn" class="kz-date-btn">
+                  <Label id="profile_row9_date" class="kz-record-cell" text="{s:profile_row9_date}" hittest="false" />
+                  <Panel class="kz-tooltip-anchor" hittest="false">
+                    <Label id="profile_row9_date_tip" class="kz-tooltip" text="{s:profile_row9_date_tip}" hittest="false" />
+                  </Panel>
+                </Button>
+              </Panel>
+              <Panel class="kz-col-replay kz-record-actions">
+                <Button id="profile_row9_replay" class="kz-icon-btn icon-play">
+                  <Panel class="kz-icon-btn-face" hittest="false" />
+                  <Panel class="kz-icon-btn-icon" hittest="false" />
+                  <Panel class="kz-tooltip-anchor" hittest="false">
+                    <Label id="profile_row9_replay_tip" class="kz-tooltip" text="{s:profile_row9_replay_tip}" hittest="false" />
+                  </Panel>
+                </Button>
+                <Button id="profile_row9_copy" class="kz-icon-btn icon-copy tip-end">
+                  <Panel class="kz-icon-btn-face" hittest="false" />
+                  <Panel class="kz-icon-btn-icon" hittest="false" />
+                  <Panel class="kz-tooltip-anchor" hittest="false">
+                    <Label id="profile_row9_copy_tip" class="kz-tooltip" text="{s:profile_row9_copy_tip}" hittest="false" />
+                  </Panel>
+                </Button>
+              </Panel>
+            </Panel>
+            <Label id="profile_runs_status" class="kz-table-status" text="{s:profile_runs_status}" />
+          </Panel>
+          <Panel class="kz-pager">
+            <Label id="profile_count" class="kz-pager-count" text="{s:profile_count}" />
+            <Panel class="fill" />
+            <Button id="profile_prev" class="kz-btn">
+              <Label id="profile_prev_label" class="kz-btn-label" text="{s:profile_prev_label}" hittest="false" />
+            </Button>
+            <Button id="profile_next" class="kz-btn">
+              <Label id="profile_next_label" class="kz-btn-label" text="{s:profile_next_label}" hittest="false" />
+            </Button>
+          </Panel>
+        </Panel>
+      </Panel>
+    </Panel>
+  </Panel>
+</root>

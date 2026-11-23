@@ -34,6 +34,27 @@ constexpr char sql_getcoursetoppro[] = R"(
         OFFSET %d
 )";
 
+// Counts the players on each of the leaderboards above.
+constexpr char sql_getcoursetopcount[] = R"(
+    SELECT COUNT(DISTINCT t.SteamID64)
+        FROM Times t
+        INNER JOIN MapCourses mc ON mc.ID=t.MapCourseID
+        INNER JOIN Maps ON Maps.ID = mc.MapID
+        INNER JOIN Players p ON p.SteamID64=t.SteamID64
+    LEFT JOIN Bans b ON b.SteamID64=t.SteamID64 AND (b.ExpiresAt IS NULL OR b.ExpiresAt > CURRENT_TIMESTAMP)
+    WHERE b.ID IS NULL AND Maps.Name='%s' AND mc.Name='%s' AND t.ModeID=%d AND t.StyleIDFlags=0
+)";
+
+constexpr char sql_getcoursetopcountpro[] = R"(
+    SELECT COUNT(DISTINCT t.SteamID64)
+        FROM Times t
+        INNER JOIN MapCourses mc ON mc.ID=t.MapCourseID
+        INNER JOIN Maps ON Maps.ID = mc.MapID
+        INNER JOIN Players p ON p.SteamID64=t.SteamID64
+    LEFT JOIN Bans b ON b.SteamID64=t.SteamID64 AND (b.ExpiresAt IS NULL OR b.ExpiresAt > CURRENT_TIMESTAMP)
+    WHERE b.ID IS NULL AND Maps.Name='%s' AND mc.Name='%s' AND t.ModeID=%d AND t.Teleports=0 AND t.StyleIDFlags=0
+)";
+
 // Caching PBs
 
 constexpr char sql_getsrs[] = R"(

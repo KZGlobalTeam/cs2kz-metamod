@@ -194,6 +194,12 @@ namespace KZ::ui
 		cache = want;
 	}
 
+	void SetSwitchPick(CCSCustomHudLayout *layout, const char *panelId, const char *&cache, i32 pick)
+	{
+		static_persist const char *const pickClasses[] = {"pick-0", "pick-1", "pick-2", "pick-3", "pick-4", "pick-5", "pick-6"};
+		SetSwapClass(layout, panelId, cache, pick >= 0 && pick < (i32)KZ_ARRAYSIZE(pickClasses) ? pickClasses[pick] : nullptr);
+	}
+
 	void ApplyWindowStyle(KZPlayer *player, CCSCustomHudLayout *layout, const char *rootPanelId, WindowStyle &cache)
 	{
 		KZOptionService *opts = player->optionService;

@@ -94,6 +94,18 @@ namespace KZ::api::messages
 		bool ToJson(Json &json) const;
 	};
 
+	struct WantMapInfo
+	{
+		std::string_view map;
+
+		inline static const char *Name()
+		{
+			return "want-map-info";
+		}
+
+		bool ToJson(Json &json) const;
+	};
+
 	struct PlayerJoin
 	{
 		std::string_view id;

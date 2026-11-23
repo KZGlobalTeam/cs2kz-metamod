@@ -2381,4 +2381,12 @@
 		"zho"		"!ztopwatch [place/clear/startjump/stopland/status]"
 		"ua"		"!ztopwatch [place/clear/startjump/stopland/status]"
 	}
+	"Command Description - kz_profile"
+	{
+		"en"		"Show a player's profile."
+	}
+	"Command Usage - kz_profile"
+	{
+		"en"		"!profile [steamid/name]"
+	}
 }

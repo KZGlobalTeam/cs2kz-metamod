@@ -11,6 +11,16 @@ namespace KZ::api
 	};
 
 	bool DecodeModeString(std::string_view modeString, Mode &mode);
+	const char *GetModeShortName(Mode mode);
+
+	// The order of every CKZ/VNL switch.
+	inline constexpr Mode modes[] = {Mode::Classic, Mode::Vanilla};
+
+	// The mode's position in modes.
+	inline i32 GetModeIndex(Mode mode)
+	{
+		return mode == Mode::Vanilla ? 1 : 0;
+	}
 
 	struct PlayerInfo
 	{
@@ -119,6 +129,9 @@ namespace KZ::api
 		{
 			u16 id;
 			std::string name;
+			// The course's tiers in the record's mode.
+			std::optional<Map::Course::Filter::Tier> nubTier;
+			std::optional<Map::Course::Filter::Tier> proTier;
 
 			bool FromJson(const Json &json);
 		};

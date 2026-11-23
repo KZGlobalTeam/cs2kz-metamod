@@ -1,0 +1,1020 @@
+<!-- Every chip slot and record row is written out because layouts have no loops.
+     The counts must match KZ_COURSE_CHIPS and KZ_COURSE_TOP_ROWS. -->
+<root>
+  <styles>
+    <include src="file://{resources}/styles/custom_game/cs2kz/course_top.css" />
+  </styles>
+  <Panel class="root" hittest="false">
+    <Panel id="maptop_root" class="kz-window-root hidden" hittest="false">
+      <Panel id="maptop_window" class="kz-window maptop-window">
+        <Panel class="kz-window-header">
+          <Label id="maptop_window_title" class="kz-window-title maptop-title" text="{s:maptop_window_title}" />
+          <Button id="maptop_workshop" class="kz-icon-btn icon-copy tip-right hidden">
+            <Panel class="kz-icon-btn-face" hittest="false" />
+            <Panel class="kz-icon-btn-icon" hittest="false" />
+            <Panel class="kz-tooltip-anchor" hittest="false">
+              <Label id="maptop_workshop_tip" class="kz-tooltip" text="{s:maptop_workshop_tip}" hittest="false" />
+            </Panel>
+          </Button>
+          <Panel class="fill" />
+          <Button id="maptop_window_close" class="kz-window-close" />
+        </Panel>
+        <Panel class="kz-filters">
+          <Panel id="maptop_mode" class="kz-segment">
+            <Panel class="kz-segment-thumb" hittest="false" />
+            <Panel class="kz-segment-options">
+              <Button id="maptop_mode_0" class="kz-segment-option">
+                <Label class="kz-segment-label" text="CKZ" hittest="false" />
+              </Button>
+              <Button id="maptop_mode_1" class="kz-segment-option">
+                <Label class="kz-segment-label" text="VNL" hittest="false" />
+              </Button>
+            </Panel>
+          </Panel>
+          <Panel class="kz-rule-v" />
+          <Panel id="maptop_type" class="kz-segment tones">
+            <Panel class="kz-segment-thumb" hittest="false" />
+            <Panel class="kz-segment-options">
+              <Button id="maptop_type_0" class="kz-segment-option">
+                <Label id="maptop_type_0_label" class="kz-segment-label" text="{s:maptop_type_0_label}" hittest="false" />
+              </Button>
+              <Button id="maptop_type_1" class="kz-segment-option">
+                <Label id="maptop_type_1_label" class="kz-segment-label" text="{s:maptop_type_1_label}" hittest="false" />
+              </Button>
+            </Panel>
+          </Panel>
+          <Panel class="fill" />
+          <Panel id="maptop_scope" class="kz-segment">
+            <Panel class="kz-segment-thumb" hittest="false" />
+            <Panel class="kz-segment-options">
+              <Button id="maptop_scope_0" class="kz-segment-option">
+                <Label id="maptop_scope_0_label" class="kz-segment-label" text="{s:maptop_scope_0_label}" hittest="false" />
+              </Button>
+              <Button id="maptop_scope_1" class="kz-segment-option">
+                <Label id="maptop_scope_1_label" class="kz-segment-label" text="{s:maptop_scope_1_label}" hittest="false" />
+              </Button>
+            </Panel>
+          </Panel>
+        </Panel>
+        <Panel class="maptop-courses">
+          <Panel id="maptop_ranked" class="kz-course-group">
+            <Label id="maptop_ranked_label" class="kz-course-group-label" text="{s:maptop_ranked_label}" />
+            <Button id="maptop_ranked_chip0" class="kz-course-chip hidden">
+              <Label id="maptop_ranked_chip0_name" class="kz-course-chip-name" text="{s:maptop_ranked_chip0_name}" hittest="false" />
+              <Label id="maptop_ranked_chip0_tier" class="kz-course-chip-tier" text="T{s:maptop_ranked_chip0_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_ranked_chip1" class="kz-course-chip hidden">
+              <Label id="maptop_ranked_chip1_name" class="kz-course-chip-name" text="{s:maptop_ranked_chip1_name}" hittest="false" />
+              <Label id="maptop_ranked_chip1_tier" class="kz-course-chip-tier" text="T{s:maptop_ranked_chip1_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_ranked_chip2" class="kz-course-chip hidden">
+              <Label id="maptop_ranked_chip2_name" class="kz-course-chip-name" text="{s:maptop_ranked_chip2_name}" hittest="false" />
+              <Label id="maptop_ranked_chip2_tier" class="kz-course-chip-tier" text="T{s:maptop_ranked_chip2_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_ranked_chip3" class="kz-course-chip hidden">
+              <Label id="maptop_ranked_chip3_name" class="kz-course-chip-name" text="{s:maptop_ranked_chip3_name}" hittest="false" />
+              <Label id="maptop_ranked_chip3_tier" class="kz-course-chip-tier" text="T{s:maptop_ranked_chip3_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_ranked_chip4" class="kz-course-chip hidden">
+              <Label id="maptop_ranked_chip4_name" class="kz-course-chip-name" text="{s:maptop_ranked_chip4_name}" hittest="false" />
+              <Label id="maptop_ranked_chip4_tier" class="kz-course-chip-tier" text="T{s:maptop_ranked_chip4_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_ranked_chip5" class="kz-course-chip hidden">
+              <Label id="maptop_ranked_chip5_name" class="kz-course-chip-name" text="{s:maptop_ranked_chip5_name}" hittest="false" />
+              <Label id="maptop_ranked_chip5_tier" class="kz-course-chip-tier" text="T{s:maptop_ranked_chip5_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_ranked_chip6" class="kz-course-chip hidden">
+              <Label id="maptop_ranked_chip6_name" class="kz-course-chip-name" text="{s:maptop_ranked_chip6_name}" hittest="false" />
+              <Label id="maptop_ranked_chip6_tier" class="kz-course-chip-tier" text="T{s:maptop_ranked_chip6_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_ranked_chip7" class="kz-course-chip hidden">
+              <Label id="maptop_ranked_chip7_name" class="kz-course-chip-name" text="{s:maptop_ranked_chip7_name}" hittest="false" />
+              <Label id="maptop_ranked_chip7_tier" class="kz-course-chip-tier" text="T{s:maptop_ranked_chip7_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_ranked_chip8" class="kz-course-chip hidden">
+              <Label id="maptop_ranked_chip8_name" class="kz-course-chip-name" text="{s:maptop_ranked_chip8_name}" hittest="false" />
+              <Label id="maptop_ranked_chip8_tier" class="kz-course-chip-tier" text="T{s:maptop_ranked_chip8_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_ranked_chip9" class="kz-course-chip hidden">
+              <Label id="maptop_ranked_chip9_name" class="kz-course-chip-name" text="{s:maptop_ranked_chip9_name}" hittest="false" />
+              <Label id="maptop_ranked_chip9_tier" class="kz-course-chip-tier" text="T{s:maptop_ranked_chip9_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_ranked_chip10" class="kz-course-chip hidden">
+              <Label id="maptop_ranked_chip10_name" class="kz-course-chip-name" text="{s:maptop_ranked_chip10_name}" hittest="false" />
+              <Label id="maptop_ranked_chip10_tier" class="kz-course-chip-tier" text="T{s:maptop_ranked_chip10_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_ranked_chip11" class="kz-course-chip hidden">
+              <Label id="maptop_ranked_chip11_name" class="kz-course-chip-name" text="{s:maptop_ranked_chip11_name}" hittest="false" />
+              <Label id="maptop_ranked_chip11_tier" class="kz-course-chip-tier" text="T{s:maptop_ranked_chip11_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_ranked_chip12" class="kz-course-chip hidden">
+              <Label id="maptop_ranked_chip12_name" class="kz-course-chip-name" text="{s:maptop_ranked_chip12_name}" hittest="false" />
+              <Label id="maptop_ranked_chip12_tier" class="kz-course-chip-tier" text="T{s:maptop_ranked_chip12_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_ranked_chip13" class="kz-course-chip hidden">
+              <Label id="maptop_ranked_chip13_name" class="kz-course-chip-name" text="{s:maptop_ranked_chip13_name}" hittest="false" />
+              <Label id="maptop_ranked_chip13_tier" class="kz-course-chip-tier" text="T{s:maptop_ranked_chip13_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_ranked_chip14" class="kz-course-chip hidden">
+              <Label id="maptop_ranked_chip14_name" class="kz-course-chip-name" text="{s:maptop_ranked_chip14_name}" hittest="false" />
+              <Label id="maptop_ranked_chip14_tier" class="kz-course-chip-tier" text="T{s:maptop_ranked_chip14_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_ranked_chip15" class="kz-course-chip hidden">
+              <Label id="maptop_ranked_chip15_name" class="kz-course-chip-name" text="{s:maptop_ranked_chip15_name}" hittest="false" />
+              <Label id="maptop_ranked_chip15_tier" class="kz-course-chip-tier" text="T{s:maptop_ranked_chip15_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_ranked_chip16" class="kz-course-chip hidden">
+              <Label id="maptop_ranked_chip16_name" class="kz-course-chip-name" text="{s:maptop_ranked_chip16_name}" hittest="false" />
+              <Label id="maptop_ranked_chip16_tier" class="kz-course-chip-tier" text="T{s:maptop_ranked_chip16_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_ranked_chip17" class="kz-course-chip hidden">
+              <Label id="maptop_ranked_chip17_name" class="kz-course-chip-name" text="{s:maptop_ranked_chip17_name}" hittest="false" />
+              <Label id="maptop_ranked_chip17_tier" class="kz-course-chip-tier" text="T{s:maptop_ranked_chip17_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_ranked_chip18" class="kz-course-chip hidden">
+              <Label id="maptop_ranked_chip18_name" class="kz-course-chip-name" text="{s:maptop_ranked_chip18_name}" hittest="false" />
+              <Label id="maptop_ranked_chip18_tier" class="kz-course-chip-tier" text="T{s:maptop_ranked_chip18_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_ranked_chip19" class="kz-course-chip hidden">
+              <Label id="maptop_ranked_chip19_name" class="kz-course-chip-name" text="{s:maptop_ranked_chip19_name}" hittest="false" />
+              <Label id="maptop_ranked_chip19_tier" class="kz-course-chip-tier" text="T{s:maptop_ranked_chip19_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_ranked_chip20" class="kz-course-chip hidden">
+              <Label id="maptop_ranked_chip20_name" class="kz-course-chip-name" text="{s:maptop_ranked_chip20_name}" hittest="false" />
+              <Label id="maptop_ranked_chip20_tier" class="kz-course-chip-tier" text="T{s:maptop_ranked_chip20_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_ranked_chip21" class="kz-course-chip hidden">
+              <Label id="maptop_ranked_chip21_name" class="kz-course-chip-name" text="{s:maptop_ranked_chip21_name}" hittest="false" />
+              <Label id="maptop_ranked_chip21_tier" class="kz-course-chip-tier" text="T{s:maptop_ranked_chip21_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_ranked_chip22" class="kz-course-chip hidden">
+              <Label id="maptop_ranked_chip22_name" class="kz-course-chip-name" text="{s:maptop_ranked_chip22_name}" hittest="false" />
+              <Label id="maptop_ranked_chip22_tier" class="kz-course-chip-tier" text="T{s:maptop_ranked_chip22_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_ranked_chip23" class="kz-course-chip hidden">
+              <Label id="maptop_ranked_chip23_name" class="kz-course-chip-name" text="{s:maptop_ranked_chip23_name}" hittest="false" />
+              <Label id="maptop_ranked_chip23_tier" class="kz-course-chip-tier" text="T{s:maptop_ranked_chip23_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_ranked_chip24" class="kz-course-chip hidden">
+              <Label id="maptop_ranked_chip24_name" class="kz-course-chip-name" text="{s:maptop_ranked_chip24_name}" hittest="false" />
+              <Label id="maptop_ranked_chip24_tier" class="kz-course-chip-tier" text="T{s:maptop_ranked_chip24_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_ranked_chip25" class="kz-course-chip hidden">
+              <Label id="maptop_ranked_chip25_name" class="kz-course-chip-name" text="{s:maptop_ranked_chip25_name}" hittest="false" />
+              <Label id="maptop_ranked_chip25_tier" class="kz-course-chip-tier" text="T{s:maptop_ranked_chip25_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_ranked_chip26" class="kz-course-chip hidden">
+              <Label id="maptop_ranked_chip26_name" class="kz-course-chip-name" text="{s:maptop_ranked_chip26_name}" hittest="false" />
+              <Label id="maptop_ranked_chip26_tier" class="kz-course-chip-tier" text="T{s:maptop_ranked_chip26_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_ranked_chip27" class="kz-course-chip hidden">
+              <Label id="maptop_ranked_chip27_name" class="kz-course-chip-name" text="{s:maptop_ranked_chip27_name}" hittest="false" />
+              <Label id="maptop_ranked_chip27_tier" class="kz-course-chip-tier" text="T{s:maptop_ranked_chip27_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_ranked_chip28" class="kz-course-chip hidden">
+              <Label id="maptop_ranked_chip28_name" class="kz-course-chip-name" text="{s:maptop_ranked_chip28_name}" hittest="false" />
+              <Label id="maptop_ranked_chip28_tier" class="kz-course-chip-tier" text="T{s:maptop_ranked_chip28_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_ranked_chip29" class="kz-course-chip hidden">
+              <Label id="maptop_ranked_chip29_name" class="kz-course-chip-name" text="{s:maptop_ranked_chip29_name}" hittest="false" />
+              <Label id="maptop_ranked_chip29_tier" class="kz-course-chip-tier" text="T{s:maptop_ranked_chip29_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_ranked_chip30" class="kz-course-chip hidden">
+              <Label id="maptop_ranked_chip30_name" class="kz-course-chip-name" text="{s:maptop_ranked_chip30_name}" hittest="false" />
+              <Label id="maptop_ranked_chip30_tier" class="kz-course-chip-tier" text="T{s:maptop_ranked_chip30_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_ranked_chip31" class="kz-course-chip hidden">
+              <Label id="maptop_ranked_chip31_name" class="kz-course-chip-name" text="{s:maptop_ranked_chip31_name}" hittest="false" />
+              <Label id="maptop_ranked_chip31_tier" class="kz-course-chip-tier" text="T{s:maptop_ranked_chip31_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_ranked_chip32" class="kz-course-chip hidden">
+              <Label id="maptop_ranked_chip32_name" class="kz-course-chip-name" text="{s:maptop_ranked_chip32_name}" hittest="false" />
+              <Label id="maptop_ranked_chip32_tier" class="kz-course-chip-tier" text="T{s:maptop_ranked_chip32_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_ranked_chip33" class="kz-course-chip hidden">
+              <Label id="maptop_ranked_chip33_name" class="kz-course-chip-name" text="{s:maptop_ranked_chip33_name}" hittest="false" />
+              <Label id="maptop_ranked_chip33_tier" class="kz-course-chip-tier" text="T{s:maptop_ranked_chip33_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_ranked_chip34" class="kz-course-chip hidden">
+              <Label id="maptop_ranked_chip34_name" class="kz-course-chip-name" text="{s:maptop_ranked_chip34_name}" hittest="false" />
+              <Label id="maptop_ranked_chip34_tier" class="kz-course-chip-tier" text="T{s:maptop_ranked_chip34_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_ranked_chip35" class="kz-course-chip hidden">
+              <Label id="maptop_ranked_chip35_name" class="kz-course-chip-name" text="{s:maptop_ranked_chip35_name}" hittest="false" />
+              <Label id="maptop_ranked_chip35_tier" class="kz-course-chip-tier" text="T{s:maptop_ranked_chip35_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_ranked_chip36" class="kz-course-chip hidden">
+              <Label id="maptop_ranked_chip36_name" class="kz-course-chip-name" text="{s:maptop_ranked_chip36_name}" hittest="false" />
+              <Label id="maptop_ranked_chip36_tier" class="kz-course-chip-tier" text="T{s:maptop_ranked_chip36_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_ranked_chip37" class="kz-course-chip hidden">
+              <Label id="maptop_ranked_chip37_name" class="kz-course-chip-name" text="{s:maptop_ranked_chip37_name}" hittest="false" />
+              <Label id="maptop_ranked_chip37_tier" class="kz-course-chip-tier" text="T{s:maptop_ranked_chip37_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_ranked_chip38" class="kz-course-chip hidden">
+              <Label id="maptop_ranked_chip38_name" class="kz-course-chip-name" text="{s:maptop_ranked_chip38_name}" hittest="false" />
+              <Label id="maptop_ranked_chip38_tier" class="kz-course-chip-tier" text="T{s:maptop_ranked_chip38_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_ranked_chip39" class="kz-course-chip hidden">
+              <Label id="maptop_ranked_chip39_name" class="kz-course-chip-name" text="{s:maptop_ranked_chip39_name}" hittest="false" />
+              <Label id="maptop_ranked_chip39_tier" class="kz-course-chip-tier" text="T{s:maptop_ranked_chip39_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_ranked_chip40" class="kz-course-chip hidden">
+              <Label id="maptop_ranked_chip40_name" class="kz-course-chip-name" text="{s:maptop_ranked_chip40_name}" hittest="false" />
+              <Label id="maptop_ranked_chip40_tier" class="kz-course-chip-tier" text="T{s:maptop_ranked_chip40_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_ranked_chip41" class="kz-course-chip hidden">
+              <Label id="maptop_ranked_chip41_name" class="kz-course-chip-name" text="{s:maptop_ranked_chip41_name}" hittest="false" />
+              <Label id="maptop_ranked_chip41_tier" class="kz-course-chip-tier" text="T{s:maptop_ranked_chip41_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_ranked_chip42" class="kz-course-chip hidden">
+              <Label id="maptop_ranked_chip42_name" class="kz-course-chip-name" text="{s:maptop_ranked_chip42_name}" hittest="false" />
+              <Label id="maptop_ranked_chip42_tier" class="kz-course-chip-tier" text="T{s:maptop_ranked_chip42_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_ranked_chip43" class="kz-course-chip hidden">
+              <Label id="maptop_ranked_chip43_name" class="kz-course-chip-name" text="{s:maptop_ranked_chip43_name}" hittest="false" />
+              <Label id="maptop_ranked_chip43_tier" class="kz-course-chip-tier" text="T{s:maptop_ranked_chip43_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_ranked_chip44" class="kz-course-chip hidden">
+              <Label id="maptop_ranked_chip44_name" class="kz-course-chip-name" text="{s:maptop_ranked_chip44_name}" hittest="false" />
+              <Label id="maptop_ranked_chip44_tier" class="kz-course-chip-tier" text="T{s:maptop_ranked_chip44_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_ranked_chip45" class="kz-course-chip hidden">
+              <Label id="maptop_ranked_chip45_name" class="kz-course-chip-name" text="{s:maptop_ranked_chip45_name}" hittest="false" />
+              <Label id="maptop_ranked_chip45_tier" class="kz-course-chip-tier" text="T{s:maptop_ranked_chip45_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_ranked_chip46" class="kz-course-chip hidden">
+              <Label id="maptop_ranked_chip46_name" class="kz-course-chip-name" text="{s:maptop_ranked_chip46_name}" hittest="false" />
+              <Label id="maptop_ranked_chip46_tier" class="kz-course-chip-tier" text="T{s:maptop_ranked_chip46_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_ranked_chip47" class="kz-course-chip hidden">
+              <Label id="maptop_ranked_chip47_name" class="kz-course-chip-name" text="{s:maptop_ranked_chip47_name}" hittest="false" />
+              <Label id="maptop_ranked_chip47_tier" class="kz-course-chip-tier" text="T{s:maptop_ranked_chip47_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_ranked_chip48" class="kz-course-chip hidden">
+              <Label id="maptop_ranked_chip48_name" class="kz-course-chip-name" text="{s:maptop_ranked_chip48_name}" hittest="false" />
+              <Label id="maptop_ranked_chip48_tier" class="kz-course-chip-tier" text="T{s:maptop_ranked_chip48_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_ranked_chip49" class="kz-course-chip hidden">
+              <Label id="maptop_ranked_chip49_name" class="kz-course-chip-name" text="{s:maptop_ranked_chip49_name}" hittest="false" />
+              <Label id="maptop_ranked_chip49_tier" class="kz-course-chip-tier" text="T{s:maptop_ranked_chip49_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_ranked_chip50" class="kz-course-chip hidden">
+              <Label id="maptop_ranked_chip50_name" class="kz-course-chip-name" text="{s:maptop_ranked_chip50_name}" hittest="false" />
+              <Label id="maptop_ranked_chip50_tier" class="kz-course-chip-tier" text="T{s:maptop_ranked_chip50_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_ranked_chip51" class="kz-course-chip hidden">
+              <Label id="maptop_ranked_chip51_name" class="kz-course-chip-name" text="{s:maptop_ranked_chip51_name}" hittest="false" />
+              <Label id="maptop_ranked_chip51_tier" class="kz-course-chip-tier" text="T{s:maptop_ranked_chip51_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_ranked_chip52" class="kz-course-chip hidden">
+              <Label id="maptop_ranked_chip52_name" class="kz-course-chip-name" text="{s:maptop_ranked_chip52_name}" hittest="false" />
+              <Label id="maptop_ranked_chip52_tier" class="kz-course-chip-tier" text="T{s:maptop_ranked_chip52_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_ranked_chip53" class="kz-course-chip hidden">
+              <Label id="maptop_ranked_chip53_name" class="kz-course-chip-name" text="{s:maptop_ranked_chip53_name}" hittest="false" />
+              <Label id="maptop_ranked_chip53_tier" class="kz-course-chip-tier" text="T{s:maptop_ranked_chip53_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_ranked_chip54" class="kz-course-chip hidden">
+              <Label id="maptop_ranked_chip54_name" class="kz-course-chip-name" text="{s:maptop_ranked_chip54_name}" hittest="false" />
+              <Label id="maptop_ranked_chip54_tier" class="kz-course-chip-tier" text="T{s:maptop_ranked_chip54_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_ranked_chip55" class="kz-course-chip hidden">
+              <Label id="maptop_ranked_chip55_name" class="kz-course-chip-name" text="{s:maptop_ranked_chip55_name}" hittest="false" />
+              <Label id="maptop_ranked_chip55_tier" class="kz-course-chip-tier" text="T{s:maptop_ranked_chip55_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_ranked_chip56" class="kz-course-chip hidden">
+              <Label id="maptop_ranked_chip56_name" class="kz-course-chip-name" text="{s:maptop_ranked_chip56_name}" hittest="false" />
+              <Label id="maptop_ranked_chip56_tier" class="kz-course-chip-tier" text="T{s:maptop_ranked_chip56_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_ranked_chip57" class="kz-course-chip hidden">
+              <Label id="maptop_ranked_chip57_name" class="kz-course-chip-name" text="{s:maptop_ranked_chip57_name}" hittest="false" />
+              <Label id="maptop_ranked_chip57_tier" class="kz-course-chip-tier" text="T{s:maptop_ranked_chip57_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_ranked_chip58" class="kz-course-chip hidden">
+              <Label id="maptop_ranked_chip58_name" class="kz-course-chip-name" text="{s:maptop_ranked_chip58_name}" hittest="false" />
+              <Label id="maptop_ranked_chip58_tier" class="kz-course-chip-tier" text="T{s:maptop_ranked_chip58_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_ranked_chip59" class="kz-course-chip hidden">
+              <Label id="maptop_ranked_chip59_name" class="kz-course-chip-name" text="{s:maptop_ranked_chip59_name}" hittest="false" />
+              <Label id="maptop_ranked_chip59_tier" class="kz-course-chip-tier" text="T{s:maptop_ranked_chip59_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_ranked_chip60" class="kz-course-chip hidden">
+              <Label id="maptop_ranked_chip60_name" class="kz-course-chip-name" text="{s:maptop_ranked_chip60_name}" hittest="false" />
+              <Label id="maptop_ranked_chip60_tier" class="kz-course-chip-tier" text="T{s:maptop_ranked_chip60_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_ranked_chip61" class="kz-course-chip hidden">
+              <Label id="maptop_ranked_chip61_name" class="kz-course-chip-name" text="{s:maptop_ranked_chip61_name}" hittest="false" />
+              <Label id="maptop_ranked_chip61_tier" class="kz-course-chip-tier" text="T{s:maptop_ranked_chip61_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_ranked_chip62" class="kz-course-chip hidden">
+              <Label id="maptop_ranked_chip62_name" class="kz-course-chip-name" text="{s:maptop_ranked_chip62_name}" hittest="false" />
+              <Label id="maptop_ranked_chip62_tier" class="kz-course-chip-tier" text="T{s:maptop_ranked_chip62_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_ranked_chip63" class="kz-course-chip hidden">
+              <Label id="maptop_ranked_chip63_name" class="kz-course-chip-name" text="{s:maptop_ranked_chip63_name}" hittest="false" />
+              <Label id="maptop_ranked_chip63_tier" class="kz-course-chip-tier" text="T{s:maptop_ranked_chip63_tier}" hittest="false" />
+            </Button>
+          </Panel>
+          <Panel id="maptop_unranked" class="kz-course-group">
+            <Label id="maptop_unranked_label" class="kz-course-group-label" text="{s:maptop_unranked_label}" />
+            <Button id="maptop_unranked_chip0" class="kz-course-chip hidden">
+              <Label id="maptop_unranked_chip0_name" class="kz-course-chip-name" text="{s:maptop_unranked_chip0_name}" hittest="false" />
+              <Label id="maptop_unranked_chip0_tier" class="kz-course-chip-tier" text="T{s:maptop_unranked_chip0_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_unranked_chip1" class="kz-course-chip hidden">
+              <Label id="maptop_unranked_chip1_name" class="kz-course-chip-name" text="{s:maptop_unranked_chip1_name}" hittest="false" />
+              <Label id="maptop_unranked_chip1_tier" class="kz-course-chip-tier" text="T{s:maptop_unranked_chip1_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_unranked_chip2" class="kz-course-chip hidden">
+              <Label id="maptop_unranked_chip2_name" class="kz-course-chip-name" text="{s:maptop_unranked_chip2_name}" hittest="false" />
+              <Label id="maptop_unranked_chip2_tier" class="kz-course-chip-tier" text="T{s:maptop_unranked_chip2_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_unranked_chip3" class="kz-course-chip hidden">
+              <Label id="maptop_unranked_chip3_name" class="kz-course-chip-name" text="{s:maptop_unranked_chip3_name}" hittest="false" />
+              <Label id="maptop_unranked_chip3_tier" class="kz-course-chip-tier" text="T{s:maptop_unranked_chip3_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_unranked_chip4" class="kz-course-chip hidden">
+              <Label id="maptop_unranked_chip4_name" class="kz-course-chip-name" text="{s:maptop_unranked_chip4_name}" hittest="false" />
+              <Label id="maptop_unranked_chip4_tier" class="kz-course-chip-tier" text="T{s:maptop_unranked_chip4_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_unranked_chip5" class="kz-course-chip hidden">
+              <Label id="maptop_unranked_chip5_name" class="kz-course-chip-name" text="{s:maptop_unranked_chip5_name}" hittest="false" />
+              <Label id="maptop_unranked_chip5_tier" class="kz-course-chip-tier" text="T{s:maptop_unranked_chip5_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_unranked_chip6" class="kz-course-chip hidden">
+              <Label id="maptop_unranked_chip6_name" class="kz-course-chip-name" text="{s:maptop_unranked_chip6_name}" hittest="false" />
+              <Label id="maptop_unranked_chip6_tier" class="kz-course-chip-tier" text="T{s:maptop_unranked_chip6_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_unranked_chip7" class="kz-course-chip hidden">
+              <Label id="maptop_unranked_chip7_name" class="kz-course-chip-name" text="{s:maptop_unranked_chip7_name}" hittest="false" />
+              <Label id="maptop_unranked_chip7_tier" class="kz-course-chip-tier" text="T{s:maptop_unranked_chip7_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_unranked_chip8" class="kz-course-chip hidden">
+              <Label id="maptop_unranked_chip8_name" class="kz-course-chip-name" text="{s:maptop_unranked_chip8_name}" hittest="false" />
+              <Label id="maptop_unranked_chip8_tier" class="kz-course-chip-tier" text="T{s:maptop_unranked_chip8_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_unranked_chip9" class="kz-course-chip hidden">
+              <Label id="maptop_unranked_chip9_name" class="kz-course-chip-name" text="{s:maptop_unranked_chip9_name}" hittest="false" />
+              <Label id="maptop_unranked_chip9_tier" class="kz-course-chip-tier" text="T{s:maptop_unranked_chip9_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_unranked_chip10" class="kz-course-chip hidden">
+              <Label id="maptop_unranked_chip10_name" class="kz-course-chip-name" text="{s:maptop_unranked_chip10_name}" hittest="false" />
+              <Label id="maptop_unranked_chip10_tier" class="kz-course-chip-tier" text="T{s:maptop_unranked_chip10_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_unranked_chip11" class="kz-course-chip hidden">
+              <Label id="maptop_unranked_chip11_name" class="kz-course-chip-name" text="{s:maptop_unranked_chip11_name}" hittest="false" />
+              <Label id="maptop_unranked_chip11_tier" class="kz-course-chip-tier" text="T{s:maptop_unranked_chip11_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_unranked_chip12" class="kz-course-chip hidden">
+              <Label id="maptop_unranked_chip12_name" class="kz-course-chip-name" text="{s:maptop_unranked_chip12_name}" hittest="false" />
+              <Label id="maptop_unranked_chip12_tier" class="kz-course-chip-tier" text="T{s:maptop_unranked_chip12_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_unranked_chip13" class="kz-course-chip hidden">
+              <Label id="maptop_unranked_chip13_name" class="kz-course-chip-name" text="{s:maptop_unranked_chip13_name}" hittest="false" />
+              <Label id="maptop_unranked_chip13_tier" class="kz-course-chip-tier" text="T{s:maptop_unranked_chip13_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_unranked_chip14" class="kz-course-chip hidden">
+              <Label id="maptop_unranked_chip14_name" class="kz-course-chip-name" text="{s:maptop_unranked_chip14_name}" hittest="false" />
+              <Label id="maptop_unranked_chip14_tier" class="kz-course-chip-tier" text="T{s:maptop_unranked_chip14_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_unranked_chip15" class="kz-course-chip hidden">
+              <Label id="maptop_unranked_chip15_name" class="kz-course-chip-name" text="{s:maptop_unranked_chip15_name}" hittest="false" />
+              <Label id="maptop_unranked_chip15_tier" class="kz-course-chip-tier" text="T{s:maptop_unranked_chip15_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_unranked_chip16" class="kz-course-chip hidden">
+              <Label id="maptop_unranked_chip16_name" class="kz-course-chip-name" text="{s:maptop_unranked_chip16_name}" hittest="false" />
+              <Label id="maptop_unranked_chip16_tier" class="kz-course-chip-tier" text="T{s:maptop_unranked_chip16_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_unranked_chip17" class="kz-course-chip hidden">
+              <Label id="maptop_unranked_chip17_name" class="kz-course-chip-name" text="{s:maptop_unranked_chip17_name}" hittest="false" />
+              <Label id="maptop_unranked_chip17_tier" class="kz-course-chip-tier" text="T{s:maptop_unranked_chip17_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_unranked_chip18" class="kz-course-chip hidden">
+              <Label id="maptop_unranked_chip18_name" class="kz-course-chip-name" text="{s:maptop_unranked_chip18_name}" hittest="false" />
+              <Label id="maptop_unranked_chip18_tier" class="kz-course-chip-tier" text="T{s:maptop_unranked_chip18_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_unranked_chip19" class="kz-course-chip hidden">
+              <Label id="maptop_unranked_chip19_name" class="kz-course-chip-name" text="{s:maptop_unranked_chip19_name}" hittest="false" />
+              <Label id="maptop_unranked_chip19_tier" class="kz-course-chip-tier" text="T{s:maptop_unranked_chip19_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_unranked_chip20" class="kz-course-chip hidden">
+              <Label id="maptop_unranked_chip20_name" class="kz-course-chip-name" text="{s:maptop_unranked_chip20_name}" hittest="false" />
+              <Label id="maptop_unranked_chip20_tier" class="kz-course-chip-tier" text="T{s:maptop_unranked_chip20_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_unranked_chip21" class="kz-course-chip hidden">
+              <Label id="maptop_unranked_chip21_name" class="kz-course-chip-name" text="{s:maptop_unranked_chip21_name}" hittest="false" />
+              <Label id="maptop_unranked_chip21_tier" class="kz-course-chip-tier" text="T{s:maptop_unranked_chip21_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_unranked_chip22" class="kz-course-chip hidden">
+              <Label id="maptop_unranked_chip22_name" class="kz-course-chip-name" text="{s:maptop_unranked_chip22_name}" hittest="false" />
+              <Label id="maptop_unranked_chip22_tier" class="kz-course-chip-tier" text="T{s:maptop_unranked_chip22_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_unranked_chip23" class="kz-course-chip hidden">
+              <Label id="maptop_unranked_chip23_name" class="kz-course-chip-name" text="{s:maptop_unranked_chip23_name}" hittest="false" />
+              <Label id="maptop_unranked_chip23_tier" class="kz-course-chip-tier" text="T{s:maptop_unranked_chip23_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_unranked_chip24" class="kz-course-chip hidden">
+              <Label id="maptop_unranked_chip24_name" class="kz-course-chip-name" text="{s:maptop_unranked_chip24_name}" hittest="false" />
+              <Label id="maptop_unranked_chip24_tier" class="kz-course-chip-tier" text="T{s:maptop_unranked_chip24_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_unranked_chip25" class="kz-course-chip hidden">
+              <Label id="maptop_unranked_chip25_name" class="kz-course-chip-name" text="{s:maptop_unranked_chip25_name}" hittest="false" />
+              <Label id="maptop_unranked_chip25_tier" class="kz-course-chip-tier" text="T{s:maptop_unranked_chip25_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_unranked_chip26" class="kz-course-chip hidden">
+              <Label id="maptop_unranked_chip26_name" class="kz-course-chip-name" text="{s:maptop_unranked_chip26_name}" hittest="false" />
+              <Label id="maptop_unranked_chip26_tier" class="kz-course-chip-tier" text="T{s:maptop_unranked_chip26_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_unranked_chip27" class="kz-course-chip hidden">
+              <Label id="maptop_unranked_chip27_name" class="kz-course-chip-name" text="{s:maptop_unranked_chip27_name}" hittest="false" />
+              <Label id="maptop_unranked_chip27_tier" class="kz-course-chip-tier" text="T{s:maptop_unranked_chip27_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_unranked_chip28" class="kz-course-chip hidden">
+              <Label id="maptop_unranked_chip28_name" class="kz-course-chip-name" text="{s:maptop_unranked_chip28_name}" hittest="false" />
+              <Label id="maptop_unranked_chip28_tier" class="kz-course-chip-tier" text="T{s:maptop_unranked_chip28_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_unranked_chip29" class="kz-course-chip hidden">
+              <Label id="maptop_unranked_chip29_name" class="kz-course-chip-name" text="{s:maptop_unranked_chip29_name}" hittest="false" />
+              <Label id="maptop_unranked_chip29_tier" class="kz-course-chip-tier" text="T{s:maptop_unranked_chip29_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_unranked_chip30" class="kz-course-chip hidden">
+              <Label id="maptop_unranked_chip30_name" class="kz-course-chip-name" text="{s:maptop_unranked_chip30_name}" hittest="false" />
+              <Label id="maptop_unranked_chip30_tier" class="kz-course-chip-tier" text="T{s:maptop_unranked_chip30_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_unranked_chip31" class="kz-course-chip hidden">
+              <Label id="maptop_unranked_chip31_name" class="kz-course-chip-name" text="{s:maptop_unranked_chip31_name}" hittest="false" />
+              <Label id="maptop_unranked_chip31_tier" class="kz-course-chip-tier" text="T{s:maptop_unranked_chip31_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_unranked_chip32" class="kz-course-chip hidden">
+              <Label id="maptop_unranked_chip32_name" class="kz-course-chip-name" text="{s:maptop_unranked_chip32_name}" hittest="false" />
+              <Label id="maptop_unranked_chip32_tier" class="kz-course-chip-tier" text="T{s:maptop_unranked_chip32_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_unranked_chip33" class="kz-course-chip hidden">
+              <Label id="maptop_unranked_chip33_name" class="kz-course-chip-name" text="{s:maptop_unranked_chip33_name}" hittest="false" />
+              <Label id="maptop_unranked_chip33_tier" class="kz-course-chip-tier" text="T{s:maptop_unranked_chip33_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_unranked_chip34" class="kz-course-chip hidden">
+              <Label id="maptop_unranked_chip34_name" class="kz-course-chip-name" text="{s:maptop_unranked_chip34_name}" hittest="false" />
+              <Label id="maptop_unranked_chip34_tier" class="kz-course-chip-tier" text="T{s:maptop_unranked_chip34_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_unranked_chip35" class="kz-course-chip hidden">
+              <Label id="maptop_unranked_chip35_name" class="kz-course-chip-name" text="{s:maptop_unranked_chip35_name}" hittest="false" />
+              <Label id="maptop_unranked_chip35_tier" class="kz-course-chip-tier" text="T{s:maptop_unranked_chip35_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_unranked_chip36" class="kz-course-chip hidden">
+              <Label id="maptop_unranked_chip36_name" class="kz-course-chip-name" text="{s:maptop_unranked_chip36_name}" hittest="false" />
+              <Label id="maptop_unranked_chip36_tier" class="kz-course-chip-tier" text="T{s:maptop_unranked_chip36_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_unranked_chip37" class="kz-course-chip hidden">
+              <Label id="maptop_unranked_chip37_name" class="kz-course-chip-name" text="{s:maptop_unranked_chip37_name}" hittest="false" />
+              <Label id="maptop_unranked_chip37_tier" class="kz-course-chip-tier" text="T{s:maptop_unranked_chip37_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_unranked_chip38" class="kz-course-chip hidden">
+              <Label id="maptop_unranked_chip38_name" class="kz-course-chip-name" text="{s:maptop_unranked_chip38_name}" hittest="false" />
+              <Label id="maptop_unranked_chip38_tier" class="kz-course-chip-tier" text="T{s:maptop_unranked_chip38_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_unranked_chip39" class="kz-course-chip hidden">
+              <Label id="maptop_unranked_chip39_name" class="kz-course-chip-name" text="{s:maptop_unranked_chip39_name}" hittest="false" />
+              <Label id="maptop_unranked_chip39_tier" class="kz-course-chip-tier" text="T{s:maptop_unranked_chip39_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_unranked_chip40" class="kz-course-chip hidden">
+              <Label id="maptop_unranked_chip40_name" class="kz-course-chip-name" text="{s:maptop_unranked_chip40_name}" hittest="false" />
+              <Label id="maptop_unranked_chip40_tier" class="kz-course-chip-tier" text="T{s:maptop_unranked_chip40_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_unranked_chip41" class="kz-course-chip hidden">
+              <Label id="maptop_unranked_chip41_name" class="kz-course-chip-name" text="{s:maptop_unranked_chip41_name}" hittest="false" />
+              <Label id="maptop_unranked_chip41_tier" class="kz-course-chip-tier" text="T{s:maptop_unranked_chip41_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_unranked_chip42" class="kz-course-chip hidden">
+              <Label id="maptop_unranked_chip42_name" class="kz-course-chip-name" text="{s:maptop_unranked_chip42_name}" hittest="false" />
+              <Label id="maptop_unranked_chip42_tier" class="kz-course-chip-tier" text="T{s:maptop_unranked_chip42_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_unranked_chip43" class="kz-course-chip hidden">
+              <Label id="maptop_unranked_chip43_name" class="kz-course-chip-name" text="{s:maptop_unranked_chip43_name}" hittest="false" />
+              <Label id="maptop_unranked_chip43_tier" class="kz-course-chip-tier" text="T{s:maptop_unranked_chip43_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_unranked_chip44" class="kz-course-chip hidden">
+              <Label id="maptop_unranked_chip44_name" class="kz-course-chip-name" text="{s:maptop_unranked_chip44_name}" hittest="false" />
+              <Label id="maptop_unranked_chip44_tier" class="kz-course-chip-tier" text="T{s:maptop_unranked_chip44_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_unranked_chip45" class="kz-course-chip hidden">
+              <Label id="maptop_unranked_chip45_name" class="kz-course-chip-name" text="{s:maptop_unranked_chip45_name}" hittest="false" />
+              <Label id="maptop_unranked_chip45_tier" class="kz-course-chip-tier" text="T{s:maptop_unranked_chip45_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_unranked_chip46" class="kz-course-chip hidden">
+              <Label id="maptop_unranked_chip46_name" class="kz-course-chip-name" text="{s:maptop_unranked_chip46_name}" hittest="false" />
+              <Label id="maptop_unranked_chip46_tier" class="kz-course-chip-tier" text="T{s:maptop_unranked_chip46_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_unranked_chip47" class="kz-course-chip hidden">
+              <Label id="maptop_unranked_chip47_name" class="kz-course-chip-name" text="{s:maptop_unranked_chip47_name}" hittest="false" />
+              <Label id="maptop_unranked_chip47_tier" class="kz-course-chip-tier" text="T{s:maptop_unranked_chip47_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_unranked_chip48" class="kz-course-chip hidden">
+              <Label id="maptop_unranked_chip48_name" class="kz-course-chip-name" text="{s:maptop_unranked_chip48_name}" hittest="false" />
+              <Label id="maptop_unranked_chip48_tier" class="kz-course-chip-tier" text="T{s:maptop_unranked_chip48_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_unranked_chip49" class="kz-course-chip hidden">
+              <Label id="maptop_unranked_chip49_name" class="kz-course-chip-name" text="{s:maptop_unranked_chip49_name}" hittest="false" />
+              <Label id="maptop_unranked_chip49_tier" class="kz-course-chip-tier" text="T{s:maptop_unranked_chip49_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_unranked_chip50" class="kz-course-chip hidden">
+              <Label id="maptop_unranked_chip50_name" class="kz-course-chip-name" text="{s:maptop_unranked_chip50_name}" hittest="false" />
+              <Label id="maptop_unranked_chip50_tier" class="kz-course-chip-tier" text="T{s:maptop_unranked_chip50_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_unranked_chip51" class="kz-course-chip hidden">
+              <Label id="maptop_unranked_chip51_name" class="kz-course-chip-name" text="{s:maptop_unranked_chip51_name}" hittest="false" />
+              <Label id="maptop_unranked_chip51_tier" class="kz-course-chip-tier" text="T{s:maptop_unranked_chip51_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_unranked_chip52" class="kz-course-chip hidden">
+              <Label id="maptop_unranked_chip52_name" class="kz-course-chip-name" text="{s:maptop_unranked_chip52_name}" hittest="false" />
+              <Label id="maptop_unranked_chip52_tier" class="kz-course-chip-tier" text="T{s:maptop_unranked_chip52_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_unranked_chip53" class="kz-course-chip hidden">
+              <Label id="maptop_unranked_chip53_name" class="kz-course-chip-name" text="{s:maptop_unranked_chip53_name}" hittest="false" />
+              <Label id="maptop_unranked_chip53_tier" class="kz-course-chip-tier" text="T{s:maptop_unranked_chip53_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_unranked_chip54" class="kz-course-chip hidden">
+              <Label id="maptop_unranked_chip54_name" class="kz-course-chip-name" text="{s:maptop_unranked_chip54_name}" hittest="false" />
+              <Label id="maptop_unranked_chip54_tier" class="kz-course-chip-tier" text="T{s:maptop_unranked_chip54_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_unranked_chip55" class="kz-course-chip hidden">
+              <Label id="maptop_unranked_chip55_name" class="kz-course-chip-name" text="{s:maptop_unranked_chip55_name}" hittest="false" />
+              <Label id="maptop_unranked_chip55_tier" class="kz-course-chip-tier" text="T{s:maptop_unranked_chip55_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_unranked_chip56" class="kz-course-chip hidden">
+              <Label id="maptop_unranked_chip56_name" class="kz-course-chip-name" text="{s:maptop_unranked_chip56_name}" hittest="false" />
+              <Label id="maptop_unranked_chip56_tier" class="kz-course-chip-tier" text="T{s:maptop_unranked_chip56_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_unranked_chip57" class="kz-course-chip hidden">
+              <Label id="maptop_unranked_chip57_name" class="kz-course-chip-name" text="{s:maptop_unranked_chip57_name}" hittest="false" />
+              <Label id="maptop_unranked_chip57_tier" class="kz-course-chip-tier" text="T{s:maptop_unranked_chip57_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_unranked_chip58" class="kz-course-chip hidden">
+              <Label id="maptop_unranked_chip58_name" class="kz-course-chip-name" text="{s:maptop_unranked_chip58_name}" hittest="false" />
+              <Label id="maptop_unranked_chip58_tier" class="kz-course-chip-tier" text="T{s:maptop_unranked_chip58_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_unranked_chip59" class="kz-course-chip hidden">
+              <Label id="maptop_unranked_chip59_name" class="kz-course-chip-name" text="{s:maptop_unranked_chip59_name}" hittest="false" />
+              <Label id="maptop_unranked_chip59_tier" class="kz-course-chip-tier" text="T{s:maptop_unranked_chip59_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_unranked_chip60" class="kz-course-chip hidden">
+              <Label id="maptop_unranked_chip60_name" class="kz-course-chip-name" text="{s:maptop_unranked_chip60_name}" hittest="false" />
+              <Label id="maptop_unranked_chip60_tier" class="kz-course-chip-tier" text="T{s:maptop_unranked_chip60_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_unranked_chip61" class="kz-course-chip hidden">
+              <Label id="maptop_unranked_chip61_name" class="kz-course-chip-name" text="{s:maptop_unranked_chip61_name}" hittest="false" />
+              <Label id="maptop_unranked_chip61_tier" class="kz-course-chip-tier" text="T{s:maptop_unranked_chip61_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_unranked_chip62" class="kz-course-chip hidden">
+              <Label id="maptop_unranked_chip62_name" class="kz-course-chip-name" text="{s:maptop_unranked_chip62_name}" hittest="false" />
+              <Label id="maptop_unranked_chip62_tier" class="kz-course-chip-tier" text="T{s:maptop_unranked_chip62_tier}" hittest="false" />
+            </Button>
+            <Button id="maptop_unranked_chip63" class="kz-course-chip hidden">
+              <Label id="maptop_unranked_chip63_name" class="kz-course-chip-name" text="{s:maptop_unranked_chip63_name}" hittest="false" />
+              <Label id="maptop_unranked_chip63_tier" class="kz-course-chip-tier" text="T{s:maptop_unranked_chip63_tier}" hittest="false" />
+            </Button>
+          </Panel>
+        </Panel>
+        <Panel class="maptop-heading-row">
+          <Label id="maptop_heading" class="maptop-heading" text="{s:maptop_heading}" />
+        </Panel>
+        <Panel id="maptop_card0" class="kz-rank-card hidden">
+          <Panel class="kz-rank-card-who">
+            <Button id="maptop_card0_profile" class="kz-name-btn kz-rank-card-name-btn">
+              <Label id="maptop_card0_name" class="kz-rank-card-name" text="{s:maptop_card0_name}" hittest="false" />
+            </Button>
+            <Panel class="kz-rank-card-place">
+              <Label id="maptop_card0_rank" class="kz-rank-card-rank" text="{s:maptop_card0_rank}" />
+              <Label class="kz-rank-card-slash" text="/" />
+              <Label id="maptop_card0_total" class="kz-rank-card-rank" text="{s:maptop_card0_total}" />
+            </Panel>
+          </Panel>
+          <Panel class="kz-rank-card-stats">
+            <Panel class="kz-rank-card-stat">
+              <Label id="maptop_card0_time_label" class="kz-rank-card-stat-label" text="{s:maptop_card0_time_label}" />
+              <Label id="maptop_card0_time" class="kz-rank-card-stat-value" text="{s:maptop_card0_time}" />
+            </Panel>
+            <Panel class="kz-rank-card-stat date">
+              <Label id="maptop_card0_date_label" class="kz-rank-card-stat-label" text="{s:maptop_card0_date_label}" />
+              <Label id="maptop_card0_date" class="kz-rank-card-stat-value" text="{s:maptop_card0_date}" />
+            </Panel>
+          </Panel>
+        </Panel>
+        <Panel id="maptop_card1" class="kz-rank-card hidden">
+          <Panel class="kz-rank-card-who">
+            <Button id="maptop_card1_profile" class="kz-name-btn kz-rank-card-name-btn">
+              <Label id="maptop_card1_name" class="kz-rank-card-name" text="{s:maptop_card1_name}" hittest="false" />
+            </Button>
+            <Panel class="kz-rank-card-place">
+              <Label id="maptop_card1_rank" class="kz-rank-card-rank" text="{s:maptop_card1_rank}" />
+              <Label class="kz-rank-card-slash" text="/" />
+              <Label id="maptop_card1_total" class="kz-rank-card-rank" text="{s:maptop_card1_total}" />
+            </Panel>
+          </Panel>
+          <Panel class="kz-rank-card-stats">
+            <Panel class="kz-rank-card-stat">
+              <Label id="maptop_card1_time_label" class="kz-rank-card-stat-label" text="{s:maptop_card1_time_label}" />
+              <Label id="maptop_card1_time" class="kz-rank-card-stat-value" text="{s:maptop_card1_time}" />
+            </Panel>
+            <Panel class="kz-rank-card-stat date">
+              <Label id="maptop_card1_date_label" class="kz-rank-card-stat-label" text="{s:maptop_card1_date_label}" />
+              <Label id="maptop_card1_date" class="kz-rank-card-stat-value" text="{s:maptop_card1_date}" />
+            </Panel>
+          </Panel>
+        </Panel>
+        <Panel id="maptop_table" class="kz-record-table">
+          <Panel class="kz-record-head">
+            <Label id="maptop_th_rank" class="kz-record-th kz-col-rank" text="{s:maptop_th_rank}" />
+            <Label id="maptop_th_player" class="kz-record-th kz-col-player" text="{s:maptop_th_player}" />
+            <Label id="maptop_th_time" class="kz-record-th kz-col-time" text="{s:maptop_th_time}" />
+            <Label id="maptop_th_points" class="kz-record-th kz-col-points" text="{s:maptop_th_points}" />
+            <Label id="maptop_th_date" class="kz-record-th kz-col-date" text="{s:maptop_th_date}" />
+            <Label id="maptop_th_replay" class="kz-record-th kz-col-replay" text="{s:maptop_th_replay}" />
+          </Panel>
+          <Panel id="maptop_row0" class="kz-record-row first hidden">
+            <Label id="maptop_row0_rank" class="kz-record-cell kz-col-rank" text="{s:maptop_row0_rank}" />
+            <Panel class="kz-col-player kz-record-player">
+              <Button id="maptop_row0_profile" class="kz-name-btn">
+                <Label id="maptop_row0_player" class="kz-record-cell kz-record-name" text="{s:maptop_row0_player}" hittest="false" />
+              </Button>
+            </Panel>
+            <Panel class="kz-record-time kz-col-time">
+              <Label id="maptop_row0_time" class="kz-record-time-value" text="{s:maptop_row0_time}" />
+              <Label id="maptop_row0_badge" class="kz-run-badge" text="{s:maptop_row0_badge}" />
+            </Panel>
+            <Label id="maptop_row0_points" class="kz-record-cell kz-col-points" text="{s:maptop_row0_points}" />
+            <Panel class="kz-col-date kz-date-cell">
+              <Button id="maptop_row0_date_btn" class="kz-date-btn">
+                <Label id="maptop_row0_date" class="kz-record-cell" text="{s:maptop_row0_date}" hittest="false" />
+                <Panel class="kz-tooltip-anchor" hittest="false">
+                  <Label id="maptop_row0_date_tip" class="kz-tooltip" text="{s:maptop_row0_date_tip}" hittest="false" />
+                </Panel>
+              </Button>
+            </Panel>
+            <Panel class="kz-col-replay kz-record-actions">
+              <Button id="maptop_row0_replay" class="kz-icon-btn icon-play">
+                <Panel class="kz-icon-btn-face" hittest="false" />
+                <Panel class="kz-icon-btn-icon" hittest="false" />
+                <Panel class="kz-tooltip-anchor" hittest="false">
+                  <Label id="maptop_row0_replay_tip" class="kz-tooltip" text="{s:maptop_row0_replay_tip}" hittest="false" />
+                </Panel>
+              </Button>
+              <Button id="maptop_row0_copy" class="kz-icon-btn icon-copy tip-end">
+                <Panel class="kz-icon-btn-face" hittest="false" />
+                <Panel class="kz-icon-btn-icon" hittest="false" />
+                <Panel class="kz-tooltip-anchor" hittest="false">
+                  <Label id="maptop_row0_copy_tip" class="kz-tooltip" text="{s:maptop_row0_copy_tip}" hittest="false" />
+                </Panel>
+              </Button>
+            </Panel>
+          </Panel>
+          <Panel id="maptop_row1" class="kz-record-row hidden">
+            <Label id="maptop_row1_rank" class="kz-record-cell kz-col-rank" text="{s:maptop_row1_rank}" />
+            <Panel class="kz-col-player kz-record-player">
+              <Button id="maptop_row1_profile" class="kz-name-btn">
+                <Label id="maptop_row1_player" class="kz-record-cell kz-record-name" text="{s:maptop_row1_player}" hittest="false" />
+              </Button>
+            </Panel>
+            <Panel class="kz-record-time kz-col-time">
+              <Label id="maptop_row1_time" class="kz-record-time-value" text="{s:maptop_row1_time}" />
+              <Label id="maptop_row1_badge" class="kz-run-badge" text="{s:maptop_row1_badge}" />
+            </Panel>
+            <Label id="maptop_row1_points" class="kz-record-cell kz-col-points" text="{s:maptop_row1_points}" />
+            <Panel class="kz-col-date kz-date-cell">
+              <Button id="maptop_row1_date_btn" class="kz-date-btn">
+                <Label id="maptop_row1_date" class="kz-record-cell" text="{s:maptop_row1_date}" hittest="false" />
+                <Panel class="kz-tooltip-anchor" hittest="false">
+                  <Label id="maptop_row1_date_tip" class="kz-tooltip" text="{s:maptop_row1_date_tip}" hittest="false" />
+                </Panel>
+              </Button>
+            </Panel>
+            <Panel class="kz-col-replay kz-record-actions">
+              <Button id="maptop_row1_replay" class="kz-icon-btn icon-play">
+                <Panel class="kz-icon-btn-face" hittest="false" />
+                <Panel class="kz-icon-btn-icon" hittest="false" />
+                <Panel class="kz-tooltip-anchor" hittest="false">
+                  <Label id="maptop_row1_replay_tip" class="kz-tooltip" text="{s:maptop_row1_replay_tip}" hittest="false" />
+                </Panel>
+              </Button>
+              <Button id="maptop_row1_copy" class="kz-icon-btn icon-copy tip-end">
+                <Panel class="kz-icon-btn-face" hittest="false" />
+                <Panel class="kz-icon-btn-icon" hittest="false" />
+                <Panel class="kz-tooltip-anchor" hittest="false">
+                  <Label id="maptop_row1_copy_tip" class="kz-tooltip" text="{s:maptop_row1_copy_tip}" hittest="false" />
+                </Panel>
+              </Button>
+            </Panel>
+          </Panel>
+          <Panel id="maptop_row2" class="kz-record-row hidden">
+            <Label id="maptop_row2_rank" class="kz-record-cell kz-col-rank" text="{s:maptop_row2_rank}" />
+            <Panel class="kz-col-player kz-record-player">
+              <Button id="maptop_row2_profile" class="kz-name-btn">
+                <Label id="maptop_row2_player" class="kz-record-cell kz-record-name" text="{s:maptop_row2_player}" hittest="false" />
+              </Button>
+            </Panel>
+            <Panel class="kz-record-time kz-col-time">
+              <Label id="maptop_row2_time" class="kz-record-time-value" text="{s:maptop_row2_time}" />
+              <Label id="maptop_row2_badge" class="kz-run-badge" text="{s:maptop_row2_badge}" />
+            </Panel>
+            <Label id="maptop_row2_points" class="kz-record-cell kz-col-points" text="{s:maptop_row2_points}" />
+            <Panel class="kz-col-date kz-date-cell">
+              <Button id="maptop_row2_date_btn" class="kz-date-btn">
+                <Label id="maptop_row2_date" class="kz-record-cell" text="{s:maptop_row2_date}" hittest="false" />
+                <Panel class="kz-tooltip-anchor" hittest="false">
+                  <Label id="maptop_row2_date_tip" class="kz-tooltip" text="{s:maptop_row2_date_tip}" hittest="false" />
+                </Panel>
+              </Button>
+            </Panel>
+            <Panel class="kz-col-replay kz-record-actions">
+              <Button id="maptop_row2_replay" class="kz-icon-btn icon-play">
+                <Panel class="kz-icon-btn-face" hittest="false" />
+                <Panel class="kz-icon-btn-icon" hittest="false" />
+                <Panel class="kz-tooltip-anchor" hittest="false">
+                  <Label id="maptop_row2_replay_tip" class="kz-tooltip" text="{s:maptop_row2_replay_tip}" hittest="false" />
+                </Panel>
+              </Button>
+              <Button id="maptop_row2_copy" class="kz-icon-btn icon-copy tip-end">
+                <Panel class="kz-icon-btn-face" hittest="false" />
+                <Panel class="kz-icon-btn-icon" hittest="false" />
+                <Panel class="kz-tooltip-anchor" hittest="false">
+                  <Label id="maptop_row2_copy_tip" class="kz-tooltip" text="{s:maptop_row2_copy_tip}" hittest="false" />
+                </Panel>
+              </Button>
+            </Panel>
+          </Panel>
+          <Panel id="maptop_row3" class="kz-record-row hidden">
+            <Label id="maptop_row3_rank" class="kz-record-cell kz-col-rank" text="{s:maptop_row3_rank}" />
+            <Panel class="kz-col-player kz-record-player">
+              <Button id="maptop_row3_profile" class="kz-name-btn">
+                <Label id="maptop_row3_player" class="kz-record-cell kz-record-name" text="{s:maptop_row3_player}" hittest="false" />
+              </Button>
+            </Panel>
+            <Panel class="kz-record-time kz-col-time">
+              <Label id="maptop_row3_time" class="kz-record-time-value" text="{s:maptop_row3_time}" />
+              <Label id="maptop_row3_badge" class="kz-run-badge" text="{s:maptop_row3_badge}" />
+            </Panel>
+            <Label id="maptop_row3_points" class="kz-record-cell kz-col-points" text="{s:maptop_row3_points}" />
+            <Panel class="kz-col-date kz-date-cell">
+              <Button id="maptop_row3_date_btn" class="kz-date-btn">
+                <Label id="maptop_row3_date" class="kz-record-cell" text="{s:maptop_row3_date}" hittest="false" />
+                <Panel class="kz-tooltip-anchor" hittest="false">
+                  <Label id="maptop_row3_date_tip" class="kz-tooltip" text="{s:maptop_row3_date_tip}" hittest="false" />
+                </Panel>
+              </Button>
+            </Panel>
+            <Panel class="kz-col-replay kz-record-actions">
+              <Button id="maptop_row3_replay" class="kz-icon-btn icon-play">
+                <Panel class="kz-icon-btn-face" hittest="false" />
+                <Panel class="kz-icon-btn-icon" hittest="false" />
+                <Panel class="kz-tooltip-anchor" hittest="false">
+                  <Label id="maptop_row3_replay_tip" class="kz-tooltip" text="{s:maptop_row3_replay_tip}" hittest="false" />
+                </Panel>
+              </Button>
+              <Button id="maptop_row3_copy" class="kz-icon-btn icon-copy tip-end">
+                <Panel class="kz-icon-btn-face" hittest="false" />
+                <Panel class="kz-icon-btn-icon" hittest="false" />
+                <Panel class="kz-tooltip-anchor" hittest="false">
+                  <Label id="maptop_row3_copy_tip" class="kz-tooltip" text="{s:maptop_row3_copy_tip}" hittest="false" />
+                </Panel>
+              </Button>
+            </Panel>
+          </Panel>
+          <Panel id="maptop_row4" class="kz-record-row hidden">
+            <Label id="maptop_row4_rank" class="kz-record-cell kz-col-rank" text="{s:maptop_row4_rank}" />
+            <Panel class="kz-col-player kz-record-player">
+              <Button id="maptop_row4_profile" class="kz-name-btn">
+                <Label id="maptop_row4_player" class="kz-record-cell kz-record-name" text="{s:maptop_row4_player}" hittest="false" />
+              </Button>
+            </Panel>
+            <Panel class="kz-record-time kz-col-time">
+              <Label id="maptop_row4_time" class="kz-record-time-value" text="{s:maptop_row4_time}" />
+              <Label id="maptop_row4_badge" class="kz-run-badge" text="{s:maptop_row4_badge}" />
+            </Panel>
+            <Label id="maptop_row4_points" class="kz-record-cell kz-col-points" text="{s:maptop_row4_points}" />
+            <Panel class="kz-col-date kz-date-cell">
+              <Button id="maptop_row4_date_btn" class="kz-date-btn">
+                <Label id="maptop_row4_date" class="kz-record-cell" text="{s:maptop_row4_date}" hittest="false" />
+                <Panel class="kz-tooltip-anchor" hittest="false">
+                  <Label id="maptop_row4_date_tip" class="kz-tooltip" text="{s:maptop_row4_date_tip}" hittest="false" />
+                </Panel>
+              </Button>
+            </Panel>
+            <Panel class="kz-col-replay kz-record-actions">
+              <Button id="maptop_row4_replay" class="kz-icon-btn icon-play">
+                <Panel class="kz-icon-btn-face" hittest="false" />
+                <Panel class="kz-icon-btn-icon" hittest="false" />
+                <Panel class="kz-tooltip-anchor" hittest="false">
+                  <Label id="maptop_row4_replay_tip" class="kz-tooltip" text="{s:maptop_row4_replay_tip}" hittest="false" />
+                </Panel>
+              </Button>
+              <Button id="maptop_row4_copy" class="kz-icon-btn icon-copy tip-end">
+                <Panel class="kz-icon-btn-face" hittest="false" />
+                <Panel class="kz-icon-btn-icon" hittest="false" />
+                <Panel class="kz-tooltip-anchor" hittest="false">
+                  <Label id="maptop_row4_copy_tip" class="kz-tooltip" text="{s:maptop_row4_copy_tip}" hittest="false" />
+                </Panel>
+              </Button>
+            </Panel>
+          </Panel>
+          <Panel id="maptop_row5" class="kz-record-row hidden">
+            <Label id="maptop_row5_rank" class="kz-record-cell kz-col-rank" text="{s:maptop_row5_rank}" />
+            <Panel class="kz-col-player kz-record-player">
+              <Button id="maptop_row5_profile" class="kz-name-btn">
+                <Label id="maptop_row5_player" class="kz-record-cell kz-record-name" text="{s:maptop_row5_player}" hittest="false" />
+              </Button>
+            </Panel>
+            <Panel class="kz-record-time kz-col-time">
+              <Label id="maptop_row5_time" class="kz-record-time-value" text="{s:maptop_row5_time}" />
+              <Label id="maptop_row5_badge" class="kz-run-badge" text="{s:maptop_row5_badge}" />
+            </Panel>
+            <Label id="maptop_row5_points" class="kz-record-cell kz-col-points" text="{s:maptop_row5_points}" />
+            <Panel class="kz-col-date kz-date-cell">
+              <Button id="maptop_row5_date_btn" class="kz-date-btn">
+                <Label id="maptop_row5_date" class="kz-record-cell" text="{s:maptop_row5_date}" hittest="false" />
+                <Panel class="kz-tooltip-anchor" hittest="false">
+                  <Label id="maptop_row5_date_tip" class="kz-tooltip" text="{s:maptop_row5_date_tip}" hittest="false" />
+                </Panel>
+              </Button>
+            </Panel>
+            <Panel class="kz-col-replay kz-record-actions">
+              <Button id="maptop_row5_replay" class="kz-icon-btn icon-play">
+                <Panel class="kz-icon-btn-face" hittest="false" />
+                <Panel class="kz-icon-btn-icon" hittest="false" />
+                <Panel class="kz-tooltip-anchor" hittest="false">
+                  <Label id="maptop_row5_replay_tip" class="kz-tooltip" text="{s:maptop_row5_replay_tip}" hittest="false" />
+                </Panel>
+              </Button>
+              <Button id="maptop_row5_copy" class="kz-icon-btn icon-copy tip-end">
+                <Panel class="kz-icon-btn-face" hittest="false" />
+                <Panel class="kz-icon-btn-icon" hittest="false" />
+                <Panel class="kz-tooltip-anchor" hittest="false">
+                  <Label id="maptop_row5_copy_tip" class="kz-tooltip" text="{s:maptop_row5_copy_tip}" hittest="false" />
+                </Panel>
+              </Button>
+            </Panel>
+          </Panel>
+          <Panel id="maptop_row6" class="kz-record-row hidden">
+            <Label id="maptop_row6_rank" class="kz-record-cell kz-col-rank" text="{s:maptop_row6_rank}" />
+            <Panel class="kz-col-player kz-record-player">
+              <Button id="maptop_row6_profile" class="kz-name-btn">
+                <Label id="maptop_row6_player" class="kz-record-cell kz-record-name" text="{s:maptop_row6_player}" hittest="false" />
+              </Button>
+            </Panel>
+            <Panel class="kz-record-time kz-col-time">
+              <Label id="maptop_row6_time" class="kz-record-time-value" text="{s:maptop_row6_time}" />
+              <Label id="maptop_row6_badge" class="kz-run-badge" text="{s:maptop_row6_badge}" />
+            </Panel>
+            <Label id="maptop_row6_points" class="kz-record-cell kz-col-points" text="{s:maptop_row6_points}" />
+            <Panel class="kz-col-date kz-date-cell">
+              <Button id="maptop_row6_date_btn" class="kz-date-btn">
+                <Label id="maptop_row6_date" class="kz-record-cell" text="{s:maptop_row6_date}" hittest="false" />
+                <Panel class="kz-tooltip-anchor" hittest="false">
+                  <Label id="maptop_row6_date_tip" class="kz-tooltip" text="{s:maptop_row6_date_tip}" hittest="false" />
+                </Panel>
+              </Button>
+            </Panel>
+            <Panel class="kz-col-replay kz-record-actions">
+              <Button id="maptop_row6_replay" class="kz-icon-btn icon-play">
+                <Panel class="kz-icon-btn-face" hittest="false" />
+                <Panel class="kz-icon-btn-icon" hittest="false" />
+                <Panel class="kz-tooltip-anchor" hittest="false">
+                  <Label id="maptop_row6_replay_tip" class="kz-tooltip" text="{s:maptop_row6_replay_tip}" hittest="false" />
+                </Panel>
+              </Button>
+              <Button id="maptop_row6_copy" class="kz-icon-btn icon-copy tip-end">
+                <Panel class="kz-icon-btn-face" hittest="false" />
+                <Panel class="kz-icon-btn-icon" hittest="false" />
+                <Panel class="kz-tooltip-anchor" hittest="false">
+                  <Label id="maptop_row6_copy_tip" class="kz-tooltip" text="{s:maptop_row6_copy_tip}" hittest="false" />
+                </Panel>
+              </Button>
+            </Panel>
+          </Panel>
+          <Panel id="maptop_row7" class="kz-record-row hidden">
+            <Label id="maptop_row7_rank" class="kz-record-cell kz-col-rank" text="{s:maptop_row7_rank}" />
+            <Panel class="kz-col-player kz-record-player">
+              <Button id="maptop_row7_profile" class="kz-name-btn">
+                <Label id="maptop_row7_player" class="kz-record-cell kz-record-name" text="{s:maptop_row7_player}" hittest="false" />
+              </Button>
+            </Panel>
+            <Panel class="kz-record-time kz-col-time">
+              <Label id="maptop_row7_time" class="kz-record-time-value" text="{s:maptop_row7_time}" />
+              <Label id="maptop_row7_badge" class="kz-run-badge" text="{s:maptop_row7_badge}" />
+            </Panel>
+            <Label id="maptop_row7_points" class="kz-record-cell kz-col-points" text="{s:maptop_row7_points}" />
+            <Panel class="kz-col-date kz-date-cell">
+              <Button id="maptop_row7_date_btn" class="kz-date-btn">
+                <Label id="maptop_row7_date" class="kz-record-cell" text="{s:maptop_row7_date}" hittest="false" />
+                <Panel class="kz-tooltip-anchor" hittest="false">
+                  <Label id="maptop_row7_date_tip" class="kz-tooltip" text="{s:maptop_row7_date_tip}" hittest="false" />
+                </Panel>
+              </Button>
+            </Panel>
+            <Panel class="kz-col-replay kz-record-actions">
+              <Button id="maptop_row7_replay" class="kz-icon-btn icon-play">
+                <Panel class="kz-icon-btn-face" hittest="false" />
+                <Panel class="kz-icon-btn-icon" hittest="false" />
+                <Panel class="kz-tooltip-anchor" hittest="false">
+                  <Label id="maptop_row7_replay_tip" class="kz-tooltip" text="{s:maptop_row7_replay_tip}" hittest="false" />
+                </Panel>
+              </Button>
+              <Button id="maptop_row7_copy" class="kz-icon-btn icon-copy tip-end">
+                <Panel class="kz-icon-btn-face" hittest="false" />
+                <Panel class="kz-icon-btn-icon" hittest="false" />
+                <Panel class="kz-tooltip-anchor" hittest="false">
+                  <Label id="maptop_row7_copy_tip" class="kz-tooltip" text="{s:maptop_row7_copy_tip}" hittest="false" />
+                </Panel>
+              </Button>
+            </Panel>
+          </Panel>
+          <Panel id="maptop_row8" class="kz-record-row hidden">
+            <Label id="maptop_row8_rank" class="kz-record-cell kz-col-rank" text="{s:maptop_row8_rank}" />
+            <Panel class="kz-col-player kz-record-player">
+              <Button id="maptop_row8_profile" class="kz-name-btn">
+                <Label id="maptop_row8_player" class="kz-record-cell kz-record-name" text="{s:maptop_row8_player}" hittest="false" />
+              </Button>
+            </Panel>
+            <Panel class="kz-record-time kz-col-time">
+              <Label id="maptop_row8_time" class="kz-record-time-value" text="{s:maptop_row8_time}" />
+              <Label id="maptop_row8_badge" class="kz-run-badge" text="{s:maptop_row8_badge}" />
+            </Panel>
+            <Label id="maptop_row8_points" class="kz-record-cell kz-col-points" text="{s:maptop_row8_points}" />
+            <Panel class="kz-col-date kz-date-cell">
+              <Button id="maptop_row8_date_btn" class="kz-date-btn">
+                <Label id="maptop_row8_date" class="kz-record-cell" text="{s:maptop_row8_date}" hittest="false" />
+                <Panel class="kz-tooltip-anchor" hittest="false">
+                  <Label id="maptop_row8_date_tip" class="kz-tooltip" text="{s:maptop_row8_date_tip}" hittest="false" />
+                </Panel>
+              </Button>
+            </Panel>
+            <Panel class="kz-col-replay kz-record-actions">
+              <Button id="maptop_row8_replay" class="kz-icon-btn icon-play">
+                <Panel class="kz-icon-btn-face" hittest="false" />
+                <Panel class="kz-icon-btn-icon" hittest="false" />
+                <Panel class="kz-tooltip-anchor" hittest="false">
+                  <Label id="maptop_row8_replay_tip" class="kz-tooltip" text="{s:maptop_row8_replay_tip}" hittest="false" />
+                </Panel>
+              </Button>
+              <Button id="maptop_row8_copy" class="kz-icon-btn icon-copy tip-end">
+                <Panel class="kz-icon-btn-face" hittest="false" />
+                <Panel class="kz-icon-btn-icon" hittest="false" />
+                <Panel class="kz-tooltip-anchor" hittest="false">
+                  <Label id="maptop_row8_copy_tip" class="kz-tooltip" text="{s:maptop_row8_copy_tip}" hittest="false" />
+                </Panel>
+              </Button>
+            </Panel>
+          </Panel>
+          <Panel id="maptop_row9" class="kz-record-row hidden">
+            <Label id="maptop_row9_rank" class="kz-record-cell kz-col-rank" text="{s:maptop_row9_rank}" />
+            <Panel class="kz-col-player kz-record-player">
+              <Button id="maptop_row9_profile" class="kz-name-btn">
+                <Label id="maptop_row9_player" class="kz-record-cell kz-record-name" text="{s:maptop_row9_player}" hittest="false" />
+              </Button>
+            </Panel>
+            <Panel class="kz-record-time kz-col-time">
+              <Label id="maptop_row9_time" class="kz-record-time-value" text="{s:maptop_row9_time}" />
+              <Label id="maptop_row9_badge" class="kz-run-badge" text="{s:maptop_row9_badge}" />
+            </Panel>
+            <Label id="maptop_row9_points" class="kz-record-cell kz-col-points" text="{s:maptop_row9_points}" />
+            <Panel class="kz-col-date kz-date-cell">
+              <Button id="maptop_row9_date_btn" class="kz-date-btn">
+                <Label id="maptop_row9_date" class="kz-record-cell" text="{s:maptop_row9_date}" hittest="false" />
+                <Panel class="kz-tooltip-anchor" hittest="false">
+                  <Label id="maptop_row9_date_tip" class="kz-tooltip" text="{s:maptop_row9_date_tip}" hittest="false" />
+                </Panel>
+              </Button>
+            </Panel>
+            <Panel class="kz-col-replay kz-record-actions">
+              <Button id="maptop_row9_replay" class="kz-icon-btn icon-play">
+                <Panel class="kz-icon-btn-face" hittest="false" />
+                <Panel class="kz-icon-btn-icon" hittest="false" />
+                <Panel class="kz-tooltip-anchor" hittest="false">
+                  <Label id="maptop_row9_replay_tip" class="kz-tooltip" text="{s:maptop_row9_replay_tip}" hittest="false" />
+                </Panel>
+              </Button>
+              <Button id="maptop_row9_copy" class="kz-icon-btn icon-copy tip-end">
+                <Panel class="kz-icon-btn-face" hittest="false" />
+                <Panel class="kz-icon-btn-icon" hittest="false" />
+                <Panel class="kz-tooltip-anchor" hittest="false">
+                  <Label id="maptop_row9_copy_tip" class="kz-tooltip" text="{s:maptop_row9_copy_tip}" hittest="false" />
+                </Panel>
+              </Button>
+            </Panel>
+          </Panel>
+          <Label id="maptop_status" class="kz-table-status" text="{s:maptop_status}" />
+        </Panel>
+        <Panel class="kz-pager">
+          <Label id="maptop_count" class="kz-pager-count" text="{s:maptop_count}" />
+          <Panel class="fill" />
+          <Button id="maptop_prev" class="kz-btn">
+            <Label id="maptop_prev_label" class="kz-btn-label" text="{s:maptop_prev_label}" hittest="false" />
+          </Button>
+          <Button id="maptop_next" class="kz-btn">
+            <Label id="maptop_next_label" class="kz-btn-label" text="{s:maptop_next_label}" hittest="false" />
+          </Button>
+        </Panel>
+      </Panel>
+    </Panel>
+  </Panel>
+</root>

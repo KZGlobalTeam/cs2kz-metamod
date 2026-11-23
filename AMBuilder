@@ -185,6 +185,7 @@ def configure_main(sdk_target, sdk, cxx):
     os.path.join(builder.sourcePath, 'src', 'kz', 'option', 'menu', 'tables.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'pistol', 'kz_pistol.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'profile', 'kz_profile.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'profile', 'hud', 'profile.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'pubapi', 'kz_pubapi.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'paint', 'kz_paint.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'quiet', 'kz_quiet.cpp'),
@@ -226,6 +227,8 @@ def configure_main(sdk_target, sdk, cxx):
 
     os.path.join(builder.sourcePath, 'src', 'kz', 'timer', 'queries', 'base_request.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'timer', 'queries', 'course_top.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'timer', 'hud', 'course_top.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'timer', 'hud', 'record_format.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'timer', 'queries', 'top_record.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'timer', 'queries', 'personal_best.cpp'),
     
@@ -234,6 +237,7 @@ def configure_main(sdk_target, sdk, cxx):
     os.path.join(builder.sourcePath, 'src', 'kz', 'away', 'events.cpp'),
     
     os.path.join(builder.sourcePath, 'src', 'kz', 'mappingapi', 'kz_mappingapi.cpp'),
+    os.path.join(builder.sourcePath, 'src', 'kz', 'mappingapi', 'hud', 'course_chips.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'trigger', 'callbacks.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'trigger', 'kz_trigger.cpp'),
     os.path.join(builder.sourcePath, 'src', 'kz', 'trigger', 'mapping_api.cpp'),

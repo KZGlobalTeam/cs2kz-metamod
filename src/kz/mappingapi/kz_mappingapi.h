@@ -262,6 +262,9 @@ namespace KZ::course
 	// Get the first course's information sorted by map-defined ID.
 	const KZCourseDescriptor *GetFirstCourse();
 
+	// Get a course's information given its position in the map-defined ID order.
+	const KZCourseDescriptor *GetCourseByIndex(u32 index);
+
 	// Setup all the courses to the local database.
 	void SetupLocalCourses();
 

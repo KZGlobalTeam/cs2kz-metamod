@@ -1,0 +1,321 @@
+@import url("file://{resources}/styles/custom_game/cs2kz/tokens.css");
+@import url("file://{resources}/styles/custom_game/cs2kz/palette.css");
+@import url("file://{resources}/styles/custom_game/cs2kz/fonts.css");
+@import url("file://{resources}/styles/custom_game/cs2kz/components.css");
+
+/* 100px wider than !ctop to fit eight run columns. */
+.profile-window {
+	width: 960px;
+}
+
+.profile-card {
+	flow-children: down;
+	width: 100%;
+	margin-bottom: 20px;
+	padding: 16px;
+	border: 1px solid kz-zinc-700;
+	border-radius: kz-radius-md;
+}
+
+/* Full width so the Steam ID button's tooltip has room on its right. */
+.profile-name-row {
+	flow-children: right;
+	width: 100%;
+}
+
+.profile-name {
+	vertical-align: center;
+	max-width: 860px;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	font-size: 24px;
+	font-weight: bold;
+	color: kz-cyan-600;
+}
+
+.profile-line {
+	flow-children: right;
+	margin-top: 20px;
+}
+
+.profile-joined-label,
+.profile-rank-label,
+.profile-joined,
+.profile-slash,
+.profile-rating {
+	vertical-align: center;
+	margin-right: 4px;
+	font-size: kz-text-lg;
+}
+
+.profile-joined-label,
+.profile-rank-label {
+	color: kz-gray-400;
+}
+
+.profile-joined {
+	color: kz-gray-300;
+}
+
+.profile-global-rank {
+	vertical-align: center;
+	font-size: kz-text-lg;
+	color: kz-gray-200;
+}
+
+.profile-global-rank.global-rank-500 {
+	color: kz-orange-400;
+}
+
+.profile-global-rank.global-rank-100 {
+	color: kz-purple-400;
+}
+
+.profile-global-rank.global-rank-20 {
+	color: kz-red-400;
+}
+
+.profile-global-rank.global-rank-1 {
+	color: kz-yellow-400;
+}
+
+.profile-slash {
+	color: kz-gray-600;
+}
+
+.profile-rating {
+	color: kz-gray-300;
+}
+
+/* 1px of the bottom padding moves to the top because Stratum2's line box puts capitals ~1px high (ascent 900, descent 300, caps 666).
+   1px more on the left centres the ink because the words end in letters with room on their right (r, t, o, d). */
+.profile-rank-badge {
+	vertical-align: center;
+	margin-right: 4px;
+	padding: 2px 4px 0px 5px;
+	border-radius: kz-radius-md;
+	font-size: kz-text-sm;
+	font-weight: bold;
+}
+
+.profile-rank-badge.rank-legend {
+	border: 1px solid #ffb800;
+	background-color: #ffb80020;
+	color: #ffb800;
+}
+
+.profile-rank-badge.rank-master {
+	border: 1px solid #ff3131;
+	background-color: #ff313120;
+	color: #ff3131;
+}
+
+.profile-rank-badge.rank-pro {
+	border: 1px solid #ff5151;
+	background-color: #ff515120;
+	color: #ff5151;
+}
+
+.profile-rank-badge.rank-semipro {
+	border: 1px solid #ff7171;
+	background-color: #ff717120;
+	color: #ff7171;
+}
+
+.profile-rank-badge.rank-expert {
+	border: 1px solid #d32de6;
+	background-color: #d32de620;
+	color: #d32de6;
+}
+
+.profile-rank-badge.rank-skilled {
+	border: 1px solid #bb82f0;
+	background-color: #bb82f020;
+	color: #bb82f0;
+}
+
+.profile-rank-badge.rank-regular {
+	border: 1px solid #4c6aff;
+	background-color: #4c6aff20;
+	color: #4c6aff;
+}
+
+.profile-rank-badge.rank-casual {
+	border: 1px solid #5f99d9;
+	background-color: #5f99d920;
+	color: #5f99d9;
+}
+
+.profile-rank-badge.rank-beginner {
+	border: 1px solid kz-tier-10;
+	background-color: #d1d1d120;
+	color: kz-tier-10;
+}
+
+.profile-rank-badge.rank-new {
+	border: 1px solid #cbcbcb;
+	background-color: #cbcbcb20;
+	color: #cbcbcb;
+}
+
+/* The map column takes what the other columns leave of the 892px row.
+   That is 156px or 316px on a server profile without tiers and points. */
+
+.profile-runs {
+	flow-children: down;
+	width: 100%;
+}
+
+.profile-runs-title {
+	margin-bottom: 8px;
+	font-size: 30px;
+	font-weight: bold;
+	color: kz-gray-300;
+}
+
+.profile-col-map {
+	width: fill-parent-flow(1);
+	padding-right: 12px;
+}
+
+.profile-col-course {
+	width: 140px;
+	padding-right: 12px;
+}
+
+.profile-col-tier {
+	width: 64px;
+}
+
+/* Server profiles have no tiers. */
+.profile-runs.server .profile-col-tier {
+	visibility: collapse;
+}
+
+.profile-col-time {
+	width: 150px;
+}
+
+.profile-col-points {
+	width: 96px;
+}
+
+/* Server profiles have no points either. */
+.profile-runs.server .profile-col-points {
+	visibility: collapse;
+}
+
+.profile-col-rank {
+	width: 96px;
+}
+
+.profile-col-date {
+	width: 130px;
+}
+
+/* Cells with padding of their own grow it by 1px for a font change instead of losing it. */
+.font-reflow .kz-record-th.profile-col-map,
+.font-reflow .kz-record-th.profile-col-course {
+	padding-right: 13px;
+}
+
+/* The map and course link to the course leaderboard.
+   Their widths are the column widths minus the 12px gap. */
+.kz-record-cell.profile-map {
+	max-width: 144px;
+	font-size: kz-text-lg;
+	font-weight: bold;
+	color: kz-slate-300;
+}
+
+.profile-runs.server .kz-record-cell.profile-map {
+	max-width: 304px;
+}
+
+.kz-name-btn:hover .profile-map {
+	color: kz-slate-200;
+}
+
+.kz-record-cell.profile-course {
+	max-width: 128px;
+	font-size: kz-text-lg;
+	color: kz-gray-300;
+}
+
+.kz-name-btn:hover .profile-course {
+	color: kz-slate-300;
+}
+
+.kz-record-cell.profile-tier {
+	font-size: kz-text-lg;
+}
+
+.profile-tier.tier-1 {
+	color: kz-tier-1;
+}
+
+.profile-tier.tier-2 {
+	color: kz-tier-2;
+}
+
+.profile-tier.tier-3 {
+	color: kz-tier-3;
+}
+
+.profile-tier.tier-4 {
+	color: kz-tier-4;
+}
+
+.profile-tier.tier-5 {
+	color: kz-tier-5;
+}
+
+.profile-tier.tier-6 {
+	color: kz-tier-6;
+}
+
+.profile-tier.tier-7 {
+	color: kz-tier-7;
+}
+
+.profile-tier.tier-8 {
+	color: kz-tier-8;
+}
+
+.profile-tier.tier-9 {
+	color: kz-tier-9;
+}
+
+.profile-tier.tier-10 {
+	color: kz-tier-10;
+}
+
+.kz-record-cell.rank-first {
+	color: kz-yellow-400;
+}
+
+.kz-record-cell.rank-top {
+	color: kz-red-400;
+}
+
+.font-reflow .profile-name,
+.font-reflow .profile-runs-title {
+	padding-right: 1px;
+	margin-right: -1px;
+}
+
+.font-reflow .profile-joined-label,
+.font-reflow .profile-rank-label,
+.font-reflow .profile-joined,
+.font-reflow .profile-global-rank,
+.font-reflow .profile-rating {
+	padding-right: 1px;
+	margin-right: 3px;
+}
+
+/* Grows its padding on both sides and gives the 2px back in margin to keep the text centred. */
+.font-reflow .profile-rank-badge {
+	margin-left: -1px;
+	margin-right: 3px;
+	padding: 2px 5px 0px 6px;
+}

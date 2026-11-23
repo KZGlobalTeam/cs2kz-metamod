@@ -56,6 +56,9 @@ namespace KZ::ui
 	void SetBoolClass(CCSCustomHudLayout *layout, const char *panelId, const char *className, bool &cache, bool want);
 	// Swaps the class that cache holds for want. NULL stands for no class.
 	void SetSwapClass(CCSCustomHudLayout *layout, const char *panelId, const char *&cache, const char *want);
+	// Slides a .kz-segment switch's thumb under option `pick` or hides it if `pick` is -1.
+	// Switches support up to seven options.
+	void SetSwitchPick(CCSCustomHudLayout *layout, const char *panelId, const char *&cache, i32 pick);
 
 	struct WindowStyle
 	{

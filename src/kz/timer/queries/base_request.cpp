@@ -27,7 +27,7 @@ void BaseRequest::Init(u64 features, const CCommand *args, bool queryLocal, bool
 {
 	this->features = features;
 	KeyValues3 params;
-	if (!utils::ParseArgsToKV3(args->ArgS(), params, const_cast<const char **>(paramKeys), KZ_ARRAYSIZE(paramKeys)))
+	if (!utils::ParseArgsToKV3(args->ArgS(), params, const_cast<const char **>(paramKeys), KZ_ARRAYSIZE(paramKeys), this->GetBareKey()))
 	{
 		this->Invalidate("");
 		this->PrintInstructions();
@@ -68,6 +68,7 @@ void BaseRequest::Init(u64 features, const CCommand *args, bool queryLocal, bool
 	if (this->HasFeature(RequestFeature::Mode))
 	{
 		kv = params.FindMember("mode");
+		this->modeGiven = kv && kv->GetString() && kv->GetString()[0];
 		this->SetupMode(kv ? kv->GetString() : "");
 	}
 	if (this->HasFeature(RequestFeature::Offset) && ((kv = params.FindMember("offset")) || (kv = params.FindMember("o"))))

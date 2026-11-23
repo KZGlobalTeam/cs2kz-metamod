@@ -119,3 +119,32 @@ constexpr char sql_getpbspro[] = R"(
         ) x ON x.RunTime = t.RunTime AND x.MapCourseID = t.MapCourseID AND x.ModeID = t.ModeID
         WHERE m.Name = '%s'
 )";
+
+// A page of a player's personal bests on every course with their server ranks from newest to oldest.
+// A rank is one plus the number of unbanned players with a faster time like in the course top.
+// The %s slots take " AND <alias>.Teleports=0" for pro runs and "" otherwise.
+constexpr char sql_getplayerpbs[] = R"(
+    SELECT t.ID, Maps.Name, mc.Name, t.RunTime, t.Teleports,
+        (SELECT COUNT(DISTINCT t3.SteamID64) + 1
+            FROM Times t3
+            LEFT JOIN Bans b3 ON b3.SteamID64=t3.SteamID64 AND (b3.ExpiresAt IS NULL OR b3.ExpiresAt > CURRENT_TIMESTAMP)
+            WHERE b3.ID IS NULL AND t3.MapCourseID=t.MapCourseID AND t3.ModeID=t.ModeID AND t3.StyleIDFlags=0
+            AND t3.RunTime < t.RunTime%s) AS PlayerRank
+        FROM Times t
+        INNER JOIN MapCourses mc ON mc.ID=t.MapCourseID
+        INNER JOIN Maps ON Maps.ID=mc.MapID
+        LEFT OUTER JOIN Times t2 ON t2.SteamID64=t.SteamID64 AND t2.MapCourseID=t.MapCourseID
+        AND t2.ModeID=t.ModeID AND t2.StyleIDFlags=t.StyleIDFlags
+        AND (t2.RunTime < t.RunTime OR (t2.RunTime = t.RunTime AND t2.ID < t.ID))%s
+    WHERE t2.ID IS NULL AND t.SteamID64=%llu AND t.ModeID=%d AND t.StyleIDFlags=0%s
+        ORDER BY t.Created DESC, t.ID DESC
+        LIMIT %d
+        OFFSET %llu
+)";
+
+// Counts the courses the player has a personal best on.
+constexpr char sql_getplayerpbcount[] = R"(
+    SELECT COUNT(DISTINCT t.MapCourseID)
+        FROM Times t
+        WHERE t.SteamID64=%llu AND t.ModeID=%d AND t.StyleIDFlags=0%s
+)";
