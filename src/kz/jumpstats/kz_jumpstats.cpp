@@ -1044,6 +1044,8 @@ void KZJumpstatsService::EndJump(bool landed)
 	}
 	KZJumpstatsService::AnnounceJump(jump);
 	this->player->recordingService->OnJumpFinish(jump);
+	// Runs after the recording service so the jump's UUID is set.
+	this->SaveJump(jump);
 	this->player->anticheatService->OnJumpFinish(jump);
 }
 

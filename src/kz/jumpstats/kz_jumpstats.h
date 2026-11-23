@@ -636,6 +636,9 @@ public:
 	void DetectExternalModifications();
 	void DetectWater();
 
+	// Jump saving
+	void SaveJump(Jump *jump);
+
 	// Jump reporting
 	static void AnnounceJump(Jump *jump);
 	static void BroadcastJumpToChat(KZPlayer *target, Jump *jump);

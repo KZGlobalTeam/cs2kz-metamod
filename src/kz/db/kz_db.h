@@ -8,6 +8,12 @@ class ISQLQuery;
 typedef std::function<void(std::vector<ISQLQuery *>)> TransactionSuccessCallbackFunc;
 typedef std::function<void(std::string, int)> TransactionFailureCallbackFunc;
 
+// The Jumpstats table stores its values as integers scaled by these.
+#define KZ_JUMPSTATS_DISTANCE_SCALE 10000.0
+#define KZ_JUMPSTATS_SYNC_SCALE     100.0
+#define KZ_JUMPSTATS_SPEED_SCALE    100.0
+#define KZ_JUMPSTATS_AIRTIME_SCALE  10000.0
+
 namespace KZ
 {
 	namespace Database
@@ -129,6 +135,11 @@ private:
 	bool isSetUp {};
 
 public:
+	bool IsSetUp() const
+	{
+		return this->isSetUp;
+	}
+
 	static void FindPlayerByAlias(const std::string &playerName, TransactionSuccessCallbackFunc onSuccess, TransactionFailureCallbackFunc onFailure);
 	// Finds the SteamID64, alias and first visit of a player by SteamID.
 	// The alias that best matches the name is used instead if the SteamID is 0.
@@ -163,6 +174,20 @@ public:
 	// Queries 2 and 3 count the players on the overall and pro leaderboards if withTotals is set.
 	static void QueryRecords(const std::string &mapName, const std::string &courseName, u32 modeID, u32 count, u32 offset,
 							 TransactionSuccessCallbackFunc onSuccess, TransactionFailureCallbackFunc onFailure, bool withTotals = false);
+
+	// Jumpstats
+	// Saves a jump and only keeps the player's best jumps of its type and mode.
+	// The first two queries return the previous best distance and the previous best block jump.
+	// Sync is a percentage.
+	static void SaveJumpstat(u64 steamID64, i32 jumpType, i32 modeID, f64 distance, f32 block, u32 strafes, f32 sync, f32 pre, f32 max, f32 airtime,
+							 const UUID_t &uuid, TransactionSuccessCallbackFunc onSuccess);
+	// Queries a page of each player's best jump of a type and mode and then counts the players.
+	static void QueryJumpTop(i32 jumpType, i32 modeID, bool block, u32 count, u64 offset, TransactionSuccessCallbackFunc onSuccess,
+							 TransactionFailureCallbackFunc onFailure);
+	static void FindPlayerJumps(u64 steamID64, TransactionSuccessCallbackFunc onSuccess, TransactionFailureCallbackFunc onFailure);
+	// The first query of both returns the UUIDs of the jumps they delete.
+	static void DeleteJumpstat(u32 id, TransactionSuccessCallbackFunc onSuccess, TransactionFailureCallbackFunc onFailure);
+	static void DeleteAllJumpstats(u64 steamID64, TransactionSuccessCallbackFunc onSuccess, TransactionFailureCallbackFunc onFailure);
 
 	static void Ban(u64 steamID64, const char *reason = nullptr, f32 duration = 0.0f, const UUID_t banId = UUID_t(false),
 					const UUID_t replayUuid = UUID_t(false), TransactionSuccessCallbackFunc onSuccess = OnGenericTxnSuccess,
