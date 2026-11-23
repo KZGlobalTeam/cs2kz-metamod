@@ -134,6 +134,9 @@ public:
 	// Collects the replays of the criteria's type that pass its filters in console table order.
 	std::vector<std::pair<UUID_t, ReplayHeader>> CollectMatches(const ReplayFilterCriteria &criteria);
 
+	// The map of the jump replay with this UUID or an empty string if there is none.
+	std::string GetJumpReplayMap(const UUID_t &uuid);
+
 	// Find replays by UUID substring.
 	// Returns matching UUIDs.
 	std::vector<UUID_t> FindReplaysByUUIDSubstring(const char *uuidSubstring);

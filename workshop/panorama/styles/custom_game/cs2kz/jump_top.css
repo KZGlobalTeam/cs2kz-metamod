@@ -1,0 +1,56 @@
+@import url("file://{resources}/styles/custom_game/cs2kz/tokens.css");
+@import url("file://{resources}/styles/custom_game/cs2kz/palette.css");
+@import url("file://{resources}/styles/custom_game/cs2kz/fonts.css");
+@import url("file://{resources}/styles/custom_game/cs2kz/components.css");
+
+.jumptop-window {
+	width: 1100px;
+}
+
+/* A row has 1034px inside its padding and the player column takes what the others leave. */
+.jt-col-num {
+	width: 48px;
+}
+
+.jt-col-player {
+	width: fill-parent-flow(1);
+}
+
+.jumptop-window .kz-record-name {
+	max-width: 242px;
+}
+
+.jt-col-distance {
+	width: 100px;
+}
+
+.jt-col-block {
+	width: 64px;
+}
+
+.jt-col-strafes,
+.jt-col-sync,
+.jt-col-pre,
+.jt-col-max {
+	width: 72px;
+}
+
+.jt-col-airtime {
+	width: 80px;
+}
+
+.jt-col-map {
+	width: 140px;
+}
+
+/* Keeps cell text off the next column. */
+.jt-col-distance,
+.jt-col-block,
+.jt-col-strafes,
+.jt-col-sync,
+.jt-col-pre,
+.jt-col-max,
+.jt-col-airtime,
+.jt-col-map {
+	padding-right: 12px;
+}
