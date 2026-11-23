@@ -1,0 +1,810 @@
+.hidden {
+	visibility: collapse;
+}
+
+.root,
+.kz-window-root {
+	width: 100%;
+	height: 100%;
+	z-index: 100;
+}
+
+/* The options menu adds no-blur while a HUD setting is being adjusted so the world behind it stays visible. */
+.kz-window {
+	horizontal-align: center;
+	vertical-align: middle;
+	flow-children: down;
+	padding: 16px;
+	border: 1px solid kz-border;
+	border-radius: kz-radius-md;
+	background-color: kz-window-bg;
+}
+
+.kz-window:not(.no-blur) {
+	world-blur: gaussian(2.26, 2.26, 1);
+}
+
+.kz-window-header {
+	flow-children: right;
+	width: 100%;
+	margin-bottom: 8px;
+}
+
+.kz-window-title {
+	vertical-align: center;
+	width: fill-parent-flow( 1 );
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	font-size: 36px;
+	color: kz-zinc-200;
+}
+
+/* Labels keep their cached font until their available width changes.
+   Every fixed-width text box gives up 1px under font-reflow so a font change lays it out again. */
+.font-reflow .kz-window-title {
+	padding-right: 1px;
+	margin-right: -1px;
+}
+
+.kz-window-close {
+	horizontal-align: right;
+	vertical-align: center;
+	width: 28px;
+	height: 28px;
+	margin-left: 12px;
+	border-radius: kz-radius-sm;
+	color: kz-zinc-400;
+	background-image: url("s2r://panorama/images/control_icons/x_close_png.vtex");
+	background-size: 16px 16px;
+	background-repeat: no-repeat;
+	background-position: 50% 50%;
+	wash-color: kz-zinc-400;
+	transition-property: wash-color, background-color;
+	transition-duration: 0.1s;
+}
+
+/* Closing a window opened from another one goes back to it. */
+.kz-window-close.back {
+	background-image: url("s2r://panorama/images/icons/ui/back.vsvg");
+}
+
+.kz-window-close:hover {
+	background-color: kz-hover;
+	color: kz-zinc-100;
+	wash-color: kz-zinc-100;
+}
+
+.kz-window-close:active {
+	background-size: 14px 14px;
+}
+
+.kz-sidebar-window {
+	width: 860px;
+	height: 620px;
+}
+
+.font-reflow .kz-sidebar-window {
+	padding-right: 15px;
+}
+
+.kz-section-header {
+	flow-children: right;
+	width: 100%;
+	margin-bottom: 14px;
+}
+
+.kz-section-title {
+	vertical-align: center;
+	width: fill-parent-flow( 1 );
+	padding-left: 8px;
+	border-left: 4px solid kz-blue-600;
+	font-size: kz-text-xl;
+	font-weight: bold;
+}
+
+.kz-panes {
+	flow-children: right;
+	width: 100%;
+	height: fill-parent-flow( 1 );
+}
+
+.kz-nav {
+	flow-children: down;
+	width: 240px;
+	height: 100%;
+	overflow: squish scroll;
+	padding-right: 12px;
+	margin-right: 14px;
+	border-right: 1px solid #ffffff1a;
+}
+
+.font-reflow .kz-nav {
+	padding-right: 11px;
+}
+
+.kz-nav-btn {
+	width: 100%;
+	height: 36px;
+	padding: 0px 10px;
+	border-radius: kz-radius-md;
+	background-color: #00000000;
+	transition-property: background-color;
+	transition-duration: 0.1s;
+}
+
+.kz-nav-btn:hover {
+	background-color: kz-hover;
+}
+
+.kz-nav-btn.selected {
+	background-color: kz-blue-400-tint;
+}
+
+.kz-nav-label {
+	vertical-align: center;
+	width: 100%;
+	text-overflow: clip;
+}
+
+.kz-nav-btn.selected .kz-nav-label {
+	color: kz-blue-400;
+}
+
+/* Lines the scroll bar up under the close button. */
+.kz-content {
+	flow-children: down;
+	width: fill-parent-flow( 1 );
+	height: 100%;
+	overflow: squish scroll;
+	padding-right: 18px;
+}
+
+.kz-content VerticalScrollBar {
+	margin-right: 6px;
+}
+
+/* The server adds current to the course the timer is on.
+   It adds bare to a course without API data since there is no tier to show. */
+
+.kz-course-chip {
+	flow-children: right;
+	height: 30px;
+	padding: 2px 4px;
+	border: 1px solid kz-border;
+	border-radius: kz-radius-sm;
+	background-color: kz-chip-bg;
+	font-size: kz-text-base;
+	font-weight: normal;
+	color: kz-zinc-200;
+}
+
+.kz-course-chip:hover,
+.kz-course-chip.current {
+	background-color: kz-zinc-600;
+}
+
+.kz-course-chip.state-ranked {
+	border-color: kz-ranked-border;
+}
+
+.kz-course-chip.state-pending {
+	border-color: kz-pending-border;
+}
+
+.kz-course-chip.state-unranked {
+	border-color: kz-unranked-border;
+}
+
+.kz-course-chip-name {
+	vertical-align: center;
+	font-size: kz-text-base;
+	font-weight: normal;
+	color: kz-zinc-200;
+}
+
+.font-reflow .kz-course-chip-name {
+	padding-right: 1px;
+	margin-right: -1px;
+}
+
+/* 1px of padding sits on top because Stratum2's line box puts digits and capitals ~1px high.
+   The right padding is 1px less because the digit's cell leaves room on its right. */
+.kz-course-chip-tier {
+	vertical-align: center;
+	margin-left: 4px;
+	padding: 1px 1px 0px 2px;
+	border: 1px solid kz-border;
+	border-radius: kz-radius-sm;
+	font-size: kz-text-base;
+	font-weight: normal;
+}
+
+.kz-course-chip.bare .kz-course-chip-tier {
+	visibility: collapse;
+}
+
+.font-reflow .kz-course-chip-tier {
+	margin-left: 3px;
+	margin-right: -1px;
+	padding: 1px 2px 0px 3px;
+}
+
+.kz-course-chip-tier.tier-1 {
+	color: kz-tier-1;
+	border-color: kz-tier-1-border;
+}
+
+.kz-course-chip-tier.tier-2 {
+	color: kz-tier-2;
+	border-color: kz-tier-2-border;
+}
+
+.kz-course-chip-tier.tier-3 {
+	color: kz-tier-3;
+	border-color: kz-tier-3-border;
+}
+
+.kz-course-chip-tier.tier-4 {
+	color: kz-tier-4;
+	border-color: kz-tier-4-border;
+}
+
+.kz-course-chip-tier.tier-5 {
+	color: kz-tier-5;
+	border-color: kz-tier-5-border;
+}
+
+.kz-course-chip-tier.tier-6 {
+	color: kz-tier-6;
+	border-color: kz-tier-6-border;
+}
+
+.kz-course-chip-tier.tier-7 {
+	color: kz-tier-7;
+	border-color: kz-tier-7-border;
+}
+
+.kz-course-chip-tier.tier-8 {
+	color: kz-tier-8;
+	border-color: kz-tier-8-border;
+}
+
+.kz-course-chip-tier.tier-9 {
+	color: kz-tier-9;
+	border-color: kz-tier-9-border;
+}
+
+.kz-course-chip-tier.tier-10 {
+	color: kz-tier-10;
+	border-color: kz-tier-10-border;
+}
+
+/* vertical-align aligns a child of a wrapping flow against the whole group instead of its own row.
+   Chips sit at the top of their row and the label's top padding lines its text up with the chip names.
+   (30px chip - 2px border - 4px padding - 19px line) / 2 + 3px = 5px */
+.kz-course-group {
+	flow-children: right-wrap;
+	width: 100%;
+	font-size: kz-text-base;
+	font-weight: normal;
+}
+
+.kz-course-group .kz-course-chip {
+	vertical-align: top;
+	margin-right: 4px;
+	margin-bottom: 4px;
+}
+
+.kz-course-group-label {
+	vertical-align: top;
+	padding-top: 5px;
+	margin-right: 4px;
+	margin-bottom: 4px;
+	font-size: kz-text-base;
+	font-weight: normal;
+	color: kz-zinc-400;
+}
+
+.font-reflow .kz-course-group-label {
+	padding-right: 1px;
+	margin-right: 3px;
+}
+
+VerticalScrollBar {
+	width: 6px;
+	height: 100%;
+	horizontal-align: right;
+	layout-position: fixed;
+	margin: 2px 0px;
+	border-radius: 3px;
+	background-color: kz-hover;
+}
+
+VerticalScrollBar .ScrollThumb {
+	width: 100%;
+	min-height: 32px;
+	border-radius: 3px;
+	background-color: kz-scroll-thumb;
+}
+
+VerticalScrollBar:hover .ScrollThumb {
+	background-color: kz-scroll-thumb-hover;
+}
+
+.snd .kz-window-close:hover,
+.snd .kz-nav-btn:not(.disabled):hover,
+.snd .kz-course-chip:hover {
+	sound: "UIPanorama.generic_button_rollover";
+}
+
+.snd .kz-window-close:active,
+.snd .kz-nav-btn:not(.disabled):active,
+.snd .kz-course-chip:active {
+	sound: "UIPanorama.generic_button_press";
+}
+
+.fill {
+	width: fill-parent-flow(1);
+	height: 1px;
+}
+
+.kz-filters {
+	flow-children: right;
+	width: 100%;
+	margin-bottom: 12px;
+}
+
+/* The server sets pick-0 to pick-6 on the switch.
+   Without one nothing is picked and the thumb stays hidden. */
+.kz-segment {
+	width: 160px;
+	padding: 4px;
+	vertical-align: center;
+	border-radius: kz-radius-md;
+	background-color: kz-zinc-800;
+}
+
+.kz-segment-thumb {
+	width: 76px;
+	height: 32px;
+	border-radius: kz-radius-md;
+	background-color: kz-zinc-300;
+	opacity: 0;
+	transition-property: position, background-color;
+	transition-duration: 0.2s;
+	transition-timing-function: cubic-bezier( 0.4, 0, 0.2, 1 );
+}
+
+.kz-segment.pick-0 .kz-segment-thumb,
+.kz-segment.pick-1 .kz-segment-thumb,
+.kz-segment.pick-2 .kz-segment-thumb,
+.kz-segment.pick-3 .kz-segment-thumb,
+.kz-segment.pick-4 .kz-segment-thumb,
+.kz-segment.pick-5 .kz-segment-thumb,
+.kz-segment.pick-6 .kz-segment-thumb {
+	opacity: 1;
+}
+
+.kz-segment.pick-1 .kz-segment-thumb {
+	x: 76px;
+}
+
+.kz-segment.tones .kz-segment-thumb {
+	background-color: kz-yellow-600;
+}
+
+.kz-segment.tones.pick-1 .kz-segment-thumb {
+	background-color: kz-blue-600;
+}
+
+/* Seven 56px options for the jump types. */
+.kz-segment.jumptypes {
+	width: 400px;
+}
+
+.kz-segment.jumptypes .kz-segment-thumb {
+	width: 56px;
+}
+
+.kz-segment.jumptypes.pick-1 .kz-segment-thumb {
+	x: 56px;
+}
+
+.kz-segment.jumptypes.pick-2 .kz-segment-thumb {
+	x: 112px;
+}
+
+.kz-segment.jumptypes.pick-3 .kz-segment-thumb {
+	x: 168px;
+}
+
+.kz-segment.jumptypes.pick-4 .kz-segment-thumb {
+	x: 224px;
+}
+
+.kz-segment.jumptypes.pick-5 .kz-segment-thumb {
+	x: 280px;
+}
+
+.kz-segment.jumptypes.pick-6 .kz-segment-thumb {
+	x: 336px;
+}
+
+.kz-segment-options {
+	flow-children: right;
+	width: 100%;
+}
+
+.kz-segment-option {
+	width: fill-parent-flow(1);
+	height: 32px;
+}
+
+.kz-segment-label {
+	horizontal-align: center;
+	vertical-align: center;
+	font-size: kz-text-base;
+	font-weight: bold;
+	color: kz-slate-600;
+	transition-property: color;
+	transition-duration: 0.15s;
+	transition-timing-function: cubic-bezier( 0.4, 0, 0.2, 1 );
+}
+
+.font-reflow .kz-segment-label {
+	padding-right: 1px;
+	margin-right: -1px;
+}
+
+.kz-segment-option:hover .kz-segment-label {
+	color: kz-slate-400;
+}
+
+.kz-segment-option.selected .kz-segment-label {
+	color: kz-slate-900;
+}
+
+.kz-rule-v {
+	width: 1px;
+	height: 32px;
+	margin: 0px 12px;
+	vertical-align: center;
+	background-color: kz-zinc-700;
+}
+
+/* Rows are 40px so ten fit on screen.
+   Rows don't clip vertically and action cells don't clip at all so tooltips can show above the buttons. */
+
+.kz-record-table {
+	flow-children: down;
+	width: 100%;
+	border: 1px solid kz-zinc-700;
+	border-radius: kz-radius-md;
+	background-color: kz-table-bg;
+}
+
+.kz-record-head {
+	flow-children: right;
+	width: 100%;
+	height: 48px;
+	padding: 0px 16px;
+	border-bottom: 1px solid kz-zinc-700;
+}
+
+.kz-record-row {
+	flow-children: right;
+	width: 100%;
+	height: 40px;
+	padding: 0px 16px;
+	border-top: 1px solid kz-zinc-800;
+	overflow: squish noclip;
+}
+
+.kz-record-row.first {
+	border-top: 0px solid kz-zinc-800;
+}
+
+.kz-record-th {
+	vertical-align: center;
+	font-size: kz-text-sm;
+	font-weight: bold;
+	color: kz-white;
+}
+
+.kz-record-cell {
+	vertical-align: center;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	font-size: kz-text-base;
+	color: kz-zinc-400;
+}
+
+.kz-record-cell.points-top {
+	color: kz-yellow-400;
+}
+
+.kz-record-cell.points-high {
+	color: kz-red-400;
+}
+
+.font-reflow .kz-record-th,
+.font-reflow .kz-record-cell,
+.font-reflow .kz-record-time-value {
+	padding-right: 1px;
+}
+
+/* font-reflow grows a badge's own padding by 1px on each side and takes 2px back in margin. */
+.font-reflow .kz-run-badge {
+	margin-left: 3px;
+	margin-right: -1px;
+	padding: 0px 5px;
+}
+
+/* Two 28px buttons with a 4px gap.
+   The heading lines up with the first icon 7px into its button. */
+.kz-col-replay {
+	width: 60px;
+}
+
+.kz-record-th.kz-col-replay {
+	padding-left: 7px;
+}
+
+.kz-record-actions {
+	flow-children: right;
+	height: 100%;
+	overflow: noclip;
+}
+
+.kz-record-time {
+	flow-children: right;
+	vertical-align: center;
+}
+
+.kz-record-time-value {
+	font-size: kz-text-base;
+	color: kz-slate-300;
+}
+
+.kz-run-badge {
+	vertical-align: top;
+	margin-left: 4px;
+	padding: 0px 4px;
+	border-radius: kz-radius-sm;
+	font-size: 10px;
+	color: kz-gray-100;
+}
+
+.kz-run-badge.tone-tp {
+	background-color: kz-yellow-600;
+}
+
+.kz-run-badge.tone-pro {
+	background-color: kz-blue-600;
+}
+
+/* border-radius clips a panel's children and its own background image near the corners regardless of overflow.
+   The rounded fill and the icon are separate children so the button itself stays square and lets its tooltip out. */
+.kz-icon-btn {
+	width: 28px;
+	height: 28px;
+	vertical-align: center;
+	overflow: noclip;
+}
+
+.kz-icon-btn.icon-copy {
+	margin-left: 4px;
+}
+
+.kz-icon-btn-face {
+	width: 100%;
+	height: 100%;
+	border-radius: kz-radius-md;
+}
+
+.kz-icon-btn-icon {
+	width: 100%;
+	height: 100%;
+	background-image: url("s2r://panorama/images/icons/ui/play.vsvg");
+	background-size: 14px 14px;
+	background-repeat: no-repeat;
+	background-position: 50% 50%;
+	wash-color: kz-zinc-200;
+}
+
+/* The copy icon is drawn larger because its strokes leave more margin than the play triangle. */
+.icon-copy .kz-icon-btn-icon {
+	background-image: url("s2r://panorama/images/custom_game/cs2kz/copy.vsvg");
+	background-size: 18px 18px;
+}
+
+.kz-icon-btn:not(.disabled):hover .kz-icon-btn-face {
+	background-color: kz-zinc-800;
+}
+
+/* The player cell is the column and the button is only as wide as the name.
+   A window adds static to the button to leave the name plain. */
+.kz-record-player {
+	height: 100%;
+	padding-right: 12px;
+}
+
+.kz-record-cell.kz-record-name {
+	color: kz-cyan-600;
+}
+
+.kz-name-btn:not(.static):hover .kz-record-name {
+	color: kz-cyan-400;
+}
+
+/* Each sheet colours the link text on hover.
+   The server adds static where there is nowhere to link to. */
+.kz-link-cell {
+	height: 100%;
+}
+
+.kz-name-btn {
+	height: 100%;
+	max-width: 100%;
+}
+
+.snd .kz-name-btn:not(.static):hover {
+	sound: "UIPanorama.generic_button_rollover";
+}
+
+.snd .kz-name-btn:not(.static):active {
+	sound: "UIPanorama.generic_button_press";
+}
+
+/* The tooltip sits above the date because the table's rounded corners would clip it below the last row.
+   The anchor keeps its 240px and the button fills the column because a label is never wider than its parent. */
+.kz-date-cell {
+	height: 100%;
+	overflow: squish noclip;
+}
+
+.kz-date-btn {
+	width: 100%;
+	height: 100%;
+	overflow: noclip;
+}
+
+.kz-date-btn .kz-tooltip-anchor,
+.kz-date-btn .kz-tooltip {
+	horizontal-align: left;
+}
+
+.kz-date-btn:hover .kz-tooltip-anchor {
+	opacity: 1;
+}
+
+/* Panorama doesn't paint a child that lies wholly outside its parent.
+   The tooltip hangs from a clear anchor that reaches 1px down into the button. */
+.kz-tooltip-anchor {
+	width: 240px;
+	height: 32px;
+	horizontal-align: center;
+	vertical-align: top;
+	margin-top: -31px;
+	overflow: noclip;
+	opacity: 0;
+}
+
+.kz-icon-btn:hover .kz-tooltip-anchor {
+	opacity: 1;
+}
+
+/* A disabled button keeps its tooltip to say why it does nothing. */
+.kz-icon-btn.disabled .kz-icon-btn-icon {
+	wash-color: kz-zinc-600;
+}
+
+.kz-tooltip {
+	horizontal-align: center;
+	vertical-align: top;
+	padding: 4px 10px;
+	border: 1px solid kz-zinc-800;
+	border-radius: kz-radius-sm;
+	background-color: kz-zinc-900;
+	box-shadow: #0000001a 0px 1px 3px 0px;
+	white-space: nowrap;
+	font-size: kz-text-xs;
+	color: kz-white;
+}
+
+/* Buttons in the title row put their tooltip on the right because there is no room above. */
+.tip-right .kz-tooltip-anchor {
+	height: 100%;
+	horizontal-align: left;
+	vertical-align: center;
+	margin-top: 0px;
+	margin-left: 27px;
+}
+
+.tip-right .kz-tooltip {
+	horizontal-align: left;
+	vertical-align: center;
+	margin-left: 7px;
+}
+
+/* The anchor can be wider because the title row leaves more room to the right. */
+.tip-right .kz-tooltip-anchor {
+	width: 320px;
+}
+
+/* Buttons by the window's right edge end their tooltip there because the window's rounded corners clip anything past it. */
+.tip-end .kz-tooltip-anchor,
+.tip-end .kz-tooltip {
+	horizontal-align: right;
+}
+
+.font-reflow .kz-tooltip {
+	padding: 4px 11px;
+}
+
+.kz-table-status {
+	horizontal-align: center;
+	margin: 24px 0px;
+	font-size: kz-text-sm;
+	color: kz-zinc-400;
+}
+
+.kz-pager {
+	flow-children: right;
+	width: 100%;
+	margin-top: 12px;
+}
+
+.kz-pager-count {
+	vertical-align: center;
+	font-size: kz-text-sm;
+	color: kz-zinc-400;
+}
+
+.kz-btn {
+	height: 32px;
+	margin-left: 8px;
+	padding: 0px 10px;
+	border: 1px solid kz-zinc-700;
+	border-radius: kz-radius-md;
+	background-color: kz-zinc-900;
+}
+
+.kz-btn:hover {
+	background-color: kz-zinc-800;
+}
+
+.kz-btn.disabled,
+.kz-btn.disabled:hover {
+	border: 1px solid kz-zinc-800;
+	background-color: kz-zinc-900;
+}
+
+.kz-btn-label {
+	vertical-align: center;
+	font-size: kz-text-sm;
+	color: kz-zinc-200;
+}
+
+.kz-btn.disabled .kz-btn-label {
+	color: kz-zinc-600;
+}
+
+.font-reflow .kz-pager-count,
+.font-reflow .kz-btn-label,
+.font-reflow .kz-table-status {
+	padding-right: 1px;
+	margin-right: -1px;
+}
+
+.snd .kz-segment-option:hover,
+.snd .kz-btn:hover,
+.snd .kz-icon-btn:not(.disabled):hover {
+	sound: "UIPanorama.generic_button_rollover";
+}
+
+.snd .kz-segment-option:active,
+.snd .kz-btn:active,
+.snd .kz-icon-btn:not(.disabled):active {
+	sound: "UIPanorama.generic_button_press";
+}
