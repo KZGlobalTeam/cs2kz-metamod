@@ -1,3 +1,4 @@
+@import url("file://{resources}/styles/custom_game/cs2kz/tokens.css");
 @import url("file://{resources}/styles/custom_game/cs2kz/palette.css");
 @import url("file://{resources}/styles/custom_game/cs2kz/fonts.css");
 @import url("file://{resources}/styles/custom_game/cs2kz/replay-bar.css");
@@ -18,21 +19,15 @@
 	flow-children: down;
 	/* The bar's 960 plus the padding. */
 	width: 988px;
-	/* Low enough that the top clears the MHUD timer at its default spot. */
-	margin-bottom: -6px;
-	padding: 6px 14px 9px 14px;
+	padding: 9px 14px 9px 14px;
 	overflow: noclip noclip;
 
-	/* Same as jumpstats panel. */
-	background-color: #000000b8;
-	background-image: url("s2r://panorama/images/backgrounds/bluedots_large_png.vtex");
-	background-size: 360px 360px;
-	background-img-opacity: 0.015;
-	world-blur: gaussian(1, 1, 1);
-	border-radius: 4px;
+	border: 1px solid kz-border;
+	border-radius: kz-radius-md;
+	background-color: kz-hud-bg;
+	world-blur: gaussian(2.26, 2.26, 1);
 }
 
-/* Times on the left, the player's name centred on the first line, speeds on the right. */
 .rp-info {
 	width: 960px;
 	height: 36px;
@@ -43,7 +38,7 @@
 	flow-children: right;
 }
 
-/* Titles and values in two columns so a value that changes width never moves the line below it. */
+/* Titles and values sit in two columns so a value that changes width never moves the line below it. */
 .rp-info-titles,
 .rp-info-values {
 	height: 100%;
@@ -54,7 +49,7 @@
 	margin-right: 8px;
 }
 
-/* The spectated player's name on the game's player card (.HudSpecplayer__player-name) without its team colour wash.
+/* Styled like the spectated player's name on the game's player card (.HudSpecplayer__player-name) without its team colour wash.
    Narrow enough to stay clear of the times and the speeds. */
 .rp-player {
 	max-width: 360px;
@@ -70,10 +65,8 @@
 /* Matches the jumpstats panel's row labels. */
 .rp-info-title {
 	height: 18px;
-	font-size: 14px;
-	font-weight: medium;
-	color: #c5cad0;
-	text-transform: uppercase;
+	font-size: 15px;
+	color: kz-zinc-400;
 }
 
 .rp-info-value {
@@ -88,7 +81,8 @@
 	flow-children: right;
 }
 
-/* Kept in step with KZ_REPLAY_CONTROLS_BAR_WIDTH. Couldn't manage to make it work with percentages. */
+/* Kept in step with KZ_REPLAY_CONTROLS_BAR_WIDTH.
+   Couldn't manage to make it work with percentages. */
 .rp-bar {
 	width: 960px;
 	height: 32px;
@@ -101,7 +95,7 @@
 	height: 6px;
 	vertical-align: center;
 	border-radius: 3px;
-	background-color: #ffffff26;
+	background-color: kz-zinc-700;
 }
 
 .rp-fill {
@@ -112,7 +106,7 @@
 
 .rp-fill-part {
 	height: 100%;
-	background-color: #ffffffb3;
+	background-color: kz-blue-400;
 }
 
 /* A spacer as wide as the marker's position goes first and is sized like the fill. */
@@ -142,7 +136,7 @@
 
 .rp-pct:hover .rp-pct-line {
 	height: 24px;
-	background-color: #ffffffff;
+	background-color: kz-white;
 }
 
 .rp-zone {
@@ -169,21 +163,19 @@
 }
 
 .zone-split .rp-zone-dot {
-	background-color: #f2c94c;
+	background-color: kz-yellow-400;
 }
 
 .zone-checkpoint .rp-zone-dot {
-	background-color: #56ccf2;
+	background-color: kz-cyan-400;
 }
 
 .zone-stage .rp-zone-dot {
-	background-color: #bb6bd9;
+	background-color: kz-purple-400;
 }
 
-/*
-	This has to overlap the marker by at least a pixel.
-	Panorama does not paint a child that lies wholly outside its parent whether it is noclip or not. 
-*/
+/* This has to overlap the marker by at least a pixel.
+   Panorama does not paint a child that lies wholly outside its parent (noclip or not). */
 .rp-zone-label {
 	opacity: 0;
 	width: 240px;
@@ -231,23 +223,28 @@
 	padding: 0px 6px;
 	margin: 0px 2px;
 	vertical-align: center;
-	border-radius: 3px;
-	background-color: #ffffff1a;
+	border: 1px solid kz-zinc-700;
+	border-radius: kz-radius-md;
+	background-color: kz-zinc-900;
 	transition-property: background-color;
 	transition-duration: 0.05s;
 }
 
-/* The menu's step buttons. */
 .rp-btn:hover {
-	background-color: #ffffff40;
+	background-color: kz-zinc-800;
 }
 
 .rp-btn.selected {
-	background-color: #ffffff4d;
+	border-color: kz-zinc-300;
+	background-color: kz-zinc-300;
+}
+
+.rp-btn.selected .rp-btn-label {
+	color: kz-slate-900;
 }
 
 .rp-btn.disabled:hover {
-	background-color: #ffffff1a;
+	background-color: kz-zinc-900;
 }
 
 .rp-btn.disabled .rp-btn-label {
@@ -259,12 +256,11 @@
 	vertical-align: center;
 	font-size: 14px;
 	/* The default text is off center by 1px.
-	   A transform: translateY(1px); is most likely because of it. */
+	   That is most likely the reason for any transform: translateY(1px). */
 	transform: translateY(1px);
 	text-align: center;
 }
 
-/* The run's start and end. */
 .rp-run-mark {
 	width: 16px;
 	height: 14px;
@@ -308,7 +304,7 @@
 }
 
 /* Previous and next split, checkpoint, stage and teleport.
-   Zones show their marker's diamond; teleports have no marker. */
+   Zones show their marker's diamond and teleports have no marker. */
 .rp-bottom {
 	width: 960px;
 	height: 28px;
@@ -340,9 +336,7 @@
 	transform: translateY(1px);
 	margin-right: 6px;
 	font-size: 14px;
-	font-weight: medium;
-	color: #c5cad0;
-	text-transform: uppercase;
+	color: kz-zinc-400;
 }
 
 .rp-breather,
@@ -354,14 +348,15 @@
 	width: 40px;
 	height: 30px;
 	margin: 0px 6px;
-	border-radius: 3px;
-	background-color: #ffffff26;
+	border: 1px solid #51a2ff80;
+	border-radius: kz-radius-md;
+	background-color: kz-zinc-900;
 	transition-property: background-color;
 	transition-duration: 0.05s;
 }
 
 .rp-play:hover {
-	background-color: #ffffff4d;
+	background-color: #1e2632;
 }
 
 .rp-play-icon {
@@ -373,6 +368,7 @@
 	background-size: 18px 18px;
 	background-repeat: no-repeat;
 	background-position: 50% 50%;
+	wash-color: kz-blue-400;
 }
 
 .paused .rp-play-icon {
@@ -384,18 +380,19 @@
 	width: 120px;
 	height: 26px;
 	vertical-align: center;
-	border-radius: 3px;
-	background-color: #ffffff1a;
+	border: 1px solid kz-zinc-700;
+	border-radius: kz-radius-md;
+	background-color: kz-zinc-900;
 	transition-property: background-color;
 	transition-duration: 0.05s;
 }
 
 .rp-side-btn:hover {
-	background-color: #ffffff40;
+	background-color: kz-zinc-800;
 }
 
 .rp-side-btn.disabled:hover {
-	background-color: #ffffff1a;
+	background-color: kz-zinc-900;
 }
 
 .rp-side-btn.disabled .rp-side-btn-label {
@@ -413,14 +410,15 @@
 	horizontal-align: right;
 }
 
-/* The HUD edit bar's key chips with the border on a panel of its own so the label centres inside it. */
+/* The border is on a separate panel so the label centres inside it. */
 .rp-key {
 	height: 18px;
 	margin-right: 7px;
 	padding: 0px 5px;
 	vertical-align: center;
-	border: 1px solid #ffffff90;
-	border-radius: 3px;
+	border: 1px solid kz-gray-700;
+	border-radius: kz-radius-md;
+	background-color: kz-gray-900;
 }
 
 .rp-key-label {
@@ -430,7 +428,7 @@
 	transform: translateY(1px);
 	font-size: 12px;
 	font-weight: bold;
-	color: #ffffffff;
+	color: kz-code;
 	text-transform: uppercase;
 }
 
@@ -438,7 +436,7 @@
 	vertical-align: center;
 	transform: translateY(1px);
 	font-size: 14px;
-	color: #ffffffe0;
+	color: kz-zinc-200;
 }
 
 .snd .rp-btn:not(.disabled):hover,

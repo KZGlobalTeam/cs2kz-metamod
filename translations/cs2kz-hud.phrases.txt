@@ -461,19 +461,10 @@
 	{
 		// T3, the tier tag beside the All and Pro rows
 		"#format"	"tier:i"
-		"en"		" · T{tier}"
-		"zho"		" · T{tier}"
-		"ua"		" · T{tier}"
-		"ru"		" · T{tier}"
-	}
-	"HUD - Course Tiers"
-	{
-		//  · T3 / Pro T5
-		"#format"	"tp:i,pro:i"
-		"en"		" · T{tp} / Pro T{pro}"
-		"zho"		" · T{tp} / Pro T{pro}"
-		"ua"		" · T{tp} / Pro T{pro}"
-		"ru"		" · T{tp} / Pro T{pro}"
+		"en"		"T{tier}"
+		"zho"		"T{tier}"
+		"ua"		"T{tier}"
+		"ru"		"T{tier}"
 	}
 	"HUD - Course Pill Split"
 	{

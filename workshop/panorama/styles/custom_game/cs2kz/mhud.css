@@ -1,3 +1,4 @@
+@import url("file://{resources}/styles/custom_game/cs2kz/tokens.css");
 @import url("file://{resources}/styles/custom_game/cs2kz/palette.css");
 @import url("file://{resources}/styles/custom_game/cs2kz/fonts.css");
 @import url("file://{resources}/styles/custom_game/cs2kz/font-size.css");
@@ -16,7 +17,8 @@
 	z-index: 1;
 }
 
-/* The game sets these on an ancestor panel; the MHUD would otherwise draw over both screens. */
+/* The game sets these on an ancestor panel.
+   The MHUD would otherwise draw over both screens. */
 .HUD_SCOREBOARD_VISIBLE .root,
 .HUD_ENDOFMATCH_VISIBLE .root {
 	visibility: collapse;
@@ -86,11 +88,12 @@
 
 .key-button.pressed {
 	background-color: #24f09780;
-	/* glow; keys.css overrides both from mhudKeysPressedColor. */
+	/* keys.css overrides the fill and the glow from mhudKeysPressedColor. */
 	box-shadow: 0 0 10px #3beda080;
 }
 
-/* keys.css sets the fill and glow together; these switch off one without the other. */
+/* keys.css sets the fill and glow together.
+   These rules switch off one without the other. */
 .keys.keys-noglow .key-button.pressed {
 	box-shadow: 0 0 0 #00000000;
 }
@@ -99,7 +102,7 @@
 	background-color: #00000000;
 }
 
-/* mhudKeysBorder off: keep the 2px so the layout holds but stop drawing it. */
+/* With mhudKeysBorder off the 2px stay so the layout holds but the border isn't drawn. */
 .keys-noborder .key-button {
 	border-color: #00000000;
 }
@@ -142,7 +145,7 @@
 	visibility: visible;
 }
 
-/* mhudKeysIdle = Underscore: an unpressed key shows a dash instead of its glyph. */
+/* With mhudKeysIdle set to Underscore an unpressed key shows a dash instead of its glyph. */
 .key-glyph-idle {
 	visibility: collapse;
 }
@@ -155,7 +158,7 @@
 	visibility: visible;
 }
 
-/* J shows how many jump presses came in while they keep coming with mhudKeysJumpCount on regardless of the idle style. */
+/* J shows how many jump presses came in while they keep coming if mhudKeysJumpCount is on (whatever the idle style). */
 .key-glyph-count {
 	visibility: collapse;
 }
@@ -173,9 +176,8 @@
 	opacity: 1;
 }
 
-/* Jumpstats.
-   The stack is an element like the others so it is placed by its x/y classes and scaled by js-scale.css.
-   Its labels take the element's font class so none of them sets a font-family. */
+/* The jumpstats stack is placed by its x/y classes and scaled by js-scale.css like the other elements.
+   Its labels take the element's font class and none of them sets a font-family. */
 .js-stack {
 	width: 288px;
 	flow-children: down;
@@ -187,7 +189,8 @@
 	margin-bottom: 8px;
 }
 
-/*pills are all bottom anchored in js-history.. the age class alone moves, shrinks and fades them*/
+/* Pills are all bottom anchored in js-history.
+   The age class alone moves, shrinks and fades them. */
 .js-hist {
 	opacity: 0;
 	transform: translate3d(0px, -132px, 0px) scale3d(0.68, 1, 1);
@@ -198,10 +201,8 @@
 	vertical-align: bottom;
 	padding: 0px 13px;
 
-	background-color: #000000b8;
-	background-size: 360px 360px;
-	background-img-opacity: 0.015;
-	border-radius: 4px;
+	background-color: kz-hud-bg;
+	border-radius: kz-radius-md;
 
 	transform-origin: 100% 50%;
 	transition-property: transform, opacity;
@@ -209,7 +210,7 @@
 	transition-timing-function: ease-out;
 }
 
-/*0 is only ever a fresh hist pill.. it slides in from the side*/
+/* Age 0 is only ever a fresh history pill that slides in from the side. */
 .js-hist.js-age-0,
 .js-hist.js-age-0b {
 	opacity: 1;
@@ -268,7 +269,7 @@
 	opacity: 0;
 }
 
-/* mhudJsHistoryBelow puts the history under the panel so the pills hang from its top and age downwards. */
+/* mhudJsHistoryBelow puts the history under the panel and the pills hang from its top and age downwards. */
 .js-stack.js-below {
 	flow-children: up;
 }
@@ -321,8 +322,7 @@
 	vertical-align: center;
 	margin-left: 38px;
 	font-size: 11px;
-	font-weight: medium;
-	color: #c5cad0;
+	color: kz-zinc-400;
 }
 
 .js-hist-dist {
@@ -337,20 +337,18 @@
 	flow-children: down;
 	padding: 11px 14px 9px 14px;
 
-	background-color: #000000b8;
-	background-size: 360px 360px;
-	background-img-opacity: 0.015;
-	border-radius: 4px;
+	background-color: kz-hud-bg;
+	border-radius: kz-radius-md;
 
 	opacity: 0;
 }
 
-/* panel-opacity.css sets the background's alpha and scales its world-blur with it because the blur ignores alpha.
-   A see-through background drops its dots as well. */
+/* panel-opacity.css sets the background alpha and scales its world-blur with it because the blur ignores alpha.
+   A see-through background also drops its border. */
 .element:not(.js-bg--0pct) .js-panel,
 .element:not(.js-bg--0pct) .js-hist,
 .element:not(.js-bg--0pct) .ci-hist {
-	background-image: url("s2r://panorama/images/backgrounds/bluedots_large_png.vtex");
+	border: 1px solid kz-border;
 }
 
 .js-panel.js-show {
@@ -401,16 +399,13 @@
 	vertical-align: center;
 	font-size: 15px;
 	font-weight: bold;
-	text-transform: uppercase;
 }
 
 .js-tier-name {
 	horizontal-align: right;
 	vertical-align: center;
 	font-size: 13px;
-	font-weight: medium;
-	color: #828282;
-	text-transform: uppercase;
+	color: kz-zinc-500;
 }
 
 .js-dist {
@@ -424,7 +419,7 @@
 .js-divider {
 	width: 100%;
 	height: 0px;
-	border-bottom: 1px solid #ffffff14;
+	border-bottom: 1px solid kz-border;
 	margin-bottom: 8px;
 }
 
@@ -437,9 +432,7 @@
 	horizontal-align: left;
 	vertical-align: center;
 	font-size: 14px;
-	font-weight: medium;
-	color: #c5cad0;
-	text-transform: uppercase;
+	color: kz-zinc-400;
 }
 
 .js-value {
@@ -447,7 +440,7 @@
 	vertical-align: center;
 	font-size: 15px;
 	font-weight: bold;
-	/* The chat's olive that it prints every stat value in. */
+	/* The chat's olive used for every stat value. */
 	color: #bfff90;
 }
 
@@ -457,8 +450,10 @@
 	flow-children: down;
 }
 
+/* Edit mode's box sizes in layout/edit.cpp follow these heights. */
 .ci-panel {
 	opacity: 1;
+	padding: 10px 12px;
 }
 
 /* The course pills hang below the panel and keep their width so the times stay readable. */
@@ -478,10 +473,8 @@
 	padding: 0px 13px;
 	flow-children: right;
 
-	background-color: #000000b8;
-	background-size: 360px 360px;
-	background-img-opacity: 0.015;
-	border-radius: 4px;
+	background-color: kz-hud-bg;
+	border-radius: kz-radius-md;
 
 	transition-property: transform, opacity;
 	transition-duration: 0.3s;
@@ -525,7 +518,8 @@
 }
 
 /* A zone name such as STAGE 12 is wider than a jump type.
-   The info takes whatever the gap leaves and shrinks to fit it because a slow split or a long compare target runs into the gap otherwise. */
+   The info takes whatever the gap leaves and shrinks to fit it.
+   A slow split or a long compare target runs into the gap otherwise. */
 .ci-hist .js-hist-type {
 	width: 76px;
 }
@@ -554,90 +548,167 @@
 }
 
 .ci-map {
-	text-transform: none;
-	color: #ffffff;
+	font-size: 16px;
+	color: kz-zinc-100;
+}
+
+/* Without API data the state label has no class and no text and draws nothing. */
+.ci-global,
+.ci-nonglobal,
+.ci-ranked,
+.ci-pending,
+.ci-unranked {
+	padding: 0px 5px;
+	border: 1px solid kz-zinc-600;
+	border-radius: kz-radius-sm;
+	font-size: 12px;
 }
 
 .ci-global {
-	color: #40ff40;
+	border-color: kz-green-400;
+	color: kz-green-400;
 }
 
 .ci-nonglobal {
-	color: #e4ae39;
+	border-color: kz-yellow-400;
+	color: kz-yellow-400;
 }
 
-/* The course, mode and tiers on the left and the course's ranked state in that mode on the right. */
 .ci-course-row {
 	width: 100%;
 	height: 18px;
-	margin-bottom: 6px;
+	margin-top: 4px;
+	margin-bottom: 8px;
 }
 
 .ci-course {
 	horizontal-align: left;
 	vertical-align: center;
 	font-size: 13px;
-	font-weight: medium;
-	color: #c5cad0;
+	color: kz-zinc-400;
 }
 
 .ci-ranked {
-	color: #40ff40;
+	border-color: kz-green-400;
+	color: kz-green-400;
 }
 
 .ci-pending {
-	color: #e4ae39;
+	border-color: kz-yellow-400;
+	color: kz-yellow-400;
 }
 
 .ci-unranked {
-	color: #ff4040;
+	border-color: kz-gray-300;
+	color: kz-gray-300;
 }
 
 .ci-row {
 	flow-children: right;
 }
 
-/* A record row drawn like the overlay's. */
+.ci-record {
+	height: 22px;
+}
+
+.ci-key {
+	flow-children: right;
+	width: 66px;
+	vertical-align: center;
+}
+
 .ci-label {
-	width: 44px;
+	vertical-align: center;
+	font-size: 13px;
+	color: kz-zinc-400;
 }
 
-.ci-label-all {
-	color: #ca8a04;
+.ci-tier {
+	vertical-align: center;
+	margin-left: 5px;
+	padding: 0px 3px;
+	border: 1px solid kz-border;
+	border-radius: kz-radius-sm;
+	font-size: 11px;
 }
 
-.ci-label-pro {
-	color: #2563eb;
+.ci-tier.tier-1 {
+	color: kz-tier-1;
+	border-color: kz-tier-1-border;
+}
+
+.ci-tier.tier-2 {
+	color: kz-tier-2;
+	border-color: kz-tier-2-border;
+}
+
+.ci-tier.tier-3 {
+	color: kz-tier-3;
+	border-color: kz-tier-3-border;
+}
+
+.ci-tier.tier-4 {
+	color: kz-tier-4;
+	border-color: kz-tier-4-border;
+}
+
+.ci-tier.tier-5 {
+	color: kz-tier-5;
+	border-color: kz-tier-5-border;
+}
+
+.ci-tier.tier-6 {
+	color: kz-tier-6;
+	border-color: kz-tier-6-border;
+}
+
+.ci-tier.tier-7 {
+	color: kz-tier-7;
+	border-color: kz-tier-7-border;
+}
+
+.ci-tier.tier-8 {
+	color: kz-tier-8;
+	border-color: kz-tier-8-border;
+}
+
+.ci-tier.tier-9 {
+	color: kz-tier-9;
+	border-color: kz-tier-9-border;
+}
+
+.ci-tier.tier-10 {
+	color: kz-tier-10;
+	border-color: kz-tier-10-border;
 }
 
 .ci-progress-label {
 	width: 120px;
-	color: #c5cad0;
 }
 
 .ci-time {
 	vertical-align: center;
 	font-size: 15px;
 	font-weight: bold;
-	color: #f3f4f6;
+	color: kz-zinc-100;
 }
 
 .ci-badge {
 	vertical-align: center;
 	margin-left: 4px;
 	padding: 0px 4px;
-	border-radius: 2px;
+	border-radius: kz-radius-sm;
 	font-size: 11px;
 	font-weight: bold;
-	color: #f3f4f6;
+	color: kz-gray-100;
 }
 
 .ci-badge-tp {
-	background-color: #ca8a04;
+	background-color: kz-yellow-600;
 }
 
 .ci-badge-pro {
-	background-color: #2563eb;
+	background-color: kz-blue-600;
 }
 
 .ci-name {
@@ -647,21 +718,19 @@
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	font-size: 13px;
-	font-weight: medium;
-	color: #06b6d4;
+	color: kz-cyan-500;
 }
 
 /* The viewer holds this record. */
 .ci-name.ci-own {
-	color: #22c55e;
+	color: kz-green-500;
 }
 
 .ci-gap {
 	margin-left: 6px;
 	vertical-align: center;
 	font-size: 13px;
-	font-weight: medium;
-	color: #c9301e;
+	color: kz-red-400;
 }
 
 /* The race panel borrows the course panel's look. */
@@ -675,19 +744,19 @@
 }
 
 .race-title {
-	color: #e4ae39;
+	color: kz-white;
 }
 
 .race-accepted {
-	color: #40ff40;
+	color: kz-green-400;
 }
 
 .race-running {
-	color: #ffff20;
+	color: kz-yellow-400;
 }
 
 .race-finished {
-	color: #5e98d9;
+	color: kz-blue-400;
 }
 
 .race-row {
@@ -706,7 +775,7 @@
 	text-overflow: ellipsis;
 	font-size: 15px;
 	font-weight: bold;
-	color: #f3f4f6;
+	color: kz-gray-100;
 }
 
 /* Centred a fifth of the screen above the crosshair. */
@@ -717,11 +786,11 @@
 	font-family: Stratum2, "Arial Unicode MS";
 	font-size: 40px;
 	font-weight: bold;
-	color: #ffffff;
+	color: kz-white;
 	text-shadow: 0px 0px 4px 2 #000000ff;
 }
 
-/* The chat colors of distanceTierColors: grey, grey, blue, green, darkred, gold, orchid. */
+/* The chat colors of distanceTierColors (grey, grey, blue, green, darkred, gold, orchid). */
 .js-tier-0 {
 	color: #c5cad0;
 }
@@ -744,7 +813,7 @@
 	color: #d32ce6;
 }
 
-/* Chat colors for single values (such as the W release). */
+/* Chat colors for single values like the W release. */
 .js-c-red {
 	color: #ff4040;
 }
@@ -758,7 +827,7 @@
 	color: #c5cad0;
 }
 
-/* Each element's box in edit mode as sized by box-size.css.
+/* Each element's box in edit mode is sized by box-size.css.
    The move button fills it and the corner buttons sit on top. */
 .edit-hit {
 	width: 100%;
@@ -773,8 +842,8 @@
 }
 
 .edit-box.dragging .edit-hit {
-	border-color: #3beda0ff;
-	background-color: #3beda028;
+	border-color: kz-blue-400;
+	background-color: #51a2ff28;
 }
 
 .edit-corner {
@@ -785,7 +854,7 @@
 }
 
 .edit-corner:hover {
-	background-color: #3beda0ff;
+	background-color: kz-blue-400;
 }
 
 .edit-box.dragging .edit-corner {
@@ -836,20 +905,17 @@
 	flow-children: right;
 	padding: 8px 12px 8px 16px;
 
-	/* The jumpstats panel's background is the menu's blue dots over a see-through black. */
-	background-color: #000000b8;
-	background-image: url("s2r://panorama/images/backgrounds/bluedots_large_png.vtex");
-	background-size: 360px 360px;
-	background-img-opacity: 0.015;
-	world-blur: gaussian(1, 1, 1);
-	border-radius: 4px;
+	border: 1px solid kz-border;
+	border-radius: kz-radius-md;
+	background-color: kz-hud-bg;
+	world-blur: gaussian(2.26, 2.26, 1);
 }
 
 .edit-hint {
 	vertical-align: center;
 	margin-right: 16px;
 	font-size: 20px;
-	color: #ffffffe0;
+	color: kz-zinc-200;
 }
 
 .edit-keys {
@@ -857,30 +923,31 @@
 	vertical-align: center;
 }
 
-/* The key the player has bound as read from the game's bind_* dialog variables. */
 .edit-key {
 	vertical-align: center;
 	margin-right: 6px;
 	padding: 1px 6px;
-	border: 1px solid #ffffff90;
-	border-radius: 3px;
+	border: 1px solid kz-gray-700;
+	border-radius: kz-radius-md;
+	background-color: kz-gray-900;
 	font-size: 16px;
-	color: #ffffffff;
+	color: kz-code;
 	text-transform: uppercase;
 }
 
 .edit-done {
 	vertical-align: center;
 	padding: 4px 16px;
-	border-radius: 4px;
-	background-color: #3beda0c0;
+	border: 1px solid #51a2ff80;
+	border-radius: kz-radius-md;
+	background-color: kz-zinc-900;
 }
 
 .edit-done:hover {
-	background-color: #3beda0ff;
+	background-color: #1e2632;
 }
 
 .edit-done-label {
 	font-size: 20px;
-	color: #000000ff;
+	color: kz-blue-400;
 }
