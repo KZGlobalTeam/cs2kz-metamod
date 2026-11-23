@@ -21,24 +21,12 @@
 }
 
 /* kz_menu.cpp flips font-reflow on every font change. */
-.font-reflow .popup {
-	padding-right: 15px;
-}
-
-.font-reflow .list-rows {
-	padding-right: 9px;
-}
-
 .font-reflow .step-btn {
 	width: 43px;
 }
 
 .font-reflow .step-readout {
 	width: 109px;
-}
-
-.font-reflow .popup-page {
-	width: 59px;
 }
 
 .font-reflow .item-value {
@@ -247,7 +235,6 @@
 
 .popup {
 	x: 594px;
-	width: 300px;
 }
 
 /* The grid gets 308px because .popup's padding comes out of this width.
@@ -284,81 +271,6 @@
 	box-shadow: 0 0 6px #51a2ffcc;
 }
 
-.list-rows {
-	flow-children: down;
-	width: 260px;
-	height: 450px;
-	overflow: squish scroll;
-	padding-right: 10px;
-}
-
-.li {
-	width: 100%;
-	height: 36px;
-	padding: 0px 10px;
-	border-radius: kz-radius-md;
-	background-color: #00000000;
-}
-
-.li:hover {
-	background-color: kz-hover;
-}
-
-.li.selected {
-	background-color: kz-blue-400-tint;
-}
-
-.li.selected .li-label {
-	color: kz-blue-400;
-}
-
-.popup-note {
-	width: 100%;
-	margin-top: 8px;
-	font-size: kz-text-xs;
-	opacity: 0.6;
-}
-
-.li-label {
-	width: 100%;
-	vertical-align: center;
-	font-size: kz-text-base;
-	text-overflow: ellipsis;
-}
-
-.popup-nav {
-	flow-children: right;
-	horizontal-align: center;
-	margin-top: 12px;
-}
-
-.popup-btn {
-	height: 32px;
-	padding: 0px 12px;
-	margin: 0px 3px;
-	border-radius: kz-radius-md;
-	background-color: kz-zinc-800;
-	transition-property: background-color;
-	transition-duration: 0.05s;
-}
-
-.popup-btn:hover {
-	background-color: kz-zinc-700;
-}
-
-.popup-btn-label {
-	horizontal-align: center;
-	vertical-align: center;
-	font-size: kz-text-sm;
-	color: kz-zinc-200;
-}
-
-.popup-page {
-	vertical-align: middle;
-	width: 60px;
-	text-align: center;
-}
-
 /* It needs its own offset to keep the same gap because it is wider than the other popups. */
 /* The z row reuses the readout slot for an axis label.
    The main readout shows all three. */
@@ -369,15 +281,6 @@
 .step-popup {
 	width: 340px;
 	x: 614px;
-}
-
-.popup-title {
-	width: fill-parent-flow(1);
-	vertical-align: center;
-	padding-left: 8px;
-	border-left: 4px solid kz-blue-600;
-	font-size: kz-text-lg;
-	font-weight: bold;
 }
 
 .step-row {
@@ -508,14 +411,6 @@
 	color: kz-zinc-200;
 }
 
-.popup .kz-window-close {
-	margin-bottom: 8px;
-}
-
-.kz-section-header .kz-window-close {
-	margin-bottom: 0px;
-}
-
 /* The server adds snd to menu_root if menuSounds is on. */
 
 .snd .item:not(.disabled):hover {
@@ -531,22 +426,6 @@
 }
 
 .snd .swatch:active {
-	sound: "UIPanorama.generic_button_press";
-}
-
-.snd .li:hover {
-	sound: "UIPanorama.generic_button_rollover";
-}
-
-.snd .li:active {
-	sound: "UIPanorama.generic_button_press";
-}
-
-.snd .popup-btn:hover {
-	sound: "UIPanorama.generic_button_rollover";
-}
-
-.snd .popup-btn:active {
 	sound: "UIPanorama.generic_button_press";
 }
 

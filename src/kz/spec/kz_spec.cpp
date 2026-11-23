@@ -2,6 +2,7 @@
 #include "../timer/kz_timer.h"
 #include "kz/language/kz_language.h"
 #include "kz/away/kz_away.h"
+#include "kz/ui/player_picker.h"
 #include "utils/simplecmds.h"
 #include "utils/ctimer.h"
 
@@ -292,6 +293,39 @@ SCMD(kz_spec, SCFL_SPEC)
 	{
 		player->specService->SpectatePlayer(args->Arg(1));
 		return true;
+	}
+
+	// A chat command lists the players to pick from unless the addon is unavailable or nobody else can be watched.
+	const bool chat = args->Arg(0)[0] == SCMD_CHAT_TRIGGER || args->Arg(0)[0] == SCMD_CHAT_SILENT_TRIGGER;
+	if (chat)
+	{
+		std::vector<KZPlayer *> candidates;
+		for (KZPlayer *otherPlayer : g_pKZPlayerManager->GetAllSlots())
+		{
+			if (otherPlayer != player && CanBeSpectated(otherPlayer))
+			{
+				candidates.push_back(otherPlayer);
+			}
+		}
+		auto onPick = [](KZPlayer *player, KZPlayer *target)
+		{
+			if (!player->specService->CanSpectate())
+			{
+				player->languageService->PrintChat(true, false, "Spectate Failure (Generic)");
+				return;
+			}
+			if (!CanBeSpectated(target))
+			{
+				player->languageService->PrintChat(true, false, "Spectate Failure (Dead)");
+				return;
+			}
+			player->specService->SpectatePlayer(target);
+		};
+		KZPlayer *watched = player->specService->GetSpectatedPlayer();
+		if (!candidates.empty() && player->uiService->GetWindow<KZ::ui::PlayerPicker>()->Show("Spectate - Picker Title", candidates, watched, onPick))
+		{
+			return true;
+		}
 	}
 
 	// Find the first alive player other than the player themselves.

@@ -127,4 +127,13 @@
 		"es"		"CS2KZ actualmente esta en fase de pruebas (Beta). Recordatorio de que todos los records y datos serán borrados cuando CS2KZ esté fuera del modo Beta."
 		"ko"		"CS2KZ는 현재 테스트 단계입니다. CS2KZ가 베타를 종료하면 모든 기록과 데이터가 삭제될 수 있음을 유의하세요."
 	}
+	"Picker - No Players"
+	{
+		"en"		"No players to pick."
+	}
+	"Picker - Player Left"
+	{
+		"#format"	"name:s"
+		"en"		"{default}{name}{grey} left the server."
+	}
 }

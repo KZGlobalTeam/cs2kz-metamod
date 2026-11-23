@@ -114,4 +114,8 @@
 		"de"		"{darkred}Der von dir angegebene Spieler konnte nicht gefunden werden."
 		"es"		"{darkred}No se puede encontrar el jugador especificado."
 	}
+	"Spectate - Picker Title"
+	{
+		"en"		"Spectate Player"
+	}
 }

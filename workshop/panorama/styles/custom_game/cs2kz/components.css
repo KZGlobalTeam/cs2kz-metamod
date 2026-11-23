@@ -797,14 +797,126 @@ VerticalScrollBar:hover .ScrollThumb {
 	margin-right: -1px;
 }
 
+.font-reflow .popup {
+	padding-right: 15px;
+}
+
+.font-reflow .list-rows {
+	padding-right: 9px;
+}
+
+.font-reflow .popup-page {
+	width: 59px;
+}
+
+.popup {
+	width: 300px;
+}
+
+.list-rows {
+	flow-children: down;
+	width: 260px;
+	height: 450px;
+	overflow: squish scroll;
+	padding-right: 10px;
+}
+
+.li {
+	width: 100%;
+	height: 36px;
+	padding: 0px 10px;
+	border-radius: kz-radius-md;
+	background-color: #00000000;
+}
+
+.li:hover {
+	background-color: kz-hover;
+}
+
+.li.selected {
+	background-color: kz-blue-400-tint;
+}
+
+.li.selected .li-label {
+	color: kz-blue-400;
+}
+
+.popup-note {
+	width: 100%;
+	margin-top: 8px;
+	font-size: kz-text-xs;
+	opacity: 0.6;
+}
+
+.li-label {
+	width: 100%;
+	vertical-align: center;
+	font-size: kz-text-base;
+	text-overflow: ellipsis;
+}
+
+.popup-nav {
+	flow-children: right;
+	horizontal-align: center;
+	margin-top: 12px;
+}
+
+.popup-btn {
+	height: 32px;
+	padding: 0px 12px;
+	margin: 0px 3px;
+	border-radius: kz-radius-md;
+	background-color: kz-zinc-800;
+	transition-property: background-color;
+	transition-duration: 0.05s;
+}
+
+.popup-btn:hover {
+	background-color: kz-zinc-700;
+}
+
+.popup-btn-label {
+	horizontal-align: center;
+	vertical-align: center;
+	font-size: kz-text-sm;
+	color: kz-zinc-200;
+}
+
+.popup-page {
+	vertical-align: middle;
+	width: 60px;
+	text-align: center;
+}
+
+.popup-title {
+	width: fill-parent-flow(1);
+	vertical-align: center;
+	padding-left: 8px;
+	border-left: 4px solid kz-blue-600;
+	font-size: kz-text-lg;
+	font-weight: bold;
+}
+
+.popup .kz-window-close {
+	margin-bottom: 8px;
+}
+
+.kz-section-header .kz-window-close {
+	margin-bottom: 0px;
+}
+
 .snd .kz-segment-option:hover,
 .snd .kz-btn:hover,
-.snd .kz-icon-btn:not(.disabled):hover {
+.snd .kz-icon-btn:not(.disabled):hover,
+.snd .li:hover,
+.snd .popup-btn:hover {
 	sound: "UIPanorama.generic_button_rollover";
 }
 
 .snd .kz-segment-option:active,
 .snd .kz-btn:active,
-.snd .kz-icon-btn:not(.disabled):active {
+.snd .kz-icon-btn:not(.disabled):active,
+.snd .li:active,
+.snd .popup-btn:active {
 	sound: "UIPanorama.generic_button_press";
 }

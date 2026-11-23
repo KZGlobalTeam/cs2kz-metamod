@@ -1,0 +1,121 @@
+<!-- Every row is written out because layouts have no loops.
+     The count must match KZ_PICKER_ROWS. -->
+<root>
+  <styles>
+    <include src="file://{resources}/styles/custom_game/cs2kz/player_picker.css" />
+  </styles>
+  <Panel class="root" hittest="false">
+    <Panel id="picker_root" class="kz-window-root hidden" hittest="false">
+      <Panel id="picker_window" class="kz-window popup player-picker">
+        <Panel class="kz-section-header">
+          <Label id="picker_title" class="popup-title" text="{s:picker_title}" />
+          <Button id="picker_close" class="kz-window-close" />
+        </Panel>
+        <Panel class="list-rows">
+          <Button id="picker_row0" class="li hidden">
+            <Label id="picker_row0_name" class="li-label" text="{s:picker_row0_name}" />
+          </Button>
+          <Button id="picker_row1" class="li hidden">
+            <Label id="picker_row1_name" class="li-label" text="{s:picker_row1_name}" />
+          </Button>
+          <Button id="picker_row2" class="li hidden">
+            <Label id="picker_row2_name" class="li-label" text="{s:picker_row2_name}" />
+          </Button>
+          <Button id="picker_row3" class="li hidden">
+            <Label id="picker_row3_name" class="li-label" text="{s:picker_row3_name}" />
+          </Button>
+          <Button id="picker_row4" class="li hidden">
+            <Label id="picker_row4_name" class="li-label" text="{s:picker_row4_name}" />
+          </Button>
+          <Button id="picker_row5" class="li hidden">
+            <Label id="picker_row5_name" class="li-label" text="{s:picker_row5_name}" />
+          </Button>
+          <Button id="picker_row6" class="li hidden">
+            <Label id="picker_row6_name" class="li-label" text="{s:picker_row6_name}" />
+          </Button>
+          <Button id="picker_row7" class="li hidden">
+            <Label id="picker_row7_name" class="li-label" text="{s:picker_row7_name}" />
+          </Button>
+          <Button id="picker_row8" class="li hidden">
+            <Label id="picker_row8_name" class="li-label" text="{s:picker_row8_name}" />
+          </Button>
+          <Button id="picker_row9" class="li hidden">
+            <Label id="picker_row9_name" class="li-label" text="{s:picker_row9_name}" />
+          </Button>
+          <Button id="picker_row10" class="li hidden">
+            <Label id="picker_row10_name" class="li-label" text="{s:picker_row10_name}" />
+          </Button>
+          <Button id="picker_row11" class="li hidden">
+            <Label id="picker_row11_name" class="li-label" text="{s:picker_row11_name}" />
+          </Button>
+          <Button id="picker_row12" class="li hidden">
+            <Label id="picker_row12_name" class="li-label" text="{s:picker_row12_name}" />
+          </Button>
+          <Button id="picker_row13" class="li hidden">
+            <Label id="picker_row13_name" class="li-label" text="{s:picker_row13_name}" />
+          </Button>
+          <Button id="picker_row14" class="li hidden">
+            <Label id="picker_row14_name" class="li-label" text="{s:picker_row14_name}" />
+          </Button>
+          <Button id="picker_row15" class="li hidden">
+            <Label id="picker_row15_name" class="li-label" text="{s:picker_row15_name}" />
+          </Button>
+          <Button id="picker_row16" class="li hidden">
+            <Label id="picker_row16_name" class="li-label" text="{s:picker_row16_name}" />
+          </Button>
+          <Button id="picker_row17" class="li hidden">
+            <Label id="picker_row17_name" class="li-label" text="{s:picker_row17_name}" />
+          </Button>
+          <Button id="picker_row18" class="li hidden">
+            <Label id="picker_row18_name" class="li-label" text="{s:picker_row18_name}" />
+          </Button>
+          <Button id="picker_row19" class="li hidden">
+            <Label id="picker_row19_name" class="li-label" text="{s:picker_row19_name}" />
+          </Button>
+          <Button id="picker_row20" class="li hidden">
+            <Label id="picker_row20_name" class="li-label" text="{s:picker_row20_name}" />
+          </Button>
+          <Button id="picker_row21" class="li hidden">
+            <Label id="picker_row21_name" class="li-label" text="{s:picker_row21_name}" />
+          </Button>
+          <Button id="picker_row22" class="li hidden">
+            <Label id="picker_row22_name" class="li-label" text="{s:picker_row22_name}" />
+          </Button>
+          <Button id="picker_row23" class="li hidden">
+            <Label id="picker_row23_name" class="li-label" text="{s:picker_row23_name}" />
+          </Button>
+          <Button id="picker_row24" class="li hidden">
+            <Label id="picker_row24_name" class="li-label" text="{s:picker_row24_name}" />
+          </Button>
+          <Button id="picker_row25" class="li hidden">
+            <Label id="picker_row25_name" class="li-label" text="{s:picker_row25_name}" />
+          </Button>
+          <Button id="picker_row26" class="li hidden">
+            <Label id="picker_row26_name" class="li-label" text="{s:picker_row26_name}" />
+          </Button>
+          <Button id="picker_row27" class="li hidden">
+            <Label id="picker_row27_name" class="li-label" text="{s:picker_row27_name}" />
+          </Button>
+          <Button id="picker_row28" class="li hidden">
+            <Label id="picker_row28_name" class="li-label" text="{s:picker_row28_name}" />
+          </Button>
+          <Button id="picker_row29" class="li hidden">
+            <Label id="picker_row29_name" class="li-label" text="{s:picker_row29_name}" />
+          </Button>
+          <Button id="picker_row30" class="li hidden">
+            <Label id="picker_row30_name" class="li-label" text="{s:picker_row30_name}" />
+          </Button>
+          <Button id="picker_row31" class="li hidden">
+            <Label id="picker_row31_name" class="li-label" text="{s:picker_row31_name}" />
+          </Button>
+        </Panel>
+        <Panel id="picker_nav" class="popup-nav">
+          <Button id="picker_prev" class="popup-btn"><Label class="popup-btn-label" text="&lt;" /></Button>
+          <Label id="picker_page" class="popup-page" text="{s:picker_page}" />
+          <Button id="picker_next" class="popup-btn"><Label class="popup-btn-label" text="&gt;" /></Button>
+        </Panel>
+        <Label id="picker_note" class="popup-note hidden" text="{s:picker_note}" />
+      </Panel>
+    </Panel>
+  </Panel>
+</root>
