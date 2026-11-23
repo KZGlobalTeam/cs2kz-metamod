@@ -8,7 +8,7 @@
 #include "bot.h"
 #include "item.h"
 #include "events.h"
-#include "controls.h"
+#include "kz/replays/hud/controls.h"
 #include "sdk/usercmd.h"
 #include "utils/utils.h"
 

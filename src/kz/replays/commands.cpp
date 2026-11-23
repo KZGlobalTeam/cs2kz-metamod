@@ -15,7 +15,7 @@
 #include "bot.h"
 #include "events.h"
 #include "playback.h"
-#include "controls.h"
+#include "kz/replays/hud/controls.h"
 #include "watcher.h"
 #include "utils/uuid.h"
 #include "utils/simplecmds.h"

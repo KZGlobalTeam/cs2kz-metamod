@@ -8,13 +8,13 @@
 #include "sdk/usercmd.h"
 #include "utils/simplecmds.h"
 #include "utils/utils.h"
-#include "controls.h"
-#include "kz_replaysystem.h"
-#include "commands.h"
-#include "playback.h"
-#include "data.h"
-#include "compression.h"
-#include "bot.h"
+#include "kz/replays/hud/controls.h"
+#include "kz/replays/kz_replaysystem.h"
+#include "kz/replays/commands.h"
+#include "kz/replays/playback.h"
+#include "kz/replays/data.h"
+#include "kz/replays/compression.h"
+#include "kz/replays/bot.h"
 
 #include <vector>
 
@@ -68,7 +68,7 @@ static_global const char *const texts[][3] = {
 };
 
 // Labels with a fixed text.
-// It is still sent from here because only a new text makes a label measure itself in a new font.
+// The text is still sent from here because only a new text makes a label measure itself in a new font.
 static_global const char *const literalTexts[][3] = {
 	{"rp_speed0_label", "rps0", "0.1x"},         {"rp_speed1_label", "rps1", "0.25x"},        {"rp_speed2_label", "rps2", "0.5x"},
 	{"rp_speed3_label", "rps3", "1x"},           {"rp_speed4_label", "rps4", "2x"},           {"rp_speed5_label", "rps5", "4x"},
@@ -79,7 +79,7 @@ static_global const char *const literalTexts[][3] = {
 	{"rp_prev_tp_label", "rpprevtp", "<"},       {"rp_next_tp_label", "rpnexttp", ">"},
 };
 
-// Indexed by ZoneMarker::kind and then teleports (which have no marker).
+// Indexed by ZoneMarker::kind followed by teleports (they have no marker).
 #define TELEPORT_KIND 3
 
 static_global const struct
@@ -107,12 +107,13 @@ struct ZoneMarker
 static_global std::vector<ZoneMarker> zoneMarkers;
 // The ticks the previous and next buttons jump between in tick order per entry of zoneJumps.
 static_global std::vector<u32> jumpTicks[KZ_REPLAY_CONTROLS_ZONE_KINDS];
-// Where the run's timer starts and ends or -1 when the replay has none.
+// Where the run's timer starts and ends or -1 if the replay has none.
 static_global i64 runStartTick = -1;
 static_global i64 runEndTick = -1;
 
-// The ticks from a timer pause or from the player leaving the pawn to itself (away or spectating) up to where skipping it lands.
-// That is a tick before its resume or return or the last tick when there is none.
+// The ticks from a timer pause or from the player leaving the pawn to itself (away or spectating).
+// They run up to where skipping it lands.
+// That is a tick before its resume or return or the last tick if there is none.
 struct PauseSegment
 {
 	u32 start;
@@ -128,7 +129,7 @@ static_function u32 GetEventSeekTick(i64 eventTick)
 }
 
 // Where skipping the pause the current tick is in lands or -1 outside a pause.
-// Pauses inside a stretch without control overlap it so the furthest end wins.
+// Pauses inside a stretch without control overlap it and the furthest end wins.
 static_function i64 FindPauseSkipTick(u32 currentTick)
 {
 	i64 skipTick = -1;
@@ -149,7 +150,7 @@ static_function bool IsControlEvent(const RpEvent &event, RpEvent::RpEventData::
 
 static_global u32 currentReplayId;
 
-// Uses the same rule as CInButtonState::IsButtonNewlyPressed (any state from UP_DOWN upwards had a press).
+// Uses the same rule as CInButtonState::IsButtonNewlyPressed where any state from UP_DOWN upwards had a press.
 static_function u64 GetNewlyPressedButtons(const CInButtonStatePB &buttons)
 {
 	return buttons.buttonstate3() | (buttons.buttonstate1() & buttons.buttonstate2());
@@ -182,7 +183,7 @@ static_function const RpEvent *FindRunStart(const KZ::replaysystem::data::Replay
 	return nullptr;
 }
 
-// The end that belongs to the run's start (after it in the replay).
+// The end that belongs to the run's start and comes after it in the replay.
 static_function const RpEvent *FindRunEnd(const KZ::replaysystem::data::ReplayPlayback *replay, const RpEvent *start)
 {
 	if (static_cast<ReplayType>(replay->header.type()) == ReplayType::RP_RUN && replay->header.has_run())
@@ -238,7 +239,7 @@ static_function bool CanSkip(const KZ::replaysystem::data::ReplayPlayback *repla
 	return target >= 0 && target <= (i64)replay->tickCount - 1;
 }
 
-// The closest jump target of that kind before or after the current tick or -1 when there is none.
+// The closest jump target of that kind before or after the current tick or -1 if there is none.
 static_function i64 FindZoneTick(u32 currentTick, i32 kind, bool forward)
 {
 	i64 found = -1;
@@ -261,7 +262,7 @@ static_function bool CanStepBack(const KZ::replaysystem::data::ReplayPlayback *r
 	return replay->currentTick > 0;
 }
 
-// Same rule as playback::StepTick that never plays the last tick.
+// Same rule as playback::StepTick (it never plays the last tick).
 static_function bool CanStepForward(const KZ::replaysystem::data::ReplayPlayback *replay)
 {
 	return replay->currentTick + replay->stepTicks + 1 < replay->tickCount;
@@ -453,7 +454,8 @@ namespace KZ::replaysystem::controls
 		}
 		if (this->cursorReplayId != 0)
 		{
-			// The request expires with its replay so a player who never got to watch it does not get the cursor later.
+			// The request expires with its replay.
+			// A player who never got to watch it does not get the cursor later.
 			if (this->cursorReplayId == currentReplayId && !this->player->uiService->IsOpen(this))
 			{
 				this->player->uiService->Open(this, KZ::ui::OpenMode::Push);
@@ -568,20 +570,21 @@ namespace KZ::replaysystem::controls
 		}
 		auto replay = data::GetCurrentReplay();
 		KZ::ui::SetBoolClass(entity, "rp_root", "hidden", this->applied.rootHidden, false);
-		// A tick after the font changes so the labels measure their new text in the new font rather than the old one.
+		// Runs a tick after the font changes so the labels measure their new text in the new font rather than the old one.
 		if (this->textsChanged)
 		{
 			this->textsChanged = false;
 			this->textMark = !this->textMark;
 			this->RenderTexts();
 		}
-		// Reading the preferences every tick is too slow so the style is only applied again once one of them changes.
+		// The style is only applied again once a preference changes because reading them every tick is too slow.
 		if (this->styleChanged)
 		{
 			this->styleChanged = false;
 			const char *font = this->applied.style.font;
 			KZ::ui::ApplyWindowStyle(this->player, entity, "rp_root", this->applied.style);
-			// The first texts can reach the client before the font class does so they are sent again for the first font too.
+			// The first texts can reach the client before the font class does.
+			// They are sent again for the first font too.
 			this->textsChanged = font != this->applied.style.font;
 		}
 		this->RenderCursor(entity);
@@ -644,7 +647,8 @@ namespace KZ::replaysystem::controls
 		this->SetText("rp_cursor_label", "rpcursor", this->player->languageService->PrepareMessage(key).c_str());
 	}
 
-	// A word joiner is invisible so adding or dropping one gives every label a new text without changing what it shows.
+	// A word joiner is invisible.
+	// Adding or dropping one gives every label a new text without changing what it shows.
 	void ControlsWindow::SetText(const char *panelId, const char *var, const char *text)
 	{
 		std::string value = text;

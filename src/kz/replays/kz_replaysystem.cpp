@@ -6,7 +6,7 @@
 #include "playback.h"
 #include "events.h"
 #include "commands.h"
-#include "controls.h"
+#include "kz/replays/hud/controls.h"
 #include "kz_replay.h"
 #include "utils/uuid.h"
 #include "filesystem/ifilesystem.h"
