@@ -341,7 +341,49 @@ void ReplayWatcher::PrintUsage(KZPlayer *player)
 
 void ReplayWatcher::FindReplaysMatchingCriteria(const char *inputs, KZPlayer *player)
 {
-	// Parse inputs and filter replays accordingly.
+	ReplayFilterCriteria criteria = ParseCriteria(inputs, player);
+	switch (criteria.type)
+	{
+		case RP_CHEATER:
+			this->FilterAndPrintMatchingCheaterReplays(criteria, player);
+			break;
+		case RP_RUN:
+			this->FilterAndPrintMatchingRunReplays(criteria, player);
+			break;
+		case RP_JUMPSTATS:
+			this->FilterAndPrintMatchingJumpReplays(criteria, player);
+			break;
+		case RP_MANUAL:
+			this->FilterAndPrintMatchingManualReplays(criteria, player);
+			break;
+		default:
+			break;
+	}
+}
+
+std::vector<std::pair<UUID_t, ReplayHeader>> ReplayWatcher::CollectMatches(const ReplayFilterCriteria &criteria)
+{
+	switch (criteria.type)
+	{
+		case RP_CHEATER:
+			return CollectMatchesWithMapFallback(this->cheaterReplays, criteria, this->replayMapsMutex);
+		case RP_RUN:
+		{
+			auto matches = CollectMatchesWithMapFallback(this->runReplays, criteria, this->replayMapsMutex);
+			std::sort(matches.begin(), matches.end(), [](const auto &a, const auto &b) { return a.second.run().time() < b.second.run().time(); });
+			return matches;
+		}
+		case RP_JUMPSTATS:
+			return CollectMatchesWithMapFallback(this->jumpReplays, criteria, this->replayMapsMutex);
+		case RP_MANUAL:
+			return CollectMatchesWithMapFallback(this->manualReplays, criteria, this->replayMapsMutex);
+		default:
+			return {};
+	}
+}
+
+ReplayFilterCriteria ReplayWatcher::ParseCriteria(const char *inputs, KZPlayer *player, std::optional<ReplayType> type)
+{
 	KeyValues3 params;
 	utils::ParseArgsToKV3(inputs, params, const_cast<const char **>(generalParameters), KZ_ARRAYSIZE(generalParameters));
 	ReplayFilterCriteria criteria;
@@ -368,6 +410,10 @@ void ReplayWatcher::FindReplaysMatchingCriteria(const char *inputs, KZPlayer *pl
 		{
 			criteria.type = RP_MANUAL;
 		}
+	}
+	if (type)
+	{
+		criteria.type = *type;
 	}
 	// Player filter
 	kv = params.FindMember("player");
@@ -410,9 +456,6 @@ void ReplayWatcher::FindReplaysMatchingCriteria(const char *inputs, KZPlayer *pl
 			{
 				criteria.reasonSubString = kv->GetString();
 			}
-
-			this->FilterAndPrintMatchingCheaterReplays(criteria, player);
-
 			break;
 		}
 		case RP_RUN:
@@ -448,8 +491,6 @@ void ReplayWatcher::FindReplaysMatchingCriteria(const char *inputs, KZPlayer *pl
 			{
 				criteria.courseName = player->timerService->GetCourse()->name;
 			}
-
-			this->FilterAndPrintMatchingRunReplays(criteria, player);
 			break;
 		}
 		case RP_JUMPSTATS:
@@ -475,8 +516,6 @@ void ReplayWatcher::FindReplaysMatchingCriteria(const char *inputs, KZPlayer *pl
 			{
 				criteria.jumpType = (u8)kv->GetInt();
 			}
-
-			this->FilterAndPrintMatchingJumpReplays(criteria, player);
 			break;
 		}
 		case RP_MANUAL:
@@ -500,13 +539,12 @@ void ReplayWatcher::FindReplaysMatchingCriteria(const char *inputs, KZPlayer *pl
 			{
 				criteria.savedBy.steamID = kv->GetUInt64();
 			}
-
-			this->FilterAndPrintMatchingManualReplays(criteria, player);
 			break;
 		}
 		default:
 			break;
 	}
+	return criteria;
 }
 
 bool ReplayFilterCriteria::PassGeneralFilters(const ReplayHeader &header, bool exactMapMatch) const

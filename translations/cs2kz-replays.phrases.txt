@@ -1059,4 +1059,42 @@
 		"en"		"Hide controls"
 		"ua"		"Сховати панель"
 	}
+	"Replays - Window Title"
+	{
+		"en"		"Replays"
+	}
+	"Replays - Window Runs"
+	{
+		"en"		"Runs"
+	}
+	"Replays - Window Jumps"
+	{
+		"en"		"Jumps"
+	}
+	"Replays - Window Manual"
+	{
+		"en"		"Manual"
+	}
+	"Replays - Window TPs"
+	{
+		"en"		"TPs"
+	}
+	"Replays - Window Filters"
+	{
+		"#format"	"filters:s"
+		"en"		"Filters: {filters}"
+	}
+	"Replays - Window None"
+	{
+		"en"		"No matching replays."
+	}
+	"Replays - Window Copy IDs"
+	{
+		"en"		"Print replay and Steam ID to chat and console"
+	}
+	"Replays - IDs"
+	{
+		"#format"	"name:s,uuid:s,steamid64:s"
+		"en"		"{grey}Replay of {default}{name}{grey}: {default}{uuid}{grey}, Steam ID {default}{steamid64}"
+	}
 }

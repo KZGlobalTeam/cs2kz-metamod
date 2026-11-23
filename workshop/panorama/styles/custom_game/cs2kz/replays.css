@@ -1,0 +1,145 @@
+@import url("file://{resources}/styles/custom_game/cs2kz/tokens.css");
+@import url("file://{resources}/styles/custom_game/cs2kz/palette.css");
+@import url("file://{resources}/styles/custom_game/cs2kz/fonts.css");
+@import url("file://{resources}/styles/custom_game/cs2kz/components.css");
+
+/* As wide as !profile to fit the run columns and the three switches. */
+.replays-window {
+	width: 960px;
+}
+
+/* Narrower options than the default switch so the list, mode and jump type switches fit on one line. */
+.kz-segment.three {
+	width: 272px;
+}
+
+.kz-segment.three .kz-segment-thumb {
+	width: 88px;
+}
+
+.kz-segment.three.pick-1 .kz-segment-thumb {
+	x: 88px;
+}
+
+.kz-segment.three.pick-2 .kz-segment-thumb {
+	x: 176px;
+}
+
+/* Manual saves have no mode. */
+.list-manual .replays-moded {
+	visibility: collapse;
+}
+
+.replays-jumps-only {
+	visibility: collapse;
+}
+
+.list-jump .replays-jumps-only {
+	visibility: visible;
+}
+
+.replays-filters {
+	width: 100%;
+	margin-bottom: 12px;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	font-size: kz-text-sm;
+	color: kz-zinc-400;
+}
+
+.font-reflow .replays-filters {
+	padding-right: 1px;
+	margin-right: -1px;
+}
+
+/* A row has 894px inside its padding. */
+
+.rp-col-num {
+	width: 48px;
+}
+
+.rp-col-player {
+	width: fill-parent-flow(1);
+}
+
+.rp-col-map {
+	width: 140px;
+}
+
+.rp-col-c0,
+.rp-col-c1,
+.rp-col-c2,
+.rp-col-c3,
+.rp-col-c4,
+.rp-col-time {
+	visibility: collapse;
+}
+
+/* On the run list c0 is the course, c1 the styles and c3 the TPs. */
+.list-run .rp-col-c0 {
+	visibility: visible;
+	width: 112px;
+}
+
+.list-run .rp-col-c1 {
+	visibility: visible;
+	width: 80px;
+}
+
+.list-run .rp-col-time {
+	visibility: visible;
+	width: 150px;
+}
+
+.list-run .rp-col-c3 {
+	visibility: visible;
+	width: 56px;
+}
+
+.list-run .kz-record-name {
+	max-width: 232px;
+}
+
+/* On the jump list c0 is the distance, c1 the block and c2 the strafes. */
+.list-jump .rp-col-c0 {
+	visibility: visible;
+	width: 96px;
+}
+
+.list-jump .rp-col-c1 {
+	visibility: visible;
+	width: 64px;
+}
+
+.list-jump .rp-col-c2 {
+	visibility: visible;
+	width: 72px;
+}
+
+.list-jump .kz-record-name {
+	max-width: 398px;
+}
+
+/* On the manual list c0 is who saved the replay. */
+.list-manual .rp-col-map {
+	width: 200px;
+}
+
+.list-manual .rp-col-c0 {
+	visibility: visible;
+	width: 240px;
+}
+
+.list-manual .kz-record-name {
+	max-width: 334px;
+}
+
+/* Keeps cell text off the next column. */
+.rp-col-map,
+.rp-col-c0,
+.rp-col-c1,
+.rp-col-c2,
+.rp-col-c3,
+.rp-col-c4 {
+	padding-right: 12px;
+}

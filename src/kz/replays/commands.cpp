@@ -16,6 +16,7 @@
 #include "events.h"
 #include "playback.h"
 #include "kz/replays/hud/controls.h"
+#include "kz/replays/hud/replays.h"
 #include "watcher.h"
 #include "utils/uuid.h"
 #include "utils/simplecmds.h"
@@ -1008,6 +1009,12 @@ SCMD(kz_replays, SCFL_REPLAY)
 		return true;
 	}
 
+	// Prefer using the custom HUD if it's a chat command unless the addon is unavailable.
+	const bool chat = args->Arg(0)[0] == SCMD_CHAT_TRIGGER || args->Arg(0)[0] == SCMD_CHAT_SILENT_TRIGGER;
+	if (chat && player->uiService->GetWindow<KZ::replaysystem::hud::ReplaysWindow>()->Show(args->ArgS()))
+	{
+		return true;
+	}
 	KZ::replaysystem::commands::ListReplays(player, args->ArgS());
 	return true;
 }

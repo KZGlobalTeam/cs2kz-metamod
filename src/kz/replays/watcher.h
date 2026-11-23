@@ -128,6 +128,12 @@ public:
 
 	void FindReplaysMatchingCriteria(const char *inputs, KZPlayer *player);
 
+	// Parses !replays arguments and fills in the caller's map, course and mode where they are missing.
+	// `type` overrides the type argument if given.
+	static ReplayFilterCriteria ParseCriteria(const char *inputs, KZPlayer *player, std::optional<ReplayType> type = std::nullopt);
+	// Collects the replays of the criteria's type that pass its filters in console table order.
+	std::vector<std::pair<UUID_t, ReplayHeader>> CollectMatches(const ReplayFilterCriteria &criteria);
+
 	// Find replays by UUID substring.
 	// Returns matching UUIDs.
 	std::vector<UUID_t> FindReplaysByUUIDSubstring(const char *uuidSubstring);
