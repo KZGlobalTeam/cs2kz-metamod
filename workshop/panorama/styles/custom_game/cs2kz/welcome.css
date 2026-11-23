@@ -1,0 +1,249 @@
+@import url("file://{resources}/styles/custom_game/cs2kz/tokens.css");
+@import url("file://{resources}/styles/custom_game/cs2kz/palette.css");
+@import url("file://{resources}/styles/custom_game/cs2kz/fonts.css");
+@import url("file://{resources}/styles/custom_game/cs2kz/components.css");
+
+.welcome-window {
+	width: 760px;
+	ui-scale: 115%;
+}
+
+.welcome-body {
+	width: 100%;
+	height: 298px;
+}
+
+.welcome-page {
+	flow-children: down;
+	width: 100%;
+	height: 100%;
+}
+
+.welcome-shots {
+	flow-children: right;
+	margin-bottom: 12px;
+}
+
+.welcome-shot {
+	width: 356px;
+	height: 200px;
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+}
+
+.shot-start {
+	background-image: url("file://{images}/custom_game/cs2kz/welcome_start.png");
+}
+
+.shot-end {
+	margin-left: 16px;
+	background-image: url("file://{images}/custom_game/cs2kz/welcome_end.png");
+}
+
+.shot-radio {
+	height: 298px;
+	background-image: url("file://{images}/custom_game/cs2kz/welcome_radio.png");
+}
+
+.welcome-text {
+	width: 100%;
+	margin-top: 8px;
+	font-size: kz-text-base;
+	color: kz-zinc-300;
+}
+
+.welcome-text.first {
+	margin-top: 0px;
+}
+
+.welcome-line {
+	flow-children: right;
+}
+
+.welcome-word {
+	vertical-align: center;
+	white-space: nowrap;
+	font-size: kz-text-base;
+	color: kz-zinc-300;
+}
+
+.muted {
+	color: kz-zinc-400;
+}
+
+.welcome-code {
+	vertical-align: center;
+	margin: 0px 5px;
+	padding: 1px 6px;
+	border: 1px solid kz-gray-700;
+	border-radius: kz-radius-md;
+	background-color: kz-gray-900;
+	white-space: nowrap;
+	font-size: kz-text-base;
+	color: kz-code;
+}
+
+#welcome_radio_key {
+	margin: 0px 1px;
+}
+
+.font-reflow .welcome-text,
+.font-reflow .welcome-word,
+.font-reflow .welcome-cmd-text {
+	padding-right: 1px;
+	margin-right: -1px;
+}
+
+.font-reflow .welcome-code {
+	padding-right: 7px;
+}
+
+.welcome-side {
+	flow-children: right;
+}
+
+.welcome-col {
+	flow-children: down;
+	vertical-align: center;
+	width: fill-parent-flow( 1 );
+	margin-left: 16px;
+}
+
+.welcome-centred {
+	height: fit-children;
+	vertical-align: center;
+}
+
+.welcome-modes {
+	flow-children: right;
+	width: 100%;
+	margin: 16px 0px 12px 0px;
+}
+
+.welcome-mode {
+	flow-children: down;
+	width: 356px;
+	height: 132px;
+	padding: 16px;
+	border: 1px solid kz-zinc-700;
+	border-radius: kz-radius-md;
+	background-color: kz-zinc-900;
+}
+
+.welcome-mode.right {
+	margin-left: 16px;
+}
+
+.welcome-mode:hover {
+	background-color: kz-zinc-800;
+}
+
+.welcome-mode.selected {
+	border: 1px solid kz-blue-400;
+	background-color: kz-blue-400-tint;
+}
+
+.welcome-mode-head {
+	flow-children: right;
+	width: 100%;
+}
+
+.welcome-mode-name {
+	vertical-align: center;
+	width: fill-parent-flow( 1 );
+	font-size: 22px;
+	color: kz-zinc-100;
+}
+
+.welcome-mode.selected .welcome-mode-name {
+	color: kz-blue-400;
+}
+
+.welcome-mode-tag {
+	vertical-align: center;
+	font-size: kz-text-sm;
+	color: kz-zinc-400;
+}
+
+.welcome-mode-text {
+	width: 100%;
+	margin-top: 8px;
+	font-size: kz-text-base;
+	color: kz-zinc-300;
+}
+
+.font-reflow .welcome-mode-name,
+.font-reflow .welcome-mode-tag,
+.font-reflow .welcome-mode-text {
+	padding-right: 1px;
+	margin-right: -1px;
+}
+
+.snd .welcome-mode:hover {
+	sound: "UIPanorama.generic_button_rollover";
+}
+
+.snd .welcome-mode:active {
+	sound: "UIPanorama.generic_button_press";
+}
+
+.welcome-grid {
+	flow-children: right;
+	width: 100%;
+	margin-top: 16px;
+}
+
+.welcome-grid-col {
+	flow-children: down;
+	width: 356px;
+}
+
+.welcome-grid-col.right {
+	margin-left: 16px;
+}
+
+.welcome-cmd {
+	flow-children: right;
+	width: 100%;
+	height: 30px;
+	margin-bottom: 12px;
+}
+
+.welcome-cmd-slot {
+	width: 96px;
+	height: 100%;
+}
+
+.welcome-cmd-slot .welcome-code {
+	margin: 0px;
+}
+
+.welcome-cmd-text {
+	vertical-align: center;
+	width: fill-parent-flow( 1 );
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	font-size: kz-text-base;
+	color: kz-zinc-300;
+}
+
+.welcome-more {
+	margin-top: 6px;
+}
+
+.welcome-dots {
+	flow-children: right;
+	vertical-align: center;
+}
+
+.welcome-dot {
+	width: 8px;
+	height: 8px;
+	margin-right: 8px;
+	border-radius: kz-radius-sm;
+	background-color: kz-zinc-700;
+}
+
+.welcome-dot.on {
+	background-color: kz-zinc-200;
+}

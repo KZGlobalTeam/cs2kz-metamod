@@ -1030,6 +1030,10 @@
 		"ko"		"도움말 표시를 전환합니다."
 		"lv"		"Ieslēgt/izslēgt padomus."
 	}
+	"Command Description - kz_tutorial"
+	{
+		"en"		"Show the welcome window for new players again."
+	}
 	"Command Description - kz_hidelegs"
 	{
 		"en"		"Hide your legs in first person."
