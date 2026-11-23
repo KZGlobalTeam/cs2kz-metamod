@@ -1391,4 +1391,16 @@
 		"#format"	"type:s,mode:s,list:s"
 		"en"		"Best {type} jumps in {mode} by {list}"
 	}
+	"Jumpstats - Personal Best"
+	{
+		// You beat your Long Jump personal best! [242.4751 | VNL]
+		"#format"	"jump_type:s,color:s,distance:.4f,mode_short:s"
+		"en"		"{grey}You beat your {lime}{jump_type}{grey} personal best! [{color}{distance}{grey} | {purple}{mode_short}{grey}]"
+	}
+	"Jumpstats - Personal Best Block"
+	{
+		// You beat your Long Jump block personal best! [242.4751 | 230 block | VNL]
+		"#format"	"jump_type:s,color:s,distance:.4f,block:d,mode_short:s"
+		"en"		"{grey}You beat your {lime}{jump_type}{grey} block personal best! [{color}{distance}{grey} | {default}{block}{grey} block | {purple}{mode_short}{grey}]"
+	}
 }

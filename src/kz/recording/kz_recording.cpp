@@ -323,15 +323,39 @@ void KZRecordingService::CheckRecorders()
 			KZ_LOG_DEBUG(LogChannel::Recording, "Jump recorder stopped\n");
 			if (fileWriter)
 			{
+				DiskWriteSuccessCallback onSaved;
+				if (recorder.announceSave)
+				{
+					const CPlayerUserId userID = this->player->GetClient()->GetUserID();
+					onSaved = [userID](const UUID_t &uuid, f32)
+					{
+						if (KZPlayer *player = g_pKZPlayerManager->ToPlayer(userID))
+						{
+							player->languageService->PrintChat(true, false, "Replay - Jump Replay Saved", uuid.ToString().c_str());
+						}
+					};
+				}
 				auto recorderPtr = std::make_unique<JumpRecorder>(std::move(recorder));
 				this->CopyWeaponsToRecorder(recorderPtr.get());
-				fileWriter->QueueWriteToFile(std::move(recorderPtr));
+				fileWriter->QueueWriteToFile(std::move(recorderPtr), onSaved);
 			}
 			it = this->jumpRecorders.erase(it);
 		}
 		else
 		{
 			++it;
+		}
+	}
+}
+
+void KZRecordingService::AnnounceJumpReplay(const UUID_t &uuid)
+{
+	for (JumpRecorder &recorder : this->jumpRecorders)
+	{
+		if (recorder.uuid == uuid)
+		{
+			recorder.announceSave = true;
+			return;
 		}
 	}
 }

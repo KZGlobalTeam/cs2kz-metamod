@@ -257,6 +257,9 @@ struct RunRecorder : public Recorder
 struct JumpRecorder : public Recorder
 {
 	JumpRecorder(Jump *jump);
+
+	// Set for a personal best so the player hears when its replay is on disk.
+	bool announceSave {};
 };
 
 struct CheaterRecorder : public Recorder
@@ -410,6 +413,10 @@ public:
 	{
 		return lastJumpUUID;
 	}
+
+	// Tells the player once the replay of this jump is saved.
+	// Does nothing if the jump isn't being recorded.
+	void AnnounceJumpReplay(const UUID_t &uuid);
 
 	enum class RecorderType
 	{
