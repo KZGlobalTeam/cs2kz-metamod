@@ -21,11 +21,14 @@ enum CourseRow
 
 static_assert(COURSE_ROW_PRO + 1 == MHUD_COURSE_ROW_COUNT, "one row per record");
 
-// Each record row's panels from the row itself to the gap from the viewer's personal best.
-static_global const char *const courseRows[MHUD_COURSE_ROW_COUNT][6] = {
-	{"mhud_ci_r0", "mhud_ci_l0", "mhud_ci_t0", "mhud_ci_b0", "mhud_ci_n0", "mhud_ci_g0"},
-	{"mhud_ci_r1", "mhud_ci_l1", "mhud_ci_t1", "mhud_ci_b1", "mhud_ci_n1", "mhud_ci_g1"},
+// The panels of each record row followed by the tier tag beside its label.
+static_global const char *const courseRows[MHUD_COURSE_ROW_COUNT][7] = {
+	{"mhud_ci_r0", "mhud_ci_l0", "mhud_ci_t0", "mhud_ci_b0", "mhud_ci_n0", "mhud_ci_g0", "mhud_ci_k0"},
+	{"mhud_ci_r1", "mhud_ci_l1", "mhud_ci_t1", "mhud_ci_b1", "mhud_ci_n1", "mhud_ci_g1", "mhud_ci_k1"},
 };
+
+static_global const char *const courseTierClasses[] = {"tier-1", "tier-2", "tier-3", "tier-4", "tier-5",
+													   "tier-6", "tier-7", "tier-8", "tier-9", "tier-10"};
 
 static_global const char *const courseRowPhrases[MHUD_COURSE_ROW_COUNT] = {"HUD - Course All", "HUD - Course Pro"};
 
@@ -62,7 +65,7 @@ static_global const char *const courseComparePhrases[KZTimerService::COMPARETYPE
 #define COURSE_TEXT_STATUS   1
 #define COURSE_TEXT_COURSE   2
 #define COURSE_TEXT_ROWS     3
-#define COURSE_TEXT_PROGRESS (COURSE_TEXT_ROWS + MHUD_COURSE_ROW_COUNT * 5)
+#define COURSE_TEXT_PROGRESS (COURSE_TEXT_ROWS + MHUD_COURSE_ROW_COUNT * 6)
 #define COURSE_TEXT_ROUTE    (COURSE_TEXT_PROGRESS + MHUD_COURSE_PROGRESS_COUNT * 2)
 #define COURSE_TEXT_STATE    (COURSE_TEXT_ROUTE + 2)
 
@@ -88,6 +91,7 @@ struct CourseInfoText
 	std::string course;
 	std::string state; // empty off global maps because there is none
 	const char *stateClass {};
+	i32 tiers[MHUD_COURSE_ROW_COUNT] {}; // 0 when the API has none
 	std::string times[MHUD_COURSE_ROW_COUNT];
 	std::string badges[MHUD_COURSE_ROW_COUNT];
 	const char *badgeClasses[MHUD_COURSE_ROW_COUNT] {};
@@ -137,7 +141,8 @@ static_function void GetCourseInfo(KZPlayer *viewer, KZPlayer *source, CourseInf
 		course = KZ::course::GetFirstCourse();
 	}
 	const KZModeManager::ModePluginInfo modeInfo = KZ::mode::GetModeInfo(source->modeService);
-	const bool classic = modeInfo.id == KZ::mode::GetModeInfo(KZ::api::Mode::Classic).id;
+	// Any other mode shows CKZ's tiers and states because the API only rates VNL and CKZ.
+	const bool classic = modeInfo.id != KZ::mode::GetModeInfo(KZ::api::Mode::Vanilla).id;
 
 	i32 nubTier = 0, proTier = 0;
 	KZGlobalService::WithCurrentMapState(
@@ -203,11 +208,8 @@ static_function void GetCourseInfo(KZPlayer *viewer, KZPlayer *source, CourseInf
 	}
 
 	out.course = lang->PrepareMessage("HUD - Course Line", course->name, modeInfo.shortModeName.c_str());
-	if (nubTier > 0)
-	{
-		out.course +=
-			nubTier == proTier ? lang->PrepareMessage("HUD - Course Tier", nubTier) : lang->PrepareMessage("HUD - Course Tiers", nubTier, proTier);
-	}
+	out.tiers[COURSE_ROW_ALL] = nubTier;
+	out.tiers[COURSE_ROW_PRO] = proTier;
 
 	// World records where there are any and the server's records and personal bests otherwise.
 	const PBDataKey key = ToPBDataKey(modeInfo.id, course->guid);
@@ -230,7 +232,9 @@ static_function void GetCourseSample(KZLanguageService *lang, CourseInfoText &ou
 	out.map = "kz_longest_map_name_v2";
 	out.status = lang->PrepareMessage("HUD - Course Global");
 	out.statusClass = "ci-global";
-	out.course = lang->PrepareMessage("HUD - Course Line", "Main", "CKZ") + lang->PrepareMessage("HUD - Course Tiers", 7, 8);
+	out.course = lang->PrepareMessage("HUD - Course Line", "Main", "CKZ");
+	out.tiers[COURSE_ROW_ALL] = 7;
+	out.tiers[COURSE_ROW_PRO] = 8;
 	out.state = lang->PrepareMessage("HUD - Course Unranked");
 	out.stateClass = "ci-unranked";
 	for (i32 i = 0; i < MHUD_COURSE_ROW_COUNT; i++)
@@ -395,12 +399,15 @@ void KZHUDService::UpdateCourseElement(CCSCustomHudLayout *layout, KZPlayer *sou
 		this->SetLayoutClass(layout, "mhud_ci_state", ci.stateClass, info.stateClass);
 		for (i32 i = 0; i < MHUD_COURSE_ROW_COUNT; i++)
 		{
-			const i32 slot = COURSE_TEXT_ROWS + i * 5;
+			const i32 slot = COURSE_TEXT_ROWS + i * 6;
+			const bool hasTier = info.tiers[i] >= 1 && info.tiers[i] <= (i32)KZ_ARRAYSIZE(courseTierClasses);
 			setText(slot, courseRows[i][1], lang->PrepareMessage(courseRowPhrases[i]));
 			setText(slot + 1, courseRows[i][2], info.times[i]);
 			setText(slot + 2, courseRows[i][3], info.badges[i]);
 			setText(slot + 3, courseRows[i][4], info.names[i]);
 			setText(slot + 4, courseRows[i][5], info.gaps[i]);
+			setText(slot + 5, courseRows[i][6], hasTier ? lang->PrepareMessage("HUD - Course Tier", info.tiers[i]) : std::string());
+			this->SetLayoutClass(layout, courseRows[i][6], ci.tierClasses[i], hasTier ? courseTierClasses[info.tiers[i] - 1] : "hidden");
 			this->SetLayoutClass(layout, courseRows[i][3], ci.badgeClasses[i], info.badgeClasses[i]);
 			this->SetLayoutClass(layout, courseRows[i][4], ci.nameClasses[i], info.nameClasses[i]);
 		}

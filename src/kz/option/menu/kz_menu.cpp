@@ -66,6 +66,8 @@ static_function const char *GetTypeClass(KZOptItemType type)
 			return "type-position";
 		case KZOptItemType::Size:
 			return "type-size";
+		case KZOptItemType::Vector:
+			return "type-vector";
 		case KZOptItemType::Button:
 			return "type-button";
 		case KZOptItemType::Choice:

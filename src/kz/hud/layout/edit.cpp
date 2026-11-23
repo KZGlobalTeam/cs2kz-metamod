@@ -40,8 +40,9 @@
 
 #define MHUD_EDIT_COURSE_WIDTH          320.0f
 #define MHUD_EDIT_COURSE_PADDING        20.0f
-#define MHUD_EDIT_COURSE_HEAD_HEIGHT    53.0f
+#define MHUD_EDIT_COURSE_HEAD_HEIGHT    59.0f
 #define MHUD_EDIT_COURSE_PROGRESS_GAP   6.0f
+#define MHUD_EDIT_COURSE_RECORD_HEIGHT  22.0f
 #define MHUD_EDIT_COURSE_ROW_HEIGHT     19.0f
 #define MHUD_EDIT_COURSE_HISTORY_HEIGHT 146.0f
 
@@ -685,7 +686,8 @@ void KZHUDService::GetEditBoxSize(MHUDElement element, f32 &width, f32 &height)
 	}
 	if (element == MHUDElement::Course)
 	{
-		i32 rows = prefs.courseRecords ? (prefs.coursePro ? 2 : 1) : 0;
+		const i32 records = prefs.courseRecords ? (prefs.coursePro ? 2 : 1) : 0;
+		i32 rows = 0;
 		const f32 scale = Clamp((i32)size, MHUD_JS_SIZE_MIN, MHUD_JS_SIZE_MAX) / 100.0f;
 		const f32 history = prefs.courseSplits ? MHUD_EDIT_COURSE_HISTORY_HEIGHT : 0.0f;
 		// The sample shows every enabled zone-count row and the route progress row.
@@ -696,7 +698,8 @@ void KZHUDService::GetEditBoxSize(MHUDElement element, f32 &width, f32 &height)
 			head += MHUD_EDIT_COURSE_PROGRESS_GAP;
 		}
 		width = MHUD_EDIT_COURSE_WIDTH * scale + MHUD_EDIT_BOX_PADDING;
-		height = (history + MHUD_EDIT_COURSE_PADDING + head + rows * MHUD_EDIT_COURSE_ROW_HEIGHT) * scale + MHUD_EDIT_BOX_PADDING;
+		height = (history + MHUD_EDIT_COURSE_PADDING + head + records * MHUD_EDIT_COURSE_RECORD_HEIGHT + rows * MHUD_EDIT_COURSE_ROW_HEIGHT) * scale
+				 + MHUD_EDIT_BOX_PADDING;
 		return;
 	}
 	if (element == MHUDElement::Race)

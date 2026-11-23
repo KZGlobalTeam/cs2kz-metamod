@@ -208,8 +208,8 @@ inline const char *GetMHUDBackgroundOpacityKey(MHUDElement element)
 	}
 }
 
-// The panels' background alpha (b8 in hex).
-#define MHUD_DEF_BG_OPACITY 72
+// The panels' background alpha (cc in hex).
+#define MHUD_DEF_BG_OPACITY 80
 
 // Symbols wrapped around a numeric element's value.
 enum class MHUDBorder
@@ -650,7 +650,8 @@ private:
 		i32 historyHidden {-1};
 		f64 nextRefresh {};
 		// The last text sent to each label in the order course.cpp lists them.
-		std::string texts[6 + MHUD_COURSE_ROW_COUNT * 5 + MHUD_COURSE_PROGRESS_COUNT * 2] {};
+		std::string texts[6 + MHUD_COURSE_ROW_COUNT * 6 + MHUD_COURSE_PROGRESS_COUNT * 2] {};
+		const char *tierClasses[MHUD_COURSE_ROW_COUNT] {};
 		const char *badgeClasses[MHUD_COURSE_ROW_COUNT] {};
 		const char *nameClasses[MHUD_COURSE_ROW_COUNT] {};
 		const char *statusClass {};

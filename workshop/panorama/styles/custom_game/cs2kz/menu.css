@@ -1,16 +1,10 @@
+@import url("file://{resources}/styles/custom_game/cs2kz/tokens.css");
 @import url("file://{resources}/styles/custom_game/cs2kz/palette.css");
 @import url("file://{resources}/styles/custom_game/cs2kz/fonts.css");
-
-.root {
-	width: 100%;
-	height: 100%;
-	z-index: 100;
-}
+@import url("file://{resources}/styles/custom_game/cs2kz/components.css");
 
 #menu_root {
 	overflow: noclip noclip;
-	width: 100%;
-	height: 100%;
 	transition-property: position;
 	transition-duration: 0.1s;
 	transition-timing-function: ease-in-out;
@@ -20,45 +14,15 @@
 	x: -125px;
 }
 
-#menu_root.hidden {
-	visibility: collapse;
-}
-
-// --- the chrome box ----------------------------------------------------------------
-
 .menu-box {
-	horizontal-align: center;
-	vertical-align: middle;
-	flow-children: down;
 	transition-property: width, height;
 	transition-duration: 1s;
 	transition-timing-function: ease-in-out;
-	background-img-opacity: 0.01;
-	width: 860px;
-	height: 620px;
-	padding: 18px;
-	border: 1px solid #5f494926;
-	border-radius: 5px;
-	background-image: url("s2r://panorama/images/backgrounds/bluedots_large_png.vtex");
-	background-size: 360px 360px;
-	background-color: rgba(1, 1, 1, 0.95);
 }
 
-.menu-box.hidden {
-	visibility: collapse;
-}
-
-/* Labels keep their old font until their width changes; kz_menu.cpp flips this on every font change. */
-.font-reflow .menu-box {
-	padding-right: 17px;
-}
-
+/* kz_menu.cpp flips font-reflow on every font change. */
 .font-reflow .popup {
 	padding-right: 15px;
-}
-
-.font-reflow .cats {
-	padding-right: 11px;
 }
 
 .font-reflow .list-rows {
@@ -81,83 +45,8 @@
 	max-width: 319px;
 }
 
-.window-header {
-	width: 100%;
-	flow-children: right;
-	margin-bottom: 14px;
-}
-
-.menu-title {
-	width: fill-parent-flow(1);
-	vertical-align: center;
-	font-size: 20px;
-	text-transform: uppercase;
-	font-weight: bold;
-	letter-spacing: 2px;
-}
-
-.close-btn {
-	width: 20px;
-	height: 20px;
-	margin-left: 10px;
-	horizontal-align: right;
-	vertical-align: center;
-	wash-color: #888888;
-	background-image: url("s2r://panorama/images/control_icons/x_close_png.vtex");
-	background-size: 20px 20px;
-	background-repeat: no-repeat;
-	background-position: 50% 50%;
-	transition-property: wash-color;
-	transition-duration: 0.1s;
-	transition-timing-function: ease-in;
-}
-
-.close-btn:hover {
-	wash-color: #ffffff;
-}
-
-.close-btn:active {
-	wash-color: #ffffff;
-	background-size: 17px 17px;
-}
-
-.panes {
-	flow-children: right;
-	width: 100%;
-	height: fill-parent-flow(1);
-}
-
-.panes.hidden {
-	visibility: collapse;
-}
-
-// --- left: categories --------------------------------------------------------------
-
-.cats {
-	flow-children: down;
-	width: 240px;
-	height: 100%;
-	overflow: squish scroll;
-	padding-right: 12px;
-	margin-right: 14px;
-	border-right: 1px solid #ffffff1a;
-}
-
-.cat {
-	width: 100%;
-	padding: 8px 10px;
-	border-radius: 3px;
-	background-color: #00000000;
-	transition-property: background-color;
-	transition-duration: 0.05s;
-}
-
-.cat:hover {
-	background-color: #ffffff1a;
-}
-
-.cat.selected {
-	background-color: #ffffff26;
+.cat.selected .cat-label {
+	opacity: 1;
 }
 
 .cat.indent {
@@ -176,74 +65,33 @@
 	background-color: #00000000;
 }
 
-.cat.hidden {
-	visibility: collapse;
-}
-
+/* Sections stand out by size and brightness instead of weight because fonts have a single face. */
 .cat-label {
-	width: 100%;
-	font-size: 16px;
-	text-overflow: clip;
-	font-weight: lighter;
+	font-size: 15px;
+	opacity: 0.75;
 }
 
 .cat.cat-parent .cat-label {
-	font-size: 18px;
+	font-size: kz-text-lg;
 	font-weight: bold;
-	letter-spacing: 1px;
-	text-transform: uppercase;
-	opacity: 0.7;
-}
-
-// --- middle: items -----------------------------------------------------------------
-
-.items {
-	flow-children: down;
-	width: fill-parent-flow(1);
-	height: 100%;
-	overflow: squish scroll;
-}
-
-VerticalScrollBar {
-	width: 6px;
-	height: 100%;
-	horizontal-align: right;
-	layout-position: fixed;
-	margin: 2px 0px;
-	border-radius: 3px;
-	background-color: #ffffff14;
-}
-
-VerticalScrollBar .ScrollThumb {
-	width: 100%;
-	min-height: 32px;
-	border-radius: 3px;
-	background-color: #ffffff59;
-}
-
-VerticalScrollBar:hover .ScrollThumb {
-	background-color: #ffffff99;
-}
-
-.items VerticalScrollBar {
-	margin-right: 6px;
+	opacity: 1;
 }
 
 .item {
 	width: 100%;
 	flow-children: down;
 	padding: 7px 12px;
-	border-radius: 3px;
+	border-radius: kz-radius-md;
 	background-color: #00000000;
 	transition-property: background-color;
 	transition-duration: 0.05s;
 }
 
 .item:hover {
-	background-color: #ffffff14;
+	background-color: kz-hover;
 }
 
-/* enabledBy off: still readable but inert. */
+/* A row gated by enabledBy stays readable but inert. */
 .item.disabled {
 	opacity: 0.35;
 }
@@ -252,12 +100,9 @@ VerticalScrollBar:hover .ScrollThumb {
 	background-color: #00000000;
 }
 
-.item.hidden {
-	visibility: collapse;
-}
-
 .item-row {
 	width: 100%;
+	min-height: 32px;
 	flow-children: right;
 }
 
@@ -267,18 +112,18 @@ VerticalScrollBar:hover .ScrollThumb {
 	vertical-align: middle;
 }
 
-/* The label and its subtext stay on one line so a long value cuts them short instead of making the row taller. */
+/* The label and its subtext stay on one line and a long value cuts them short instead of making the row taller. */
 .item-label {
 	width: 100%;
-	font-size: 18px;
+	font-size: kz-text-base;
 	white-space: nowrap;
 	text-overflow: ellipsis;
 }
 
 .item-sub {
 	width: 100%;
-	font-size: 13px;
-	opacity: 0.55;
+	font-size: kz-text-sm;
+	opacity: 0.6;
 	margin-top: 1px;
 	white-space: nowrap;
 	text-overflow: ellipsis;
@@ -293,7 +138,7 @@ VerticalScrollBar:hover .ScrollThumb {
 	width: 100%;
 	height: 1px;
 	margin-top: 7px;
-	background-color: #ffffff1f;
+	background-color: kz-border;
 }
 
 .item-ctl {
@@ -304,29 +149,90 @@ VerticalScrollBar:hover .ScrollThumb {
 	max-width: 100%;
 }
 
+.item.type-font .item-ctl,
+.item.type-position .item-ctl,
+.item.type-size .item-ctl,
+.item.type-vector .item-ctl,
+.item.type-choice .item-ctl {
+	height: 32px;
+	padding: 0px 8px 0px 10px;
+	border: 1px solid kz-zinc-700;
+	border-radius: kz-radius-md;
+	background-color: kz-zinc-900;
+}
+
+.item-caret {
+	width: 14px;
+	height: 14px;
+	margin-left: 8px;
+	vertical-align: center;
+	background-image: url("s2r://panorama/images/icons/ui/expand.vsvg");
+	background-size: 14px 14px;
+	background-repeat: no-repeat;
+	background-position: 50% 50%;
+	wash-color: kz-zinc-500;
+	visibility: collapse;
+}
+
+.item.type-font .item-caret,
+.item.type-position .item-caret,
+.item.type-size .item-caret,
+.item.type-vector .item-caret,
+.item.type-choice .item-caret {
+	visibility: visible;
+}
+
+/* The tick is a child panel because wash-color also tints the panel's background colour. */
+.item-check {
+	width: 16px;
+	height: 16px;
+	vertical-align: center;
+	border: 1px solid kz-zinc-700;
+	border-radius: kz-radius-sm;
+	visibility: collapse;
+}
+
+.item.type-toggle .item-check {
+	visibility: visible;
+}
+
+.item.type-toggle.on .item-check {
+	border-color: kz-blue-400;
+	background-color: kz-blue-400;
+}
+
+.item-check-icon {
+	width: 12px;
+	height: 12px;
+	horizontal-align: center;
+	vertical-align: center;
+	background-size: 12px 12px;
+	background-repeat: no-repeat;
+	background-position: 50% 50%;
+	wash-color: kz-zinc-900;
+}
+
+.item.type-toggle.on .item-check-icon {
+	background-image: url("s2r://panorama/images/icons/ui/check.vsvg");
+}
+
 /* Capped so the label keeps room beside a long value (such as a list of styles). */
 .item-value {
 	vertical-align: middle;
 	max-width: 320px;
-	font-size: 16px;
+	font-size: kz-text-sm;
 	white-space: nowrap;
 	text-overflow: ellipsis;
 }
 
 .item.type-toggle .item-value {
-	padding: 2px 10px;
-	border-radius: 9px;
-	background-color: #ffffff14;
-}
-
-.item.type-toggle.on .item-value {
-	background-color: #24f09733;
+	visibility: collapse;
 }
 
 .item-swatch {
 	width: 34px;
 	height: 18px;
-	border-radius: 3px;
+	border-radius: kz-radius-sm;
 	border: 1px solid #ffffff40;
 	visibility: collapse;
 }
@@ -339,40 +245,19 @@ VerticalScrollBar:hover .ScrollThumb {
 	visibility: visible;
 }
 
-// --- popups -------------------------------------------------------------------------
-
 .popup {
-	horizontal-align: center;
-	vertical-align: middle;
 	x: 594px;
 	width: 300px;
-	flow-children: down;
-	padding: 16px;
-	border: 1px solid #5f494926;
-	border-radius: 5px;
-	background-image: url("s2r://panorama/images/backgrounds/bluedots_large_png.vtex");
-	background-size: 360px 360px;
-	background-color: rgba(1, 1, 1, 0.97);
-	background-img-opacity: 0.01;
 }
 
-.popup.hidden {
-	visibility: collapse;
-}
-
-.menu-box:not(.no-blur),
-.popup:not(.no-blur) {
-	world-blur: gaussian(2, 2, 2);
-}
-
-/* .popup's padding comes out of this width and leaves the grid 308px.
-   Centring happens before x so the extra 40px of width needs half of it back in x to keep the gap from the menu box. */
+/* The grid gets 308px because .popup's padding comes out of this width.
+   Centring happens before x and the extra 40px of width needs half of it back in x to keep the gap from the menu box. */
 .color-popup {
 	width: 340px;
 	x: 614px;
 }
 
-/* A swatch occupies 24 + 2 border + 4 margin = 30px so 10 columns need 300.
+/* A swatch occupies 24 + 2 border + 4 margin = 30px and 10 columns need 300.
    Keep in step with KZ_MENU_SWATCH. */
 .swatch-grid {
 	flow-children: right-wrap;
@@ -384,23 +269,19 @@ VerticalScrollBar:hover .ScrollThumb {
 	width: 24px;
 	height: 24px;
 	margin: 2px;
-	border-radius: 3px;
-	border: 1px solid #ffffff26;
+	border-radius: kz-radius-sm;
+	border: 1px solid kz-selected;
 	transition-property: border-color;
 	transition-duration: 0.05s;
 }
 
 .swatch:hover {
-	border-color: #ffffffff;
-}
-
-.swatch.hidden {
-	visibility: collapse;
+	border-color: kz-white;
 }
 
 .swatch.selected {
-	border-color: #ffcc44ff;
-	box-shadow: 0 0 6px #ffcc44cc;
+	border-color: kz-blue-400;
+	box-shadow: 0 0 6px #51a2ffcc;
 }
 
 .list-rows {
@@ -413,37 +294,35 @@ VerticalScrollBar:hover .ScrollThumb {
 
 .li {
 	width: 100%;
-	padding: 6px 10px;
-	border-radius: 3px;
+	height: 36px;
+	padding: 0px 10px;
+	border-radius: kz-radius-md;
 	background-color: #00000000;
 }
 
 .li:hover {
-	background-color: #ffffff1a;
+	background-color: kz-hover;
 }
 
 .li.selected {
-	background-color: #24f09733;
+	background-color: kz-blue-400-tint;
 }
 
-.li.hidden {
-	visibility: collapse;
+.li.selected .li-label {
+	color: kz-blue-400;
 }
 
 .popup-note {
 	width: 100%;
 	margin-top: 8px;
-	font-size: 12px;
-	opacity: 0.55;
-}
-
-.popup-note.hidden {
-	visibility: collapse;
+	font-size: kz-text-xs;
+	opacity: 0.6;
 }
 
 .li-label {
 	width: 100%;
-	font-size: 18px;
+	vertical-align: center;
+	font-size: kz-text-base;
 	text-overflow: ellipsis;
 }
 
@@ -454,21 +333,24 @@ VerticalScrollBar:hover .ScrollThumb {
 }
 
 .popup-btn {
-	padding: 5px 12px;
+	height: 32px;
+	padding: 0px 12px;
 	margin: 0px 3px;
-	border-radius: 3px;
-	background-color: #ffffff1a;
+	border-radius: kz-radius-md;
+	background-color: kz-zinc-800;
 	transition-property: background-color;
 	transition-duration: 0.05s;
 }
 
 .popup-btn:hover {
-	background-color: #ffffff40;
+	background-color: kz-zinc-700;
 }
 
 .popup-btn-label {
 	horizontal-align: center;
-	color: #ffffffff;
+	vertical-align: center;
+	font-size: kz-text-sm;
+	color: kz-zinc-200;
 }
 
 .popup-page {
@@ -477,10 +359,9 @@ VerticalScrollBar:hover .ScrollThumb {
 	text-align: center;
 }
 
-// --- stepper popup -----------------------------------------------------------------
-
-/* Wider than the other popups so it needs its own offset to keep the same gap. */
-/* The z row reuses the readout slot for an axis label; the main readout shows all three. */
+/* It needs its own offset to keep the same gap because it is wider than the other popups. */
+/* The z row reuses the readout slot for an axis label.
+   The main readout shows all three. */
 .step-axis {
 	opacity: 0.5;
 }
@@ -493,7 +374,10 @@ VerticalScrollBar:hover .ScrollThumb {
 .popup-title {
 	width: fill-parent-flow(1);
 	vertical-align: center;
-	font-size: 18px;
+	padding-left: 8px;
+	border-left: 4px solid kz-blue-600;
+	font-size: kz-text-lg;
+	font-weight: bold;
 }
 
 .step-row {
@@ -506,27 +390,26 @@ VerticalScrollBar:hover .ScrollThumb {
 	flow-children: down;
 }
 
-.step-row.hidden {
-	visibility: collapse;
-}
-
 .step-btn {
 	width: 44px;
-	padding: 5px 0px;
+	height: 32px;
 	margin: 2px;
-	border-radius: 3px;
-	background-color: #ffffff1a;
+	border: 1px solid kz-zinc-700;
+	border-radius: kz-radius-md;
+	background-color: kz-zinc-900;
 	transition-property: background-color;
 	transition-duration: 0.05s;
 }
 
 .step-btn:hover {
-	background-color: #ffffff40;
+	background-color: kz-zinc-800;
 }
 
 .step-btn-label {
 	horizontal-align: center;
-	color: #ffffffff;
+	vertical-align: center;
+	font-size: kz-text-sm;
+	color: kz-zinc-200;
 }
 
 .step-readout {
@@ -536,8 +419,8 @@ VerticalScrollBar:hover .ScrollThumb {
 	font-size: 19px;
 }
 
-/* Positions step in tenths too so the row trades its centre readout for the fine buttons and a gap.
-   The readout moves above the cross.
+/* Positions step in tenths too.
+   Their row trades its centre readout for the fine buttons and a gap and the readout moves above the cross.
    Sizes and vectors keep the centre readout. */
 .step-readout.step-readout-top {
 	width: 100%;
@@ -564,20 +447,12 @@ VerticalScrollBar:hover .ScrollThumb {
 	margin-top: 10px;
 }
 
-.step-drag.hidden {
-	visibility: collapse;
-}
-
-// --- order popup -------------------------------------------------------------------
-
 /* Wide enough for "Bad angles, overlap and dead air" beside the buttons. */
 .order-popup {
 	width: 380px;
 	x: 634px;
 }
 
-/* One row per shown entry with buttons that move it past its neighbour.
-   The ends grey out the way they cannot go. */
 .order-rows {
 	flow-children: down;
 	width: 100%;
@@ -587,22 +462,18 @@ VerticalScrollBar:hover .ScrollThumb {
 	width: 100%;
 	flow-children: right;
 	padding: 3px 4px 3px 10px;
-	border-radius: 3px;
+	border-radius: kz-radius-md;
 	background-color: #00000000;
 }
 
 .or:hover {
-	background-color: #ffffff0d;
-}
-
-.or.hidden {
-	visibility: collapse;
+	background-color: kz-hover;
 }
 
 .or-label {
 	width: fill-parent-flow(1);
 	vertical-align: middle;
-	font-size: 18px;
+	font-size: kz-text-base;
 	white-space: nowrap;
 	text-overflow: ellipsis;
 }
@@ -611,14 +482,15 @@ VerticalScrollBar:hover .ScrollThumb {
 	width: 30px;
 	padding: 3px 0px;
 	margin-left: 4px;
-	border-radius: 3px;
-	background-color: #ffffff1a;
+	border: 1px solid kz-zinc-700;
+	border-radius: kz-radius-md;
+	background-color: kz-zinc-900;
 	transition-property: background-color;
 	transition-duration: 0.05s;
 }
 
 .or-btn:hover {
-	background-color: #ffffff40;
+	background-color: kz-zinc-800;
 }
 
 .or.first .or-up,
@@ -628,39 +500,23 @@ VerticalScrollBar:hover .ScrollThumb {
 
 .or.first .or-up:hover,
 .or.last .or-down:hover {
-	background-color: #ffffff1a;
+	background-color: kz-zinc-900;
 }
 
 .or-btn-label {
 	horizontal-align: center;
-	color: #ffffffff;
+	color: kz-zinc-200;
 }
 
-.popup .close-btn {
+.popup .kz-window-close {
 	margin-bottom: 8px;
 }
 
-.window-header .close-btn {
+.kz-section-header .kz-window-close {
 	margin-bottom: 0px;
 }
 
-/* menuSounds: the server adds `snd` to menu_root when they are on. */
-
-.snd .close-btn:hover {
-	sound: "UIPanorama.generic_button_rollover";
-}
-
-.snd .close-btn:active {
-	sound: "UIPanorama.generic_button_press";
-}
-
-.snd .cat:not(.disabled):hover {
-	sound: "UIPanorama.generic_button_rollover";
-}
-
-.snd .cat:not(.disabled):active {
-	sound: "UIPanorama.generic_button_press";
-}
+/* The server adds snd to menu_root if menuSounds is on. */
 
 .snd .item:not(.disabled):hover {
 	sound: "UIPanorama.generic_button_rollover";

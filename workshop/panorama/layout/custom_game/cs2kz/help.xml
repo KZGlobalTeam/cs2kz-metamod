@@ -3,76 +3,76 @@
     <include src="file://{resources}/styles/custom_game/cs2kz/help.css" />
   </styles>
   <Panel class="root" hittest="false">
-    <Panel id="help_root" class="hidden">
-      <Panel class="help-box">
-        <Panel class="help-header">
-          <Label id="help_title" class="help-title" text="{s:title}" />
-          <Button id="help_close" class="help-close" />
+    <Panel id="help_root" class="kz-window-root hidden" hittest="false">
+      <Panel class="kz-window kz-sidebar-window">
+        <Panel class="kz-section-header">
+          <Label id="help_title" class="kz-section-title" text="{s:title}" />
+          <Button id="help_close" class="kz-window-close" />
         </Panel>
-        <Panel class="help-panes">
-          <Panel class="help-categories">
-            <Button id="help_cat0" class="help-category hidden">
-              <Label id="help_cat_label0" class="help-category-label" text="{s:hc0}" />
+        <Panel class="kz-panes">
+          <Panel class="kz-nav">
+            <Button id="help_cat0" class="kz-nav-btn hidden">
+              <Label id="help_cat_label0" class="kz-nav-label" text="{s:hc0}" />
             </Button>
-            <Button id="help_cat1" class="help-category hidden">
-              <Label id="help_cat_label1" class="help-category-label" text="{s:hc1}" />
+            <Button id="help_cat1" class="kz-nav-btn hidden">
+              <Label id="help_cat_label1" class="kz-nav-label" text="{s:hc1}" />
             </Button>
-            <Button id="help_cat2" class="help-category hidden">
-              <Label id="help_cat_label2" class="help-category-label" text="{s:hc2}" />
+            <Button id="help_cat2" class="kz-nav-btn hidden">
+              <Label id="help_cat_label2" class="kz-nav-label" text="{s:hc2}" />
             </Button>
-            <Button id="help_cat3" class="help-category hidden">
-              <Label id="help_cat_label3" class="help-category-label" text="{s:hc3}" />
+            <Button id="help_cat3" class="kz-nav-btn hidden">
+              <Label id="help_cat_label3" class="kz-nav-label" text="{s:hc3}" />
             </Button>
-            <Button id="help_cat4" class="help-category hidden">
-              <Label id="help_cat_label4" class="help-category-label" text="{s:hc4}" />
+            <Button id="help_cat4" class="kz-nav-btn hidden">
+              <Label id="help_cat_label4" class="kz-nav-label" text="{s:hc4}" />
             </Button>
-            <Button id="help_cat5" class="help-category hidden">
-              <Label id="help_cat_label5" class="help-category-label" text="{s:hc5}" />
+            <Button id="help_cat5" class="kz-nav-btn hidden">
+              <Label id="help_cat_label5" class="kz-nav-label" text="{s:hc5}" />
             </Button>
-            <Button id="help_cat6" class="help-category hidden">
-              <Label id="help_cat_label6" class="help-category-label" text="{s:hc6}" />
+            <Button id="help_cat6" class="kz-nav-btn hidden">
+              <Label id="help_cat_label6" class="kz-nav-label" text="{s:hc6}" />
             </Button>
-            <Button id="help_cat7" class="help-category hidden">
-              <Label id="help_cat_label7" class="help-category-label" text="{s:hc7}" />
+            <Button id="help_cat7" class="kz-nav-btn hidden">
+              <Label id="help_cat_label7" class="kz-nav-label" text="{s:hc7}" />
             </Button>
-            <Button id="help_cat8" class="help-category hidden">
-              <Label id="help_cat_label8" class="help-category-label" text="{s:hc8}" />
+            <Button id="help_cat8" class="kz-nav-btn hidden">
+              <Label id="help_cat_label8" class="kz-nav-label" text="{s:hc8}" />
             </Button>
-            <Button id="help_cat9" class="help-category hidden">
-              <Label id="help_cat_label9" class="help-category-label" text="{s:hc9}" />
+            <Button id="help_cat9" class="kz-nav-btn hidden">
+              <Label id="help_cat_label9" class="kz-nav-label" text="{s:hc9}" />
             </Button>
-            <Button id="help_cat10" class="help-category hidden">
-              <Label id="help_cat_label10" class="help-category-label" text="{s:hc10}" />
+            <Button id="help_cat10" class="kz-nav-btn hidden">
+              <Label id="help_cat_label10" class="kz-nav-label" text="{s:hc10}" />
             </Button>
-            <Button id="help_cat11" class="help-category hidden">
-              <Label id="help_cat_label11" class="help-category-label" text="{s:hc11}" />
+            <Button id="help_cat11" class="kz-nav-btn hidden">
+              <Label id="help_cat_label11" class="kz-nav-label" text="{s:hc11}" />
             </Button>
-            <Button id="help_cat12" class="help-category hidden">
-              <Label id="help_cat_label12" class="help-category-label" text="{s:hc12}" />
+            <Button id="help_cat12" class="kz-nav-btn hidden">
+              <Label id="help_cat_label12" class="kz-nav-label" text="{s:hc12}" />
             </Button>
-            <Button id="help_cat13" class="help-category hidden">
-              <Label id="help_cat_label13" class="help-category-label" text="{s:hc13}" />
+            <Button id="help_cat13" class="kz-nav-btn hidden">
+              <Label id="help_cat_label13" class="kz-nav-label" text="{s:hc13}" />
             </Button>
-            <Button id="help_cat14" class="help-category hidden">
-              <Label id="help_cat_label14" class="help-category-label" text="{s:hc14}" />
+            <Button id="help_cat14" class="kz-nav-btn hidden">
+              <Label id="help_cat_label14" class="kz-nav-label" text="{s:hc14}" />
             </Button>
-            <Button id="help_cat15" class="help-category hidden">
-              <Label id="help_cat_label15" class="help-category-label" text="{s:hc15}" />
+            <Button id="help_cat15" class="kz-nav-btn hidden">
+              <Label id="help_cat_label15" class="kz-nav-label" text="{s:hc15}" />
             </Button>
-            <Button id="help_cat16" class="help-category hidden">
-              <Label id="help_cat_label16" class="help-category-label" text="{s:hc16}" />
+            <Button id="help_cat16" class="kz-nav-btn hidden">
+              <Label id="help_cat_label16" class="kz-nav-label" text="{s:hc16}" />
             </Button>
-            <Button id="help_cat17" class="help-category hidden">
-              <Label id="help_cat_label17" class="help-category-label" text="{s:hc17}" />
+            <Button id="help_cat17" class="kz-nav-btn hidden">
+              <Label id="help_cat_label17" class="kz-nav-label" text="{s:hc17}" />
             </Button>
-            <Button id="help_cat18" class="help-category hidden">
-              <Label id="help_cat_label18" class="help-category-label" text="{s:hc18}" />
+            <Button id="help_cat18" class="kz-nav-btn hidden">
+              <Label id="help_cat_label18" class="kz-nav-label" text="{s:hc18}" />
             </Button>
-            <Button id="help_cat19" class="help-category hidden">
-              <Label id="help_cat_label19" class="help-category-label" text="{s:hc19}" />
+            <Button id="help_cat19" class="kz-nav-btn hidden">
+              <Label id="help_cat_label19" class="kz-nav-label" text="{s:hc19}" />
             </Button>
           </Panel>
-          <Panel class="help-commands">
+          <Panel class="kz-content">
             <Panel id="help_row0" class="help-row hidden" hittest="false">
               <Label id="help_command0" class="help-command" text="{s:hn0}" hittest="false" />
               <Label id="help_description0" class="help-description" text="{s:hd0}" hittest="false" />

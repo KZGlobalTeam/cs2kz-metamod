@@ -3,77 +3,77 @@
     <include src="file://{resources}/styles/custom_game/cs2kz/menu.css" />
   </styles>
   <Panel class="root" hittest="false">
-    <Panel id="menu_root" class="menu hidden">
-      <Panel id="menu_box" class="menu-box">
-        <Panel class="window-header">
-          <Label id="menu_title" class="menu-title" text="{s:title}" />
-          <Button id="m_close" class="close-btn" />
+    <Panel id="menu_root" class="menu kz-window-root hidden" hittest="false">
+      <Panel id="menu_box" class="kz-window kz-sidebar-window menu-box">
+        <Panel class="kz-section-header">
+          <Label id="menu_title" class="kz-section-title" text="{s:title}" />
+          <Button id="m_close" class="kz-window-close" />
         </Panel>
 
-        <Panel id="menu_panes" class="panes">
-          <Panel id="menu_cats" class="cats">
-        <Button id="cat0" class="cat hidden">
-          <Label id="cat_lbl0" class="cat-label" text="{s:cl0}" />
+        <Panel id="menu_panes" class="kz-panes">
+          <Panel id="menu_cats" class="kz-nav">
+        <Button id="cat0" class="kz-nav-btn cat hidden">
+          <Label id="cat_lbl0" class="kz-nav-label cat-label" text="{s:cl0}" />
         </Button>
-        <Button id="cat1" class="cat hidden">
-          <Label id="cat_lbl1" class="cat-label" text="{s:cl1}" />
+        <Button id="cat1" class="kz-nav-btn cat hidden">
+          <Label id="cat_lbl1" class="kz-nav-label cat-label" text="{s:cl1}" />
         </Button>
-        <Button id="cat2" class="cat hidden">
-          <Label id="cat_lbl2" class="cat-label" text="{s:cl2}" />
+        <Button id="cat2" class="kz-nav-btn cat hidden">
+          <Label id="cat_lbl2" class="kz-nav-label cat-label" text="{s:cl2}" />
         </Button>
-        <Button id="cat3" class="cat hidden">
-          <Label id="cat_lbl3" class="cat-label" text="{s:cl3}" />
+        <Button id="cat3" class="kz-nav-btn cat hidden">
+          <Label id="cat_lbl3" class="kz-nav-label cat-label" text="{s:cl3}" />
         </Button>
-        <Button id="cat4" class="cat hidden">
-          <Label id="cat_lbl4" class="cat-label" text="{s:cl4}" />
+        <Button id="cat4" class="kz-nav-btn cat hidden">
+          <Label id="cat_lbl4" class="kz-nav-label cat-label" text="{s:cl4}" />
         </Button>
-        <Button id="cat5" class="cat hidden">
-          <Label id="cat_lbl5" class="cat-label" text="{s:cl5}" />
+        <Button id="cat5" class="kz-nav-btn cat hidden">
+          <Label id="cat_lbl5" class="kz-nav-label cat-label" text="{s:cl5}" />
         </Button>
-        <Button id="cat6" class="cat hidden">
-          <Label id="cat_lbl6" class="cat-label" text="{s:cl6}" />
+        <Button id="cat6" class="kz-nav-btn cat hidden">
+          <Label id="cat_lbl6" class="kz-nav-label cat-label" text="{s:cl6}" />
         </Button>
-        <Button id="cat7" class="cat hidden">
-          <Label id="cat_lbl7" class="cat-label" text="{s:cl7}" />
+        <Button id="cat7" class="kz-nav-btn cat hidden">
+          <Label id="cat_lbl7" class="kz-nav-label cat-label" text="{s:cl7}" />
         </Button>
-        <Button id="cat8" class="cat hidden">
-          <Label id="cat_lbl8" class="cat-label" text="{s:cl8}" />
+        <Button id="cat8" class="kz-nav-btn cat hidden">
+          <Label id="cat_lbl8" class="kz-nav-label cat-label" text="{s:cl8}" />
         </Button>
-        <Button id="cat9" class="cat hidden">
-          <Label id="cat_lbl9" class="cat-label" text="{s:cl9}" />
+        <Button id="cat9" class="kz-nav-btn cat hidden">
+          <Label id="cat_lbl9" class="kz-nav-label cat-label" text="{s:cl9}" />
         </Button>
-        <Button id="cat10" class="cat hidden">
-          <Label id="cat_lbl10" class="cat-label" text="{s:cl10}" />
+        <Button id="cat10" class="kz-nav-btn cat hidden">
+          <Label id="cat_lbl10" class="kz-nav-label cat-label" text="{s:cl10}" />
         </Button>
-        <Button id="cat11" class="cat hidden">
-          <Label id="cat_lbl11" class="cat-label" text="{s:cl11}" />
+        <Button id="cat11" class="kz-nav-btn cat hidden">
+          <Label id="cat_lbl11" class="kz-nav-label cat-label" text="{s:cl11}" />
         </Button>
-        <Button id="cat12" class="cat hidden">
-          <Label id="cat_lbl12" class="cat-label" text="{s:cl12}" />
+        <Button id="cat12" class="kz-nav-btn cat hidden">
+          <Label id="cat_lbl12" class="kz-nav-label cat-label" text="{s:cl12}" />
         </Button>
-        <Button id="cat13" class="cat hidden">
-          <Label id="cat_lbl13" class="cat-label" text="{s:cl13}" />
+        <Button id="cat13" class="kz-nav-btn cat hidden">
+          <Label id="cat_lbl13" class="kz-nav-label cat-label" text="{s:cl13}" />
         </Button>
-        <Button id="cat14" class="cat hidden">
-          <Label id="cat_lbl14" class="cat-label" text="{s:cl14}" />
+        <Button id="cat14" class="kz-nav-btn cat hidden">
+          <Label id="cat_lbl14" class="kz-nav-label cat-label" text="{s:cl14}" />
         </Button>
-        <Button id="cat15" class="cat hidden">
-          <Label id="cat_lbl15" class="cat-label" text="{s:cl15}" />
+        <Button id="cat15" class="kz-nav-btn cat hidden">
+          <Label id="cat_lbl15" class="kz-nav-label cat-label" text="{s:cl15}" />
         </Button>
-        <Button id="cat16" class="cat hidden">
-          <Label id="cat_lbl16" class="cat-label" text="{s:cl16}" />
+        <Button id="cat16" class="kz-nav-btn cat hidden">
+          <Label id="cat_lbl16" class="kz-nav-label cat-label" text="{s:cl16}" />
         </Button>
-        <Button id="cat17" class="cat hidden">
-          <Label id="cat_lbl17" class="cat-label" text="{s:cl17}" />
+        <Button id="cat17" class="kz-nav-btn cat hidden">
+          <Label id="cat_lbl17" class="kz-nav-label cat-label" text="{s:cl17}" />
         </Button>
-        <Button id="cat18" class="cat hidden">
-          <Label id="cat_lbl18" class="cat-label" text="{s:cl18}" />
+        <Button id="cat18" class="kz-nav-btn cat hidden">
+          <Label id="cat_lbl18" class="kz-nav-label cat-label" text="{s:cl18}" />
         </Button>
-        <Button id="cat19" class="cat hidden">
-          <Label id="cat_lbl19" class="cat-label" text="{s:cl19}" />
+        <Button id="cat19" class="kz-nav-btn cat hidden">
+          <Label id="cat_lbl19" class="kz-nav-label cat-label" text="{s:cl19}" />
         </Button>
           </Panel>
-          <Panel id="menu_items" class="items">
+          <Panel id="menu_items" class="kz-content">
         <Button id="item0" class="item hidden">
           <Panel class="item-row">
             <Panel class="item-text">
@@ -83,6 +83,8 @@
             <Panel class="item-ctl">
               <Label id="item_val0" class="item-value" text="{s:iv0}" />
               <Panel id="item_sw0" class="item-swatch" />
+              <Panel class="item-caret" />
+              <Panel class="item-check"><Panel class="item-check-icon" /></Panel>
             </Panel>
           </Panel>
           <Panel id="item_div0" class="item-divider" />
@@ -96,6 +98,8 @@
             <Panel class="item-ctl">
               <Label id="item_val1" class="item-value" text="{s:iv1}" />
               <Panel id="item_sw1" class="item-swatch" />
+              <Panel class="item-caret" />
+              <Panel class="item-check"><Panel class="item-check-icon" /></Panel>
             </Panel>
           </Panel>
           <Panel id="item_div1" class="item-divider" />
@@ -109,6 +113,8 @@
             <Panel class="item-ctl">
               <Label id="item_val2" class="item-value" text="{s:iv2}" />
               <Panel id="item_sw2" class="item-swatch" />
+              <Panel class="item-caret" />
+              <Panel class="item-check"><Panel class="item-check-icon" /></Panel>
             </Panel>
           </Panel>
           <Panel id="item_div2" class="item-divider" />
@@ -122,6 +128,8 @@
             <Panel class="item-ctl">
               <Label id="item_val3" class="item-value" text="{s:iv3}" />
               <Panel id="item_sw3" class="item-swatch" />
+              <Panel class="item-caret" />
+              <Panel class="item-check"><Panel class="item-check-icon" /></Panel>
             </Panel>
           </Panel>
           <Panel id="item_div3" class="item-divider" />
@@ -135,6 +143,8 @@
             <Panel class="item-ctl">
               <Label id="item_val4" class="item-value" text="{s:iv4}" />
               <Panel id="item_sw4" class="item-swatch" />
+              <Panel class="item-caret" />
+              <Panel class="item-check"><Panel class="item-check-icon" /></Panel>
             </Panel>
           </Panel>
           <Panel id="item_div4" class="item-divider" />
@@ -148,6 +158,8 @@
             <Panel class="item-ctl">
               <Label id="item_val5" class="item-value" text="{s:iv5}" />
               <Panel id="item_sw5" class="item-swatch" />
+              <Panel class="item-caret" />
+              <Panel class="item-check"><Panel class="item-check-icon" /></Panel>
             </Panel>
           </Panel>
           <Panel id="item_div5" class="item-divider" />
@@ -161,6 +173,8 @@
             <Panel class="item-ctl">
               <Label id="item_val6" class="item-value" text="{s:iv6}" />
               <Panel id="item_sw6" class="item-swatch" />
+              <Panel class="item-caret" />
+              <Panel class="item-check"><Panel class="item-check-icon" /></Panel>
             </Panel>
           </Panel>
           <Panel id="item_div6" class="item-divider" />
@@ -174,6 +188,8 @@
             <Panel class="item-ctl">
               <Label id="item_val7" class="item-value" text="{s:iv7}" />
               <Panel id="item_sw7" class="item-swatch" />
+              <Panel class="item-caret" />
+              <Panel class="item-check"><Panel class="item-check-icon" /></Panel>
             </Panel>
           </Panel>
           <Panel id="item_div7" class="item-divider" />
@@ -187,6 +203,8 @@
             <Panel class="item-ctl">
               <Label id="item_val8" class="item-value" text="{s:iv8}" />
               <Panel id="item_sw8" class="item-swatch" />
+              <Panel class="item-caret" />
+              <Panel class="item-check"><Panel class="item-check-icon" /></Panel>
             </Panel>
           </Panel>
           <Panel id="item_div8" class="item-divider" />
@@ -200,6 +218,8 @@
             <Panel class="item-ctl">
               <Label id="item_val9" class="item-value" text="{s:iv9}" />
               <Panel id="item_sw9" class="item-swatch" />
+              <Panel class="item-caret" />
+              <Panel class="item-check"><Panel class="item-check-icon" /></Panel>
             </Panel>
           </Panel>
           <Panel id="item_div9" class="item-divider" />
@@ -213,6 +233,8 @@
             <Panel class="item-ctl">
               <Label id="item_val10" class="item-value" text="{s:iv10}" />
               <Panel id="item_sw10" class="item-swatch" />
+              <Panel class="item-caret" />
+              <Panel class="item-check"><Panel class="item-check-icon" /></Panel>
             </Panel>
           </Panel>
           <Panel id="item_div10" class="item-divider" />
@@ -226,6 +248,8 @@
             <Panel class="item-ctl">
               <Label id="item_val11" class="item-value" text="{s:iv11}" />
               <Panel id="item_sw11" class="item-swatch" />
+              <Panel class="item-caret" />
+              <Panel class="item-check"><Panel class="item-check-icon" /></Panel>
             </Panel>
           </Panel>
           <Panel id="item_div11" class="item-divider" />
@@ -239,6 +263,8 @@
             <Panel class="item-ctl">
               <Label id="item_val12" class="item-value" text="{s:iv12}" />
               <Panel id="item_sw12" class="item-swatch" />
+              <Panel class="item-caret" />
+              <Panel class="item-check"><Panel class="item-check-icon" /></Panel>
             </Panel>
           </Panel>
           <Panel id="item_div12" class="item-divider" />
@@ -252,6 +278,8 @@
             <Panel class="item-ctl">
               <Label id="item_val13" class="item-value" text="{s:iv13}" />
               <Panel id="item_sw13" class="item-swatch" />
+              <Panel class="item-caret" />
+              <Panel class="item-check"><Panel class="item-check-icon" /></Panel>
             </Panel>
           </Panel>
           <Panel id="item_div13" class="item-divider" />
@@ -265,6 +293,8 @@
             <Panel class="item-ctl">
               <Label id="item_val14" class="item-value" text="{s:iv14}" />
               <Panel id="item_sw14" class="item-swatch" />
+              <Panel class="item-caret" />
+              <Panel class="item-check"><Panel class="item-check-icon" /></Panel>
             </Panel>
           </Panel>
           <Panel id="item_div14" class="item-divider" />
@@ -278,6 +308,8 @@
             <Panel class="item-ctl">
               <Label id="item_val15" class="item-value" text="{s:iv15}" />
               <Panel id="item_sw15" class="item-swatch" />
+              <Panel class="item-caret" />
+              <Panel class="item-check"><Panel class="item-check-icon" /></Panel>
             </Panel>
           </Panel>
           <Panel id="item_div15" class="item-divider" />
@@ -291,6 +323,8 @@
             <Panel class="item-ctl">
               <Label id="item_val16" class="item-value" text="{s:iv16}" />
               <Panel id="item_sw16" class="item-swatch" />
+              <Panel class="item-caret" />
+              <Panel class="item-check"><Panel class="item-check-icon" /></Panel>
             </Panel>
           </Panel>
           <Panel id="item_div16" class="item-divider" />
@@ -304,6 +338,8 @@
             <Panel class="item-ctl">
               <Label id="item_val17" class="item-value" text="{s:iv17}" />
               <Panel id="item_sw17" class="item-swatch" />
+              <Panel class="item-caret" />
+              <Panel class="item-check"><Panel class="item-check-icon" /></Panel>
             </Panel>
           </Panel>
           <Panel id="item_div17" class="item-divider" />
@@ -317,6 +353,8 @@
             <Panel class="item-ctl">
               <Label id="item_val18" class="item-value" text="{s:iv18}" />
               <Panel id="item_sw18" class="item-swatch" />
+              <Panel class="item-caret" />
+              <Panel class="item-check"><Panel class="item-check-icon" /></Panel>
             </Panel>
           </Panel>
           <Panel id="item_div18" class="item-divider" />
@@ -330,6 +368,8 @@
             <Panel class="item-ctl">
               <Label id="item_val19" class="item-value" text="{s:iv19}" />
               <Panel id="item_sw19" class="item-swatch" />
+              <Panel class="item-caret" />
+              <Panel class="item-check"><Panel class="item-check-icon" /></Panel>
             </Panel>
           </Panel>
           <Panel id="item_div19" class="item-divider" />
@@ -343,6 +383,8 @@
             <Panel class="item-ctl">
               <Label id="item_val20" class="item-value" text="{s:iv20}" />
               <Panel id="item_sw20" class="item-swatch" />
+              <Panel class="item-caret" />
+              <Panel class="item-check"><Panel class="item-check-icon" /></Panel>
             </Panel>
           </Panel>
           <Panel id="item_div20" class="item-divider" />
@@ -356,6 +398,8 @@
             <Panel class="item-ctl">
               <Label id="item_val21" class="item-value" text="{s:iv21}" />
               <Panel id="item_sw21" class="item-swatch" />
+              <Panel class="item-caret" />
+              <Panel class="item-check"><Panel class="item-check-icon" /></Panel>
             </Panel>
           </Panel>
           <Panel id="item_div21" class="item-divider" />
@@ -369,6 +413,8 @@
             <Panel class="item-ctl">
               <Label id="item_val22" class="item-value" text="{s:iv22}" />
               <Panel id="item_sw22" class="item-swatch" />
+              <Panel class="item-caret" />
+              <Panel class="item-check"><Panel class="item-check-icon" /></Panel>
             </Panel>
           </Panel>
           <Panel id="item_div22" class="item-divider" />
@@ -382,6 +428,8 @@
             <Panel class="item-ctl">
               <Label id="item_val23" class="item-value" text="{s:iv23}" />
               <Panel id="item_sw23" class="item-swatch" />
+              <Panel class="item-caret" />
+              <Panel class="item-check"><Panel class="item-check-icon" /></Panel>
             </Panel>
           </Panel>
           <Panel id="item_div23" class="item-divider" />
@@ -395,6 +443,8 @@
             <Panel class="item-ctl">
               <Label id="item_val24" class="item-value" text="{s:iv24}" />
               <Panel id="item_sw24" class="item-swatch" />
+              <Panel class="item-caret" />
+              <Panel class="item-check"><Panel class="item-check-icon" /></Panel>
             </Panel>
           </Panel>
           <Panel id="item_div24" class="item-divider" />
@@ -408,6 +458,8 @@
             <Panel class="item-ctl">
               <Label id="item_val25" class="item-value" text="{s:iv25}" />
               <Panel id="item_sw25" class="item-swatch" />
+              <Panel class="item-caret" />
+              <Panel class="item-check"><Panel class="item-check-icon" /></Panel>
             </Panel>
           </Panel>
           <Panel id="item_div25" class="item-divider" />
@@ -421,6 +473,8 @@
             <Panel class="item-ctl">
               <Label id="item_val26" class="item-value" text="{s:iv26}" />
               <Panel id="item_sw26" class="item-swatch" />
+              <Panel class="item-caret" />
+              <Panel class="item-check"><Panel class="item-check-icon" /></Panel>
             </Panel>
           </Panel>
           <Panel id="item_div26" class="item-divider" />
@@ -434,6 +488,8 @@
             <Panel class="item-ctl">
               <Label id="item_val27" class="item-value" text="{s:iv27}" />
               <Panel id="item_sw27" class="item-swatch" />
+              <Panel class="item-caret" />
+              <Panel class="item-check"><Panel class="item-check-icon" /></Panel>
             </Panel>
           </Panel>
           <Panel id="item_div27" class="item-divider" />
@@ -447,6 +503,8 @@
             <Panel class="item-ctl">
               <Label id="item_val28" class="item-value" text="{s:iv28}" />
               <Panel id="item_sw28" class="item-swatch" />
+              <Panel class="item-caret" />
+              <Panel class="item-check"><Panel class="item-check-icon" /></Panel>
             </Panel>
           </Panel>
           <Panel id="item_div28" class="item-divider" />
@@ -460,6 +518,8 @@
             <Panel class="item-ctl">
               <Label id="item_val29" class="item-value" text="{s:iv29}" />
               <Panel id="item_sw29" class="item-swatch" />
+              <Panel class="item-caret" />
+              <Panel class="item-check"><Panel class="item-check-icon" /></Panel>
             </Panel>
           </Panel>
           <Panel id="item_div29" class="item-divider" />
@@ -473,6 +533,8 @@
             <Panel class="item-ctl">
               <Label id="item_val30" class="item-value" text="{s:iv30}" />
               <Panel id="item_sw30" class="item-swatch" />
+              <Panel class="item-caret" />
+              <Panel class="item-check"><Panel class="item-check-icon" /></Panel>
             </Panel>
           </Panel>
           <Panel id="item_div30" class="item-divider" />
@@ -486,6 +548,8 @@
             <Panel class="item-ctl">
               <Label id="item_val31" class="item-value" text="{s:iv31}" />
               <Panel id="item_sw31" class="item-swatch" />
+              <Panel class="item-caret" />
+              <Panel class="item-check"><Panel class="item-check-icon" /></Panel>
             </Panel>
           </Panel>
           <Panel id="item_div31" class="item-divider" />
@@ -495,8 +559,8 @@
 
       </Panel>
 
-      <Panel id="color_popup" class="popup color-popup hidden">
-        <Button id="color_close" class="close-btn" />
+      <Panel id="color_popup" class="kz-window popup color-popup hidden">
+        <Button id="color_close" class="kz-window-close" />
         <Panel class="swatch-grid">
         <Button id="sw0" class="swatch" />
         <Button id="sw1" class="swatch" />
@@ -546,10 +610,10 @@
         </Panel>
       </Panel>
 
-      <Panel id="list_popup" class="popup list-popup hidden">
-        <Panel class="window-header">
+      <Panel id="list_popup" class="kz-window popup list-popup hidden">
+        <Panel class="kz-section-header">
           <Label id="lp_title" class="popup-title" text="{s:lptitle}" />
-          <Button id="list_close" class="close-btn" />
+          <Button id="list_close" class="kz-window-close" />
         </Panel>
         <Panel class="list-rows">
           <Button id="li0" class="li hidden">
@@ -657,10 +721,10 @@
         <Label id="lp_note" class="popup-note hidden" text="{s:lpnote}" />
       </Panel>
 
-      <Panel id="step_popup" class="popup step-popup hidden">
-        <Panel class="window-header">
+      <Panel id="step_popup" class="kz-window popup step-popup hidden">
+        <Panel class="kz-section-header">
           <Label id="step_label" class="popup-title" text="{s:steplabel}" />
-          <Button id="step_close" class="close-btn" />
+          <Button id="step_close" class="kz-window-close" />
         </Panel>
         <Label id="step_readout_top" class="step-readout step-readout-top" text="{s:steptop}" />
         <Panel id="m_step_up" class="step-row v-step hidden">
@@ -695,10 +759,10 @@
         </Button>
       </Panel>
 
-      <Panel id="order_popup" class="popup order-popup hidden">
-        <Panel class="window-header">
+      <Panel id="order_popup" class="kz-window popup order-popup hidden">
+        <Panel class="kz-section-header">
           <Label id="op_title" class="popup-title" text="{s:optitle}" />
-          <Button id="order_close" class="close-btn" />
+          <Button id="order_close" class="kz-window-close" />
         </Panel>
         <Panel class="order-rows">
           <Panel id="or0" class="or hidden">

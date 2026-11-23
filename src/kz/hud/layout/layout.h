@@ -61,4 +61,4 @@
 
 // Default element colors (MHUD_DEF_*_COLOR) live in kz_hud.h: both HUD styles share them.
 
-#define MHUD_DEFAULT_FONT "stratum2-bold-monodigit"
+#define MHUD_DEFAULT_FONT "stratum2-bold-tf"
