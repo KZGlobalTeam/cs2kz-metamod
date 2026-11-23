@@ -155,7 +155,7 @@ void Jump::FormatField(JSField field, bool chat, bool greyTier, JSFieldText &out
 		}
 		case JSField::AirPath:
 		{
-			AddFieldValue(out, "%.2f", this->GetAirPath());
+			AddFieldValue(out, "%.3f", this->GetAirPath());
 			break;
 		}
 		case JSField::BadAngles:
