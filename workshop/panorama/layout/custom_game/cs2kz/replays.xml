@@ -1,0 +1,438 @@
+<!-- Every switch option, row and cell is written out because layouts have no loops.
+     The counts must match KZ_REPLAYS_ROWS, KZ_REPLAYS_CELLS and KZ_REPLAYS_JUMP_TYPES. -->
+<root>
+  <styles>
+    <include src="file://{resources}/styles/custom_game/cs2kz/replays.css" />
+  </styles>
+  <Panel class="root" hittest="false">
+    <Panel id="replays_root" class="kz-window-root hidden" hittest="false">
+      <Panel id="replays_window" class="kz-window replays-window">
+        <Panel class="kz-window-header">
+          <Label id="replays_window_title" class="kz-window-title" text="{s:replays_window_title}" />
+          <Button id="replays_window_close" class="kz-window-close" />
+        </Panel>
+        <Panel class="kz-filters">
+          <Panel id="replays_type" class="kz-segment three">
+            <Panel class="kz-segment-thumb" hittest="false" />
+            <Panel class="kz-segment-options">
+              <Button id="replays_type_0" class="kz-segment-option">
+                <Label id="replays_type_0_label" class="kz-segment-label" text="{s:replays_type_0_label}" hittest="false" />
+              </Button>
+              <Button id="replays_type_1" class="kz-segment-option">
+                <Label id="replays_type_1_label" class="kz-segment-label" text="{s:replays_type_1_label}" hittest="false" />
+              </Button>
+              <Button id="replays_type_2" class="kz-segment-option">
+                <Label id="replays_type_2_label" class="kz-segment-label" text="{s:replays_type_2_label}" hittest="false" />
+              </Button>
+            </Panel>
+          </Panel>
+          <Panel class="kz-rule-v replays-moded" />
+          <Panel id="replays_mode" class="kz-segment replays-moded">
+            <Panel class="kz-segment-thumb" hittest="false" />
+            <Panel class="kz-segment-options">
+              <Button id="replays_mode_0" class="kz-segment-option">
+                <Label class="kz-segment-label" text="CKZ" hittest="false" />
+              </Button>
+              <Button id="replays_mode_1" class="kz-segment-option">
+                <Label class="kz-segment-label" text="VNL" hittest="false" />
+              </Button>
+            </Panel>
+          </Panel>
+          <Panel class="kz-rule-v replays-jumps-only" />
+          <Panel id="replays_jt" class="kz-segment jumptypes replays-jumps-only">
+            <Panel class="kz-segment-thumb" hittest="false" />
+            <Panel class="kz-segment-options">
+              <Button id="replays_jt_0" class="kz-segment-option">
+                <Label class="kz-segment-label" text="LJ" hittest="false" />
+              </Button>
+              <Button id="replays_jt_1" class="kz-segment-option">
+                <Label class="kz-segment-label" text="BH" hittest="false" />
+              </Button>
+              <Button id="replays_jt_2" class="kz-segment-option">
+                <Label class="kz-segment-label" text="MBH" hittest="false" />
+              </Button>
+              <Button id="replays_jt_3" class="kz-segment-option">
+                <Label class="kz-segment-label" text="WJ" hittest="false" />
+              </Button>
+              <Button id="replays_jt_4" class="kz-segment-option">
+                <Label class="kz-segment-label" text="LAJ" hittest="false" />
+              </Button>
+              <Button id="replays_jt_5" class="kz-segment-option">
+                <Label class="kz-segment-label" text="LAH" hittest="false" />
+              </Button>
+              <Button id="replays_jt_6" class="kz-segment-option">
+                <Label class="kz-segment-label" text="JB" hittest="false" />
+              </Button>
+            </Panel>
+          </Panel>
+        </Panel>
+        <Label id="replays_filters" class="replays-filters" text="{s:replays_filters}" />
+        <Panel class="kz-record-table">
+          <Panel class="kz-record-head">
+            <Label class="kz-record-th rp-col-num" text="#" />
+            <Label id="replays_th_player" class="kz-record-th rp-col-player" text="{s:replays_th_player}" />
+            <Label id="replays_th_map" class="kz-record-th rp-col-map" text="{s:replays_th_map}" />
+            <Label id="replays_th_c0" class="kz-record-th rp-col-c0" text="{s:replays_th_c0}" />
+            <Label id="replays_th_c1" class="kz-record-th rp-col-c1" text="{s:replays_th_c1}" />
+            <Label id="replays_th_c2" class="kz-record-th rp-col-c2" text="{s:replays_th_c2}" />
+            <Label id="replays_th_time" class="kz-record-th rp-col-time" text="{s:replays_th_time}" />
+            <Label id="replays_th_c3" class="kz-record-th rp-col-c3" text="{s:replays_th_c3}" />
+            <Label id="replays_th_c4" class="kz-record-th rp-col-c4" text="{s:replays_th_c4}" />
+            <Label id="replays_th_replay" class="kz-record-th kz-col-replay" text="{s:replays_th_replay}" />
+          </Panel>
+          <Panel id="replays_row0" class="kz-record-row first hidden">
+            <Label id="replays_row0_num" class="kz-record-cell rp-col-num" text="{s:replays_row0_num}" />
+            <Panel class="rp-col-player kz-record-player">
+              <Button id="replays_row0_profile" class="kz-name-btn">
+                <Label id="replays_row0_player" class="kz-record-cell kz-record-name" text="{s:replays_row0_player}" hittest="false" />
+              </Button>
+            </Panel>
+            <Label id="replays_row0_map" class="kz-record-cell rp-col-map" text="{s:replays_row0_map}" />
+            <Label id="replays_row0_c0" class="kz-record-cell rp-col-c0" text="{s:replays_row0_c0}" />
+            <Label id="replays_row0_c1" class="kz-record-cell rp-col-c1" text="{s:replays_row0_c1}" />
+            <Label id="replays_row0_c2" class="kz-record-cell rp-col-c2" text="{s:replays_row0_c2}" />
+            <Panel class="kz-record-time rp-col-time">
+              <Label id="replays_row0_time" class="kz-record-time-value" text="{s:replays_row0_time}" />
+              <Label id="replays_row0_badge" class="kz-run-badge" text="{s:replays_row0_badge}" />
+            </Panel>
+            <Label id="replays_row0_c3" class="kz-record-cell rp-col-c3" text="{s:replays_row0_c3}" />
+            <Label id="replays_row0_c4" class="kz-record-cell rp-col-c4" text="{s:replays_row0_c4}" />
+            <Panel class="kz-col-replay kz-record-actions">
+              <Button id="replays_row0_play" class="kz-icon-btn icon-play">
+                <Panel class="kz-icon-btn-face" hittest="false" />
+                <Panel class="kz-icon-btn-icon" hittest="false" />
+                <Panel class="kz-tooltip-anchor" hittest="false">
+                  <Label id="replays_row0_play_tip" class="kz-tooltip" text="{s:replays_row0_play_tip}" hittest="false" />
+                </Panel>
+              </Button>
+              <Button id="replays_row0_copy" class="kz-icon-btn icon-copy tip-end">
+                <Panel class="kz-icon-btn-face" hittest="false" />
+                <Panel class="kz-icon-btn-icon" hittest="false" />
+                <Panel class="kz-tooltip-anchor" hittest="false">
+                  <Label id="replays_row0_copy_tip" class="kz-tooltip" text="{s:replays_row0_copy_tip}" hittest="false" />
+                </Panel>
+              </Button>
+            </Panel>
+          </Panel>
+          <Panel id="replays_row1" class="kz-record-row hidden">
+            <Label id="replays_row1_num" class="kz-record-cell rp-col-num" text="{s:replays_row1_num}" />
+            <Panel class="rp-col-player kz-record-player">
+              <Button id="replays_row1_profile" class="kz-name-btn">
+                <Label id="replays_row1_player" class="kz-record-cell kz-record-name" text="{s:replays_row1_player}" hittest="false" />
+              </Button>
+            </Panel>
+            <Label id="replays_row1_map" class="kz-record-cell rp-col-map" text="{s:replays_row1_map}" />
+            <Label id="replays_row1_c0" class="kz-record-cell rp-col-c0" text="{s:replays_row1_c0}" />
+            <Label id="replays_row1_c1" class="kz-record-cell rp-col-c1" text="{s:replays_row1_c1}" />
+            <Label id="replays_row1_c2" class="kz-record-cell rp-col-c2" text="{s:replays_row1_c2}" />
+            <Panel class="kz-record-time rp-col-time">
+              <Label id="replays_row1_time" class="kz-record-time-value" text="{s:replays_row1_time}" />
+              <Label id="replays_row1_badge" class="kz-run-badge" text="{s:replays_row1_badge}" />
+            </Panel>
+            <Label id="replays_row1_c3" class="kz-record-cell rp-col-c3" text="{s:replays_row1_c3}" />
+            <Label id="replays_row1_c4" class="kz-record-cell rp-col-c4" text="{s:replays_row1_c4}" />
+            <Panel class="kz-col-replay kz-record-actions">
+              <Button id="replays_row1_play" class="kz-icon-btn icon-play">
+                <Panel class="kz-icon-btn-face" hittest="false" />
+                <Panel class="kz-icon-btn-icon" hittest="false" />
+                <Panel class="kz-tooltip-anchor" hittest="false">
+                  <Label id="replays_row1_play_tip" class="kz-tooltip" text="{s:replays_row1_play_tip}" hittest="false" />
+                </Panel>
+              </Button>
+              <Button id="replays_row1_copy" class="kz-icon-btn icon-copy tip-end">
+                <Panel class="kz-icon-btn-face" hittest="false" />
+                <Panel class="kz-icon-btn-icon" hittest="false" />
+                <Panel class="kz-tooltip-anchor" hittest="false">
+                  <Label id="replays_row1_copy_tip" class="kz-tooltip" text="{s:replays_row1_copy_tip}" hittest="false" />
+                </Panel>
+              </Button>
+            </Panel>
+          </Panel>
+          <Panel id="replays_row2" class="kz-record-row hidden">
+            <Label id="replays_row2_num" class="kz-record-cell rp-col-num" text="{s:replays_row2_num}" />
+            <Panel class="rp-col-player kz-record-player">
+              <Button id="replays_row2_profile" class="kz-name-btn">
+                <Label id="replays_row2_player" class="kz-record-cell kz-record-name" text="{s:replays_row2_player}" hittest="false" />
+              </Button>
+            </Panel>
+            <Label id="replays_row2_map" class="kz-record-cell rp-col-map" text="{s:replays_row2_map}" />
+            <Label id="replays_row2_c0" class="kz-record-cell rp-col-c0" text="{s:replays_row2_c0}" />
+            <Label id="replays_row2_c1" class="kz-record-cell rp-col-c1" text="{s:replays_row2_c1}" />
+            <Label id="replays_row2_c2" class="kz-record-cell rp-col-c2" text="{s:replays_row2_c2}" />
+            <Panel class="kz-record-time rp-col-time">
+              <Label id="replays_row2_time" class="kz-record-time-value" text="{s:replays_row2_time}" />
+              <Label id="replays_row2_badge" class="kz-run-badge" text="{s:replays_row2_badge}" />
+            </Panel>
+            <Label id="replays_row2_c3" class="kz-record-cell rp-col-c3" text="{s:replays_row2_c3}" />
+            <Label id="replays_row2_c4" class="kz-record-cell rp-col-c4" text="{s:replays_row2_c4}" />
+            <Panel class="kz-col-replay kz-record-actions">
+              <Button id="replays_row2_play" class="kz-icon-btn icon-play">
+                <Panel class="kz-icon-btn-face" hittest="false" />
+                <Panel class="kz-icon-btn-icon" hittest="false" />
+                <Panel class="kz-tooltip-anchor" hittest="false">
+                  <Label id="replays_row2_play_tip" class="kz-tooltip" text="{s:replays_row2_play_tip}" hittest="false" />
+                </Panel>
+              </Button>
+              <Button id="replays_row2_copy" class="kz-icon-btn icon-copy tip-end">
+                <Panel class="kz-icon-btn-face" hittest="false" />
+                <Panel class="kz-icon-btn-icon" hittest="false" />
+                <Panel class="kz-tooltip-anchor" hittest="false">
+                  <Label id="replays_row2_copy_tip" class="kz-tooltip" text="{s:replays_row2_copy_tip}" hittest="false" />
+                </Panel>
+              </Button>
+            </Panel>
+          </Panel>
+          <Panel id="replays_row3" class="kz-record-row hidden">
+            <Label id="replays_row3_num" class="kz-record-cell rp-col-num" text="{s:replays_row3_num}" />
+            <Panel class="rp-col-player kz-record-player">
+              <Button id="replays_row3_profile" class="kz-name-btn">
+                <Label id="replays_row3_player" class="kz-record-cell kz-record-name" text="{s:replays_row3_player}" hittest="false" />
+              </Button>
+            </Panel>
+            <Label id="replays_row3_map" class="kz-record-cell rp-col-map" text="{s:replays_row3_map}" />
+            <Label id="replays_row3_c0" class="kz-record-cell rp-col-c0" text="{s:replays_row3_c0}" />
+            <Label id="replays_row3_c1" class="kz-record-cell rp-col-c1" text="{s:replays_row3_c1}" />
+            <Label id="replays_row3_c2" class="kz-record-cell rp-col-c2" text="{s:replays_row3_c2}" />
+            <Panel class="kz-record-time rp-col-time">
+              <Label id="replays_row3_time" class="kz-record-time-value" text="{s:replays_row3_time}" />
+              <Label id="replays_row3_badge" class="kz-run-badge" text="{s:replays_row3_badge}" />
+            </Panel>
+            <Label id="replays_row3_c3" class="kz-record-cell rp-col-c3" text="{s:replays_row3_c3}" />
+            <Label id="replays_row3_c4" class="kz-record-cell rp-col-c4" text="{s:replays_row3_c4}" />
+            <Panel class="kz-col-replay kz-record-actions">
+              <Button id="replays_row3_play" class="kz-icon-btn icon-play">
+                <Panel class="kz-icon-btn-face" hittest="false" />
+                <Panel class="kz-icon-btn-icon" hittest="false" />
+                <Panel class="kz-tooltip-anchor" hittest="false">
+                  <Label id="replays_row3_play_tip" class="kz-tooltip" text="{s:replays_row3_play_tip}" hittest="false" />
+                </Panel>
+              </Button>
+              <Button id="replays_row3_copy" class="kz-icon-btn icon-copy tip-end">
+                <Panel class="kz-icon-btn-face" hittest="false" />
+                <Panel class="kz-icon-btn-icon" hittest="false" />
+                <Panel class="kz-tooltip-anchor" hittest="false">
+                  <Label id="replays_row3_copy_tip" class="kz-tooltip" text="{s:replays_row3_copy_tip}" hittest="false" />
+                </Panel>
+              </Button>
+            </Panel>
+          </Panel>
+          <Panel id="replays_row4" class="kz-record-row hidden">
+            <Label id="replays_row4_num" class="kz-record-cell rp-col-num" text="{s:replays_row4_num}" />
+            <Panel class="rp-col-player kz-record-player">
+              <Button id="replays_row4_profile" class="kz-name-btn">
+                <Label id="replays_row4_player" class="kz-record-cell kz-record-name" text="{s:replays_row4_player}" hittest="false" />
+              </Button>
+            </Panel>
+            <Label id="replays_row4_map" class="kz-record-cell rp-col-map" text="{s:replays_row4_map}" />
+            <Label id="replays_row4_c0" class="kz-record-cell rp-col-c0" text="{s:replays_row4_c0}" />
+            <Label id="replays_row4_c1" class="kz-record-cell rp-col-c1" text="{s:replays_row4_c1}" />
+            <Label id="replays_row4_c2" class="kz-record-cell rp-col-c2" text="{s:replays_row4_c2}" />
+            <Panel class="kz-record-time rp-col-time">
+              <Label id="replays_row4_time" class="kz-record-time-value" text="{s:replays_row4_time}" />
+              <Label id="replays_row4_badge" class="kz-run-badge" text="{s:replays_row4_badge}" />
+            </Panel>
+            <Label id="replays_row4_c3" class="kz-record-cell rp-col-c3" text="{s:replays_row4_c3}" />
+            <Label id="replays_row4_c4" class="kz-record-cell rp-col-c4" text="{s:replays_row4_c4}" />
+            <Panel class="kz-col-replay kz-record-actions">
+              <Button id="replays_row4_play" class="kz-icon-btn icon-play">
+                <Panel class="kz-icon-btn-face" hittest="false" />
+                <Panel class="kz-icon-btn-icon" hittest="false" />
+                <Panel class="kz-tooltip-anchor" hittest="false">
+                  <Label id="replays_row4_play_tip" class="kz-tooltip" text="{s:replays_row4_play_tip}" hittest="false" />
+                </Panel>
+              </Button>
+              <Button id="replays_row4_copy" class="kz-icon-btn icon-copy tip-end">
+                <Panel class="kz-icon-btn-face" hittest="false" />
+                <Panel class="kz-icon-btn-icon" hittest="false" />
+                <Panel class="kz-tooltip-anchor" hittest="false">
+                  <Label id="replays_row4_copy_tip" class="kz-tooltip" text="{s:replays_row4_copy_tip}" hittest="false" />
+                </Panel>
+              </Button>
+            </Panel>
+          </Panel>
+          <Panel id="replays_row5" class="kz-record-row hidden">
+            <Label id="replays_row5_num" class="kz-record-cell rp-col-num" text="{s:replays_row5_num}" />
+            <Panel class="rp-col-player kz-record-player">
+              <Button id="replays_row5_profile" class="kz-name-btn">
+                <Label id="replays_row5_player" class="kz-record-cell kz-record-name" text="{s:replays_row5_player}" hittest="false" />
+              </Button>
+            </Panel>
+            <Label id="replays_row5_map" class="kz-record-cell rp-col-map" text="{s:replays_row5_map}" />
+            <Label id="replays_row5_c0" class="kz-record-cell rp-col-c0" text="{s:replays_row5_c0}" />
+            <Label id="replays_row5_c1" class="kz-record-cell rp-col-c1" text="{s:replays_row5_c1}" />
+            <Label id="replays_row5_c2" class="kz-record-cell rp-col-c2" text="{s:replays_row5_c2}" />
+            <Panel class="kz-record-time rp-col-time">
+              <Label id="replays_row5_time" class="kz-record-time-value" text="{s:replays_row5_time}" />
+              <Label id="replays_row5_badge" class="kz-run-badge" text="{s:replays_row5_badge}" />
+            </Panel>
+            <Label id="replays_row5_c3" class="kz-record-cell rp-col-c3" text="{s:replays_row5_c3}" />
+            <Label id="replays_row5_c4" class="kz-record-cell rp-col-c4" text="{s:replays_row5_c4}" />
+            <Panel class="kz-col-replay kz-record-actions">
+              <Button id="replays_row5_play" class="kz-icon-btn icon-play">
+                <Panel class="kz-icon-btn-face" hittest="false" />
+                <Panel class="kz-icon-btn-icon" hittest="false" />
+                <Panel class="kz-tooltip-anchor" hittest="false">
+                  <Label id="replays_row5_play_tip" class="kz-tooltip" text="{s:replays_row5_play_tip}" hittest="false" />
+                </Panel>
+              </Button>
+              <Button id="replays_row5_copy" class="kz-icon-btn icon-copy tip-end">
+                <Panel class="kz-icon-btn-face" hittest="false" />
+                <Panel class="kz-icon-btn-icon" hittest="false" />
+                <Panel class="kz-tooltip-anchor" hittest="false">
+                  <Label id="replays_row5_copy_tip" class="kz-tooltip" text="{s:replays_row5_copy_tip}" hittest="false" />
+                </Panel>
+              </Button>
+            </Panel>
+          </Panel>
+          <Panel id="replays_row6" class="kz-record-row hidden">
+            <Label id="replays_row6_num" class="kz-record-cell rp-col-num" text="{s:replays_row6_num}" />
+            <Panel class="rp-col-player kz-record-player">
+              <Button id="replays_row6_profile" class="kz-name-btn">
+                <Label id="replays_row6_player" class="kz-record-cell kz-record-name" text="{s:replays_row6_player}" hittest="false" />
+              </Button>
+            </Panel>
+            <Label id="replays_row6_map" class="kz-record-cell rp-col-map" text="{s:replays_row6_map}" />
+            <Label id="replays_row6_c0" class="kz-record-cell rp-col-c0" text="{s:replays_row6_c0}" />
+            <Label id="replays_row6_c1" class="kz-record-cell rp-col-c1" text="{s:replays_row6_c1}" />
+            <Label id="replays_row6_c2" class="kz-record-cell rp-col-c2" text="{s:replays_row6_c2}" />
+            <Panel class="kz-record-time rp-col-time">
+              <Label id="replays_row6_time" class="kz-record-time-value" text="{s:replays_row6_time}" />
+              <Label id="replays_row6_badge" class="kz-run-badge" text="{s:replays_row6_badge}" />
+            </Panel>
+            <Label id="replays_row6_c3" class="kz-record-cell rp-col-c3" text="{s:replays_row6_c3}" />
+            <Label id="replays_row6_c4" class="kz-record-cell rp-col-c4" text="{s:replays_row6_c4}" />
+            <Panel class="kz-col-replay kz-record-actions">
+              <Button id="replays_row6_play" class="kz-icon-btn icon-play">
+                <Panel class="kz-icon-btn-face" hittest="false" />
+                <Panel class="kz-icon-btn-icon" hittest="false" />
+                <Panel class="kz-tooltip-anchor" hittest="false">
+                  <Label id="replays_row6_play_tip" class="kz-tooltip" text="{s:replays_row6_play_tip}" hittest="false" />
+                </Panel>
+              </Button>
+              <Button id="replays_row6_copy" class="kz-icon-btn icon-copy tip-end">
+                <Panel class="kz-icon-btn-face" hittest="false" />
+                <Panel class="kz-icon-btn-icon" hittest="false" />
+                <Panel class="kz-tooltip-anchor" hittest="false">
+                  <Label id="replays_row6_copy_tip" class="kz-tooltip" text="{s:replays_row6_copy_tip}" hittest="false" />
+                </Panel>
+              </Button>
+            </Panel>
+          </Panel>
+          <Panel id="replays_row7" class="kz-record-row hidden">
+            <Label id="replays_row7_num" class="kz-record-cell rp-col-num" text="{s:replays_row7_num}" />
+            <Panel class="rp-col-player kz-record-player">
+              <Button id="replays_row7_profile" class="kz-name-btn">
+                <Label id="replays_row7_player" class="kz-record-cell kz-record-name" text="{s:replays_row7_player}" hittest="false" />
+              </Button>
+            </Panel>
+            <Label id="replays_row7_map" class="kz-record-cell rp-col-map" text="{s:replays_row7_map}" />
+            <Label id="replays_row7_c0" class="kz-record-cell rp-col-c0" text="{s:replays_row7_c0}" />
+            <Label id="replays_row7_c1" class="kz-record-cell rp-col-c1" text="{s:replays_row7_c1}" />
+            <Label id="replays_row7_c2" class="kz-record-cell rp-col-c2" text="{s:replays_row7_c2}" />
+            <Panel class="kz-record-time rp-col-time">
+              <Label id="replays_row7_time" class="kz-record-time-value" text="{s:replays_row7_time}" />
+              <Label id="replays_row7_badge" class="kz-run-badge" text="{s:replays_row7_badge}" />
+            </Panel>
+            <Label id="replays_row7_c3" class="kz-record-cell rp-col-c3" text="{s:replays_row7_c3}" />
+            <Label id="replays_row7_c4" class="kz-record-cell rp-col-c4" text="{s:replays_row7_c4}" />
+            <Panel class="kz-col-replay kz-record-actions">
+              <Button id="replays_row7_play" class="kz-icon-btn icon-play">
+                <Panel class="kz-icon-btn-face" hittest="false" />
+                <Panel class="kz-icon-btn-icon" hittest="false" />
+                <Panel class="kz-tooltip-anchor" hittest="false">
+                  <Label id="replays_row7_play_tip" class="kz-tooltip" text="{s:replays_row7_play_tip}" hittest="false" />
+                </Panel>
+              </Button>
+              <Button id="replays_row7_copy" class="kz-icon-btn icon-copy tip-end">
+                <Panel class="kz-icon-btn-face" hittest="false" />
+                <Panel class="kz-icon-btn-icon" hittest="false" />
+                <Panel class="kz-tooltip-anchor" hittest="false">
+                  <Label id="replays_row7_copy_tip" class="kz-tooltip" text="{s:replays_row7_copy_tip}" hittest="false" />
+                </Panel>
+              </Button>
+            </Panel>
+          </Panel>
+          <Panel id="replays_row8" class="kz-record-row hidden">
+            <Label id="replays_row8_num" class="kz-record-cell rp-col-num" text="{s:replays_row8_num}" />
+            <Panel class="rp-col-player kz-record-player">
+              <Button id="replays_row8_profile" class="kz-name-btn">
+                <Label id="replays_row8_player" class="kz-record-cell kz-record-name" text="{s:replays_row8_player}" hittest="false" />
+              </Button>
+            </Panel>
+            <Label id="replays_row8_map" class="kz-record-cell rp-col-map" text="{s:replays_row8_map}" />
+            <Label id="replays_row8_c0" class="kz-record-cell rp-col-c0" text="{s:replays_row8_c0}" />
+            <Label id="replays_row8_c1" class="kz-record-cell rp-col-c1" text="{s:replays_row8_c1}" />
+            <Label id="replays_row8_c2" class="kz-record-cell rp-col-c2" text="{s:replays_row8_c2}" />
+            <Panel class="kz-record-time rp-col-time">
+              <Label id="replays_row8_time" class="kz-record-time-value" text="{s:replays_row8_time}" />
+              <Label id="replays_row8_badge" class="kz-run-badge" text="{s:replays_row8_badge}" />
+            </Panel>
+            <Label id="replays_row8_c3" class="kz-record-cell rp-col-c3" text="{s:replays_row8_c3}" />
+            <Label id="replays_row8_c4" class="kz-record-cell rp-col-c4" text="{s:replays_row8_c4}" />
+            <Panel class="kz-col-replay kz-record-actions">
+              <Button id="replays_row8_play" class="kz-icon-btn icon-play">
+                <Panel class="kz-icon-btn-face" hittest="false" />
+                <Panel class="kz-icon-btn-icon" hittest="false" />
+                <Panel class="kz-tooltip-anchor" hittest="false">
+                  <Label id="replays_row8_play_tip" class="kz-tooltip" text="{s:replays_row8_play_tip}" hittest="false" />
+                </Panel>
+              </Button>
+              <Button id="replays_row8_copy" class="kz-icon-btn icon-copy tip-end">
+                <Panel class="kz-icon-btn-face" hittest="false" />
+                <Panel class="kz-icon-btn-icon" hittest="false" />
+                <Panel class="kz-tooltip-anchor" hittest="false">
+                  <Label id="replays_row8_copy_tip" class="kz-tooltip" text="{s:replays_row8_copy_tip}" hittest="false" />
+                </Panel>
+              </Button>
+            </Panel>
+          </Panel>
+          <Panel id="replays_row9" class="kz-record-row hidden">
+            <Label id="replays_row9_num" class="kz-record-cell rp-col-num" text="{s:replays_row9_num}" />
+            <Panel class="rp-col-player kz-record-player">
+              <Button id="replays_row9_profile" class="kz-name-btn">
+                <Label id="replays_row9_player" class="kz-record-cell kz-record-name" text="{s:replays_row9_player}" hittest="false" />
+              </Button>
+            </Panel>
+            <Label id="replays_row9_map" class="kz-record-cell rp-col-map" text="{s:replays_row9_map}" />
+            <Label id="replays_row9_c0" class="kz-record-cell rp-col-c0" text="{s:replays_row9_c0}" />
+            <Label id="replays_row9_c1" class="kz-record-cell rp-col-c1" text="{s:replays_row9_c1}" />
+            <Label id="replays_row9_c2" class="kz-record-cell rp-col-c2" text="{s:replays_row9_c2}" />
+            <Panel class="kz-record-time rp-col-time">
+              <Label id="replays_row9_time" class="kz-record-time-value" text="{s:replays_row9_time}" />
+              <Label id="replays_row9_badge" class="kz-run-badge" text="{s:replays_row9_badge}" />
+            </Panel>
+            <Label id="replays_row9_c3" class="kz-record-cell rp-col-c3" text="{s:replays_row9_c3}" />
+            <Label id="replays_row9_c4" class="kz-record-cell rp-col-c4" text="{s:replays_row9_c4}" />
+            <Panel class="kz-col-replay kz-record-actions">
+              <Button id="replays_row9_play" class="kz-icon-btn icon-play">
+                <Panel class="kz-icon-btn-face" hittest="false" />
+                <Panel class="kz-icon-btn-icon" hittest="false" />
+                <Panel class="kz-tooltip-anchor" hittest="false">
+                  <Label id="replays_row9_play_tip" class="kz-tooltip" text="{s:replays_row9_play_tip}" hittest="false" />
+                </Panel>
+              </Button>
+              <Button id="replays_row9_copy" class="kz-icon-btn icon-copy tip-end">
+                <Panel class="kz-icon-btn-face" hittest="false" />
+                <Panel class="kz-icon-btn-icon" hittest="false" />
+                <Panel class="kz-tooltip-anchor" hittest="false">
+                  <Label id="replays_row9_copy_tip" class="kz-tooltip" text="{s:replays_row9_copy_tip}" hittest="false" />
+                </Panel>
+              </Button>
+            </Panel>
+          </Panel>
+          <Label id="replays_status" class="kz-table-status" text="{s:replays_status}" />
+        </Panel>
+        <Panel class="kz-pager">
+          <Label id="replays_count" class="kz-pager-count" text="{s:replays_count}" />
+          <Panel class="fill" />
+          <Button id="replays_prev" class="kz-btn">
+            <Label id="replays_prev_label" class="kz-btn-label" text="{s:replays_prev_label}" hittest="false" />
+          </Button>
+          <Button id="replays_next" class="kz-btn">
+            <Label id="replays_next_label" class="kz-btn-label" text="{s:replays_next_label}" hittest="false" />
+          </Button>
+        </Panel>
+      </Panel>
+    </Panel>
+  </Panel>
+</root>
