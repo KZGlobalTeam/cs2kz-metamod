@@ -1349,4 +1349,46 @@
 		"es"		"{grey}Reporte de estadísticas de fallo en console desactivado."
 		"ko"		"{grey}실패 통계 콘솔 보고가 비활성화되었습니다."
 	}
+	// =====[ JUMP TOP ]=====
+	"Jump Top - Window Title"
+	{
+		"en"		"Jump Top"
+	}
+	"Jump Top - Sync"
+	{
+		"en"		"Sync"
+	}
+	"Jump Top - Pre"
+	{
+		"en"		"Pre"
+	}
+	"Jump Top - Max"
+	{
+		"en"		"Max"
+	}
+	"Jump Top - Airtime"
+	{
+		"en"		"Airtime"
+	}
+	"Jump Top - Window None"
+	{
+		"en"		"No jumps saved yet"
+	}
+	"Jump Top - Window Unavailable"
+	{
+		"en"		"Jumps are saved in the server's database and it isn't available"
+	}
+	"Jump Top - Unavailable"
+	{
+		"en"		"{grey}Jumps are saved in the server's database and it isn't available."
+	}
+	"Jump Top - Check Console"
+	{
+		"en"		"{grey}Check console for the best jumps on this server."
+	}
+	"Jump Top - Table Title"
+	{
+		"#format"	"type:s,mode:s,list:s"
+		"en"		"Best {type} jumps in {mode} by {list}"
+	}
 }

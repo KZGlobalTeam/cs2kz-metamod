@@ -1251,6 +1251,13 @@ void ReplayWatcher::ScanDownloadedReplays(u64 currentTime)
 	}
 }
 
+std::string ReplayWatcher::GetJumpReplayMap(const UUID_t &uuid)
+{
+	std::lock_guard<std::mutex> lock(this->replayMapsMutex);
+	auto it = this->jumpReplays.find(uuid);
+	return it == this->jumpReplays.end() ? std::string() : it->second.map().name();
+}
+
 std::vector<UUID_t> ReplayWatcher::FindReplaysByUUIDSubstring(const char *uuidSubstring)
 {
 	std::vector<UUID_t> matches;

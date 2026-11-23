@@ -1,0 +1,345 @@
+<!-- Every switch option and row is written out because layouts have no loops.
+     The counts must match KZ_JUMP_TOP_ROWS and KZ_JUMP_TOP_TYPES. -->
+<root>
+  <styles>
+    <include src="file://{resources}/styles/custom_game/cs2kz/jump_top.css" />
+  </styles>
+  <Panel class="root" hittest="false">
+    <Panel id="jumptop_root" class="kz-window-root hidden" hittest="false">
+      <Panel id="jumptop_window" class="kz-window jumptop-window">
+        <Panel class="kz-window-header">
+          <Label id="jumptop_window_title" class="kz-window-title" text="{s:jumptop_window_title}" />
+          <Button id="jumptop_window_close" class="kz-window-close" />
+        </Panel>
+        <Panel class="kz-filters">
+          <Panel id="jumptop_mode" class="kz-segment">
+            <Panel class="kz-segment-thumb" hittest="false" />
+            <Panel class="kz-segment-options">
+              <Button id="jumptop_mode_0" class="kz-segment-option">
+                <Label class="kz-segment-label" text="CKZ" hittest="false" />
+              </Button>
+              <Button id="jumptop_mode_1" class="kz-segment-option">
+                <Label class="kz-segment-label" text="VNL" hittest="false" />
+              </Button>
+            </Panel>
+          </Panel>
+          <Panel class="kz-rule-v" />
+          <Panel id="jumptop_list" class="kz-segment">
+            <Panel class="kz-segment-thumb" hittest="false" />
+            <Panel class="kz-segment-options">
+              <Button id="jumptop_list_0" class="kz-segment-option">
+                <Label id="jumptop_list_0_label" class="kz-segment-label" text="{s:jumptop_list_0_label}" hittest="false" />
+              </Button>
+              <Button id="jumptop_list_1" class="kz-segment-option">
+                <Label id="jumptop_list_1_label" class="kz-segment-label" text="{s:jumptop_list_1_label}" hittest="false" />
+              </Button>
+            </Panel>
+          </Panel>
+          <Panel class="kz-rule-v" />
+          <Panel id="jumptop_jt" class="kz-segment jumptypes">
+            <Panel class="kz-segment-thumb" hittest="false" />
+            <Panel class="kz-segment-options">
+              <Button id="jumptop_jt_0" class="kz-segment-option">
+                <Label class="kz-segment-label" text="LJ" hittest="false" />
+              </Button>
+              <Button id="jumptop_jt_1" class="kz-segment-option">
+                <Label class="kz-segment-label" text="BH" hittest="false" />
+              </Button>
+              <Button id="jumptop_jt_2" class="kz-segment-option">
+                <Label class="kz-segment-label" text="MBH" hittest="false" />
+              </Button>
+              <Button id="jumptop_jt_3" class="kz-segment-option">
+                <Label class="kz-segment-label" text="WJ" hittest="false" />
+              </Button>
+              <Button id="jumptop_jt_4" class="kz-segment-option">
+                <Label class="kz-segment-label" text="LAJ" hittest="false" />
+              </Button>
+              <Button id="jumptop_jt_5" class="kz-segment-option">
+                <Label class="kz-segment-label" text="LAH" hittest="false" />
+              </Button>
+              <Button id="jumptop_jt_6" class="kz-segment-option">
+                <Label class="kz-segment-label" text="JB" hittest="false" />
+              </Button>
+            </Panel>
+          </Panel>
+        </Panel>
+        <Panel class="kz-record-table">
+          <Panel class="kz-record-head">
+            <Label class="kz-record-th jt-col-num" text="#" />
+            <Label id="jumptop_th_player" class="kz-record-th jt-col-player" text="{s:jumptop_th_player}" />
+            <Label id="jumptop_th_distance" class="kz-record-th jt-col-distance" text="{s:jumptop_th_distance}" />
+            <Label id="jumptop_th_block" class="kz-record-th jt-col-block" text="{s:jumptop_th_block}" />
+            <Label id="jumptop_th_strafes" class="kz-record-th jt-col-strafes" text="{s:jumptop_th_strafes}" />
+            <Label id="jumptop_th_sync" class="kz-record-th jt-col-sync" text="{s:jumptop_th_sync}" />
+            <Label id="jumptop_th_pre" class="kz-record-th jt-col-pre" text="{s:jumptop_th_pre}" />
+            <Label id="jumptop_th_max" class="kz-record-th jt-col-max" text="{s:jumptop_th_max}" />
+            <Label id="jumptop_th_airtime" class="kz-record-th jt-col-airtime" text="{s:jumptop_th_airtime}" />
+            <Label id="jumptop_th_map" class="kz-record-th jt-col-map" text="{s:jumptop_th_map}" />
+            <Label id="jumptop_th_replay" class="kz-record-th kz-col-replay" text="{s:jumptop_th_replay}" />
+          </Panel>
+          <Panel id="jumptop_row0" class="kz-record-row first hidden">
+            <Label id="jumptop_row0_num" class="kz-record-cell jt-col-num" text="{s:jumptop_row0_num}" />
+            <Panel class="jt-col-player kz-record-player">
+              <Button id="jumptop_row0_profile" class="kz-name-btn">
+                <Label id="jumptop_row0_player" class="kz-record-cell kz-record-name" text="{s:jumptop_row0_player}" hittest="false" />
+              </Button>
+            </Panel>
+            <Label id="jumptop_row0_distance" class="kz-record-cell jt-col-distance" text="{s:jumptop_row0_distance}" />
+            <Label id="jumptop_row0_block" class="kz-record-cell jt-col-block" text="{s:jumptop_row0_block}" />
+            <Label id="jumptop_row0_strafes" class="kz-record-cell jt-col-strafes" text="{s:jumptop_row0_strafes}" />
+            <Label id="jumptop_row0_sync" class="kz-record-cell jt-col-sync" text="{s:jumptop_row0_sync}" />
+            <Label id="jumptop_row0_pre" class="kz-record-cell jt-col-pre" text="{s:jumptop_row0_pre}" />
+            <Label id="jumptop_row0_max" class="kz-record-cell jt-col-max" text="{s:jumptop_row0_max}" />
+            <Label id="jumptop_row0_airtime" class="kz-record-cell jt-col-airtime" text="{s:jumptop_row0_airtime}" />
+            <Label id="jumptop_row0_map" class="kz-record-cell jt-col-map" text="{s:jumptop_row0_map}" />
+            <Panel class="kz-col-replay kz-record-actions">
+              <Button id="jumptop_row0_play" class="kz-icon-btn icon-play tip-end">
+                <Panel class="kz-icon-btn-face" hittest="false" />
+                <Panel class="kz-icon-btn-icon" hittest="false" />
+                <Panel class="kz-tooltip-anchor" hittest="false">
+                  <Label id="jumptop_row0_play_tip" class="kz-tooltip" text="{s:jumptop_row0_play_tip}" hittest="false" />
+                </Panel>
+              </Button>
+            </Panel>
+          </Panel>
+          <Panel id="jumptop_row1" class="kz-record-row hidden">
+            <Label id="jumptop_row1_num" class="kz-record-cell jt-col-num" text="{s:jumptop_row1_num}" />
+            <Panel class="jt-col-player kz-record-player">
+              <Button id="jumptop_row1_profile" class="kz-name-btn">
+                <Label id="jumptop_row1_player" class="kz-record-cell kz-record-name" text="{s:jumptop_row1_player}" hittest="false" />
+              </Button>
+            </Panel>
+            <Label id="jumptop_row1_distance" class="kz-record-cell jt-col-distance" text="{s:jumptop_row1_distance}" />
+            <Label id="jumptop_row1_block" class="kz-record-cell jt-col-block" text="{s:jumptop_row1_block}" />
+            <Label id="jumptop_row1_strafes" class="kz-record-cell jt-col-strafes" text="{s:jumptop_row1_strafes}" />
+            <Label id="jumptop_row1_sync" class="kz-record-cell jt-col-sync" text="{s:jumptop_row1_sync}" />
+            <Label id="jumptop_row1_pre" class="kz-record-cell jt-col-pre" text="{s:jumptop_row1_pre}" />
+            <Label id="jumptop_row1_max" class="kz-record-cell jt-col-max" text="{s:jumptop_row1_max}" />
+            <Label id="jumptop_row1_airtime" class="kz-record-cell jt-col-airtime" text="{s:jumptop_row1_airtime}" />
+            <Label id="jumptop_row1_map" class="kz-record-cell jt-col-map" text="{s:jumptop_row1_map}" />
+            <Panel class="kz-col-replay kz-record-actions">
+              <Button id="jumptop_row1_play" class="kz-icon-btn icon-play tip-end">
+                <Panel class="kz-icon-btn-face" hittest="false" />
+                <Panel class="kz-icon-btn-icon" hittest="false" />
+                <Panel class="kz-tooltip-anchor" hittest="false">
+                  <Label id="jumptop_row1_play_tip" class="kz-tooltip" text="{s:jumptop_row1_play_tip}" hittest="false" />
+                </Panel>
+              </Button>
+            </Panel>
+          </Panel>
+          <Panel id="jumptop_row2" class="kz-record-row hidden">
+            <Label id="jumptop_row2_num" class="kz-record-cell jt-col-num" text="{s:jumptop_row2_num}" />
+            <Panel class="jt-col-player kz-record-player">
+              <Button id="jumptop_row2_profile" class="kz-name-btn">
+                <Label id="jumptop_row2_player" class="kz-record-cell kz-record-name" text="{s:jumptop_row2_player}" hittest="false" />
+              </Button>
+            </Panel>
+            <Label id="jumptop_row2_distance" class="kz-record-cell jt-col-distance" text="{s:jumptop_row2_distance}" />
+            <Label id="jumptop_row2_block" class="kz-record-cell jt-col-block" text="{s:jumptop_row2_block}" />
+            <Label id="jumptop_row2_strafes" class="kz-record-cell jt-col-strafes" text="{s:jumptop_row2_strafes}" />
+            <Label id="jumptop_row2_sync" class="kz-record-cell jt-col-sync" text="{s:jumptop_row2_sync}" />
+            <Label id="jumptop_row2_pre" class="kz-record-cell jt-col-pre" text="{s:jumptop_row2_pre}" />
+            <Label id="jumptop_row2_max" class="kz-record-cell jt-col-max" text="{s:jumptop_row2_max}" />
+            <Label id="jumptop_row2_airtime" class="kz-record-cell jt-col-airtime" text="{s:jumptop_row2_airtime}" />
+            <Label id="jumptop_row2_map" class="kz-record-cell jt-col-map" text="{s:jumptop_row2_map}" />
+            <Panel class="kz-col-replay kz-record-actions">
+              <Button id="jumptop_row2_play" class="kz-icon-btn icon-play tip-end">
+                <Panel class="kz-icon-btn-face" hittest="false" />
+                <Panel class="kz-icon-btn-icon" hittest="false" />
+                <Panel class="kz-tooltip-anchor" hittest="false">
+                  <Label id="jumptop_row2_play_tip" class="kz-tooltip" text="{s:jumptop_row2_play_tip}" hittest="false" />
+                </Panel>
+              </Button>
+            </Panel>
+          </Panel>
+          <Panel id="jumptop_row3" class="kz-record-row hidden">
+            <Label id="jumptop_row3_num" class="kz-record-cell jt-col-num" text="{s:jumptop_row3_num}" />
+            <Panel class="jt-col-player kz-record-player">
+              <Button id="jumptop_row3_profile" class="kz-name-btn">
+                <Label id="jumptop_row3_player" class="kz-record-cell kz-record-name" text="{s:jumptop_row3_player}" hittest="false" />
+              </Button>
+            </Panel>
+            <Label id="jumptop_row3_distance" class="kz-record-cell jt-col-distance" text="{s:jumptop_row3_distance}" />
+            <Label id="jumptop_row3_block" class="kz-record-cell jt-col-block" text="{s:jumptop_row3_block}" />
+            <Label id="jumptop_row3_strafes" class="kz-record-cell jt-col-strafes" text="{s:jumptop_row3_strafes}" />
+            <Label id="jumptop_row3_sync" class="kz-record-cell jt-col-sync" text="{s:jumptop_row3_sync}" />
+            <Label id="jumptop_row3_pre" class="kz-record-cell jt-col-pre" text="{s:jumptop_row3_pre}" />
+            <Label id="jumptop_row3_max" class="kz-record-cell jt-col-max" text="{s:jumptop_row3_max}" />
+            <Label id="jumptop_row3_airtime" class="kz-record-cell jt-col-airtime" text="{s:jumptop_row3_airtime}" />
+            <Label id="jumptop_row3_map" class="kz-record-cell jt-col-map" text="{s:jumptop_row3_map}" />
+            <Panel class="kz-col-replay kz-record-actions">
+              <Button id="jumptop_row3_play" class="kz-icon-btn icon-play tip-end">
+                <Panel class="kz-icon-btn-face" hittest="false" />
+                <Panel class="kz-icon-btn-icon" hittest="false" />
+                <Panel class="kz-tooltip-anchor" hittest="false">
+                  <Label id="jumptop_row3_play_tip" class="kz-tooltip" text="{s:jumptop_row3_play_tip}" hittest="false" />
+                </Panel>
+              </Button>
+            </Panel>
+          </Panel>
+          <Panel id="jumptop_row4" class="kz-record-row hidden">
+            <Label id="jumptop_row4_num" class="kz-record-cell jt-col-num" text="{s:jumptop_row4_num}" />
+            <Panel class="jt-col-player kz-record-player">
+              <Button id="jumptop_row4_profile" class="kz-name-btn">
+                <Label id="jumptop_row4_player" class="kz-record-cell kz-record-name" text="{s:jumptop_row4_player}" hittest="false" />
+              </Button>
+            </Panel>
+            <Label id="jumptop_row4_distance" class="kz-record-cell jt-col-distance" text="{s:jumptop_row4_distance}" />
+            <Label id="jumptop_row4_block" class="kz-record-cell jt-col-block" text="{s:jumptop_row4_block}" />
+            <Label id="jumptop_row4_strafes" class="kz-record-cell jt-col-strafes" text="{s:jumptop_row4_strafes}" />
+            <Label id="jumptop_row4_sync" class="kz-record-cell jt-col-sync" text="{s:jumptop_row4_sync}" />
+            <Label id="jumptop_row4_pre" class="kz-record-cell jt-col-pre" text="{s:jumptop_row4_pre}" />
+            <Label id="jumptop_row4_max" class="kz-record-cell jt-col-max" text="{s:jumptop_row4_max}" />
+            <Label id="jumptop_row4_airtime" class="kz-record-cell jt-col-airtime" text="{s:jumptop_row4_airtime}" />
+            <Label id="jumptop_row4_map" class="kz-record-cell jt-col-map" text="{s:jumptop_row4_map}" />
+            <Panel class="kz-col-replay kz-record-actions">
+              <Button id="jumptop_row4_play" class="kz-icon-btn icon-play tip-end">
+                <Panel class="kz-icon-btn-face" hittest="false" />
+                <Panel class="kz-icon-btn-icon" hittest="false" />
+                <Panel class="kz-tooltip-anchor" hittest="false">
+                  <Label id="jumptop_row4_play_tip" class="kz-tooltip" text="{s:jumptop_row4_play_tip}" hittest="false" />
+                </Panel>
+              </Button>
+            </Panel>
+          </Panel>
+          <Panel id="jumptop_row5" class="kz-record-row hidden">
+            <Label id="jumptop_row5_num" class="kz-record-cell jt-col-num" text="{s:jumptop_row5_num}" />
+            <Panel class="jt-col-player kz-record-player">
+              <Button id="jumptop_row5_profile" class="kz-name-btn">
+                <Label id="jumptop_row5_player" class="kz-record-cell kz-record-name" text="{s:jumptop_row5_player}" hittest="false" />
+              </Button>
+            </Panel>
+            <Label id="jumptop_row5_distance" class="kz-record-cell jt-col-distance" text="{s:jumptop_row5_distance}" />
+            <Label id="jumptop_row5_block" class="kz-record-cell jt-col-block" text="{s:jumptop_row5_block}" />
+            <Label id="jumptop_row5_strafes" class="kz-record-cell jt-col-strafes" text="{s:jumptop_row5_strafes}" />
+            <Label id="jumptop_row5_sync" class="kz-record-cell jt-col-sync" text="{s:jumptop_row5_sync}" />
+            <Label id="jumptop_row5_pre" class="kz-record-cell jt-col-pre" text="{s:jumptop_row5_pre}" />
+            <Label id="jumptop_row5_max" class="kz-record-cell jt-col-max" text="{s:jumptop_row5_max}" />
+            <Label id="jumptop_row5_airtime" class="kz-record-cell jt-col-airtime" text="{s:jumptop_row5_airtime}" />
+            <Label id="jumptop_row5_map" class="kz-record-cell jt-col-map" text="{s:jumptop_row5_map}" />
+            <Panel class="kz-col-replay kz-record-actions">
+              <Button id="jumptop_row5_play" class="kz-icon-btn icon-play tip-end">
+                <Panel class="kz-icon-btn-face" hittest="false" />
+                <Panel class="kz-icon-btn-icon" hittest="false" />
+                <Panel class="kz-tooltip-anchor" hittest="false">
+                  <Label id="jumptop_row5_play_tip" class="kz-tooltip" text="{s:jumptop_row5_play_tip}" hittest="false" />
+                </Panel>
+              </Button>
+            </Panel>
+          </Panel>
+          <Panel id="jumptop_row6" class="kz-record-row hidden">
+            <Label id="jumptop_row6_num" class="kz-record-cell jt-col-num" text="{s:jumptop_row6_num}" />
+            <Panel class="jt-col-player kz-record-player">
+              <Button id="jumptop_row6_profile" class="kz-name-btn">
+                <Label id="jumptop_row6_player" class="kz-record-cell kz-record-name" text="{s:jumptop_row6_player}" hittest="false" />
+              </Button>
+            </Panel>
+            <Label id="jumptop_row6_distance" class="kz-record-cell jt-col-distance" text="{s:jumptop_row6_distance}" />
+            <Label id="jumptop_row6_block" class="kz-record-cell jt-col-block" text="{s:jumptop_row6_block}" />
+            <Label id="jumptop_row6_strafes" class="kz-record-cell jt-col-strafes" text="{s:jumptop_row6_strafes}" />
+            <Label id="jumptop_row6_sync" class="kz-record-cell jt-col-sync" text="{s:jumptop_row6_sync}" />
+            <Label id="jumptop_row6_pre" class="kz-record-cell jt-col-pre" text="{s:jumptop_row6_pre}" />
+            <Label id="jumptop_row6_max" class="kz-record-cell jt-col-max" text="{s:jumptop_row6_max}" />
+            <Label id="jumptop_row6_airtime" class="kz-record-cell jt-col-airtime" text="{s:jumptop_row6_airtime}" />
+            <Label id="jumptop_row6_map" class="kz-record-cell jt-col-map" text="{s:jumptop_row6_map}" />
+            <Panel class="kz-col-replay kz-record-actions">
+              <Button id="jumptop_row6_play" class="kz-icon-btn icon-play tip-end">
+                <Panel class="kz-icon-btn-face" hittest="false" />
+                <Panel class="kz-icon-btn-icon" hittest="false" />
+                <Panel class="kz-tooltip-anchor" hittest="false">
+                  <Label id="jumptop_row6_play_tip" class="kz-tooltip" text="{s:jumptop_row6_play_tip}" hittest="false" />
+                </Panel>
+              </Button>
+            </Panel>
+          </Panel>
+          <Panel id="jumptop_row7" class="kz-record-row hidden">
+            <Label id="jumptop_row7_num" class="kz-record-cell jt-col-num" text="{s:jumptop_row7_num}" />
+            <Panel class="jt-col-player kz-record-player">
+              <Button id="jumptop_row7_profile" class="kz-name-btn">
+                <Label id="jumptop_row7_player" class="kz-record-cell kz-record-name" text="{s:jumptop_row7_player}" hittest="false" />
+              </Button>
+            </Panel>
+            <Label id="jumptop_row7_distance" class="kz-record-cell jt-col-distance" text="{s:jumptop_row7_distance}" />
+            <Label id="jumptop_row7_block" class="kz-record-cell jt-col-block" text="{s:jumptop_row7_block}" />
+            <Label id="jumptop_row7_strafes" class="kz-record-cell jt-col-strafes" text="{s:jumptop_row7_strafes}" />
+            <Label id="jumptop_row7_sync" class="kz-record-cell jt-col-sync" text="{s:jumptop_row7_sync}" />
+            <Label id="jumptop_row7_pre" class="kz-record-cell jt-col-pre" text="{s:jumptop_row7_pre}" />
+            <Label id="jumptop_row7_max" class="kz-record-cell jt-col-max" text="{s:jumptop_row7_max}" />
+            <Label id="jumptop_row7_airtime" class="kz-record-cell jt-col-airtime" text="{s:jumptop_row7_airtime}" />
+            <Label id="jumptop_row7_map" class="kz-record-cell jt-col-map" text="{s:jumptop_row7_map}" />
+            <Panel class="kz-col-replay kz-record-actions">
+              <Button id="jumptop_row7_play" class="kz-icon-btn icon-play tip-end">
+                <Panel class="kz-icon-btn-face" hittest="false" />
+                <Panel class="kz-icon-btn-icon" hittest="false" />
+                <Panel class="kz-tooltip-anchor" hittest="false">
+                  <Label id="jumptop_row7_play_tip" class="kz-tooltip" text="{s:jumptop_row7_play_tip}" hittest="false" />
+                </Panel>
+              </Button>
+            </Panel>
+          </Panel>
+          <Panel id="jumptop_row8" class="kz-record-row hidden">
+            <Label id="jumptop_row8_num" class="kz-record-cell jt-col-num" text="{s:jumptop_row8_num}" />
+            <Panel class="jt-col-player kz-record-player">
+              <Button id="jumptop_row8_profile" class="kz-name-btn">
+                <Label id="jumptop_row8_player" class="kz-record-cell kz-record-name" text="{s:jumptop_row8_player}" hittest="false" />
+              </Button>
+            </Panel>
+            <Label id="jumptop_row8_distance" class="kz-record-cell jt-col-distance" text="{s:jumptop_row8_distance}" />
+            <Label id="jumptop_row8_block" class="kz-record-cell jt-col-block" text="{s:jumptop_row8_block}" />
+            <Label id="jumptop_row8_strafes" class="kz-record-cell jt-col-strafes" text="{s:jumptop_row8_strafes}" />
+            <Label id="jumptop_row8_sync" class="kz-record-cell jt-col-sync" text="{s:jumptop_row8_sync}" />
+            <Label id="jumptop_row8_pre" class="kz-record-cell jt-col-pre" text="{s:jumptop_row8_pre}" />
+            <Label id="jumptop_row8_max" class="kz-record-cell jt-col-max" text="{s:jumptop_row8_max}" />
+            <Label id="jumptop_row8_airtime" class="kz-record-cell jt-col-airtime" text="{s:jumptop_row8_airtime}" />
+            <Label id="jumptop_row8_map" class="kz-record-cell jt-col-map" text="{s:jumptop_row8_map}" />
+            <Panel class="kz-col-replay kz-record-actions">
+              <Button id="jumptop_row8_play" class="kz-icon-btn icon-play tip-end">
+                <Panel class="kz-icon-btn-face" hittest="false" />
+                <Panel class="kz-icon-btn-icon" hittest="false" />
+                <Panel class="kz-tooltip-anchor" hittest="false">
+                  <Label id="jumptop_row8_play_tip" class="kz-tooltip" text="{s:jumptop_row8_play_tip}" hittest="false" />
+                </Panel>
+              </Button>
+            </Panel>
+          </Panel>
+          <Panel id="jumptop_row9" class="kz-record-row hidden">
+            <Label id="jumptop_row9_num" class="kz-record-cell jt-col-num" text="{s:jumptop_row9_num}" />
+            <Panel class="jt-col-player kz-record-player">
+              <Button id="jumptop_row9_profile" class="kz-name-btn">
+                <Label id="jumptop_row9_player" class="kz-record-cell kz-record-name" text="{s:jumptop_row9_player}" hittest="false" />
+              </Button>
+            </Panel>
+            <Label id="jumptop_row9_distance" class="kz-record-cell jt-col-distance" text="{s:jumptop_row9_distance}" />
+            <Label id="jumptop_row9_block" class="kz-record-cell jt-col-block" text="{s:jumptop_row9_block}" />
+            <Label id="jumptop_row9_strafes" class="kz-record-cell jt-col-strafes" text="{s:jumptop_row9_strafes}" />
+            <Label id="jumptop_row9_sync" class="kz-record-cell jt-col-sync" text="{s:jumptop_row9_sync}" />
+            <Label id="jumptop_row9_pre" class="kz-record-cell jt-col-pre" text="{s:jumptop_row9_pre}" />
+            <Label id="jumptop_row9_max" class="kz-record-cell jt-col-max" text="{s:jumptop_row9_max}" />
+            <Label id="jumptop_row9_airtime" class="kz-record-cell jt-col-airtime" text="{s:jumptop_row9_airtime}" />
+            <Label id="jumptop_row9_map" class="kz-record-cell jt-col-map" text="{s:jumptop_row9_map}" />
+            <Panel class="kz-col-replay kz-record-actions">
+              <Button id="jumptop_row9_play" class="kz-icon-btn icon-play tip-end">
+                <Panel class="kz-icon-btn-face" hittest="false" />
+                <Panel class="kz-icon-btn-icon" hittest="false" />
+                <Panel class="kz-tooltip-anchor" hittest="false">
+                  <Label id="jumptop_row9_play_tip" class="kz-tooltip" text="{s:jumptop_row9_play_tip}" hittest="false" />
+                </Panel>
+              </Button>
+            </Panel>
+          </Panel>
+          <Label id="jumptop_status" class="kz-table-status" text="{s:jumptop_status}" />
+        </Panel>
+        <Panel class="kz-pager">
+          <Label id="jumptop_count" class="kz-pager-count" text="{s:jumptop_count}" />
+          <Panel class="fill" />
+          <Button id="jumptop_prev" class="kz-btn">
+            <Label id="jumptop_prev_label" class="kz-btn-label" text="{s:jumptop_prev_label}" hittest="false" />
+          </Button>
+          <Button id="jumptop_next" class="kz-btn">
+            <Label id="jumptop_next_label" class="kz-btn-label" text="{s:jumptop_next_label}" hittest="false" />
+          </Button>
+        </Panel>
+      </Panel>
+    </Panel>
+  </Panel>
+</root>

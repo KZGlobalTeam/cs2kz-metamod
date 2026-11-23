@@ -2393,4 +2393,12 @@
 	{
 		"en"		"!profile [steamid/name]"
 	}
+	"Command Description - kz_jstop"
+	{
+		"en"		"Show the best saved jumps on this server."
+	}
+	"Command Usage - kz_jstop"
+	{
+		"en"		"!jstop [jumptype] [ckz/vnl] [block]"
+	}
 }
