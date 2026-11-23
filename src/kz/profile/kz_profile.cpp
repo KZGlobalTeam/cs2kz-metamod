@@ -13,53 +13,31 @@
 #include "sdk/recipientfilters.h"
 #include "public/networksystem/inetworkmessages.h"
 
-enum Ranks
+// Rank bands by minimum rating from highest to lowest.
+static_global const KZ::profile::RankBand rankBands[] = {
+	{37500, "Legend", "{gold}", "rank-legend"},
+	{35000, "Master", "{gold}", "rank-master"},
+	{30000, "Pro", "{yellow}", "rank-pro"},
+	{25000, "Semipro", "{red}", "rank-semipro"},
+	{20000, "Expert", "{orchid}", "rank-expert"},
+	{15000, "Skilled", "{darkblue}", "rank-skilled"},
+	{10000, "Regular", "{darkblue}", "rank-regular"},
+	{5000, "Casual", "{blue}", "rank-casual"},
+	{0.000001, "Beginner", "{grey}", "rank-beginner"},
+	{0, "New", "{grey}", "rank-new"},
+};
+
+const KZ::profile::RankBand &KZ::profile::GetRankBand(f64 rating)
 {
-	Unknown = 0,
-	New,
-	Beginner,
-	Casual,
-	Regular,
-	Skilled,
-	Expert,
-	Semipro,
-	Pro,
-	Master,
-	Legend,
-	NUM_RANKS
-};
-
-static_global const char *rankNames[NUM_RANKS] = {
-	"Unknown", "New", "Beginner", "Casual", "Regular", "Skilled", "Expert", "Semipro", "Pro", "Master", "Legend",
-};
-
-static_global const f32 rankThresholds[NUM_RANKS] = {
-	-1.0f,     // Unknown
-	0.0f,      // New
-	0.000001f, // Beginner
-	5000.0f,   // Casual
-	10000.0f,  // Regular
-	15000.0f,  // Skilled
-	20000.0f,  // Expert
-	25000.0f,  // Semipro
-	30000.0f,  // Pro
-	35000.0f,  // Master
-	37500.0f   // Legend
-};
-
-static_global const char *rankColors[NUM_RANKS] = {
-	"{default}",  // Unknown
-	"{grey}",     // New
-	"{grey}",     // Beginner
-	"{blue}",     // Casual
-	"{darkblue}", // Regular
-	"{darkblue}", // Skilled
-	"{orchid}",   // Expert
-	"{red}",      // Semipro
-	"{yellow}",   // Pro
-	"{gold}",     // Master
-	"{gold}"      // Legend
-};
+	for (const RankBand &band : rankBands)
+	{
+		if (rating >= band.minRating)
+		{
+			return band;
+		}
+	}
+	return rankBands[KZ_ARRAYSIZE(rankBands) - 1];
+}
 
 #define RATING_REFRESH_PERIOD 120.0f // seconds
 
@@ -244,17 +222,9 @@ void KZProfileService::UpdateClantag()
 	}
 	if (this->CanDisplayRank())
 	{
-		i32 rank = Ranks::Unknown;
-		for (i32 i = Ranks::NUM_RANKS - 1; i >= 0; i--)
-		{
-			if (this->currentRating >= rankThresholds[i])
-			{
-				rank = i;
-				break;
-			}
-		}
 		// The client wraps clan tags in brackets itself.
-		V_snprintf(this->clanTag, sizeof(this->clanTag), "%s %s", this->player->modeService->GetModeShortName(), rankNames[rank]);
+		V_snprintf(this->clanTag, sizeof(this->clanTag), "%s %s", this->player->modeService->GetModeShortName(),
+				   KZ::profile::GetRankBand(this->currentRating).name);
 	}
 	else
 	{
@@ -309,16 +279,8 @@ std::string KZProfileService::GetPrefix(bool colors)
 	}
 	if (this->CanDisplayRank())
 	{
-		i32 rank = Ranks::Unknown;
-		for (i32 i = Ranks::NUM_RANKS - 1; i >= 0; i--)
-		{
-			if (this->currentRating >= rankThresholds[i])
-			{
-				rank = i;
-				break;
-			}
-		}
-		return std::string(colors ? rankColors[rank] : "") + "[" + this->player->modeService->GetModeShortName() + " " + rankNames[rank]
+		const KZ::profile::RankBand &rank = KZ::profile::GetRankBand(this->currentRating);
+		return std::string(colors ? rank.chatColor : "") + "[" + this->player->modeService->GetModeShortName() + " " + rank.name
 			   + (colors ? "]{default}" : "]");
 	}
 	else

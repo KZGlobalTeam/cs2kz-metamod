@@ -4,7 +4,7 @@
 #include "kz/hud/kz_hud.h"
 #include "kz/language/kz_language.h"
 #include "kz/mode/kz_mode.h"
-#include "kz/option/kz_option.h"
+#include "kz/profile/kz_profile.h"
 #include "kz/replays/commands.h"
 #include "kz/replays/kz_replaysystem.h"
 #include "kz/timer/hud/course_top.h"
@@ -52,49 +52,6 @@ static_global const char *const modeQuery[] = {"classic", "vanilla"};
 static_global const char *const tierClasses[] = {
 	"tier-1", "tier-2", "tier-3", "tier-4", "tier-5", "tier-6", "tier-7", "tier-8", "tier-9", "tier-10",
 };
-
-// Rank bands by minimum rating from highest to lowest.
-struct RankBand
-{
-	f64 minRating;
-	const char *name;
-	const char *className;
-};
-
-static_global const RankBand rankBands[] = {
-	{37500, "Legend", "rank-legend"},
-	{35000, "Master", "rank-master"},
-	{30000, "Pro", "rank-pro"},
-	{25000, "Semipro", "rank-semipro"},
-	{20000, "Expert", "rank-expert"},
-	{15000, "Skilled", "rank-skilled"},
-	{10000, "Regular", "rank-regular"},
-	{5000, "Casual", "rank-casual"},
-	{0.000001, "Beginner", "rank-beginner"},
-	{0, "New", "rank-new"},
-};
-
-static_function const RankBand &GetRankBand(f64 rating)
-{
-	for (const RankBand &band : rankBands)
-	{
-		if (rating >= band.minRating)
-		{
-			return band;
-		}
-	}
-	return rankBands[KZ_ARRAYSIZE(rankBands) - 1];
-}
-
-static_function std::string GetApiUrl()
-{
-	std::string url = KZOptionService::GetOptionStr("apiUrl", "https://api.cs2kz.org");
-	if (!url.empty() && url.back() == '/')
-	{
-		url.pop_back();
-	}
-	return url;
-}
 
 // Percent-encodes a player name for a URL query.
 static_function std::string EncodeQueryValue(const std::string &text)
@@ -283,7 +240,7 @@ void ProfileWindow::RequestPlayer()
 	// A name is searched for and the highest-rated match in the shown mode is used.
 	const u64 steamId = ParseSteamId(this->identifier);
 	const bool search = steamId == 0;
-	HTTP::Request request(HTTP::Method::GET, GetApiUrl() + "/players" + (search ? "" : "/" + std::to_string(steamId)));
+	HTTP::Request request(HTTP::Method::GET, KZ::api::GetBaseUrl() + "/players" + (search ? "" : "/" + std::to_string(steamId)));
 	if (search)
 	{
 		request.SetQuery("name", EncodeQueryValue(this->identifier));
@@ -354,7 +311,7 @@ void ProfileWindow::RequestRuns()
 	const u32 serial = ++this->runsSerial;
 	this->runsState = State::Loading;
 	const CPlayerUserId userID = this->player->GetClient()->GetUserID();
-	HTTP::Request request(HTTP::Method::GET, GetApiUrl() + "/records");
+	HTTP::Request request(HTTP::Method::GET, KZ::api::GetBaseUrl() + "/records");
 	request.SetQuery("player", std::to_string(this->profile->steamId));
 	request.SetQuery("mode", modeQuery[KZ::api::GetModeIndex(this->mode)]);
 	request.SetQuery("top", "true");
@@ -597,7 +554,7 @@ void ProfileWindow::Render()
 		return;
 	}
 	const f64 rating = this->profile->rating[KZ::api::GetModeIndex(this->mode)];
-	const RankBand &rank = GetRankBand(rating);
+	const KZ::profile::RankBand &rank = KZ::profile::GetRankBand(rating);
 	this->layout.SetVar("profile_name", "profile_name", this->profile->name.c_str());
 	this->layout.SetVar("profile_steamid_tip", "profile_steamid_tip", language->PrepareMessage("Profile - Copy Steam ID").c_str());
 	this->layout.SetVar("profile_joined_label", "profile_joined_label", language->PrepareMessage("Profile - Joined On").c_str());

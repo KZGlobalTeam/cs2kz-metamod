@@ -1,0 +1,169 @@
+<!-- Every row is written out because layouts have no loops.
+     The count must match KZ_LEADERBOARD_ROWS. -->
+<root>
+  <styles>
+    <include src="file://{resources}/styles/custom_game/cs2kz/leaderboard.css" />
+  </styles>
+  <Panel class="root" hittest="false">
+    <Panel id="leaderboard_root" class="kz-window-root hidden" hittest="false">
+      <Panel id="leaderboard_window" class="kz-window leaderboard-window">
+        <Panel class="kz-window-header">
+          <Label id="leaderboard_window_title" class="kz-window-title" text="{s:leaderboard_window_title}" />
+          <Button id="leaderboard_window_close" class="kz-window-close" />
+        </Panel>
+        <Panel class="kz-filters">
+          <Panel id="leaderboard_mode" class="kz-segment">
+            <Panel class="kz-segment-thumb" hittest="false" />
+            <Panel class="kz-segment-options">
+              <Button id="leaderboard_mode_0" class="kz-segment-option">
+                <Label class="kz-segment-label" text="CKZ" hittest="false" />
+              </Button>
+              <Button id="leaderboard_mode_1" class="kz-segment-option">
+                <Label class="kz-segment-label" text="VNL" hittest="false" />
+              </Button>
+            </Panel>
+          </Panel>
+        </Panel>
+        <Panel class="kz-record-table">
+          <Panel class="kz-record-head">
+            <Label class="kz-record-th lb-col-num" text="#" />
+            <Label id="leaderboard_th_player" class="kz-record-th lb-col-player" text="{s:leaderboard_th_player}" />
+            <Label id="leaderboard_th_rating" class="kz-record-th lb-col-rating" text="{s:leaderboard_th_rating}" />
+            <Label id="leaderboard_th_title" class="kz-record-th lb-col-title" text="{s:leaderboard_th_title}" />
+          </Panel>
+          <Panel id="leaderboard_row0" class="kz-record-row first hidden">
+            <Label id="leaderboard_row0_num" class="kz-record-cell lb-col-num" text="{s:leaderboard_row0_num}" />
+            <Panel class="lb-col-player kz-record-player">
+              <Button id="leaderboard_row0_profile" class="kz-name-btn">
+                <Label id="leaderboard_row0_player" class="kz-record-cell kz-record-name" text="{s:leaderboard_row0_player}" hittest="false" />
+              </Button>
+            </Panel>
+            <Label id="leaderboard_row0_rating" class="kz-record-cell kz-rank-rating lb-col-rating" text="{s:leaderboard_row0_rating}" />
+            <Panel class="lb-col-title">
+              <Label id="leaderboard_row0_title" class="kz-rank-badge" text="{s:leaderboard_row0_title}" />
+            </Panel>
+          </Panel>
+          <Panel id="leaderboard_row1" class="kz-record-row hidden">
+            <Label id="leaderboard_row1_num" class="kz-record-cell lb-col-num" text="{s:leaderboard_row1_num}" />
+            <Panel class="lb-col-player kz-record-player">
+              <Button id="leaderboard_row1_profile" class="kz-name-btn">
+                <Label id="leaderboard_row1_player" class="kz-record-cell kz-record-name" text="{s:leaderboard_row1_player}" hittest="false" />
+              </Button>
+            </Panel>
+            <Label id="leaderboard_row1_rating" class="kz-record-cell kz-rank-rating lb-col-rating" text="{s:leaderboard_row1_rating}" />
+            <Panel class="lb-col-title">
+              <Label id="leaderboard_row1_title" class="kz-rank-badge" text="{s:leaderboard_row1_title}" />
+            </Panel>
+          </Panel>
+          <Panel id="leaderboard_row2" class="kz-record-row hidden">
+            <Label id="leaderboard_row2_num" class="kz-record-cell lb-col-num" text="{s:leaderboard_row2_num}" />
+            <Panel class="lb-col-player kz-record-player">
+              <Button id="leaderboard_row2_profile" class="kz-name-btn">
+                <Label id="leaderboard_row2_player" class="kz-record-cell kz-record-name" text="{s:leaderboard_row2_player}" hittest="false" />
+              </Button>
+            </Panel>
+            <Label id="leaderboard_row2_rating" class="kz-record-cell kz-rank-rating lb-col-rating" text="{s:leaderboard_row2_rating}" />
+            <Panel class="lb-col-title">
+              <Label id="leaderboard_row2_title" class="kz-rank-badge" text="{s:leaderboard_row2_title}" />
+            </Panel>
+          </Panel>
+          <Panel id="leaderboard_row3" class="kz-record-row hidden">
+            <Label id="leaderboard_row3_num" class="kz-record-cell lb-col-num" text="{s:leaderboard_row3_num}" />
+            <Panel class="lb-col-player kz-record-player">
+              <Button id="leaderboard_row3_profile" class="kz-name-btn">
+                <Label id="leaderboard_row3_player" class="kz-record-cell kz-record-name" text="{s:leaderboard_row3_player}" hittest="false" />
+              </Button>
+            </Panel>
+            <Label id="leaderboard_row3_rating" class="kz-record-cell kz-rank-rating lb-col-rating" text="{s:leaderboard_row3_rating}" />
+            <Panel class="lb-col-title">
+              <Label id="leaderboard_row3_title" class="kz-rank-badge" text="{s:leaderboard_row3_title}" />
+            </Panel>
+          </Panel>
+          <Panel id="leaderboard_row4" class="kz-record-row hidden">
+            <Label id="leaderboard_row4_num" class="kz-record-cell lb-col-num" text="{s:leaderboard_row4_num}" />
+            <Panel class="lb-col-player kz-record-player">
+              <Button id="leaderboard_row4_profile" class="kz-name-btn">
+                <Label id="leaderboard_row4_player" class="kz-record-cell kz-record-name" text="{s:leaderboard_row4_player}" hittest="false" />
+              </Button>
+            </Panel>
+            <Label id="leaderboard_row4_rating" class="kz-record-cell kz-rank-rating lb-col-rating" text="{s:leaderboard_row4_rating}" />
+            <Panel class="lb-col-title">
+              <Label id="leaderboard_row4_title" class="kz-rank-badge" text="{s:leaderboard_row4_title}" />
+            </Panel>
+          </Panel>
+          <Panel id="leaderboard_row5" class="kz-record-row hidden">
+            <Label id="leaderboard_row5_num" class="kz-record-cell lb-col-num" text="{s:leaderboard_row5_num}" />
+            <Panel class="lb-col-player kz-record-player">
+              <Button id="leaderboard_row5_profile" class="kz-name-btn">
+                <Label id="leaderboard_row5_player" class="kz-record-cell kz-record-name" text="{s:leaderboard_row5_player}" hittest="false" />
+              </Button>
+            </Panel>
+            <Label id="leaderboard_row5_rating" class="kz-record-cell kz-rank-rating lb-col-rating" text="{s:leaderboard_row5_rating}" />
+            <Panel class="lb-col-title">
+              <Label id="leaderboard_row5_title" class="kz-rank-badge" text="{s:leaderboard_row5_title}" />
+            </Panel>
+          </Panel>
+          <Panel id="leaderboard_row6" class="kz-record-row hidden">
+            <Label id="leaderboard_row6_num" class="kz-record-cell lb-col-num" text="{s:leaderboard_row6_num}" />
+            <Panel class="lb-col-player kz-record-player">
+              <Button id="leaderboard_row6_profile" class="kz-name-btn">
+                <Label id="leaderboard_row6_player" class="kz-record-cell kz-record-name" text="{s:leaderboard_row6_player}" hittest="false" />
+              </Button>
+            </Panel>
+            <Label id="leaderboard_row6_rating" class="kz-record-cell kz-rank-rating lb-col-rating" text="{s:leaderboard_row6_rating}" />
+            <Panel class="lb-col-title">
+              <Label id="leaderboard_row6_title" class="kz-rank-badge" text="{s:leaderboard_row6_title}" />
+            </Panel>
+          </Panel>
+          <Panel id="leaderboard_row7" class="kz-record-row hidden">
+            <Label id="leaderboard_row7_num" class="kz-record-cell lb-col-num" text="{s:leaderboard_row7_num}" />
+            <Panel class="lb-col-player kz-record-player">
+              <Button id="leaderboard_row7_profile" class="kz-name-btn">
+                <Label id="leaderboard_row7_player" class="kz-record-cell kz-record-name" text="{s:leaderboard_row7_player}" hittest="false" />
+              </Button>
+            </Panel>
+            <Label id="leaderboard_row7_rating" class="kz-record-cell kz-rank-rating lb-col-rating" text="{s:leaderboard_row7_rating}" />
+            <Panel class="lb-col-title">
+              <Label id="leaderboard_row7_title" class="kz-rank-badge" text="{s:leaderboard_row7_title}" />
+            </Panel>
+          </Panel>
+          <Panel id="leaderboard_row8" class="kz-record-row hidden">
+            <Label id="leaderboard_row8_num" class="kz-record-cell lb-col-num" text="{s:leaderboard_row8_num}" />
+            <Panel class="lb-col-player kz-record-player">
+              <Button id="leaderboard_row8_profile" class="kz-name-btn">
+                <Label id="leaderboard_row8_player" class="kz-record-cell kz-record-name" text="{s:leaderboard_row8_player}" hittest="false" />
+              </Button>
+            </Panel>
+            <Label id="leaderboard_row8_rating" class="kz-record-cell kz-rank-rating lb-col-rating" text="{s:leaderboard_row8_rating}" />
+            <Panel class="lb-col-title">
+              <Label id="leaderboard_row8_title" class="kz-rank-badge" text="{s:leaderboard_row8_title}" />
+            </Panel>
+          </Panel>
+          <Panel id="leaderboard_row9" class="kz-record-row hidden">
+            <Label id="leaderboard_row9_num" class="kz-record-cell lb-col-num" text="{s:leaderboard_row9_num}" />
+            <Panel class="lb-col-player kz-record-player">
+              <Button id="leaderboard_row9_profile" class="kz-name-btn">
+                <Label id="leaderboard_row9_player" class="kz-record-cell kz-record-name" text="{s:leaderboard_row9_player}" hittest="false" />
+              </Button>
+            </Panel>
+            <Label id="leaderboard_row9_rating" class="kz-record-cell kz-rank-rating lb-col-rating" text="{s:leaderboard_row9_rating}" />
+            <Panel class="lb-col-title">
+              <Label id="leaderboard_row9_title" class="kz-rank-badge" text="{s:leaderboard_row9_title}" />
+            </Panel>
+          </Panel>
+          <Label id="leaderboard_status" class="kz-table-status" text="{s:leaderboard_status}" />
+        </Panel>
+        <Panel class="kz-pager">
+          <Label id="leaderboard_count" class="kz-pager-count" text="{s:leaderboard_count}" />
+          <Panel class="fill" />
+          <Button id="leaderboard_prev" class="kz-btn">
+            <Label id="leaderboard_prev_label" class="kz-btn-label" text="{s:leaderboard_prev_label}" hittest="false" />
+          </Button>
+          <Button id="leaderboard_next" class="kz-btn">
+            <Label id="leaderboard_next_label" class="kz-btn-label" text="{s:leaderboard_next_label}" hittest="false" />
+          </Button>
+        </Panel>
+      </Panel>
+    </Panel>
+  </Panel>
+</root>

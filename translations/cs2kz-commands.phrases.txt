@@ -2401,4 +2401,12 @@
 	{
 		"en"		"!jstop [jumptype] [ckz/vnl] [block]"
 	}
+	"Command Description - kz_top"
+	{
+		"en"		"Show the global players ranked by rating."
+	}
+	"Command Usage - kz_top"
+	{
+		"en"		"!top [ckz/vnl]"
+	}
 }
