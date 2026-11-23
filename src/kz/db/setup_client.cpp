@@ -1,9 +1,11 @@
 #include "kz_db.h"
 #include "kz/option/kz_option.h"
+#include "kz/tip/kz_tip.h"
 #include "vendor/sql_mm/src/public/sql_mm.h"
 
 #include "queries/players.h"
 #include "queries/bans.h"
+#include "queries/times.h"
 
 using namespace KZ::Database;
 
@@ -55,6 +57,9 @@ void KZDatabaseService::SetupClient()
 	V_snprintf(query, sizeof(query), sql_bans_get_active, steamID64);
 	txn.queries.push_back(query);
 
+	V_snprintf(query, sizeof(query), sql_times_any_for_player, steamID64);
+	txn.queries.push_back(query);
+
 	CPlayerUserId userID = this->player->GetClient()->GetUserID();
 
 	GetDatabaseConnection()->ExecuteTransaction(
@@ -68,18 +73,21 @@ void KZDatabaseService::SetupClient()
 			}
 			ISQLResult *result = NULL;
 			ISQLResult *banResult = NULL;
+			ISQLResult *timesResult = NULL;
 			switch (GetDatabaseType())
 			{
 				case DatabaseType::SQLite:
 				{
 					result = queries[2]->GetResultSet();
 					banResult = queries[3]->GetResultSet();
+					timesResult = queries[4]->GetResultSet();
 					break;
 				}
 				case DatabaseType::MySQL:
 				{
 					result = queries[1]->GetResultSet();
 					banResult = queries[2]->GetResultSet();
+					timesResult = queries[3]->GetResultSet();
 					break;
 				}
 			}
@@ -98,6 +106,7 @@ void KZDatabaseService::SetupClient()
 				const char *prefs = result->FetchRow() ? utils::OrEmpty(result->GetString(0)) : "";
 				this->isSetUp = true;
 				pl->optionService->InitializeLocalPrefs(prefs);
+				pl->tipService->OnLocalRunsChecked(!timesResult || timesResult->FetchRow());
 				CALL_FORWARD(KZDatabaseService::eventListeners, OnClientSetup, pl, pl->GetSteamId64(), isBanned, banReason);
 			}
 		},

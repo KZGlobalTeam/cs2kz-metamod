@@ -1,0 +1,124 @@
+<!-- Mode tags and commands are written out since only their descriptions are translated. -->
+<root>
+  <styles>
+    <include src="file://{resources}/styles/custom_game/cs2kz/welcome.css" />
+  </styles>
+  <Panel class="root" hittest="false">
+    <Panel id="welcome_root" class="kz-window-root hidden" hittest="false">
+      <Panel id="welcome_window" class="kz-window welcome-window">
+        <Panel class="kz-window-header">
+          <Label id="welcome_window_title" class="kz-window-title" text="{s:welcome_window_title}" />
+          <Button id="welcome_window_close" class="kz-window-close" />
+        </Panel>
+        <Panel class="welcome-body">
+          <Panel id="welcome_page0" class="welcome-page">
+            <Panel class="welcome-shots">
+              <Panel class="welcome-shot shot-start" hittest="false" />
+              <Panel class="welcome-shot shot-end" hittest="false" />
+            </Panel>
+            <Label id="welcome_intro" class="welcome-text first" text="{s:welcome_intro}" />
+            <Label id="welcome_goal" class="welcome-text" text="{s:welcome_goal}" />
+          </Panel>
+          <Panel id="welcome_page1" class="welcome-page welcome-centred hidden">
+            <Label id="welcome_mode_lead" class="welcome-text first" text="{s:welcome_mode_lead}" />
+            <Panel class="welcome-modes">
+              <Button id="welcome_mode0" class="welcome-mode">
+                <Panel class="welcome-mode-head" hittest="false">
+                  <Label id="welcome_mode0_name" class="welcome-mode-name" text="{s:welcome_mode0_name}" hittest="false" />
+                  <Label class="welcome-mode-tag" text="CKZ" hittest="false" />
+                </Panel>
+                <Label id="welcome_mode0_text" class="welcome-mode-text" text="{s:welcome_mode0_text}" hittest="false" />
+              </Button>
+              <Button id="welcome_mode1" class="welcome-mode right">
+                <Panel class="welcome-mode-head" hittest="false">
+                  <Label id="welcome_mode1_name" class="welcome-mode-name" text="{s:welcome_mode1_name}" hittest="false" />
+                  <Label class="welcome-mode-tag" text="VNL" hittest="false" />
+                </Panel>
+                <Label id="welcome_mode1_text" class="welcome-mode-text" text="{s:welcome_mode1_text}" hittest="false" />
+              </Button>
+            </Panel>
+            <Panel class="welcome-line welcome-more">
+              <Label id="welcome_mode_type" class="welcome-word muted" text="{s:welcome_mode_type}" />
+              <Label class="welcome-code" text="/mode" />
+              <Label id="welcome_mode_later" class="welcome-word muted" text="{s:welcome_mode_later}" />
+            </Panel>
+          </Panel>
+          <Panel id="welcome_page2" class="welcome-page welcome-side hidden">
+            <Panel class="welcome-shot shot-radio" hittest="false" />
+            <Panel class="welcome-col">
+              <Panel class="welcome-line">
+                <Label id="welcome_radio_press" class="welcome-word" text="{s:welcome_radio_press}" />
+                <Label class="welcome-code" text="radio1" />
+                <Label class="welcome-word" text="(" />
+                <Label id="welcome_radio_key" class="welcome-code" text="{g:csgo_key:welcomekey}" />
+                <Label class="welcome-word" text=")" />
+              </Panel>
+              <Label id="welcome_radio_open" class="welcome-text first" text="{s:welcome_radio_open}" />
+              <Label id="welcome_radio_save" class="welcome-text" text="{s:welcome_radio_save}" />
+              <Label id="welcome_radio_runs" class="welcome-text" text="{s:welcome_radio_runs}" />
+            </Panel>
+          </Panel>
+          <Panel id="welcome_page3" class="welcome-page welcome-centred hidden">
+            <Label id="welcome_commands_lead" class="welcome-text first" text="{s:welcome_commands_lead}" />
+            <Panel class="welcome-grid">
+              <Panel class="welcome-grid-col">
+                <Panel class="welcome-cmd">
+                  <Panel class="welcome-cmd-slot"><Label class="welcome-code" text="/r" /></Panel>
+                  <Label id="welcome_cmd0" class="welcome-cmd-text" text="{s:welcome_cmd0}" />
+                </Panel>
+                <Panel class="welcome-cmd">
+                  <Panel class="welcome-cmd-slot"><Label class="welcome-code" text="/nc" /></Panel>
+                  <Label id="welcome_cmd1" class="welcome-cmd-text" text="{s:welcome_cmd1}" />
+                </Panel>
+                <Panel class="welcome-cmd">
+                  <Panel class="welcome-cmd-slot"><Label class="welcome-code" text="/courses" /></Panel>
+                  <Label id="welcome_cmd2" class="welcome-cmd-text" text="{s:welcome_cmd2}" />
+                </Panel>
+                <Panel class="welcome-cmd">
+                  <Panel class="welcome-cmd-slot"><Label class="welcome-code" text="/options" /></Panel>
+                  <Label id="welcome_cmd3" class="welcome-cmd-text" text="{s:welcome_cmd3}" />
+                </Panel>
+              </Panel>
+              <Panel class="welcome-grid-col right">
+                <Panel class="welcome-cmd">
+                  <Panel class="welcome-cmd-slot"><Label class="welcome-code" text="/pb" /></Panel>
+                  <Label id="welcome_cmd4" class="welcome-cmd-text" text="{s:welcome_cmd4}" />
+                </Panel>
+                <Panel class="welcome-cmd">
+                  <Panel class="welcome-cmd-slot"><Label class="welcome-code" text="/wr" /></Panel>
+                  <Label id="welcome_cmd5" class="welcome-cmd-text" text="{s:welcome_cmd5}" />
+                </Panel>
+                <Panel class="welcome-cmd">
+                  <Panel class="welcome-cmd-slot"><Label class="welcome-code" text="/hide" /></Panel>
+                  <Label id="welcome_cmd6" class="welcome-cmd-text" text="{s:welcome_cmd6}" />
+                </Panel>
+              </Panel>
+            </Panel>
+            <Panel class="welcome-line welcome-more">
+              <Label id="welcome_more_type" class="welcome-word muted" text="{s:welcome_more_type}" />
+              <Label class="welcome-code" text="/help" />
+              <Label id="welcome_more_help" class="welcome-word muted" text="{s:welcome_more_help}" />
+              <Label class="welcome-code" text="/tutorial" />
+              <Label id="welcome_more_again" class="welcome-word muted" text="{s:welcome_more_again}" />
+            </Panel>
+          </Panel>
+        </Panel>
+        <Panel class="kz-pager">
+          <Panel class="welcome-dots">
+            <Panel id="welcome_dot0" class="welcome-dot on" />
+            <Panel id="welcome_dot1" class="welcome-dot" />
+            <Panel id="welcome_dot2" class="welcome-dot" />
+            <Panel id="welcome_dot3" class="welcome-dot" />
+          </Panel>
+          <Panel class="fill" />
+          <Button id="welcome_prev" class="kz-btn disabled">
+            <Label id="welcome_prev_label" class="kz-btn-label" text="{s:welcome_prev_label}" hittest="false" />
+          </Button>
+          <Button id="welcome_next" class="kz-btn">
+            <Label id="welcome_next_label" class="kz-btn-label" text="{s:welcome_next_label}" hittest="false" />
+          </Button>
+        </Panel>
+      </Panel>
+    </Panel>
+  </Panel>
+</root>

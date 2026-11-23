@@ -56,6 +56,10 @@ constexpr char sql_times_update_id[] = R"(
     UPDATE Times SET ID='%s' WHERE ID='%s'
 )";
 
+constexpr char sql_times_any_for_player[] = R"(
+    SELECT 1 FROM Times WHERE SteamID64=%llu LIMIT 1
+)";
+
 // Migration queries to convert Times.ID to use UUID v7 strings
 constexpr char mysql_times_alter_id_column[] = R"(
     ALTER TABLE Times MODIFY COLUMN ID VARCHAR(36) NOT NULL

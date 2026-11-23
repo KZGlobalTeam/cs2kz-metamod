@@ -3,6 +3,9 @@
 #include "kz/timer/kz_timer.h"
 #include "kz/language/kz_language.h"
 #include "kz/global/kz_global.h"
+#include "kz/tip/hud/welcome.h"
+#include "utils/http.h"
+#include "utils/json.h"
 
 #include <vendor/MultiAddonManager/public/imultiaddonmanager.h>
 
@@ -24,6 +27,7 @@ void KZTipService::Init()
 void KZTipService::Reset()
 {
 	this->teamJoinedAtLeastOnce = false;
+	this->welcomePending = false;
 }
 
 void KZTipService::ToggleTips()
@@ -95,6 +99,82 @@ SCMD(kz_tips, SCFL_MISC)
 	return true;
 }
 
+bool KZTipService::ShowWelcome()
+{
+	return this->player->uiService->GetWindow<KZ::tip::hud::WelcomeWindow>()->Show();
+}
+
+void KZTipService::OnLocalRunsChecked(bool hasRuns)
+{
+	if (hasRuns || this->player->optionService->GetPreferenceBool("welcomeSeen", false))
+	{
+		return;
+	}
+	if (!KZGlobalService::IsAvailable())
+	{
+		this->welcomePending = true;
+		this->ShowPendingWelcome();
+		return;
+	}
+	const CPlayerUserId userID = this->player->GetClient()->GetUserID();
+	HTTP::Request request(HTTP::Method::GET, KZ::api::GetBaseUrl() + "/players/" + std::to_string(this->player->GetSteamId64()));
+	request.Send(
+		[userID](HTTP::Response response)
+		{
+			KZPlayer *player = g_pKZPlayerManager->ToPlayer(userID);
+			if (!player)
+			{
+				return;
+			}
+			// The API doesn't know players who have never played on a global server.
+			// Any other failure leaves the window for the next connection.
+			bool isNew = response.status == 404;
+			if (response.status == 200)
+			{
+				Json json(response.Body().value_or(""));
+				f64 ckzRating = 0;
+				f64 vnlRating = 0;
+				json.Get("ckz_rating", ckzRating);
+				json.Get("vnl_rating", vnlRating);
+				isNew = ckzRating <= 0 && vnlRating <= 0;
+			}
+			if (isNew)
+			{
+				player->tipService->welcomePending = true;
+				player->tipService->ShowPendingWelcome();
+			}
+		});
+}
+
+void KZTipService::ShowPendingWelcome()
+{
+	if (!this->welcomePending || !this->teamJoinedAtLeastOnce)
+	{
+		return;
+	}
+	this->welcomePending = false;
+	// Check again because the global preferences can arrive after the database query.
+	// They may show the player already saw the window on another server.
+	if (this->player->optionService->GetPreferenceBool("welcomeSeen", false))
+	{
+		return;
+	}
+	if (this->ShowWelcome())
+	{
+		this->player->optionService->SetPreferenceBool("welcomeSeen", true);
+	}
+}
+
+SCMD(kz_tutorial, SCFL_MISC)
+{
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
+	if (!player->tipService->ShowWelcome())
+	{
+		player->languageService->PrintChat(true, false, "Welcome - Unavailable");
+	}
+	return true;
+}
+
 f64 KZTipService::PrintTips()
 {
 	// Nothing to print without loaded tip translation files.
@@ -127,6 +207,7 @@ void KZTipService::OnPlayerJoinTeam(i32 team)
 	}
 
 	this->player->globalService->PrintAnnouncements();
+	this->ShowPendingWelcome();
 
 	StartTimer<CPlayerUserId>(KZAnticheatService::PrintWarning, this->player->GetClient()->GetUserID(), 1.0f, false, false);
 }

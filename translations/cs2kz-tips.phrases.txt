@@ -35,4 +35,121 @@
 		"ko"		"{grey}이제 채팅에서 주기적으로 랜덤 팁이 표시되지 않습니다."
 		"lv"		"{grey}Tu vairs neredzēsi nejaušus padomus čatā regulāri."
 	}
+
+	// =====[ WELCOME WINDOW ]=====
+	"Welcome - Unavailable"
+	{
+		"en"		"{grey}The tutorial window couldn't open."
+	}
+	"Welcome - Title"
+	{
+		"en"		"Welcome to CS2KZ"
+	}
+	"Welcome - Intro"
+	{
+		"en"		"KreedZ (KZ) is a movement game mode. Climb and navigate through obstacle courses using techniques like bunnyhopping and strafing."
+	}
+	"Welcome - Goal"
+	{
+		"en"		"Leave the start zone to start the timer, then reach the end zone as fast as possible."
+	}
+	"Welcome - Mode Title"
+	{
+		"en"		"Choose a Mode"
+	}
+	"Welcome - Mode Lead"
+	{
+		"en"		"Pick your preferred mode."
+	}
+	"Welcome - Mode Classic"
+	{
+		"en"		"Classic"
+	}
+	"Welcome - Mode Classic Text"
+	{
+		"en"		"The fast paced default mode for CS2KZ, with prestrafe, consistent bunnyhops and 128 tick emulation. Most KZ maps are made for this mode."
+	}
+	"Welcome - Mode Vanilla"
+	{
+		"en"		"Vanilla"
+	}
+	"Welcome - Mode Vanilla Text"
+	{
+		"en"		"More challenging. Identical to competitive CS2 movement. Some courses might not be possible on this mode."
+	}
+	"Welcome - Mode Later"
+	{
+		// Follows "Type [/mode]".
+		"en"		"to switch at any time."
+	}
+	"Welcome - Radio Title"
+	{
+		"en"		"Teleport Menu"
+	}
+	"Welcome - Radio Press"
+	{
+		// Followed by the radio1 command and the player's key for it: "Press the key bound to [radio1] ([X])".
+		"en"		"Press the key bound to"
+	}
+	"Welcome - Radio Open"
+	{
+		"en"		"to open the teleport menu, then pick an option with its number key."
+	}
+	"Welcome - Radio Save"
+	{
+		"en"		"Save a checkpoint where you stand, and teleport back to it when you fall."
+	}
+	"Welcome - Radio Runs"
+	{
+		"en"		"A run without teleports counts as PRO; one with them counts as TP."
+	}
+	"Welcome - Commands Title"
+	{
+		"en"		"Useful Commands"
+	}
+	"Welcome - Commands Lead"
+	{
+		"en"		"Type these in chat. New to KZ? Start on tier 1 and 2 courses."
+	}
+	"Welcome - Command Restart"
+	{
+		"en"		"Go back to the start"
+	}
+	"Welcome - Command Noclip"
+	{
+		"en"		"Enable noclip"
+	}
+	"Welcome - Command Courses"
+	{
+		"en"		"Show a list of courses"
+	}
+	"Welcome - Command Options"
+	{
+		"en"		"Open the settings"
+	}
+	"Welcome - Command PB"
+	{
+		"en"		"Show your best time"
+	}
+	"Welcome - Command WR"
+	{
+		"en"		"Show the records for this course"
+	}
+	"Welcome - Command Hide"
+	{
+		"en"		"Hide other players"
+	}
+	"Welcome - More Type"
+	{
+		// "Type [/help] for every command, or [/tutorial] to see this again."
+		"en"		"Type"
+	}
+	"Welcome - More Help"
+	{
+		"en"		"for every command, or"
+	}
+	"Welcome - More Again"
+	{
+		"en"		"to see this again."
+	}
 }

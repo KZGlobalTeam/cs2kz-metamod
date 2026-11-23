@@ -14,6 +14,8 @@ class KZTipService : public KZBaseService
 
 private:
 	bool teamJoinedAtLeastOnce {};
+	// Set if the welcome window should open once the player joins a team.
+	bool welcomePending {};
 
 public:
 	virtual void Reset() override;
@@ -22,10 +24,15 @@ public:
 	static f64 PrintTips();
 	void OnPlayerJoinTeam(i32 team);
 	void OnTimerStartPost();
+	// Called after the database setup with whether the player has runs on this server.
+	// Players without runs or a global rating who haven't seen the welcome window get it.
+	void OnLocalRunsChecked(bool hasRuns);
+	bool ShowWelcome();
 
 private:
 	bool ShouldPrintTip();
 	void PrintTip();
+	void ShowPendingWelcome();
 	static void LoadTips();
 	static void ShuffleTips();
 };
