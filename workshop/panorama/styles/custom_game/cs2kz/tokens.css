@@ -74,6 +74,28 @@
 @define kz-testing-border: #ff890470;
 @define kz-invalid-border: #99a1af70;
 
+/* Panorama blends colours in linear light so a badge fill at 08 looks like the website's 20 on a window. */
+@define kz-rank-legend: #ffb800;
+@define kz-rank-legend-bg: #ffb80008;
+@define kz-rank-master: #ff3131;
+@define kz-rank-master-bg: #ff313108;
+@define kz-rank-pro: #ff5151;
+@define kz-rank-pro-bg: #ff515108;
+@define kz-rank-semipro: #ff7171;
+@define kz-rank-semipro-bg: #ff717108;
+@define kz-rank-expert: #d32de6;
+@define kz-rank-expert-bg: #d32de608;
+@define kz-rank-skilled: #bb82f0;
+@define kz-rank-skilled-bg: #bb82f008;
+@define kz-rank-regular: #4c6aff;
+@define kz-rank-regular-bg: #4c6aff08;
+@define kz-rank-casual: #5f99d9;
+@define kz-rank-casual-bg: #5f99d908;
+@define kz-rank-beginner: #d1d1d1;
+@define kz-rank-beginner-bg: #d1d1d108;
+@define kz-rank-new: #cbcbcb;
+@define kz-rank-new-bg: #cbcbcb08;
+
 @define kz-window-bg: #09090bcc;
 @define kz-hud-bg: #09090bcc;
 @define kz-border: #ffffff1f;

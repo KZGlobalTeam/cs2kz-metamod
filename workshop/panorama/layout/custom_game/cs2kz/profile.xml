@@ -67,7 +67,7 @@
           </Panel>
           <Panel id="profile_rank_line" class="profile-line">
             <Label id="profile_rank_label" class="profile-rank-label" text="{s:profile_rank_label}" />
-            <Label id="profile_rank" class="profile-rank-badge" text="{s:profile_rank}" />
+            <Label id="profile_rank" class="kz-rank-badge profile-rank-badge" text="{s:profile_rank}" />
             <Label class="profile-slash" text="/" />
             <Label id="profile_rating" class="profile-rating" text="{s:profile_rating}" />
           </Panel>

@@ -65,4 +65,32 @@
 	{
 		"en"		"{grey}The profile window couldn't open."
 	}
+	"Leaderboard - Window Title"
+	{
+		"en"		"Leaderboard"
+	}
+	"Leaderboard - Rating"
+	{
+		"en"		"Rating"
+	}
+	"Leaderboard - Title"
+	{
+		"en"		"Title"
+	}
+	"Leaderboard - Window Failed"
+	{
+		"en"		"Couldn't load the leaderboard."
+	}
+	"Leaderboard - Window None"
+	{
+		"en"		"No ranked players."
+	}
+	"Leaderboard - Unavailable"
+	{
+		"en"		"{grey}The leaderboard needs the global API and it isn't available."
+	}
+	"Leaderboard - Window Unavailable"
+	{
+		"en"		"{grey}The leaderboard window couldn't open."
+	}
 }

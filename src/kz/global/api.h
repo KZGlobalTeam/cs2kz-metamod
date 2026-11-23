@@ -22,6 +22,9 @@ namespace KZ::api
 		return mode == Mode::Vanilla ? 1 : 0;
 	}
 
+	// The apiUrl option without a trailing slash.
+	std::string GetBaseUrl();
+
 	struct PlayerInfo
 	{
 		u64 id {};

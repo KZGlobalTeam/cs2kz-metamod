@@ -797,6 +797,122 @@ VerticalScrollBar:hover .ScrollThumb {
 	margin-right: -1px;
 }
 
+/* 1px of the bottom padding moves to the top because Stratum2's line box puts capitals ~1px high (ascent 900, descent 300, caps 666).
+   1px more on the left centres the ink because the words end in letters with room on their right (r, t, o, d). */
+.kz-rank-badge {
+	vertical-align: center;
+	padding: 2px 4px 0px 5px;
+	border-radius: kz-radius-md;
+	font-size: kz-text-sm;
+	font-weight: bold;
+}
+
+.font-reflow .kz-rank-badge {
+	margin-left: -1px;
+	margin-right: -1px;
+	padding: 2px 5px 0px 6px;
+}
+
+.kz-rank-badge.rank-legend {
+	border: 1px solid kz-rank-legend;
+	background-color: kz-rank-legend-bg;
+	color: kz-rank-legend;
+}
+
+.kz-rank-badge.rank-master {
+	border: 1px solid kz-rank-master;
+	background-color: kz-rank-master-bg;
+	color: kz-rank-master;
+}
+
+.kz-rank-badge.rank-pro {
+	border: 1px solid kz-rank-pro;
+	background-color: kz-rank-pro-bg;
+	color: kz-rank-pro;
+}
+
+.kz-rank-badge.rank-semipro {
+	border: 1px solid kz-rank-semipro;
+	background-color: kz-rank-semipro-bg;
+	color: kz-rank-semipro;
+}
+
+.kz-rank-badge.rank-expert {
+	border: 1px solid kz-rank-expert;
+	background-color: kz-rank-expert-bg;
+	color: kz-rank-expert;
+}
+
+.kz-rank-badge.rank-skilled {
+	border: 1px solid kz-rank-skilled;
+	background-color: kz-rank-skilled-bg;
+	color: kz-rank-skilled;
+}
+
+.kz-rank-badge.rank-regular {
+	border: 1px solid kz-rank-regular;
+	background-color: kz-rank-regular-bg;
+	color: kz-rank-regular;
+}
+
+.kz-rank-badge.rank-casual {
+	border: 1px solid kz-rank-casual;
+	background-color: kz-rank-casual-bg;
+	color: kz-rank-casual;
+}
+
+.kz-rank-badge.rank-beginner {
+	border: 1px solid kz-rank-beginner;
+	background-color: kz-rank-beginner-bg;
+	color: kz-rank-beginner;
+}
+
+.kz-rank-badge.rank-new {
+	border: 1px solid kz-rank-new;
+	background-color: kz-rank-new-bg;
+	color: kz-rank-new;
+}
+
+.kz-rank-rating.rank-legend {
+	color: kz-rank-legend;
+}
+
+.kz-rank-rating.rank-master {
+	color: kz-rank-master;
+}
+
+.kz-rank-rating.rank-pro {
+	color: kz-rank-pro;
+}
+
+.kz-rank-rating.rank-semipro {
+	color: kz-rank-semipro;
+}
+
+.kz-rank-rating.rank-expert {
+	color: kz-rank-expert;
+}
+
+.kz-rank-rating.rank-skilled {
+	color: kz-rank-skilled;
+}
+
+.kz-rank-rating.rank-regular {
+	color: kz-rank-regular;
+}
+
+.kz-rank-rating.rank-casual {
+	color: kz-rank-casual;
+}
+
+.kz-rank-rating.rank-beginner {
+	color: kz-rank-beginner;
+}
+
+.kz-rank-rating.rank-new {
+	color: kz-rank-new;
+}
+
 .font-reflow .popup {
 	padding-right: 15px;
 }

@@ -1,0 +1,72 @@
+@import url("file://{resources}/styles/custom_game/cs2kz/tokens.css");
+@import url("file://{resources}/styles/custom_game/cs2kz/palette.css");
+@import url("file://{resources}/styles/custom_game/cs2kz/fonts.css");
+@import url("file://{resources}/styles/custom_game/cs2kz/components.css");
+
+/* The headings and controls are a step larger than the other windows' and the rows are 48px. */
+.leaderboard-window {
+	width: 720px;
+}
+
+.leaderboard-window .kz-window-title {
+	font-size: 40px;
+}
+
+.leaderboard-window .kz-segment {
+	width: 184px;
+}
+
+.leaderboard-window .kz-segment-thumb {
+	width: 88px;
+	height: 36px;
+}
+
+.leaderboard-window .kz-segment.pick-1 .kz-segment-thumb {
+	x: 88px;
+}
+
+.leaderboard-window .kz-segment-option,
+.leaderboard-window .kz-btn {
+	height: 36px;
+}
+
+.leaderboard-window .kz-segment-label {
+	font-size: kz-text-lg;
+}
+
+.leaderboard-window .kz-record-row {
+	height: 48px;
+}
+
+.leaderboard-window .kz-record-th,
+.leaderboard-window .kz-rank-badge,
+.leaderboard-window .kz-pager-count,
+.leaderboard-window .kz-btn-label {
+	font-size: kz-text-base;
+}
+
+/* A row has 654px inside its padding and the player column takes what the others leave. */
+.lb-col-num {
+	width: 56px;
+}
+
+.lb-col-player {
+	width: fill-parent-flow(1);
+}
+
+.leaderboard-window .kz-record-name {
+	max-width: 340px;
+}
+
+.lb-col-rating {
+	width: 112px;
+	font-weight: bold;
+}
+
+.lb-col-title {
+	width: 112px;
+}
+
+.kz-record-row .lb-col-title {
+	height: 100%;
+}

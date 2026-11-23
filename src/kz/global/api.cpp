@@ -1,6 +1,17 @@
 #include "common.h"
 #include "utils/utils.h"
 #include "api.h"
+#include "kz/option/kz_option.h"
+
+std::string KZ::api::GetBaseUrl()
+{
+	std::string url = KZOptionService::GetOptionStr("apiUrl", "https://api.cs2kz.org");
+	if (!url.empty() && url.back() == '/')
+	{
+		url.pop_back();
+	}
+	return url;
+}
 
 bool KZ::api::DecodeModeString(std::string_view modeString, Mode &mode)
 {

@@ -2,6 +2,20 @@
 #include "kz/kz.h"
 #include "kz/global/kz_global.h"
 
+namespace KZ::profile
+{
+	// A player's title for their rating with its chat colour and the class that colours it in windows.
+	struct RankBand
+	{
+		f64 minRating;
+		const char *name;
+		const char *chatColor;
+		const char *className;
+	};
+
+	const RankBand &GetRankBand(f64 rating);
+} // namespace KZ::profile
+
 class KZProfileService : public KZBaseService
 {
 public:
