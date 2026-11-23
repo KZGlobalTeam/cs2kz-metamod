@@ -1,0 +1,95 @@
+/* A sheet sees the defines of the sheets it imports and of the sheets loaded before it.
+   Each layout's own sheet imports this one first and shared sheets never do because a sheet can only load once per layout.
+   The kz- prefix keeps a name from replacing a keyword. */
+
+@define kz-white: #ffffff;
+
+@define kz-zinc-100: #f4f4f5;
+@define kz-zinc-200: #e4e4e7;
+@define kz-zinc-300: #d4d4d8;
+@define kz-zinc-400: #9f9fa9;
+@define kz-zinc-500: #71717b;
+@define kz-zinc-600: #52525c;
+@define kz-zinc-700: #3f3f46;
+@define kz-zinc-800: #27272a;
+@define kz-zinc-900: #18181b;
+@define kz-zinc-950: #09090b;
+
+@define kz-gray-100: #f3f4f6;
+@define kz-gray-200: #e5e7eb;
+@define kz-gray-300: #d1d5dc;
+@define kz-gray-400: #99a1af;
+@define kz-gray-600: #4a5565;
+@define kz-gray-700: #374151;
+@define kz-gray-900: #111827;
+
+@define kz-slate-200: #e2e8f0;
+@define kz-slate-300: #cad5e2;
+@define kz-slate-400: #90a1b9;
+@define kz-slate-500: #62748e;
+@define kz-slate-600: #45556c;
+@define kz-slate-900: #0f172b;
+
+@define kz-blue-400: #51a2ff;
+@define kz-blue-600: #155dfc;
+@define kz-cyan-400: #00d3f2;
+@define kz-cyan-500: #00b8db;
+@define kz-cyan-600: #0092b8;
+@define kz-green-400: #05df72;
+@define kz-green-500: #00c950;
+@define kz-yellow-300: #ffdf20;
+@define kz-yellow-400: #fdc700;
+@define kz-yellow-600: #d08700;
+@define kz-orange-400: #ff8904;
+@define kz-red-400: #ff6467;
+@define kz-purple-400: #c27aff;
+
+@define kz-code: #6099df;
+
+@define kz-tier-1: #6bc96f;
+@define kz-tier-2: #33bd3a;
+@define kz-tier-3: #d8e302;
+@define kz-tier-4: #ffc107;
+@define kz-tier-5: #e37910;
+@define kz-tier-6: #e34202;
+@define kz-tier-7: #e31c02;
+@define kz-tier-8: #bb02db;
+@define kz-tier-9: #e800e1;
+@define kz-tier-10: #d1d1d1;
+@define kz-tier-1-border: #6bc96f70;
+@define kz-tier-2-border: #33bd3a70;
+@define kz-tier-3-border: #d8e30270;
+@define kz-tier-4-border: #ffc10770;
+@define kz-tier-5-border: #e3791070;
+@define kz-tier-6-border: #e3420270;
+@define kz-tier-7-border: #e31c0270;
+@define kz-tier-8-border: #bb02db70;
+@define kz-tier-9-border: #e800e170;
+@define kz-tier-10-border: #d1d1d170;
+
+@define kz-ranked-border: #05df7250;
+@define kz-pending-border: #fdc70050;
+@define kz-unranked-border: #d1d5dc50;
+@define kz-approved-border: #05df7270;
+@define kz-testing-border: #ff890470;
+@define kz-invalid-border: #99a1af70;
+
+@define kz-window-bg: #09090bcc;
+@define kz-hud-bg: #09090bcc;
+@define kz-border: #ffffff1f;
+@define kz-hover: #ffffff14;
+@define kz-selected: #ffffff26;
+@define kz-blue-400-tint: #51a2ff1a;
+@define kz-chip-bg: #3f3f46cc;
+@define kz-table-bg: #18181b99;
+@define kz-scroll-thumb: #ffffff59;
+@define kz-scroll-thumb-hover: #ffffff99;
+
+@define kz-radius-sm: 4px;
+@define kz-radius-md: 6px;
+
+@define kz-text-xs: 12px;
+@define kz-text-sm: 14px;
+@define kz-text-base: 16px;
+@define kz-text-lg: 18px;
+@define kz-text-xl: 20px;
