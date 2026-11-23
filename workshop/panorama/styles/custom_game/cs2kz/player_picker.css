@@ -1,0 +1,23 @@
+@import url("file://{resources}/styles/custom_game/cs2kz/tokens.css");
+@import url("file://{resources}/styles/custom_game/cs2kz/palette.css");
+@import url("file://{resources}/styles/custom_game/cs2kz/fonts.css");
+@import url("file://{resources}/styles/custom_game/cs2kz/components.css");
+
+/* The race panel's default spot is 48% left of the centre with its top edge 5% above it. */
+.player-picker {
+	horizontal-align: left;
+	vertical-align: top;
+	x: 2%;
+	y: 45%;
+}
+
+/* Eight 36px rows show before the list scrolls. */
+.player-picker .list-rows {
+	height: fit-children;
+	max-height: 288px;
+}
+
+/* The note is the window's only text when nobody can be picked. */
+.player-picker .popup-note {
+	font-size: kz-text-base;
+}

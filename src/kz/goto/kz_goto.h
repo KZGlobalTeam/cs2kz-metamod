@@ -12,4 +12,5 @@ public:
 	static void Init();
 
 	bool GotoPlayer(const char *playerNamePart);
+	bool GotoPlayer(KZPlayer *targetPlayer);
 };

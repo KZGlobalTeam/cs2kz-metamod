@@ -6,27 +6,32 @@
 #include "../language/kz_language.h"
 #include "../timer/kz_timer.h"
 #include "kz/away/kz_away.h"
+#include "kz/ui/player_picker.h"
 
 void KZGotoService::Init() {}
 
 void KZGotoService::Reset() {}
 
-// The first player other than the given one whose name matches.
 // An away player's pawn stays in the world and can be gone to.
+static_function bool CanGoto(KZPlayer *player, KZPlayer *otherPlayer)
+{
+	if (player == otherPlayer || !(otherPlayer->IsInGame() || otherPlayer->IsAway()))
+	{
+		return false;
+	}
+	return otherPlayer->GetController()->GetTeam() != CS_TEAM_SPECTATOR || otherPlayer->awayService->IsObservingWithPersistentPawn();
+}
+
+// The first player other than the given one whose name matches.
 static_function KZPlayer *FindGotoTarget(KZPlayer *player, const char *namePart, bool exact, bool persistentPawn)
 {
 	for (KZPlayer *otherPlayer : g_pKZPlayerManager->GetAllSlots())
 	{
-		if (player == otherPlayer || !(otherPlayer->IsInGame() || otherPlayer->IsAway())
-			|| otherPlayer->awayService->CanControlPawn() == persistentPawn)
+		if (!CanGoto(player, otherPlayer) || otherPlayer->awayService->CanControlPawn() == persistentPawn)
 		{
 			continue;
 		}
 		if (exact ? !KZ_STREQI(otherPlayer->GetName(), namePart) : !V_stristr(otherPlayer->GetName(), namePart))
-		{
-			continue;
-		}
-		if (otherPlayer->GetController()->GetTeam() == CS_TEAM_SPECTATOR && !otherPlayer->awayService->IsObservingWithPersistentPawn())
 		{
 			continue;
 		}
@@ -59,6 +64,16 @@ bool KZGotoService::GotoPlayer(const char *playerNamePart)
 	if (!targetPlayer)
 	{
 		player->languageService->PrintChat(true, false, "Error Message (Player Not Found)", playerNamePart);
+		return false;
+	}
+	return this->GotoPlayer(targetPlayer);
+}
+
+bool KZGotoService::GotoPlayer(KZPlayer *targetPlayer)
+{
+	if (this->player->timerService->GetTimerRunning())
+	{
+		this->player->languageService->PrintChat(true, false, "Goto - Error Message (Timer Running)");
 		return false;
 	}
 
@@ -101,6 +116,35 @@ SCMD(kz_goto, SCFL_PLAYER)
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
 	const char *targetNamePart = args->ArgS();
+	// A chat command without a name lists the players to pick from unless the addon is unavailable.
+	const bool chat = args->Arg(0)[0] == SCMD_CHAT_TRIGGER || args->Arg(0)[0] == SCMD_CHAT_SILENT_TRIGGER;
+	if (chat && !targetNamePart[0])
+	{
+		if (player->timerService->GetTimerRunning())
+		{
+			player->languageService->PrintChat(true, false, "Goto - Error Message (Timer Running)");
+			return true;
+		}
+		std::vector<KZPlayer *> candidates;
+		for (KZPlayer *otherPlayer : g_pKZPlayerManager->GetAllSlots())
+		{
+			if (CanGoto(player, otherPlayer))
+			{
+				candidates.push_back(otherPlayer);
+			}
+		}
+		auto onPick = [](KZPlayer *player, KZPlayer *target)
+		{
+			if (CanGoto(player, target))
+			{
+				player->gotoService->GotoPlayer(target);
+			}
+		};
+		if (player->uiService->GetWindow<KZ::ui::PlayerPicker>()->Show("Goto - Picker Title", candidates, nullptr, onPick))
+		{
+			return true;
+		}
+	}
 	player->gotoService->GotoPlayer(targetNamePart);
 	return true;
 }

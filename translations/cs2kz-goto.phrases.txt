@@ -70,4 +70,8 @@
 		"ko"		"{grey}사용법: {default}kz_goto <플레이어 이름>"
 		"lv"		"{grey}Lietojums: {default}kz_goto <spēlētāja vārds>"
 	}
+	"Goto - Picker Title"
+	{
+		"en"		"Go to Player"
+	}
 }
