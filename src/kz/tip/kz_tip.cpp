@@ -97,7 +97,7 @@ SCMD(kz_tips, SCFL_MISC)
 
 f64 KZTipService::PrintTips()
 {
-	// No tip translation files loaded, nothing to print.
+	// Nothing to print without loaded tip translation files.
 	if (tipNames.empty())
 	{
 		return tipInterval;

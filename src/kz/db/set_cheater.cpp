@@ -31,7 +31,8 @@ void KZDatabaseService::Ban(u64 steamID64, const char *reason, f32 duration, con
 	char expiryValue[128];
 	if (duration < 0.0f)
 	{
-		// No actual ban duration (e.g. a plain kick), but still record a 0 second (already expired) ban for audit purposes.
+		// There is no actual ban duration (e.g. a plain kick).
+		// Still record a 0 second (already expired) ban for audit purposes.
 		if (GetDatabaseType() == KZ::Database::DatabaseType::MySQL)
 		{
 			V_snprintf(expiryValue, sizeof(expiryValue), "CURRENT_TIMESTAMP");
@@ -62,7 +63,7 @@ void KZDatabaseService::Ban(u64 steamID64, const char *reason, f32 duration, con
 	char query[2048];
 	Transaction txn;
 
-	// Only replace active bans that end sooner, a new infraction should never shorten an existing ban.
+	// Only replace active bans that end sooner because a new infraction should never shorten an existing ban.
 	V_snprintf(query, sizeof(query), sql_bans_remove_active_before, steamID64, expiryValue);
 	txn.queries.push_back(query);
 

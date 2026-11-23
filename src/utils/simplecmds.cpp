@@ -110,7 +110,7 @@ const std::vector<scmd::CommandInfo> &scmd::GetCategoryCommands(i32 category, bo
 
 #define SCMD_COOLDOWN 0.2f
 
-// Blocks commands from clients who aren't fully in-game yet, and enforces a cooldown between commands.
+// Blocks commands from clients who aren't fully in-game yet and enforces a cooldown between commands.
 // Silent when blocking for not-in-game (client can't receive chat yet); prints the remaining wait when on cooldown.
 static_global bool CanRunCommand(KZPlayer *player, u64 flags)
 {
@@ -119,7 +119,7 @@ static_global bool CanRunCommand(KZPlayer *player, u64 flags)
 		return false;
 	}
 
-	// Certain commands are exempt from the cooldown, since they're expected to be spammed.
+	// Certain commands are exempt from the cooldown because they're expected to be spammed.
 	if (flags & (SCFL_CHECKPOINT | SCFL_MEASURE | SCFL_PREFERENCE))
 	{
 		return true;
@@ -306,7 +306,7 @@ bool scmd::OnDispatchConCommand(ConCommandRef cmd, const CCommandContext &ctx, c
 
 	if (!V_stricmp(commandName, "say") || !V_stricmp(commandName, "say_team"))
 	{
-		// A client that isn't fully in-game yet can't legitimately chat at all, command or not.
+		// A client that isn't fully in-game yet can't legitimately chat at all whether it's a command or not.
 		if (!player->IsInGame())
 		{
 			return true;

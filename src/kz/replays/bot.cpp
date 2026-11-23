@@ -19,7 +19,7 @@ static_function f64 RetrySpectateBot(CPlayerUserId userID, UUID_t replayID, f64 
 {
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(userID);
 	KZPlayer *botPlayer = KZ::replaysystem::bot::GetBotPlayer();
-	// The player left, or the replay ended or was replaced.
+	// The player left or the replay ended or was replaced.
 	if (!player || !player->IsConnected() || !botPlayer || !(KZ::replaysystem::data::GetCurrentReplay()->uuid == replayID))
 	{
 		return 0.0f;
@@ -33,7 +33,8 @@ static_function f64 RetrySpectateBot(CPlayerUserId userID, UUID_t replayID, f64 
 	{
 		return ENGINE_FIXED_TICK_INTERVAL;
 	}
-	// CanSpectate failed on an alive, unpaused player, so CanPause prints why.
+	// CanSpectate failed on an alive and unpaused player.
+	// CanPause prints why.
 	player->timerService->CanPause(true);
 	player->languageService->PrintChat(true, false, "Replay - Spectate Failed", botPlayer->GetName());
 	return 0.0f;
@@ -180,7 +181,7 @@ namespace KZ::replaysystem::bot
 		{
 			return;
 		}
-		// Without a running timer there is no run to protect, so the pause checks do not apply.
+		// The pause checks do not apply without a running timer because there is no run to protect.
 		if (!spectator->timerService->GetTimerRunning() || spectator->specService->CanSpectate())
 		{
 			spectator->specService->SpectatePlayer(botPlayer, true);

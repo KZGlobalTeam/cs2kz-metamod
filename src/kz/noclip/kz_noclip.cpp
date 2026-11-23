@@ -25,7 +25,7 @@ void KZNoclipService::HandleNoclip()
 		{
 			pawn->m_fFlags(pawn->m_fFlags() | FL_NOCLIP);
 		}
-		// A pause holds the player in place, and noclip picks up again once it ends.
+		// A pause holds the player in place and noclip picks up again once it ends.
 		if (pawn->m_MoveType() != MOVETYPE_NOCLIP && !this->player->timerService->GetPaused())
 		{
 			this->player->SetMoveType(MOVETYPE_NOCLIP);

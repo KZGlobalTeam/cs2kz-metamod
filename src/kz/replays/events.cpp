@@ -62,7 +62,7 @@ namespace KZ::replaysystem::events
 					break;
 
 				case RPEVENT_CONTROL:
-					// The ticks already show the pawn running on its own, the controls use these to skip that stretch.
+					// The ticks already show the pawn running on its own and the controls use these to skip that stretch.
 					break;
 			}
 
@@ -327,7 +327,7 @@ namespace KZ::replaysystem::events
 		u32 targetServerTick = data::GetTick(replay, targetTick).serverTick;
 		u32 currentServerTick = replay->currentTick < replay->tickCount ? data::GetTick(replay, replay->currentTick).serverTick : 0;
 
-		// Optimization: If seeking forward, we only need to process events from current position
+		// Seeking forward only needs to process events from the current position.
 		bool isSeekingForward = (targetTick > replay->currentTick) && replay->currentTick > 0;
 		u32 startEventIndex = 0;
 		u32 startJumpIndex = 0;
@@ -486,7 +486,7 @@ namespace KZ::replaysystem::events
 				case RPEVENT_TELEPORT:
 				{
 					// This event is only for interrupting interpolation during playback
-					// For seeking, we don't need to do anything here since teleport count
+					// We don't need to do anything here for seeking since teleport count
 					// is tracked via checkpoint data in tickData
 					break;
 				}
@@ -502,8 +502,9 @@ namespace KZ::replaysystem::events
 			}
 		}
 
-		// A pause still going at the target, including one that never resumes. The target tick's events have run, so it
-		// counts as played, and playback adds a tick for every played tick of a pause, the target included.
+		// A pause still going at the target (including one that never resumes).
+		// The target tick's events have run and it counts as played.
+		// Playback adds a tick for every played tick of a pause including the target.
 		if (inPause && inActiveTimerRun && replay->startTime > 0.0f)
 		{
 			u32 pauseStartTickIndex = data::GetTickAtServerTick(replay, pauseStartTick);

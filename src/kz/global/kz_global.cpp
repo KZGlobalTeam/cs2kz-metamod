@@ -144,9 +144,10 @@ void KZGlobalService::ReloadConfig()
 	{
 		KZ_LOG_INFO(LogChannel::Global, "Reconnecting to the API...\n");
 
-		// This is synchronous: it closes the connection, cancels any pending reconnection backoff and joins
-		// the WebSocket thread. `WS::OnCloseMessage()` may still run on the WebSocket thread before this
-		// returns, so we must not hold any of our own mutexes here, nor touch `state` until afterwards.
+		// This is synchronous.
+		// It closes the connection, cancels any pending reconnection backoff and joins the WebSocket thread.
+		// `WS::OnCloseMessage()` may still run on the WebSocket thread before this returns.
+		// We must not hold any of our own mutexes here or touch `state` until afterwards.
 		KZGlobalService::WS::socket->stop();
 
 		KZGlobalService::WS::socket->setUrl(apiUrl);
@@ -156,8 +157,8 @@ void KZGlobalService::ReloadConfig()
 		KZGlobalService::WS::socket->enableAutomaticReconnection();
 		KZGlobalService::WS::socket->setMinWaitBetweenReconnectionRetries(10'000 /* ms */);
 
-		// `OnCloseMessage()` clears every other queue, but not a `hello_ack` that arrived right before we
-		// disconnected. Completing the new handshake with a stale ack would apply outdated map information.
+		// `OnCloseMessage()` clears every other queue but not a `hello_ack` that arrived right before we disconnected.
+		// Completing the new handshake with a stale ack would apply outdated map information.
 		{
 			std::lock_guard _guard(KZGlobalService::callbacks.mutex);
 			KZGlobalService::callbacks.helloAck.reset();
@@ -274,7 +275,8 @@ void KZGlobalService::OnMapInfo(const std::optional<KZ::api::Map> &mapInfo, std:
 		return;
 	}
 
-	// The map change cleared every record cache, and players who stayed connected get no new join ack to refill theirs.
+	// The map change cleared every record cache.
+	// Players who stayed connected get no new join ack to refill theirs.
 	KZGlobalService::UpdateRecordCache();
 	for (KZPlayer *player : g_pKZPlayerManager->GetAllSlots())
 	{
@@ -369,10 +371,10 @@ void KZGlobalService::OnActivateServer()
 
 void KZGlobalService::OnServerGamePostSimulate()
 {
-	// Main-thread drain for everything the WebSocket thread queued up. The callbacks run here, so
-	// whatever they allocate belongs to Global too.
+	// Main-thread drain for everything the WebSocket thread queued up.
+	// The callbacks run here and whatever they allocate belongs to Global too.
 
-	// Replays go over HTTP, so they don't have to wait for the WebSocket connection.
+	// Replays go over HTTP and don't have to wait for the WebSocket connection.
 	KZGlobalService::replayManager.ProcessUploads();
 
 	switch (KZGlobalService::state.load())
@@ -466,8 +468,8 @@ void KZGlobalService::OnServerGamePostSimulate()
 
 				KZGlobalService::ws.receivedMessages.queue.clear();
 
-				// Time out callbacks whose response never arrived. Without this they would sit in
-				// the map forever on a connection that stays open.
+				// Time out callbacks whose response never arrived.
+				// Without this they would sit in the map forever on a connection that stays open.
 				const auto now = std::chrono::system_clock::now();
 				for (auto it = messageCallbacks.begin(); it != messageCallbacks.end();)
 				{
@@ -610,14 +612,14 @@ void KZGlobalService::OnClientDisconnect()
 		return;
 	}
 
-	// A player who stays away already left the API when their client disconnected, and joins it again once they are back.
+	// A player who stays away already left the API when their client disconnected and joins it again once they are back.
 	if (this->player->IsAway() || !this->player->IsAuthenticated())
 	{
 		return;
 	}
 
 	// The API replaces the stored preferences with whatever this message carries and will not take one without them.
-	// Before the join ack arrives there is nothing safe to send, and the next join covers the API's session bookkeeping.
+	// Before the join ack arrives there is nothing safe to send and the next join covers the API's session bookkeeping.
 	if (!this->player->optionService->CanSaveGlobalPrefs())
 	{
 		return;
@@ -643,8 +645,9 @@ void KZGlobalService::OnClientDisconnect()
 
 void KZGlobalService::WS::OnMessage(const ix::WebSocketMessagePtr &message)
 {
-	// Runs on the ixwebsocket thread. JSON parsing here allocates heavily and the results are
-	// handed to the main thread through the queues below, so the scope has to sit on this side.
+	// Runs on the ixwebsocket thread.
+	// JSON parsing here allocates heavily and the results reach the main thread through the queues below.
+	// The scope therefore has to sit on this side.
 
 	switch (message->type)
 	{

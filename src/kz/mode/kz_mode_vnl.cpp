@@ -126,8 +126,8 @@ void KZVanillaModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t *pFirstTr
 #endif
 
 #if 0 
-	// AG2 Update: Kill player speed if someone is standing on top of them
-	// Note that this function is only called when the player might collide with something while on the ground.
+	// Kill player speed if someone is standing on top of them (added in the AG2 update).
+	// This function is only called if the player might collide with something while on the ground.
 	if (this->player->GetPlayerPawn()->m_hGroundEntity().Get() != NULL)
 	{
 		if (IsStoodOn(this->player->GetPlayerPawn()))
@@ -164,14 +164,14 @@ void KZVanillaModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t *pFirstTr
 			VectorMA(origin, time_left, velocity, end);
 		}
 
-		// AG2 Update: Fixed several cases where a player would get stuck on map geometry while surfing
+		// Fixes several cases where a player would get stuck on map geometry while surfing (added in the AG2 update).
 		if (numplanes == 1)
 		{
 			VectorMA(end, 0.03125f, planes[0], end);
 		}
 
 		// See if we can make it from origin to end point.
-		// If their velocity Z is 0, then we can avoid an extra trace here during WalkMove.
+		// We can avoid an extra trace here during WalkMove if their velocity Z is 0.
 		if (pFirstDest && (end == *pFirstDest))
 		{
 			pm = *pFirstTrace;
@@ -192,9 +192,7 @@ void KZVanillaModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t *pFirstTr
 			}
 		}
 
-		// If we moved some portion of the total distance, then
-		//  copy the end position into the pmove.origin and
-		//  zero the plane counter.
+		// Copy the end position into the pmove.origin and zero the plane counter if we moved some portion of the total distance.
 		if (pm.m_flFraction * MAX(1.0, velocity.Length()) > 0.03125f)
 		{
 			// actually covered some distance
@@ -299,7 +297,7 @@ void KZVanillaModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t *pFirstTr
 					}
 				}
 
-				if (j == numplanes) // Didn't have to clip, so we're ok
+				if (j == numplanes) // Didn't have to clip and we're ok
 				{
 					break;
 				}
@@ -320,7 +318,7 @@ void KZVanillaModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t *pFirstTr
 			}
 
 			//
-			// if original velocity is against the original velocity, stop dead
+			// stop dead if original velocity is against the original velocity
 			// to avoid tiny occilations in sloping corners
 			//
 			if (velocity.Dot(primal_velocity) <= 0.0f)
@@ -446,7 +444,7 @@ void KZVanillaModeService::OnTeleport(const Vector *newPosition, const QAngle *n
 void KZVanillaModeService::OnStartTouchGround()
 {
 	bbox_t bounds;
-	// Shrink the bounds here as well, otherwise we touch triggers that are flush with the ground.
+	// Shrink the bounds here as well or we touch triggers that are flush with the ground.
 	bbox_t offset = {{0.03125f, 0.03125f, 0.03125f}, {-0.03125f, -0.03125f, -0.03125f}};
 	this->player->GetBBoxBounds(&bounds, &offset);
 	Vector ground = this->player->landingOrigin;

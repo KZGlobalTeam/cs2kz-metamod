@@ -242,7 +242,7 @@ void KZClassicModeService::OnStartTouchGround()
 {
 	this->SlopeFix();
 	bbox_t bounds;
-	// Shrink the bounds here as well, otherwise we touch triggers that are flush with the ground.
+	// Shrink the bounds here as well or we touch triggers that are flush with the ground.
 	bbox_t offset = {{0.03125f, 0.03125f, 0.03125f}, {-0.03125f, -0.03125f, -0.03125f}};
 	this->player->GetBBoxBounds(&bounds, &offset);
 	Vector ground = this->player->landingOrigin;
@@ -278,7 +278,7 @@ void KZClassicModeService::OnPhysicsSimulate()
 			replace = i;
 		}
 	}
-	// No stale slot left, give up the furthest one instead.
+	// Give up the furthest one instead if there is no stale slot left.
 	if (slots[replace] > subtickMoveTime)
 	{
 		for (u32 i = 0; i < FORCED_SUBTICK_SLOTS; i++)
@@ -302,9 +302,10 @@ void KZClassicModeService::OnPhysicsSimulatePost()
 	u32 tickCount = g_pKZUtils->GetServerGlobals()->tickcount;
 
 	/*
-		The client only predicts the half tick split for the commands m_arrForceSubtickMoveWhen covers, so two more engine fields are used to
-		cover two more commands. The friction stash makes the engine split the next command at its fraction, and gets cleared by FinishMove
-		while in the air. It changes ground friction, so it is only used when the next command can't reach the ground.
+		The client only predicts the half tick split for the commands m_arrForceSubtickMoveWhen covers.
+		Two more engine fields are used to cover two more commands.
+		The friction stash makes the engine split the next command at its fraction and gets cleared by FinishMove while in the air.
+		It changes ground friction so it is only used when the next command can't reach the ground.
 	*/
 	bool frictionSplit = this->CanUseFrictionSplit();
 	if (frictionSplit)
@@ -320,7 +321,8 @@ void KZClassicModeService::OnPhysicsSimulatePost()
 		{
 			moveServices->m_flUseFrictionStashedSpeedUntilFrac(0.5f);
 		}
-		// Only used if the player reaches the ground anyway, matches the friction they would have gotten without the stash.
+		// Only used if the player reaches the ground anyway.
+		// Matches the friction they would have gotten without the stash.
 		if (moveServices->m_flFrictionStashedSpeed() != speed)
 		{
 			moveServices->m_flFrictionStashedSpeed(speed);
@@ -385,7 +387,7 @@ bool KZClassicModeService::CanUseFrictionSplit()
 	return !trace.m_bStartInSolid && trace.m_flFraction == 1.0f;
 }
 
-// The engine only relies on the friction stash on the ground, so off the ground it can always be cleared.
+// The engine only relies on the friction stash on the ground and it can always be cleared off the ground.
 void KZClassicModeService::ClearFrictionSplit()
 {
 	CCSPlayerPawn *pawn = this->player->GetPlayerPawn();
@@ -410,8 +412,8 @@ void KZClassicModeService::OnSetupMove(CUserCmd *pc)
 		subtickMove->set_when(when >= 0.5 ? 0.5 : 0);
 	}
 
-	// SetupMove replaces the angles with any change the client has not applied yet, and a command that applies one
-	// starts from the snapped angles instead of the last ones.
+	// SetupMove replaces the angles with any change the client has not applied yet.
+	// A command that applies one starts from the snapped angles instead of the last ones.
 	u32 consumed = pc->base().consumed_server_angle_changes();
 	this->serverAngleChange = consumed > this->lastConsumedAngleChange;
 	this->lastConsumedAngleChange = MAX(this->lastConsumedAngleChange, consumed);
@@ -460,7 +462,7 @@ void KZClassicModeService::OnProcessMovementPost()
 
 void KZClassicModeService::InterpolateViewAngles()
 {
-	// Second half of the movement, no change.
+	// Second half of the movement without a change.
 	CGlobalVars *globals = g_pKZUtils->GetGlobals();
 	f64 subtickFraction, whole;
 	subtickFraction = modf((f64)globals->curtime * ENGINE_FIXED_TICK_RATE, &whole);
@@ -469,7 +471,7 @@ void KZClassicModeService::InterpolateViewAngles()
 		return;
 	}
 
-	// First half of the movement, tweak the angle to be the middle of the desired angle and the last angle
+	// First half of the movement tweaks the angle to be the middle of the desired angle and the last angle
 	QAngle newAngles = player->currentMoveData->m_vecViewAngles;
 	QAngle oldAngles = this->hasValidDesiredViewAngle ? this->lastValidDesiredViewAngle : this->player->moveDataPost.m_vecViewAngles;
 	if (newAngles[YAW] - oldAngles[YAW] > 180)
@@ -680,7 +682,7 @@ void KZClassicModeService::CheckVelocityQuantization()
 {
 	if (this->postProcessMovementZSpeed > this->player->currentMoveData->m_vecVelocity.z
 		&& this->postProcessMovementZSpeed - this->player->currentMoveData->m_vecVelocity.z < 0.03125f
-		// Colliding with a flat floor can result in a velocity of +0.0078125u/s, and this breaks ladders.
+		// Colliding with a flat floor can result in a velocity of +0.0078125u/s and this breaks ladders.
 		// The quantization accidentally fixed this bug...
 		&& fabs(this->player->currentMoveData->m_vecVelocity.z) > 0.03125f)
 	{
@@ -688,8 +690,7 @@ void KZClassicModeService::CheckVelocityQuantization()
 	}
 }
 
-// ORIGINAL AUTHORS : Mev & Blacky
-// URL: https://forums.alliedmods.net/showthread.php?p=2322788
+// Originally by Mev & Blacky (https://forums.alliedmods.net/showthread.php?p=2322788).
 void KZClassicModeService::SlopeFix()
 {
 	CTraceFilterPlayerMovementCS filter(this->player->GetPlayerPawn());
@@ -709,7 +710,7 @@ void KZClassicModeService::SlopeFix()
 
 	INavPhysicsInterface::TraceShape(Ray_t(bounds.mins, bounds.maxs), this->player->currentMoveData->m_vecAbsOrigin, ground, &filter, &trace);
 
-	// Doesn't hit anything, fall back to the original ground
+	// Fall back to the original ground if it doesn't hit anything
 	if (trace.m_bStartInSolid || trace.m_flFraction == 1.0f)
 	{
 		return;
@@ -757,7 +758,7 @@ void KZClassicModeService::OnTryPlayerMove(Vector *pFirstDest, trace_t *pFirstTr
 	this->tpmTriggerFixOrigins.clear();
 	this->tpmTriggerFixOrigins.push_back(origin);
 
-	// WalkMove does the first trace before calling TryPlayerMove, so we need to fix that one here.
+	// WalkMove does the first trace before calling TryPlayerMove and we need to fix that one here.
 	// TryPlayerMove only uses it if it ends where its own first trace would end.
 	if (pFirstDest && pFirstTrace && (this->player->GetPlayerPawn()->m_fFlags & FL_ONGROUND))
 	{
@@ -820,23 +821,29 @@ void KZClassicModeService::OnTracePlayerBBoxPost(const Ray_t &ray, const Vector 
 /*
 	Rampbug fix:
 	The game keeps the player 1/32 unit away from whatever they collide with.
-	While sliding on a ramp, the player can end up closer to the ramp than that, or collide with the edge between two triangles of the ramp
-	instead of the ramp itself, which gives a wrong normal. TryPlayerMove then either stops the player or sends them in a random direction.
+	While sliding on a ramp the player can end up closer to the ramp than that.
+	It can also collide with the edge between two triangles of the ramp instead of the ramp itself.
+	That gives a wrong normal.
+	TryPlayerMove then either stops the player or sends them in a random direction.
 
-	To fix this, we redo the trace a bit further away from the ramp. We only use that trace if it actually goes further than the original one.
-	If it just ends up on another plane right away, the player is really running into a corner and the original trace is kept.
+	We redo the trace a bit further away from the ramp to fix this.
+	We only use that trace if it actually goes further than the original one.
+	The player is really running into a corner if it just ends up on another plane right away.
+	The original trace is kept in that case.
 */
 void KZClassicModeService::FixTryPlayerMoveTrace(const Ray_t &ray, const Vector &start, const Vector &end, CTraceFilter *filter, trace_t *pm)
 {
 	Vector direction = end - start;
 	f32 length = direction.NormalizeInPlace();
-	// We hit a plane that will change our velocity, or we barely moved at all. This is either a real obstacle or a rampbug.
+	// We hit a plane that will change our velocity or we barely moved at all.
+	// This is either a real obstacle or a rampbug.
 	bool shouldConsiderRampbug = pm->m_flFraction < 1.0f && !pm->m_bStartInSolid && this->lastPlane.LengthSqr() > 0.0f && length > 0.0f
 								 && (pm->m_vHitNormal.Dot(this->lastPlane) < RAMP_BUG_THRESHOLD || pm->m_flFraction * length < RAMP_BUG_OFFSET);
 	if (shouldConsiderRampbug)
 	{
 		bool success {};
-		// We already failed to move twice, so TryPlayerMove is about to stop the player. Use any trace that goes further.
+		// We already failed to move twice and TryPlayerMove is about to stop the player.
+		// Use any trace that goes further.
 		bool stuck = this->stuckTraceCount >= 2;
 		// This can only be a rampbug if the player is still right next to the last plane they hit.
 		trace_t test;
@@ -848,8 +855,9 @@ void KZClassicModeService::FixTryPlayerMoveTrace(const Ray_t &ray, const Vector 
 			Vector offset = this->lastPlane * RAMP_BUG_OFFSET;
 			trace_t offsetTrace;
 			INavPhysicsInterface::TraceShape(ray, start + offset, end + offset, filter, &offsetTrace);
-			// If this trace only goes a bit further and then hits a different plane, the original trace hit something real,
-			// like a corner or two ramps meeting each other. Keep the original so TryPlayerMove can slide along both planes.
+			// The original trace hit something real if this trace only goes a bit further and then hits a different plane.
+			// That happens at a corner or where two ramps meet.
+			// Keep the original so TryPlayerMove can slide along both planes.
 			f32 distance = (offsetTrace.m_vEndPos - pm->m_vEndPos).Dot(direction);
 			bool samePlane = offsetTrace.m_vHitNormal.Dot(this->lastPlane) >= RAMP_BUG_SAME_PLANE;
 			success = !offsetTrace.m_bStartInSolid && distance > RAMP_BUG_OFFSET
@@ -861,8 +869,8 @@ void KZClassicModeService::FixTryPlayerMoveTrace(const Ray_t &ray, const Vector 
 		}
 		if (!success && stuck && pm->m_flFraction * length < RAMP_BUG_OFFSET)
 		{
-			// The player is stuck between two planes, moving away from one of them will just push them into the other one.
-			// A trace only gives us one of the two planes, so we find the other one by tracing away from the first.
+			// The player is stuck between two planes and moving away from one of them will just push them into the other one.
+			// A trace only gives us one of the two planes and we find the other one by tracing away from the first.
 			Vector normal = pm->m_vHitNormal;
 			Vector otherNormal = vec3_origin;
 			if (normal.Dot(this->lastPlane) < RAMP_BUG_THRESHOLD)
@@ -910,7 +918,8 @@ void KZClassicModeService::FixTryPlayerMoveTrace(const Ray_t &ray, const Vector 
 
 // Sometimes the game thinks the player is on standable ground while they are actually on a steep slope right below a wall.
 // A slightly smaller hull doesn't have this problem and will hit the slope instead.
-// It will also hit a slope if the player is standing over a gap between two floors though, so we make sure there's a wall next to the player.
+// It will also hit a slope if the player is standing over a gap between two floors.
+// We therefore make sure there's a wall next to the player.
 void KZClassicModeService::FixGroundTrace(const Ray_t &ray, const Vector &start, const Vector &end, CTraceFilter *filter, trace_t *pm)
 {
 	f32 standableZ = KZ::mode::modeCvarRefs[MODECVAR_SV_STANDABLE_NORMAL]->GetFloat();
@@ -965,7 +974,7 @@ void KZClassicModeService::OnWaterMovePost()
 
 void KZClassicModeService::OnTeleport(const Vector *newPosition, const QAngle *newAngles, const Vector *newVelocity)
 {
-	// The teleport can put the player on the ground, where the friction stash would change friction.
+	// The teleport can put the player on the ground where the friction stash would change friction.
 	this->ClearFrictionSplit();
 
 	// Prevent prekeep from teleporting the player to a lower speed.

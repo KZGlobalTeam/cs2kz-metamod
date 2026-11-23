@@ -6,7 +6,7 @@
 
 #include "tier0/memdbgon.h"
 
-// Indexed by SafeguardOption and CompareType, so a picked row id is the stored value.
+// Indexed by SafeguardOption and CompareType so a picked row id is the stored value.
 static_global const char *const SAFEGUARD_LABELS[] = {"Menu - Safeguard Off", "Menu - Safeguard Nub", "Menu - Safeguard Pro"};
 static_global const char *const COMPARE_LABELS[] = {"Menu - Compare None", "Menu - Compare Local PB", "Menu - Compare Global PB",
 													"Menu - Compare Server Record", "Menu - Compare World Record"};

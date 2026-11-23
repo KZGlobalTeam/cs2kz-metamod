@@ -91,7 +91,7 @@ Recorder::Recorder(KZPlayer *player, f32 numSeconds, ReplayType type, bool copyT
 	CircularRecorder *circular = player->recordingService->circularRecording;
 	if (!circular)
 	{
-		// No circular recorder initialized, nothing to copy
+		// Nothing to copy without an initialized circular recorder
 		return;
 	}
 	// Go through the events and fetch the first events within the time frame.
@@ -266,7 +266,7 @@ Recorder::~Recorder()
 	CleanupTempFiles();
 }
 
-// Binary chunk format:
+// The binary chunk format in order.
 //   u32 numTicks
 //   u32 numSubtickCounts
 //   u32 numSubtickMoves (total RpSubtickMove entries)
@@ -279,11 +279,11 @@ Recorder::~Recorder()
 //   u8[numSubtickCounts] (subtick counts)
 //   RpSubtickMove[numSubtickMoves]
 //   RpEvent[numEvents]
-//   RpJumpStats[numJumps]  -- serialized with size prefix per entry due to std::vector member
+//   RpJumpStats[numJumps] (each with a size prefix because of its std::vector member)
 //   CmdData[numCmds]
 //   u8[numCmdSubtickCounts] (cmd subtick counts)
 //   RpSubtickMove[numCmdSubtickMoves]
-// Subtick counts are pushed apart from ticks and commands, so their numbers are stored on their own.
+// Subtick counts are pushed apart from ticks and commands and their numbers are stored on their own.
 
 void Recorder::FlushChunkToDisk()
 {
@@ -527,8 +527,9 @@ bool Recorder::WriteToMemory(std::vector<char> &outBuffer)
 	time(&unixTime);
 	replayHeader.set_timestamp((u64)unixTime);
 
-	// Long recordings were flushed to disk in chunks. Each chunk is compressed as it is read back, so only the compressed
-	// sections and one chunk are ever in memory, not the whole recording.
+	// Long recordings were flushed to disk in chunks.
+	// Each chunk is compressed as it is read back.
+	// Only the compressed sections and one chunk are ever in memory instead of the whole recording.
 	KZ::replaysystem::compression::RecordingWriter writer;
 	std::vector<RpEvent> allEvents;
 	std::vector<RpJumpStats> allJumps;
@@ -540,7 +541,7 @@ bool Recorder::WriteToMemory(std::vector<char> &outBuffer)
 	for (u32 i = 0; i < numFlushedChunks; i++)
 	{
 		Chunk chunk;
-		// A missing chunk would leave a gap in the ticks, so the replay is not written at all.
+		// The replay is not written at all because a missing chunk would leave a gap in the ticks.
 		if (!ReadFlushedChunk(i, chunk) || !writer.AddTicks(chunk.tickData, chunk.subtickCounts, chunk.subtickMoves)
 			|| !writer.AddCmds(chunk.cmdData, chunk.cmdSubtickCounts, chunk.cmdSubtickMoves))
 		{

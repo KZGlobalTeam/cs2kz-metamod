@@ -27,11 +27,11 @@ void SubtickData::RpSubtickMove::FromMove(const CSubtickMoveStep &move)
 {
 	this->when = move.when();
 	this->button = move.button();
-	// Any step can turn the view, including steps that carry no input at all.
+	// Any step can turn the view including steps that carry no input at all.
 	this->analogMove = {0.0f, 0.0f, move.pitch_delta(), move.yaw_delta()};
 	if (move.button())
 	{
-		// Shares its storage with analog_forward_delta, which button steps don't use.
+		// Shares its storage with analog_forward_delta because button steps don't use it.
 		this->pressed = move.pressed();
 	}
 	else
@@ -272,7 +272,7 @@ void KZRecordingService::CheckRecorders()
 				UUID_t localUUID = recorderPtr->uuid; // capture before move
 				KZRecordingService::fileWriter->QueueWrite(
 					std::move(recorderPtr),
-					// Success: deliver buffer to RunSubmission state machine
+					// Deliver the buffer to the RunSubmission state machine on success.
 					[localUUID](const UUID_t &, f32, std::vector<char> &&buffer)
 					{
 						RunSubmission *sub = RunSubmission::GetByUUID(localUUID);
@@ -281,7 +281,7 @@ void KZRecordingService::CheckRecorders()
 							sub->OnReplayReady(std::move(buffer));
 						}
 					},
-					// Failure: notify the player and log
+					// Notify the player and log on failure.
 					[localUUID](const char *error)
 					{
 						KZ_LOG_WARN(LogChannel::Recording, "Run replay serialization failed for UUID %s: %s\n", localUUID.ToString().c_str(), error);
@@ -299,7 +299,7 @@ void KZRecordingService::CheckRecorders()
 			}
 			else
 			{
-				// No file writer, so neither callback will ever run.
+				// Neither callback will ever run without a file writer.
 				// This should never happen.
 				RunSubmission *sub = RunSubmission::GetByUUID(recorder.uuid);
 				if (sub)
@@ -354,7 +354,7 @@ void KZRecordingService::CheckWeapons()
 			return;
 		}
 	}
-	// New weapon, record it
+	// Record a new weapon
 	this->weapons.push_back(weaponEconInfo);
 	this->currentWeaponID = static_cast<i16>(this->weapons.size() - 1);
 }

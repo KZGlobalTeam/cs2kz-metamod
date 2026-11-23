@@ -8,7 +8,7 @@
 
 #include "tier0/memdbgon.h"
 
-// Indexed by DistanceTier, so a picked row id is the stored value.
+// Indexed by DistanceTier so a picked row id is the stored value.
 static_global const char *const TIER_LABELS[DISTANCETIER_COUNT] = {"Menu - Tier None",    "Menu - Tier Meh",     "Menu - Tier Impressive",
 																   "Menu - Tier Perfect", "Menu - Tier Godlike", "Menu - Tier Ownage",
 																   "Menu - Tier Wrecker"};
@@ -75,7 +75,8 @@ static_function void PickReportType(KZPlayer *player, i64, i64 id)
 	player->optionService->SetPreferenceInt("jsReportType", Clamp(id, (i64)JSReportType_Hud, (i64)JSReportType_Both));
 }
 
-// The order list only shows the fields that are on, so a move swaps a field with the next one on in that direction.
+// The order list only shows the fields that are on.
+// A move swaps a field with the next one on in that direction.
 static_function void GetFieldOrderChoices(KZPlayer *player, i64, std::vector<KZChoice> &out)
 {
 	const JSFieldLayout &fields = player->hudService->GetOwnPrefs().jsFields;

@@ -106,7 +106,7 @@ void KZAnticheatService::OnSetupMove(CUserCmd *cmd)
 		this->ClearTurnTracking();
 		return;
 	}
-	// Turn binds aren't an infraction, so track them for everyone.
+	// Turn binds are tracked for everyone because they aren't an infraction.
 	this->TrackTurn(cmd);
 	// Running detections on players that can't receive another infraction only spams the logs.
 	if (!this->CanReceiveInfraction())
@@ -186,7 +186,7 @@ void KZAnticheatService::OnGlobalAuthFinished(BanInfo *banInfo)
 		}
 		else
 		{
-			// Don't kick, but still mark as banned.
+			// Don't kick but still mark as banned.
 			this->PrintCheaterMessage();
 		}
 		return;
@@ -230,7 +230,7 @@ void KZAnticheatService::OnClientSetup(bool isBanned, const char *banReason)
 		}
 		else
 		{
-			// Don't kick, but still mark as banned.
+			// Don't kick but still mark as banned.
 			this->PrintCheaterMessage();
 		}
 		return;

@@ -96,7 +96,9 @@ void KZPistolService::UpdatePistol()
 	}
 	else if (pistol.team == CS_TEAM_NONE && !this->player->IsFakeClient())
 	{
-		// Check the player's inventory. If there's a skin on this current team, don't switch. Otherwise, switch team.
+		// Check the player's inventory.
+		// Don't switch if there's a skin on the current team.
+		// Otherwise switch team.
 		bool checkOtherTeam = true;
 		CCSPlayerInventory *inventory = this->player->GetController()->m_pInventoryServices()->GetInventory();
 		// LOADOUT_POSITION_SECONDARY0 to LOADOUT_POSITION_SECONDARY5

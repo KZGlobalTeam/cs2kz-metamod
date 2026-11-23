@@ -337,7 +337,8 @@ namespace KZ::mode
 	// clang-format on
 	static_assert(KZ_ARRAYSIZE(modeCvarNames) == MODECVAR_COUNT, "Array modeCvarRefs length is not the same as MODECVAR_COUNT!");
 
-	// Frees this module's copy of modeCvarRefs. Plugin unload only.
+	// Frees this module's copy of modeCvarRefs.
+	// Plugin unload only.
 	inline void CleanupModeCvarRefs()
 	{
 		for (u32 i = 0; i < MODECVAR_COUNT; i++)

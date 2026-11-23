@@ -332,6 +332,7 @@ bool KZ::api::Record::FromJson(const Json &json)
 		return false;
 	}
 
+	// Only WebSocket messages include the leaderboard sizes.
 	if (json.Get("nub_rank", this->nubRank))
 	{
 		if (!json.Get("nub_points", this->nubPoints))

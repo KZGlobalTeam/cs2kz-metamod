@@ -1,6 +1,6 @@
-// Preferences travel between servers as userinfo convars named kzp_<prefKey>, pasted with setinfo.
-// The server can only read them: a setinfo convar is FCVAR_USERINFO only, which the client's
-// SetConVar handler refuses to write.
+// Preferences travel between servers as userinfo convars named kzp_<prefKey> and are pasted with setinfo.
+// The server can only read them because a setinfo convar is FCVAR_USERINFO only.
+// The client's SetConVar handler refuses to write those.
 #include "kz/option/pref_registry.h"
 #include "kz/option/kz_option.h"
 #include "kz/language/kz_language.h"
@@ -42,7 +42,8 @@ static_function void DrainImport(KZPlayer *player, bool fromConnect)
 		return;
 	}
 	auto *opts = player->optionService;
-	// An unstamped block was typed by hand: apply it, but don't record it.
+	// An unstamped block was typed by hand.
+	// Apply it but don't record it.
 	const bool stamped = state.stamp > 0;
 	if (stamped ? state.stamp <= opts->GetPreferenceInt(KZ_PREF_LAST_IMPORT, 0) : fromConnect)
 	{
@@ -107,7 +108,7 @@ static_function void OnClientConVar(CPlayerSlot slot, const char *name, const ch
 		state.staged[name + sizeof(KZ_PREF_CVAR_PREFIX) - 1] = value;
 	}
 
-	// On connect there is no stored stamp yet, so that drain runs from OnPlayerPreferencesLoaded.
+	// There is no stored stamp on connect yet and that drain runs from OnPlayerPreferencesLoaded.
 	KZPlayer *player = g_pKZPlayerManager->ToPlayer(slot);
 	if (!player || !player->GetClient() || !state.prefsLoaded || state.drainPending)
 	{
@@ -117,9 +118,9 @@ static_function void OnClientConVar(CPlayerSlot slot, const char *name, const ch
 	StartTimer<CPlayerUserId>(DrainImportTimer, player->GetClient()->GetUserID(), KZ_PREF_IMPORT_DELAY, true, true);
 }
 
-// The convars a client already has on connect never reach ProcessSetConVar: that batch is applied
-// from the connection handler, which is not in the vtable. ApplyConVars still puts them in the
-// client's userinfo KeyValues, which is what GetClientConVarValue reads.
+// The convars a client already has on connect never reach ProcessSetConVar.
+// That batch is applied from the connection handler and it is not in the vtable.
+// ApplyConVars still puts them in the client's userinfo KeyValues and that is what GetClientConVarValue reads.
 static_function void ReadImport(KZPlayer *player)
 {
 	const CPlayerSlot slot = player->GetPlayerSlot();
@@ -153,8 +154,8 @@ static_function void ReadImport(KZPlayer *player)
 	}
 }
 
-// Runs after the local and global stores are merged in, so the imported keys land in userSetPrefs
-// and a later global load cannot merge over them.
+// Runs after the local and global stores are merged in.
+// The imported keys land in userSetPrefs and a later global load cannot merge over them.
 static_global class KZOptionServiceEventListener_PrefsTransfer : public KZOptionServiceEventListener
 {
 	virtual void OnPlayerPreferencesLoaded(KZPlayer *player)

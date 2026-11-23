@@ -4,7 +4,7 @@
 
 namespace KZ::replaysystem::parsing
 {
-	// Wire differences are selected once for each version, outside decoding loops.
+	// Wire differences are selected once for each version outside decoding loops.
 	struct VersionParser
 	{
 		u64 weaponFlag;
@@ -14,16 +14,16 @@ namespace KZ::replaysystem::parsing
 		bool modernJump;
 		bool compactSubticks;
 		bool jumpFractions;
-		// Older versions left the angle deltas of analog steps unwritten, so they hold garbage.
+		// Older versions left the angle deltas of analog steps unwritten and they hold garbage.
 		bool analogSubtickAngles;
 		// Section headers hold 64-bit sizes (v7+).
 		bool wideSections;
-		// Subtick sections hold one move count per element followed by all moves, instead of one SubtickData each (v7+).
+		// Subtick sections hold one move count per element followed by all moves instead of one SubtickData each (v7+).
 		bool packedSubticks;
 		bool (*readEvents)(const char *, size_t, u32, std::vector<RpEvent> &);
 	};
 
-	// Returns the decoder for an existing version, or nullptr for unsupported files.
+	// Returns the decoder for an existing version or nullptr for unsupported files.
 	const VersionParser *GetVersionParser(u32 version);
 
 	// Writes extensible, length-prefixed v6 events; never writes native struct bytes.

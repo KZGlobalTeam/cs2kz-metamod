@@ -155,11 +155,11 @@ bool KZStyleManager::RegisterStyle(PluginId id, const char *shortName, const cha
 		}
 	}
 
-	// Add to the list otherwise, and update the database for ID.
+	// Add to the list otherwise and update the database for ID.
 	if (!info)
 	{
 		info = &styleInfos.emplace_back();
-		// If there is already information about this mode while the ID is -1, that means it has to come from the database, so no need to update it.
+		// Information about this style while the ID is -1 has to come from the database and needs no update.
 		KZDatabaseService::InsertAndUpdateStyleIDs(longName, shortName);
 	}
 	*info = {id, shortName, longName, factory};
@@ -225,7 +225,8 @@ void KZStyleManager::Cleanup()
 
 void KZStyleManager::AddStyle(KZPlayer *player, const char *styleName, bool silent, bool updatePreference)
 {
-	// Don't add style if it doesn't exist. Instead, print a list of styles to the client.
+	// Don't add a style if it doesn't exist.
+	// Print a list of styles to the client instead.
 	if (!styleName || !V_stricmp("", styleName))
 	{
 		player->languageService->PrintChat(true, false, "Add Style Command Usage");
@@ -338,7 +339,8 @@ void KZStyleManager::RemoveStyle(KZPlayer *player, const char *styleName, bool s
 
 void KZStyleManager::ToggleStyle(KZPlayer *player, const char *styleName, bool silent, bool updatePreference)
 {
-	// Don't change style if it doesn't exist. Instead, print a list of styles to the client.
+	// Don't change style if it doesn't exist.
+	// Print a list of styles to the client instead.
 	if (!styleName || !V_stricmp("", styleName))
 	{
 		player->languageService->PrintChat(true, false, "Toggle Style Command Usage");
@@ -576,7 +578,7 @@ void KZOptionServiceEventListener_Styles::OnPlayerPreferencesLoaded(KZPlayer *pl
 		styleManager.ClearStyles(player, true, false);
 		for (const std::string &style : utils::Split(styles, ','))
 		{
-			// Applying the loaded preference is not a change to it, and writing it back would mark it as one.
+			// Applying the loaded preference is not a change to it and writing it back would mark it as one.
 			styleManager.AddStyle(player, style.c_str(), false, false);
 		}
 	}

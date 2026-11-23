@@ -35,7 +35,7 @@ struct ReadTask
 	ReadCallback onRead;
 };
 
-// Write a raw buffer on the background thread, with an optional main-thread callback.
+// Write a raw buffer on the background thread with an optional main-thread callback.
 struct RawWriteTask
 {
 	std::string path;

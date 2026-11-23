@@ -239,7 +239,7 @@ public:
 
 	/* ===== Sending events ===== */
 
-	// Note that unlike the global service, these functions do not have callbacks from the coordinator.
+	// Note that these functions do not have callbacks from the coordinator unlike the global service.
 	// The server only acts upon receiving broadcasted messages from the coordinator.
 
 	void SendReady();
@@ -319,10 +319,11 @@ public:
 		i32 maxTeleports {-1};
 		// 0 without a time limit.
 		f64 timeLimit {};
-		// Counted down instead of the limit, once the race has started.
+		// Counted down instead of the limit once the race has started.
 		bool showTimeLeft {};
 		f64 timeLeft {};
-		// The fastest time sent in this race, which only a fastest time race shows. 0 hides it.
+		// The fastest time sent in this race.
+		// Only a fastest time race shows it and 0 hides it.
 		f64 pb {};
 		const char *statusPhrase {};
 		const char *statusClass {};
@@ -345,11 +346,11 @@ public:
 
 	bool CanTeleport();
 	// Return false if a race is active, the player is one of the participants and the start time hasn't arrived yet.
-	// Also returns false if the mode or the course is invalid, or if the player has any active style.
+	// Also returns false if the mode or the course is invalid or if the player has any active style.
 	bool OnTimerStart(u32 courseGUID);
 
 	i32 timerStartTickServer {};
-	// The fastest time this player has sent in the current race, or 0.
+	// The fastest time this player has sent in the current race or 0.
 	f64 racePB {};
 	// Notify the coordinator about the end of the run.
 	void OnTimerEndPost(u32 courseGUID, f32 time, u32 teleportsUsed);

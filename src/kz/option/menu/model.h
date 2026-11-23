@@ -4,23 +4,23 @@
 #include <string>
 #include <vector>
 
-// A registry of categories -> optional subcategories -> typed items, built by services at Init with
-// the KZ::menu::Add* helpers and walked by KZMenuService.
+// A registry of categories -> optional subcategories -> typed items.
+// It is built by services at Init with the KZ::menu::Add* helpers and walked by KZMenuService.
 
 enum class KZOptItemType
 {
-	Toggle,   // bool pref, flipped inline
-	Color,    // palette index, opens the swatch popup
-	Font,     // font slug pref, opens the list popup (rows preview their own face)
-	Position, // two int percent prefs (prefKey = x, yKey = y), opens the 2-axis stepper popup
-	Size,     // one int px pref, opens the 1-axis stepper popup
-	Vector,   // one vector pref, opens the 3-axis stepper popup
-	Button,   // no value, click runs onActivate
-	Choice,   // arbitrary runtime option list, opens the list popup
-	Order,    // arbitrary runtime list, opens the order popup where each row moves up or down
+	Toggle,   // bool pref flipped inline
+	Color,    // palette index that opens the swatch popup
+	Font,     // font slug pref that opens the list popup (rows preview their own face)
+	Position, // two int percent prefs (prefKey = x, yKey = y) that open the 2-axis stepper popup
+	Size,     // one int px pref that opens the 1-axis stepper popup
+	Vector,   // one vector pref that opens the 3-axis stepper popup
+	Button,   // no value and a click runs onActivate
+	Choice,   // arbitrary runtime option list that opens the list popup
+	Order,    // arbitrary runtime list that opens the order popup where each row moves up or down
 };
 
-// Which typed accessor a preference is stored through, for the generic export/import path.
+// Which typed accessor a preference is stored through for the generic export/import path.
 enum class KZOptStorage
 {
 	None = 0,
@@ -35,21 +35,21 @@ struct KZChoice
 {
 	std::string label;
 	i64 id {};
-	const char *colorClass {}; // NULL: the menu color
+	const char *colorClass {}; // NULL for the menu color
 	bool selected {};          // for a list where more than one row can be on at once
 };
 
-// tag is opaque context passed to every callback, so one free function can serve many items.
+// tag is opaque context passed to every callback so one free function can serve many items.
 struct KZOptItem
 {
 	const char *phraseKey {};
 	const char *subKey {}; // optional second line under the label
-	// Greyed out and unclickable while any of these bool preferences is off. Two is enough for the
-	// HUD, where an element's own toggle gates the whole page and a row can gate itself on top.
+	// Greyed out and unclickable while any of these bool preferences is off.
+	// Two is enough for the HUD where an element's own toggle gates the whole page and a row can gate itself on top.
 	const char *enabledBy[2] {};
 	bool enabledByDef[2] {}; // what each enabledBy preference reads as while the player has not set it
 	bool dividerAfter {};    // draw a horizontal rule under this item
-	bool solidOnly {};       // Color: hide the gradients, for a consumer that cannot render one
+	bool solidOnly {};       // set on a Color item to hide the gradients for a consumer that cannot render one
 	KZOptItemType type {};
 	KZOptStorage storage {};         // how prefKey (and yKey) are stored; None: nothing to export
 	const char *prefKey {};          // Toggle/Color/Font/Size; Position uses prefKey (x) + yKey
@@ -61,15 +61,15 @@ struct KZOptItem
 	i32 izdef {};                    // Vector z default
 	Color cdef {255, 255, 255, 255}; // Color default
 	const char *sdef {};             // Font default slug
-	const char *unit {};             // Size: the suffix shown after the value
-	i32 scale {};                    // Size: the preference stores value / scale (0 or 1 = as-is)
-	i64 tag {};                      // opaque, handed to the callbacks below
+	const char *unit {};             // the suffix a Size item shows after the value
+	i32 scale {};                    // a Size item's preference stores value / scale (0 or 1 = as-is)
+	i64 tag {};                      // opaque and handed to the callbacks below
 
-	// Choice and Order: rebuilt from getChoices each time the popup opens, so runtime-only choices work.
+	// Choice and Order items rebuild this from getChoices each time the popup opens so runtime-only choices work.
 	void (*getChoices)(KZPlayer *, i64 tag, std::vector<KZChoice> &) {};
 	i64 (*getCurrent)(KZPlayer *, i64 tag) {};
 	void (*onPick)(KZPlayer *, i64 tag, i64 id) {};
-	// Order: delta is -1 to move the row up and 1 to move it down.
+	// delta of an Order item is -1 to move the row up and 1 to move it down.
 	void (*onMove)(KZPlayer *, i64 tag, i64 id, i32 delta) {};
 
 	void (*onActivate)(KZPlayer *, i64 tag) {}; // Button
@@ -87,7 +87,8 @@ struct KZOptNode
 
 namespace KZ::menu
 {
-	// Call from a service's Init. Returns heap nodes with stable addresses.
+	// Call from a service's Init.
+	// Returns heap nodes with stable addresses.
 	KZOptNode *AddCategory(const char *phraseKey);
 	KZOptNode *AddSub(KZOptNode *parent, const char *phraseKey);
 
@@ -113,12 +114,13 @@ namespace KZ::menu
 
 	void SetItemSubtext(KZOptNode *node, const char *phraseKey);
 	void SetItemDivider(KZOptNode *node);
-	// Declares the preference an action toggle or a choice persists to, for export and import.
+	// Declares the preference an action toggle or a choice persists to for export and import.
 	void SetItemPref(KZOptNode *node, const char *prefKey, KZOptStorage storage, i32 idef = 0, const char *sdef = NULL);
-	// Greys the item out and ignores clicks on it while the named bool preference is off. Call it
-	// twice to require both. A NULL key gates nothing.
+	// Greys the item out and ignores clicks on it while the named bool preference is off.
+	// Call it twice to require both.
+	// A NULL key gates nothing.
 	void SetItemEnabledBy(KZOptNode *node, const char *prefKey);
-	// The suffix a Size item shows after its value, "px" unless set.
+	// The suffix a Size item shows after its value ("px" unless set).
 	void SetItemUnit(KZOptNode *node, const char *unit);
 	// Step a Size item in whole units while the preference keeps a fraction of them.
 	void SetItemScale(KZOptNode *node, i32 scale);
@@ -127,8 +129,8 @@ namespace KZ::menu
 	// Shows a button in a Position item's stepper that hands the value over to mouse editing.
 	void SetItemInteract(KZOptNode *node, void (*onInteract)(KZPlayer *, i64));
 
-	// Writes every value item in this node back to its registered default. Items with no preference
-	// behind them are skipped.
+	// Writes every value item in this node back to its registered default.
+	// Items with no preference behind them are skipped.
 	void ResetNode(KZPlayer *player, KZOptNode *node);
 
 	const std::vector<KZOptNode *> &GetTree();

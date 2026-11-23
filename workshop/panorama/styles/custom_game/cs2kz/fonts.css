@@ -1,4 +1,4 @@
-// Curated: font-family classes, one per available face.
+// Curated font-family classes (one per available face).
 
 .font-family--stratum2 {
 	font-family: Stratum2, "Arial Unicode MS";
@@ -224,8 +224,8 @@
 	font-family: Arial, "Arial Unicode MS";
 }
 
-// System fonts: only render if the player has them installed, marked with * in the picker. Weights
-// come from font-weight, since Windows exposes one family rather than one per weight.
+// System fonts only render if the player has them installed and are marked with * in the picker.
+// Weights come from font-weight because Windows exposes one family rather than one per weight.
 .font-family--trebuchet {
 	font-family: "Trebuchet MS", "Arial Unicode MS";
 }
@@ -259,8 +259,8 @@
 	font-weight: black;
 }
 
-// Quicksand: Light/Medium/SemiBold register as their own families; Regular and Bold share
-// "Quicksand" and separate by weight.
+// Quicksand Light/Medium/SemiBold register as their own families.
+// Regular and Bold share "Quicksand" and separate by weight.
 .font-family--quicksand-light {
 	font-family: "Quicksand Light", "Arial Unicode MS";
 }

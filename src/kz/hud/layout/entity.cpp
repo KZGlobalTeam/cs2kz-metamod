@@ -72,7 +72,7 @@ void KZHUDService::UpdateLayoutElement(CCSCustomHudLayout *layout, MHUDElement e
 		state.hidden = !show;
 		layout->SetHasClass(def.panelId, "hidden", state.hidden ? k_eHudPanelClassStatus_HasClass : k_eHudPanelClassStatus_DoesNotHaveClass);
 	}
-	// A hidden element keeps its last values, so toggling it back on costs nothing.
+	// A hidden element keeps its last values and toggling it back on costs nothing.
 	if (state.hidden)
 	{
 		return;
@@ -96,7 +96,7 @@ void KZHUDService::UpdateLayoutElement(CCSCustomHudLayout *layout, MHUDElement e
 	this->SetLayoutClass(layout, def.panelId, state.alignClass, ALIGN_CLASSES[(i32)cached.align]);
 	this->SetLayoutPosition(layout, def.panelId, def.posPanelId, state.x, state.fineX, RoundFloatToInt(x * 10.0f) + alignShift, "x");
 	this->SetLayoutPosition(layout, def.panelId, def.posPanelId, state.y, state.fineY, RoundFloatToInt(y * 10.0f) + anchorShift, "y");
-	// The jumpstats, course and race panels scale as a whole instead, from their own update.
+	// The jumpstats, course and race panels scale as a whole in their own update instead.
 	if (!IsMHUDElementScaled(element))
 	{
 		this->SetLayoutValueClass(layout, def.panelId, state.fontSize, (i32)this->GetLayoutSize(element), "font-size", false);
@@ -111,7 +111,7 @@ void KZHUDService::UpdateLayoutElement(CCSCustomHudLayout *layout, MHUDElement e
 	this->SetLayoutClass(layout, def.panelId, state.colorClass, state.colorClassComputed);
 	this->SetLayoutClass(layout, def.panelId, state.fontClass, KZHUDService::GetMHUDFontClass(this->player, element));
 
-	// A panel's opacity fades only its text, and its background has its own.
+	// A panel's opacity fades only its text and its background has its own.
 	const i32 opacity = Clamp(cached.opacity, 0, 100);
 	if (GetMHUDBackgroundOpacityKey(element))
 	{
@@ -123,7 +123,8 @@ void KZHUDService::UpdateLayoutElement(CCSCustomHudLayout *layout, MHUDElement e
 		this->SetLayoutValueClass(layout, def.panelId, state.opacity, opacity, "opacity", true);
 	}
 
-	// text-shadow only draws on text, so the keys Panel gets none; UpdateKeysElement outlines its glyphs.
+	// The keys Panel gets no text-shadow because it only draws on text.
+	// UpdateKeysElement outlines its glyphs instead.
 	const bool outline = this->IsMHUDOutlineEnabled(element) && element != MHUDElement::Keys;
 	if (state.outline != outline)
 	{

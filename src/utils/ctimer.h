@@ -15,7 +15,7 @@ class CTimerBase
 public:
 	CTimerBase(f64 initialInterval, bool useRealTime) : interval(initialInterval), useRealTime(useRealTime) {};
 
-	// Timers are always deleted through CTimerBase*, and CTimer holds a std::tuple of arguments.
+	// Timers are always deleted through CTimerBase* and CTimer holds a std::tuple of arguments.
 	virtual ~CTimerBase() = default;
 
 	virtual bool Execute() = 0;
@@ -28,7 +28,8 @@ public:
 void ProcessTimers();
 void RemoveNonPersistentTimers();
 
-// Deletes every remaining timer, persistent ones included. Plugin unload only.
+// Deletes every remaining timer including persistent ones.
+// Plugin unload only.
 void RemoveAllTimers();
 
 extern std::vector<CTimerBase *> g_NonPersistentTimers;
@@ -55,7 +56,7 @@ public:
 	}
 };
 
-/* Creates a timer for the given function, the function must return a f64 that represents the interval in seconds; 0 or less to stop the timer */
+/* Creates a timer for the given function that must return a f64 that represents the interval in seconds; 0 or less to stop the timer */
 template<typename... Args>
 CTimer<Args...> *StartTimer(typename CTimer<Args...>::Fn fn, Args... args, f64 initialDelay, bool preserveMapChange = true, bool useRealTime = false)
 {

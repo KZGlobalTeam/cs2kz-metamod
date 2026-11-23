@@ -100,7 +100,7 @@ void KZ::mode::LoadModePlugins()
 
 void KZ::mode::UpdateModeDatabaseID(const std::string &name, i32 id, const std::string &shortName)
 {
-	// Check if the mode already exists in the list, if yes, we update it.
+	// Update the mode if it already exists in the list.
 	for (size_t i = 0; i < modeInfos.size(); i++)
 	{
 		if (!V_stricmp(modeInfos[i].longModeName.c_str(), name.c_str()))
@@ -113,7 +113,7 @@ void KZ::mode::UpdateModeDatabaseID(const std::string &name, i32 id, const std::
 			return;
 		}
 	}
-	// If the code reaches here, that means the mode is not in the list yet.
+	// The mode is not in the list yet if the code reaches here.
 	modeInfos.push_back({-1, name.c_str(), shortName.c_str()});
 }
 
@@ -183,11 +183,11 @@ bool KZModeManager::RegisterMode(PluginId id, const char *shortModeName, const c
 	V_snprintf(shortModeDescription, 64, "Command Description - kz_%s", shortModeName);
 	bool shortCmdRegistered = scmd::RegisterCmd(V_strlower(shortModeCmd), Command_KzModeShort, shortModeDescription, SCFL_MODESTYLE);
 
-	// Add to the list otherwise, and update the database for ID.
+	// Add to the list otherwise and update the database for ID.
 	if (!info)
 	{
 		info = &modeInfos.emplace_back();
-		// If there is already information about this mode while the ID is -1, that means it has to come from the database, so no need to update it.
+		// Information about this mode while the ID is -1 has to come from the database and needs no update.
 		KZDatabaseService::InsertAndUpdateModeIDs(longModeName, shortModeName);
 	}
 	*info = {id, shortModeName, longModeName, factory, shortCmdRegistered};
@@ -217,7 +217,7 @@ void KZModeManager::UnregisterMode(PluginId id)
 			{
 				if (!player->IsInGame())
 				{
-					// The plugin owning this service is about to be unloaded, so the pointer would dangle.
+					// The plugin owning this service is about to be unloaded and the pointer would dangle.
 					// Reset it silently instead of running the full mode switch on a player who is not here.
 					KZ::mode::InitModeService(player);
 					continue;
@@ -245,7 +245,8 @@ void KZModeManager::UnregisterMode(PluginId id)
 
 bool KZModeManager::SwitchToMode(KZPlayer *player, const char *modeName, bool silent, bool force, bool updatePreference)
 {
-	// Don't change mode if it doesn't exist. Instead, print a list of modes to the client.
+	// Don't change mode if it doesn't exist.
+	// Print a list of modes to the client instead.
 	if (!modeName || !V_stricmp("", modeName))
 	{
 		player->languageService->PrintChat(true, false, "Mode Command Usage");
@@ -268,7 +269,7 @@ bool KZModeManager::SwitchToMode(KZPlayer *player, const char *modeName, bool si
 		return false;
 	}
 
-	// If it's the same style, do nothing, unless it's forced.
+	// Do nothing if it's the same mode unless the switch is forced.
 	if (!force && (V_stricmp(player->modeService->GetModeName(), modeName) == 0 || V_stricmp(player->modeService->GetModeShortName(), modeName) == 0))
 	{
 		return false;
@@ -463,7 +464,7 @@ void KZOptionServiceEventListener_Modes::OnPlayerPreferencesLoaded(KZPlayer *pla
 	// Give up changing modes if the player is already in the server for a while.
 	if (player->telemetryService->GetTimeInServer() < 30.0f && !player->timerService->GetTimerRunning())
 	{
-		// Applying the loaded preference is not a change to it, and writing it back would mark it as one.
+		// Applying the loaded preference is not a change to it and writing it back would mark it as one.
 		modeManager.SwitchToMode(player, mode, false, false, false);
 	}
 }

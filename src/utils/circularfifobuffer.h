@@ -10,9 +10,9 @@
 template<typename T, size_t SIZE>
 struct CFIFOCircularBuffer
 {
-	// Compile-time check: T must be trivially destructible
-	// This prevents using types with std::vector, std::string, std::unique_ptr, etc. that manage resources
-	// Types like Vector, QAngle are fine (non-trivial copy but trivial destruction)
+	// T must be trivially destructible.
+	// This prevents using types that manage resources (std::vector, std::string, std::unique_ptr, etc.).
+	// Types like Vector and QAngle are fine (non-trivial copy but trivial destruction).
 	static_assert(std::is_trivially_destructible_v<T>, "CFIFOCircularBuffer requires trivially destructible types.");
 
 private:
@@ -102,7 +102,7 @@ public:
 		}
 		else
 		{
-			// Buffer is full, advance read position (overwrite oldest)
+			// Advance read position (overwrite oldest) if the buffer is full
 			readPos = (readPos + 1) % capacity;
 		}
 	}
@@ -116,17 +116,17 @@ public:
 		// Clean the slot before returning reference
 		if constexpr (is_vector<T>::value)
 		{
-			// For vectors, clear them
+			// Clear vectors
 			ref.clear();
 		}
 		else if constexpr (std::is_trivially_copyable_v<T>)
 		{
-			// For POD types, zero them out
+			// Zero out POD types
 			std::memset(&ref, 0, sizeof(T));
 		}
 		else
 		{
-			// For other types, use assignment to reset
+			// Use assignment to reset other types
 			ref = T {};
 		}
 
@@ -138,14 +138,14 @@ public:
 		}
 		else
 		{
-			// Buffer is full, advance read position (overwrite oldest)
+			// Advance read position (overwrite oldest) if the buffer is full
 			readPos = (readPos + 1) % capacity;
 		}
 
 		return ref;
 	}
 
-	// Peek at up to 'count' elements of type T from the buffer, starting at 'offset'
+	// Peek at up to 'count' elements of type T from the buffer starting at 'offset'
 	// Returns the number of elements actually read
 	int Peek(T *out, size_t count = 1, int offset = 0)
 	{
@@ -166,7 +166,7 @@ public:
 		return static_cast<int>(elementsToPeek);
 	}
 
-	// Peek at a single element, returns pointer or nullptr
+	// Peek at a single element and return a pointer or nullptr
 	const T *PeekSingle(int offset = 0) const
 	{
 		if (offset < 0 || static_cast<size_t>(offset) >= count)
@@ -190,7 +190,7 @@ public:
 	}
 
 	// Read and consume a single element of type T from the buffer
-	// Returns true if an element was read, false otherwise
+	// Returns true if an element was read and false otherwise
 	bool Read(T *out)
 	{
 		if (count == 0 || !out)

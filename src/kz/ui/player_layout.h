@@ -7,7 +7,7 @@
 class CCSCustomHudLayout;
 class CCheckTransmitInfo;
 
-// The appearance every window shares, set from the options menu's own preferences.
+// The appearance every window shares as set from the options menu's own preferences.
 #define KZ_UI_DEFAULT_FONT  "stratum2-medium-tf"
 #define KZ_UI_DEFAULT_COLOR Color(255, 255, 255, 255)
 
@@ -23,8 +23,8 @@ namespace KZ::ui
 		PlayerLayout(const PlayerLayout &) = delete;
 		PlayerLayout &operator=(const PlayerLayout &) = delete;
 
-		// Spawns the entity if it does not exist yet. `created` is set when this call spawned it, so the caller can reset its
-		// own caches.
+		// Spawns the entity if it does not exist yet.
+		// `created` is set if this call spawned it so the caller can reset its own caches.
 		CCSCustomHudLayout *Ensure(bool &created);
 		CCSCustomHudLayout *Get();
 		void Destroy();
@@ -32,8 +32,8 @@ namespace KZ::ui
 		bool Owns(CCSCustomHudLayout *layout);
 		void SetInputCapture(bool enabled);
 
-		// Skips a value that is already set. Only the first write of a variable marks the whole entity changed; later ones mark
-		// just their own entry.
+		// Skips a value that is already set.
+		// Only the first write of a variable marks the whole entity changed and later ones mark just their own entry.
 		void SetVar(const char *panelId, const char *var, const char *value);
 
 		void ClearVarCache()

@@ -24,8 +24,8 @@ void KZPaintService::Reset()
 
 Color KZPaintService::GetColor() const
 {
-	// The menu's color picker also offers gradients, which have no single RGB: fall back to the
-	// default for those, the same way the legacy HUD does.
+	// The menu's color picker also offers gradients and they have no single RGB.
+	// Fall back to the default for those the same way the legacy HUD does.
 	const Color stored = player->optionService->GetPreferenceColor("paintColor", KZ_PAINT_DEFAULT_COLOR);
 	return panorama::ResolveSolidColor(stored, KZ_PAINT_DEFAULT_COLOR);
 }

@@ -12,14 +12,14 @@
 #define NUM_JUMPS_WINDOW_SIZE           20 // How many recent jumps to consider for autostrafe detection
 #define BASE_SUSPICIOUS_JUMPS_THRESHOLD 15 // Minimum number of high strafe count jumps within the window to consider for detection.
 
-// If the player has a high number of strafes per second, mark them as suspicious.
+// Mark the player as suspicious if they have a high number of strafes per second.
 #define BASE_STRAFES_PER_SECOND_THRESHOLD 20.0f
 
 // Sometimes unstable mouse can cause 1 tick strafes.
 #define MIN_STRAFE_DURATION              0.02f // If we ignore strafes shorter than this duration...
 #define REAL_STRAFE_PER_SECOND_THRESHOLD 18.0f // then this is the threshold for suspicious strafes per second.
 
-#define MAX_STRAFES_PER_SECOND_THRESHOLD 30.0f // At this many strafes per second, even a few jumps are suspicious
+#define MAX_STRAFES_PER_SECOND_THRESHOLD 30.0f // Even a few jumps are suspicious at this many strafes per second
 #define MIN_SUSPICIOUS_JUMPS_THRESHOLD   5     //... in which case we lower the threshold to this many jumps.
 
 // High gain efficiency jumps are suspicious if the player has a high number of strafes per second or if the jump distance is significant.
@@ -42,7 +42,7 @@ void KZAnticheatService::OnJumpFinish(Jump *jump)
 	}
 	if (!this->player->styleServices.empty())
 	{
-		// Styles can modify player's strafes in unpredictable ways, so skip detection for styled players.
+		// Detection is skipped for styled players because styles can modify their strafes in unpredictable ways.
 		return;
 	}
 	if (jump->invalidateReason[0] != '\0' || !jump->IsValid())

@@ -41,7 +41,8 @@ namespace KZ::progress
 		bool Build(const replaysystem::data::ReplayMovement &replay, i32 courseID, const std::atomic<bool> &cancel);
 		// Finds the closest route position between behind and ahead of a known one.
 		bool Follow(const Vector &position, f64 from, f64 behind, f64 ahead, f64 &distance, f32 &error) const;
-		// Finds a route position anywhere. Overlapping parts of the route resolve to the one closest to hint, or fail without a hint.
+		// Finds a route position anywhere.
+		// Overlapping parts of the route resolve to the one closest to hint or fail without a hint.
 		bool Locate(const Vector &position, f64 hint, f64 &distance, f32 &error) const;
 	};
 

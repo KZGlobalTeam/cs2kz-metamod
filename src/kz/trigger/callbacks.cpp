@@ -75,7 +75,7 @@ void KZTriggerService::OnTriggerTouchPost(CBaseTrigger *trigger, TriggerTouchTra
 		}
 		return;
 	}
-	// The filter wasn't active when the player entered this trigger, but it is now.
+	// The filter wasn't active when the player entered this trigger but it is now.
 	// We need to retroactively fire StartTouch for this trigger so that modifiers get applied correctly.
 	if (!tracker.mappingApiStartedTouch)
 	{
@@ -87,8 +87,8 @@ void KZTriggerService::OnTriggerTouchPost(CBaseTrigger *trigger, TriggerTouchTra
 
 void KZTriggerService::OnTriggerEndTouchPost(CBaseTrigger *trigger, TriggerTouchTracker &tracker)
 {
-	// Only fire the mapping API end touch if the mapping API start touch was actually fired,
-	// so that start and end touch effects stay symmetric regardless of when the filter became active.
+	// Only fire the mapping API end touch if the mapping API start touch was actually fired.
+	// Start and end touch effects then stay symmetric regardless of when the filter became active.
 	if (!tracker.kzTrigger || !tracker.mappingApiStartedTouch)
 	{
 		return;
@@ -175,7 +175,7 @@ void KZTriggerService::ApplyPushes()
 			{
 				vel[i] += push.impulse[i];
 			}
-			// If we are pushing the player up, make sure they cannot re-ground themselves.
+			// Make sure the player cannot re-ground themselves if we are pushing them up.
 			if (i == 2 && vel[i] > 0 && useBaseVelocity)
 			{
 				this->player->GetPlayerPawn()->m_hGroundEntity().FromIndex(INVALID_EHANDLE_INDEX);
@@ -216,7 +216,7 @@ void KZTriggerService::ApplyPushes()
 
 void KZTriggerService::OnMappingApiTriggerStartTouchPost(TriggerTouchTracker tracker)
 {
-	// Always recount, the trigger type below might be stale.
+	// Always recount because the trigger type below might be stale.
 	this->UpdateModifierCounts();
 	const KzTrigger *trigger = tracker.kzTrigger;
 	const KZCourseDescriptor *course = KZ::mapapi::GetCourseDescriptorFromTrigger(trigger);
@@ -331,7 +331,7 @@ void KZTriggerService::OnMappingApiTriggerTouchPost(TriggerTouchTracker tracker)
 
 void KZTriggerService::OnMappingApiTriggerEndTouchPost(TriggerTouchTracker tracker)
 {
-	// Always recount, the trigger type below might be stale.
+	// Always recount because the trigger type below might be stale.
 	this->UpdateModifierCounts();
 	const KZCourseDescriptor *course = KZ::mapapi::GetCourseDescriptorFromTrigger(tracker.kzTrigger);
 	if (KZ::mapapi::IsTimerTrigger(tracker.kzTrigger->type) && !course)

@@ -132,7 +132,7 @@ public:
 
 	virtual void OnStageZoneTouchPost(KZPlayer *player, u32 stageZone) {}
 
-	// Fires once per finished run when its ranks are announced, even if the player has left or the map has changed since.
+	// Fires once per finished run when its ranks are announced even if the player has left or the map has changed since.
 	virtual void OnRunSubmittedPost(const RunSubmission &submission) {}
 
 	// Called when a cached record gets a different replay.
@@ -192,22 +192,22 @@ public:
 		Stage,
 	};
 
-	// A zone reached during a run, for the HUD's course panel.
+	// A zone reached during a run for the HUD's course panel.
 	struct ZoneReport
 	{
 		ZoneKind kind {};
-		i32 number {}; // from 1, as the chat numbers it
+		i32 number {}; // from 1 like the chat numbers it
 		f64 time {};
 		bool hasDiff {};
-		f64 diff {}; // against the compare target, negative when ahead of it
+		f64 diff {}; // against the compare target (negative when ahead of it)
 		bool pro {}; // compared with the target's pro time
 		CompareType compareType {};
 	};
 
 private:
 	// The maximum level that we should compare our current time with.
-	// For example, if the value is set to COMPARE_GPB, the player will not attempt to compare their splits with SR/WR,
-	// but only global PB, and local PB if global data is not available.
+	// With COMPARE_GPB the player only compares their splits with their global PB and not with SR/WR.
+	// The local PB is used if global data is not available.
 	CompareType preferredCompareType = COMPARE_GPB;
 
 	// What we are currently comparing our run against in this current run.
@@ -273,7 +273,7 @@ public:
 		return currentTime;
 	}
 
-	// Zones reached in the running run, for the course panel.
+	// Zones reached in the running run for the course panel.
 	i32 GetReachedStages()
 	{
 		return timerRunning ? currentStage : 0;

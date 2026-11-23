@@ -22,7 +22,7 @@
 #define PS_TURN_RATE_WINDOW 0.02f // Turn rate will be computed over this amount of time
 #define PS_DECREMENT_RATIO  3.0f  // Prestrafe will lose this fast compared to gaining
 // Controls the ratio between prestrafe ratio and gain.
-// The lower the value, the faster the prespeed gain at the start, but the slower the gain near the max value.
+// A lower value makes the prespeed gain faster at the start and slower near the max value.
 // 1 means prestrafe gain is linear with the ratio.
 #define PS_RATIO_TO_SPEED 0.5f
 // Prestrafe ratio will be not go down after landing for this amount of time - helps with small movements after landing
@@ -36,7 +36,7 @@
 #define BH_NORMALIZE_FACTOR (BH_BASE_MULTIPLIER * log(SPEED_NORMAL + PS_SPEED_MAX) - (SPEED_NORMAL + PS_SPEED_MAX))
 // Forced half tick splits
 #define FORCED_SUBTICK_SLOTS  4    // Size of m_arrForceSubtickMoveWhen
-#define FRICTION_SPLIT_MARGIN 2.5f // Extra distance the next tick's reach is padded by, covers the 2 unit ground snap
+#define FRICTION_SPLIT_MARGIN 2.5f // Extra distance the next tick's reach is padded by to cover the 2 unit ground snap
 // Misc
 #define DUCK_SPEED_NORMAL  8.0f
 #define DUCK_SPEED_MINIMUM 6.0234375f // Equal to if you just ducked/unducked for the first time in a while
@@ -182,7 +182,7 @@ class KZClassicModeService : public KZModeService
 	std::vector<Vector> tpmTriggerFixOrigins;
 
 	// Hijack friction to add one more subtick split.
-	// Friction split can only be applied when the player is *off* the ground, as it's only unused in the air.
+	// The friction split can only be applied while the player is *off* the ground because friction is only unused in the air.
 	bool CanUseFrictionSplit();
 	void ClearFrictionSplit();
 
@@ -234,14 +234,12 @@ public:
 	/*
 		Ported from DanZay's SimpleKZ:
 		Duck speed is reduced by the game upon ducking or unducking.
-		The goal here is to accept that duck speed is reduced, but
-		stop it from being reduced further when spamming duck.
+		The goal here is to accept that duck speed is reduced but stop it from being reduced further when spamming duck.
 
-		This is done by enforcing a minimum duck speed equivalent to
-		the value as if the player only ducked once. When not in not
-		in the middle of ducking, duck speed is reset to its normal
-		value in effort to reduce the number of times the minimum
-		duck speed is enforced. This should reduce noticeable lag.
+		This is done by enforcing a minimum duck speed equivalent to the value as if the player only ducked once.
+		Duck speed is reset to its normal value when not in the middle of ducking.
+		This is in effort to reduce the number of times the minimum duck speed is enforced.
+		This should reduce noticeable lag.
 	*/
 	void ReduceDuckSlowdown();
 

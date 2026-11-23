@@ -1,4 +1,4 @@
-// Backup for when layout based HUD is not available, or the player has asked for the legacy style.
+// Backup for when the layout based HUD is not available or the player has asked for the legacy style.
 #include "../kz.h"
 #include "cs2kz.h"
 #include "kz_hud.h"
@@ -21,8 +21,8 @@ std::string KZHUDService::GetSpeedText(const MHUDPrefs &prefs, const char *langu
 	{
 		return KZLanguageService::PrepareMessageWithLang(language, "HUD - Speed Text", info.speed);
 	}
-	// The legacy HTML HUD prints a hex color, which a gradient has no equivalent for, so a gradient
-	// preference falls back to that element's default color (the shared MHUD_DEF_* the layout HUD uses).
+	// The legacy HTML HUD prints a hex color and a gradient has no equivalent for it.
+	// A gradient preference therefore falls back to that element's default color (the shared MHUD_DEF_* the layout HUD uses).
 	const MHUDSpeedState state = info.GetState();
 	const Color tintCol = panorama::ResolveSolidColor(prefs.prespeed[(i32)state], MHUD_DEF_BASE_COLOR);
 	const Color cjCol = panorama::ResolveSolidColor(prefs.speed[(i32)MHUDSpeedState::CrouchJump], MHUD_DEF_CJ_COLOR);
@@ -79,7 +79,7 @@ void KZHUDService::DrawLegacyPanels(KZPlayer *player, KZPlayer *target)
 
 	std::string centerText = "";
 	std::string htmlText = "";
-	// The alert template is empty in every shipped translation, so skip formatting it in that case.
+	// Skip formatting the alert template if it is empty like in every shipped translation.
 	std::string alertText = KZLanguageService::IsMessageEmpty(language, "HUD - Alert Text")
 								? std::string("")
 								: KZLanguageService::PrepareMessageWithLang(language, "HUD - Alert Text", keyText.c_str(), checkpointText.c_str(),

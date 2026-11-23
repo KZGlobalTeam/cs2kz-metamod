@@ -6,7 +6,7 @@
 
 #include "tier0/memdbgon.h"
 
-// Each row's panels, from the row itself to its value, for the course, mode, format, teleport limit, time and personal best.
+// Each row's panels from the row itself to its value for the course, mode, format, teleport limit, time and personal best.
 static_global const char *const RACE_ROWS[MHUD_RACE_ROW_COUNT][3] = {
 	{"mhud_race_r0", "mhud_race_l0", "mhud_race_v0"}, {"mhud_race_r1", "mhud_race_l1", "mhud_race_v1"},
 	{"mhud_race_r2", "mhud_race_l2", "mhud_race_v2"}, {"mhud_race_r3", "mhud_race_l3", "mhud_race_v3"},
@@ -121,7 +121,7 @@ void KZHUDService::UpdateRaceElements(CCSCustomHudLayout *layout, bool showPanel
 		race.scale = scale;
 	}
 
-	// A label only picks up a new font when it is restyled itself, so the class goes on every label.
+	// The class goes on every label because a label only picks up a new font if it is restyled itself.
 	const char *fontClass = KZHUDService::GetMHUDFontClass(this->player, MHUDElement::Race);
 	if (race.fontClass != fontClass)
 	{
@@ -187,8 +187,8 @@ void KZHUDService::UpdateRaceElements(CCSCustomHudLayout *layout, bool showPanel
 		bool shown;
 	};
 
-	// The course and mode are known once the race has started, and the time limit is part of the rules, so before the start it
-	// shows even when there is none.
+	// The course and mode are known once the race has started.
+	// The time limit is part of the rules and shows before the start even if there is none.
 	const Row rows[MHUD_RACE_ROW_COUNT] = {
 		{"Racing HUD - Course", info.course, NULL, !info.started},
 		{"Racing HUD - Mode", info.mode, NULL, !info.started},
@@ -206,7 +206,7 @@ void KZHUDService::UpdateRaceElements(CCSCustomHudLayout *layout, bool showPanel
 			continue;
 		}
 		setPhrase(RACE_PHRASE_LABELS + i, RACE_ROWS[i][1], rows[i].phrase);
-		// Each cache is cleared while the other one is in use, so switching between them always writes.
+		// Each cache is cleared while the other one is in use so switching between them always writes.
 		if (rows[i].value)
 		{
 			race.phrases[RACE_PHRASE_VALUES + i] = NULL;

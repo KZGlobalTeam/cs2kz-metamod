@@ -84,7 +84,7 @@ public:
 	virtual void OnAuthorized() override;
 	virtual void OnPrimeStatusConfirmed() override;
 	virtual bool IsAway() override;
-	// Tears down what belongs to the player being on the server, once they are gone for good.
+	// Tears down what belongs to the player being on the server once they are gone for good.
 	void CleanupPlayer();
 	void CleanupClient();
 
@@ -168,7 +168,7 @@ private:
 	f32 lastValidYaw {};
 	// 1 for left, -1 for right, 0 for none.
 	i32 lastTurnbindDirection {};
-	// Left first, then right.
+	// Left first and then right.
 	f32 turnbindStartTimes[2] {-FLT_MAX, -FLT_MAX};
 
 	// Deletes and nulls every service this player owns.
@@ -212,7 +212,7 @@ public:
 	KZFOVService *fovService {};
 	KZZtopwatchService *ztopwatchService {};
 
-	// Timestamp (curtime) of the last accepted scmd command, used for the per-command cooldown.
+	// Timestamp (curtime) of the last accepted scmd command for the per-command cooldown.
 	f32 lastCommandTime {};
 
 	void LimitTurnbinds();
@@ -222,15 +222,14 @@ public:
 	void ToggleHideLegs();
 
 	void UpdatePlayerModelAlpha();
-	// Teleport checking, used for multiple services
+	// Teleport checking for multiple services
 	virtual bool JustTeleported(f32 threshold = KZ_RECENT_TELEPORT_THRESHOLD);
 	// Triggerfix stuff
 
-	// Hit all triggers from start to end with the specified bounds,
-	// and call Touch/StartTouch on triggers that the player is touching.
+	// Hit all triggers from start to end with the specified bounds and call Touch/StartTouch on triggers that the player is touching.
 	virtual void TouchTriggersAlongPath(const Vector &start, const Vector &end, const bbox_t &bounds);
 
-	// Update the list of triggers that the player is touching, and call StartTouch/EndTouch appropriately.
+	// Update the list of triggers that the player is touching and call StartTouch/EndTouch appropriately.
 	virtual void UpdateTriggerTouchList();
 
 	// Print helpers
@@ -253,8 +252,8 @@ public:
 		this->player = player;
 	}
 
-	// Services are routinely deleted through KZBaseService/KZModeService/KZStyleService pointers
-	// (mode switching, style toggling, player teardown), so this has to be virtual.
+	// Services are routinely deleted through base pointers (mode switching, style toggling, player teardown).
+	// The destructor therefore has to be virtual.
 	virtual ~KZBaseService() = default;
 
 	// To be implemented by each service class

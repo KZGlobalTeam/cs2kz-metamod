@@ -219,10 +219,10 @@ void KZWebSocket::OnWebSocketOpen(const ix::WebSocketOpenInfo &info)
 		This waits for the dispatch thread to actually park inside this->dispatchThreadCvar.wait() in RunDispatchLoop().
 		What will happen without this:
 		- The dispatch thread sees the socket as closed, predicate returns false, prepares to park itself.
-		- This function is called, this->dispatchThreadCvar.notify_one() does nothing because the dispatch thread
-		is not parked yet.
-		- The dispatch thread parks itself despite the socket now being open, and stays parked until the next
-		SendMessage() or Shutdown() happens to notify it, leaving queued messages unsent until then.
+		- This function is called and this->dispatchThreadCvar.notify_one() does nothing because the dispatch thread is not parked yet.
+		- The dispatch thread parks itself despite the socket now being open.
+		It stays parked until the next SendMessage() or Shutdown() happens to notify it.
+		Queued messages stay unsent until then.
 	*/
 	{
 		std::lock_guard<std::mutex> _guard(this->mtx);

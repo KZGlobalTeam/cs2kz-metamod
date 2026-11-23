@@ -67,7 +67,7 @@ namespace KZ::replaysystem::data
 
 	u32 GetTickAtServerTick(const ReplayPlayback *replay, u32 serverTick)
 	{
-		// Ticks are recorded in server tick order, so the keyframes can be binary searched.
+		// Ticks are recorded in server tick order and the keyframes can be binary searched.
 		return replay->ticks->FindServerTick(serverTick);
 	}
 
@@ -183,7 +183,8 @@ namespace KZ::replaysystem::data
 
 	static_function bool ReadHeader(const char *&cursor, const char *end, ReplayHeader &header)
 	{
-		// Try to read header size (u32). If this fails, the data is invalid or corrupted.
+		// Try to read the header size (u32).
+		// The data is invalid or corrupted if this fails.
 		if (cursor + (ptrdiff_t)sizeof(u32) > end)
 		{
 			return false;
@@ -251,7 +252,7 @@ namespace KZ::replaysystem::data
 		std::vector<SubtickData::RpSubtickMove> subtickMoves;
 
 		result.ticks = new KZ::replaysystem::compression::TickStore();
-		// Playback always reads the current tick, so a replay without ticks cannot be played.
+		// A replay without ticks cannot be played because playback always reads the current tick.
 		if (!KZ::replaysystem::compression::ReadTickStore(cursor, end, *result.ticks, subtickCounts, subtickMoves, result.header.version())
 			|| result.ticks->Count() == 0)
 		{
@@ -384,7 +385,7 @@ namespace KZ::replaysystem::data
 	}
 
 	// Complete-file reader shared by the replay loading entry points.
-	// Replays are written under csgo/ with utils::WriteBufferToFile, and CUtlBuffer cannot hold files past 2 GiB.
+	// Replays are written under csgo/ with utils::WriteBufferToFile and CUtlBuffer cannot hold files past 2 GiB.
 	static_function bool ReadReplayFile(const char *path, std::vector<char> &buffer, const std::atomic<bool> &cancel)
 	{
 		return !cancel && utils::ReadBufferFromFile(path, buffer) && !cancel && !buffer.empty();
@@ -432,7 +433,7 @@ namespace KZ::replaysystem::data
 		return !cancel && compression::ReadEventsCompressed(cursor, end, result.events, result.header.version());
 	}
 
-	// File-based entry point: reads the entire file into memory then parses.
+	// File-based entry point that reads the entire file into memory and then parses it.
 	static_function ReplayPlayback LoadReplayWithProgress(const char *path, std::atomic<f32> &progress, std::atomic<bool> &shouldCancel)
 	{
 		std::vector<char> buffer;
@@ -448,15 +449,15 @@ namespace KZ::replaysystem::data
 		return LoadReplayFromMemory(buffer.data(), buffer.size(), uuid, progress, shouldCancel);
 	}
 
-	// Memory-based entry point: parse directly from a provided buffer.
+	// Memory-based entry point that parses directly from a provided buffer.
 	static_function ReplayPlayback LoadReplayWithProgress(const char *data, size_t size, UUID_t uuid, std::atomic<f32> &progress,
 														  std::atomic<bool> &shouldCancel)
 	{
 		return LoadReplayFromMemory(data, size, uuid, progress, shouldCancel);
 	}
 
-	// Cancels the running load (if any) and waits for its thread to exit, so only one loader can
-	// ever touch g_loadStatus at a time.
+	// Cancels the running load (if any) and waits for its thread to exit.
+	// Only one loader can ever touch g_loadStatus at a time.
 	static_function void StopLoadThread()
 	{
 		g_cancelLoad = true;
@@ -492,7 +493,7 @@ namespace KZ::replaysystem::data
 	{
 		if (g_cancelLoad)
 		{
-			// Load was cancelled, cleanup and exit
+			// Clean up and exit because the load was cancelled
 			FreeReplayData(&result);
 			g_loadStatus.state = LoadingState::Failed;
 			{

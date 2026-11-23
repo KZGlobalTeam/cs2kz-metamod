@@ -71,7 +71,7 @@ SCMD(kz_end, SCFL_MAP)
 	bool shouldTeleport = false;
 	Vector tpOrigin;
 	QAngle tpAngles;
-	// If the player specify a course name, we first check if it's valid or not.
+	// We first check whether the course name the player specified is valid.
 	if (V_strlen(args->ArgS()) > 0)
 	{
 		std::string courseArg = utils::Trim(args->ArgS());
@@ -110,7 +110,7 @@ SCMD(kz_end, SCFL_MAP)
 		}
 	}
 
-	// If we have no active course the map only has one course, !r should send the player to the end of that course.
+	// !r should send the player to the end of the map's only course if we have no active course.
 	else if (KZ::course::GetCourseCount() == 1)
 	{
 		const KZCourseDescriptor *descriptor = KZ::course::GetFirstCourse();
@@ -160,7 +160,7 @@ SCMD(kz_end, SCFL_MAP)
 void KZ::misc::HandleTeleportToCourse(KZPlayer *player, const CCommand *args)
 {
 	const KZCourseDescriptor *startPosCourse = nullptr;
-	// If the player specify a course name, we first check if it's valid or not.
+	// We first check whether the course name the player specified is valid.
 	if (V_strlen(args->ArgS()) > 0)
 	{
 		// Trim whitespace
@@ -216,7 +216,7 @@ void KZ::misc::HandleTeleportToCourse(KZPlayer *player, const CCommand *args)
 		return;
 	}
 
-	// If we have no custom start position, we try to get the start position of the current course.
+	// We try to get the start position of the current course if we have no custom start position.
 	if (player->timerService->GetCourse())
 	{
 		if (player->timerService->GetCourse()->hasStartPosition)
@@ -226,7 +226,7 @@ void KZ::misc::HandleTeleportToCourse(KZPlayer *player, const CCommand *args)
 		}
 	}
 
-	// If we have no active course the map only has one course, !r should send the player to that course.
+	// !r should send the player to the map's only course if we have no active course.
 	if (KZ::course::GetCourseCount() == 1)
 	{
 		const KZCourseDescriptor *descriptor = KZ::course::GetFirstCourse();
@@ -237,7 +237,7 @@ void KZ::misc::HandleTeleportToCourse(KZPlayer *player, const CCommand *args)
 		}
 	}
 
-	// If this fails, we just try to find any valid spawn.
+	// We just try to find any valid spawn if this fails.
 	Vector spawnOrigin;
 	QAngle spawnAngles;
 	if (utils::FindValidSpawn(spawnOrigin, spawnAngles))
@@ -246,14 +246,14 @@ void KZ::misc::HandleTeleportToCourse(KZPlayer *player, const CCommand *args)
 		return;
 	}
 
-	// Attempt to just find any spawn at all, ignoring stuck checks.
+	// Attempt to just find any spawn at all and ignore stuck checks.
 	if (utils::FindValidSpawn(spawnOrigin, spawnAngles, true))
 	{
 		player->Teleport(&spawnOrigin, &spawnAngles, &vec3_origin);
 		return;
 	}
 
-	// Last resort, just respawn the player.
+	// Just respawn the player as a last resort.
 	player->GetPlayerPawn()->Respawn();
 	player->pistolService->UpdatePistol();
 }
@@ -352,7 +352,7 @@ SCMD(jointeam, SCFL_HIDDEN)
 			return true;
 		}
 	}
-	// Leaving spectate keeps the run, as it does for a spectator without a pawn.
+	// Leaving spectate keeps the run like it does for a spectator without a pawn.
 	else if (player->IsAlive() && !player->awayService->IsObservingWithPersistentPawn() && !player->timerService->CheckSafeguard())
 	{
 		CloseTeamMenu(player);
@@ -360,7 +360,7 @@ SCMD(jointeam, SCFL_HIDDEN)
 	}
 	bool wasSpectating = player->awayService->IsObservingWithPersistentPawn();
 	KZ::misc::JoinTeam(player, newTeam, true);
-	// Without a target, a spectator with a persistent pawn starts with a free camera where the player was.
+	// A spectator with a persistent pawn starts with a free camera where the player was if there is no target.
 	if (spectating && !wasSpectating && player->awayService->IsObservingWithPersistentPawn())
 	{
 		player->specService->SpectatePlayer(player, true);
@@ -379,7 +379,8 @@ SCMD_LINK(switchhandsright, switchhands);
 
 static_function f64 CheckRestart()
 {
-	// Away players do not count as connected, so an empty server keeps its map until each of them has been gone an hour.
+	// Away players do not count as connected.
+	// An empty server keeps its map until each of them has been gone an hour.
 	f64 awayTimeLeft = KZAwayService::GetAwayTimeLeft(AWAY_RESTART_DELAY);
 	if (awayTimeLeft > 0.0)
 	{
@@ -422,8 +423,8 @@ void KZ::misc::JoinTeam(KZPlayer *player, int newTeam, bool restorePos)
 		{
 			return;
 		}
-		// Coming back picks the persistent pawn up again. The other team takes the pawn over alive instead of respawning it, so nothing
-		// the map did to it is undone.
+		// Coming back picks the persistent pawn up again.
+		// The other team takes the pawn over alive instead of respawning it so nothing the map did to it is undone.
 		player->awayService->RestorePersistentPawn();
 		if (newTeam != player->GetController()->GetTeam())
 		{
@@ -476,9 +477,8 @@ void KZ::misc::JoinTeam(KZPlayer *player, int newTeam, bool restorePos)
 			{
 				auto pawn = player->GetPlayerPawn();
 				player->Teleport(&spawnOrigin, &spawnAngles, &vec3_origin);
-				// CS2 bug: m_flWaterJumpTime is not properly initialized upon player spawn.
-				// If the player is teleported on the very first tick of movement and lose the ground flag,
-				// the player might get teleported to a random place.
+				// CS2 doesn't properly initialize m_flWaterJumpTime on player spawn.
+				// A player teleported on the very first tick of movement who loses the ground flag might get teleported to a random place.
 				pawn->m_pWaterServices()->m_flWaterJumpTime(0.0f);
 			}
 		}
@@ -542,7 +542,7 @@ void KZ::misc::ProcessConCommand(ConCommandRef cmd, const CCommandContext &ctx, 
 	{
 		if (args.ArgC() < 2)
 		{
-			// no argument, happens when the player just types "say" or "say_team" in console
+			// no argument happens when the player just types "say" or "say_team" in console
 			return;
 		}
 		// 3 cases:
@@ -813,7 +813,7 @@ static_function void DrawTriggers()
 void KZ::misc::OnPhysicsGameSystemFrameBoundary(void *pThis)
 {
 	static_persist CPhysicsGameSystem *physicsGameSystem = nullptr;
-	// Map probably reloaded, mark clips as not drawn.
+	// Mark clips as not drawn because the map probably reloaded.
 	if (pThis != physicsGameSystem)
 	{
 		physicsGameSystem = (CPhysicsGameSystem *)pThis;

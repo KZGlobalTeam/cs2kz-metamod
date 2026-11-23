@@ -3,8 +3,9 @@
 
 namespace KZ::replaysystem::parsing
 {
-	// This is the original v1-v5 ABI, including its padding. New fields are
-	// deliberately absent; legacy playback must not read native v6 RpEvent bytes.
+	// This is the original v1-v5 ABI including its padding.
+	// New fields are deliberately absent.
+	// Legacy playback must not read native v6 RpEvent bytes.
 	struct LegacyEvent
 	{
 		RpEventType type;
@@ -30,7 +31,8 @@ namespace KZ::replaysystem::parsing
 		} data;
 	};
 
-	// Should always stay the same, if this fails that means old replays will no longer be compatible.
+	// Should always stay the same.
+	// Old replays will no longer be compatible if this fails.
 	static_assert(sizeof(LegacyEvent) == 172);
 
 	static_function bool ReadLegacyEvents(const char *bytes, size_t size, u32 count, std::vector<RpEvent> &events)
@@ -254,8 +256,9 @@ namespace KZ::replaysystem::parsing
 		return cursor == end;
 	}
 
-	// Each version has one entry point. Shared layouts reuse shared decoders;
-	// adding a new version does not add version checks to field-reading loops.
+	// Each version has one entry point.
+	// Shared layouts reuse shared decoders.
+	// Adding a new version does not add version checks to field-reading loops.
 	static_function VersionParser ParserV1()
 	{
 		VersionParser parser {};

@@ -80,7 +80,7 @@ public:
 		bool SendMessage(Message &&message);
 
 		/**
-		 * Starts the receiving thread, which also opens the connection.
+		 * Starts the receiving thread that also opens the connection.
 		 */
 		void Start();
 
@@ -114,7 +114,7 @@ public:
 	/**
 	 * A default implementation of `ix::OnMessageCallback` that consumers of this class may call at the start of their own callback.
 	 *
-	 * It performs work that all consumers will likely want to do anyway, such as logging and message data decoding.
+	 * It performs work that all consumers will likely want to do anyway (such as logging and message data decoding).
 	 */
 	void OnMessage(const ix::WebSocketMessagePtr &message);
 
@@ -138,8 +138,7 @@ private:
 	// Protects the message queues and synchronizes condition variable(s).
 	std::mutex mtx {};
 
-	// Used for waking up the dispatch thread when there is a new message for it to send, when the connection opens, or
-	// during shutdown.
+	// Wakes up the dispatch thread for a new message to send, when the connection opens and during shutdown.
 	std::condition_variable dispatchThreadCvar {};
 
 	// The dispatch loop runs until this is set.
@@ -154,7 +153,7 @@ private:
 	/**
 	 * Runs the send queue dispatch loop.
 	 *
-	 * This will block until `Handle::Shutdown()` is called, so this shold be called on a dedicated thread.
+	 * This will block until `Handle::Shutdown()` is called so this shold be called on a dedicated thread.
 	 */
 	void RunDispatchLoop();
 

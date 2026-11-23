@@ -22,7 +22,7 @@ static_function void GetServerCfgPath(char (&path)[1024])
 IMPLEMENT_CLASS_EVENT_LISTENER(KZOptionService, KZOptionServiceEventListener);
 
 // Helper function to merge loaded preferences with existing ones
-// Source values overwrite target values, except for keys in excludeKeys
+// Source values overwrite target values except for keys in excludeKeys
 // excludeKeys: list of keys to never overwrite (user-set preferences)
 static_function void MergePreferences(KeyValues3 *target, KeyValues3 *source, const std::vector<std::string> *excludeKeys = nullptr)
 {
@@ -223,7 +223,7 @@ CON_COMMAND_F(kz_reload_config, "Reload server config file and reconnect to the 
 	KZ_LOG_INFO(LogChannel::General, "Changes to the local database and tip intervals will only take effect after a server restart.\n");
 }
 
-// 0 when there is no stamp, or when it is far enough ahead of this server's clock to be untrusted.
+// 0 if there is no stamp or it is far enough ahead of this server's clock to be untrusted.
 static_function i64 ReadPrefsStamp(KeyValues3 *prefs)
 {
 	KeyValues3 *member = prefs->FindMember(KZ_PREF_UPDATED_AT);
@@ -241,8 +241,8 @@ static_function i64 ReadPrefsStamp(KeyValues3 *prefs)
 	return stamp;
 }
 
-// The stamp is when the set last changed, not when it was written. Saving an untouched set must not make it beat a newer
-// copy that another server wrote in the meantime.
+// The stamp is when the set last changed and not when it was written.
+// Saving an untouched set must not make it beat a newer copy that another server wrote in the meantime.
 void KZOptionService::StampPreferences()
 {
 	if (this->modifiedAt > ReadPrefsStamp(&this->prefKV))
@@ -289,7 +289,7 @@ void KZOptionService::InitializeLocalPrefs(const std::string &text)
 		return;
 	}
 
-	// Merge loaded preferences, excluding user-set preferences
+	// Merge loaded preferences except user-set preferences
 	MergePreferences(&this->prefKV, &loadedPrefs, &this->userSetPrefs);
 	this->loadedStamp = stamp;
 
@@ -329,7 +329,7 @@ void KZOptionService::InitializeGlobalPrefs(std::string json)
 		return;
 	}
 
-	// Merge loaded preferences, excluding user-set preferences
+	// Merge loaded preferences except user-set preferences
 	MergePreferences(&this->prefKV, &loadedPrefs, &this->userSetPrefs);
 	this->loadedStamp = stamp;
 

@@ -23,7 +23,7 @@ void KZJumpstatsService::DetectEdgebug()
 	{
 		return;
 	}
-	// If the player suddenly gain speed from negative speed, they probably edgebugged.
+	// The player probably edgebugged if they suddenly gain speed from negative speed.
 	this->possibleEdgebug = false;
 	if (this->tpmVelocity.z < 0.0f && this->player->currentMoveData->m_vecVelocity.z > this->tpmVelocity.z
 		&& this->player->currentMoveData->m_vecVelocity.z > -JS_EPSILON)
@@ -41,8 +41,8 @@ void KZJumpstatsService::DetectInvalidCollisions()
 	if (this->player->IsCollidingWithWorld())
 	{
 		this->jumps.back().touchDuration += g_pKZUtils->GetGlobals()->frametime;
-		// Headhit invadidates following bhops but not the current jump,
-		// while other collisions do after a certain duration.
+		// A headhit invalidates following bhops but not the current jump.
+		// Other collisions do after a certain duration.
 		if (this->jumps.back().touchDuration > JS_TOUCH_GRACE_PERIOD)
 		{
 			this->InvalidateJumpstats("Invalid collisions");
@@ -58,8 +58,8 @@ void KZJumpstatsService::DetectInvalidGains()
 {
 	/*
 	 * Ported from GOKZ: Fix certain props that don't give you base velocity
-	 * We check for speed reduction for abuse; while prop abuses increase speed,
-	 * wall collision will very likely (if not always) result in a speed reduction.
+	 * We check for speed reduction for abuse.
+	 * Prop abuses increase speed while wall collision will very likely (if not always) result in a speed reduction.
 	 */
 
 	// clang-format off

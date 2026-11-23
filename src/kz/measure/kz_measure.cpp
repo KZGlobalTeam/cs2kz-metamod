@@ -102,7 +102,7 @@ bool KZMeasureService::EndMeasure(f32 minDistThreshold)
 	f32 horizontalDist = delta.Length2D();
 	f32 verticalDist = delta.z;
 	f32 effectiveDist = KZMeasureService::GetEffectiveDistance(this->startPos.origin, endPos.origin);
-	// Wait, are we trying to measure a block?
+	// Are we trying to measure a block?
 	if (minDistThreshold >= 0.0f && horizontalDist <= minDistThreshold && verticalDist <= minDistThreshold)
 	{
 		this->startPos.Invalidate();

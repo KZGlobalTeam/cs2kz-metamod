@@ -19,7 +19,7 @@ enum SigError
 	SIG_FOUND_MULTIPLE,
 };
 
-// equivalent to FindSignature, but allows for multiple signatures to be found and iterated over
+// equivalent to FindSignature but allows for multiple signatures to be found and iterated over
 class SignatureIterator
 {
 public:
@@ -87,7 +87,7 @@ public:
 #endif
 	}
 
-	// dlmount() is dlopen()/LoadLibrary(), so it took a reference we have to give back.
+	// dlmount() is dlopen()/LoadLibrary() and took a reference we have to give back.
 	~CModule()
 	{
 		if (m_hModule)

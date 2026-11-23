@@ -98,6 +98,6 @@ void KZAutoBhopStyleService::Cleanup()
 
 void KZAutoBhopStyleService::OnProcessMovement()
 {
-	// Write the value directly like KZ::mode::ApplyModeSettings does, Set() would fire global change callbacks every tick.
+	// Write the value directly like KZ::mode::ApplyModeSettings does because Set() would fire global change callbacks every tick.
 	sv_autobunnyhopping.TypeTraits()->Copy(sv_autobunnyhopping.GetConVarData()->Value(-1), true);
 }

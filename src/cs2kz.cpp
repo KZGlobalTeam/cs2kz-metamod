@@ -65,8 +65,8 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 		return false;
 	}
 
-	// Metamod keeps the binary loaded after a failed load and reuses it on the next "meta load", so every step that can fail
-	// runs before anything that can't be undone.
+	// Metamod keeps the binary loaded after a failed load and reuses it on the next "meta load".
+	// Every step that can fail therefore runs before anything that can't be undone.
 	RegisterKZLogChannels();
 	if (!utils::Initialize(ismm, error, maxlen) || !hooks::ResolveSignatures(error, maxlen))
 	{
@@ -74,7 +74,8 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 		return false;
 	}
 
-	// The convars can't be registered twice in one binary, Metamod unregisters them for good once the load fails.
+	// The convars can't be registered twice in one binary.
+	// Metamod unregisters them for good once the load fails.
 	META_CONVAR_REGISTER(FCVAR_NONE);
 	if (!KZ::mode::CheckModeCvars())
 	{
@@ -108,7 +109,7 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 	KZ::prefs::Init();
 	AsyncFileIO::Init();
 	KZRecordingService::Init();
-	// Must come after KZTimerService::Init, it hooks into the timer's event listeners.
+	// Must come after KZTimerService::Init because it hooks into the timer's event listeners.
 	KZ::pubapi::Init();
 
 	ismm->AddListener(this, this);
@@ -138,7 +139,8 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 
 bool KZPlugin::Unload(char *error, size_t maxlen)
 {
-	// Metamod still calls Unload after a failed load (shutdown, meta unload), Load already undid its own setup.
+	// Metamod still calls Unload after a failed load (shutdown, meta unload).
+	// Load already undid its own setup.
 	if (this->loading)
 	{
 		return true;
@@ -173,8 +175,9 @@ bool KZPlugin::Unload(char *error, size_t maxlen)
 	kz_log_to_file.Set(false);
 	g_KZLoggingListener.CheckFile();
 	ConVar_Unregister();
-	// The heap-allocated CConVarRefs are in the SDK's registration list until ConVar_Unregister() walks it, so they must outlive it.
-	// Not in KZGlobalService::Cleanup(): ReloadConfig() calls that at runtime and keeps using the refs.
+	// The heap-allocated CConVarRefs stay in the SDK's registration list until ConVar_Unregister() walks it.
+	// They must outlive that call.
+	// KZGlobalService::Cleanup() doesn't free them because ReloadConfig() calls it at runtime and keeps using the refs.
 	KZGlobalService::CleanupConVars();
 	KZ::mode::CleanupModeCvarRefs();
 	return true;

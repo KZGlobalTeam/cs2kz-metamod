@@ -1,12 +1,14 @@
 #pragma once
-// Suppress HL2SDK related warnings, comment these out if something goes wrong
+// Suppress HL2SDK related warnings.
+// Comment these out if something goes wrong
 #ifdef _WIN32
 #pragma warning(disable: 4146 4244 4267 4018 4099 4005 5033)
 #endif
 
 #include <ISmmPlugin.h>
 #include <stdint.h>
-// This is quite wild, this library must be included here so memory corruption doesn't happen on windows...
+// This is quite wild.
+// This library must be included here so memory corruption doesn't happen on windows...
 #define TINYFORMAT_USE_VARIADIC_TEMPLATES
 #include "vendor/tinyformat.h"
 
@@ -31,7 +33,7 @@
 
 PLUGIN_GLOBALVARS();
 
-// These are for searchability, because static behaves differently in different scopes.
+// These are for searchability because static behaves differently in different scopes.
 // Regular static is for static class functions.
 #define static_global   static // static global variables
 #define static_persist  static // static local variables
@@ -64,13 +66,14 @@ typedef double f64;
 	}
 
 // str*cmp considered harmful.
-//  Macros to make sure you don't mess up checking if strings are equal.
-//  The I means case insensitive.
+// Macros to make sure you don't mess up checking if strings are equal.
+// The I means case insensitive.
 #define KZ_STREQ(a, b)             (V_strcmp(a, b) == 0)
 #define KZ_STREQI(a, b)            (V_stricmp(a, b) == 0)
 #define KZ_STREQLEN(a, b, maxlen)  (V_strncmp(a, b, maxlen) == 0)
 #define KZ_STREQILEN(a, b, maxlen) (V_strnicmp(a, b, maxlen) == 0)
-// ARRAYSIZE gets undef'd if metamod_oslink is included after commonmacros.h. We can use our own implementation instead.
+// ARRAYSIZE gets undef'd if metamod_oslink is included after commonmacros.h.
+// We can use our own implementation instead.
 #define KZ_ARRAYSIZE(a)       ((sizeof(a) / sizeof(*(a))) / static_cast<size_t>(!(sizeof(a) % sizeof(*(a)))))
 #define KZ_FOURCC(a, b, c, d) ((u32)(((d) << 24) | ((c) << 16) | ((b) << 8) | (a)))
 

@@ -32,7 +32,7 @@ namespace KZ::replaysystem
 	void Cleanup();
 	void OnRoundStart();
 	void OnGameFrame();
-	// A replay bot runs its per-tick logic once per replay tick, which can be zero or several times in a server tick.
+	// A replay bot runs its per-tick logic once per replay tick (zero or several times in a server tick).
 	// playback.h explains the order these are called in.
 	bool BeginServerTick(KZPlayer *player);
 	void BeginReplayTick(KZPlayer *player);
@@ -67,13 +67,13 @@ namespace KZ::replaysystem
 	{
 		// False for replays that never have a timer.
 		bool timed;
-		// The course of the last timer start, null before the first one.
+		// The course of the last timer start (null before the first one).
 		const KZCourseDescriptor *course;
 		bool running;
 		i32 stages;
 		i32 checkpoints;
 		i32 splits;
-		// The recorded run's time when this is a run replay of that course, 0 otherwise.
+		// The recorded run's time when this is a run replay of that course and 0 otherwise.
 		f64 runTime;
 		bool runPro;
 	};

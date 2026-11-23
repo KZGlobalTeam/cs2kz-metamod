@@ -19,7 +19,7 @@ public:
 		return true;
 	}
 
-	// Return the tweaked value, null if this convar name is not tweaked.
+	// Return the tweaked value (null if this convar name is not tweaked).
 	virtual const CVValue_t *GetTweakedConvarValue(const char *name)
 	{
 		return nullptr;

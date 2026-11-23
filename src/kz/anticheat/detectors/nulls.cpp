@@ -9,20 +9,21 @@
 #define NUM_CONSECUTIVE_PERFECT_CSTRAFE_FOR_DETECTION_MINIMUM 256
 #define NUM_CONSECUTIVE_PERFECT_CSTRAFE_FOR_DETECTION_MAXIMUM 640
 
-// The higher the FPS, the less likely player can get perfect counter-strafes by chance.
+// A higher FPS makes it less likely that a player gets perfect counter-strafes by chance.
 #define FPS_FOR_MINIMUM_SUSPICION 64.0f // We shouldn't count any attempt below this FPS.
 #define FPS_FOR_MAXIMUM_SUSPICION 256.0f
-// A key bound to an analog command is not a controller, and there is no legitimate reason to fake a stick.
+// A key bound to an analog command is not a controller.
+// There is no legitimate reason to fake a stick.
 #define SYNTHETIC_ANALOG_CSTRAFE_WEIGHT 4.0f
 // Analog deltas landing exactly on a hundredth. A real stick almost never does.
 #define SYNTHETIC_ANALOG_GRID         0.01f
 #define SYNTHETIC_ANALOG_GRID_EPSILON 1e-6f
 #define MIN_AIR_SPEED_FOR_DETECTION   100.0f // Only consider airstrafes with at least this airspeed to avoid false positives.
-// Only count counterstrafe attempts if the keypresses are at most this far apart, in either direction.
+// Only count counterstrafe attempts if the keypresses are at most this far apart in either direction.
 // Consider higher values as brand new inputs rather than a counter-strafe attempt.
 #define GAP_DISCARD_THRESHOLD 0.2f
 // Above this the player already loses enough of the jump that nulling would not meaningfully help them.
-#define SWITCH_LOSS_FORGIVENESS_THRESHOLD 0.02f // ~10% of a flat ground jump, considering 7.5 strafes on average
+#define SWITCH_LOSS_FORGIVENESS_THRESHOLD 0.02f // ~10% of a flat ground jump with 7.5 strafes on average
 
 // An exact comparison against 0 misses any null that carries a fraction of a subtick of jitter.
 // Treat a small gap in either direction as a perfect swap.
@@ -58,7 +59,7 @@ void KZAnticheatService::CreateInputEvents(CUserCmd *cmd)
 	};
 
 	bool airborne = (this->player->GetPlayerPawn()->m_fFlags() & FL_ONGROUND) == 0 && this->player->GetMoveType() == MOVETYPE_WALK;
-	// This isn't the actual airspeed at the time of the input, but it's close enough for our purposes.
+	// This isn't the actual airspeed at the time of the input but it's close enough for our purposes.
 	f32 airSpeed = airborne ? this->player->moveDataPost.m_vecVelocity.Length2D() : -1.0f;
 
 	auto push = [&](u64 button, bool pressed, f32 when, bool analog, bool synthetic)
@@ -75,9 +76,9 @@ void KZAnticheatService::CreateInputEvents(CUserCmd *cmd)
 		}
 	};
 
-	// Move one axis to the given set of held buttons, emitting only what actually changes. Both directions of
-	// an axis can be held at once - that is exactly what an overlap is - so this cannot be derived from the
-	// movement impulses, which cancel to zero while both are down.
+	// Move one axis to the given set of held buttons and emit only what actually changes.
+	// Both directions of an axis can be held at once (that is exactly what an overlap is).
+	// This can't be derived from the movement impulses because they cancel to zero while both are down.
 	u64 &heldButtons = this->heldMovementButtons;
 	auto setHeld = [&](u64 positive, u64 negative, u64 target, f32 when, bool analog, bool synthetic = false)
 	{
@@ -87,7 +88,7 @@ void KZAnticheatService::CreateInputEvents(CUserCmd *cmd)
 		{
 			return;
 		}
-		// Release before press, so a swap with no gap reads as a perfect counter-strafe and not as an overlap.
+		// Release before press so a swap with no gap reads as a perfect counter-strafe and not as an overlap.
 		if ((held & ~target) & positive)
 		{
 			push(positive, false, when, analog, synthetic);
@@ -110,8 +111,8 @@ void KZAnticheatService::CreateInputEvents(CUserCmd *cmd)
 	if (cmd->base().subtick_moves_size() == 0 || VerifySubtickMoves(cmd, forwardAxis, sideAxis) != SubtickRejection::None)
 	{
 		// A command is allowed to change the movement buttons without carrying any subtick move.
-		// In such scenario, SetupMove derives the impulses from the final button state
-		// and treat it as an input that happened at the very start of the tick.
+		// In that case SetupMove derives the impulses from the final button state.
+		// It treats that state as an input at the very start of the tick.
 		u64 buttons = cmd->base().buttons_pb().buttonstate1();
 		setHeld(IN_FORWARD, IN_BACK, buttons & (IN_FORWARD | IN_BACK), 0.0f, false);
 		setHeld(IN_MOVELEFT, IN_MOVERIGHT, buttons & (IN_MOVELEFT | IN_MOVERIGHT), 0.0f, false);
@@ -145,22 +146,23 @@ void KZAnticheatService::CreateInputEvents(CUserCmd *cmd)
 				// Buttons that are not direction inputs are ignored.
 				continue;
 			}
-			// A key press says nothing about the opposite key, which may well stay held. Take the move at face
-			// value instead of reading the direction back off the axis, where holding both cancels out.
+			// A key press says nothing about the opposite key because it may well stay held.
+			// Take the move at face value instead of reading the direction back off the axis where holding both cancels out.
 			u64 held = heldButtons & (positive | negative);
 			setHeld(positive, negative, step.pressed() ? (held | button) : (held & ~button), step.when(), false);
 		}
 		else if (step.has_analog_forward_delta() || step.has_analog_left_delta())
 		{
-			// The engine never clamps the impulses. It only refuses the whole command if they leave the range
-			// VerifySubtickMoves checks, so anything reaching here accumulates as is.
+			// The engine never clamps the impulses.
+			// It only refuses the whole command if they leave the range VerifySubtickMoves checks.
+			// Anything reaching here accumulates as is.
 			forwardAxis += step.analog_forward_delta();
 			sideAxis += step.analog_left_delta();
-			// A stick carries no press or release, and only ever points one way, so the axis sign is the whole
-			// held state for it.
-			// A stick sweeps continuously and lands on values like 1.3e-05. A key bound to an analog command
-			// emits whatever round number the alias was written with, so anything sitting exactly on a
-			// hundredth did not come from hardware.
+			// A stick carries no press or release and only ever points one way.
+			// The axis sign is therefore its whole held state.
+			// A stick sweeps continuously and lands on values like 1.3e-05.
+			// A key bound to an analog command emits whatever round number the alias was written with.
+			// Anything sitting exactly on a hundredth therefore did not come from hardware.
 			auto isSynthetic = [](f32 delta)
 			{ return fabsf(delta - roundf(delta / SYNTHETIC_ANALOG_GRID) * SYNTHETIC_ANALOG_GRID) < SYNTHETIC_ANALOG_GRID_EPSILON; };
 			if (step.analog_forward_delta() != 0.0f)
@@ -236,7 +238,7 @@ void KZAnticheatService::AnalyzeNullsForAxis(const std::deque<InputEvent> &event
 	u32 numConsecutivePerfect = 0;
 	u32 maxConsecutivePerfect = 0;
 	u32 numUnderlaps = 0;
-	// Unweighted, so that the weighting cannot move the impact gate.
+	// Unweighted so the weighting can't move the impact gate.
 	u32 numAttempts = 0;
 	f32 totalSwitchLoss = 0.0f;
 
@@ -267,7 +269,7 @@ void KZAnticheatService::AnalyzeNullsForAxis(const std::deque<InputEvent> &event
 		}
 
 		// Now handling press events
-		// First, check if we should analyze this event (apply filters)
+		// First check if we should analyze this event (apply filters)
 		bool shouldAnalyze = true;
 		if (event.framerate > 0.0f && 1 / event.framerate < FPS_FOR_MINIMUM_SUSPICION)
 		{
@@ -278,13 +280,13 @@ void KZAnticheatService::AnalyzeNullsForAxis(const std::deque<InputEvent> &event
 			shouldAnalyze = false;
 		}
 		f32 weight = event.synthetic ? SYNTHETIC_ANALOG_CSTRAFE_WEIGHT : 1.0f;
-		// Note that InputEvent::framerate holds a frame time, not a rate.
+		// Note that InputEvent::framerate holds a frame time rather than a rate.
 		f32 nearPerfect = NEAR_PERFECT_MAX_DURATION;
 		if (event.framerate > 0.0f)
 		{
 			nearPerfect = Clamp(NEAR_PERFECT_FRAMETIME_SCALE * event.framerate, NEAR_PERFECT_MIN_DURATION, NEAR_PERFECT_MAX_DURATION);
 		}
-		// Check for overlap: pressing one key while opposite key is still held
+		// An overlap is pressing one key while the opposite key is still held.
 		bool isOverlap = (event.button == button1 && button2Pressed) || (event.button == button2 && button1Pressed);
 		if (isOverlap)
 		{
@@ -307,14 +309,14 @@ void KZAnticheatService::AnalyzeNullsForAxis(const std::deque<InputEvent> &event
 				}
 			}
 
-			// Holding both directions is time spent not accelerating, same as a gap is.
+			// Holding both directions is time spent not accelerating just like a gap is.
 			if (foundRelease && event.airSpeed >= MIN_AIR_SPEED_FOR_DETECTION)
 			{
 				numAttempts++;
 				totalSwitchLoss += overlapDuration;
 			}
-			// Without a release inside the window there is nothing to classify: the player is simply holding
-			// both directions, which is not a counter-strafe attempt.
+			// Without a release inside the window there is nothing to classify.
+			// The player is simply holding both directions and that is not a counter-strafe attempt.
 			if (foundRelease)
 			{
 				if (overlapDuration < nearPerfect)
@@ -345,7 +347,7 @@ void KZAnticheatService::AnalyzeNullsForAxis(const std::deque<InputEvent> &event
 						}
 						numOverlaps += weight;
 					}
-					// An overlap breaks the streak even where it is not counted, such as on the ground.
+					// An overlap breaks the streak even where it is not counted (such as on the ground).
 					numConsecutivePerfect = 0;
 				}
 			}
@@ -361,13 +363,13 @@ void KZAnticheatService::AnalyzeNullsForAxis(const std::deque<InputEvent> &event
 			button2Pressed = true;
 		}
 
-		// If it was an overlap or we're not analyzing, skip the rest
+		// Skip the rest if it was an overlap or we're not analyzing
 		if (isOverlap || !shouldAnalyze)
 		{
 			continue;
 		}
 
-		// Not an overlap, so check for perfect/underlap counter-strafe
+		// This isn't an overlap and could be a perfect counter-strafe or an underlap.
 		const InputEvent *oppositeRelease = nullptr;
 		if (event.button == button1 && lastButton2Release != nullptr)
 		{
@@ -402,7 +404,7 @@ void KZAnticheatService::AnalyzeNullsForAxis(const std::deque<InputEvent> &event
 			{
 				this->player->PrintConsole(false, true, "Perfect (%.4f ms late) @ %f", timeDiff * 1000, event.cmdNum + event.fraction);
 			}
-			// Perfect: no meaningful time between release and press
+			// A perfect counter-strafe has no meaningful time between release and press.
 			numPerfect += weight;
 			numConsecutivePerfect += weight;
 			if (numConsecutivePerfect > maxConsecutivePerfect)
@@ -416,13 +418,13 @@ void KZAnticheatService::AnalyzeNullsForAxis(const std::deque<InputEvent> &event
 			{
 				this->player->PrintConsole(false, true, "Underlap %.3f ms @ %f", timeDiff * 1000, event.cmdNum + event.fraction);
 			}
-			// Underlap: gap between release and press
+			// An underlap has a gap between release and press.
 			numUnderlaps++;
 		}
 	}
-	// Averaging over every attempt is what makes this a measure of impact rather than of style. Taking it
-	// over the misses alone ignores the switches that cost nothing, so a player who nulls most of the time
-	// and misses sloppily the rest reads as though every switch were sloppy.
+	// Averaging over every attempt is what makes this a measure of impact rather than of style.
+	// Taking it over the misses alone ignores the switches that cost nothing.
+	// A player who nulls most of the time and misses sloppily the rest would read as though every switch were sloppy.
 	f32 meanSwitchLoss = numAttempts > 0 ? totalSwitchLoss / (f32)numAttempts : 0.0f;
 	if (meanSwitchLoss >= SWITCH_LOSS_FORGIVENESS_THRESHOLD)
 	{
@@ -433,7 +435,7 @@ void KZAnticheatService::AnalyzeNullsForAxis(const std::deque<InputEvent> &event
 		return;
 	}
 
-	// The more a player's counter-strafes cost them, the less nulling would have gained them.
+	// Nulling gains a player less the more their counter-strafes cost them.
 	// We scale up the required perfect cstrafes accordingly.
 	f32 lossRatio = Clamp(meanSwitchLoss / SWITCH_LOSS_FORGIVENESS_THRESHOLD, 0.0f, 1.0f);
 	// Squared because we want to be more strict when the switches cost the player almost nothing.
@@ -442,7 +444,7 @@ void KZAnticheatService::AnalyzeNullsForAxis(const std::deque<InputEvent> &event
 
 	const char *axisName = (button1 == IN_FORWARD) ? "forward/backward" : "left/right";
 
-	// The streak is the best run anywhere in the window, not the run still open at the end of it.
+	// The streak is the best run anywhere in the window rather than the run still open at the end of it.
 	if (maxConsecutivePerfect >= adjustedRequiredPerfectCstrafes)
 	{
 		std::string details = tinyformat::format(

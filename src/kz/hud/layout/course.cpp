@@ -10,7 +10,7 @@
 
 #include "tier0/memdbgon.h"
 
-// How often the rows are rebuilt, in seconds.
+// How often the rows are rebuilt (in seconds).
 #define MHUD_COURSE_REFRESH_TIME 0.5
 
 enum CourseRow
@@ -21,7 +21,7 @@ enum CourseRow
 
 static_assert(COURSE_ROW_PRO + 1 == MHUD_COURSE_ROW_COUNT, "one row per record");
 
-// Each record row's panels, from the row itself to the gap from the viewer's personal best.
+// Each record row's panels from the row itself to the gap from the viewer's personal best.
 static_global const char *const COURSE_ROWS[MHUD_COURSE_ROW_COUNT][6] = {
 	{"mhud_ci_r0", "mhud_ci_l0", "mhud_ci_t0", "mhud_ci_b0", "mhud_ci_n0", "mhud_ci_g0"},
 	{"mhud_ci_r1", "mhud_ci_l1", "mhud_ci_t1", "mhud_ci_b1", "mhud_ci_n1", "mhud_ci_g1"},
@@ -29,7 +29,7 @@ static_global const char *const COURSE_ROWS[MHUD_COURSE_ROW_COUNT][6] = {
 
 static_global const char *const COURSE_ROW_PHRASES[MHUD_COURSE_ROW_COUNT] = {"HUD - Course All", "HUD - Course Pro"};
 
-// Each progress row's panels, for stages, checkpoints and splits.
+// Each progress row's panels for stages, checkpoints and splits.
 static_global const char *const COURSE_PROGRESS_ROWS[MHUD_COURSE_PROGRESS_COUNT][3] = {
 	{"mhud_ci_p0", "mhud_ci_pl0", "mhud_ci_pv0"}, {"mhud_ci_p1", "mhud_ci_pl1", "mhud_ci_pv1"}, {"mhud_ci_p2", "mhud_ci_pl2", "mhud_ci_pv2"}};
 
@@ -43,7 +43,7 @@ static_global const char *const COURSE_PILL_PANELS[MHUD_JS_PILL_COUNT][4] = {{"m
 																			 {"mhud_ci_h3", "mhud_ci_h3_t", "mhud_ci_h3_i", "mhud_ci_h3_d"},
 																			 {"mhud_ci_h4", "mhud_ci_h4_t", "mhud_ci_h4_i", "mhud_ci_h4_d"}};
 
-// One pill per age for the preview, as in mhud.cpp.
+// One pill per age for the preview like in mhud.cpp.
 static_global const char *const COURSE_AGE_CLASSES[MHUD_JS_PILL_GONE_RANK] = {"js-age-0", "js-age-1", "js-age-2", "js-age-3"};
 
 // Indexed by KZTimerService::ZoneKind.
@@ -66,7 +66,7 @@ static_global const char *const COURSE_COMPARE_PHRASES[KZTimerService::COMPARETY
 #define COURSE_TEXT_ROUTE    (COURSE_TEXT_PROGRESS + MHUD_COURSE_PROGRESS_COUNT * 2)
 #define COURSE_TEXT_STATE    (COURSE_TEXT_ROUTE + 2)
 
-// The course's ranked state in the player's mode, as the API reports it.
+// The course's ranked state in the player's mode as reported by the API.
 struct CourseStateDef
 {
 	KZ::api::Map::Course::Filter::State state;
@@ -86,7 +86,7 @@ struct CourseInfoText
 	std::string status;
 	const char *statusClass {};
 	std::string course;
-	std::string state; // empty off global maps, where there is none
+	std::string state; // empty off global maps because there is none
 	const char *stateClass {};
 	std::string times[MHUD_COURSE_ROW_COUNT];
 	std::string badges[MHUD_COURSE_ROW_COUNT];
@@ -130,7 +130,7 @@ static_function void GetCourseInfo(KZPlayer *viewer, KZPlayer *source, CourseInf
 	const KZ::replaysystem::RunStatus run = replay ? KZ::replaysystem::GetRunStatus() : KZ::replaysystem::RunStatus {};
 	const KZCourseDescriptor *runCourse = replay ? run.course : source->timerService->GetCourse();
 
-	// Before the timer has started on a course, the map's first one stands in for it.
+	// The map's first course stands in for the current one before the timer has started on a course.
 	const KZCourseDescriptor *course = runCourse;
 	if (!course)
 	{
@@ -143,7 +143,7 @@ static_function void GetCourseInfo(KZPlayer *viewer, KZPlayer *source, CourseInf
 	KZGlobalService::WithCurrentMapState(
 		[&](const std::optional<KZ::api::Map> &map, bool confirmed)
 		{
-			// Like the overlay, a map is non-global until the API confirms it.
+			// A map is non-global until the API confirms it like on the overlay.
 			const bool global = confirmed && map;
 			out.status = lang->PrepareMessage(global ? "HUD - Course Global" : "HUD - Course Non Global");
 			out.statusClass = global ? "ci-global" : "ci-nonglobal";
@@ -180,8 +180,8 @@ static_function void GetCourseInfo(KZPlayer *viewer, KZPlayer *source, CourseInf
 		return;
 	}
 
-	// The run only counts zones on its own course, so another course shows none reached yet. A replay without a timer
-	// has no zones to count at all.
+	// The run only counts zones on its own course and another course shows none reached yet.
+	// A replay without a timer has no zones to count at all.
 	const bool running = runCourse == course;
 	if (!replay || run.timed)
 	{
@@ -209,12 +209,12 @@ static_function void GetCourseInfo(KZPlayer *viewer, KZPlayer *source, CourseInf
 			nubTier == proTier ? lang->PrepareMessage("HUD - Course Tier", nubTier) : lang->PrepareMessage("HUD - Course Tiers", nubTier, proTier);
 	}
 
-	// World records where there are any, and the server's records and personal bests otherwise.
+	// World records where there are any and the server's records and personal bests otherwise.
 	const PBDataKey key = ToPBDataKey(modeInfo.id, course->guid);
 	const PBData *wr = KZTimerService::GetCachedRecord(key, true);
 	const bool global = wr && (wr->overall.pbTime > 0 || wr->pro.pbTime > 0);
 	const PBData *record = global ? wr : KZTimerService::GetCachedRecord(key, false);
-	// The gaps are from the watched player's personal best, or from the time of the run the bot replays.
+	// The gaps are from the watched player's personal best or from the time of the run the bot replays.
 	const PBData *pb = replay ? nullptr : source->timerService->GetCachedPB(key, global);
 	const f64 pbOverall = replay ? run.runTime : (pb ? pb->overall.pbTime : 0);
 	const f64 pbPro = replay ? (run.runPro ? run.runTime : 0) : (pb ? pb->pro.pbTime : 0);
@@ -299,14 +299,15 @@ void KZHUDService::UpdateCourseElement(CCSCustomHudLayout *layout, KZPlayer *sou
 		ci = LayoutCourseState();
 	}
 	this->UpdateLayoutElement(layout, MHUDElement::Course, show, NULL, MHUD_DEF_BASE_COLOR, force);
-	// A hidden panel keeps whatever it last showed, and a stale preview is cleared the next time it shows for real.
+	// A hidden panel keeps whatever it last showed.
+	// A stale preview is cleared the next time it shows for real.
 	if (!show)
 	{
 		return;
 	}
 	const MHUDPrefs &prefs = preview ? this->GetOwnPrefs() : this->GetPrefs();
 
-	// js-scale.css scales the whole panel, history included, by the element's size in percent.
+	// js-scale.css scales the whole panel (history included) by the element's size in percent.
 	const i32 scale = Clamp((i32)this->GetLayoutSize(MHUDElement::Course), MHUD_JS_SIZE_MIN, MHUD_JS_SIZE_MAX);
 	if (ci.scale != scale)
 	{
@@ -322,7 +323,7 @@ void KZHUDService::UpdateCourseElement(CCSCustomHudLayout *layout, KZPlayer *sou
 		ci.scale = scale;
 	}
 
-	// A label only picks up a new font when it is restyled itself, so the class goes on every label.
+	// The class goes on every label because a label only picks up a new font if it is restyled itself.
 	const char *fontClass = KZHUDService::GetMHUDFontClass(this->player, MHUDElement::Course);
 	if (ci.fontClass != fontClass)
 	{

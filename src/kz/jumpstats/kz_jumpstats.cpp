@@ -107,7 +107,7 @@ f32 AACall::CalcIdealYaw(bool useRadians)
 
 f32 AACall::CalcMinYaw(bool useRadians)
 {
-	// If your velocity is lower than sv_air_max_wishspeed, any direction will get you gain.
+	// Any direction will get you gain if your velocity is lower than sv_air_max_wishspeed.
 	const f64 wishspeedcapped = KZ::mode::modeCvarRefs[MODECVAR_SV_AIR_MAX_WISHSPEED]->GetFloat();
 	if (this->velocityPre.Length2D() <= wishspeedcapped)
 	{
@@ -258,9 +258,8 @@ bool Strafe::CalcAngleRatioStats()
 		}
 		VectorAngles(aaCall.velocityPre, velAngles);
 
-		// If no attempt to gain speed was made, use the angle of the last call as a reference,
-		// and add yaw relative to last tick's yaw.
-		// If the velocity is 0 as well, then every angle is a perfect angle.
+		// Use the angle of the last call as a reference and add yaw relative to last tick's yaw if no attempt to gain speed was made.
+		// Every angle is a perfect angle if the velocity is 0 as well.
 		if (aaCall.wishspeed != 0)
 		{
 			VectorAngles(aaCall.wishdir, angles);
@@ -281,20 +280,19 @@ bool Strafe::CalcAngleRatioStats()
 		if (this->turnstate == TURN_RIGHT || /* The ideal angle is calculated for left turns, we need to flip it for right turns. */
 			(this->turnstate == TURN_NONE
 			 && fabs(utils::GetAngleDifference(angles.y, idealYaw, 180.0f)) > fabs(utils::GetAngleDifference(-angles.y, idealYaw, 180.0f))))
-		// If we aren't turning at all, take the one closer to the ideal yaw.
+		// Take the one closer to the ideal yaw if we aren't turning at all.
 		{
 			angles.y = -angles.y;
 		}
 
-		// It is possible for the player to gain speed here, by pressing the opposite keys
-		// while still turning in the same direction, which results in actual gain...
-		// Usually this happens at the end of a strafe.
+		// The player can gain speed here by pressing the opposite keys while still turning in the same direction.
+		// That results in actual gain and usually happens at the end of a strafe.
 		if (angles.y < 0 && aaCall.velocityPost.Length2D() > aaCall.velocityPre.Length2D())
 		{
 			angles.y = -angles.y;
 		}
 
-		// If the player yaw is way too off, they are probably pressing the wrong key and probably not turning too fast.
+		// The player is probably pressing the wrong key and probably not turning too fast if their yaw is way too off.
 		// So we shouldn't count them into the average calc.
 
 		//	utils::PrintConsoleAll("%f %f %f %f | %f / %f / %f | %f -> %f | %f %f | ws %f wd %f %f %f accel %f fraction %f",
@@ -354,7 +352,7 @@ bool Strafe::CalcAngleRatioStats()
 		}
 	}
 
-	// This can return nan if the duration is 0, this is intended...
+	// This can return nan if the duration is 0 and this is intended...
 	if (totalDuration == 0.0f)
 	{
 		return false;
@@ -425,7 +423,7 @@ void Jump::Init()
 
 void Jump::UpdateAACallPost(Vector wishdir, f32 wishspeed, f32 accel)
 {
-	// Use the latest parameters, just in case they changed.
+	// Use the latest parameters just in case they changed.
 	Strafe *strafe = this->GetCurrentStrafe();
 	AACall *call = &strafe->aaCalls.back();
 	QAngle currentAngle;
@@ -443,9 +441,8 @@ void Jump::UpdateAACallPost(Vector wishdir, f32 wishspeed, f32 accel)
 	this->player->GetVelocity(&call->velocityPost);
 
 	// AA only applies at most half of the acceleration to the velocity after AACall.
-	// The rest is applied in TryPlayerMove, but let's just add it here for simplicity.
-	// Technically this is not 100% accurate if the player collides with something,
-	// but it should be close enough.
+	// The rest is applied in TryPlayerMove but we add it here for simplicity.
+	// This is not 100% accurate if the player collides with something but it should be close enough.
 	call->velocityPost += this->player->currentMoveData->m_vecFrameVelocityDelta;
 	strafe->UpdateStrafeMaxSpeed(call->velocityPost.Length2D());
 
@@ -489,7 +486,7 @@ void Jump::End()
 	}
 	this->landingOrigin = this->player->landingOrigin;
 	this->adjustedLandingOrigin = this->player->landingOriginActual;
-	// This is not the real jump duration, it's just here to calculate sync.
+	// This is not the real jump duration and is just here to calculate sync.
 	f32 jumpDuration = 0.0f;
 
 	// Reset aggregate stats in case they were temporarily populated during failstat probing.
@@ -644,12 +641,12 @@ Strafe *Jump::GetCurrentStrafe()
 		this->strafes.push_back({this});
 		this->strafes.back().turnstate = this->player->GetTurning();
 	}
-	// If the player isn't turning, update the turn state until it changes.
+	// Update the turn state until it changes if the player isn't turning.
 	else if (!this->strafes.back().turnstate)
 	{
 		this->strafes.back().turnstate = this->player->GetTurning();
 	}
-	// Otherwise, if the strafe is in opposite direction, we add a new strafe.
+	// Otherwise add a new strafe if the strafe is in the opposite direction.
 	else if (this->strafes.back().turnstate == -this->player->GetTurning())
 	{
 		this->strafes.back().End();
@@ -659,7 +656,8 @@ Strafe *Jump::GetCurrentStrafe()
 		strafe.turnstate = this->player->GetTurning();
 		this->strafes.push_back(strafe);
 	}
-	// Turn state didn't change, it's the same strafe. No need to do anything.
+	// The turn state didn't change and it's the same strafe.
+	// No need to do anything.
 
 	return &this->strafes.back();
 }
@@ -752,7 +750,8 @@ f32 Jump::GetSignedDeviation()
 {
 	f32 deltaX = adjustedLandingOrigin.x - adjustedTakeoffOrigin.x;
 	f32 deltaY = adjustedLandingOrigin.y - adjustedTakeoffOrigin.y;
-	// The jump runs along the longer axis. Facing along it, left is +Y when heading +X, -X when heading +Y, and so on.
+	// The jump runs along the longer axis.
+	// Facing along it left is +Y when heading +X, -X when heading +Y and so on.
 	if (fabs(deltaX) > fabs(deltaY))
 	{
 		return deltaX >= 0.0f ? deltaY : -deltaY;
@@ -786,7 +785,7 @@ JumpType KZJumpstatsService::DetermineJumpType()
 			{
 				return JumpType_Invalid;
 			}
-			// Mark this as a ladder hop, so if the player jumps again, we don't add a new jump.
+			// Mark this as a ladder hop so no new jump is added if the player jumps again.
 			this->ladderHopThisMove = true;
 			return JumpType_Ladderhop;
 		}
@@ -888,7 +887,7 @@ void KZJumpstatsService::Reset()
 void KZJumpstatsService::OnProcessMovement()
 {
 	// Always ensure that the player has at least an ongoing jump.
-	// This is mostly to prevent crash, it's not a valid jump.
+	// This is mostly to prevent crash and it's not a valid jump.
 	if (this->jumps.empty())
 	{
 		this->AddJump();
@@ -1068,7 +1067,8 @@ void KZJumpstatsService::HandleTeleport()
 	Vector preTeleportOrigin;
 	this->player->GetOrigin(&preTeleportOrigin);
 
-	// Teleports are not real landings. Use the pre-teleport origin/time as a synthetic landing snapshot.
+	// Teleports are not real landings.
+	// Use the pre-teleport origin and time as a synthetic landing snapshot.
 	this->player->landingOrigin = preTeleportOrigin;
 	this->player->landingOriginActual = preTeleportOrigin;
 	this->player->landingTime = g_pKZUtils->GetGlobals()->curtime;

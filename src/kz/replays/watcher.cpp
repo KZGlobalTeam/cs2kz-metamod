@@ -70,7 +70,8 @@ static_function PageRange GetPageRange(const ReplayFilterCriteria &criteria, siz
 	return {startIndex, endIndex};
 }
 
-// Grouping keys compare names case-insensitively, so they are lowercased up front to keep the hash consistent with equality.
+// Grouping keys compare names case-insensitively.
+// They are lowercased up front to keep the hash consistent with equality.
 static_function std::string LowercaseKey(std::string str)
 {
 	V_strlower(str.data());
@@ -688,7 +689,8 @@ void ReplayWatcher::SaveArchiveIndex()
 		kv.SetMemberUInt64(uuid.ToString().c_str(), timestamp);
 	}
 
-	// Writes through the "GAME" path ID land in its first directory, which is csgo/addons/metamod on servers running Metamod.
+	// Writes through the "GAME" path ID land in its first directory.
+	// That is csgo/addons/metamod on servers running Metamod.
 	CUtlString error;
 	CUtlBuffer buf(0, 0, CUtlBuffer::TEXT_BUFFER);
 	if (!SaveKV3(g_KV3Encoding_Text, g_KV3Format_Generic, &kv, &error, &buf, KV3_SAVE_TEXT_NONE))
@@ -894,8 +896,8 @@ void ReplayWatcher::CleanupManualReplays(std::unordered_map<UUID_t, ReplayHeader
 
 void ReplayWatcher::WatchLoop()
 {
-	// Long-lived background scanner: the replay index maps it builds are the plugin's main
-	// steady-state allocator outside of recording.
+	// Long-lived background scanner.
+	// The replay index maps it builds are the plugin's main steady-state allocator outside of recording.
 
 	LoadArchiveIndex();
 	ScanReplays();
@@ -914,9 +916,10 @@ void ReplayWatcher::WatchLoop()
 	}
 }
 
-// Recorders delete their own chunks when they finish, so anything left behind is from a
-// process that died mid-recording. A live recording only flushes a chunk every 15 minutes of
-// recorded time, so a full day of staleness cannot belong to one that is still running.
+// Recorders delete their own chunks when they finish.
+// Anything left behind is therefore from a process that died mid-recording.
+// A live recording only flushes a chunk every 15 minutes of recorded time.
+// A full day of staleness cannot belong to one that is still running.
 void ReplayWatcher::SweepOrphanedChunks(u64 currentTime)
 {
 	static constexpr u64 CHUNK_MAX_AGE_SECONDS = 24 * 60 * 60;
@@ -962,8 +965,8 @@ void ReplayWatcher::ScanReplays()
 
 	SweepOrphanedChunks((u64)currentUnixTime);
 
-	// Files still present on disk this scan. Anything cached but not in this set has been
-	// deleted externally and must be dropped from the cache.
+	// Files still present on disk this scan.
+	// Anything cached but not in this set has been deleted externally and must be dropped from the cache.
 	std::unordered_set<UUID_t> seen;
 
 	while (pFileName)
@@ -1055,7 +1058,8 @@ void ReplayWatcher::ScanReplays()
 		}
 	}
 
-	// Rebuild the typed maps from the (mostly cached, in-memory) header set. No file I/O here.
+	// Rebuild the typed maps from the (mostly cached, in-memory) header set.
+	// No file I/O here.
 	std::unordered_map<UUID_t, ReplayHeader> newCheater;
 	std::map<UUID_t, ReplayHeader> newRun;
 	std::map<UUID_t, ReplayHeader> newJump;

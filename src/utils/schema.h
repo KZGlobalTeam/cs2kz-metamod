@@ -24,7 +24,7 @@ namespace schema
 {
 	int16_t FindChainOffset(const char *className, uint32_t classNameHash);
 	SchemaKey GetOffset(const char *className, uint32_t classKey, const char *memberName, uint32_t memberKey);
-	// Manipulator for a CUtlVector/CNetworkUtlVectorBase field, NULL if the field is not a collection.
+	// Manipulator for a CUtlVector/CNetworkUtlVectorBase field (NULL if the field is not a collection).
 	SchemaCollectionManipulatorFn_t GetCollectionManipulator(const char *className, const char *fieldName);
 } // namespace schema
 
@@ -59,14 +59,15 @@ public:
 		return (T *)m_pfn(SCHEMA_COLLECTION_MANIPULATOR_ACTION_GET_ELEMENT, m_pCollection, index, 0);
 	}
 
-	// Element() without the bounds check, for a loop that has already hoisted Count(). Every access
-	// is a call into the game, so a scan that goes through Element() pays three of them per entry.
+	// Element() without the bounds check for a loop that has already hoisted Count().
+	// Every access is a call into the game.
+	// A scan that goes through Element() pays three of them per entry.
 	T *ElementUnchecked(int index) const
 	{
 		return (T *)m_pfn(SCHEMA_COLLECTION_MANIPULATOR_ACTION_GET_ELEMENT, m_pCollection, index, 0);
 	}
 
-	// Grows or shrinks the collection, constructing/destructing elements as the game would.
+	// Grows or shrinks the collection and constructs/destructs elements as the game would.
 	// Const because the wrapper is only a view; the collection it points at is not ours.
 	bool SetCount(int count) const
 	{
@@ -78,7 +79,7 @@ public:
 		return Count() == count;
 	}
 
-	// Appends one default constructed element and returns it, NULL on failure.
+	// Appends one default constructed element and returns it (NULL on failure).
 	T *AddToTail() const
 	{
 		int count = Count();
@@ -289,7 +290,7 @@ inline constexpr uint64_t hash_64_fnv1a_const(const char *const str, const uint6
 // Use DECLARE_SCHEMA_CLASS_BASE for non-entity classes such as CCollisionProperty or CGlowProperty
 // Their NetworkStateChanged function is elsewhere on their vtable rather than being CEntityInstance::NetworkStateChanged (usually 1)
 // Though some classes like CGameRules will instead use their CNetworkVarChainer as a link back to the parent entity
-// Some classes, such as CModelState, have offset 0 despite not being entity.
+// Some classes (such as CModelState) have offset 0 despite not being entity.
 #define DECLARE_SCHEMA_CLASS_BASE(ClassName, offset)				\
 	private:																		\
 		typedef ClassName ThisClass;												\

@@ -91,8 +91,8 @@ public:
 	enum struct ResponseStatus
 	{
 		DISABLED = 0, // Query is disabled
-		ENABLED,      // Query is enabled, but not sent
-		PENDING,      // Query is sent, waiting for response
+		ENABLED,      // Query is enabled but not sent
+		PENDING,      // Query is sent and waiting for response
 		RECEIVED      // Response received
 	} localStatus, globalStatus;
 
@@ -121,9 +121,9 @@ protected:
 
 	u64 targetSteamID64 {};
 	std::string targetPlayerName {};
-	// If this is true, the queries should be delayed until it's true.
+	// The queries should be delayed while this is true.
 	bool requestingLocalPlayer = false;
-	// If this is true, the *local* query should be delayed.
+	// The *local* query should be delayed if this is true.
 	bool requestingGlobalPlayer = false;
 
 	u64 localModeID;

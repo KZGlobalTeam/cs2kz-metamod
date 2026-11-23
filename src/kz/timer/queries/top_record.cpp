@@ -199,7 +199,7 @@ struct TopRecordRequest : public BaseRequest
 			// KZ | Overall Record: 01:23.45 (5 TP) by Bill
 			player->languageService->PrintChat(true, false, "Top Record - Overall", standardTime, wrData.holder.c_str(), tpText);
 		}
-		// Their MAP PB has 0 teleports, and is therefore also their PRO PB
+		// Their MAP PB has 0 teleports and is therefore also their PRO PB
 		else if (wrData.teleportsUsed == 0)
 		{
 			// KZ | Overall/PRO Record: 01:23.45 by Bill
@@ -241,7 +241,7 @@ struct TopRecordRequest : public BaseRequest
 			// KZ | Overall Record: 01:23.45 (5 TP) by Bill
 			player->languageService->PrintChat(true, false, "Top Record - Overall", standardTime, srData.holder.c_str(), localTPText);
 		}
-		// Their MAP PB has 0 teleports, and is therefore also their PRO PB
+		// Their MAP PB has 0 teleports and is therefore also their PRO PB
 		else if (srData.teleportsUsed == 0)
 		{
 			// KZ | Overall/PRO Record: 01:23.45 by Bill

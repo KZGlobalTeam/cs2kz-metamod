@@ -23,7 +23,7 @@ namespace KZ::replaysystem::data
 		ReplayHeader header;
 
 		u32 tickCount;
-		// Read through GetTick, which decodes the tick on demand.
+		// Read through GetTick because it decodes the tick on demand.
 		compression::TickStore *ticks;
 		// tickCount + 1 entries; the subtick moves of tick i are subtickMoves[subtickOffsets[i]] to subtickMoves[subtickOffsets[i + 1] - 1].
 		u64 *subtickOffsets;
@@ -58,7 +58,7 @@ namespace KZ::replaysystem::data
 		bool playingReplay;
 		bool replayPaused;
 		f32 timescale;
-		// How far the bot is from currentTick's pre state to its post state, in replay ticks.
+		// How far the bot is from currentTick's pre state to its post state (in replay ticks).
 		f32 tickProgress;
 		// Replay ticks left to simulate this server tick.
 		u32 pendingTicks;
@@ -67,7 +67,7 @@ namespace KZ::replaysystem::data
 		// Set on server ticks that simulate nothing and only move the bot between two replay ticks.
 		bool holdingTick;
 		bool hasLastMoveData;
-		// Raw bytes, the engine's CUtlVectors inside must not be copied or freed by ReplayPlayback.
+		// Raw bytes because the engine's CUtlVectors inside must not be copied or freed by ReplayPlayback.
 		alignas(CMoveData) u8 lastMoveData[sizeof(CMoveData)];
 	};
 
@@ -98,7 +98,7 @@ namespace KZ::replaysystem::data
 		std::mutex callbackMutex;
 	};
 
-	// The positions and events of a replay, without the data only playback needs.
+	// The positions and events of a replay without the data only playback needs.
 	struct MovementSample
 	{
 		u32 serverTick;
@@ -120,10 +120,11 @@ namespace KZ::replaysystem::data
 	void LoadReplayMemoryAsync(std::vector<char> data, UUID_t uuid, LoadSuccessCallback onSuccess, LoadFailureCallback onFailure);
 	void FreeReplayData(ReplayPlayback *replay);
 	void ResetReplayState(ReplayPlayback *replay);
-	// index must be below replay->tickCount. Reading the tick after the last one read is cheap, other ticks cost up to
-	// compression::TickStore::KEYFRAME_INTERVAL tick decodes.
+	// index must be below replay->tickCount.
+	// Reading the tick after the last one read is cheap.
+	// Other ticks cost up to compression::TickStore::KEYFRAME_INTERVAL tick decodes.
 	TickData GetTick(const ReplayPlayback *replay, u32 index);
-	// The first replay tick recorded on or after serverTick, or the last tick if there is none.
+	// The first replay tick recorded on or after serverTick or the last tick if there is none.
 	u32 GetTickAtServerTick(const ReplayPlayback *replay, u32 serverTick);
 
 	// Async loading status
@@ -131,7 +132,8 @@ namespace KZ::replaysystem::data
 	bool IsLoading();
 	void CancelAsyncLoad();
 
-	// Stops the loader thread and frees every replay buffer this module owns. Plugin unload only.
+	// Stops the loader thread and frees every replay buffer this module owns.
+	// Plugin unload only.
 	void Shutdown();
 	void ProcessAsyncLoadCompletion(); // Call this from main thread	// State queries
 	ReplayPlayback *GetCurrentReplay();
@@ -143,7 +145,7 @@ namespace KZ::replaysystem::data
 	i32 GetCheckpointCount();
 	i32 GetTeleportCount();
 	f32 GetReplayTime();
-	// The bot's clock, which moves one tick per simulated replay tick, not with the server.
+	// The bot's clock moves one tick per simulated replay tick and not with the server.
 	i32 GetBotTickcount();
 	void SetBotTickcount(i32 tick);
 	f32 GetBotCurtime();

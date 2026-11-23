@@ -3,10 +3,11 @@
 
 #include "vendor/sql_mm/src/public/sql_mm.h"
 
-// Periodic `SELECT 1` against the MySQL connection. Keeps the connection from being dropped for idling, and makes
-// libmysqlclient's auto-reconnect happen on the ping instead of on a real query.
+// Periodic `SELECT 1` against the MySQL connection.
+// Keeps the connection from being dropped for idling.
+// It also makes libmysqlclient's auto-reconnect happen on the ping instead of on a real query.
 static_global constexpr f64 healthCheckInterval = 60.0;
-// Timer tick, also the ping interval while the connection is unhealthy.
+// Timer tick and also the ping interval while the connection is unhealthy.
 static_global constexpr f64 healthRecheckInterval = 5.0;
 
 static_global CTimerBase *healthCheckTimer;
@@ -51,7 +52,7 @@ static_function f64 RunHealthCheck()
 	ISQLConnection *connection = KZDatabaseService::GetDatabaseConnection();
 	if (!connection)
 	{
-		// The connection was destroyed, the timer is deleted after returning.
+		// The connection was destroyed and the timer is deleted after returning.
 		healthCheckTimer = nullptr;
 		return 0.0;
 	}

@@ -102,7 +102,8 @@ void RegisterKZLogChannels()
 	LoggingVerbosity_t verbosity = CommandLine()->FindParm("-debug") ? LV_MAX : LV_DEFAULT;
 	for (auto &entry : g_KZChannels)
 	{
-		// Channels outlive the plugin, so a reload finds the ones it registered last time.
+		// Channels outlive the plugin.
+		// A reload finds the ones it registered last time.
 		entry.handle = LoggingSystem_FindChannel(entry.name);
 		if (entry.handle == INVALID_LOGGING_CHANNEL_ID)
 		{

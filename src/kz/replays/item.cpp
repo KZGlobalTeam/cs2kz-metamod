@@ -122,8 +122,8 @@ void KZ::replaysystem::item::InitItemAttributes()
 		}
 		ItemData &itemData = weaponItemMapping[id];
 		itemData = {sub->GetString("name"), gear_slot_t::GEAR_SLOT_INVALID};
-		// Try to get "item_gear_slot" from the item, if not found, find it in the prefab.
-		// Prefabs can be nested so we need to take that into account as well.
+		// Try to get "item_gear_slot" from the item and find it in the prefab if it is not there.
+		// Prefabs can be nested and we need to take that into account as well.
 		const char *gearSlotStr = sub->GetString("item_gear_slot", "");
 		KeyValues *current = sub;
 		while (!gearSlotStr[0])
@@ -143,7 +143,7 @@ void KZ::replaysystem::item::InitItemAttributes()
 		}
 		itemData.gearSlot = GetGearSlot(gearSlotStr);
 	}
-	// Cache the plain knife, used as a stand-in during playback for items the bot can't hold.
+	// Cache the plain knife as a stand-in during playback for items the bot can't hold.
 	for (const auto &[id, itemData] : weaponItemMapping)
 	{
 		if (itemData.name == "weapon_knife")
@@ -184,7 +184,7 @@ u16 KZ::replaysystem::item::GetDefaultKnifeItemDef()
 gear_slot_t KZ::replaysystem::item::GetWeaponGearSlot(u16 id)
 {
 	auto it = weaponItemMapping.find(id);
-	// Unknown items must not fall back to 0, which is GEAR_SLOT_RIFLE.
+	// Unknown items must not fall back to 0 because that is GEAR_SLOT_RIFLE.
 	return it == weaponItemMapping.end() ? gear_slot_t::GEAR_SLOT_INVALID : it->second.gearSlot;
 }
 
@@ -204,7 +204,7 @@ void KZ::replaysystem::item::ApplyItemAttributesToWeapon(CBasePlayerWeapon &weap
 	bool isKnife = false;
 	if (KZ_STREQI(weapon.GetClassname(), "weapon_knife") || KZ_STREQI(weapon.GetClassname(), "weapon_knife_t"))
 	{
-		// Hacky way to change subclass, but it doesn't rely on fragile signatures.
+		// Hacky way to change subclass but it doesn't rely on fragile signatures.
 		isKnife = true;
 		char command[64];
 		V_snprintf(command, sizeof(command), "subclass_change %i %i", info.mainInfo.itemDef, weapon.entindex());
@@ -292,7 +292,7 @@ void KZ::replaysystem::item::ApplyModelAttributesToPawn(CCSPlayerPawn *pawn, con
 
 	if (g_pFullFileSystem->FileExists(modelStr.c_str()))
 	{
-		// If the model starts with "characters/models" and there's a "agents/models" variant, use that instead.
+		// Use the "agents/models" variant instead if the model starts with "characters/models" and there is one.
 		// Newer CS2 versions no longer work with the "characters/models" variants.
 		if (V_strstr(modelStr.c_str(), "characters/models/"))
 		{
@@ -316,7 +316,7 @@ void KZ::replaysystem::item::ApplyModelAttributesToPawn(CCSPlayerPawn *pawn, con
 	{
 		KZ_LOG_INFO(LogChannel::Replays, "[KZ] Model '%s' does not exist, skipping model application.\n", modelName);
 	}
-	// This might not work with custom models, but oh well.
+	// This might not work with custom models but oh well.
 	if (setGloves)
 	{
 		CSkeletonInstance *pSkeleton = static_cast<CSkeletonInstance *>(pawn->m_CBodyComponent()->m_pSceneNode());

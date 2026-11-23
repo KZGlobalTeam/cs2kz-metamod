@@ -23,7 +23,7 @@ void KZHUDService::RefreshPrefs()
 		{
 			element.enabled = opts->GetPreferenceInt("jsReportType", JSReportType_Hud) != JSReportType_Chat;
 		}
-		// Older saves allowed +-100, which puts the anchor off screen.
+		// Older saves allowed +-100 and that puts the anchor off screen.
 		element.x = Clamp((f32)opts->GetPreferenceFloat(def.xKey, def.xDefault), -50.0f, 50.0f);
 		element.y = Clamp((f32)opts->GetPreferenceFloat(def.yKey, def.yDefault), -50.0f, 50.0f);
 		element.size = (f32)opts->GetPreferenceFloat(def.sizeKey, def.sizeDefault);
@@ -149,7 +149,7 @@ const MHUDPrefs &KZHUDService::GetPrefs()
 	{
 		return own;
 	}
-	// Bots have no preferences of their own, so mimicking a replay bot would just wipe the HUD.
+	// Bots have no preferences of their own and mimicking a replay bot would just wipe the HUD.
 	KZPlayer *target = this->player->specService->GetSpectatedPlayer();
 	if (!target || target == this->player || target->IsFakeClient())
 	{
@@ -180,7 +180,7 @@ bool KZHUDService::IsMHUDOutlineEnabled(MHUDElement element)
 
 bool KZHUDService::IsUsingLayoutStyle()
 {
-	// Own set on purpose: which HUD is drawn stays the player's choice even while mimicking.
+	// The player's own set on purpose because which HUD is drawn stays their choice even while mimicking.
 	return KZHUDService::IsLayoutHudAvailable() && !this->GetOwnPrefs().legacyStyle;
 }
 

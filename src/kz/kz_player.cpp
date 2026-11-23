@@ -48,7 +48,7 @@
 
 void KZPlayer::DestroyServices()
 {
-	// First, so no window stack outlives the services whose windows it points at.
+	// Runs first because no window stack may outlive the services whose windows it points at.
 	delete this->uiService;
 	this->uiService = nullptr;
 	delete this->anticheatService;
@@ -209,7 +209,8 @@ void KZPlayer::OnPlayerActive()
 	VPROF_BUDGET(__func__, "CS2KZ");
 	if (this->awayService->OnReconnect())
 	{
-		// The persistent services are still set up, rebuilding them would stop the timer. The new client only needs their convars.
+		// The persistent services are still set up and rebuilding them would stop the timer.
+		// The new client only needs their convars.
 		this->modeService->Init();
 		utils::SendMultipleConVarValues(this->GetPlayerSlot(), KZ::mode::modeCvarRefs, this->modeService->GetModeConVarValues(), MODECVAR_COUNT);
 		for (KZStyleService *style : this->styleServices)
@@ -314,8 +315,8 @@ bool KZPlayer::OnPlayerRunCommand(CUserCmd *cmd)
 	{
 		return false;
 	}
-	// Fast replay playback simulates several replay ticks in one server tick. The engine runs the last command, the
-	// others run here with the same per-tick logic around them.
+	// Fast replay playback simulates several replay ticks in one server tick.
+	// The engine runs the last command and the others run here with the same per-tick logic around them.
 	while (KZ::replaysystem::HasQueuedReplayTicks(this))
 	{
 		hooks::CallOriginalPlayerRunCommand(this->GetMoveServices(), cmd);
@@ -331,7 +332,7 @@ void KZPlayer::SimulateTick()
 {
 	MovementPlayer::OnPhysicsSimulate();
 
-	// sv_subtick_movement_view_angles is checked inside SetupMove, so the cvars have to be set before that.
+	// The cvars have to be set before SetupMove because it checks sv_subtick_movement_view_angles.
 	KZ::mode::ApplyModeSettings(this);
 	this->recordingService->OnPhysicsSimulate();
 	this->triggerService->OnPhysicsSimulate();
@@ -363,8 +364,8 @@ void KZPlayer::SimulateTickPost()
 	this->timerService->OnPhysicsSimulatePost();
 	KZ::replaysystem::OnPhysicsSimulatePost(this);
 	this->progressService->OnPhysicsSimulatePost();
-	// Called even while dead and not spectating: the MHUD layout has to be told to collapse, it
-	// does not fade out on its own the way the html centre panel did.
+	// Called even while dead and not spectating because the MHUD layout has to be told to collapse.
+	// It does not fade out on its own the way the html centre panel did.
 	if (this->specService->GetSpectatedPlayer())
 	{
 		KZHUDService::DrawPanels(this->specService->GetSpectatedPlayer(), this);
@@ -1089,7 +1090,7 @@ void KZPlayer::LimitTurnbinds()
 	if (direction != 0 && time < this->turnbindStartTimes[1 - index] + KZ_TURNBIND_COOLDOWN)
 	{
 		angles.y = this->lastValidYaw;
-		// NOTE(GameChaos): Using SetAngles, which uses Teleport makes player movement really weird
+		// NOTE(GameChaos): Using SetAngles makes player movement really weird because it uses Teleport.
 		g_pKZUtils->SnapViewAngles(pawn, angles);
 		return;
 	}

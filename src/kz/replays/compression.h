@@ -18,9 +18,11 @@ namespace KZ::replaysystem::compression
 		u64 elementCount;     // Number of elements (e.g., tick count)
 	};
 
-	// The ticks of a loaded replay, kept delta-encoded as they are on disk. Every KEYFRAME_INTERVAL-th tick is also kept in
-	// full, so a read decodes forward from the keyframe before it, and reading the tick after the last one decodes just that one.
-	// The last tick read and the one before it are cached. Main thread only.
+	// The ticks of a loaded replay kept delta-encoded like on disk.
+	// Every KEYFRAME_INTERVAL-th tick is also kept in full.
+	// A read decodes forward from the keyframe before it and reading the tick after the last one decodes just that one.
+	// The last tick read and the one before it are cached.
+	// Main thread only.
 	class TickStore
 	{
 	public:
@@ -33,10 +35,11 @@ namespace KZ::replaysystem::compression
 
 		// index must be below Count().
 		TickData Get(u32 index);
-		// The first tick recorded on or after serverTick, or the last tick if there is none. Count() must not be 0.
+		// The first tick recorded on or after serverTick or the last tick if there is none.
+		// Count() must not be 0.
 		u32 FindServerTick(u32 serverTick);
 
-		// The ticks where the teleport count goes up, found while loading.
+		// The ticks where the teleport count goes up as found while loading.
 		const std::vector<u32> &TeleportTicks() const
 		{
 			return teleportTicks;
@@ -77,10 +80,10 @@ namespace KZ::replaysystem::compression
 	// Decompress a buffer using zstd
 	bool Decompress(const void *src, size_t srcSize, void *dst, size_t dstSize);
 
-	// Subtick data travels packed: one move count per tick and the moves of all ticks back to back,
-	// because most ticks have no subtick moves at all.
+	// Subtick data travels packed as one move count per tick followed by the moves of all ticks back to back.
+	// Most ticks have no subtick moves at all.
 
-	// One compressed section assembled from consecutive pieces, each compressed as its own zstd frame.
+	// One compressed section assembled from consecutive pieces that are each compressed as their own zstd frame.
 	struct SectionBuilder
 	{
 		std::vector<char> frames;
@@ -88,8 +91,9 @@ namespace KZ::replaysystem::compression
 		u64 elementCount = 0;
 	};
 
-	// Writes the tick, subtick, cmd and cmd subtick sections of a recording that arrives in consecutive pieces, such as the
-	// chunks a long recording flushes to disk. Only the compressed sections and the current piece have to be in memory.
+	// Writes the tick, subtick, cmd and cmd subtick sections of a recording that arrives in consecutive pieces.
+	// The chunks a long recording flushes to disk are such pieces.
+	// Only the compressed sections and the current piece have to be in memory.
 	class RecordingWriter
 	{
 	public:
@@ -124,7 +128,7 @@ namespace KZ::replaysystem::compression
 								 const std::vector<SubtickData::RpSubtickMove> &subtickMoves);
 
 	// The route reader receives decoded ticks without retaining full tick/subtick arrays.
-	// Returning false aborts decoding, for example when a map change cancels loading.
+	// Returning false aborts decoding (for example when a map change cancels loading).
 	using TickVisitor = std::function<bool(const TickData &)>;
 
 	// Read compressed tick data with delta decoding

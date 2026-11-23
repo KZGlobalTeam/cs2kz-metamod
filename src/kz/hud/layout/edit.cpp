@@ -12,43 +12,45 @@
 
 // The layout is always 1080 units tall; its width follows the aspect ratio the player picked in the menu.
 #define MHUD_EDIT_UNITS_PER_PCT_Y 10.8f
-// Layout units the element moves per raw mouse count, about a cursor at 1080p.
+// Layout units the element moves per raw mouse count (about a cursor at 1080p).
 #define MHUD_EDIT_UNITS_PER_COUNT 1.0f
 #define MHUD_EDIT_SNAP_UNITS      20.0f
-// Box width per character, in font sizes. No font we ship averages wider than this for HUD text, so the box never
-// comes out smaller than the text whatever the font; characters outside ASCII (CJK phrases) get a full em.
+// Box width per character in font sizes.
+// No font we ship averages wider than this for HUD text and the box never comes out smaller than the text whatever the font.
+// Characters outside ASCII (CJK phrases) get a full em.
 #define MHUD_EDIT_BOX_EM_PER_CHAR  0.6f
 #define MHUD_EDIT_BOX_EM_WIDE_CHAR 1.0f
 #define MHUD_EDIT_BOX_EM_HEIGHT    1.3f
 // Layout units of breathing room around every box.
 #define MHUD_EDIT_BOX_PADDING 8.0f
-// The largest box box-size.css defines. The jumpstats panel at 200% is about 970 units tall.
+// The largest box box-size.css defines.
+// The jumpstats panel at 200% is about 970 units tall.
 #define MHUD_EDIT_BOX_MAX_WIDTH  1600
 #define MHUD_EDIT_BOX_MAX_HEIGHT 1000
-// Re-centre pitch well before the +-89 clamp, leaving a full round trip of room for the snap to land.
+// Re-centre pitch well before the +-89 clamp to leave a full round trip of room for the snap to land.
 #define MHUD_EDIT_RESNAP_PITCH 45.0f
 #define MHUD_EDIT_CAMERA_NAME  "kz_hudedit_camera"
-// The jumpstats panel at 100%, from mhud.css. The panel's fixed part is its padding, header, distance and divider.
+
 #define MHUD_EDIT_JS_WIDTH          288.0f
 #define MHUD_EDIT_JS_PANEL_HEIGHT   109.0f
 #define MHUD_EDIT_JS_ROW_HEIGHT     19.0f
 #define MHUD_EDIT_JS_HISTORY_HEIGHT 146.0f
-// Compact mode has only the pills, with no gap under them for the panel.
+// Compact mode only has the pills without a gap under them for the panel.
 #define MHUD_EDIT_JS_COMPACT_HEIGHT 138.0f
-// The course panel at 100%, from mhud.css.
+
 #define MHUD_EDIT_COURSE_WIDTH          320.0f
 #define MHUD_EDIT_COURSE_PADDING        20.0f
 #define MHUD_EDIT_COURSE_HEAD_HEIGHT    53.0f
 #define MHUD_EDIT_COURSE_PROGRESS_GAP   6.0f
 #define MHUD_EDIT_COURSE_ROW_HEIGHT     19.0f
 #define MHUD_EDIT_COURSE_HISTORY_HEIGHT 146.0f
-// The race panel at 100%, from mhud.css. Its head is the header and the divider under it, and the sample shows a race
-// before its start, with a teleport limit and a time limit.
+
 #define MHUD_EDIT_RACE_WIDTH       260.0f
 #define MHUD_EDIT_RACE_HEAD_HEIGHT 29.0f
 #define MHUD_EDIT_RACE_SAMPLE_ROWS 5
 
-// The buttons inside each element's edit box, after its id. Corners are in EditState::corner order.
+// The buttons inside each element's edit box after its id.
+// Corners are in EditState::corner order.
 #define MHUD_EDIT_MOVE_SUFFIX "_move"
 static_global const char *const EDIT_CORNER_SUFFIXES[] = {"_tl", "_tr", "_bl", "_br"};
 
@@ -59,16 +61,17 @@ struct EditTextDef
 	const char *phraseKey;
 };
 
-// The drag hint shows the keys the player has bound. Each key label in mhud.xml reads {g:csgo_key:editkey}, and the
-// game's csgo_key formatter swaps every %command% in that variable for the key bound to it. The HUD's own bind_*
-// variables would not work here, because they live on the CSGOHud root and custom layouts are not under it.
+// The drag hint shows the keys the player has bound.
+// Each key label in mhud.xml reads {g:csgo_key:editkey}.
+// The game's csgo_key formatter swaps every %command% in that variable for the key bound to it.
+// The HUD's own bind_* variables would not work here because they live on the CSGOHud root and custom layouts are not under it.
 static_global const EditTextDef EDIT_TEXTS[] = {
 	{"mhud_edit_hint", "edithint", "HUD Edit - Pick Hint"},  {"mhud_edit_place", "editplace", "HUD Edit - Place"},
 	{"mhud_edit_cancel", "editcancel", "HUD Edit - Cancel"}, {"mhud_edit_default", "editdefault", "HUD Edit - Default"},
 	{"mhud_edit_free", "editfree", "HUD Edit - Free Move"},  {"mhud_edit_done_label", "editdone", "HUD Edit - Done"},
 };
 
-// Key label panel, and the command whose bound key it shows.
+// Key label panel and the command whose bound key it shows.
 static_global const char *const EDIT_KEYS[][2] = {
 	{"mhud_edit_key_place", "%attack%"},
 	{"mhud_edit_key_cancel", "%attack2%"},
@@ -85,7 +88,7 @@ static_function f32 NormalizeYawDelta(f32 delta)
 	return delta < 0.0f ? delta + 180.0f : delta - 180.0f;
 }
 
-// Uses the same rule as CInButtonState::IsButtonNewlyPressed, where any state from UP_DOWN upwards had a press.
+// Uses the same rule as CInButtonState::IsButtonNewlyPressed where any state from UP_DOWN upwards had a press.
 static_function u64 GetNewlyPressedButtons(const CInButtonStatePB &buttons)
 {
 	return buttons.buttonstate3() | (buttons.buttonstate1() & buttons.buttonstate2());
@@ -98,8 +101,9 @@ static_function f32 GetClientConVarFloat(CPlayerSlot slot, const char *name, f32
 	return fabsf(result) > 0.0001f ? result : fallback;
 }
 
-// Stripping +attack on the server is not enough, because the client still predicts the shot. m_flNextAttack is
-// networked and predicted, so holding it in the future stops the weapon on both ends, whichever weapon is out.
+// Stripping +attack on the server is not enough because the client still predicts the shot.
+// m_flNextAttack is networked and predicted.
+// Holding it in the future stops the weapon on both ends whichever weapon is out.
 static_function void HoldWeapons(CCSPlayerPawn *pawn, bool hold, f32 &saved)
 {
 	CCSPlayer_WeaponServices *weapons = pawn ? static_cast<CCSPlayer_WeaponServices *>(pawn->m_pWeaponServices()) : nullptr;
@@ -109,23 +113,25 @@ static_function void HoldWeapons(CCSPlayerPawn *pawn, bool hold, f32 &saved)
 	}
 	const f32 now = g_pKZUtils->GetServerGlobals()->curtime;
 	const f32 current = weapons->m_flNextAttack().GetTime();
-	// Nothing the game sets reaches a minute ahead, so that far out means it is still our hold. A deploy after a weapon
-	// switch replaces it; take that value as the one to restore and hold again.
+	// A value a minute ahead is still our hold because nothing the game sets reaches that far.
+	// A deploy after a weapon switch replaces it.
+	// Take that value as the one to restore and hold again.
 	const bool held = current > now + 60.0f;
 	if (hold && !held)
 	{
 		saved = current;
 		weapons->m_flNextAttack(GameTime_t(now + 3600.0f));
 	}
-	// The hold is released half a second late. When edit mode ends on the click that places an element, that click is
-	// still held for a round trip and would otherwise fire.
+	// The hold is released half a second late.
+	// The click that places an element and ends edit mode is still held for a round trip and would otherwise fire.
 	else if (!hold && held)
 	{
 		weapons->m_flNextAttack(GameTime_t(fmaxf(saved, now + 0.5f)));
 	}
 
-	// Each weapon's own attack ticks are held the same way. The secondary one gates attack2 (burst, silencer, scope,
-	// knife stab), and reloads wait on the primary one. Every carried weapon is held, so switching cannot get around it.
+	// Each weapon's own attack ticks are held the same way.
+	// The secondary one gates attack2 (burst, silencer, scope, knife stab) and reloads wait on the primary one.
+	// Every carried weapon is held so switching cannot get around it.
 	const i32 tick = g_pKZUtils->GetServerGlobals()->tickcount;
 	const i32 heldTicks = (i32)(3600.0f / ENGINE_FIXED_TICK_INTERVAL);
 	const i32 heldThreshold = tick + (i32)(60.0f / ENGINE_FIXED_TICK_INTERVAL);
@@ -165,7 +171,7 @@ static_function void RemoveEditCamera(CHandle<CBaseEntity> &handle, CHandle<CBas
 		CCSPlayerPawnBase *pawn = camera->m_hPawn().Get();
 		camera->SetMode(CUSTOM_CAMERA_MODE_DISABLED);
 		g_pKZUtils->RemoveEntity(camera);
-		// Give the view back to whatever held it before the drag, such as a map camera, unless something took it since.
+		// Give the view back to whatever held it before the drag (such as a map camera) unless something took it since.
 		CPlayer_CameraServices *cameraServices = pawn ? pawn->m_pCameraServices() : nullptr;
 		CBaseEntity *previous = previousView.Get();
 		if (cameraServices && previous && previous != (CBaseEntity *)pawn && !cameraServices->m_hViewEntity().Get())
@@ -204,7 +210,8 @@ void KZHUDService::StartHudEdit(MHUDElement element)
 		return;
 	}
 	this->editWindow.element = element;
-	// Started from an element's position stepper, so the menu stays underneath and comes back afterwards.
+	// Started from an element's position stepper.
+	// The menu stays underneath and comes back afterwards.
 	this->player->uiService->Open(&this->editWindow, element < MHUDElement::Count ? KZ::ui::OpenMode::Push : KZ::ui::OpenMode::Replace);
 }
 
@@ -257,7 +264,8 @@ void KZHUDService::HudEditWindow::OnClose(KZ::ui::CloseReason reason)
 	if (GameEntitySystem())
 	{
 		CCSPlayerPawn *pawn = hud->player->GetPlayerPawn();
-		// Closed mid-drag by something else, such as another window, so hand back the view the drag turned.
+		// Something else (such as another window) closed edit mode mid-drag.
+		// Hand back the view the drag turned.
 		if (hud->edit.mode == EditMode::Dragging && pawn && pawn->IsAlive())
 		{
 			g_pKZUtils->SnapViewAngles(pawn, hud->edit.viewAngles);
@@ -279,8 +287,8 @@ void KZHUDService::ValidateHudEdit()
 		this->AbortHudEdit();
 		return;
 	}
-	// Weapons stay held for the whole session, not just the drag, since the click that places an element is still held
-	// for a round trip.
+	// Weapons stay held for the whole session and not just the drag.
+	// The click that places an element is still held for a round trip.
 	HoldWeapons(pawn, true, this->edit.nextAttack);
 	if (this->edit.mode == EditMode::Dragging)
 	{
@@ -371,7 +379,7 @@ void KZHUDService::BeginDrag(MHUDElement element, i32 corner)
 	this->edit.yawSum = this->edit.pitchSum = 0.0f;
 	this->edit.snapPending = false;
 
-	// Negative m_yaw/m_pitch (inverted mouse) keeps its sign, so the element still follows the hand.
+	// Negative m_yaw/m_pitch (inverted mouse) keeps its sign so the element still follows the hand.
 	const f32 sensitivity = GetClientConVarFloat(slot, "sensitivity", 1.0f);
 	this->edit.yawPerCount = GetClientConVarFloat(slot, "m_yaw", 0.022f) * sensitivity;
 	this->edit.pitchPerCount = GetClientConVarFloat(slot, "m_pitch", 0.022f) * sensitivity;
@@ -423,7 +431,7 @@ void KZHUDService::SnapEditView(const QAngle &angles)
 		return;
 	}
 	g_pKZUtils->SnapViewAngles(pawn, angles);
-	// The stored target is quantized the way the client will receive it, so rebase on that, not on angles.
+	// Rebase on the stored target instead of the angles because it is quantized the way the client will receive it.
 	CSchemaCollection<ViewAngleServerChange_t> changes = pawn->m_ServerViewAngleChanges();
 	const i32 count = changes.Count();
 	if (count > 0)
@@ -435,9 +443,10 @@ void KZHUDService::SnapEditView(const QAngle &angles)
 	}
 }
 
-// Movement, buttons and weapon switches pass through untouched, because rewriting them only makes the client mispredict.
-// Weapons are held through their attack times instead. While dragging, the pawn keeps the view it had before the drag,
-// so spectators do not watch it spin, while the client's own angles keep moving the element.
+// Movement, buttons and weapon switches pass through untouched because rewriting them only makes the client mispredict.
+// Weapons are held through their attack times instead.
+// While dragging the pawn keeps the view it had before the drag so spectators do not watch it spin.
+// The client's own angles keep moving the element.
 static_function void PinEditViewAngles(CUserCmd *cmd, const QAngle &viewAngles)
 {
 	CMsgQAngle *angles = cmd->mutable_base()->mutable_viewangles();
@@ -459,9 +468,9 @@ void KZHUDService::OnProcessUsercmds(CUserCmd *cmds, i32 numCmds)
 		{
 			continue;
 		}
-		// Copied first, because tracking can end the drag and reset the edit state on this very command.
+		// Copied first because tracking can end the drag and reset the edit state on this very command.
 		const QAngle viewAngles = this->edit.viewAngles;
-		// A command can arrive more than once, and is only tracked the first time.
+		// A command can arrive more than once and is only tracked the first time.
 		if (cmds[i].cmdNum > this->edit.lastCmdNum)
 		{
 			this->TrackEditCommand(pawn, cmds[i]);
@@ -476,7 +485,8 @@ void KZHUDService::TrackEditCommand(CCSPlayerPawn *pawn, CUserCmd &cmd)
 	const CBaseUserCmdPB &base = cmd.base();
 	const QAngle angles(base.viewangles().x(), base.viewangles().y(), 0.0f);
 
-	// A snap from elsewhere (checkpoint, teleport, map) replaces ours, so rebase on whichever the client applies.
+	// A snap from elsewhere (checkpoint, teleport, map) replaces ours.
+	// Rebase on whichever snap the client applies.
 	CSchemaCollection<ViewAngleServerChange_t> changes = pawn->m_ServerViewAngleChanges();
 	const i32 count = changes.Count();
 	if (count > 0)
@@ -490,7 +500,7 @@ void KZHUDService::TrackEditCommand(CCSPlayerPawn *pawn, CUserCmd &cmd)
 		}
 	}
 
-	// Until the client applies the snap its angles continue from the old ones; from then on, from the snap.
+	// The client's angles continue from the old ones until it applies the snap and from the snap after that.
 	QAngle reference = this->edit.lastAngles;
 	if (this->edit.snapPending && base.consumed_server_angle_changes() >= this->edit.snapIndex)
 	{
@@ -517,7 +527,7 @@ void KZHUDService::UpdateDragPosition(u64 newlyPressed, u64 held)
 {
 	if (this->edit.corner >= 0)
 	{
-		// Turning right lowers yaw, looking down raises pitch.
+		// Turning right lowers yaw and looking down raises pitch.
 		const f32 unitsX = -this->edit.yawSum / this->edit.yawPerCount * MHUD_EDIT_UNITS_PER_COUNT;
 		const f32 unitsY = this->edit.pitchSum / this->edit.pitchPerCount * MHUD_EDIT_UNITS_PER_COUNT;
 		this->UpdateResize(newlyPressed, unitsX, unitsY);
@@ -536,7 +546,7 @@ void KZHUDService::UpdateDragPosition(u64 newlyPressed, u64 held)
 	}
 }
 
-// Dragging a corner scales the element about the opposite corner, which stays where it is.
+// Dragging a corner scales the element about the opposite corner and that corner stays where it is.
 void KZHUDService::UpdateResize(u64 newlyPressed, f32 unitsX, f32 unitsY)
 {
 	const MHUDElementDef &def = MHUD_ELEMENTS[(i32)this->edit.element];
@@ -547,8 +557,8 @@ void KZHUDService::UpdateResize(u64 newlyPressed, f32 unitsX, f32 unitsY)
 		this->edit.yawSum = this->edit.pitchSum = 0.0f;
 		unitsX = unitsY = 0.0f;
 	}
-	// The grabbed corner's offset from the fixed one, without the padding, which does not scale with the element. How far
-	// the mouse moved the corner along that diagonal sets the new size.
+	// The grabbed corner's offset from the fixed one without the padding (it does not scale with the element).
+	// How far the mouse moved the corner along that diagonal sets the new size.
 	const f32 dirX = (this->edit.corner & 1) ? 1.0f : -1.0f;
 	const f32 dirY = (this->edit.corner & 2) ? 1.0f : -1.0f;
 	const f32 cornerX = dirX * (this->edit.startWidth - MHUD_EDIT_BOX_PADDING);
@@ -582,13 +592,13 @@ void KZHUDService::UpdateMove(u64 newlyPressed, u64 held)
 		this->edit.yawSum = this->edit.pitchSum = 0.0f;
 	}
 
-	// Turning right lowers yaw, looking down raises pitch.
+	// Turning right lowers yaw and looking down raises pitch.
 	const f32 countsX = -this->edit.yawSum / this->edit.yawPerCount;
 	const f32 countsY = this->edit.pitchSum / this->edit.pitchPerCount;
 	f32 x = this->edit.startX + countsX * MHUD_EDIT_UNITS_PER_COUNT / this->edit.unitsPerPctX;
 	f32 y = this->edit.startY + countsY * MHUD_EDIT_UNITS_PER_COUNT / MHUD_EDIT_UNITS_PER_PCT_Y;
-	// This works like a cursor at the screen edge. Pushing further moves the start along, so coming back responds at
-	// once.
+	// This works like a cursor at the screen edge.
+	// Pushing further moves the start along so coming back responds at once.
 	const f32 rawX = x, rawY = y;
 	this->ClampEditBox(this->edit.element, x, y);
 	this->edit.startX += x - rawX;
@@ -622,7 +632,7 @@ void KZHUDService::UpdateMove(u64 newlyPressed, u64 held)
 					}
 				}
 			}
-			// The default position is a point, so only the anchor snaps to it.
+			// Only the anchor snaps to the default position because it is a point.
 			const f32 delta = defaults[axis] - anchor[axis];
 			if (fabsf(delta) < best)
 			{
@@ -656,7 +666,7 @@ void KZHUDService::GetEditBoxSize(MHUDElement element, f32 &width, f32 &height)
 	const f32 size = this->GetLayoutSize(element);
 	if (element == MHUDElement::Jumpstats)
 	{
-		// The sample shows every row the player has on, and the history unless it is off.
+		// The sample shows every row the player has on and the history unless it is off.
 		i32 rows = 0;
 		for (bool shown : prefs.jsFields.shown)
 		{
@@ -699,7 +709,7 @@ void KZHUDService::GetEditBoxSize(MHUDElement element, f32 &width, f32 &height)
 	}
 	if (element == MHUDElement::Keys)
 	{
-		// Mirrors keys-size.css, where the size-20 boxes (55x35 wide, 40x40 square, 10px gaps) scale with the size.
+		// Mirrors keys-size.css where the size-20 boxes (55x35 wide, 40x40 square, 10px gaps) scale with the size.
 		const f32 scale = Clamp((i32)size, MHUD_SIZE_MIN, MHUD_SIZE_MAX) / 20.0f;
 		const f32 keyWidth = roundf((prefs.keysSquare ? 40.0f : 55.0f) * scale);
 		const f32 keyHeight = roundf((prefs.keysSquare ? 40.0f : 35.0f) * scale);
@@ -739,7 +749,7 @@ void KZHUDService::ClampEditBox(MHUDElement element, f32 &x, f32 &y)
 {
 	f32 box[4];
 	this->GetEditBox(element, x, y, box);
-	// Percent offsets are from the screen centre, so the screen spans -50..50 on both axes.
+	// Percent offsets are from the screen centre and the screen spans -50..50 on both axes.
 	for (i32 axis = 0; axis < 2; axis++)
 	{
 		const f32 lo = box[axis * 2], hi = box[axis * 2 + 1];

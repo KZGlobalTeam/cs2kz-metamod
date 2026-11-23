@@ -46,7 +46,7 @@ enum JSReportType : u8
 	JSREPORTTYPE_COUNT
 };
 
-// The stats listed under a jump's distance, in their default order, shared by the chat report and the HUD panel.
+// The stats listed under a jump's distance in their default order (shared by the chat report and the HUD panel).
 enum class JSField : u8
 {
 	Block,
@@ -72,19 +72,20 @@ enum class JSField : u8
 struct JSFieldDef
 {
 	const char *slug;       // its name in the jsFieldOrder preference
-	const char *prefKey;    // bool preference, on by default
+	const char *prefKey;    // bool preference that is on by default
 	const char *menuPhrase; // its toggle in the options menu
-	const char *hudLabel;   // NULL: the labels below, joined
-	// One per value, as the chat prints them. Pre and max, say, are one field with two values.
+	const char *hudLabel;   // NULL for the labels below joined
+	// One per value like the chat prints them.
+	// Pre and max are one field with two values for example.
 	const char *labels[JS_FIELD_MAX_VALUES];
-	bool extended; // printed on the chat's second line, which only shows with extended chat stats on
+	bool extended; // printed on the chat's second line that only shows with extended chat stats on
 };
 
 extern const JSFieldDef JS_FIELDS[(i32)JSField::Count];
 
 #define JS_DEFAULT_FIELD_ORDER "block,strafes,sync,premax,edge,height,airtime,width,gaineff,airpath,badangles,deviation,miss,release,offset"
 
-// The fields in the player's order, and which of them are on.
+// The fields in the player's order and which of them are on.
 struct JSFieldLayout
 {
 	JSField order[(i32)JSField::Count] {};
@@ -101,10 +102,10 @@ enum class JSFieldColor : u8
 	Tier, // the distance tier's color
 };
 
-// One field of one jump, formatted for the chat or the HUD.
+// One field of one jump formatted for the chat or the HUD.
 struct JSFieldText
 {
-	bool present {}; // false for a stat the jump does not have, such as the block of a jump without one
+	bool present {}; // false for a stat the jump does not have (such as the block of a jump without one)
 	JSFieldColor color {};
 	DistanceTier tier {};
 	std::string values[JS_FIELD_MAX_VALUES];
@@ -272,7 +273,7 @@ public:
 	}
 
 	// Calculate the ratio for each strafe.
-	// The ratio is 0 if the angle is perfect, closer to -1 if it's too slow
+	// The ratio is 0 if the angle is perfect and closer to -1 if it's too slow
 	// Closer to 1 if it passes the optimal value.
 	// Note: if the player jumps in place, no velocity and no attempt to move at all, any angle will be "perfect".
 	// Returns false if there is no available stats.
@@ -352,7 +353,7 @@ public:
 	bool failstatValid {};
 	f32 failstatBlockHeight {};
 
-	// Running totals for ended strafes, used by RecordPose snapshots.
+	// Running totals for ended strafes for RecordPose snapshots.
 	f32 poseEndedDuration {};
 	f32 poseEndedSyncDuration {};
 	f32 poseEndedBadAnglesDuration {};
@@ -508,7 +509,7 @@ public:
 
 	f32 GetDeviation();
 
-	// Same distance as GetDeviation, positive when the landing is to the left of the jump direction and negative to the right.
+	// Same distance as GetDeviation (positive when the landing is to the left of the jump direction and negative to the right).
 	f32 GetSignedDeviation();
 
 	f32 GetReleaseInTick()
@@ -545,7 +546,7 @@ public:
 		return releaseString;
 	}
 
-	// greyTier greys the block out like the distance, for a jump that is invalid or reported through jsalways.
+	// greyTier greys the block out like the distance for a jump that is invalid or reported through jsalways.
 	void FormatField(JSField field, bool chat, bool greyTier, JSFieldText &out);
 
 	std::string GetInvalidationReasonString(const char *reason, const char *language = NULL);
@@ -576,7 +577,7 @@ public:
 
 	// Jumpstats
 	std::vector<Jump> jumps;
-	// One pose per subtick movement of the current jump, consumed by the tail jump's failstat tracking.
+	// One pose per subtick movement of the current jump for the tail jump's failstat tracking.
 	CFIFOCircularBuffer<JumpPose, JS_FAILSTATS_MAX_TRACKED_TICKS> poseHistory;
 	f32 lastJumpButtonTime {};
 	f32 lastNoclipTime {};
@@ -642,7 +643,8 @@ public:
 	static void PrintJumpToChat(KZPlayer *target, Jump *jump, bool extended = false);
 	static void PrintJumpToConsole(KZPlayer *target, Jump *jump, bool broadcast = false);
 
-	// Reads the field preferences. The HUD keeps the result in its cached preferences, which the chat report reads too.
+	// Reads the field preferences.
+	// The HUD keeps the result in its cached preferences and the chat report reads it too.
 	static void GetFieldLayout(KZPlayer *player, JSFieldLayout &out);
 	static void SetFieldOrder(KZPlayer *player, const JSField (&order)[(i32)JSField::Count]);
 

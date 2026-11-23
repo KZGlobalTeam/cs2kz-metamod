@@ -143,8 +143,9 @@ void AsyncFileIO::RunFrame()
 
 void AsyncFileIO::ThreadRun()
 {
-	// Our own thread, so nothing above it marks us as being inside cs2kz - the module scope has to
-	// start here. Read buffers are allocated on this thread and freed on the main thread.
+	// This is our own thread and nothing above it marks us as being inside cs2kz.
+	// The module scope has to start here.
+	// Read buffers are allocated on this thread and freed on the main thread.
 
 	auto processTask = [&](AsyncAnyTask &anyTask)
 	{
@@ -231,7 +232,7 @@ void AsyncFileIO::ThreadRun()
 		{
 			utils::WriteBufferToFile(rwt->path.c_str(), rwt->buffer);
 		}
-		// ReadTask: skip on shutdown
+		// Read tasks are skipped on shutdown.
 		m_taskQueue.pop();
 	}
 }

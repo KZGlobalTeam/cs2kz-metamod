@@ -11,8 +11,8 @@
 #define KZ_HUD_TIMER_STOPPED_GRACE_TIME 3.0f
 #define KZ_HUD_ON_GROUND_THRESHOLD      0.07f
 
-// The m_iHideHUD bits the client's own HUD elements check, as of CS2 1.41.8.3. Same values as HIDEHUD_* in
-// shareddefs.h, which clashes with the SDK definitions the plugin already has.
+// The m_iHideHUD bits the client's own HUD elements check as of CS2 1.41.8.3.
+// Same values as HIDEHUD_* in shareddefs.h (that header clashes with the SDK definitions the plugin already has).
 #define KZ_HIDEHUD_WEAPONSELECTION (1 << 0)
 #define KZ_HIDEHUD_ALL             (1 << 2)
 #define KZ_HIDEHUD_MISCSTATUS      (1 << 6)
@@ -26,7 +26,7 @@ struct GameHudPartDef
 	const char *phraseKey;
 	const char *prefKey; // bool preference
 	u32 bit;
-	const char *argName; // kz_hidehud argument, null when the command can't toggle it
+	const char *argName; // kz_hidehud argument (null when the command can't toggle it)
 };
 
 extern const GameHudPartDef GAME_HUD_PARTS[GAME_HUD_PART_COUNT];
@@ -41,12 +41,12 @@ class CUserCmd;
 #define MHUD_JS_PANEL_TIME_MAX 30
 #define MHUD_JS_HISTORY_TIME   10.0f
 
-// How long the keys element keeps counting jump presses after the last one, in seconds, like NohBoard's scroll hold.
+// How long (in seconds) the keys element keeps counting jump presses after the last one like NohBoard's scroll hold.
 #define MHUD_KEYS_JUMP_COUNT_HOLD 0.25
 
-// The course panel's record rows, overall then pro.
+// The course panel's record rows (overall then pro).
 #define MHUD_COURSE_ROW_COUNT 2
-// Stages, checkpoints and splits reached, each out of the course's total.
+// Stages, checkpoints and splits reached out of the course's total.
 #define MHUD_COURSE_PROGRESS_COUNT 3
 // Course, mode, format, teleport limit, time and personal best.
 #define MHUD_RACE_ROW_COUNT 6
@@ -63,7 +63,8 @@ enum class MHUDElement
 	Release,
 	// Only drawn while a race is configured or running.
 	Race,
-	// The indicators are contiguous and last, so an element index maps straight onto the indicator tables.
+	// The indicators are contiguous and last.
+	// An element index therefore maps straight onto the indicator tables.
 	Perf,
 	CrouchJump,
 	Jumpbug,
@@ -95,9 +96,10 @@ struct MHUDElementDef
 {
 	const char *panelId;    // See the panel ids in mhud.xml
 	const char *posPanelId; // full-screen wrapper carrying the fine position
-	const char *hitPanelId; // edit-mode box, holding the move button and one resize button per corner
+	const char *hitPanelId; // edit-mode box holding the move button and one resize button per corner
 	const char *varName;
-	// NULL for the jumpstats panel, which is on whenever jumpstats are reported to the HUD.
+	// NULL for the jumpstats panel.
+	// It is on whenever jumpstats are reported to the HUD.
 	const char *enabledKey;
 	const char *xKey;
 	const char *yKey;
@@ -122,13 +124,14 @@ struct MHUDColorPrefDef
 	u8 r, g, b;
 	bool solidOnly {};
 	const char *enabledBy {};
-	// The legacy HTML HUD tints its speed line from these, so they are not layout-only like the rest.
+	// These are not layout-only like the rest because the legacy HTML HUD tints its speed line from them.
 	bool affectLegacy {};
 };
 
 extern const MHUDElementDef MHUD_ELEMENTS[(i32)MHUDElement::Count];
 
-// The layout is 1080 units tall, so its width is 1080 * aspect ratio. Only edit mode needs it.
+// The layout is 1080 units tall and its width is 1080 * aspect ratio.
+// Only edit mode needs it.
 #define MHUD_DEF_SCREEN_WIDTH 1920
 
 #define MHUD_SIZE_MIN 8
@@ -169,13 +172,14 @@ enum class MHUDAlign
 	Right,
 };
 
-// The course and race panels hang off the left edge of the screen, so they stay on it whatever the aspect ratio.
+// The course and race panels hang off the left edge of the screen and stay on it whatever the aspect ratio.
 inline MHUDAlign GetMHUDDefaultAlign(MHUDElement element)
 {
 	return element == MHUDElement::Course || element == MHUDElement::Race ? MHUDAlign::Left : MHUDAlign::Center;
 }
 
-// The course and race panels' heights depend on what they show, so their y is their top edge rather than their centre.
+// The course and race panels' heights depend on what they show.
+// Their y is therefore their top edge rather than their centre.
 inline bool IsMHUDElementTopAnchored(MHUDElement element)
 {
 	return element == MHUDElement::Course || element == MHUDElement::Race;
@@ -187,7 +191,8 @@ inline bool IsMHUDElementScaled(MHUDElement element)
 	return element == MHUDElement::Jumpstats || element == MHUDElement::Course || element == MHUDElement::Race;
 }
 
-// The jumpstats and course panels draw a background, which fades apart from their text. NULL for every other element.
+// The jumpstats and course panels draw a background that fades apart from their text.
+// NULL for every other element.
 inline const char *GetMHUDBackgroundOpacityKey(MHUDElement element)
 {
 	switch (element)
@@ -203,7 +208,7 @@ inline const char *GetMHUDBackgroundOpacityKey(MHUDElement element)
 	}
 }
 
-// The panels' background alpha, b8 in hex.
+// The panels' background alpha (b8 in hex).
 #define MHUD_DEF_BG_OPACITY 72
 
 // Symbols wrapped around a numeric element's value.
@@ -226,7 +231,7 @@ struct MHUDBorderDef
 {
 	const char *prefix;
 	const char *suffix;
-	const char *label; // the symbols around a sample value, so the picker needs no phrase; NULL for None
+	const char *label; // the symbols around a sample value (the picker needs no phrase); NULL for None
 };
 
 extern const MHUDBorderDef MHUD_BORDERS[(i32)MHUDBorder::Count];
@@ -252,7 +257,7 @@ struct MHUDIndicatorDef
 	const char *acronymKey;  // bool preference: draw the short form instead of the full one
 	const char *fullPhrase;  // drawn in Full mode
 	const char *shortPhrase; // drawn in Acronym mode
-	// Indicator-qualified: all three share one page, where a bare "Size" would repeat three times.
+	// Indicator-qualified because all three share one page where a bare "Size" would repeat three times.
 	const char *rowPhrase[(i32)MHUDIndicatorRow::Count];
 };
 
@@ -262,8 +267,8 @@ extern const MHUDIndicatorDef MHUD_INDICATOR_DEFS[MHUD_INDICATOR_COUNT];
 enum class MHUDPrespeedShow
 {
 	Brief,        // default: shows briefly after any landing
-	JumpOrLadder, // shows briefly, but only after a jump or ladder takeoff, not a walk-off
-	Always,       // stays visible while grounded, using the last known takeoff speed
+	JumpOrLadder, // shows briefly after a jump or ladder takeoff but not after a walk-off
+	Always,       // stays visible while grounded with the last known takeoff speed
 };
 
 // What an unpressed key looks like.
@@ -301,7 +306,7 @@ struct MHUDPrefs
 	JSFieldLayout jsFields {}; // shared with the chat report
 	bool jsHistory {true};
 	bool jsHistoryBelow {};
-	bool jsCompact {};                   // jumps go straight to the history pills, with no panel
+	bool jsCompact {};                   // jumps go straight to the history pills without a panel
 	i32 jsDuration {MHUD_JS_PANEL_TIME}; // seconds the panel stays up after a jump
 	Color releaseEarly, releasePerfect, releaseLate;
 	bool courseMap {true};
@@ -325,17 +330,17 @@ struct MHUDPrefs
 	bool prespeedDeadstrafeEnabled {};
 	MHUDPrespeedShow prespeedShow {MHUDPrespeedShow::Brief};
 	bool keysOverlapEnabled {true};
-	bool keysOverlapAxis {}; // tint only the two keys causing the overlap, not the whole element
+	bool keysOverlapAxis {}; // tint only the two keys causing the overlap rather than the whole element
 	bool keysLetters {};
-	bool keysJumpCount {}; // J shows how many jump presses came in, for scroll jumpers
+	bool keysJumpCount {}; // J shows how many jump presses came in for scroll jumpers
 	bool keysSquare {};
 	bool keysBorder {true};
 	bool keysGlowEnabled {true};
 	bool keysFillEnabled {true};
 	MHUDKeysIdle keysIdle {MHUDKeysIdle::Show};
-	bool mimicSpec {};                       // read from the viewer's own set only, never from the player being mimicked
-	i32 screenWidth {MHUD_DEF_SCREEN_WIDTH}; // layout units across the screen, from the chosen aspect ratio
-	u32 hiddenGameHud {};                    // m_iHideHUD bits, also only ever read from the viewer's own set
+	bool mimicSpec {};                       // read from the viewer's own set only and never from the player being mimicked
+	i32 screenWidth {MHUD_DEF_SCREEN_WIDTH}; // layout units across the screen from the chosen aspect ratio
+	u32 hiddenGameHud {};                    // m_iHideHUD bits that are also only ever read from the viewer's own set
 };
 
 class KZHUDService : public KZBaseService
@@ -358,11 +363,11 @@ public:
 
 	static const MHUDColorPrefDef *GetMHUDElementColorPrefs(MHUDElement element, i32 &count);
 
-	// Static storage, so callers can keep caching the result by pointer.
+	// Static storage so callers can keep caching the result by pointer.
 	static const char *GetMHUDFontClass(KZPlayer *player, MHUDElement element);
 
-	// The player's own preferences or the spectated player's, depending on the mimicSpec setting.
-	// If the player is not spectating, this is always their own.
+	// The player's own preferences or the spectated player's depending on the mimicSpec setting.
+	// This is always their own if the player is not spectating.
 	const MHUDPrefs &GetPrefs();
 
 	const MHUDPrefs &GetOwnPrefs();
@@ -377,8 +382,8 @@ public:
 	static void RegisterMenu();
 
 	static bool IsLayoutHudAvailable();
-	// Caches whether the layout asset is mounted here. Called on load and on every map change,
-	// since that is when mounts settle.
+	// Caches whether the layout asset is mounted here.
+	// Called on load and on every map change because that is when mounts settle.
 	static void RefreshLayoutAvailability();
 
 	bool IsUsingLayoutStyle();
@@ -387,7 +392,7 @@ public:
 	// Draw the panel from a player to a specific target.
 	static void DrawPanels(KZPlayer *player, KZPlayer *target);
 
-	// Only the bits this service added are ever cleared, since the server sets some of them itself.
+	// Only the bits this service added are ever cleared because the server sets some of them itself.
 	void UpdateGameHud();
 	void RestoreGameHud();
 
@@ -426,7 +431,7 @@ public:
 		return this->showPanel;
 	}
 
-	// These describe the player's most recent takeoff, not the current tick.
+	// These describe the player's most recent takeoff rather than the current tick.
 	bool IsCrouchJumping() const
 	{
 		return this->crouchJumping;
@@ -437,18 +442,19 @@ public:
 		return this->fromDuckbug;
 	}
 
-	// True if the jump button registered a press this tick, even if it was already
-	// released again by the time something polls buttons later in the same tick (e.g. a
-	// scroll-wheel jump bind). Reset every tick in OnPhysicsSimulate, latched by OnJump.
+	// True if the jump button registered a press this tick.
+	// It stays true even if the press was released again before something polls buttons later in the same tick (e.g. a scroll-wheel jump bind).
+	// Reset every tick in OnPhysicsSimulate and latched by OnJump.
 	bool JumpedThisTick() const
 	{
 		return this->jumpedThisTick;
 	}
 
-	// Counts every +jump press in the command, subtick ones included, so each scroll notch adds one.
+	// Counts every +jump press in the command including subtick ones.
+	// Each scroll notch adds one.
 	void OnSetupMove(CUserCmd *cmd);
 
-	// The jump presses since the count last lapsed, or 0 once MHUD_KEYS_JUMP_COUNT_HOLD has passed without one.
+	// The jump presses since the count last lapsed or 0 once MHUD_KEYS_JUMP_COUNT_HOLD has passed without one.
 	i32 GetJumpInputCount() const;
 
 	bool IsCompactPanel();
@@ -461,19 +467,20 @@ public:
 			   && g_pKZUtils->GetServerGlobals()->curtime - timerStoppedTime < KZ_HUD_TIMER_STOPPED_GRACE_TIME;
 	}
 
-	// source is the same player, or the spectated one.
+	// source is the same player or the spectated one.
 	bool UpdateHudLayout(KZPlayer *source);
 
 	bool IsMHUDElementEnabled(MHUDElement element);
 
-	// Whether the race panel and countdown can be drawn at all, which the legacy alert stands in for otherwise.
+	// Whether the race panel and countdown can be drawn at all.
+	// The legacy alert stands in for them otherwise.
 	bool CanShowRaceHud();
 
 	bool IsMHUDTimerDetailed();
 	bool IsMHUDOutlineEnabled(MHUDElement element);
 
-	// Edit mode lets the player pick an element with the cursor, then drag it with the mouse while the view is locked.
-	// With an element, skips picking and starts dragging it straight away.
+	// Edit mode lets the player pick an element with the cursor and then drag it with the mouse while the view is locked.
+	// With an element it skips picking and starts dragging it straight away.
 	void StartHudEdit(MHUDElement element = MHUDElement::Count);
 	void StopHudEdit();
 	// Leaves edit mode without saving the element being dragged.
@@ -484,10 +491,10 @@ public:
 		return this->edit.mode != EditMode::Off;
 	}
 
-	// Reads each usercmd as it arrives while dragging, and keeps the pawn's view where it was before the drag.
+	// Reads each usercmd as it arrives while dragging and keeps the pawn's view where it was before the drag.
 	void OnProcessUsercmds(CUserCmd *cmds, i32 numCmds);
 
-	// One jump as the jumpstats panel shows it, defined in mhud.cpp.
+	// One jump as the jumpstats panel shows it (defined in mhud.cpp).
 	struct JumpstatText;
 
 private:
@@ -500,8 +507,8 @@ private:
 		bool jumpbug {};
 		bool crouchJump {};
 		bool walkedOff {};     // left the ground without jumping and not off a ladder
-		bool recentTakeoff {}; // airborne or inside the landing grace, even when showTakeoff is held on
-		bool deadstrafe {};    // airborne with m_flSurfaceFriction at 0.25, so air acceleration is quartered
+		bool recentTakeoff {}; // airborne or inside the landing grace even when showTakeoff is held on
+		bool deadstrafe {};    // airborne with m_flSurfaceFriction at 0.25 (air acceleration is quartered)
 
 		MHUDSpeedState GetState() const
 		{
@@ -519,7 +526,7 @@ private:
 
 	SpeedInfo GetSpeedInfo(const MHUDPrefs &prefs);
 
-	// Player pawn while alive, observer pawn otherwise.
+	// Player pawn while alive and observer pawn otherwise.
 	CPlayer_MovementServices *GetHudMoveServices();
 
 	// Shared by both HUDs
@@ -542,7 +549,8 @@ private:
 		i32 fineX {INT_MIN};
 		i32 fineY {INT_MIN};
 		bool hidden {true};
-		// The edit-mode click target, which shares the element's wrapper and so its fine position.
+		// The edit-mode click target.
+		// It shares the element's wrapper and with it the fine position.
 		bool hitShown {};
 		bool hitDragging {};
 		i32 hitX {INT_MIN};
@@ -554,7 +562,7 @@ private:
 		i32 opacity {INT_MIN};
 		i32 bgOpacity {INT_MIN};
 		const char *alignClass {};
-		// Cached so the nearest-palette search only runs when the color changes, not every tick.
+		// Cached so the nearest-palette search only runs when the color changes rather than every tick.
 		const char *colorClassComputed {};
 		u32 lastColorPacked {};
 		bool colorComputed {};
@@ -564,7 +572,7 @@ private:
 	{
 		bool pressed[6] {};
 		i32 glow[6] {-1, -1, -1, -1, -1, -1};
-		const char *overlapClass[6] {}; // per-key overlap tint, used by the axis-only mode
+		const char *overlapClass[6] {}; // per-key overlap tint for the axis-only mode
 		i32 idle {-1};
 		i32 letters {-1};
 		i32 square {-1};
@@ -592,9 +600,9 @@ private:
 		const char *distTierClass {};
 	};
 
-	// Ages the pills by one and returns the slot for a new one, which is empty or the oldest.
+	// Ages the pills by one and returns the slot for a new one (an empty one or the oldest).
 	static i32 AdvancePills(LayoutPill (&pills)[MHUD_JS_PILL_COUNT]);
-	// Moves each pill to its age class, and expires the ones older than MHUD_JS_HISTORY_TIME.
+	// Moves each pill to its age class and expires the ones older than MHUD_JS_HISTORY_TIME.
 	void UpdatePills(CCSCustomHudLayout *layout, LayoutPill (&pills)[MHUD_JS_PILL_COUNT], const char *const (*ids)[4]);
 	void ClearPills(CCSCustomHudLayout *layout, LayoutPill (&pills)[MHUD_JS_PILL_COUNT], const char *const (*ids)[4]);
 
@@ -605,7 +613,7 @@ private:
 
 		Pill pills[MHUD_JS_PILL_COUNT] {};
 		bool preview {}; // edit mode's sample jump is on screen
-		// Row slots, filled in the player's order with the fields the jump has.
+		// Row slots filled in the player's order with the fields the jump has.
 		bool rowHidden[(i32)JSField::Count] {};
 		const char *valueClass[(i32)JSField::Count] {};
 		bool historyHidden {};
@@ -641,7 +649,7 @@ private:
 		std::string routeLabelLanguage {};
 		i32 historyHidden {-1};
 		f64 nextRefresh {};
-		// The last text sent to each label, in the order course.cpp lists them.
+		// The last text sent to each label in the order course.cpp lists them.
 		std::string texts[6 + MHUD_COURSE_ROW_COUNT * 5 + MHUD_COURSE_PROGRESS_COUNT * 2] {};
 		const char *badgeClasses[MHUD_COURSE_ROW_COUNT] {};
 		const char *nameClasses[MHUD_COURSE_ROW_COUNT] {};
@@ -676,15 +684,17 @@ private:
 		const char *statusClass {};
 		// Labels are only prepared again when their phrase or the viewer's language changes.
 		std::string language {};
-		// The title, the status, then each row's label and each row's value when it is a phrase.
+		// The title and the status followed by each row's label and its value if the value is a phrase.
 		const char *phrases[2 + MHUD_RACE_ROW_COUNT * 2] {};
 		std::string values[MHUD_RACE_ROW_COUNT] {};
-		// Tenths of a second, so the countdown is formatted ten times a second rather than every tick. -1 for GO!
+		// Tenths of a second so the countdown is formatted ten times a second rather than every tick.
+		// -1 for GO!
 		i32 countdownTenths {INT_MIN};
 	};
 
 	LayoutRaceState layoutRace {};
-	// The W release element's last value, so its text is only rebuilt when that changes.
+	// The W release element's last value.
+	// Its text is only rebuilt if that changes.
 	f32 releaseTicks {NAN};
 	std::string releaseText {};
 	LayoutEditState layoutEdit {};
@@ -705,7 +715,7 @@ private:
 		Dragging,
 	};
 
-	// Snap lines on one axis, in percent from the screen centre.
+	// Snap lines on one axis in percent from the screen centre.
 	struct EditTargets
 	{
 		f32 lines[32] {};
@@ -716,23 +726,23 @@ private:
 	{
 		EditMode mode {EditMode::Off};
 		MHUDElement element {MHUDElement::Timer};
-		// The corner being dragged to resize the element, from top left to bottom right, or -1 when moving it.
+		// The corner being dragged to resize the element (from top left to bottom right) or -1 if it is being moved.
 		i32 corner {-1};
 		f32 startSize {}, dragSize {};
-		f32 startWidth {}, startHeight {}; // the box at startSize, in layout units
-		f32 fixedX {}, fixedY {};          // the opposite corner, which stays put while resizing
+		f32 startWidth {}, startHeight {}; // the box at startSize in layout units
+		f32 fixedX {}, fixedY {};          // the opposite corner that stays put while resizing
 		f32 nextAttack {};                 // CCSPlayer_WeaponServices::m_flNextAttack before edit mode held it
-		bool returnToMenu {};              // set when started from a position stepper, so edit mode ends with the drag
-		f32 unitsPerPctX {19.2f};          // layout width / 100, from the aspect ratio picked in the menu
-		// Anchor positions in percent, as stored in the preferences.
+		bool returnToMenu {};              // set if started from a position stepper so edit mode ends with the drag
+		f32 unitsPerPctX {19.2f};          // layout width / 100 from the aspect ratio picked in the menu
+		// Anchor positions in percent like the preferences store them.
 		f32 startX {}, startY {};
 		f32 dragX {}, dragY {};
 		bool guideShown[2] {};
 		f32 guide[2] {};
 		EditTargets targets[2] {};
 		CHandle<CBaseEntity> camera {};
-		CHandle<CBaseEntity> previousView {}; // the view entity before the drag, handed back when it ends
-		QAngle viewAngles {};                 // before the drag, restored after it
+		CHandle<CBaseEntity> previousView {}; // the view entity before the drag to hand back when it ends
+		QAngle viewAngles {};                 // before the drag to restore after it
 		QAngle lastAngles {};
 		bool haveAngles {};
 		i32 lastCmdNum {INT_MIN};
@@ -745,7 +755,7 @@ private:
 
 	EditState edit {};
 
-	// Edit mode as a window, borrowing the HUD's own layout for its clicks and input capture.
+	// Edit mode as a window that borrows the HUD's own layout for its clicks and input capture.
 	class HudEditWindow : public KZ::ui::Window
 	{
 	public:
@@ -761,7 +771,7 @@ private:
 		virtual void OnClose(KZ::ui::CloseReason reason) override;
 		virtual void OnClick(const char *buttonId) override;
 
-		// The element to start dragging straight away, or MHUDElement::Count to start by picking one.
+		// The element to start dragging straight away or MHUDElement::Count to start by picking one.
 		MHUDElement element {MHUDElement::Count};
 
 	private:
@@ -778,9 +788,10 @@ private:
 	void UpdateDragPosition(u64 newlyPressed, u64 held);
 	void UpdateMove(u64 newlyPressed, u64 held);
 	void UpdateResize(u64 newlyPressed, f32 unitsX, f32 unitsY);
-	// The size the element is drawn at, which is the one being dragged while resizing it.
+	// The size the element is drawn at.
+	// While resizing it is the one being dragged.
 	f32 GetLayoutSize(MHUDElement element);
-	// Fills box with the element's left, right, top and bottom edges, in percent from the screen centre.
+	// Fills box with the element's left, right, top and bottom edges in percent from the screen centre.
 	void GetEditBox(MHUDElement element, f32 x, f32 y, f32 box[4]);
 	void GetEditBoxSize(MHUDElement element, f32 &width, f32 &height);
 	// Moves an anchor so the element's whole box stays on screen.
@@ -792,7 +803,7 @@ private:
 	// The click targets, guides and hint bar; also hides them again after edit mode.
 	void UpdateEditLayout(CCSCustomHudLayout *layout, bool force);
 
-	// One per element, all called from UpdateHudLayout.
+	// One per element and all called from UpdateHudLayout.
 	void UpdateTimerElement(CCSCustomHudLayout *layout, KZPlayer *source, bool force);
 	void UpdateSpeedElement(CCSCustomHudLayout *layout, const SpeedInfo &info, bool force);
 	void UpdatePrespeedElement(CCSCustomHudLayout *layout, const SpeedInfo &info, bool force);
@@ -800,12 +811,12 @@ private:
 	void UpdateCheckpointElement(CCSCustomHudLayout *layout, KZPlayer *source, bool force);
 	void UpdateIndicatorElements(CCSCustomHudLayout *layout, const SpeedInfo &info, bool force);
 	void UpdateReleaseElement(CCSCustomHudLayout *layout, KZPlayer *source, const SpeedInfo &info, bool force);
-	// preview fills every row and the history with sample values, for edit mode.
+	// preview fills every row and the history with sample values for edit mode.
 	void UpdateCourseElement(CCSCustomHudLayout *layout, KZPlayer *source, bool show, bool force, bool preview = false);
 	void ClearCoursePreview(CCSCustomHudLayout *layout);
-	// preview fills the panel with sample values, for edit mode.
+	// preview fills the panel with sample values for edit mode.
 	void UpdateRaceElements(CCSCustomHudLayout *layout, bool showPanel, bool showCountdown, bool force, bool preview = false);
-	// preview draws a sample jump with every enabled row, for edit mode.
+	// preview draws a sample jump with every enabled row for edit mode.
 	void UpdateJumpstatsElement(CCSCustomHudLayout *layout, bool show, bool force, bool preview = false);
 	void PushJumpstatHistory(CCSCustomHudLayout *layout);
 	void ApplyJumpstatText(CCSCustomHudLayout *layout, const JumpstatText &text);
@@ -813,7 +824,7 @@ private:
 
 public:
 	bool ShowJumpstat(Jump *jump, i32 colorTier);
-	// A split, checkpoint or stage the source reached, for the course panel's history.
+	// A split, checkpoint or stage the source reached for the course panel's history.
 	void OnZoneReached(const KZTimerService::ZoneReport &report);
 
 	void DestroyOwnedLayout();

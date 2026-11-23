@@ -17,7 +17,8 @@ enum : u32
 	KZ_REPLAY_VERSION = 7,
 };
 
-// Maximum subtick moves per tick. The theoretical engine maximum is 64, but 36 is a much more reasonable amount.
+// Maximum subtick moves per tick.
+// The theoretical engine maximum is 64 but 36 is a much more reasonable amount.
 static constexpr u32 MAX_SUBTICK_MOVES = 36;
 
 enum ReplayType : u32
@@ -25,7 +26,7 @@ enum ReplayType : u32
 	RP_MANUAL = 0,  // Contain who saved the replay.
 	RP_CHEATER = 1, // Contain a reason and a reporter.
 	RP_RUN = 2,
-	RP_JUMPSTATS = 3 // Contain all jumpstats events that happen throughout the replay. Does not contain timer events.
+	RP_JUMPSTATS = 3 // Contains all jumpstats events that happen throughout the replay but not timer events.
 };
 
 enum RpEventType
@@ -78,7 +79,7 @@ struct RpStyleChangeInfo : public RpModeStyleInfo
 
 class Jump;
 
-// This struct is really big, so we don't store them in run replays.
+// This struct is really big and we don't store them in run replays.
 struct RpJumpStats
 {
 	struct GeneralData
@@ -159,7 +160,7 @@ struct RpEvent
 {
 	RpEventType type;
 	u32 serverTick;
-	// Events retain their insertion order, including several CP/TP commands in one tick.
+	// Events retain their insertion order including several CP/TP commands in one tick.
 	RpEventPhase phase;
 
 	union RpEventData
@@ -179,7 +180,7 @@ struct RpEvent
 			} type;
 
 			i32 index; // Course ID for start/end, split number for split, checkpoint number for cpz, stage number for stage.
-			f32 time;  // Final time for end, time reached split/checkpoint/stage for split/cpz/stage. Current time for pause/stop/resume.
+			f32 time;  // Final time for end, time reached for split/cpz/stage and current time for pause/stop/resume.
 			f32 origin[3];
 		} timer;
 
@@ -199,7 +200,8 @@ struct RpEvent
 			f32 origin[3];
 		} checkpoint;
 
-		// The player stops or starts controlling the pawn. In between, the pawn runs on its own without input.
+		// The player stops or starts controlling the pawn.
+		// The pawn runs on its own without input in between.
 		struct ControlEvent
 		{
 			enum ControlEventType
@@ -215,7 +217,7 @@ struct RpEvent
 		struct
 		{
 			RpTeleportReason reason;
-			i32 checkpointIndex; // One-based saved checkpoint, or zero when not applicable.
+			i32 checkpointIndex; // One-based saved checkpoint or zero if not applicable.
 			bool hasOrigin;
 			bool hasAngles;
 			bool hasVelocity;
@@ -243,7 +245,7 @@ struct SubtickData
 		{
 			bool pressed;
 
-			// The angle deltas are stored for every step, but only v7+ records them for steps without a button.
+			// The angle deltas are stored for every step but only v7+ records them for steps without a button.
 			struct
 			{
 				f32 analog_forward_delta;
@@ -320,7 +322,7 @@ struct TickData
 	} modernJump {};
 };
 
-// While tick data is only recorded during certain conditions, metadata is recorded every time the server receives a move message from the client.
+// Tick data is only recorded during certain conditions while metadata is recorded every time the server receives a move message from the client.
 struct CmdData
 {
 	u32 serverTick {};

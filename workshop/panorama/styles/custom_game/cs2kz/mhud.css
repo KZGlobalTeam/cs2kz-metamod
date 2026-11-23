@@ -22,7 +22,7 @@
 	visibility: collapse;
 }
 
-/* Full-screen, so its fine x/y offset adds to the element's percent offset. */
+/* Full-screen so its fine x/y offset adds to the element's percent offset. */
 .pos {
 	width: 100%;
 	height: 100%;
@@ -42,7 +42,7 @@
 	horizontal-align: right;
 }
 
-/* An element whose height changes grows down from its y, instead of about it. */
+/* An element whose height changes grows down from its y instead of about it. */
 .element.anchor-top {
 	vertical-align: top;
 }
@@ -68,7 +68,7 @@
 }
 
 .key-button {
-	/* The glyph's line box outgrows the 23px of content below, and would be clipped. */
+	/* The glyph's line box outgrows the 23px of content below and would be clipped. */
 	overflow: noclip noclip;
 	width: 55px;
 	height: 35px;
@@ -99,7 +99,7 @@
 	background-color: #00000000;
 }
 
-/* mhudKeysBorder off: keep the 2px so the layout holds, just stop drawing it. */
+/* mhudKeysBorder off: keep the 2px so the layout holds but stop drawing it. */
 .keys-noborder .key-button {
 	border-color: #00000000;
 }
@@ -155,7 +155,7 @@
 	visibility: visible;
 }
 
-/* With mhudKeysJumpCount on, J shows how many jump presses came in while they keep coming, whatever the idle style. */
+/* J shows how many jump presses came in while they keep coming with mhudKeysJumpCount on regardless of the idle style. */
 .key-glyph-count {
 	visibility: collapse;
 }
@@ -173,8 +173,9 @@
 	opacity: 1;
 }
 
-/* Jumpstats. The stack is an element like the others, so it is placed by its x/y classes and scaled by js-scale.css.
-   Its labels take the element's font class, so none of them sets a font-family. */
+/* Jumpstats.
+   The stack is an element like the others so it is placed by its x/y classes and scaled by js-scale.css.
+   Its labels take the element's font class so none of them sets a font-family. */
 .js-stack {
 	width: 288px;
 	flow-children: down;
@@ -267,7 +268,7 @@
 	opacity: 0;
 }
 
-/* mhudJsHistoryBelow puts the history under the panel, so the pills hang from its top and age downwards. */
+/* mhudJsHistoryBelow puts the history under the panel so the pills hang from its top and age downwards. */
 .js-stack.js-below {
 	flow-children: up;
 }
@@ -344,7 +345,7 @@
 	opacity: 0;
 }
 
-/* panel-opacity.css sets the background's alpha and scales its world-blur with it, since the blur ignores alpha.
+/* panel-opacity.css sets the background's alpha and scales its world-blur with it because the blur ignores alpha.
    A see-through background drops its dots as well. */
 .element:not(.js-bg--0pct) .js-panel,
 .element:not(.js-bg--0pct) .js-hist,
@@ -446,11 +447,11 @@
 	vertical-align: center;
 	font-size: 15px;
 	font-weight: bold;
-	/* The chat's olive, which it prints every stat value in. */
+	/* The chat's olive that it prints every stat value in. */
 	color: #bfff90;
 }
 
-/* The course panel borrows the jumpstats panel's look, but stays up. */
+/* The course panel borrows the jumpstats panel's look but stays up. */
 .ci-stack {
 	width: 320px;
 	flow-children: down;
@@ -460,7 +461,7 @@
 	opacity: 1;
 }
 
-/* The course pills hang below the panel and keep their width, so the times stay readable. */
+/* The course pills hang below the panel and keep their width so the times stay readable. */
 .ci-history {
 	width: 100%;
 	height: 138px;
@@ -523,8 +524,8 @@
 	opacity: 0;
 }
 
-/* A zone name such as STAGE 12 is wider than a jump type. The info takes whatever the gap leaves and shrinks
-   to fit it, since a slow split or a long compare target runs into the gap otherwise. */
+/* A zone name such as STAGE 12 is wider than a jump type.
+   The info takes whatever the gap leaves and shrinks to fit it because a slow split or a long compare target runs into the gap otherwise. */
 .ci-hist .js-hist-type {
 	width: 76px;
 }
@@ -565,7 +566,7 @@
 	color: #e4ae39;
 }
 
-/* The course, mode and tiers on the left, and the course's ranked state in that mode on the right. */
+/* The course, mode and tiers on the left and the course's ranked state in that mode on the right. */
 .ci-course-row {
 	width: 100%;
 	height: 18px;
@@ -596,7 +597,7 @@
 	flow-children: right;
 }
 
-/* A record row, drawn like the overlay's. */
+/* A record row drawn like the overlay's. */
 .ci-label {
 	width: 44px;
 }
@@ -708,7 +709,7 @@
 	color: #f3f4f6;
 }
 
-/* Centred, a fifth of the screen above the crosshair. */
+/* Centred a fifth of the screen above the crosshair. */
 .race-countdown {
 	horizontal-align: center;
 	vertical-align: middle;
@@ -743,7 +744,7 @@
 	color: #d32ce6;
 }
 
-/* Chat colors for single values, such as the W release. */
+/* Chat colors for single values (such as the W release). */
 .js-c-red {
 	color: #ff4040;
 }
@@ -757,7 +758,8 @@
 	color: #c5cad0;
 }
 
-/* Each element's box in edit mode, sized by box-size.css. The move button fills it, and the corner buttons sit on top. */
+/* Each element's box in edit mode as sized by box-size.css.
+   The move button fills it and the corner buttons sit on top. */
 .edit-hit {
 	width: 100%;
 	height: 100%;
@@ -834,7 +836,7 @@
 	flow-children: right;
 	padding: 8px 12px 8px 16px;
 
-	/* The jumpstats panel's background, which is the menu's blue dots over a see-through black. */
+	/* The jumpstats panel's background is the menu's blue dots over a see-through black. */
 	background-color: #000000b8;
 	background-image: url("s2r://panorama/images/backgrounds/bluedots_large_png.vtex");
 	background-size: 360px 360px;
@@ -855,7 +857,7 @@
 	vertical-align: center;
 }
 
-/* The key the player has bound, from the game's bind_* dialog variables. */
+/* The key the player has bound as read from the game's bind_* dialog variables. */
 .edit-key {
 	vertical-align: center;
 	margin-right: 6px;

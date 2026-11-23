@@ -22,7 +22,7 @@ static bool IsFieldNetworked(const char *cppName, SchemaClassFieldData_t &field)
 		return false;
 	}
 
-	// Just use a random class to get access to the full database, as some schema classes don't have entity representations
+	// Just use a random class to get access to the full database because some schema classes don't have entity representations.
 	CNetworkSerializerCodeGenDatabase *pDatabase = GameEntitySystem()->FindClassByName("CBaseEntity")->m_NetworkSerializerInfo->m_pDatabase;
 	int index = pDatabase->m_ClassInfos.Find(cppName);
 
@@ -64,7 +64,7 @@ static void InitChainOffset(SchemaClassInfoData_t *pClassInfo, SchemaKeyValueMap
 		return;
 	}
 
-	// Not the base class yet, keep looking
+	// Keep looking if this is not the base class yet
 	if (pClassInfo->m_nNumBaseClasses)
 	{
 		return InitChainOffset(pClassInfo->m_pBaseClasses[0].m_pClass, keyValueMap);
