@@ -1097,4 +1097,9 @@
 		"#format"	"name:s,uuid:s,steamid64:s"
 		"en"		"{grey}Replay of {default}{name}{grey}: {default}{uuid}{grey}, Steam ID {default}{steamid64}"
 	}
+	"Replay - Jump Replay Saved"
+	{
+		"#format"	"uuid:s"
+		"en"		"{grey}Jumpstat replay saved: {lime}{uuid}"
+	}
 }
