@@ -13,8 +13,8 @@ struct PanoramaFontDef
 	const char *variant;
 };
 
-extern const PanoramaFontDef PANORAMA_FONTS[];
-extern const i32 PANORAMA_FONT_COUNT;
+extern const PanoramaFontDef panoramaFonts[];
+extern const i32 panoramaFontCount;
 
 namespace panorama
 {

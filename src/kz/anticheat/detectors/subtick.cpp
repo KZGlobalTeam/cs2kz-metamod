@@ -35,7 +35,7 @@
 #define SUBTICK_SPLIT_BUTTON_MASK   (IN_ATTACK | IN_ATTACK2 | IN_JUMP | IN_DUCK)
 
 // The engine's own limits on a subtick move list (from CCSPlayer_MovementServices).
-// Not to be confused with MAX_SUBTICK_MOVES (the number of moves the replay format stores).
+// Not to be confused with maxSubtickMoves (the number of moves the replay format stores).
 #define ENGINE_MAX_SUBTICK_MOVES 32
 #define MAX_SUBTICK_MOVE_IMPULSE 2.0f
 // One button per subtick move and only the ones the engine knows how to apply.

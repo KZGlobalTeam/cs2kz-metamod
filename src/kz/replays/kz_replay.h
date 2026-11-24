@@ -19,7 +19,7 @@ enum : u32
 
 // Maximum subtick moves per tick.
 // The theoretical engine maximum is 64 but 36 is a much more reasonable amount.
-static constexpr u32 MAX_SUBTICK_MOVES = 36;
+static constexpr u32 maxSubtickMoves = 36;
 
 enum ReplayType : u32
 {
@@ -261,7 +261,7 @@ struct SubtickData
 		}
 
 		void FromMove(const CSubtickMoveStep &step);
-	} subtickMoves[MAX_SUBTICK_MOVES];
+	} subtickMoves[maxSubtickMoves];
 };
 
 static_assert(std::is_trivial<SubtickData>::value, "SubtickData must be a trivial type");

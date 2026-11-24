@@ -9,7 +9,7 @@
 
 #include "tier0/memdbgon.h"
 
-static constexpr f64 PROGRESS_UPDATE_INTERVAL = 0.1;
+static constexpr f64 progressUpdateInterval = 0.1;
 
 struct ProgressReference
 {
@@ -275,8 +275,8 @@ void KZProgressService::OnPhysicsSimulatePost()
 	{
 		return;
 	}
-	f64 phase = this->player->GetPlayerSlot().Get() * PROGRESS_UPDATE_INTERVAL / MAX_PLAYERS;
-	this->nextUpdate = (floor((now - phase) / PROGRESS_UPDATE_INTERVAL) + 1) * PROGRESS_UPDATE_INTERVAL + phase;
+	f64 phase = this->player->GetPlayerSlot().Get() * progressUpdateInterval / MAX_PLAYERS;
+	this->nextUpdate = (floor((now - phase) / progressUpdateInterval) + 1) * progressUpdateInterval + phase;
 	this->visible = false;
 	const auto *course = this->player->timerService->GetCourse();
 	if (!course)

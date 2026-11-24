@@ -22,36 +22,36 @@ enum CourseRow
 static_assert(COURSE_ROW_PRO + 1 == MHUD_COURSE_ROW_COUNT, "one row per record");
 
 // Each record row's panels from the row itself to the gap from the viewer's personal best.
-static_global const char *const COURSE_ROWS[MHUD_COURSE_ROW_COUNT][6] = {
+static_global const char *const courseRows[MHUD_COURSE_ROW_COUNT][6] = {
 	{"mhud_ci_r0", "mhud_ci_l0", "mhud_ci_t0", "mhud_ci_b0", "mhud_ci_n0", "mhud_ci_g0"},
 	{"mhud_ci_r1", "mhud_ci_l1", "mhud_ci_t1", "mhud_ci_b1", "mhud_ci_n1", "mhud_ci_g1"},
 };
 
-static_global const char *const COURSE_ROW_PHRASES[MHUD_COURSE_ROW_COUNT] = {"HUD - Course All", "HUD - Course Pro"};
+static_global const char *const courseRowPhrases[MHUD_COURSE_ROW_COUNT] = {"HUD - Course All", "HUD - Course Pro"};
 
 // Each progress row's panels for stages, checkpoints and splits.
-static_global const char *const COURSE_PROGRESS_ROWS[MHUD_COURSE_PROGRESS_COUNT][3] = {
+static_global const char *const courseProgressRows[MHUD_COURSE_PROGRESS_COUNT][3] = {
 	{"mhud_ci_p0", "mhud_ci_pl0", "mhud_ci_pv0"}, {"mhud_ci_p1", "mhud_ci_pl1", "mhud_ci_pv1"}, {"mhud_ci_p2", "mhud_ci_pl2", "mhud_ci_pv2"}};
 
-static_global const char *const COURSE_PROGRESS_PHRASES[MHUD_COURSE_PROGRESS_COUNT] = {"HUD - Course Stages", "HUD - Course Checkpoints",
-																					   "HUD - Course Splits"};
+static_global const char *const courseProgressPhrases[MHUD_COURSE_PROGRESS_COUNT] = {"HUD - Course Stages", "HUD - Course Checkpoints",
+																					 "HUD - Course Splits"};
 
 // Each pill's panels.
-static_global const char *const COURSE_PILL_PANELS[MHUD_JS_PILL_COUNT][4] = {{"mhud_ci_h0", "mhud_ci_h0_t", "mhud_ci_h0_i", "mhud_ci_h0_d"},
-																			 {"mhud_ci_h1", "mhud_ci_h1_t", "mhud_ci_h1_i", "mhud_ci_h1_d"},
-																			 {"mhud_ci_h2", "mhud_ci_h2_t", "mhud_ci_h2_i", "mhud_ci_h2_d"},
-																			 {"mhud_ci_h3", "mhud_ci_h3_t", "mhud_ci_h3_i", "mhud_ci_h3_d"},
-																			 {"mhud_ci_h4", "mhud_ci_h4_t", "mhud_ci_h4_i", "mhud_ci_h4_d"}};
+static_global const char *const coursePillPanels[MHUD_JS_PILL_COUNT][4] = {{"mhud_ci_h0", "mhud_ci_h0_t", "mhud_ci_h0_i", "mhud_ci_h0_d"},
+																		   {"mhud_ci_h1", "mhud_ci_h1_t", "mhud_ci_h1_i", "mhud_ci_h1_d"},
+																		   {"mhud_ci_h2", "mhud_ci_h2_t", "mhud_ci_h2_i", "mhud_ci_h2_d"},
+																		   {"mhud_ci_h3", "mhud_ci_h3_t", "mhud_ci_h3_i", "mhud_ci_h3_d"},
+																		   {"mhud_ci_h4", "mhud_ci_h4_t", "mhud_ci_h4_i", "mhud_ci_h4_d"}};
 
 // One pill per age for the preview like in mhud.cpp.
-static_global const char *const COURSE_AGE_CLASSES[MHUD_JS_PILL_GONE_RANK] = {"js-age-0", "js-age-1", "js-age-2", "js-age-3"};
+static_global const char *const courseAgeClasses[MHUD_JS_PILL_GONE_RANK] = {"js-age-0", "js-age-1", "js-age-2", "js-age-3"};
 
 // Indexed by KZTimerService::ZoneKind.
-static_global const char *const COURSE_ZONE_PHRASES[] = {"HUD - Course Pill Split", "HUD - Course Pill Checkpoint", "HUD - Course Pill Stage"};
+static_global const char *const courseZonePhrases[] = {"HUD - Course Pill Split", "HUD - Course Pill Checkpoint", "HUD - Course Pill Stage"};
 
 // Indexed by KZTimerService::CompareType.
-static_global const char *const COURSE_COMPARE_PHRASES[KZTimerService::COMPARETYPE_COUNT] = {
-	NULL, "HUD - Compare Server PB", "HUD - Compare Global PB", "HUD - Compare SR", "HUD - Compare WR"};
+static_global const char *const courseComparePhrases[KZTimerService::COMPARETYPE_COUNT] = {NULL, "HUD - Compare Server PB", "HUD - Compare Global PB",
+																						   "HUD - Compare SR", "HUD - Compare WR"};
 
 // The chat's colors for a time ahead of or behind another.
 #define COURSE_CLASS_AHEAD  "js-c-green"
@@ -74,7 +74,7 @@ struct CourseStateDef
 	const char *className;
 };
 
-static_global const CourseStateDef COURSE_STATES[] = {
+static_global const CourseStateDef courseStates[] = {
 	{KZ::api::Map::Course::Filter::State::Ranked, "HUD - Course Ranked", "ci-ranked"},
 	{KZ::api::Map::Course::Filter::State::Pending, "HUD - Course Pending", "ci-pending"},
 	{KZ::api::Map::Course::Filter::State::Unranked, "HUD - Course Unranked", "ci-unranked"},
@@ -158,7 +158,7 @@ static_function void GetCourseInfo(KZPlayer *viewer, KZPlayer *source, CourseInf
 					const KZ::api::Map::Course::Filter &filter = classic ? globalCourse.filters.classic : globalCourse.filters.vanilla;
 					nubTier = (i32)filter.nubTier;
 					proTier = (i32)filter.proTier;
-					for (const CourseStateDef &def : COURSE_STATES)
+					for (const CourseStateDef &def : courseStates)
 					{
 						if (def.state == filter.state)
 						{
@@ -262,14 +262,14 @@ void KZHUDService::OnZoneReached(const KZTimerService::ZoneReport &report)
 	LayoutCourseState &ci = this->layoutCourse;
 	const i32 index = KZHUDService::AdvancePills(ci.pills);
 	LayoutPill &pill = ci.pills[index];
-	const char *const *ids = COURSE_PILL_PANELS[index];
+	const char *const *ids = coursePillPanels[index];
 
-	const std::string zone = lang->PrepareMessage(COURSE_ZONE_PHRASES[(i32)report.kind], report.number);
+	const std::string zone = lang->PrepareMessage(courseZonePhrases[(i32)report.kind], report.number);
 	std::string info = utils::FormatTime(report.time).c_str();
 	std::string gap;
-	if (report.hasDiff && COURSE_COMPARE_PHRASES[report.compareType])
+	if (report.hasDiff && courseComparePhrases[report.compareType])
 	{
-		std::string target = lang->PrepareMessage(COURSE_COMPARE_PHRASES[report.compareType]);
+		std::string target = lang->PrepareMessage(courseComparePhrases[report.compareType]);
 		if (report.pro)
 		{
 			target = lang->PrepareMessage("HUD - Compare Pro", target.c_str());
@@ -288,7 +288,7 @@ void KZHUDService::ClearCoursePreview(CCSCustomHudLayout *layout)
 	LayoutCourseState &ci = this->layoutCourse;
 	ci.preview = false;
 	ci.nextRefresh = 0;
-	this->ClearPills(layout, ci.pills, COURSE_PILL_PANELS);
+	this->ClearPills(layout, ci.pills, coursePillPanels);
 }
 
 void KZHUDService::UpdateCourseElement(CCSCustomHudLayout *layout, KZPlayer *source, bool show, bool force, bool preview)
@@ -298,7 +298,7 @@ void KZHUDService::UpdateCourseElement(CCSCustomHudLayout *layout, KZPlayer *sou
 	{
 		ci = LayoutCourseState();
 	}
-	this->UpdateLayoutElement(layout, MHUDElement::Course, show, NULL, MHUD_DEF_BASE_COLOR, force);
+	this->UpdateLayoutElement(layout, MHUDElement::Course, show, NULL, mhudDefBaseColor, force);
 	// A hidden panel keeps whatever it last showed.
 	// A stale preview is cleared the next time it shows for real.
 	if (!show)
@@ -311,7 +311,7 @@ void KZHUDService::UpdateCourseElement(CCSCustomHudLayout *layout, KZPlayer *sou
 	const i32 scale = Clamp((i32)this->GetLayoutSize(MHUDElement::Course), MHUD_JS_SIZE_MIN, MHUD_JS_SIZE_MAX);
 	if (ci.scale != scale)
 	{
-		const char *panelId = MHUD_ELEMENTS[(i32)MHUDElement::Course].panelId;
+		const char *panelId = mhudElements[(i32)MHUDElement::Course].panelId;
 		char className[32];
 		if (ci.scale != INT_MIN)
 		{
@@ -339,19 +339,19 @@ void KZHUDService::UpdateCourseElement(CCSCustomHudLayout *layout, KZPlayer *sou
 		{
 			setFont(panelId);
 		}
-		for (const auto &row : COURSE_ROWS)
+		for (const auto &row : courseRows)
 		{
 			for (i32 i = 1; i < KZ_ARRAYSIZE(row); i++)
 			{
 				setFont(row[i]);
 			}
 		}
-		for (const auto &row : COURSE_PROGRESS_ROWS)
+		for (const auto &row : courseProgressRows)
 		{
 			setFont(row[1]);
 			setFont(row[2]);
 		}
-		for (const auto &pill : COURSE_PILL_PANELS)
+		for (const auto &pill : coursePillPanels)
 		{
 			setFont(pill[1]);
 			setFont(pill[2]);
@@ -370,8 +370,8 @@ void KZHUDService::UpdateCourseElement(CCSCustomHudLayout *layout, KZPlayer *sou
 	};
 	setHidden("mhud_ci_head", ci.headHidden, !prefs.courseMap);
 	setHidden("mhud_ci_history", ci.historyHidden, !prefs.courseSplits);
-	setHidden(COURSE_ROWS[COURSE_ROW_ALL][0], ci.rowHidden[COURSE_ROW_ALL], !prefs.courseRecords);
-	setHidden(COURSE_ROWS[COURSE_ROW_PRO][0], ci.rowHidden[COURSE_ROW_PRO], !prefs.courseRecords || !prefs.coursePro);
+	setHidden(courseRows[COURSE_ROW_ALL][0], ci.rowHidden[COURSE_ROW_ALL], !prefs.courseRecords);
+	setHidden(courseRows[COURSE_ROW_PRO][0], ci.rowHidden[COURSE_ROW_PRO], !prefs.courseRecords || !prefs.coursePro);
 	f32 percentage = 100;
 	bool approximate = false;
 	const bool routeVisible = prefs.courseShowProgress && (preview || source->progressService->GetProgress(percentage, approximate));
@@ -396,19 +396,19 @@ void KZHUDService::UpdateCourseElement(CCSCustomHudLayout *layout, KZPlayer *sou
 		for (i32 i = 0; i < MHUD_COURSE_ROW_COUNT; i++)
 		{
 			const i32 slot = COURSE_TEXT_ROWS + i * 5;
-			setText(slot, COURSE_ROWS[i][1], lang->PrepareMessage(COURSE_ROW_PHRASES[i]));
-			setText(slot + 1, COURSE_ROWS[i][2], info.times[i]);
-			setText(slot + 2, COURSE_ROWS[i][3], info.badges[i]);
-			setText(slot + 3, COURSE_ROWS[i][4], info.names[i]);
-			setText(slot + 4, COURSE_ROWS[i][5], info.gaps[i]);
-			this->SetLayoutClass(layout, COURSE_ROWS[i][3], ci.badgeClasses[i], info.badgeClasses[i]);
-			this->SetLayoutClass(layout, COURSE_ROWS[i][4], ci.nameClasses[i], info.nameClasses[i]);
+			setText(slot, courseRows[i][1], lang->PrepareMessage(courseRowPhrases[i]));
+			setText(slot + 1, courseRows[i][2], info.times[i]);
+			setText(slot + 2, courseRows[i][3], info.badges[i]);
+			setText(slot + 3, courseRows[i][4], info.names[i]);
+			setText(slot + 4, courseRows[i][5], info.gaps[i]);
+			this->SetLayoutClass(layout, courseRows[i][3], ci.badgeClasses[i], info.badgeClasses[i]);
+			this->SetLayoutClass(layout, courseRows[i][4], ci.nameClasses[i], info.nameClasses[i]);
 		}
 		for (i32 i = 0; i < MHUD_COURSE_PROGRESS_COUNT; i++)
 		{
 			ci.progressTotals[i] = info.totals[i];
-			setText(COURSE_TEXT_PROGRESS + i * 2, COURSE_PROGRESS_ROWS[i][1], lang->PrepareMessage(COURSE_PROGRESS_PHRASES[i]));
-			setText(COURSE_TEXT_PROGRESS + i * 2 + 1, COURSE_PROGRESS_ROWS[i][2],
+			setText(COURSE_TEXT_PROGRESS + i * 2, courseProgressRows[i][1], lang->PrepareMessage(courseProgressPhrases[i]));
+			setText(COURSE_TEXT_PROGRESS + i * 2 + 1, courseProgressRows[i][2],
 					lang->PrepareMessage("HUD - Course Progress", info.reached[i], info.totals[i]));
 		}
 	};
@@ -418,7 +418,7 @@ void KZHUDService::UpdateCourseElement(CCSCustomHudLayout *layout, KZPlayer *sou
 		for (i32 i = 0; i < MHUD_COURSE_PROGRESS_COUNT; i++)
 		{
 			const bool visible = prefs.courseProgress && ci.progressTotals[i] > 0;
-			setHidden(COURSE_PROGRESS_ROWS[i][0], ci.progressRowHidden[i], !visible);
+			setHidden(courseProgressRows[i][0], ci.progressRowHidden[i], !visible);
 			anyVisible |= visible;
 		}
 		setHidden("mhud_ci_progress", ci.progressHidden, !anyVisible);
@@ -447,19 +447,19 @@ void KZHUDService::UpdateCourseElement(CCSCustomHudLayout *layout, KZPlayer *sou
 			CourseInfoText info;
 			GetCourseSample(lang, info);
 			apply(info);
-			const std::string zone = lang->PrepareMessage(COURSE_ZONE_PHRASES[(i32)KZTimerService::ZoneKind::Checkpoint], 99);
+			const std::string zone = lang->PrepareMessage(courseZonePhrases[(i32)KZTimerService::ZoneKind::Checkpoint], 99);
 			const std::string target = lang->PrepareMessage("HUD - Compare Pro", lang->PrepareMessage("HUD - Compare Server PB").c_str());
 			const std::string pillInfo = lang->PrepareMessage("HUD - Course Pill Info", "59:59.999", target.c_str());
 			for (i32 i = 0; i < MHUD_JS_PILL_GONE_RANK; i++)
 			{
 				LayoutPill &pill = ci.pills[i];
-				const char *const *ids = COURSE_PILL_PANELS[i];
+				const char *const *ids = coursePillPanels[i];
 				layout->SetDialogVariableString(ids[1], "v", zone.c_str());
 				layout->SetDialogVariableString(ids[2], "v", pillInfo.c_str());
 				layout->SetDialogVariableString(ids[3], "v", "-59:59.999");
 				this->SetLayoutClass(layout, ids[3], pill.distTierClass, COURSE_CLASS_AHEAD);
 				this->SetLayoutClass(layout, ids[0], pill.expireClass, NULL);
-				this->SetLayoutClass(layout, ids[0], pill.ageClass, COURSE_AGE_CLASSES[i]);
+				this->SetLayoutClass(layout, ids[0], pill.ageClass, courseAgeClasses[i]);
 			}
 		}
 		updateProgressRows();
@@ -479,5 +479,5 @@ void KZHUDService::UpdateCourseElement(CCSCustomHudLayout *layout, KZPlayer *sou
 		apply(info);
 	}
 	updateProgressRows();
-	this->UpdatePills(layout, ci.pills, COURSE_PILL_PANELS);
+	this->UpdatePills(layout, ci.pills, coursePillPanels);
 }

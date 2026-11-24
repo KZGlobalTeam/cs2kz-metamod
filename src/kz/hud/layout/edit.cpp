@@ -52,7 +52,7 @@
 // The buttons inside each element's edit box after its id.
 // Corners are in EditState::corner order.
 #define MHUD_EDIT_MOVE_SUFFIX "_move"
-static_global const char *const EDIT_CORNER_SUFFIXES[] = {"_tl", "_tr", "_bl", "_br"};
+static_global const char *const editCornerSuffixes[] = {"_tl", "_tr", "_bl", "_br"};
 
 struct EditTextDef
 {
@@ -65,22 +65,22 @@ struct EditTextDef
 // Each key label in mhud.xml reads {g:csgo_key:editkey}.
 // The game's csgo_key formatter swaps every %command% in that variable for the key bound to it.
 // The HUD's own bind_* variables would not work here because they live on the CSGOHud root and custom layouts are not under it.
-static_global const EditTextDef EDIT_TEXTS[] = {
+static_global const EditTextDef editTexts[] = {
 	{"mhud_edit_hint", "edithint", "HUD Edit - Pick Hint"},  {"mhud_edit_place", "editplace", "HUD Edit - Place"},
 	{"mhud_edit_cancel", "editcancel", "HUD Edit - Cancel"}, {"mhud_edit_default", "editdefault", "HUD Edit - Default"},
 	{"mhud_edit_free", "editfree", "HUD Edit - Free Move"},  {"mhud_edit_done_label", "editdone", "HUD Edit - Done"},
 };
 
 // Key label panel and the command whose bound key it shows.
-static_global const char *const EDIT_KEYS[][2] = {
+static_global const char *const editKeys[][2] = {
 	{"mhud_edit_key_place", "%attack%"},
 	{"mhud_edit_key_cancel", "%attack2%"},
 	{"mhud_edit_key_default", "%reload%"},
 	{"mhud_edit_key_free", "%sprint%"},
 };
 
-static_global const char *const GUIDE_PANELS[] = {"mhud_guide_x", "mhud_guide_y"};
-static_global const char *const GUIDE_POS_PANELS[] = {"mhud_guide_x_pos", "mhud_guide_y_pos"};
+static_global const char *const guidePanels[] = {"mhud_guide_x", "mhud_guide_y"};
+static_global const char *const guidePosPanels[] = {"mhud_guide_x_pos", "mhud_guide_y_pos"};
 
 static_function f32 NormalizeYawDelta(f32 delta)
 {
@@ -314,7 +314,7 @@ void KZHUDService::HudEditWindow::OnClick(const char *buttonId)
 	}
 	for (i32 i = 0; i < (i32)MHUDElement::Count; i++)
 	{
-		const char *hitPanelId = MHUD_ELEMENTS[i].hitPanelId;
+		const char *hitPanelId = mhudElements[i].hitPanelId;
 		const size_t length = strlen(hitPanelId);
 		if (strncmp(buttonId, hitPanelId, length) != 0 || !hud->GetOwnPrefs().elements[i].enabled)
 		{
@@ -326,9 +326,9 @@ void KZHUDService::HudEditWindow::OnClick(const char *buttonId)
 			hud->BeginDrag((MHUDElement)i);
 			return;
 		}
-		for (i32 corner = 0; corner < KZ_ARRAYSIZE(EDIT_CORNER_SUFFIXES); corner++)
+		for (i32 corner = 0; corner < KZ_ARRAYSIZE(editCornerSuffixes); corner++)
 		{
-			if (KZ_STREQ(suffix, EDIT_CORNER_SUFFIXES[corner]))
+			if (KZ_STREQ(suffix, editCornerSuffixes[corner]))
 			{
 				hud->BeginDrag((MHUDElement)i, corner);
 				return;
@@ -397,7 +397,7 @@ void KZHUDService::EndDrag(bool confirm)
 	}
 	if (confirm)
 	{
-		const MHUDElementDef &def = MHUD_ELEMENTS[(i32)this->edit.element];
+		const MHUDElementDef &def = mhudElements[(i32)this->edit.element];
 		this->player->optionService->SetPreferenceFloat(def.xKey, this->edit.dragX);
 		this->player->optionService->SetPreferenceFloat(def.yKey, this->edit.dragY);
 		if (this->edit.corner >= 0)
@@ -549,7 +549,7 @@ void KZHUDService::UpdateDragPosition(u64 newlyPressed, u64 held)
 // Dragging a corner scales the element about the opposite corner and that corner stays where it is.
 void KZHUDService::UpdateResize(u64 newlyPressed, f32 unitsX, f32 unitsY)
 {
-	const MHUDElementDef &def = MHUD_ELEMENTS[(i32)this->edit.element];
+	const MHUDElementDef &def = mhudElements[(i32)this->edit.element];
 	if (newlyPressed & IN_RELOAD)
 	{
 		this->edit.startSize = this->edit.dragSize = (f32)def.sizeDefault;
@@ -584,7 +584,7 @@ void KZHUDService::UpdateResize(u64 newlyPressed, f32 unitsX, f32 unitsY)
 
 void KZHUDService::UpdateMove(u64 newlyPressed, u64 held)
 {
-	const MHUDElementDef &def = MHUD_ELEMENTS[(i32)this->edit.element];
+	const MHUDElementDef &def = mhudElements[(i32)this->edit.element];
 	if (newlyPressed & IN_RELOAD)
 	{
 		this->edit.startX = (f32)def.xDefault;
@@ -813,7 +813,7 @@ void KZHUDService::UpdateEditLayout(CCSCustomHudLayout *layout, bool force)
 	const MHUDPrefs &prefs = this->GetOwnPrefs();
 	for (i32 i = 0; i < (i32)MHUDElement::Count; i++)
 	{
-		const MHUDElementDef &def = MHUD_ELEMENTS[i];
+		const MHUDElementDef &def = mhudElements[i];
 		LayoutElementState &state = this->layoutElements[i];
 		const bool shown = editing && prefs.elements[i].enabled && !state.hidden;
 		if (state.hitShown != shown)
@@ -848,19 +848,19 @@ void KZHUDService::UpdateEditLayout(CCSCustomHudLayout *layout, bool force)
 	}
 	if (editing)
 	{
-		for (i32 i = 0; i < KZ_ARRAYSIZE(EDIT_TEXTS); i++)
+		for (i32 i = 0; i < KZ_ARRAYSIZE(editTexts); i++)
 		{
-			const std::string text = this->player->languageService->PrepareMessage(EDIT_TEXTS[i].phraseKey);
+			const std::string text = this->player->languageService->PrepareMessage(editTexts[i].phraseKey);
 			if (this->layoutEdit.texts[i] != text)
 			{
 				this->layoutEdit.texts[i] = text;
-				layout->SetDialogVariableString(EDIT_TEXTS[i].panelId, EDIT_TEXTS[i].variable, text.c_str());
+				layout->SetDialogVariableString(editTexts[i].panelId, editTexts[i].variable, text.c_str());
 			}
 		}
 		if (!this->layoutEdit.keysSet)
 		{
 			this->layoutEdit.keysSet = true;
-			for (const auto &key : EDIT_KEYS)
+			for (const auto &key : editKeys)
 			{
 				layout->SetDialogVariableString(key[0], "editkey", key[1]);
 			}
@@ -884,11 +884,11 @@ void KZHUDService::UpdateEditLayout(CCSCustomHudLayout *layout, bool force)
 		if (this->layoutEdit.guideShown[axis] != shown)
 		{
 			this->layoutEdit.guideShown[axis] = shown;
-			layout->SetHasClass(GUIDE_PANELS[axis], "hidden", shown ? k_eHudPanelClassStatus_DoesNotHaveClass : k_eHudPanelClassStatus_HasClass);
+			layout->SetHasClass(guidePanels[axis], "hidden", shown ? k_eHudPanelClassStatus_DoesNotHaveClass : k_eHudPanelClassStatus_HasClass);
 		}
 		if (shown)
 		{
-			this->SetLayoutPosition(layout, GUIDE_PANELS[axis], GUIDE_POS_PANELS[axis], this->layoutEdit.guideCoarse[axis],
+			this->SetLayoutPosition(layout, guidePanels[axis], guidePosPanels[axis], this->layoutEdit.guideCoarse[axis],
 									this->layoutEdit.guideFine[axis], RoundFloatToInt(this->edit.guide[axis] * 10.0f), axis == 0 ? "x" : "y");
 		}
 	}

@@ -17,46 +17,46 @@
 
 namespace KZ::progress
 {
-	static constexpr f32 ROUTE_CELL_SIZE = 128.0f;
+	static constexpr f32 routeCellSize = 128.0f;
 	// A grid segment may extend one cell beyond the cell of its midpoint.
-	static constexpr f32 MAX_GRID_SEGMENT_LENGTH = 2 * ROUTE_CELL_SIZE;
+	static constexpr f32 maxGridSegmentLength = 2 * routeCellSize;
 	// Leaves room for the search radius when converting to cell coordinates.
-	static constexpr f32 MAX_INDEXED_COORDINATE = (f32)(INT_MAX / 4) * ROUTE_CELL_SIZE;
+	static constexpr f32 maxIndexedCoordinate = (f32)(INT_MAX / 4) * routeCellSize;
 	// Treats floating-point roundoff as the same position.
-	static constexpr f32 POSITION_EPSILON = 0.001f;
+	static constexpr f32 positionEpsilon = 0.001f;
 	// Furthest a player can be from the route and still be placed on it.
-	static constexpr f32 MAX_POSITION_ERROR = 256.0f;
+	static constexpr f32 maxPositionError = 256.0f;
 	// The displayed value is marked as approximate further than this from the route.
-	static constexpr f32 APPROXIMATE_POSITION_ERROR = 64.0f;
+	static constexpr f32 approximatePositionError = 64.0f;
 	// Parts this much further than the nearest one are still candidates when searching the whole route.
-	static constexpr f32 NEAREST_ERROR_TOLERANCE = 32.0f;
+	static constexpr f32 nearestErrorTolerance = 32.0f;
 	// Candidates spread over more route distance than this are different parts of the route.
-	static constexpr f64 MAX_UNAMBIGUOUS_ROUTE_SPAN = 256.0;
-	static constexpr u32 MAX_PROJECTIONS = 8192;
-	static constexpr u32 MAX_CELL_LOOKUPS = 4096;
+	static constexpr f64 maxUnambiguousRouteSpan = 256.0;
+	static constexpr u32 maxProjections = 8192;
+	static constexpr u32 maxCellLookups = 4096;
 	// How far a followed player may move along the route per update.
 	// Moving ahead allows more because the reference can take a longer line than the player.
-	static constexpr f32 FOLLOW_AHEAD_SCALE = 3.0f;
-	static constexpr f32 FOLLOW_AHEAD_SLACK = 128.0f;
-	static constexpr f32 FOLLOW_BEHIND_SLACK = 64.0f;
+	static constexpr f32 followAheadScale = 3.0f;
+	static constexpr f32 followAheadSlack = 128.0f;
+	static constexpr f32 followBehindSlack = 64.0f;
 	// Route distance a displayed value may move beyond the distance travelled without counting as a jump.
-	static constexpr f64 JUMP_SLACK = 128.0;
+	static constexpr f64 jumpSlack = 128.0;
 	// How long a jump has to last before it is displayed.
-	static constexpr f64 DIVERGENCE_TIME = 1.5;
+	static constexpr f64 divergenceTime = 1.5;
 	// How fast the displayed value may move towards its target per update relative to the distance travelled.
-	static constexpr f64 GLIDE_TRAVEL_SCALE = 2.0;
-	static constexpr f64 GLIDE_SLACK = 64.0;
+	static constexpr f64 glideTravelScale = 2.0;
+	static constexpr f64 glideSlack = 64.0;
 	// How long the last value stays displayed after the route is lost.
-	static constexpr f64 LOST_DISPLAY_TIME = 1.0;
-	static constexpr size_t NO_PATH_POINT = SIZE_MAX;
+	static constexpr f64 lostDisplayTime = 1.0;
+	static constexpr size_t noPathPoint = SIZE_MAX;
 	// Odd multipliers spread cell coordinates over hash buckets.
-	static constexpr u32 CELL_HASH_X = 73856093u;
-	static constexpr u32 CELL_HASH_Y = 19349663u;
-	static constexpr u32 CELL_HASH_Z = 83492791u;
+	static constexpr u32 cellHashX = 73856093u;
+	static constexpr u32 cellHashY = 19349663u;
+	static constexpr u32 cellHashZ = 83492791u;
 
 	size_t CellHash::operator()(const Cell &cell) const
 	{
-		return (size_t)(u32)cell.x * CELL_HASH_X ^ (size_t)(u32)cell.y * CELL_HASH_Y ^ (size_t)(u32)cell.z * CELL_HASH_Z;
+		return (size_t)(u32)cell.x * cellHashX ^ (size_t)(u32)cell.y * cellHashY ^ (size_t)(u32)cell.z * cellHashZ;
 	}
 
 	using TimerEvent = RpEvent::RpEventData::TimerEvent;
@@ -64,8 +64,8 @@ namespace KZ::progress
 
 	struct RunInterval
 	{
-		size_t firstEvent {NO_PATH_POINT};
-		size_t lastEvent {NO_PATH_POINT};
+		size_t firstEvent {noPathPoint};
+		size_t lastEvent {noPathPoint};
 		u32 firstTick {};
 		u32 lastTick {};
 	};
@@ -93,13 +93,13 @@ namespace KZ::progress
 
 	static_function bool IsIndexablePosition(const Vector &position)
 	{
-		return position.IsValid() && fabsf(position.x) <= MAX_INDEXED_COORDINATE && fabsf(position.y) <= MAX_INDEXED_COORDINATE
-			   && fabsf(position.z) <= MAX_INDEXED_COORDINATE;
+		return position.IsValid() && fabsf(position.x) <= maxIndexedCoordinate && fabsf(position.y) <= maxIndexedCoordinate
+			   && fabsf(position.z) <= maxIndexedCoordinate;
 	}
 
 	static_function Cell GetCell(const Vector &position)
 	{
-		return {(i32)floorf(position.x / ROUTE_CELL_SIZE), (i32)floorf(position.y / ROUTE_CELL_SIZE), (i32)floorf(position.z / ROUTE_CELL_SIZE)};
+		return {(i32)floorf(position.x / routeCellSize), (i32)floorf(position.y / routeCellSize), (i32)floorf(position.z / routeCellSize)};
 	}
 
 	// The cells of a box around a position.
@@ -210,14 +210,14 @@ namespace KZ::progress
 		const RunInterval &run;
 		std::vector<PathNode> nodes;
 		std::unordered_map<i32, size_t> checkpoints;
-		size_t tail {NO_PATH_POINT};
-		size_t undo {NO_PATH_POINT};
+		size_t tail {noPathPoint};
+		size_t undo {noPathPoint};
 		u32 milestone {};
 		bool active {};
 
 		size_t Append(const Vector &origin, bool disconnect, bool failureRestart = false)
 		{
-			if (tail != NO_PATH_POINT && !disconnect && nodes[tail].point.origin == origin && nodes[tail].point.milestone == milestone)
+			if (tail != noPathPoint && !disconnect && nodes[tail].point.origin == origin && nodes[tail].point.milestone == milestone)
 			{
 				return tail;
 			}
@@ -253,7 +253,7 @@ namespace KZ::progress
 			if (checkpoint.type == CheckpointEvent::CHECKPOINT_RESET)
 			{
 				checkpoints.clear();
-				undo = NO_PATH_POINT;
+				undo = noPathPoint;
 				return true;
 			}
 			Vector origin(checkpoint.origin[0], checkpoint.origin[1], checkpoint.origin[2]);
@@ -269,7 +269,7 @@ namespace KZ::progress
 		{
 			const auto &teleport = event.data.teleport;
 			size_t before = Append(source, false);
-			size_t target = NO_PATH_POINT;
+			size_t target = noPathPoint;
 			if (teleport.reason == RPTELEPORT_CHECKPOINT_UNDO)
 			{
 				target = undo;
@@ -283,11 +283,11 @@ namespace KZ::progress
 				}
 			}
 			undo = before;
-			if (target != NO_PATH_POINT)
+			if (target != noPathPoint)
 			{
 				tail = target;
 			}
-			Append(destination, target == NO_PATH_POINT);
+			Append(destination, target == noPathPoint);
 		}
 
 		bool ApplyTeleportEvent(const RpEvent &event)
@@ -419,13 +419,13 @@ namespace KZ::progress
 				return false;
 			}
 		}
-		return cursor.next > cursor.last && !tree.active && tree.tail != NO_PATH_POINT;
+		return cursor.next > cursor.last && !tree.active && tree.tail != noPathPoint;
 	}
 
 	static_function std::vector<PathPoint> TakeFinalPath(const CheckpointTree &tree, const std::atomic<bool> &cancel)
 	{
 		std::vector<PathPoint> path;
-		for (size_t index = tree.tail; index != NO_PATH_POINT; index = tree.nodes[index].parent)
+		for (size_t index = tree.tail; index != noPathPoint; index = tree.nodes[index].parent)
 		{
 			if (cancel)
 			{
@@ -439,7 +439,7 @@ namespace KZ::progress
 
 	struct FailureReturn
 	{
-		size_t segmentEnd {NO_PATH_POINT};
+		size_t segmentEnd {noPathPoint};
 		Vector origin;
 		f64 firstDistance {DBL_MAX};
 		f64 lastDistance {-1};
@@ -466,7 +466,7 @@ namespace KZ::progress
 			if (end.milestone == restart.milestone && start.milestone == restart.milestone)
 			{
 				Projection projection = ProjectPosition(restart.origin, start.origin, end.origin);
-				if (projection.error <= POSITION_EPSILON)
+				if (projection.error <= positionEpsilon)
 				{
 					f64 along = distance + projection.fraction * length;
 					result.firstDistance = Min(result.firstDistance, along);
@@ -477,9 +477,9 @@ namespace KZ::progress
 			}
 			distance += length;
 		}
-		if (result.lastDistance - result.firstDistance > POSITION_EPSILON)
+		if (result.lastDistance - result.firstDistance > positionEpsilon)
 		{
-			result.segmentEnd = NO_PATH_POINT;
+			result.segmentEnd = noPathPoint;
 		}
 		return result;
 	}
@@ -501,7 +501,7 @@ namespace KZ::progress
 				{
 					return false;
 				}
-				if (restart.segmentEnd != NO_PATH_POINT)
+				if (restart.segmentEnd != noPathPoint)
 				{
 					retained.resize(restart.segmentEnd);
 					retained.push_back({restart.origin, false, point.milestone});
@@ -534,11 +534,11 @@ namespace KZ::progress
 			{
 				return false;
 			}
-			if (length <= POSITION_EPSILON)
+			if (length <= positionEpsilon)
 			{
 				continue;
 			}
-			if (length <= MAX_GRID_SEGMENT_LENGTH)
+			if (length <= maxGridSegmentLength)
 			{
 				route.cells[GetCell((start.origin + end.origin) * 0.5f)].push_back(route.segments.size());
 			}
@@ -601,7 +601,7 @@ namespace KZ::progress
 				distance = segment.distance + (first + projection.fraction * (second - first)) * segment.length;
 			}
 		}
-		return error <= MAX_POSITION_ERROR;
+		return error <= maxPositionError;
 	}
 
 	struct Candidate
@@ -617,16 +617,16 @@ namespace KZ::progress
 		{
 			const Segment &segment = route.segments[index];
 			Projection projection = ProjectPosition(position, segment.start, segment.end);
-			if (projection.error <= MAX_POSITION_ERROR)
+			if (projection.error <= maxPositionError)
 			{
 				candidates.push_back({segment.distance + projection.fraction * segment.length, projection.error});
 			}
-			return ++projections <= MAX_PROJECTIONS;
+			return ++projections <= maxProjections;
 		};
-		CellRange cells(position, MAX_POSITION_ERROR + MAX_GRID_SEGMENT_LENGTH * 0.5f);
+		CellRange cells(position, maxPositionError + maxGridSegmentLength * 0.5f);
 		for (Cell cell; cells.Next(cell);)
 		{
-			if (++lookups > MAX_CELL_LOOKUPS)
+			if (++lookups > maxCellLookups)
 			{
 				return false;
 			}
@@ -669,7 +669,7 @@ namespace KZ::progress
 		const Candidate *closest = nullptr, *closestToHint = nullptr;
 		for (const auto &candidate : candidates)
 		{
-			if (candidate.error > nearest + NEAREST_ERROR_TOLERANCE)
+			if (candidate.error > nearest + nearestErrorTolerance)
 			{
 				continue;
 			}
@@ -684,7 +684,7 @@ namespace KZ::progress
 				closestToHint = &candidate;
 			}
 		}
-		const Candidate *chosen = maximum - minimum <= MAX_UNAMBIGUOUS_ROUTE_SPAN ? closest : (hint >= 0 ? closestToHint : nullptr);
+		const Candidate *chosen = maximum - minimum <= maxUnambiguousRouteSpan ? closest : (hint >= 0 ? closestToHint : nullptr);
 		if (!chosen)
 		{
 			return false;
@@ -726,17 +726,17 @@ namespace KZ::progress
 		f32 error;
 		bool followed =
 			this->following >= 0
-			&& route.Follow(position, this->following, travel + FOLLOW_BEHIND_SLACK, travel * FOLLOW_AHEAD_SCALE + FOLLOW_AHEAD_SLACK, found, error);
+			&& route.Follow(position, this->following, travel + followBehindSlack, travel * followAheadScale + followAheadSlack, found, error);
 		if (!followed && !route.Locate(position, this->target, found, error))
 		{
 			this->following = -1;
 			distance = this->shown;
 			approximate = this->approximate;
-			return this->shown >= 0 && !this->acceptNext && now - this->lastMatch <= LOST_DISPLAY_TIME;
+			return this->shown >= 0 && !this->acceptNext && now - this->lastMatch <= lostDisplayTime;
 		}
 		this->following = found;
 		this->lastMatch = now;
-		this->approximate = error > APPROXIMATE_POSITION_ERROR;
+		this->approximate = error > approximatePositionError;
 
 		if (this->target < 0 || this->acceptNext)
 		{
@@ -746,7 +746,7 @@ namespace KZ::progress
 			this->divergedSince = -1;
 			this->travelSinceTarget = 0;
 		}
-		else if ((followed && this->divergedSince < 0) || fabs(found - this->target) <= this->travelSinceTarget + JUMP_SLACK)
+		else if ((followed && this->divergedSince < 0) || fabs(found - this->target) <= this->travelSinceTarget + jumpSlack)
 		{
 			this->target = found;
 			this->divergedSince = -1;
@@ -756,14 +756,14 @@ namespace KZ::progress
 		{
 			this->divergedSince = now;
 		}
-		else if (now - this->divergedSince >= DIVERGENCE_TIME)
+		else if (now - this->divergedSince >= divergenceTime)
 		{
 			this->target = found;
 			this->divergedSince = -1;
 			this->travelSinceTarget = 0;
 		}
 		// Catching up after a lag or an accepted jump is shown as a short slide rather than a jump.
-		f64 step = travel * GLIDE_TRAVEL_SCALE + GLIDE_SLACK;
+		f64 step = travel * glideTravelScale + glideSlack;
 		this->shown += Clamp(this->target - this->shown, -step, step);
 		distance = this->shown;
 		approximate = this->approximate;

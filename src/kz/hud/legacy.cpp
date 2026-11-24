@@ -24,8 +24,8 @@ std::string KZHUDService::GetSpeedText(const MHUDPrefs &prefs, const char *langu
 	// The legacy HTML HUD prints a hex color and a gradient has no equivalent for it.
 	// A gradient preference therefore falls back to that element's default color (the shared MHUD_DEF_* the layout HUD uses).
 	const MHUDSpeedState state = info.GetState();
-	const Color tintCol = panorama::ResolveSolidColor(prefs.prespeed[(i32)state], MHUD_DEF_BASE_COLOR);
-	const Color cjCol = panorama::ResolveSolidColor(prefs.speed[(i32)MHUDSpeedState::CrouchJump], MHUD_DEF_CJ_COLOR);
+	const Color tintCol = panorama::ResolveSolidColor(prefs.prespeed[(i32)state], mhudDefBaseColor);
+	const Color cjCol = panorama::ResolveSolidColor(prefs.speed[(i32)MHUDSpeedState::CrouchJump], mhudDefCjColor);
 	char colorBuf[24];
 	V_snprintf(colorBuf, sizeof(colorBuf), "<font color='#%02x%02x%02x'>", tintCol.r(), tintCol.g(), tintCol.b());
 	char cjBuf[24];

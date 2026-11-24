@@ -9,9 +9,9 @@
 #include "tier0/memdbgon.h"
 
 // Indexed by DistanceTier so a picked row id is the stored value.
-static_global const char *const TIER_LABELS[DISTANCETIER_COUNT] = {"Menu - Tier None",    "Menu - Tier Meh",     "Menu - Tier Impressive",
-																   "Menu - Tier Perfect", "Menu - Tier Godlike", "Menu - Tier Ownage",
-																   "Menu - Tier Wrecker"};
+static_global const char *const tierLabels[DISTANCETIER_COUNT] = {"Menu - Tier None",    "Menu - Tier Meh",     "Menu - Tier Impressive",
+																  "Menu - Tier Perfect", "Menu - Tier Godlike", "Menu - Tier Ownage",
+																  "Menu - Tier Wrecker"};
 
 // The tier preferences all behave identically; tag is the index into this table.
 struct TierPref
@@ -23,7 +23,7 @@ struct TierPref
 };
 
 // clang-format off
-static_global const TierPref TIER_PREFS[] = {
+static_global const TierPref tierPrefs[] = {
 	{"jsMinTier",                "defaultJSMinTier",                DistanceTier_Impressive, "Menu - JS Min Tier"},
 	{"jsMinTierHud",             "defaultJSMinTierHud",             DistanceTier_Impressive, "Menu - JS Min Tier HUD"},
 	{"jsMinTierConsole",         "defaultJSMinTierConsole",         DistanceTier_Impressive, "Menu - JS Min Tier Console"},
@@ -38,30 +38,30 @@ static_function void GetTierChoices(KZPlayer *player, i64, std::vector<KZChoice>
 {
 	for (i32 i = 0; i < DISTANCETIER_COUNT; i++)
 	{
-		out.push_back({KZMenuService::GetPhrase(player, TIER_LABELS[i]), i, NULL});
+		out.push_back({KZMenuService::GetPhrase(player, tierLabels[i]), i, NULL});
 	}
 }
 
 static_function i64 GetCurrentTier(KZPlayer *player, i64 tag)
 {
-	const TierPref &pref = TIER_PREFS[tag];
+	const TierPref &pref = tierPrefs[tag];
 	return player->optionService->GetPreferenceInt(pref.prefKey, KZOptionService::GetOptionInt(pref.serverDefaultKey, pref.fallback));
 }
 
 static_function void PickTier(KZPlayer *player, i64 tag, i64 id)
 {
-	player->optionService->SetPreferenceInt(TIER_PREFS[tag].prefKey, id);
+	player->optionService->SetPreferenceInt(tierPrefs[tag].prefKey, id);
 }
 
 // JSReportType
-static_global const char *const REPORT_TYPE_LABELS[JSREPORTTYPE_COUNT] = {"Menu - JS Report Type HUD", "Menu - JS Report Type Chat",
-																		  "Menu - JS Report Type Both"};
+static_global const char *const reportTypeLabels[JSREPORTTYPE_COUNT] = {"Menu - JS Report Type HUD", "Menu - JS Report Type Chat",
+																		"Menu - JS Report Type Both"};
 
 static_function void GetReportTypeChoices(KZPlayer *player, i64, std::vector<KZChoice> &out)
 {
 	for (i32 i = 0; i < JSREPORTTYPE_COUNT; i++)
 	{
-		out.push_back({KZMenuService::GetPhrase(player, REPORT_TYPE_LABELS[i]), i, NULL});
+		out.push_back({KZMenuService::GetPhrase(player, reportTypeLabels[i]), i, NULL});
 	}
 }
 
@@ -84,7 +84,7 @@ static_function void GetFieldOrderChoices(KZPlayer *player, i64, std::vector<KZC
 	{
 		if (fields.shown[(i32)field])
 		{
-			out.push_back({KZMenuService::GetPhrase(player, JS_FIELDS[(i32)field].menuPhrase), (i64)field, NULL});
+			out.push_back({KZMenuService::GetPhrase(player, jsFieldDefs[(i32)field].menuPhrase), (i64)field, NULL});
 		}
 	}
 }
@@ -137,11 +137,11 @@ void KZJumpstatsService::RegisterMenu()
 	KZ::menu::SetItemSubtext(general, "Menu - JS Volume Sub");
 	KZ::menu::SetItemDivider(general);
 
-	for (i32 i = 0; i < KZ_ARRAYSIZE(TIER_PREFS); i++)
+	for (i32 i = 0; i < KZ_ARRAYSIZE(tierPrefs); i++)
 	{
-		KZ::menu::AddChoice(general, TIER_PREFS[i].phraseKey, GetTierChoices, GetCurrentTier, PickTier, i);
-		KZ::menu::SetItemPref(general, TIER_PREFS[i].prefKey, KZOptStorage::Int,
-							  (i32)KZOptionService::GetOptionInt(TIER_PREFS[i].serverDefaultKey, TIER_PREFS[i].fallback));
+		KZ::menu::AddChoice(general, tierPrefs[i].phraseKey, GetTierChoices, GetCurrentTier, PickTier, i);
+		KZ::menu::SetItemPref(general, tierPrefs[i].prefKey, KZOptStorage::Int,
+							  (i32)KZOptionService::GetOptionInt(tierPrefs[i].serverDefaultKey, tierPrefs[i].fallback));
 	}
 
 	// Shared by the chat report and the HUD panel.
@@ -150,7 +150,7 @@ void KZJumpstatsService::RegisterMenu()
 	KZ::menu::SetItemPref(fieldsNode, "jsFieldOrder", KZOptStorage::Str, 0, JS_DEFAULT_FIELD_ORDER);
 	KZ::menu::SetItemSubtext(fieldsNode, "Menu - JS Field Order Sub");
 	KZ::menu::SetItemDivider(fieldsNode);
-	for (const JSFieldDef &field : JS_FIELDS)
+	for (const JSFieldDef &field : jsFieldDefs)
 	{
 		KZ::menu::AddToggle(fieldsNode, field.menuPhrase, field.prefKey, true);
 		if (field.extended)

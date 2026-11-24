@@ -13,13 +13,13 @@
 #include "tier0/memdbgon.h"
 
 // Indexed by KZBeamService::BeamType so a picked row id is the stored value.
-static_global const char *const BEAM_LABELS[] = {"Menu - Beam None", "Menu - Beam Ground", "Menu - Beam Feet"};
+static_global const char *const beamLabels[] = {"Menu - Beam None", "Menu - Beam Ground", "Menu - Beam Feet"};
 
 static_function void GetBeamChoices(KZPlayer *player, i64, std::vector<KZChoice> &out)
 {
-	for (i32 i = 0; i < KZ_ARRAYSIZE(BEAM_LABELS); i++)
+	for (i32 i = 0; i < KZ_ARRAYSIZE(beamLabels); i++)
 	{
-		out.push_back({KZMenuService::GetPhrase(player, BEAM_LABELS[i]), i, NULL});
+		out.push_back({KZMenuService::GetPhrase(player, beamLabels[i]), i, NULL});
 	}
 }
 

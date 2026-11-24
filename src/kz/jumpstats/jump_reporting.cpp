@@ -27,7 +27,7 @@ static_global const char *columnKeys[] = {"#.",
 										  "Angle Ratio"};
 
 // clang-format off
-extern const JSFieldDef JS_FIELDS[(i32)JSField::Count] =
+extern const JSFieldDef jsFieldDefs[(i32)JSField::Count] =
 {
 	{"block",     "jsShowBlock",     "Menu - JS Field Block",           NULL,                      {"Block"},                                                         true},
 	{"strafes",   "jsShowStrafes",   "Menu - JS Field Strafes",         NULL,                      {"Strafes"},                                                       false},
@@ -57,7 +57,7 @@ void KZJumpstatsService::GetFieldLayout(KZPlayer *player, JSFieldLayout &out)
 	{
 		for (i32 f = 0; f < (i32)JSField::Count; f++)
 		{
-			if (!placed[f] && KZ_STREQ(slug.c_str(), JS_FIELDS[f].slug))
+			if (!placed[f] && KZ_STREQ(slug.c_str(), jsFieldDefs[f].slug))
 			{
 				placed[f] = true;
 				out.order[count++] = (JSField)f;
@@ -71,7 +71,7 @@ void KZJumpstatsService::GetFieldLayout(KZPlayer *player, JSFieldLayout &out)
 		{
 			out.order[count++] = (JSField)f;
 		}
-		out.shown[f] = opts->GetPreferenceBool(JS_FIELDS[f].prefKey, true);
+		out.shown[f] = opts->GetPreferenceBool(jsFieldDefs[f].prefKey, true);
 	}
 }
 
@@ -80,7 +80,7 @@ void KZJumpstatsService::SetFieldOrder(KZPlayer *player, const JSField (&order)[
 	std::string value;
 	for (JSField field : order)
 	{
-		value += value.empty() ? JS_FIELDS[(i32)field].slug : std::string(",") + JS_FIELDS[(i32)field].slug;
+		value += value.empty() ? jsFieldDefs[(i32)field].slug : std::string(",") + jsFieldDefs[(i32)field].slug;
 	}
 	player->optionService->SetPreferenceStr("jsFieldOrder", value.c_str());
 }
@@ -228,7 +228,7 @@ void Jump::FormatField(JSField field, bool chat, bool greyTier, JSFieldText &out
 
 // Indexed by JSFieldColor.
 // Tier takes the tier's own color instead.
-static_global const char *const JS_CHAT_COLORS[] = {"{olive}", "{grey}", "{red}", "{green}", "{blue}", "{grey}"};
+static_global const char *const jsChatColors[] = {"{olive}", "{grey}", "{red}", "{green}", "{blue}", "{grey}"};
 
 // Leaves room for the chat prefix and for the color codes to expand inside the 512 bytes a chat message gets.
 #define JS_CHAT_LINE_MAX 380
@@ -303,7 +303,7 @@ void KZJumpstatsService::PrintJumpToChat(KZPlayer *target, Jump *jump, bool exte
 	const JSFieldLayout &fields = target->hudService->GetOwnPrefs().jsFields;
 	for (JSField field : fields.order)
 	{
-		const JSFieldDef &def = JS_FIELDS[(i32)field];
+		const JSFieldDef &def = jsFieldDefs[(i32)field];
 		if (!fields.shown[(i32)field] || (def.extended && !extended))
 		{
 			continue;
@@ -314,7 +314,7 @@ void KZJumpstatsService::PrintJumpToChat(KZPlayer *target, Jump *jump, bool exte
 		{
 			continue;
 		}
-		const char *valueColor = JS_CHAT_COLORS[(i32)text.color];
+		const char *valueColor = jsChatColors[(i32)text.color];
 		if (text.color == JSFieldColor::Tier)
 		{
 			valueColor = distanceTierColors[text.tier];

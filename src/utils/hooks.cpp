@@ -1447,7 +1447,7 @@ struct SignatureHook
 
 #define SIGNATURE_HOOK(hook) {#hook, [](void *address) { hook.Configure(address); }}
 
-static_global const SignatureHook SIGNATURE_HOOKS[] = {
+static_global const SignatureHook signatureHooks[] = {
 	SIGNATURE_HOOK(RecvServerBrowserPacket),
 	SIGNATURE_HOOK(CPhysicsGameSystemFrameBoundary),
 #ifdef DEBUG_TPM
@@ -1484,7 +1484,7 @@ static_global const SignatureHook SIGNATURE_HOOKS[] = {
 
 #undef SIGNATURE_HOOK
 
-static_global void *signatureAddresses[KZ_ARRAYSIZE(SIGNATURE_HOOKS)];
+static_global void *signatureAddresses[KZ_ARRAYSIZE(signatureHooks)];
 
 // ============================================================
 // hooks::ResolveSignatures
@@ -1493,13 +1493,13 @@ bool hooks::ResolveSignatures(char *error, size_t maxlen)
 {
 	// Resolve every signature before anything is hooked so outdated gamedata aborts the load instead of running with missing detours.
 	std::string missingSignatures;
-	for (u32 i = 0; i < KZ_ARRAYSIZE(SIGNATURE_HOOKS); i++)
+	for (u32 i = 0; i < KZ_ARRAYSIZE(signatureHooks); i++)
 	{
-		signatureAddresses[i] = g_pGameConfig->ResolveSignature(SIGNATURE_HOOKS[i].name);
+		signatureAddresses[i] = g_pGameConfig->ResolveSignature(signatureHooks[i].name);
 		if (!signatureAddresses[i])
 		{
 			missingSignatures += missingSignatures.empty() ? "" : ", ";
-			missingSignatures += SIGNATURE_HOOKS[i].name;
+			missingSignatures += signatureHooks[i].name;
 		}
 	}
 	if (!missingSignatures.empty())
@@ -1637,9 +1637,9 @@ void hooks::Initialize()
 	}
 
 	// Signature-based hooks
-	for (u32 i = 0; i < KZ_ARRAYSIZE(SIGNATURE_HOOKS); i++)
+	for (u32 i = 0; i < KZ_ARRAYSIZE(signatureHooks); i++)
 	{
-		SIGNATURE_HOOKS[i].configure(signatureAddresses[i]);
+		signatureHooks[i].configure(signatureAddresses[i]);
 	}
 }
 

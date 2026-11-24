@@ -29,7 +29,7 @@ struct GameHudPartDef
 	const char *argName; // kz_hidehud argument (null when the command can't toggle it)
 };
 
-extern const GameHudPartDef GAME_HUD_PARTS[GAME_HUD_PART_COUNT];
+extern const GameHudPartDef gameHudParts[GAME_HUD_PART_COUNT];
 class CCSCustomHudLayout;
 class Jump;
 class CUserCmd;
@@ -128,7 +128,7 @@ struct MHUDColorPrefDef
 	bool affectLegacy {};
 };
 
-extern const MHUDElementDef MHUD_ELEMENTS[(i32)MHUDElement::Count];
+extern const MHUDElementDef mhudElements[(i32)MHUDElement::Count];
 
 // The layout is 1080 units tall and its width is 1080 * aspect ratio.
 // Only edit mode needs it.
@@ -138,22 +138,22 @@ extern const MHUDElementDef MHUD_ELEMENTS[(i32)MHUDElement::Count];
 #define MHUD_SIZE_MAX 100
 
 // Shared by the layout HUD (as pal-fg classes) and the legacy HTML HUD (as hex).
-static_global const Color MHUD_DEF_BASE_COLOR(255, 255, 255, 255);
-static_global const Color MHUD_DEF_PERF_COLOR(0x40, 0xFF, 0x40, 0xFF);
-static_global const Color MHUD_DEF_JUMPBUG_COLOR(0xFF, 0xFF, 0x20, 0xFF);
-static_global const Color MHUD_DEF_CJ_COLOR(0x71, 0xEE, 0xB8, 0xFF);
-static_global const Color MHUD_DEF_DEADSTRAFE_COLOR(0xFF, 0x00, 0x00, 0xFF);
-static_global const Color MHUD_DEF_TIMER_TP_COLOR(0xFF, 0xFF, 0x00, 0xFF);
-static_global const Color MHUD_DEF_TIMER_PRO_COLOR(0x5F, 0x99, 0xD9, 0xFF);
-static_global const Color MHUD_DEF_TIMER_PAUSED_COLOR(0xFF, 0x80, 0x00, 0xFF);
-static_global const Color MHUD_DEF_TIMER_STOPPED_COLOR(0xFF, 0xA0, 0xA0, 0xFF);
-static_global const Color MHUD_DEF_KEYS_OVERLAP_COLOR(0xFF, 0x40, 0x40, 0xFF);
-static_global const Color MHUD_DEF_KEYS_PRESSED_COLOR(0x3B, 0xED, 0xA0, 0xFF);
-static_global const Color MHUD_DEF_KEYS_OVERLAP_GLOW_COLOR(0xFF, 0x40, 0x40, 0xFF);
+static_global const Color mhudDefBaseColor(255, 255, 255, 255);
+static_global const Color mhudDefPerfColor(0x40, 0xFF, 0x40, 0xFF);
+static_global const Color mhudDefJumpbugColor(0xFF, 0xFF, 0x20, 0xFF);
+static_global const Color mhudDefCjColor(0x71, 0xEE, 0xB8, 0xFF);
+static_global const Color mhudDefDeadstrafeColor(0xFF, 0x00, 0x00, 0xFF);
+static_global const Color mhudDefTimerTpColor(0xFF, 0xFF, 0x00, 0xFF);
+static_global const Color mhudDefTimerProColor(0x5F, 0x99, 0xD9, 0xFF);
+static_global const Color mhudDefTimerPausedColor(0xFF, 0x80, 0x00, 0xFF);
+static_global const Color mhudDefTimerStoppedColor(0xFF, 0xA0, 0xA0, 0xFF);
+static_global const Color mhudDefKeysOverlapColor(0xFF, 0x40, 0x40, 0xFF);
+static_global const Color mhudDefKeysPressedColor(0x3B, 0xED, 0xA0, 0xFF);
+static_global const Color mhudDefKeysOverlapGlowColor(0xFF, 0x40, 0x40, 0xFF);
 // The chat's colors for an early, perfect and late W release.
-static_global const Color MHUD_DEF_RELEASE_EARLY_COLOR(0x5E, 0x98, 0xD9, 0xFF);
-static_global const Color MHUD_DEF_RELEASE_PERFECT_COLOR(0x40, 0xFF, 0x40, 0xFF);
-static_global const Color MHUD_DEF_RELEASE_LATE_COLOR(0xFF, 0x40, 0x40, 0xFF);
+static_global const Color mhudDefReleaseEarlyColor(0x5E, 0x98, 0xD9, 0xFF);
+static_global const Color mhudDefReleasePerfectColor(0x40, 0xFF, 0x40, 0xFF);
+static_global const Color mhudDefReleaseLateColor(0xFF, 0x40, 0x40, 0xFF);
 
 enum class MHUDSpeedState
 {
@@ -234,7 +234,7 @@ struct MHUDBorderDef
 	const char *label; // the symbols around a sample value (the picker needs no phrase); NULL for None
 };
 
-extern const MHUDBorderDef MHUD_BORDERS[(i32)MHUDBorder::Count];
+extern const MHUDBorderDef mhudBorders[(i32)MHUDBorder::Count];
 
 // The rows each indicator contributes to the flattened Indicators page.
 enum class MHUDIndicatorRow
@@ -261,7 +261,7 @@ struct MHUDIndicatorDef
 	const char *rowPhrase[(i32)MHUDIndicatorRow::Count];
 };
 
-extern const MHUDIndicatorDef MHUD_INDICATOR_DEFS[MHUD_INDICATOR_COUNT];
+extern const MHUDIndicatorDef mhudIndicatorDefs[MHUD_INDICATOR_COUNT];
 
 // How long prespeed stays visible after landing.
 enum class MHUDPrespeedShow
@@ -665,7 +665,7 @@ private:
 		i32 guideFine[2] {INT_MIN, INT_MIN};
 		bool dragging {};
 		bool keysSet {};
-		std::string texts[6] {}; // one per EDIT_TEXTS entry in edit.cpp
+		std::string texts[6] {}; // one per editTexts entry in edit.cpp
 	};
 
 	KZ::ui::PlayerLayout ownedLayout {this->player, KZ_MHUD_LAYOUT, "kzmhud"};

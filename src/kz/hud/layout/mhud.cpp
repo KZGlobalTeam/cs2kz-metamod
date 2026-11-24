@@ -63,7 +63,7 @@ static_function void FormatBordered(char *out, i32 outLen, const MHUDPrefs::Elem
 {
 	char number[16];
 	V_snprintf(number, sizeof(number), precise ? "%.2f" : "%.0f", value);
-	const MHUDBorderDef &border = MHUD_BORDERS[(i32)element.border];
+	const MHUDBorderDef &border = mhudBorders[(i32)element.border];
 	V_snprintf(out, outLen, "%s%s%s", border.prefix, number, border.suffix);
 }
 
@@ -88,14 +88,14 @@ void KZHUDService::UpdatePrespeedElement(CCSCustomHudLayout *layout, const Speed
 }
 
 // Order matches the panels in mhud.xml with C W J on the top row and A S D on the bottom.
-static_global const char *KEY_PANELS[] = {"mhud_key_c", "mhud_key_w", "mhud_key_j", "mhud_key_a", "mhud_key_s", "mhud_key_d"};
+static_global const char *keyPanels[] = {"mhud_key_c", "mhud_key_w", "mhud_key_j", "mhud_key_a", "mhud_key_s", "mhud_key_d"};
 
 // The glyph labels inside those buttons.
 // The font class goes on these rather than on the buttons because a child only restyles if it is touched itself.
-static_global const char *KEY_GLYPHS[] = {"mhud_kg_c_main", "mhud_kg_c_idle",   "mhud_kg_w_main", "mhud_kg_w_letter", "mhud_kg_w_idle",
-										  "mhud_kg_j_main", "mhud_kg_j_idle",   "mhud_kg_a_main", "mhud_kg_a_letter", "mhud_kg_a_idle",
-										  "mhud_kg_s_main", "mhud_kg_s_letter", "mhud_kg_s_idle", "mhud_kg_d_main",   "mhud_kg_d_letter",
-										  "mhud_kg_d_idle", "mhud_kg_j_count"};
+static_global const char *keyGlyphs[] = {"mhud_kg_c_main", "mhud_kg_c_idle",   "mhud_kg_w_main", "mhud_kg_w_letter", "mhud_kg_w_idle",
+										 "mhud_kg_j_main", "mhud_kg_j_idle",   "mhud_kg_a_main", "mhud_kg_a_letter", "mhud_kg_a_idle",
+										 "mhud_kg_s_main", "mhud_kg_s_letter", "mhud_kg_s_idle", "mhud_kg_d_main",   "mhud_kg_d_letter",
+										 "mhud_kg_d_idle", "mhud_kg_j_count"};
 
 // The movement axis each panel sits on so an overlap can be shown on just the keys causing it.
 enum KeyAxis
@@ -105,8 +105,8 @@ enum KeyAxis
 	KEY_AXIS_LEFT_RIGHT,
 };
 
-static_global const i32 KEY_AXES[] = {KEY_AXIS_NONE,       KEY_AXIS_FORWARD_BACK, KEY_AXIS_NONE,
-									  KEY_AXIS_LEFT_RIGHT, KEY_AXIS_FORWARD_BACK, KEY_AXIS_LEFT_RIGHT};
+static_global const i32 keyAxes[] = {KEY_AXIS_NONE,       KEY_AXIS_FORWARD_BACK, KEY_AXIS_NONE,
+									 KEY_AXIS_LEFT_RIGHT, KEY_AXIS_FORWARD_BACK, KEY_AXIS_LEFT_RIGHT};
 
 void KZHUDService::UpdateKeysElement(CCSCustomHudLayout *layout, KZPlayer *source, bool force, bool preview)
 {
@@ -119,11 +119,11 @@ void KZHUDService::UpdateKeysElement(CCSCustomHudLayout *layout, KZPlayer *sourc
 	const MHUDPrefs &prefs = this->GetPrefs();
 	// Edit mode shows every key held without the overlap tint that would imply.
 	const bool overlap = !preview && ((forward && back) || (left && right)) && prefs.keysOverlapEnabled;
-	bool overlapped[KZ_ARRAYSIZE(KEY_PANELS)] {};
-	for (i32 i = 0; overlap && i < KZ_ARRAYSIZE(KEY_PANELS); i++)
+	bool overlapped[KZ_ARRAYSIZE(keyPanels)] {};
+	for (i32 i = 0; overlap && i < KZ_ARRAYSIZE(keyPanels); i++)
 	{
-		overlapped[i] = !prefs.keysOverlapAxis || (KEY_AXES[i] == KEY_AXIS_FORWARD_BACK && forward && back)
-						|| (KEY_AXES[i] == KEY_AXIS_LEFT_RIGHT && left && right);
+		overlapped[i] = !prefs.keysOverlapAxis || (keyAxes[i] == KEY_AXIS_FORWARD_BACK && forward && back)
+						|| (keyAxes[i] == KEY_AXIS_LEFT_RIGHT && left && right);
 	}
 	// Axis mode leaves the element on the base color and tints the offending keys one by one below.
 	const Color color = overlap && !prefs.keysOverlapAxis ? prefs.keysOverlap : prefs.keys;
@@ -138,7 +138,7 @@ void KZHUDService::UpdateKeysElement(CCSCustomHudLayout *layout, KZPlayer *sourc
 		return;
 	}
 
-	const char *const keysPanel = MHUD_ELEMENTS[(i32)MHUDElement::Keys].panelId;
+	const char *const keysPanel = mhudElements[(i32)MHUDElement::Keys].panelId;
 	const i32 idle = (i32)prefs.keysIdle;
 	if (this->layoutKeys.idle != idle)
 	{
@@ -178,14 +178,14 @@ void KZHUDService::UpdateKeysElement(CCSCustomHudLayout *layout, KZPlayer *sourc
 		this->layoutKeys.square = square;
 		layout->SetHasClass(keysPanel, "keys-square", square ? k_eHudPanelClassStatus_HasClass : k_eHudPanelClassStatus_DoesNotHaveClass);
 	}
-	const i32 glow = panorama::GetNearestSolidIndex(panorama::ResolveSolidColor(prefs.keysPressed, MHUD_DEF_KEYS_PRESSED_COLOR));
+	const i32 glow = panorama::GetNearestSolidIndex(panorama::ResolveSolidColor(prefs.keysPressed, mhudDefKeysPressedColor));
 	const i32 glowOverlap =
-		overlap ? panorama::GetNearestSolidIndex(panorama::ResolveSolidColor(prefs.keysOverlapGlow, MHUD_DEF_KEYS_OVERLAP_GLOW_COLOR)) : glow;
+		overlap ? panorama::GetNearestSolidIndex(panorama::ResolveSolidColor(prefs.keysOverlapGlow, mhudDefKeysOverlapGlowColor)) : glow;
 	const char *overlapClass = prefs.keysOverlapAxis ? panorama::ResolveColorClass(prefs.keysOverlap) : NULL;
-	for (i32 i = 0; i < KZ_ARRAYSIZE(KEY_PANELS); i++)
+	for (i32 i = 0; i < KZ_ARRAYSIZE(keyPanels); i++)
 	{
 		// A class here overrides the inherited element color for this key alone.
-		this->SetLayoutClass(layout, KEY_PANELS[i], this->layoutKeys.overlapClass[i], overlapped[i] ? overlapClass : NULL);
+		this->SetLayoutClass(layout, keyPanels[i], this->layoutKeys.overlapClass[i], overlapped[i] ? overlapClass : NULL);
 
 		const i32 wanted = overlapped[i] ? glowOverlap : glow;
 		if (this->layoutKeys.glow[i] == wanted)
@@ -196,21 +196,21 @@ void KZHUDService::UpdateKeysElement(CCSCustomHudLayout *layout, KZPlayer *sourc
 		if (this->layoutKeys.glow[i] >= 0)
 		{
 			V_snprintf(glowClass, sizeof(glowClass), "key-glow-%i", this->layoutKeys.glow[i]);
-			layout->SetHasClass(KEY_PANELS[i], glowClass, k_eHudPanelClassStatus_DoesNotHaveClass);
+			layout->SetHasClass(keyPanels[i], glowClass, k_eHudPanelClassStatus_DoesNotHaveClass);
 		}
 		V_snprintf(glowClass, sizeof(glowClass), "key-glow-%i", wanted);
-		layout->SetHasClass(KEY_PANELS[i], glowClass, k_eHudPanelClassStatus_HasClass);
+		layout->SetHasClass(keyPanels[i], glowClass, k_eHudPanelClassStatus_HasClass);
 		this->layoutKeys.glow[i] = wanted;
 	}
 
-	for (i32 i = 0; i < KZ_ARRAYSIZE(KEY_PANELS); i++)
+	for (i32 i = 0; i < KZ_ARRAYSIZE(keyPanels); i++)
 	{
 		if (this->layoutKeys.pressed[i] == keys[i])
 		{
 			continue;
 		}
 		this->layoutKeys.pressed[i] = keys[i];
-		layout->SetHasClass(KEY_PANELS[i], "pressed", keys[i] ? k_eHudPanelClassStatus_HasClass : k_eHudPanelClassStatus_DoesNotHaveClass);
+		layout->SetHasClass(keyPanels[i], "pressed", keys[i] ? k_eHudPanelClassStatus_HasClass : k_eHudPanelClassStatus_DoesNotHaveClass);
 	}
 
 	// A count replaces the J while the presses keep coming the way NohBoard shows scroll notches.
@@ -254,15 +254,15 @@ void KZHUDService::UpdateKeysElement(CCSCustomHudLayout *layout, KZPlayer *sourc
 	if (this->layoutKeys.fontSize != size)
 	{
 		char className[64];
-		for (i32 i = 0; i < KZ_ARRAYSIZE(KEY_PANELS); i++)
+		for (i32 i = 0; i < KZ_ARRAYSIZE(keyPanels); i++)
 		{
 			if (this->layoutKeys.fontSize != INT_MIN)
 			{
 				V_snprintf(className, sizeof(className), "font-size--%ipx", this->layoutKeys.fontSize);
-				layout->SetHasClass(KEY_PANELS[i], className, k_eHudPanelClassStatus_DoesNotHaveClass);
+				layout->SetHasClass(keyPanels[i], className, k_eHudPanelClassStatus_DoesNotHaveClass);
 			}
 			V_snprintf(className, sizeof(className), "font-size--%ipx", size);
-			layout->SetHasClass(KEY_PANELS[i], className, k_eHudPanelClassStatus_HasClass);
+			layout->SetHasClass(keyPanels[i], className, k_eHudPanelClassStatus_HasClass);
 		}
 		this->layoutKeys.fontSize = size;
 	}
@@ -272,22 +272,22 @@ void KZHUDService::UpdateKeysElement(CCSCustomHudLayout *layout, KZPlayer *sourc
 	{
 		this->layoutKeys.outline = outline;
 		const auto status = outline ? k_eHudPanelClassStatus_HasClass : k_eHudPanelClassStatus_DoesNotHaveClass;
-		for (i32 i = 0; i < KZ_ARRAYSIZE(KEY_GLYPHS); i++)
+		for (i32 i = 0; i < KZ_ARRAYSIZE(keyGlyphs); i++)
 		{
-			layout->SetHasClass(KEY_GLYPHS[i], "outline", status);
+			layout->SetHasClass(keyGlyphs[i], "outline", status);
 		}
 	}
 
 	const char *fontClass = KZHUDService::GetMHUDFontClass(this->player, MHUDElement::Keys);
 	if (this->layoutKeys.fontClass != fontClass)
 	{
-		for (i32 i = 0; i < KZ_ARRAYSIZE(KEY_GLYPHS); i++)
+		for (i32 i = 0; i < KZ_ARRAYSIZE(keyGlyphs); i++)
 		{
 			if (this->layoutKeys.fontClass)
 			{
-				layout->SetHasClass(KEY_GLYPHS[i], this->layoutKeys.fontClass, k_eHudPanelClassStatus_DoesNotHaveClass);
+				layout->SetHasClass(keyGlyphs[i], this->layoutKeys.fontClass, k_eHudPanelClassStatus_DoesNotHaveClass);
 			}
-			layout->SetHasClass(KEY_GLYPHS[i], fontClass, k_eHudPanelClassStatus_HasClass);
+			layout->SetHasClass(keyGlyphs[i], fontClass, k_eHudPanelClassStatus_HasClass);
 		}
 		this->layoutKeys.fontClass = fontClass;
 	}
@@ -314,7 +314,7 @@ void KZHUDService::UpdateIndicatorElements(CCSCustomHudLayout *layout, const Spe
 
 	for (i32 i = 0; i < MHUD_INDICATOR_COUNT; i++)
 	{
-		const MHUDIndicatorDef &indicator = MHUD_INDICATOR_DEFS[i];
+		const MHUDIndicatorDef &indicator = mhudIndicatorDefs[i];
 		const bool show = this->IsMHUDElementEnabled(indicator.element) && info.recentTakeoff && active[i];
 		if (!show)
 		{
@@ -416,7 +416,7 @@ std::string KZHUDService::GetEditSampleText(MHUDElement element)
 		case MHUDElement::Jumpbug:
 		{
 			const i32 index = MHUDIndicatorIndex(element);
-			const MHUDIndicatorDef &indicator = MHUD_INDICATOR_DEFS[index];
+			const MHUDIndicatorDef &indicator = mhudIndicatorDefs[index];
 			return this->player->languageService->PrepareMessage(prefs.indicatorAcronym[index] ? indicator.shortPhrase : indicator.fullPhrase);
 		}
 		default:
@@ -433,10 +433,10 @@ void KZHUDService::UpdateEditElements(CCSCustomHudLayout *layout, bool force)
 							prefs.prespeed[(i32)MHUDSpeedState::Base],
 							prefs.keys,
 							prefs.checkpoint,
-							MHUD_DEF_BASE_COLOR,
-							MHUD_DEF_BASE_COLOR,
+							mhudDefBaseColor,
+							mhudDefBaseColor,
 							prefs.releaseLate,
-							MHUD_DEF_BASE_COLOR,
+							mhudDefBaseColor,
 							prefs.indicator[0],
 							prefs.indicator[1],
 							prefs.indicator[2]};
@@ -472,22 +472,22 @@ void KZHUDService::UpdateEditElements(CCSCustomHudLayout *layout, bool force)
 
 // Indexed by DistanceTier.
 // The colors match the chat's tier colors.
-static_global const char *const JS_TIER_CLASSES[DISTANCETIER_COUNT] = {"js-tier-0", "js-tier-1", "js-tier-2", "js-tier-3",
-																	   "js-tier-4", "js-tier-5", "js-tier-6"};
-static_global const char *const JS_TIER_PHRASES[DISTANCETIER_COUNT] = {
+static_global const char *const jsTierClasses[DISTANCETIER_COUNT] = {"js-tier-0", "js-tier-1", "js-tier-2", "js-tier-3",
+																	 "js-tier-4", "js-tier-5", "js-tier-6"};
+static_global const char *const jsTierPhrases[DISTANCETIER_COUNT] = {
 	NULL, "Menu - Tier Meh", "Menu - Tier Impressive", "Menu - Tier Perfect", "Menu - Tier Godlike", "Menu - Tier Ownage", "Menu - Tier Wrecker"};
 // indexed with history pill age.. no class meaning its gon
-static_global const char *const JS_AGE_CLASSES[MHUD_JS_PILL_GONE_RANK] = {"js-age-0", "js-age-1", "js-age-2", "js-age-3"};
+static_global const char *const jsAgeClasses[MHUD_JS_PILL_GONE_RANK] = {"js-age-0", "js-age-1", "js-age-2", "js-age-3"};
 
 // per pill: pill, type, info, distance
-static_global const char *const JS_PILL_PANELS[MHUD_JS_PILL_COUNT][4] = {{"mhud_js_h0", "mhud_js_h0_t", "mhud_js_h0_i", "mhud_js_h0_d"},
-																		 {"mhud_js_h1", "mhud_js_h1_t", "mhud_js_h1_i", "mhud_js_h1_d"},
-																		 {"mhud_js_h2", "mhud_js_h2_t", "mhud_js_h2_i", "mhud_js_h2_d"},
-																		 {"mhud_js_h3", "mhud_js_h3_t", "mhud_js_h3_i", "mhud_js_h3_d"},
-																		 {"mhud_js_h4", "mhud_js_h4_t", "mhud_js_h4_i", "mhud_js_h4_d"}};
+static_global const char *const jsPillPanels[MHUD_JS_PILL_COUNT][4] = {{"mhud_js_h0", "mhud_js_h0_t", "mhud_js_h0_i", "mhud_js_h0_d"},
+																	   {"mhud_js_h1", "mhud_js_h1_t", "mhud_js_h1_i", "mhud_js_h1_d"},
+																	   {"mhud_js_h2", "mhud_js_h2_t", "mhud_js_h2_i", "mhud_js_h2_d"},
+																	   {"mhud_js_h3", "mhud_js_h3_t", "mhud_js_h3_i", "mhud_js_h3_d"},
+																	   {"mhud_js_h4", "mhud_js_h4_t", "mhud_js_h4_i", "mhud_js_h4_d"}};
 
 // The row slots under the distance (each a row, its label and its value).
-static_global const char *const JS_ROWS[(i32)JSField::Count][3] = {
+static_global const char *const jsRows[(i32)JSField::Count][3] = {
 	{"mhud_js_r0", "mhud_js_l0", "mhud_js_v0"},    {"mhud_js_r1", "mhud_js_l1", "mhud_js_v1"},    {"mhud_js_r2", "mhud_js_l2", "mhud_js_v2"},
 	{"mhud_js_r3", "mhud_js_l3", "mhud_js_v3"},    {"mhud_js_r4", "mhud_js_l4", "mhud_js_v4"},    {"mhud_js_r5", "mhud_js_l5", "mhud_js_v5"},
 	{"mhud_js_r6", "mhud_js_l6", "mhud_js_v6"},    {"mhud_js_r7", "mhud_js_l7", "mhud_js_v7"},    {"mhud_js_r8", "mhud_js_l8", "mhud_js_v8"},
@@ -497,7 +497,7 @@ static_global const char *const JS_ROWS[(i32)JSField::Count][3] = {
 
 // Indexed by JSFieldColor in the chat's colors.
 // NULL keeps the default olive and Tier takes the tier's class instead.
-static_global const char *const JS_VALUE_CLASSES[] = {NULL, "js-c-grey", "js-c-red", "js-c-green", "js-c-blue", NULL};
+static_global const char *const jsValueClasses[] = {NULL, "js-c-grey", "js-c-red", "js-c-green", "js-c-blue", NULL};
 
 // Everything the panel shows for one jump.
 struct KZHUDService::JumpstatText
@@ -520,7 +520,7 @@ struct KZHUDService::JumpstatText
 // A field's own label or the labels of its values joined (such as PRE / MAX).
 static_function std::string GetJumpstatLabel(KZLanguageService *lang, JSField field)
 {
-	const JSFieldDef &def = JS_FIELDS[(i32)field];
+	const JSFieldDef &def = jsFieldDefs[(i32)field];
 	if (def.hudLabel)
 	{
 		return lang->PrepareMessage(def.hudLabel);
@@ -542,8 +542,8 @@ void KZHUDService::ApplyJumpstatText(CCSCustomHudLayout *layout, const JumpstatT
 	layout->SetDialogVariableString("mhud_js_type", "v", text.type.c_str());
 	layout->SetDialogVariableString("mhud_js_tier", "v", text.tierName.c_str());
 	layout->SetDialogVariableString("mhud_js_dist", "v", text.dist.c_str());
-	this->SetLayoutClass(layout, "mhud_js_type", js.typeTierClass, JS_TIER_CLASSES[text.tier]);
-	this->SetLayoutClass(layout, "mhud_js_dist", js.distTierClass, JS_TIER_CLASSES[text.tier]);
+	this->SetLayoutClass(layout, "mhud_js_type", js.typeTierClass, jsTierClasses[text.tier]);
+	this->SetLayoutClass(layout, "mhud_js_dist", js.distTierClass, jsTierClasses[text.tier]);
 
 	for (i32 i = 0; i < (i32)JSField::Count; i++)
 	{
@@ -551,16 +551,16 @@ void KZHUDService::ApplyJumpstatText(CCSCustomHudLayout *layout, const JumpstatT
 		if (js.rowHidden[i] != hidden)
 		{
 			js.rowHidden[i] = hidden;
-			layout->SetHasClass(JS_ROWS[i][0], "hidden", hidden ? k_eHudPanelClassStatus_HasClass : k_eHudPanelClassStatus_DoesNotHaveClass);
+			layout->SetHasClass(jsRows[i][0], "hidden", hidden ? k_eHudPanelClassStatus_HasClass : k_eHudPanelClassStatus_DoesNotHaveClass);
 		}
 		if (hidden)
 		{
 			continue;
 		}
 		const JumpstatText::Row &row = text.rows[i];
-		layout->SetDialogVariableString(JS_ROWS[i][1], "v", row.label.c_str());
-		layout->SetDialogVariableString(JS_ROWS[i][2], "v", row.value.c_str());
-		this->SetLayoutClass(layout, JS_ROWS[i][2], js.valueClass[i], row.valueClass);
+		layout->SetDialogVariableString(jsRows[i][1], "v", row.label.c_str());
+		layout->SetDialogVariableString(jsRows[i][2], "v", row.value.c_str());
+		this->SetLayoutClass(layout, jsRows[i][2], js.valueClass[i], row.valueClass);
 	}
 	this->SetLayoutClass(layout, "mhud_js_panel", js.panelClass, "js-show");
 }
@@ -609,7 +609,7 @@ bool KZHUDService::ShowJumpstat(Jump *jump, i32 colorTier)
 
 	JumpstatText text;
 	text.type = jump->IsFailstat() ? lang->PrepareMessage("Jumpstats HUD - Failstat", typeName.c_str()) : typeName;
-	text.tierName = JS_TIER_PHRASES[tier] ? lang->PrepareMessage(JS_TIER_PHRASES[tier]) : "";
+	text.tierName = jsTierPhrases[tier] ? lang->PrepareMessage(jsTierPhrases[tier]) : "";
 	text.dist = lang->PrepareMessage("Jumpstats HUD - Distance", jump->GetDistance(true, false, 1));
 	text.tier = colorTier;
 	const JSFieldLayout &fields = this->GetPrefs().jsFields;
@@ -631,7 +631,7 @@ bool KZHUDService::ShowJumpstat(Jump *jump, i32 colorTier)
 		{
 			row.value += i == 0 ? value.values[i] : " / " + value.values[i];
 		}
-		row.valueClass = value.color == JSFieldColor::Tier ? JS_TIER_CLASSES[value.tier] : JS_VALUE_CLASSES[(i32)value.color];
+		row.valueClass = value.color == JSFieldColor::Tier ? jsTierClasses[value.tier] : jsValueClasses[(i32)value.color];
 	}
 	this->ApplyJumpstatText(layout, text);
 
@@ -697,7 +697,7 @@ void KZHUDService::UpdatePills(CCSCustomHudLayout *layout, LayoutPill (&pills)[M
 		const char *age = NULL;
 		if (pill.live || pill.expired)
 		{
-			age = pill.rank == 0 && pill.alt ? "js-age-0b" : JS_AGE_CLASSES[pill.rank];
+			age = pill.rank == 0 && pill.alt ? "js-age-0b" : jsAgeClasses[pill.rank];
 		}
 		this->SetLayoutClass(layout, ids[i][0], pill.ageClass, age);
 		this->SetLayoutClass(layout, ids[i][0], pill.expireClass, pill.expired ? "js-expire" : NULL);
@@ -723,25 +723,25 @@ void KZHUDService::PushJumpstatHistory(CCSCustomHudLayout *layout)
 	js.hasShown = false;
 	const i32 index = KZHUDService::AdvancePills(js.pills);
 	LayoutPill &pill = js.pills[index];
-	const char *const *ids = JS_PILL_PANELS[index];
+	const char *const *ids = jsPillPanels[index];
 	layout->SetDialogVariableString(ids[1], "v", js.shownType.c_str());
 	layout->SetDialogVariableString(ids[2], "v", js.shownInfo.c_str());
 	layout->SetDialogVariableString(ids[3], "v", js.shownDist.c_str());
-	this->SetLayoutClass(layout, ids[1], pill.typeTierClass, JS_TIER_CLASSES[js.shownTier]);
-	this->SetLayoutClass(layout, ids[3], pill.distTierClass, JS_TIER_CLASSES[js.shownTier]);
+	this->SetLayoutClass(layout, ids[1], pill.typeTierClass, jsTierClasses[js.shownTier]);
+	this->SetLayoutClass(layout, ids[3], pill.distTierClass, jsTierClasses[js.shownTier]);
 }
 
 // The widest value of each field indexed by JSField.
-static_global const char *const JS_SAMPLE_VALUES[] = {"299",    "99",   "100%", "299.9 / 399.9",      "99.99",  "66.6",  "0.781s",
-													  "999.9°", "100%", "0.99", "100% / 100% / 100%", "99.9 L", "99.99", "+10.0",
-													  "-99.99"};
-static_assert(KZ_ARRAYSIZE(JS_SAMPLE_VALUES) == (i32)JSField::Count, "one sample per field");
+static_global const char *const jsSampleValues[] = {"299",    "99",   "100%", "299.9 / 399.9",      "99.99",  "66.6",  "0.781s",
+													"999.9°", "100%", "0.99", "100% / 100% / 100%", "99.9 L", "99.99", "+10.0",
+													"-99.99"};
+static_assert(KZ_ARRAYSIZE(jsSampleValues) == (i32)JSField::Count, "one sample per field");
 
 // A widest-case jump for edit mode with every field the player has on and a full history.
 static_function void GetJumpstatSample(KZLanguageService *lang, const JSFieldLayout &fields, KZHUDService::JumpstatText &text)
 {
 	text.type = lang->PrepareMessage(jumpTypeStr[JumpType_MultiBhop]);
-	text.tierName = lang->PrepareMessage(JS_TIER_PHRASES[DistanceTier_Wrecker]);
+	text.tierName = lang->PrepareMessage(jsTierPhrases[DistanceTier_Wrecker]);
 	text.dist = lang->PrepareMessage("Jumpstats HUD - Distance", 299.9f);
 	text.tier = DistanceTier_Wrecker;
 	for (JSField field : fields.order)
@@ -752,14 +752,14 @@ static_function void GetJumpstatSample(KZLanguageService *lang, const JSFieldLay
 		}
 		KZHUDService::JumpstatText::Row &row = text.rows[text.rowCount++];
 		row.label = GetJumpstatLabel(lang, field);
-		row.value = JS_SAMPLE_VALUES[(i32)field];
+		row.value = jsSampleValues[(i32)field];
 		if (field == JSField::Block)
 		{
-			row.valueClass = JS_TIER_CLASSES[DistanceTier_Wrecker];
+			row.valueClass = jsTierClasses[DistanceTier_Wrecker];
 		}
 		else if (field == JSField::Release)
 		{
-			row.valueClass = JS_VALUE_CLASSES[(i32)JSFieldColor::Red];
+			row.valueClass = jsValueClasses[(i32)JSFieldColor::Red];
 		}
 	}
 }
@@ -770,7 +770,7 @@ void KZHUDService::ClearJumpstatPreview(CCSCustomHudLayout *layout)
 	js.preview = false;
 	js.hasShown = false;
 	this->SetLayoutClass(layout, "mhud_js_panel", js.panelClass, NULL);
-	this->ClearPills(layout, js.pills, JS_PILL_PANELS);
+	this->ClearPills(layout, js.pills, jsPillPanels);
 }
 
 void KZHUDService::UpdateJumpstatsElement(CCSCustomHudLayout *layout, bool show, bool force, bool preview)
@@ -781,14 +781,14 @@ void KZHUDService::UpdateJumpstatsElement(CCSCustomHudLayout *layout, bool show,
 		js = LayoutJumpstatsState();
 	}
 	// The labels carry no color of their own from this and the base color only fills the call.
-	this->UpdateLayoutElement(layout, MHUDElement::Jumpstats, show, NULL, MHUD_DEF_BASE_COLOR, force);
+	this->UpdateLayoutElement(layout, MHUDElement::Jumpstats, show, NULL, mhudDefBaseColor, force);
 
 	const MHUDPrefs &prefs = this->GetPrefs();
 	// js-scale.css scales the whole panel (history included) by the element's size in percent.
 	const i32 scale = Clamp((i32)this->GetLayoutSize(MHUDElement::Jumpstats), MHUD_JS_SIZE_MIN, MHUD_JS_SIZE_MAX);
 	if (js.scale != scale)
 	{
-		const char *panelId = MHUD_ELEMENTS[(i32)MHUDElement::Jumpstats].panelId;
+		const char *panelId = mhudElements[(i32)MHUDElement::Jumpstats].panelId;
 		char className[32];
 		if (js.scale != INT_MIN)
 		{
@@ -816,12 +816,12 @@ void KZHUDService::UpdateJumpstatsElement(CCSCustomHudLayout *layout, bool show,
 		{
 			setFont(panelId);
 		}
-		for (const auto &row : JS_ROWS)
+		for (const auto &row : jsRows)
 		{
 			setFont(row[1]);
 			setFont(row[2]);
 		}
-		for (const auto &pill : JS_PILL_PANELS)
+		for (const auto &pill : jsPillPanels)
 		{
 			setFont(pill[1]);
 			setFont(pill[2]);
@@ -840,13 +840,13 @@ void KZHUDService::UpdateJumpstatsElement(CCSCustomHudLayout *layout, bool show,
 	if (js.compact != prefs.jsCompact)
 	{
 		js.compact = prefs.jsCompact;
-		layout->SetHasClass(MHUD_ELEMENTS[(i32)MHUDElement::Jumpstats].panelId, "js-compact",
+		layout->SetHasClass(mhudElements[(i32)MHUDElement::Jumpstats].panelId, "js-compact",
 							prefs.jsCompact ? k_eHudPanelClassStatus_HasClass : k_eHudPanelClassStatus_DoesNotHaveClass);
 	}
 	if (js.historyBelow != prefs.jsHistoryBelow)
 	{
 		js.historyBelow = prefs.jsHistoryBelow;
-		layout->SetHasClass(MHUD_ELEMENTS[(i32)MHUDElement::Jumpstats].panelId, "js-below",
+		layout->SetHasClass(mhudElements[(i32)MHUDElement::Jumpstats].panelId, "js-below",
 							prefs.jsHistoryBelow ? k_eHudPanelClassStatus_HasClass : k_eHudPanelClassStatus_DoesNotHaveClass);
 	}
 
@@ -864,14 +864,14 @@ void KZHUDService::UpdateJumpstatsElement(CCSCustomHudLayout *layout, bool show,
 			for (i32 i = 0; i < MHUD_JS_PILL_GONE_RANK; i++)
 			{
 				LayoutJumpstatsState::Pill &pill = js.pills[i];
-				const char *const *ids = JS_PILL_PANELS[i];
+				const char *const *ids = jsPillPanels[i];
 				layout->SetDialogVariableString(ids[1], "v", jumpTypeShortStr[JumpType_MultiBhop]);
 				layout->SetDialogVariableString(ids[2], "v", info.c_str());
 				layout->SetDialogVariableString(ids[3], "v", text.dist.c_str());
-				this->SetLayoutClass(layout, ids[1], pill.typeTierClass, JS_TIER_CLASSES[text.tier]);
-				this->SetLayoutClass(layout, ids[3], pill.distTierClass, JS_TIER_CLASSES[text.tier]);
+				this->SetLayoutClass(layout, ids[1], pill.typeTierClass, jsTierClasses[text.tier]);
+				this->SetLayoutClass(layout, ids[3], pill.distTierClass, jsTierClasses[text.tier]);
 				this->SetLayoutClass(layout, ids[0], pill.expireClass, NULL);
-				this->SetLayoutClass(layout, ids[0], pill.ageClass, JS_AGE_CLASSES[i]);
+				this->SetLayoutClass(layout, ids[0], pill.ageClass, jsAgeClasses[i]);
 			}
 		}
 		return;
@@ -888,7 +888,7 @@ void KZHUDService::UpdateJumpstatsElement(CCSCustomHudLayout *layout, bool show,
 		this->PushJumpstatHistory(layout);
 		this->SetLayoutClass(layout, "mhud_js_panel", js.panelClass, "js-hide");
 	}
-	this->UpdatePills(layout, js.pills, JS_PILL_PANELS);
+	this->UpdatePills(layout, js.pills, jsPillPanels);
 }
 
 bool KZHUDService::UpdateHudLayout(KZPlayer *source)
@@ -913,7 +913,7 @@ bool KZHUDService::UpdateHudLayout(KZPlayer *source)
 		{
 			if (i != (i32)MHUDElement::Jumpstats && i != (i32)MHUDElement::Course && i != (i32)MHUDElement::Race)
 			{
-				this->UpdateLayoutElement(layout, (MHUDElement)i, false, NULL, MHUD_DEF_BASE_COLOR, force);
+				this->UpdateLayoutElement(layout, (MHUDElement)i, false, NULL, mhudDefBaseColor, force);
 			}
 		}
 		this->UpdateJumpstatsElement(layout, false, force);

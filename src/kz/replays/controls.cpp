@@ -42,18 +42,18 @@ SLOT_ID(ZoneVar, "rz%i")
 SLOT_ID(SpeedPanel, "rp_speed%i")
 #undef SLOT_ID
 
-static_global const f32 SPEEDS[KZ_REPLAY_CONTROLS_SPEEDS] = {0.1f, 0.25f, 0.5f, 1.0f, 2.0f, 4.0f};
+static_global const f32 speeds[KZ_REPLAY_CONTROLS_SPEEDS] = {0.1f, 0.25f, 0.5f, 1.0f, 2.0f, 4.0f};
 
 static_global const struct
 {
 	const char *panelId;
 	i32 seconds;
-} SKIPS[KZ_REPLAY_CONTROLS_SKIPS] = {
+} skips[KZ_REPLAY_CONTROLS_SKIPS] = {
 	{"rp_back300", -300}, {"rp_back60", -60}, {"rp_back5", -5}, {"rp_next5", 5}, {"rp_next60", 60}, {"rp_next300", 300},
 };
 
 // Static labels and the phrase each one shows.
-static_global const char *const TEXTS[][3] = {
+static_global const char *const texts[][3] = {
 	{"rp_breather_label", "rpbreather", "Replay Controls - Skip Breather"},
 	{"rp_skip_pause_label", "rpskippause", "Replay Controls - Skip Pause"},
 	{"rp_tick_title", "rptickname", "Replay Controls - Tick"},
@@ -69,7 +69,7 @@ static_global const char *const TEXTS[][3] = {
 
 // Labels with a fixed text.
 // It is still sent from here because only a new text makes a label measure itself in a new font.
-static_global const char *const LITERAL_TEXTS[][3] = {
+static_global const char *const literalTexts[][3] = {
 	{"rp_speed0_label", "rps0", "0.1x"},         {"rp_speed1_label", "rps1", "0.25x"},        {"rp_speed2_label", "rps2", "0.5x"},
 	{"rp_speed3_label", "rps3", "1x"},           {"rp_speed4_label", "rps4", "2x"},           {"rp_speed5_label", "rps5", "4x"},
 	{"rp_back300_label", "rpback300", "-5m"},    {"rp_back60_label", "rpback60", "-1m"},      {"rp_back5_label", "rpback5", "-5s"},
@@ -87,7 +87,7 @@ static_global const struct
 	const char *groupPanel;
 	const char *prevPanel;
 	const char *nextPanel;
-} ZONE_JUMPS[KZ_REPLAY_CONTROLS_ZONE_KINDS] = {
+} zoneJumps[KZ_REPLAY_CONTROLS_ZONE_KINDS] = {
 	{"rp_jump_split", "rp_prev_split", "rp_next_split"},
 	{"rp_jump_cp", "rp_prev_cp", "rp_next_cp"},
 	{"rp_jump_stage", "rp_prev_stage", "rp_next_stage"},
@@ -105,7 +105,7 @@ struct ZoneMarker
 };
 
 static_global std::vector<ZoneMarker> zoneMarkers;
-// The ticks the previous and next buttons jump between in tick order per entry of ZONE_JUMPS.
+// The ticks the previous and next buttons jump between in tick order per entry of zoneJumps.
 static_global std::vector<u32> jumpTicks[KZ_REPLAY_CONTROLS_ZONE_KINDS];
 // Where the run's timer starts and ends or -1 when the replay has none.
 static_global i64 runStartTick = -1;
@@ -603,7 +603,7 @@ namespace KZ::replaysystem::controls
 		KZ::ui::SetBoolClass(entity, "rp_root", "paused", this->applied.paused, replay->replayPaused);
 		for (i32 i = 0; i < KZ_REPLAY_CONTROLS_SPEEDS; i++)
 		{
-			KZ::ui::SetBoolClass(entity, SpeedPanel(i), "selected", this->applied.speedSelected[i], fabsf(replay->timescale - SPEEDS[i]) < 0.001f);
+			KZ::ui::SetBoolClass(entity, SpeedPanel(i), "selected", this->applied.speedSelected[i], fabsf(replay->timescale - speeds[i]) < 0.001f);
 		}
 		// A run that starts on the first tick has no breather to skip.
 		KZ::ui::SetBoolClass(entity, "rp_breather", "hidden", this->applied.breatherHidden, runStartTick < 0 || GetEventSeekTick(runStartTick) == 0);
@@ -613,14 +613,14 @@ namespace KZ::replaysystem::controls
 		KZ::ui::SetBoolClass(entity, "rp_skip_pause", "disabled", this->applied.skipPauseDisabled, FindPauseSkipTick(replay->currentTick) < 0);
 		for (i32 i = 0; i < KZ_REPLAY_CONTROLS_SKIPS; i++)
 		{
-			KZ::ui::SetBoolClass(entity, SKIPS[i].panelId, "disabled", this->applied.skipDisabled[i], !CanSkip(replay, SKIPS[i].seconds));
+			KZ::ui::SetBoolClass(entity, skips[i].panelId, "disabled", this->applied.skipDisabled[i], !CanSkip(replay, skips[i].seconds));
 		}
 		KZ::ui::SetBoolClass(entity, "rp_tick_back", "disabled", this->applied.stepBackDisabled, !CanStepBack(replay));
 		for (i32 i = 0; i < KZ_REPLAY_CONTROLS_ZONE_KINDS; i++)
 		{
-			KZ::ui::SetBoolClass(entity, ZONE_JUMPS[i].prevPanel, "disabled", this->applied.zonePrevDisabled[i],
+			KZ::ui::SetBoolClass(entity, zoneJumps[i].prevPanel, "disabled", this->applied.zonePrevDisabled[i],
 								 FindZoneTick(replay->currentTick, i, false) < 0);
-			KZ::ui::SetBoolClass(entity, ZONE_JUMPS[i].nextPanel, "disabled", this->applied.zoneNextDisabled[i],
+			KZ::ui::SetBoolClass(entity, zoneJumps[i].nextPanel, "disabled", this->applied.zoneNextDisabled[i],
 								 FindZoneTick(replay->currentTick, i, true) < 0);
 		}
 		KZ::ui::SetBoolClass(entity, "rp_tick_next", "disabled", this->applied.stepForwardDisabled, !CanStepForward(replay));
@@ -658,11 +658,11 @@ namespace KZ::replaysystem::controls
 	void ControlsWindow::RenderTexts()
 	{
 		KZLanguageService *language = this->player->languageService;
-		for (const auto &text : TEXTS)
+		for (const auto &text : texts)
 		{
 			this->SetText(text[0], text[1], language->PrepareMessage(text[2]).c_str());
 		}
-		for (const auto &text : LITERAL_TEXTS)
+		for (const auto &text : literalTexts)
 		{
 			this->SetText(text[0], text[1], text[2]);
 		}
@@ -706,7 +706,7 @@ namespace KZ::replaysystem::controls
 		bool anyKind = false;
 		for (i32 i = 0; i < KZ_REPLAY_CONTROLS_ZONE_KINDS; i++)
 		{
-			KZ::ui::SetBoolClass(entity, ZONE_JUMPS[i].groupPanel, "hidden", this->applied.zoneJumpHidden[i], jumpTicks[i].empty());
+			KZ::ui::SetBoolClass(entity, zoneJumps[i].groupPanel, "hidden", this->applied.zoneJumpHidden[i], jumpTicks[i].empty());
 			anyKind |= !jumpTicks[i].empty();
 		}
 		KZ::ui::SetBoolClass(entity, "rp_zone_jumps", "hidden", this->applied.zoneJumpsHidden, !anyKind);
@@ -789,7 +789,7 @@ namespace KZ::replaysystem::controls
 			}
 			return;
 		}
-		for (const auto &skip : SKIPS)
+		for (const auto &skip : skips)
 		{
 			if (KZ_STREQ(buttonId, skip.panelId))
 			{
@@ -810,8 +810,8 @@ namespace KZ::replaysystem::controls
 		}
 		for (i32 i = 0; i < KZ_REPLAY_CONTROLS_ZONE_KINDS; i++)
 		{
-			const bool prev = KZ_STREQ(buttonId, ZONE_JUMPS[i].prevPanel);
-			if (prev || KZ_STREQ(buttonId, ZONE_JUMPS[i].nextPanel))
+			const bool prev = KZ_STREQ(buttonId, zoneJumps[i].prevPanel);
+			if (prev || KZ_STREQ(buttonId, zoneJumps[i].nextPanel))
 			{
 				const i64 tick = FindZoneTick(replay->currentTick, i, !prev);
 				if (tick >= 0)
@@ -833,7 +833,7 @@ namespace KZ::replaysystem::controls
 		{
 			if (KZ_STREQ(buttonId, SpeedPanel(i)))
 			{
-				replay->timescale = SPEEDS[i];
+				replay->timescale = speeds[i];
 				return;
 			}
 		}

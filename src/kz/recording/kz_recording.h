@@ -95,7 +95,7 @@ struct Recorder
 
 	// --- Incremental disk flushing for long runs ---
 	// In-memory data is written to a temp file on disk every 15 minutes to keep memory bounded during long runs.
-	static constexpr u32 FLUSH_INTERVAL_TICKS = 57600; // 15 minutes at 64 ticks/sec
+	static constexpr u32 flushIntervalTicks = 57600; // 15 minutes at 64 ticks/sec
 	u32 numFlushedChunks = 0;
 	u32 totalTicksRecorded = 0;  // Total across all flushed chunks + in-memory
 	u32 totalEventsRecorded = 0; // Preserves run event indices across disk flushes.
@@ -147,7 +147,7 @@ struct Recorder
 		{
 			tickData.push_back(data);
 			totalTicksRecorded++;
-			if (tickData.size() >= FLUSH_INTERVAL_TICKS)
+			if (tickData.size() >= flushIntervalTicks)
 			{
 				FlushChunkToDisk();
 			}
@@ -181,7 +181,7 @@ struct Recorder
 	template<Vec V>
 	void PushData(const SubtickData &data)
 	{
-		u8 count = (u8)MIN(data.numSubtickMoves, MAX_SUBTICK_MOVES);
+		u8 count = (u8)MIN(data.numSubtickMoves, maxSubtickMoves);
 		if constexpr (V == Vec::Tick)
 		{
 			subtickCounts.push_back(count);

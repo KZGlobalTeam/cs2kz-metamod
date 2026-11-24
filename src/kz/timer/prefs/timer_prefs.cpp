@@ -7,17 +7,17 @@
 #include "tier0/memdbgon.h"
 
 // Indexed by SafeguardOption and CompareType so a picked row id is the stored value.
-static_global const char *const SAFEGUARD_LABELS[] = {"Menu - Safeguard Off", "Menu - Safeguard Nub", "Menu - Safeguard Pro"};
-static_global const char *const COMPARE_LABELS[] = {"Menu - Compare None", "Menu - Compare Local PB", "Menu - Compare Global PB",
-													"Menu - Compare Server Record", "Menu - Compare World Record"};
+static_global const char *const safeguardLabels[] = {"Menu - Safeguard Off", "Menu - Safeguard Nub", "Menu - Safeguard Pro"};
+static_global const char *const compareLabels[] = {"Menu - Compare None", "Menu - Compare Local PB", "Menu - Compare Global PB",
+												   "Menu - Compare Server Record", "Menu - Compare World Record"};
 // SetCompareTarget takes the same strings the kz_comparelevel command does.
-static_global const char *const COMPARE_ARGS[] = {"none", "spb", "gpb", "sr", "wr"};
+static_global const char *const compareArgs[] = {"none", "spb", "gpb", "sr", "wr"};
 
 static_function void GetSafeguardChoices(KZPlayer *player, i64, std::vector<KZChoice> &out)
 {
-	for (i32 i = 0; i < KZ_ARRAYSIZE(SAFEGUARD_LABELS); i++)
+	for (i32 i = 0; i < KZ_ARRAYSIZE(safeguardLabels); i++)
 	{
-		out.push_back({KZMenuService::GetPhrase(player, SAFEGUARD_LABELS[i]), i, NULL});
+		out.push_back({KZMenuService::GetPhrase(player, safeguardLabels[i]), i, NULL});
 	}
 }
 
@@ -33,9 +33,9 @@ static_function void PickSafeguard(KZPlayer *player, i64, i64 id)
 
 static_function void GetCompareChoices(KZPlayer *player, i64, std::vector<KZChoice> &out)
 {
-	for (i32 i = 0; i < KZ_ARRAYSIZE(COMPARE_LABELS); i++)
+	for (i32 i = 0; i < KZ_ARRAYSIZE(compareLabels); i++)
 	{
-		out.push_back({KZMenuService::GetPhrase(player, COMPARE_LABELS[i]), i, NULL});
+		out.push_back({KZMenuService::GetPhrase(player, compareLabels[i]), i, NULL});
 	}
 }
 
@@ -46,9 +46,9 @@ static_function i64 GetCurrentCompare(KZPlayer *player, i64)
 
 static_function void PickCompare(KZPlayer *player, i64, i64 id)
 {
-	if (id >= 0 && id < KZ_ARRAYSIZE(COMPARE_ARGS))
+	if (id >= 0 && id < KZ_ARRAYSIZE(compareArgs))
 	{
-		player->timerService->SetCompareTarget(COMPARE_ARGS[id]);
+		player->timerService->SetCompareTarget(compareArgs[id]);
 	}
 }
 

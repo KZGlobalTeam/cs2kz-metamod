@@ -9,7 +9,7 @@
 // === Writing classes onto the layout (global) =================================
 
 // Indexed by MHUDAlign.
-static_global const char *const ALIGN_CLASSES[] = {"align-left", NULL, "align-right"};
+static_global const char *const alignClasses[] = {"align-left", NULL, "align-right"};
 
 void KZHUDService::SetLayoutClass(CCSCustomHudLayout *layout, const char *panelId, const char *&cache, const char *className)
 {
@@ -59,7 +59,7 @@ void KZHUDService::SetLayoutPosition(CCSCustomHudLayout *layout, const char *pan
 
 void KZHUDService::UpdateLayoutElement(CCSCustomHudLayout *layout, MHUDElement element, bool show, const char *text, const Color &color, bool force)
 {
-	const MHUDElementDef &def = MHUD_ELEMENTS[(i32)element];
+	const MHUDElementDef &def = mhudElements[(i32)element];
 	LayoutElementState &state = this->layoutElements[(i32)element];
 
 	if (force)
@@ -93,7 +93,7 @@ void KZHUDService::UpdateLayoutElement(CCSCustomHudLayout *layout, MHUDElement e
 	const bool dragged = this->edit.mode == EditMode::Dragging && this->edit.element == element;
 	const f32 x = dragged ? this->edit.dragX : cached.x;
 	const f32 y = dragged ? this->edit.dragY : cached.y;
-	this->SetLayoutClass(layout, def.panelId, state.alignClass, ALIGN_CLASSES[(i32)cached.align]);
+	this->SetLayoutClass(layout, def.panelId, state.alignClass, alignClasses[(i32)cached.align]);
 	this->SetLayoutPosition(layout, def.panelId, def.posPanelId, state.x, state.fineX, RoundFloatToInt(x * 10.0f) + alignShift, "x");
 	this->SetLayoutPosition(layout, def.panelId, def.posPanelId, state.y, state.fineY, RoundFloatToInt(y * 10.0f) + anchorShift, "y");
 	// The jumpstats, course and race panels scale as a whole in their own update instead.

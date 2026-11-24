@@ -1,5 +1,5 @@
 #pragma once
-// =====[ MODES ]=====
+// =====[ modes ]=====
 
 constexpr char mysql_modes_create[] = R"(
     CREATE TABLE IF NOT EXISTS `Modes` ( 

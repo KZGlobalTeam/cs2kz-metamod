@@ -108,7 +108,7 @@ void KZ::quiet::OnCheckTransmit(CCheckTransmitInfo **pInfo, int infoCount)
 				continue;
 			}
 			bool isZtopwatchEdge = false;
-			for (int e = 0; e < KZZtopwatchService::Zone::NUM_EDGES; e++)
+			for (int e = 0; e < KZZtopwatchService::Zone::numEdges; e++)
 			{
 				if (targetPlayer->ztopwatchService->startZone.edges[e] == particleSystem->GetRefEHandle()
 					|| targetPlayer->ztopwatchService->endZone.edges[e] == particleSystem->GetRefEHandle())
@@ -198,7 +198,7 @@ void KZ::quiet::OnPostEvent(NetMessageInfo_t *pEvent, const CNetMessage *pData, 
 		case GE_PlaceDecalEvent:
 		{
 			auto msg = const_cast<CNetMessage *>(pData)->ToPB<CMsgPlaceDecalEvent>();
-			if (msg->decal_group_name() != KZPaintService::DECAL_GROUP_NAME)
+			if (msg->decal_group_name() != KZPaintService::decalGroupName)
 			{
 				return;
 			}

@@ -18,7 +18,7 @@ static_global class KZOptionServiceEventListener_Checkpoint : public KZOptionSer
 	}
 } optionEventListener;
 
-static_global const Vector NULL_VECTOR = Vector(0, 0, 0);
+static_global const Vector nullVector = Vector(0, 0, 0);
 
 void KZCheckpointService::Init()
 {
@@ -274,7 +274,7 @@ void KZCheckpointService::DoTeleport(const Checkpoint cp, bool stayOnGround, i32
 	// So we only set the player origin if it doesn't match.
 	if (currentOrigin != cp.origin)
 	{
-		this->player->Teleport(&cp.origin, &cp.angles, &NULL_VECTOR);
+		this->player->Teleport(&cp.origin, &cp.angles, &nullVector);
 		// Check if player might get stuck and attempt to put the player in duck.
 		if (!utils::IsSpawnValid(cp.origin))
 		{
@@ -284,7 +284,7 @@ void KZCheckpointService::DoTeleport(const Checkpoint cp, bool stayOnGround, i32
 	}
 	else
 	{
-		this->player->Teleport(NULL, &cp.angles, &NULL_VECTOR);
+		this->player->Teleport(NULL, &cp.angles, &nullVector);
 	}
 	CBaseEntity *groundEntity = static_cast<CBaseEntity *>(GameEntitySystem()->GetEntityInstance(cp.groundEnt));
 	// Don't attach the player onto a moving platform because they might not be there anymore.
