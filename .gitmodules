@@ -3,8 +3,8 @@
 	url = https://github.com/alliedmodders/metamod-source.git
 [submodule "hl2sdk-cs2"]
 	path = hl2sdk-cs2
-	url = https://github.com/alliedmodders/s2sdk.git
-	branch = cs2
+	url = https://github.com/Vauff/s2sdk.git
+	branch = update-isource2server
 [submodule "vendor/MultiAddonManager"]
 	path = vendor/MultiAddonManager
 	url = https://github.com/Source2ZE/MultiAddonManager
