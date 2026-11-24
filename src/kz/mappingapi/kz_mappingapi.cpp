@@ -1089,14 +1089,14 @@ static_function void PrintCoursesWithMap(KZPlayer *player, const std::vector<KZ:
 		);
 		// clang-format on
 	}
-	player->PrintConsole(false, false, table.GetSeparator("=").c_str());
-	player->PrintConsole(false, false, table.GetTitle().c_str());
-	player->PrintConsole(false, false, table.GetHeader().c_str());
+	player->PrintConsole(false, false, "%s", table.GetSeparator("=").c_str());
+	player->PrintConsole(false, false, "%s", table.GetTitle().c_str());
+	player->PrintConsole(false, false, "%s", table.GetHeader().c_str());
 	for (u32 i = 0; i < table.GetNumEntries(); i++)
 	{
-		player->PrintConsole(false, false, table.GetLine(i).c_str());
+		player->PrintConsole(false, false, "%s", table.GetLine(i).c_str());
 	}
-	player->PrintConsole(false, false, table.GetSeparator("=").c_str());
+	player->PrintConsole(false, false, "%s", table.GetSeparator("=").c_str());
 }
 
 static_function void PrintCoursesWithoutMap(KZPlayer *player)
@@ -1118,14 +1118,14 @@ static_function void PrintCoursesWithoutMap(KZPlayer *player)
 		);
 		// clang-format on
 	}
-	player->PrintConsole(false, false, table.GetSeparator("=").c_str());
-	player->PrintConsole(false, false, table.GetTitle().c_str());
-	player->PrintConsole(false, false, table.GetHeader().c_str());
+	player->PrintConsole(false, false, "%s", table.GetSeparator("=").c_str());
+	player->PrintConsole(false, false, "%s", table.GetTitle().c_str());
+	player->PrintConsole(false, false, "%s", table.GetHeader().c_str());
 	for (u32 i = 0; i < table.GetNumEntries(); i++)
 	{
-		player->PrintConsole(false, false, table.GetLine(i).c_str());
+		player->PrintConsole(false, false, "%s", table.GetLine(i).c_str());
 	}
-	player->PrintConsole(false, false, table.GetSeparator("=").c_str());
+	player->PrintConsole(false, false, "%s", table.GetSeparator("=").c_str());
 }
 
 void KZ::course::PrintCourses(KZPlayer *player)

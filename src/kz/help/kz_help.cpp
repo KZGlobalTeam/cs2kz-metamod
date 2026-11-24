@@ -201,15 +201,15 @@ static_global void PrintCategoryCommands(KZPlayer *player, i32 category, bool pr
 	{
 		return;
 	}
-	player->PrintConsole(false, false, table.GetSeparator("=").c_str());
-	player->PrintConsole(false, false, table.GetTitle().c_str());
-	player->PrintConsole(false, false, table.GetHeader().c_str());
+	player->PrintConsole(false, false, "%s", table.GetSeparator("=").c_str());
+	player->PrintConsole(false, false, "%s", table.GetTitle().c_str());
+	player->PrintConsole(false, false, "%s", table.GetHeader().c_str());
 
 	for (u32 i = 0; i < table.GetNumEntries(); i++)
 	{
-		player->PrintConsole(false, false, table.GetLine(i).c_str());
+		player->PrintConsole(false, false, "%s", table.GetLine(i).c_str());
 	}
-	player->PrintConsole(false, false, table.GetSeparator("=").c_str());
+	player->PrintConsole(false, false, "%s", table.GetSeparator("=").c_str());
 }
 
 SCMD(kz_help, SCFL_MISC)

@@ -280,15 +280,15 @@ struct CourseTopRequest : public BaseRequest
 			table.SetRow(i, rank, stats.GetName(), stats.GetTime(), stats.GetTeleportCount(), stats.GetSteamID64(), stats.GetPoints(),
 						 stats.GetRunID());
 		}
-		player->PrintConsole(false, false, table.GetSeparator("=").c_str());
-		player->PrintConsole(false, false, table.GetTitle().c_str());
-		player->PrintConsole(false, false, table.GetHeader().c_str());
+		player->PrintConsole(false, false, "%s", table.GetSeparator("=").c_str());
+		player->PrintConsole(false, false, "%s", table.GetTitle().c_str());
+		player->PrintConsole(false, false, "%s", table.GetHeader().c_str());
 
 		for (u32 i = 0; i < table.GetNumEntries(); i++)
 		{
-			player->PrintConsole(false, false, table.GetLine(i).c_str());
+			player->PrintConsole(false, false, "%s", table.GetLine(i).c_str());
 		}
-		player->PrintConsole(false, false, table.GetSeparator("=").c_str());
+		player->PrintConsole(false, false, "%s", table.GetSeparator("=").c_str());
 
 		// Pro table
 		std::string headersPro[KZ_ARRAYSIZE(columnKeysGlobalPro)];
@@ -305,14 +305,14 @@ struct CourseTopRequest : public BaseRequest
 			RunStats stats = wrData.proData[i];
 			tablePro.SetRow(i, rank, stats.GetName(), stats.GetTime(), stats.GetSteamID64(), stats.GetPoints(), stats.GetRunID());
 		}
-		player->PrintConsole(false, false, tablePro.GetSeparator("=").c_str());
-		player->PrintConsole(false, false, tablePro.GetTitle().c_str());
-		player->PrintConsole(false, false, tablePro.GetHeader().c_str());
+		player->PrintConsole(false, false, "%s", tablePro.GetSeparator("=").c_str());
+		player->PrintConsole(false, false, "%s", tablePro.GetTitle().c_str());
+		player->PrintConsole(false, false, "%s", tablePro.GetHeader().c_str());
 		for (u32 i = 0; i < tablePro.GetNumEntries(); i++)
 		{
-			player->PrintConsole(false, false, tablePro.GetLine(i).c_str());
+			player->PrintConsole(false, false, "%s", tablePro.GetLine(i).c_str());
 		}
-		player->PrintConsole(false, false, tablePro.GetSeparator("=").c_str());
+		player->PrintConsole(false, false, "%s", tablePro.GetSeparator("=").c_str());
 	}
 
 	void ReplyLocal()
@@ -334,15 +334,15 @@ struct CourseTopRequest : public BaseRequest
 			RunStats stats = srData.overallData[i];
 			table.SetRow(i, rank, stats.GetName(), stats.GetTime(), stats.GetTeleportCount(), stats.GetSteamID64(), stats.GetRunID());
 		}
-		player->PrintConsole(false, false, table.GetSeparator("=").c_str());
-		player->PrintConsole(false, false, table.GetTitle().c_str());
-		player->PrintConsole(false, false, table.GetHeader().c_str());
+		player->PrintConsole(false, false, "%s", table.GetSeparator("=").c_str());
+		player->PrintConsole(false, false, "%s", table.GetTitle().c_str());
+		player->PrintConsole(false, false, "%s", table.GetHeader().c_str());
 
 		for (u32 i = 0; i < table.GetNumEntries(); i++)
 		{
-			player->PrintConsole(false, false, table.GetLine(i).c_str());
+			player->PrintConsole(false, false, "%s", table.GetLine(i).c_str());
 		}
-		player->PrintConsole(false, false, table.GetSeparator("=").c_str());
+		player->PrintConsole(false, false, "%s", table.GetSeparator("=").c_str());
 		// Pro table
 		std::string headersPro[KZ_ARRAYSIZE(columnKeysLocalPro)];
 		for (u32 i = 0; i < KZ_ARRAYSIZE(columnKeysLocalPro); i++)
@@ -358,14 +358,14 @@ struct CourseTopRequest : public BaseRequest
 			RunStats stats = srData.proData[i];
 			tablePro.SetRow(i, rank, stats.GetName(), stats.GetTime(), stats.GetSteamID64(), stats.GetRunID());
 		}
-		player->PrintConsole(false, false, tablePro.GetSeparator("=").c_str());
-		player->PrintConsole(false, false, tablePro.GetTitle().c_str());
-		player->PrintConsole(false, false, tablePro.GetHeader().c_str());
+		player->PrintConsole(false, false, "%s", tablePro.GetSeparator("=").c_str());
+		player->PrintConsole(false, false, "%s", tablePro.GetTitle().c_str());
+		player->PrintConsole(false, false, "%s", tablePro.GetHeader().c_str());
 		for (u32 i = 0; i < tablePro.GetNumEntries(); i++)
 		{
-			player->PrintConsole(false, false, tablePro.GetLine(i).c_str());
+			player->PrintConsole(false, false, "%s", tablePro.GetLine(i).c_str());
 		}
-		player->PrintConsole(false, false, tablePro.GetSeparator("=").c_str());
+		player->PrintConsole(false, false, "%s", tablePro.GetSeparator("=").c_str());
 	}
 };
 

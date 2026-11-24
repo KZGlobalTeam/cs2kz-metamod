@@ -477,7 +477,7 @@ void KZJumpstatsService::PrintJumpToConsole(KZPlayer *target, Jump *jump, bool b
 		char badAngleString[16], overlapString[16], deadAirString[16], widthString[16], avgGainString[16], gainEffString[16];
 		char angRatioString[32];
 		V_snprintf(strafeNumberString, sizeof(strafeNumberString), "%zu.", i + 1);
-		V_snprintf(syncString, sizeof(syncString), "%.0f%%%%", jump->strafes[i].GetSync() * 100.0f);
+		V_snprintf(syncString, sizeof(syncString), "%.0f%%", jump->strafes[i].GetSync() * 100.0f);
 		V_snprintf(gainString, sizeof(gainString), "%.2f", jump->strafes[i].GetGain());
 		V_snprintf(externalGainString, sizeof(externalGainString), "(+%.2f)", fabs(jump->strafes[i].GetGain(true)));
 		V_snprintf(lossString, sizeof(lossString), "-%.2f", fabs(jump->strafes[i].GetLoss()));
@@ -489,7 +489,7 @@ void KZJumpstatsService::PrintJumpToConsole(KZPlayer *target, Jump *jump, bool b
 		V_snprintf(deadAirString, sizeof(deadAirString), "%.1f", jump->strafes[i].GetDeadAirDuration() * ENGINE_FIXED_TICK_RATE);
 		V_snprintf(widthString, sizeof(widthString), "%.1f", fabsf(jump->strafes[i].GetWidth()));
 		V_snprintf(avgGainString, sizeof(avgGainString), "%.2f", jump->strafes[i].GetGain() / jump->strafes[i].GetStrafeDuration() * ENGINE_FIXED_TICK_INTERVAL);
-		V_snprintf(gainEffString, sizeof(gainEffString), "%.0f%%%%", jump->strafes[i].GetGain() / jump->strafes[i].GetMaxGain() * 100.0f);
+		V_snprintf(gainEffString, sizeof(gainEffString), "%.0f%%", jump->strafes[i].GetGain() / jump->strafes[i].GetMaxGain() * 100.0f);
 
 		if (jump->strafes[i].arStats.available)
 		{
@@ -527,10 +527,10 @@ void KZJumpstatsService::PrintJumpToConsole(KZPlayer *target, Jump *jump, bool b
 
 	if (!jump->strafes.empty())
 	{
-		target->PrintConsole(false, false, table.GetHeader().c_str());
+		target->PrintConsole(false, false, "%s", table.GetHeader().c_str());
 		for (u32 i = 0; i < table.GetNumEntries(); i++)
 		{
-			target->PrintConsole(false, false, table.GetLine(i).c_str());
+			target->PrintConsole(false, false, "%s", table.GetLine(i).c_str());
 		}
 	}
 

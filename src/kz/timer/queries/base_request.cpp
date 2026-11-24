@@ -18,7 +18,7 @@ BaseRequest::~BaseRequest()
 		KZPlayer *player = g_pKZPlayerManager->ToPlayer(this->userID);
 		if (player)
 		{
-			player->languageService->PrintChat(true, false, this->invalidateReasonLocalized.c_str());
+			player->PrintChat(true, false, "%s", this->invalidateReasonLocalized.c_str());
 		}
 	}
 }

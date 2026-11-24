@@ -155,14 +155,6 @@ namespace utils
 			{
 				std::string value = tfm::format("%-*s%s", columnLengths[i] + GetDisplayPadding(headers[i].c_str()) + fontResetSuffixLength,
 												headers[i], i == columnCount - 1 ? "" : "  ");
-				for (size_t i = 0; i + 1 < value.size(); i++)
-				{
-					if (value[i] == '%' && value[i + 1] == '%')
-					{
-						value += " ";
-						i++;
-					}
-				}
 				result += value;
 			}
 			return result;
@@ -180,14 +172,6 @@ namespace utils
 			{
 				std::string value = tfm::format("%-*s%s", columnLengths[i] + GetDisplayPadding(entries[row].data[i].c_str()) + fontResetSuffixLength,
 												entries[row].data[i], i == columnCount - 1 ? "" : "  ");
-				for (size_t i = 0; i + 1 < value.size(); i++)
-				{
-					if (value[i] == '%' && value[i + 1] == '%')
-					{
-						value += " ";
-						i++;
-					}
-				}
 				result += value;
 			}
 			return result;
