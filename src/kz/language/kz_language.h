@@ -187,27 +187,27 @@ private:
 		{
 			case MESSAGE_CHAT:
 			{
-				player->PrintChat(addPrefix, false, msg.c_str());
+				player->PrintChat(addPrefix, false, "%s", msg.c_str());
 				return;
 			}
 			case MESSAGE_CONSOLE:
 			{
-				player->PrintConsole(addPrefix, false, msg.c_str());
+				player->PrintConsole(addPrefix, false, "%s", msg.c_str());
 				return;
 			}
 			case MESSAGE_CENTRE:
 			{
-				player->PrintCentre(addPrefix, false, msg.c_str());
+				player->PrintCentre(addPrefix, false, "%s", msg.c_str());
 				return;
 			}
 			case MESSAGE_ALERT:
 			{
-				player->PrintAlert(addPrefix, false, msg.c_str());
+				player->PrintAlert(addPrefix, false, "%s", msg.c_str());
 				return;
 			}
 			case MESSAGE_HTML:
 			{
-				player->PrintHTMLCentre(addPrefix, false, msg.c_str());
+				player->PrintHTMLCentre(addPrefix, false, "%s", msg.c_str());
 				return;
 			}
 		}
@@ -235,7 +235,7 @@ public:
 		PrintSingle(this->player, addPrefix, includeSpectators, type, message, args...); \
 	}
 
-	// Note: Takes 8 '%' for every % printed for chat, 4 for console.
+	// Note: Phrases with a "#format" are formatted once, so they take 2 '%' for every % printed.
 	REGISTER_PRINT_SINGLE_FUNCTION(PrintChat, MESSAGE_CHAT)
 	REGISTER_PRINT_SINGLE_FUNCTION(PrintConsole, MESSAGE_CONSOLE)
 	REGISTER_PRINT_SINGLE_FUNCTION(PrintCentre, MESSAGE_CENTRE)

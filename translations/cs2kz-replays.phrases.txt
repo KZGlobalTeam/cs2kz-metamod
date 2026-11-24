@@ -201,28 +201,28 @@
 		// Replay Type: Long Jump
 		// Distance: 123.45 | 12% Sync | 245.56 Pre | 345.56 Max | 0.876 Air
 		"#format"	"type:s,distance:.2f,syncPercent:.0f,preDistance:.2f,maxDistance:.2f,airTime:.3f"
-		"en"		"Replay Type: {type}\nDistance: {distance} | {syncPercent}%%%% Sync | {preDistance} Pre | {maxDistance} Max | {airTime} Air"
-		"chi"		"回放类型: {type}\n距离: {distance} | {syncPercent}%%%% 同步 | {preDistance} 地速 | {maxDistance} 空速 | {airTime} 滞空"
-		"zho"		"回放類型: {type}\n距離: {distance} | {syncPercent}%%%% 同步 | {preDistance} 地速 | {maxDistance} 空速 | {airTime} 滯空"
-		"pl"		"Typ powtórki: {type}\nDystans: {distance} | {syncPercent}%%%% synchronizacji | {preDistance} pre | {maxDistance} max | {airTime} w powietrzu"
-		"ru"		"Тип повтора: {type}\nДистанция: {distance} | {syncPercent}%%%% Синхр. | {preDistance} Pre | {maxDistance} Макс. | {airTime} Air"
-		"ua"		"Тип повтору: {type}\nДистанція: {distance} | {syncPercent}%%%% Синхр. | {preDistance} Pre | {maxDistance} Макс. | {airTime} Air"
-		"de"		"Wiederholungstyp: {type}\nDistanz: {distance} | {syncPercent}%%%% Sync | {preDistance} Pre | {maxDistance} Max | {airTime} Air"
-		"ko"		"리플레이 유형: {type}\n거리: {distance} | {syncPercent}%%%% 싱크 | {preDistance} 프리 | {maxDistance} 최대 | {airTime} 공중 시간"
+		"en"		"Replay Type: {type}\nDistance: {distance} | {syncPercent}%% Sync | {preDistance} Pre | {maxDistance} Max | {airTime} Air"
+		"chi"		"回放类型: {type}\n距离: {distance} | {syncPercent}%% 同步 | {preDistance} 地速 | {maxDistance} 空速 | {airTime} 滞空"
+		"zho"		"回放類型: {type}\n距離: {distance} | {syncPercent}%% 同步 | {preDistance} 地速 | {maxDistance} 空速 | {airTime} 滯空"
+		"pl"		"Typ powtórki: {type}\nDystans: {distance} | {syncPercent}%% synchronizacji | {preDistance} pre | {maxDistance} max | {airTime} w powietrzu"
+		"ru"		"Тип повтора: {type}\nДистанция: {distance} | {syncPercent}%% Синхр. | {preDistance} Pre | {maxDistance} Макс. | {airTime} Air"
+		"ua"		"Тип повтору: {type}\nДистанція: {distance} | {syncPercent}%% Синхр. | {preDistance} Pre | {maxDistance} Макс. | {airTime} Air"
+		"de"		"Wiederholungstyp: {type}\nDistanz: {distance} | {syncPercent}%% Sync | {preDistance} Pre | {maxDistance} Max | {airTime} Air"
+		"ko"		"리플레이 유형: {type}\n거리: {distance} | {syncPercent}%% 싱크 | {preDistance} 프리 | {maxDistance} 최대 | {airTime} 공중 시간"
 	}
 	"Replay - Jump Info Console (Block)"
 	{
 		// Replay Type: Long Jump
 		// Distance: 123.45 | 250 Block | 12% Sync | 245.56 Pre | 345.56 Max | 0.876 Air
 		"#format"	"type:s,distance:.2f,blockDistance:d,syncPercent:.0f,preDistance:.2f,maxDistance:.2f,airTime:.3f"
-		"en"		"Replay Type: {type}\nDistance: {distance} | {blockDistance} Block | {syncPercent}%%%% Sync | {preDistance} Pre | {maxDistance} Max | {airTime} Air"
-		"chi"		"回放类型: {type}\n距离: {distance} | {blockDistance} 板子 | {syncPercent}%%%% 同步 | {preDistance} 地速 | {maxDistance} 空速 | {airTime} 滞空"
-		"zho"		"回放類型: {type}\n距離: {distance} | {blockDistance} 板子 | {syncPercent}%%%% 同步 | {preDistance} 地速 | {maxDistance} 空速 | {airTime} 滯空"
-		"pl"		"Typ powtórki: {type}\nDystans: {distance} | {blockDistance} blok | {syncPercent}%%%% synchronizacji | {preDistance} pre | {maxDistance} max | {airTime} w powietrzu"
-		"ru"		"Тип повтора: {type}\nДистанция: {distance} | {blockDistance} Блок | {syncPercent}%%%% Синхр. | {preDistance} Pre | {maxDistance} Макс. | {airTime} Air"
-		"ua"		"Тип повтору: {type}\nДистанція: {distance} | {blockDistance} Блок | {syncPercent}%%%% Синхр. | {preDistance} Pre | {maxDistance} Макс. | {airTime} Air"
-		"de"		"Wiederholungstyp: {type}\nDistanz: {distance} | {blockDistance} Block | {syncPercent}%%%% Sync | {preDistance} Pre | {maxDistance} Max | {airTime} Air"
-		"ko"		"리플레이 유형: {type}\n거리: {distance} | {blockDistance} 블록 | {syncPercent}%%%% 싱크 | {preDistance} 프리 | {maxDistance} 최대 | {airTime} 공중 시간"
+		"en"		"Replay Type: {type}\nDistance: {distance} | {blockDistance} Block | {syncPercent}%% Sync | {preDistance} Pre | {maxDistance} Max | {airTime} Air"
+		"chi"		"回放类型: {type}\n距离: {distance} | {blockDistance} 板子 | {syncPercent}%% 同步 | {preDistance} 地速 | {maxDistance} 空速 | {airTime} 滞空"
+		"zho"		"回放類型: {type}\n距離: {distance} | {blockDistance} 板子 | {syncPercent}%% 同步 | {preDistance} 地速 | {maxDistance} 空速 | {airTime} 滯空"
+		"pl"		"Typ powtórki: {type}\nDystans: {distance} | {blockDistance} blok | {syncPercent}%% synchronizacji | {preDistance} pre | {maxDistance} max | {airTime} w powietrzu"
+		"ru"		"Тип повтора: {type}\nДистанция: {distance} | {blockDistance} Блок | {syncPercent}%% Синхр. | {preDistance} Pre | {maxDistance} Макс. | {airTime} Air"
+		"ua"		"Тип повтору: {type}\nДистанція: {distance} | {blockDistance} Блок | {syncPercent}%% Синхр. | {preDistance} Pre | {maxDistance} Макс. | {airTime} Air"
+		"de"		"Wiederholungstyp: {type}\nDistanz: {distance} | {blockDistance} Block | {syncPercent}%% Sync | {preDistance} Pre | {maxDistance} Max | {airTime} Air"
+		"ko"		"리플레이 유형: {type}\n거리: {distance} | {blockDistance} 블록 | {syncPercent}%% 싱크 | {preDistance} 프리 | {maxDistance} 최대 | {airTime} 공중 시간"
 	}
 	"Replay - Manual Info Console"
 	{
@@ -392,14 +392,14 @@
 	"Replay - Loading Progress"
 	{
 		"#format"	"progress:.1f"
-		"en"		"{grey}Loading replay: {progress}%%%% complete"
-		"chi"		"{grey}加载回放中: {progress}%%%% 完成度"
-		"zho"		"{grey}載入回放中: {progress}%%%% 完成度"
-		"pl"		"{grey}Ładowanie powtórki: {progress}%%%% ukończono"
-		"ru"		"{grey}Загрузка повтора: {progress}%%%% завершено"
-		"ua"		"{grey}Завантаження повтору: {progress}%%%% виконано"
-		"de"		"{grey}Lade Wiederholung: {progress}%%%% abgeschlossen"
-		"ko"		"{grey}리플레이 불러오기: {progress}%%%% 완료"
+		"en"		"{grey}Loading replay: {progress}%% complete"
+		"chi"		"{grey}加载回放中: {progress}%% 完成度"
+		"zho"		"{grey}載入回放中: {progress}%% 完成度"
+		"pl"		"{grey}Ładowanie powtórki: {progress}%% ukończono"
+		"ru"		"{grey}Загрузка повтора: {progress}%% завершено"
+		"ua"		"{grey}Завантаження повтору: {progress}%% виконано"
+		"de"		"{grey}Lade Wiederholung: {progress}%% abgeschlossen"
+		"ko"		"{grey}리플레이 불러오기: {progress}%% 완료"
 	}
 	"Replay - Loading Completed"
 	{

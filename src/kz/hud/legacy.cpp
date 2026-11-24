@@ -103,14 +103,14 @@ void KZHUDService::DrawLegacyPanels(KZPlayer *player, KZPlayer *target)
 
 	if (!centerText.empty())
 	{
-		target->PrintCentre(false, false, centerText.c_str());
+		target->PrintCentre(false, false, "%s", centerText.c_str());
 	}
 	if (!alertText.empty())
 	{
-		target->PrintAlert(false, false, alertText.c_str());
+		target->PrintAlert(false, false, "%s", alertText.c_str());
 	}
 	if (!htmlText.empty())
 	{
-		target->PrintHTMLCentre(false, false, htmlText.c_str());
+		target->PrintHTMLCentre(false, false, "%s", htmlText.c_str());
 	}
 }

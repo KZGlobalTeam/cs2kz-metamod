@@ -1038,14 +1038,14 @@
 	{
 		// CKZ | 272 Block | 4.09 Edge | 1.23 LandEdge | 23.50 Miss | 7 Strafes | 80.4% Sync | 276.00 Pre | 357.96 Max | 8% BA | 3% OL | 9% DA | 55.83 Height | +1.0 W
 		"#format"	"mode_style:s,block:s,edge:s,landing_edge:s,miss:s,strafe_count:d,strafe_text:s,sync:.1f,pre:.2f,max:.2f,bad_angles:.0f,overlap:.0f,dead_air:.0f,height:.2f,release:s"
-		"en"		"{mode_style}{block}{edge}{landing_edge}{miss} | {strafe_count} {strafe_text} | {sync}%%%% Sync | {pre} Pre | {max} Max | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Height{release}"
-		"chi"		"{mode_style}{block}{edge}{landing_edge}{miss} | {strafe_count} {strafe_text} | {sync}%%%% 同步 | {pre} 地速 | {max} 空速 | {bad_angles}%%%% 无效 | {overlap}%%%% 冲突 | {dead_air}%%%% 无操作 | {height} 高度{release}"
-		"zho"		"{mode_style}{block}{edge}{landing_edge}{miss} | {strafe_count} {strafe_text} | {sync}%%%% 同步 | {pre} 地速 | {max} 空速 | {bad_angles}%%%% 無效 | {overlap}%%%% 衝突 | {dead_air}%%%% 無操作 | {height} 高度{release}"
-		"ua"		"{mode_style}{block}{edge}{landing_edge}{miss} | {strafe_count} {strafe_text} | {sync}%%%% Синхр | {pre} Pre | {max} Макс | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Висота{release}"
-		"ru"		"{mode_style}{block}{edge}{landing_edge}{miss} | {strafe_count} {strafe_text} | {sync}%%%% Синх | {pre} Pre | {max} Макс | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Высота{release}"
-		"es"		"{mode_style}{block}{edge}{landing_edge}{miss} | {strafe_count} {strafe_text} | {sync}%%%% Sincro | {pre} Pre | {max} Max | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Altura{release}"
+		"en"		"{mode_style}{block}{edge}{landing_edge}{miss} | {strafe_count} {strafe_text} | {sync}%% Sync | {pre} Pre | {max} Max | {bad_angles}%% BA | {overlap}%% OL | {dead_air}%% DA | {height} Height{release}"
+		"chi"		"{mode_style}{block}{edge}{landing_edge}{miss} | {strafe_count} {strafe_text} | {sync}%% 同步 | {pre} 地速 | {max} 空速 | {bad_angles}%% 无效 | {overlap}%% 冲突 | {dead_air}%% 无操作 | {height} 高度{release}"
+		"zho"		"{mode_style}{block}{edge}{landing_edge}{miss} | {strafe_count} {strafe_text} | {sync}%% 同步 | {pre} 地速 | {max} 空速 | {bad_angles}%% 無效 | {overlap}%% 衝突 | {dead_air}%% 無操作 | {height} 高度{release}"
+		"ua"		"{mode_style}{block}{edge}{landing_edge}{miss} | {strafe_count} {strafe_text} | {sync}%% Синхр | {pre} Pre | {max} Макс | {bad_angles}%% BA | {overlap}%% OL | {dead_air}%% DA | {height} Висота{release}"
+		"ru"		"{mode_style}{block}{edge}{landing_edge}{miss} | {strafe_count} {strafe_text} | {sync}%% Синх | {pre} Pre | {max} Макс | {bad_angles}%% BA | {overlap}%% OL | {dead_air}%% DA | {height} Высота{release}"
+		"es"		"{mode_style}{block}{edge}{landing_edge}{miss} | {strafe_count} {strafe_text} | {sync}%% Sincro | {pre} Pre | {max} Max | {bad_angles}%% BA | {overlap}%% OL | {dead_air}%% DA | {height} Altura{release}"
 
-		"ko"		"{mode_style}{block}{edge}{landing_edge}{miss} | {strafe_count} {strafe_text} | {sync}%%%% 싱크 | {pre} 프리 | {max} 최대 | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} 높이{release}"
+		"ko"		"{mode_style}{block}{edge}{landing_edge}{miss} | {strafe_count} {strafe_text} | {sync}%% 싱크 | {pre} 프리 | {max} 최대 | {bad_angles}%% BA | {overlap}%% OL | {dead_air}%% DA | {height} 높이{release}"
 	}
 	"Jumpstat Report - Console Segment - Edge"
 	{
@@ -1094,13 +1094,13 @@
 	{
 		// 57% GainEff | 1.048 Airpath | 17.7 Deviation | 43.1 Width | 0.8003 Airtime | -8.0 Offset | 0.12/0.12 Crouched
 		"#format"	"gain_eff:.0f,air_path:.3f,deviation:.1f,width:.1f,air_time:.4f,offset:.1f,duck_end_time:.2f,duck_total_time:.2f"
-		"en"		"{gain_eff}%%%% GainEff | {air_path} Airpath | {deviation} Deviation | {width} Width | {air_time} Airtime | {offset} Offset | {duck_end_time}/{duck_total_time} Crouched"
-		"chi"		"{gain_eff}%%%% 增益效率 | {air_path} 空中路径 | {deviation} Deviation | {width} 幅度 | {air_time} 滞空 | {offset} 位移 | {duck_end_time}/{duck_total_time} 下蹲"
-		"zho"		"{gain_eff}%%%% 增益效率 | {air_path} 空中路徑 | {deviation} Deviation | {width} 幅度 | {air_time} 滯空 | {offset} 位移 | {duck_end_time}/{duck_total_time} 下蹲"
-		"ua"		"{gain_eff}%%%% GainEff | {air_path} Airpath | {deviation} Відхилення | {width} Ширина | {air_time} Airtime | {offset} Зміщення | {duck_end_time}/{duck_total_time} Присівши"
-		"ru"		"{gain_eff}%%%% ЭффПрир | {air_path} Airpath | {deviation} Отклонение | {width} Ширина | {air_time} Airtime | {offset} Смещение | {duck_end_time}/{duck_total_time} В приседе"
-		"es"		"{gain_eff}%%%% EficGan | {air_path} Aéreo | {deviation} Desviación | {width} Ancho | {air_time} TiempoVuelo | {offset} Compensación | {duck_end_time}/{duck_total_time} Agachado"
-		"ko"		"{gain_eff}%%%% GainEff | {air_path} Airpath | {deviation} 편차 | {width} 너비 | {air_time} 공중 시간 | {offset} 오프셋 | {duck_end_time}/{duck_total_time} 앉기"
+		"en"		"{gain_eff}%% GainEff | {air_path} Airpath | {deviation} Deviation | {width} Width | {air_time} Airtime | {offset} Offset | {duck_end_time}/{duck_total_time} Crouched"
+		"chi"		"{gain_eff}%% 增益效率 | {air_path} 空中路径 | {deviation} Deviation | {width} 幅度 | {air_time} 滞空 | {offset} 位移 | {duck_end_time}/{duck_total_time} 下蹲"
+		"zho"		"{gain_eff}%% 增益效率 | {air_path} 空中路徑 | {deviation} Deviation | {width} 幅度 | {air_time} 滯空 | {offset} 位移 | {duck_end_time}/{duck_total_time} 下蹲"
+		"ua"		"{gain_eff}%% GainEff | {air_path} Airpath | {deviation} Відхилення | {width} Ширина | {air_time} Airtime | {offset} Зміщення | {duck_end_time}/{duck_total_time} Присівши"
+		"ru"		"{gain_eff}%% ЭффПрир | {air_path} Airpath | {deviation} Отклонение | {width} Ширина | {air_time} Airtime | {offset} Смещение | {duck_end_time}/{duck_total_time} В приседе"
+		"es"		"{gain_eff}%% EficGan | {air_path} Aéreo | {deviation} Desviación | {width} Ancho | {air_time} TiempoVuelo | {offset} Compensación | {duck_end_time}/{duck_total_time} Agachado"
+		"ko"		"{gain_eff}%% GainEff | {air_path} Airpath | {deviation} 편차 | {width} 너비 | {air_time} 공중 시간 | {offset} 오프셋 | {duck_end_time}/{duck_total_time} 앉기"
 	}
 	"Jumpstat Report - Console Graph - Strafe Keys"
 	{

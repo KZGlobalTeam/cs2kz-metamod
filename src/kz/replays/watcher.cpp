@@ -138,14 +138,14 @@ void ReplayWatcher::FilterAndPrintMatchingCheaterReplays(ReplayFilterCriteria &c
 		player->languageService->PrintChat(true, false, "Replay List - No Matching Replays");
 		return;
 	}
-	player->PrintConsole(false, false, table.GetSeparator("=").c_str());
-	player->PrintConsole(false, false, table.GetTitle().c_str());
-	player->PrintConsole(false, false, table.GetHeader().c_str());
+	player->PrintConsole(false, false, "%s", table.GetSeparator("=").c_str());
+	player->PrintConsole(false, false, "%s", table.GetTitle().c_str());
+	player->PrintConsole(false, false, "%s", table.GetHeader().c_str());
 	for (u32 i = 0; i < table.GetNumEntries(); i++)
 	{
-		player->PrintConsole(false, false, table.GetLine(i).c_str());
+		player->PrintConsole(false, false, "%s", table.GetLine(i).c_str());
 	}
-	player->PrintConsole(false, false, table.GetSeparator("=").c_str());
+	player->PrintConsole(false, false, "%s", table.GetSeparator("=").c_str());
 }
 
 void ReplayWatcher::FilterAndPrintMatchingRunReplays(ReplayFilterCriteria &criteria, KZPlayer *player)
@@ -211,14 +211,14 @@ void ReplayWatcher::FilterAndPrintMatchingRunReplays(ReplayFilterCriteria &crite
 		return;
 	}
 	player->languageService->PrintChat(true, false, "Replay List - Check Console");
-	player->PrintConsole(false, false, table.GetSeparator("=").c_str());
-	player->PrintConsole(false, false, table.GetTitle().c_str());
-	player->PrintConsole(false, false, table.GetHeader().c_str());
+	player->PrintConsole(false, false, "%s", table.GetSeparator("=").c_str());
+	player->PrintConsole(false, false, "%s", table.GetTitle().c_str());
+	player->PrintConsole(false, false, "%s", table.GetHeader().c_str());
 	for (u32 i = 0; i < table.GetNumEntries(); i++)
 	{
-		player->PrintConsole(false, false, table.GetLine(i).c_str());
+		player->PrintConsole(false, false, "%s", table.GetLine(i).c_str());
 	}
-	player->PrintConsole(false, false, table.GetSeparator("=").c_str());
+	player->PrintConsole(false, false, "%s", table.GetSeparator("=").c_str());
 }
 
 void ReplayWatcher::FilterAndPrintMatchingJumpReplays(ReplayFilterCriteria &criteria, KZPlayer *player)
@@ -269,14 +269,14 @@ void ReplayWatcher::FilterAndPrintMatchingJumpReplays(ReplayFilterCriteria &crit
 		return;
 	}
 	player->languageService->PrintChat(true, false, "Replay List - Check Console");
-	player->PrintConsole(false, false, table.GetSeparator("=").c_str());
-	player->PrintConsole(false, false, table.GetTitle().c_str());
-	player->PrintConsole(false, false, table.GetHeader().c_str());
+	player->PrintConsole(false, false, "%s", table.GetSeparator("=").c_str());
+	player->PrintConsole(false, false, "%s", table.GetTitle().c_str());
+	player->PrintConsole(false, false, "%s", table.GetHeader().c_str());
 	for (u32 i = 0; i < table.GetNumEntries(); i++)
 	{
-		player->PrintConsole(false, false, table.GetLine(i).c_str());
+		player->PrintConsole(false, false, "%s", table.GetLine(i).c_str());
 	}
-	player->PrintConsole(false, false, table.GetSeparator("=").c_str());
+	player->PrintConsole(false, false, "%s", table.GetSeparator("=").c_str());
 }
 
 void ReplayWatcher::FilterAndPrintMatchingManualReplays(ReplayFilterCriteria &criteria, KZPlayer *player)
@@ -317,14 +317,14 @@ void ReplayWatcher::FilterAndPrintMatchingManualReplays(ReplayFilterCriteria &cr
 		return;
 	}
 	player->languageService->PrintChat(true, false, "Replay List - Check Console");
-	player->PrintConsole(false, false, table.GetSeparator("=").c_str());
-	player->PrintConsole(false, false, table.GetTitle().c_str());
-	player->PrintConsole(false, false, table.GetHeader().c_str());
+	player->PrintConsole(false, false, "%s", table.GetSeparator("=").c_str());
+	player->PrintConsole(false, false, "%s", table.GetTitle().c_str());
+	player->PrintConsole(false, false, "%s", table.GetHeader().c_str());
 	for (u32 i = 0; i < table.GetNumEntries(); i++)
 	{
-		player->PrintConsole(false, false, table.GetLine(i).c_str());
+		player->PrintConsole(false, false, "%s", table.GetLine(i).c_str());
 	}
-	player->PrintConsole(false, false, table.GetSeparator("=").c_str());
+	player->PrintConsole(false, false, "%s", table.GetSeparator("=").c_str());
 }
 
 void ReplayWatcher::PrintUsage(KZPlayer *player)

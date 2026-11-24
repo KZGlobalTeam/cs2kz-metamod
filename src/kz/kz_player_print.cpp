@@ -153,7 +153,7 @@ void KZPlayer::PrintHTMLCentre(bool addPrefix, bool includeSpectators, const cha
 
 	if (!includeSpectators)
 	{
-		utils::PrintHTMLCentre(this->GetController(), buffer.c_str());
+		utils::PrintHTMLCentre(this->GetController(), "%s", buffer.c_str());
 		return;
 	}
 
