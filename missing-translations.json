@@ -2059,7 +2059,7 @@
           "file": "translations/cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Details 1",
           "line": 1037,
-          "english_text": "{mode_style}{block}{edge}{landing_edge}{miss} | {strafe_count} {strafe_text} | {sync}%%%% Sync | {pre} Pre | {max} Max | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Height{release}"
+          "english_text": "{mode_style}{block}{edge}{landing_edge}{miss} | {strafe_count} {strafe_text} | {sync}%% Sync | {pre} Pre | {max} Max | {bad_angles}%% BA | {overlap}%% OL | {dead_air}%% DA | {height} Height{release}"
         },
         {
           "file": "translations/cs2kz-jumpstats.phrases.txt",
@@ -2089,7 +2089,7 @@
           "file": "translations/cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Details 2",
           "line": 1093,
-          "english_text": "{gain_eff}%%%% GainEff | {air_path} Airpath | {deviation} Deviation | {width} Width | {air_time} Airtime | {offset} Offset | {duck_end_time}/{duck_total_time} Crouched"
+          "english_text": "{gain_eff}%% GainEff | {air_path} Airpath | {deviation} Deviation | {width} Width | {air_time} Airtime | {offset} Offset | {duck_end_time}/{duck_total_time} Crouched"
         },
         {
           "file": "translations/cs2kz-jumpstats.phrases.txt",
@@ -4261,13 +4261,13 @@
           "file": "translations/cs2kz-telemetry.phrases.txt",
           "phrase": "Telemetry - Modern Bhop Stats",
           "line": 3,
-          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{truePerfPercent}%%%% {grey}True ({lime}{truePerfs}{grey}) | {blue}{modernPerfEarlyPercent}%%%% {grey}Early ({lime}{modernPerfsEarly}{grey}) | {blue}{modernPerfLatePercent}%%%% {grey}Late ({lime}{modernPerfsLate}{grey})"
+          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{truePerfPercent}%% {grey}True ({lime}{truePerfs}{grey}) | {blue}{modernPerfEarlyPercent}%% {grey}Early ({lime}{modernPerfsEarly}{grey}) | {blue}{modernPerfLatePercent}%% {grey}Late ({lime}{modernPerfsLate}{grey})"
         },
         {
           "file": "translations/cs2kz-telemetry.phrases.txt",
           "phrase": "Telemetry - Legacy Bhop Stats",
           "line": 15,
-          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{perfPercent}%%%% {grey}Perf ({lime}{perfs}{grey})"
+          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{perfPercent}%% {grey}Perf ({lime}{perfs}{grey})"
         },
         {
           "file": "translations/cs2kz-telemetry.phrases.txt",
@@ -7640,13 +7640,13 @@
           "file": "translations/cs2kz-replays.phrases.txt",
           "phrase": "Replay - Jump Info Console",
           "line": 199,
-          "english_text": "Replay Type: {type}\\nDistance: {distance} | {syncPercent}%%%% Sync | {preDistance} Pre | {maxDistance} Max | {airTime} Air"
+          "english_text": "Replay Type: {type}\\nDistance: {distance} | {syncPercent}%% Sync | {preDistance} Pre | {maxDistance} Max | {airTime} Air"
         },
         {
           "file": "translations/cs2kz-replays.phrases.txt",
           "phrase": "Replay - Jump Info Console (Block)",
           "line": 213,
-          "english_text": "Replay Type: {type}\\nDistance: {distance} | {blockDistance} Block | {syncPercent}%%%% Sync | {preDistance} Pre | {maxDistance} Max | {airTime} Air"
+          "english_text": "Replay Type: {type}\\nDistance: {distance} | {blockDistance} Block | {syncPercent}%% Sync | {preDistance} Pre | {maxDistance} Max | {airTime} Air"
         },
         {
           "file": "translations/cs2kz-replays.phrases.txt",
@@ -7754,7 +7754,7 @@
           "file": "translations/cs2kz-replays.phrases.txt",
           "phrase": "Replay - Loading Progress",
           "line": 392,
-          "english_text": "{grey}Loading replay: {progress}%%%% complete"
+          "english_text": "{grey}Loading replay: {progress}%% complete"
         },
         {
           "file": "translations/cs2kz-replays.phrases.txt",
@@ -10251,7 +10251,7 @@
           "file": "translations/cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Details 1",
           "line": 1037,
-          "english_text": "{mode_style}{block}{edge}{landing_edge}{miss} | {strafe_count} {strafe_text} | {sync}%%%% Sync | {pre} Pre | {max} Max | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Height{release}"
+          "english_text": "{mode_style}{block}{edge}{landing_edge}{miss} | {strafe_count} {strafe_text} | {sync}%% Sync | {pre} Pre | {max} Max | {bad_angles}%% BA | {overlap}%% OL | {dead_air}%% DA | {height} Height{release}"
         },
         {
           "file": "translations/cs2kz-jumpstats.phrases.txt",
@@ -10281,7 +10281,7 @@
           "file": "translations/cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Details 2",
           "line": 1093,
-          "english_text": "{gain_eff}%%%% GainEff | {air_path} Airpath | {deviation} Deviation | {width} Width | {air_time} Airtime | {offset} Offset | {duck_end_time}/{duck_total_time} Crouched"
+          "english_text": "{gain_eff}%% GainEff | {air_path} Airpath | {deviation} Deviation | {width} Width | {air_time} Airtime | {offset} Offset | {duck_end_time}/{duck_total_time} Crouched"
         },
         {
           "file": "translations/cs2kz-jumpstats.phrases.txt",
@@ -12621,13 +12621,13 @@
           "file": "translations/cs2kz-replays.phrases.txt",
           "phrase": "Replay - Jump Info Console",
           "line": 199,
-          "english_text": "Replay Type: {type}\\nDistance: {distance} | {syncPercent}%%%% Sync | {preDistance} Pre | {maxDistance} Max | {airTime} Air"
+          "english_text": "Replay Type: {type}\\nDistance: {distance} | {syncPercent}%% Sync | {preDistance} Pre | {maxDistance} Max | {airTime} Air"
         },
         {
           "file": "translations/cs2kz-replays.phrases.txt",
           "phrase": "Replay - Jump Info Console (Block)",
           "line": 213,
-          "english_text": "Replay Type: {type}\\nDistance: {distance} | {blockDistance} Block | {syncPercent}%%%% Sync | {preDistance} Pre | {maxDistance} Max | {airTime} Air"
+          "english_text": "Replay Type: {type}\\nDistance: {distance} | {blockDistance} Block | {syncPercent}%% Sync | {preDistance} Pre | {maxDistance} Max | {airTime} Air"
         },
         {
           "file": "translations/cs2kz-replays.phrases.txt",
@@ -12735,7 +12735,7 @@
           "file": "translations/cs2kz-replays.phrases.txt",
           "phrase": "Replay - Loading Progress",
           "line": 392,
-          "english_text": "{grey}Loading replay: {progress}%%%% complete"
+          "english_text": "{grey}Loading replay: {progress}%% complete"
         },
         {
           "file": "translations/cs2kz-replays.phrases.txt",
@@ -13215,13 +13215,13 @@
           "file": "translations/cs2kz-telemetry.phrases.txt",
           "phrase": "Telemetry - Modern Bhop Stats",
           "line": 3,
-          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{truePerfPercent}%%%% {grey}True ({lime}{truePerfs}{grey}) | {blue}{modernPerfEarlyPercent}%%%% {grey}Early ({lime}{modernPerfsEarly}{grey}) | {blue}{modernPerfLatePercent}%%%% {grey}Late ({lime}{modernPerfsLate}{grey})"
+          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{truePerfPercent}%% {grey}True ({lime}{truePerfs}{grey}) | {blue}{modernPerfEarlyPercent}%% {grey}Early ({lime}{modernPerfsEarly}{grey}) | {blue}{modernPerfLatePercent}%% {grey}Late ({lime}{modernPerfsLate}{grey})"
         },
         {
           "file": "translations/cs2kz-telemetry.phrases.txt",
           "phrase": "Telemetry - Legacy Bhop Stats",
           "line": 15,
-          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{perfPercent}%%%% {grey}Perf ({lime}{perfs}{grey})"
+          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{perfPercent}%% {grey}Perf ({lime}{perfs}{grey})"
         },
         {
           "file": "translations/cs2kz-telemetry.phrases.txt",
@@ -13563,7 +13563,7 @@
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Record Volume Set",
           "line": 981,
-          "english_text": "{grey}You have set the world record announcement volume to {default}{volume}%%%%{grey}."
+          "english_text": "{grey}You have set the world record announcement volume to {default}{volume}%%{grey}."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
@@ -15699,7 +15699,7 @@
           "file": "translations/cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Details 1",
           "line": 1037,
-          "english_text": "{mode_style}{block}{edge}{landing_edge}{miss} | {strafe_count} {strafe_text} | {sync}%%%% Sync | {pre} Pre | {max} Max | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Height{release}"
+          "english_text": "{mode_style}{block}{edge}{landing_edge}{miss} | {strafe_count} {strafe_text} | {sync}%% Sync | {pre} Pre | {max} Max | {bad_angles}%% BA | {overlap}%% OL | {dead_air}%% DA | {height} Height{release}"
         },
         {
           "file": "translations/cs2kz-jumpstats.phrases.txt",
@@ -15729,7 +15729,7 @@
           "file": "translations/cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Details 2",
           "line": 1093,
-          "english_text": "{gain_eff}%%%% GainEff | {air_path} Airpath | {deviation} Deviation | {width} Width | {air_time} Airtime | {offset} Offset | {duck_end_time}/{duck_total_time} Crouched"
+          "english_text": "{gain_eff}%% GainEff | {air_path} Airpath | {deviation} Deviation | {width} Width | {air_time} Airtime | {offset} Offset | {duck_end_time}/{duck_total_time} Crouched"
         },
         {
           "file": "translations/cs2kz-jumpstats.phrases.txt",
@@ -18069,13 +18069,13 @@
           "file": "translations/cs2kz-replays.phrases.txt",
           "phrase": "Replay - Jump Info Console",
           "line": 199,
-          "english_text": "Replay Type: {type}\\nDistance: {distance} | {syncPercent}%%%% Sync | {preDistance} Pre | {maxDistance} Max | {airTime} Air"
+          "english_text": "Replay Type: {type}\\nDistance: {distance} | {syncPercent}%% Sync | {preDistance} Pre | {maxDistance} Max | {airTime} Air"
         },
         {
           "file": "translations/cs2kz-replays.phrases.txt",
           "phrase": "Replay - Jump Info Console (Block)",
           "line": 213,
-          "english_text": "Replay Type: {type}\\nDistance: {distance} | {blockDistance} Block | {syncPercent}%%%% Sync | {preDistance} Pre | {maxDistance} Max | {airTime} Air"
+          "english_text": "Replay Type: {type}\\nDistance: {distance} | {blockDistance} Block | {syncPercent}%% Sync | {preDistance} Pre | {maxDistance} Max | {airTime} Air"
         },
         {
           "file": "translations/cs2kz-replays.phrases.txt",
@@ -18183,7 +18183,7 @@
           "file": "translations/cs2kz-replays.phrases.txt",
           "phrase": "Replay - Loading Progress",
           "line": 392,
-          "english_text": "{grey}Loading replay: {progress}%%%% complete"
+          "english_text": "{grey}Loading replay: {progress}%% complete"
         },
         {
           "file": "translations/cs2kz-replays.phrases.txt",
@@ -18663,13 +18663,13 @@
           "file": "translations/cs2kz-telemetry.phrases.txt",
           "phrase": "Telemetry - Modern Bhop Stats",
           "line": 3,
-          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{truePerfPercent}%%%% {grey}True ({lime}{truePerfs}{grey}) | {blue}{modernPerfEarlyPercent}%%%% {grey}Early ({lime}{modernPerfsEarly}{grey}) | {blue}{modernPerfLatePercent}%%%% {grey}Late ({lime}{modernPerfsLate}{grey})"
+          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{truePerfPercent}%% {grey}True ({lime}{truePerfs}{grey}) | {blue}{modernPerfEarlyPercent}%% {grey}Early ({lime}{modernPerfsEarly}{grey}) | {blue}{modernPerfLatePercent}%% {grey}Late ({lime}{modernPerfsLate}{grey})"
         },
         {
           "file": "translations/cs2kz-telemetry.phrases.txt",
           "phrase": "Telemetry - Legacy Bhop Stats",
           "line": 15,
-          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{perfPercent}%%%% {grey}Perf ({lime}{perfs}{grey})"
+          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{perfPercent}%% {grey}Perf ({lime}{perfs}{grey})"
         },
         {
           "file": "translations/cs2kz-telemetry.phrases.txt",
@@ -19041,7 +19041,7 @@
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Record Volume Set",
           "line": 981,
-          "english_text": "{grey}You have set the world record announcement volume to {default}{volume}%%%%{grey}."
+          "english_text": "{grey}You have set the world record announcement volume to {default}{volume}%%{grey}."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
@@ -23800,7 +23800,7 @@
           "file": "translations/cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Details 1",
           "line": 1037,
-          "english_text": "{mode_style}{block}{edge}{landing_edge}{miss} | {strafe_count} {strafe_text} | {sync}%%%% Sync | {pre} Pre | {max} Max | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Height{release}"
+          "english_text": "{mode_style}{block}{edge}{landing_edge}{miss} | {strafe_count} {strafe_text} | {sync}%% Sync | {pre} Pre | {max} Max | {bad_angles}%% BA | {overlap}%% OL | {dead_air}%% DA | {height} Height{release}"
         },
         {
           "file": "translations/cs2kz-jumpstats.phrases.txt",
@@ -23830,7 +23830,7 @@
           "file": "translations/cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Details 2",
           "line": 1093,
-          "english_text": "{gain_eff}%%%% GainEff | {air_path} Airpath | {deviation} Deviation | {width} Width | {air_time} Airtime | {offset} Offset | {duck_end_time}/{duck_total_time} Crouched"
+          "english_text": "{gain_eff}%% GainEff | {air_path} Airpath | {deviation} Deviation | {width} Width | {air_time} Airtime | {offset} Offset | {duck_end_time}/{duck_total_time} Crouched"
         },
         {
           "file": "translations/cs2kz-jumpstats.phrases.txt",
@@ -26158,13 +26158,13 @@
           "file": "translations/cs2kz-replays.phrases.txt",
           "phrase": "Replay - Jump Info Console",
           "line": 199,
-          "english_text": "Replay Type: {type}\\nDistance: {distance} | {syncPercent}%%%% Sync | {preDistance} Pre | {maxDistance} Max | {airTime} Air"
+          "english_text": "Replay Type: {type}\\nDistance: {distance} | {syncPercent}%% Sync | {preDistance} Pre | {maxDistance} Max | {airTime} Air"
         },
         {
           "file": "translations/cs2kz-replays.phrases.txt",
           "phrase": "Replay - Jump Info Console (Block)",
           "line": 213,
-          "english_text": "Replay Type: {type}\\nDistance: {distance} | {blockDistance} Block | {syncPercent}%%%% Sync | {preDistance} Pre | {maxDistance} Max | {airTime} Air"
+          "english_text": "Replay Type: {type}\\nDistance: {distance} | {blockDistance} Block | {syncPercent}%% Sync | {preDistance} Pre | {maxDistance} Max | {airTime} Air"
         },
         {
           "file": "translations/cs2kz-replays.phrases.txt",
@@ -26272,7 +26272,7 @@
           "file": "translations/cs2kz-replays.phrases.txt",
           "phrase": "Replay - Loading Progress",
           "line": 392,
-          "english_text": "{grey}Loading replay: {progress}%%%% complete"
+          "english_text": "{grey}Loading replay: {progress}%% complete"
         },
         {
           "file": "translations/cs2kz-replays.phrases.txt",
@@ -26752,13 +26752,13 @@
           "file": "translations/cs2kz-telemetry.phrases.txt",
           "phrase": "Telemetry - Modern Bhop Stats",
           "line": 3,
-          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{truePerfPercent}%%%% {grey}True ({lime}{truePerfs}{grey}) | {blue}{modernPerfEarlyPercent}%%%% {grey}Early ({lime}{modernPerfsEarly}{grey}) | {blue}{modernPerfLatePercent}%%%% {grey}Late ({lime}{modernPerfsLate}{grey})"
+          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{truePerfPercent}%% {grey}True ({lime}{truePerfs}{grey}) | {blue}{modernPerfEarlyPercent}%% {grey}Early ({lime}{modernPerfsEarly}{grey}) | {blue}{modernPerfLatePercent}%% {grey}Late ({lime}{modernPerfsLate}{grey})"
         },
         {
           "file": "translations/cs2kz-telemetry.phrases.txt",
           "phrase": "Telemetry - Legacy Bhop Stats",
           "line": 15,
-          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{perfPercent}%%%% {grey}Perf ({lime}{perfs}{grey})"
+          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{perfPercent}%% {grey}Perf ({lime}{perfs}{grey})"
         },
         {
           "file": "translations/cs2kz-telemetry.phrases.txt",
@@ -26818,7 +26818,7 @@
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Record Volume Set",
           "line": 981,
-          "english_text": "{grey}You have set the world record announcement volume to {default}{volume}%%%%{grey}."
+          "english_text": "{grey}You have set the world record announcement volume to {default}{volume}%%{grey}."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
@@ -29759,7 +29759,7 @@
           "file": "translations/cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Details 1",
           "line": 1037,
-          "english_text": "{mode_style}{block}{edge}{landing_edge}{miss} | {strafe_count} {strafe_text} | {sync}%%%% Sync | {pre} Pre | {max} Max | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Height{release}"
+          "english_text": "{mode_style}{block}{edge}{landing_edge}{miss} | {strafe_count} {strafe_text} | {sync}%% Sync | {pre} Pre | {max} Max | {bad_angles}%% BA | {overlap}%% OL | {dead_air}%% DA | {height} Height{release}"
         },
         {
           "file": "translations/cs2kz-jumpstats.phrases.txt",
@@ -29789,7 +29789,7 @@
           "file": "translations/cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Details 2",
           "line": 1093,
-          "english_text": "{gain_eff}%%%% GainEff | {air_path} Airpath | {deviation} Deviation | {width} Width | {air_time} Airtime | {offset} Offset | {duck_end_time}/{duck_total_time} Crouched"
+          "english_text": "{gain_eff}%% GainEff | {air_path} Airpath | {deviation} Deviation | {width} Width | {air_time} Airtime | {offset} Offset | {duck_end_time}/{duck_total_time} Crouched"
         },
         {
           "file": "translations/cs2kz-jumpstats.phrases.txt",
@@ -32177,13 +32177,13 @@
           "file": "translations/cs2kz-replays.phrases.txt",
           "phrase": "Replay - Jump Info Console",
           "line": 199,
-          "english_text": "Replay Type: {type}\\nDistance: {distance} | {syncPercent}%%%% Sync | {preDistance} Pre | {maxDistance} Max | {airTime} Air"
+          "english_text": "Replay Type: {type}\\nDistance: {distance} | {syncPercent}%% Sync | {preDistance} Pre | {maxDistance} Max | {airTime} Air"
         },
         {
           "file": "translations/cs2kz-replays.phrases.txt",
           "phrase": "Replay - Jump Info Console (Block)",
           "line": 213,
-          "english_text": "Replay Type: {type}\\nDistance: {distance} | {blockDistance} Block | {syncPercent}%%%% Sync | {preDistance} Pre | {maxDistance} Max | {airTime} Air"
+          "english_text": "Replay Type: {type}\\nDistance: {distance} | {blockDistance} Block | {syncPercent}%% Sync | {preDistance} Pre | {maxDistance} Max | {airTime} Air"
         },
         {
           "file": "translations/cs2kz-replays.phrases.txt",
@@ -32291,7 +32291,7 @@
           "file": "translations/cs2kz-replays.phrases.txt",
           "phrase": "Replay - Loading Progress",
           "line": 392,
-          "english_text": "{grey}Loading replay: {progress}%%%% complete"
+          "english_text": "{grey}Loading replay: {progress}%% complete"
         },
         {
           "file": "translations/cs2kz-replays.phrases.txt",
@@ -32849,13 +32849,13 @@
           "file": "translations/cs2kz-telemetry.phrases.txt",
           "phrase": "Telemetry - Modern Bhop Stats",
           "line": 3,
-          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{truePerfPercent}%%%% {grey}True ({lime}{truePerfs}{grey}) | {blue}{modernPerfEarlyPercent}%%%% {grey}Early ({lime}{modernPerfsEarly}{grey}) | {blue}{modernPerfLatePercent}%%%% {grey}Late ({lime}{modernPerfsLate}{grey})"
+          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{truePerfPercent}%% {grey}True ({lime}{truePerfs}{grey}) | {blue}{modernPerfEarlyPercent}%% {grey}Early ({lime}{modernPerfsEarly}{grey}) | {blue}{modernPerfLatePercent}%% {grey}Late ({lime}{modernPerfsLate}{grey})"
         },
         {
           "file": "translations/cs2kz-telemetry.phrases.txt",
           "phrase": "Telemetry - Legacy Bhop Stats",
           "line": 15,
-          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{perfPercent}%%%% {grey}Perf ({lime}{perfs}{grey})"
+          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{perfPercent}%% {grey}Perf ({lime}{perfs}{grey})"
         },
         {
           "file": "translations/cs2kz-telemetry.phrases.txt",
@@ -33497,7 +33497,7 @@
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Record Volume Set",
           "line": 981,
-          "english_text": "{grey}You have set the world record announcement volume to {default}{volume}%%%%{grey}."
+          "english_text": "{grey}You have set the world record announcement volume to {default}{volume}%%{grey}."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
@@ -35172,7 +35172,7 @@
           "file": "translations/cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Details 1",
           "line": 1037,
-          "english_text": "{mode_style}{block}{edge}{landing_edge}{miss} | {strafe_count} {strafe_text} | {sync}%%%% Sync | {pre} Pre | {max} Max | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Height{release}"
+          "english_text": "{mode_style}{block}{edge}{landing_edge}{miss} | {strafe_count} {strafe_text} | {sync}%% Sync | {pre} Pre | {max} Max | {bad_angles}%% BA | {overlap}%% OL | {dead_air}%% DA | {height} Height{release}"
         },
         {
           "file": "translations/cs2kz-jumpstats.phrases.txt",
@@ -35202,7 +35202,7 @@
           "file": "translations/cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Details 2",
           "line": 1093,
-          "english_text": "{gain_eff}%%%% GainEff | {air_path} Airpath | {deviation} Deviation | {width} Width | {air_time} Airtime | {offset} Offset | {duck_end_time}/{duck_total_time} Crouched"
+          "english_text": "{gain_eff}%% GainEff | {air_path} Airpath | {deviation} Deviation | {width} Width | {air_time} Airtime | {offset} Offset | {duck_end_time}/{duck_total_time} Crouched"
         },
         {
           "file": "translations/cs2kz-jumpstats.phrases.txt",
@@ -37374,13 +37374,13 @@
           "file": "translations/cs2kz-telemetry.phrases.txt",
           "phrase": "Telemetry - Modern Bhop Stats",
           "line": 3,
-          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{truePerfPercent}%%%% {grey}True ({lime}{truePerfs}{grey}) | {blue}{modernPerfEarlyPercent}%%%% {grey}Early ({lime}{modernPerfsEarly}{grey}) | {blue}{modernPerfLatePercent}%%%% {grey}Late ({lime}{modernPerfsLate}{grey})"
+          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{truePerfPercent}%% {grey}True ({lime}{truePerfs}{grey}) | {blue}{modernPerfEarlyPercent}%% {grey}Early ({lime}{modernPerfsEarly}{grey}) | {blue}{modernPerfLatePercent}%% {grey}Late ({lime}{modernPerfsLate}{grey})"
         },
         {
           "file": "translations/cs2kz-telemetry.phrases.txt",
           "phrase": "Telemetry - Legacy Bhop Stats",
           "line": 15,
-          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{perfPercent}%%%% {grey}Perf ({lime}{perfs}{grey})"
+          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{perfPercent}%% {grey}Perf ({lime}{perfs}{grey})"
         },
         {
           "file": "translations/cs2kz-telemetry.phrases.txt",
@@ -39842,7 +39842,7 @@
           "file": "translations/cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Details 1",
           "line": 1037,
-          "english_text": "{mode_style}{block}{edge}{landing_edge}{miss} | {strafe_count} {strafe_text} | {sync}%%%% Sync | {pre} Pre | {max} Max | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Height{release}"
+          "english_text": "{mode_style}{block}{edge}{landing_edge}{miss} | {strafe_count} {strafe_text} | {sync}%% Sync | {pre} Pre | {max} Max | {bad_angles}%% BA | {overlap}%% OL | {dead_air}%% DA | {height} Height{release}"
         },
         {
           "file": "translations/cs2kz-jumpstats.phrases.txt",
@@ -39872,7 +39872,7 @@
           "file": "translations/cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Details 2",
           "line": 1093,
-          "english_text": "{gain_eff}%%%% GainEff | {air_path} Airpath | {deviation} Deviation | {width} Width | {air_time} Airtime | {offset} Offset | {duck_end_time}/{duck_total_time} Crouched"
+          "english_text": "{gain_eff}%% GainEff | {air_path} Airpath | {deviation} Deviation | {width} Width | {air_time} Airtime | {offset} Offset | {duck_end_time}/{duck_total_time} Crouched"
         },
         {
           "file": "translations/cs2kz-jumpstats.phrases.txt",
@@ -42068,13 +42068,13 @@
           "file": "translations/cs2kz-replays.phrases.txt",
           "phrase": "Replay - Jump Info Console",
           "line": 199,
-          "english_text": "Replay Type: {type}\\nDistance: {distance} | {syncPercent}%%%% Sync | {preDistance} Pre | {maxDistance} Max | {airTime} Air"
+          "english_text": "Replay Type: {type}\\nDistance: {distance} | {syncPercent}%% Sync | {preDistance} Pre | {maxDistance} Max | {airTime} Air"
         },
         {
           "file": "translations/cs2kz-replays.phrases.txt",
           "phrase": "Replay - Jump Info Console (Block)",
           "line": 213,
-          "english_text": "Replay Type: {type}\\nDistance: {distance} | {blockDistance} Block | {syncPercent}%%%% Sync | {preDistance} Pre | {maxDistance} Max | {airTime} Air"
+          "english_text": "Replay Type: {type}\\nDistance: {distance} | {blockDistance} Block | {syncPercent}%% Sync | {preDistance} Pre | {maxDistance} Max | {airTime} Air"
         },
         {
           "file": "translations/cs2kz-replays.phrases.txt",
@@ -42182,7 +42182,7 @@
           "file": "translations/cs2kz-replays.phrases.txt",
           "phrase": "Replay - Loading Progress",
           "line": 392,
-          "english_text": "{grey}Loading replay: {progress}%%%% complete"
+          "english_text": "{grey}Loading replay: {progress}%% complete"
         },
         {
           "file": "translations/cs2kz-replays.phrases.txt",
@@ -42614,13 +42614,13 @@
           "file": "translations/cs2kz-telemetry.phrases.txt",
           "phrase": "Telemetry - Modern Bhop Stats",
           "line": 3,
-          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{truePerfPercent}%%%% {grey}True ({lime}{truePerfs}{grey}) | {blue}{modernPerfEarlyPercent}%%%% {grey}Early ({lime}{modernPerfsEarly}{grey}) | {blue}{modernPerfLatePercent}%%%% {grey}Late ({lime}{modernPerfsLate}{grey})"
+          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{truePerfPercent}%% {grey}True ({lime}{truePerfs}{grey}) | {blue}{modernPerfEarlyPercent}%% {grey}Early ({lime}{modernPerfsEarly}{grey}) | {blue}{modernPerfLatePercent}%% {grey}Late ({lime}{modernPerfsLate}{grey})"
         },
         {
           "file": "translations/cs2kz-telemetry.phrases.txt",
           "phrase": "Telemetry - Legacy Bhop Stats",
           "line": 15,
-          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{perfPercent}%%%% {grey}Perf ({lime}{perfs}{grey})"
+          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{perfPercent}%% {grey}Perf ({lime}{perfs}{grey})"
         },
         {
           "file": "translations/cs2kz-telemetry.phrases.txt",
@@ -42656,7 +42656,7 @@
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Record Volume Set",
           "line": 981,
-          "english_text": "{grey}You have set the world record announcement volume to {default}{volume}%%%%{grey}."
+          "english_text": "{grey}You have set the world record announcement volume to {default}{volume}%%{grey}."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
@@ -44715,7 +44715,7 @@
           "file": "translations/cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Details 1",
           "line": 1037,
-          "english_text": "{mode_style}{block}{edge}{landing_edge}{miss} | {strafe_count} {strafe_text} | {sync}%%%% Sync | {pre} Pre | {max} Max | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Height{release}"
+          "english_text": "{mode_style}{block}{edge}{landing_edge}{miss} | {strafe_count} {strafe_text} | {sync}%% Sync | {pre} Pre | {max} Max | {bad_angles}%% BA | {overlap}%% OL | {dead_air}%% DA | {height} Height{release}"
         },
         {
           "file": "translations/cs2kz-jumpstats.phrases.txt",
@@ -44745,7 +44745,7 @@
           "file": "translations/cs2kz-jumpstats.phrases.txt",
           "phrase": "Jumpstat Report - Console Details 2",
           "line": 1093,
-          "english_text": "{gain_eff}%%%% GainEff | {air_path} Airpath | {deviation} Deviation | {width} Width | {air_time} Airtime | {offset} Offset | {duck_end_time}/{duck_total_time} Crouched"
+          "english_text": "{gain_eff}%% GainEff | {air_path} Airpath | {deviation} Deviation | {width} Width | {air_time} Airtime | {offset} Offset | {duck_end_time}/{duck_total_time} Crouched"
         },
         {
           "file": "translations/cs2kz-jumpstats.phrases.txt",
@@ -47085,13 +47085,13 @@
           "file": "translations/cs2kz-replays.phrases.txt",
           "phrase": "Replay - Jump Info Console",
           "line": 199,
-          "english_text": "Replay Type: {type}\\nDistance: {distance} | {syncPercent}%%%% Sync | {preDistance} Pre | {maxDistance} Max | {airTime} Air"
+          "english_text": "Replay Type: {type}\\nDistance: {distance} | {syncPercent}%% Sync | {preDistance} Pre | {maxDistance} Max | {airTime} Air"
         },
         {
           "file": "translations/cs2kz-replays.phrases.txt",
           "phrase": "Replay - Jump Info Console (Block)",
           "line": 213,
-          "english_text": "Replay Type: {type}\\nDistance: {distance} | {blockDistance} Block | {syncPercent}%%%% Sync | {preDistance} Pre | {maxDistance} Max | {airTime} Air"
+          "english_text": "Replay Type: {type}\\nDistance: {distance} | {blockDistance} Block | {syncPercent}%% Sync | {preDistance} Pre | {maxDistance} Max | {airTime} Air"
         },
         {
           "file": "translations/cs2kz-replays.phrases.txt",
@@ -47199,7 +47199,7 @@
           "file": "translations/cs2kz-replays.phrases.txt",
           "phrase": "Replay - Loading Progress",
           "line": 392,
-          "english_text": "{grey}Loading replay: {progress}%%%% complete"
+          "english_text": "{grey}Loading replay: {progress}%% complete"
         },
         {
           "file": "translations/cs2kz-replays.phrases.txt",
@@ -47679,13 +47679,13 @@
           "file": "translations/cs2kz-telemetry.phrases.txt",
           "phrase": "Telemetry - Modern Bhop Stats",
           "line": 3,
-          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{truePerfPercent}%%%% {grey}True ({lime}{truePerfs}{grey}) | {blue}{modernPerfEarlyPercent}%%%% {grey}Early ({lime}{modernPerfsEarly}{grey}) | {blue}{modernPerfLatePercent}%%%% {grey}Late ({lime}{modernPerfsLate}{grey})"
+          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{truePerfPercent}%% {grey}True ({lime}{truePerfs}{grey}) | {blue}{modernPerfEarlyPercent}%% {grey}Early ({lime}{modernPerfsEarly}{grey}) | {blue}{modernPerfLatePercent}%% {grey}Late ({lime}{modernPerfsLate}{grey})"
         },
         {
           "file": "translations/cs2kz-telemetry.phrases.txt",
           "phrase": "Telemetry - Legacy Bhop Stats",
           "line": 15,
-          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{perfPercent}%%%% {grey}Perf ({lime}{perfs}{grey})"
+          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{perfPercent}%% {grey}Perf ({lime}{perfs}{grey})"
         },
         {
           "file": "translations/cs2kz-telemetry.phrases.txt",
@@ -47901,7 +47901,7 @@
           "file": "translations/cs2kz-timer.phrases.txt",
           "phrase": "Record Volume Set",
           "line": 981,
-          "english_text": "{grey}You have set the world record announcement volume to {default}{volume}%%%%{grey}."
+          "english_text": "{grey}You have set the world record announcement volume to {default}{volume}%%{grey}."
         },
         {
           "file": "translations/cs2kz-timer.phrases.txt",
@@ -59229,7 +59229,7 @@
         {
           "name": "Jumpstat Report - Console Details 1",
           "line": 1037,
-          "english_text": "{mode_style}{block}{edge}{landing_edge}{miss} | {strafe_count} {strafe_text} | {sync}%%%% Sync | {pre} Pre | {max} Max | {bad_angles}%%%% BA | {overlap}%%%% OL | {dead_air}%%%% DA | {height} Height{release}",
+          "english_text": "{mode_style}{block}{edge}{landing_edge}{miss} | {strafe_count} {strafe_text} | {sync}%% Sync | {pre} Pre | {max} Max | {bad_angles}%% BA | {overlap}%% OL | {dead_air}%% DA | {height} Height{release}",
           "existing_languages": [
             "chi",
             "en",
@@ -59349,7 +59349,7 @@
         {
           "name": "Jumpstat Report - Console Details 2",
           "line": 1093,
-          "english_text": "{gain_eff}%%%% GainEff | {air_path} Airpath | {deviation} Deviation | {width} Width | {air_time} Airtime | {offset} Offset | {duck_end_time}/{duck_total_time} Crouched",
+          "english_text": "{gain_eff}%% GainEff | {air_path} Airpath | {deviation} Deviation | {width} Width | {air_time} Airtime | {offset} Offset | {duck_end_time}/{duck_total_time} Crouched",
           "existing_languages": [
             "chi",
             "en",
@@ -69071,7 +69071,7 @@
         {
           "name": "Replay - Jump Info Console",
           "line": 199,
-          "english_text": "Replay Type: {type}\\nDistance: {distance} | {syncPercent}%%%% Sync | {preDistance} Pre | {maxDistance} Max | {airTime} Air",
+          "english_text": "Replay Type: {type}\\nDistance: {distance} | {syncPercent}%% Sync | {preDistance} Pre | {maxDistance} Max | {airTime} Air",
           "existing_languages": [
             "chi",
             "de",
@@ -69095,7 +69095,7 @@
         {
           "name": "Replay - Jump Info Console (Block)",
           "line": 213,
-          "english_text": "Replay Type: {type}\\nDistance: {distance} | {blockDistance} Block | {syncPercent}%%%% Sync | {preDistance} Pre | {maxDistance} Max | {airTime} Air",
+          "english_text": "Replay Type: {type}\\nDistance: {distance} | {blockDistance} Block | {syncPercent}%% Sync | {preDistance} Pre | {maxDistance} Max | {airTime} Air",
           "existing_languages": [
             "chi",
             "de",
@@ -69527,7 +69527,7 @@
         {
           "name": "Replay - Loading Progress",
           "line": 392,
-          "english_text": "{grey}Loading replay: {progress}%%%% complete",
+          "english_text": "{grey}Loading replay: {progress}%% complete",
           "existing_languages": [
             "chi",
             "de",
@@ -71774,7 +71774,7 @@
         {
           "name": "Telemetry - Modern Bhop Stats",
           "line": 3,
-          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{truePerfPercent}%%%% {grey}True ({lime}{truePerfs}{grey}) | {blue}{modernPerfEarlyPercent}%%%% {grey}Early ({lime}{modernPerfsEarly}{grey}) | {blue}{modernPerfLatePercent}%%%% {grey}Late ({lime}{modernPerfsLate}{grey})",
+          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{truePerfPercent}%% {grey}True ({lime}{truePerfs}{grey}) | {blue}{modernPerfEarlyPercent}%% {grey}Early ({lime}{modernPerfsEarly}{grey}) | {blue}{modernPerfLatePercent}%% {grey}Late ({lime}{modernPerfsLate}{grey})",
           "existing_languages": [
             "chi",
             "en",
@@ -71798,7 +71798,7 @@
         {
           "name": "Telemetry - Legacy Bhop Stats",
           "line": 15,
-          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{perfPercent}%%%% {grey}Perf ({lime}{perfs}{grey})",
+          "english_text": "{grey}Jumps: {lime}{numJumps} {grey}| {green}{perfPercent}%% {grey}Perf ({lime}{perfs}{grey})",
           "existing_languages": [
             "chi",
             "en",
@@ -74386,7 +74386,7 @@
         {
           "name": "Record Volume Set",
           "line": 981,
-          "english_text": "{grey}You have set the world record announcement volume to {default}{volume}%%%%{grey}.",
+          "english_text": "{grey}You have set the world record announcement volume to {default}{volume}%%{grey}.",
           "existing_languages": [
             "chi",
             "de",

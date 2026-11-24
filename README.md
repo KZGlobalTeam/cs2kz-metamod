@@ -81,9 +81,9 @@ Automated translation linter reports for cs2kz-metamod.
 
 ## Last Updated
 
-- **Commit:** [`f94a4d43`](https://github.com/KZGlobalTeam/cs2kz-metamod/commit/f94a4d4341cf2d508220b770e4e8b0f5e3bbef8c)
-- **Time:** 2026-11-11 20:01:40 UTC
-- **Message:** Limit turn binds instead of banning them
+- **Commit:** [`1db43e99`](https://github.com/KZGlobalTeam/cs2kz-metamod/commit/1db43e99c7f00015c6fa4741f2abdf52f4ddae66)
+- **Time:** 2026-11-24 15:02:11 UTC
+- **Message:** Fix messages being used as printf format strings (#678)
 
 ---
 
