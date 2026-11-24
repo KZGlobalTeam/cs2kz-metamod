@@ -117,7 +117,7 @@ Recorder::Recorder(KZPlayer *player, f32 numSeconds, ReplayType type, bool copyT
 		this->tickData.push_back(*tickData);
 		// Pack subtick data into flat storage
 		SubtickData *sd = circular->subtickData->PeekSingle(i);
-		u8 count = (u8)MIN(sd->numSubtickMoves, MAX_SUBTICK_MOVES);
+		u8 count = (u8)MIN(sd->numSubtickMoves, maxSubtickMoves);
 		this->subtickCounts.push_back(count);
 		for (u8 j = 0; j < count; j++)
 		{
@@ -249,7 +249,7 @@ Recorder::Recorder(KZPlayer *player, f32 numSeconds, ReplayType type, bool copyT
 			this->cmdData.push_back(*circular->cmdData->PeekSingle(i));
 			// Pack cmd subtick data into flat storage
 			SubtickData *sd = circular->cmdSubtickData->PeekSingle(i);
-			u8 count = (u8)MIN(sd->numSubtickMoves, MAX_SUBTICK_MOVES);
+			u8 count = (u8)MIN(sd->numSubtickMoves, maxSubtickMoves);
 			this->cmdSubtickCounts.push_back(count);
 			for (u8 j = 0; j < count; j++)
 			{

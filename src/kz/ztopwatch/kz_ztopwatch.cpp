@@ -101,7 +101,7 @@ bool KZZtopwatchService::SetZonePoint(Zone &zone, bool isPoint1)
 
 void KZZtopwatchService::RemoveZoneVisual(Zone &zone)
 {
-	for (int i = 0; i < Zone::NUM_EDGES; i++)
+	for (int i = 0; i < Zone::numEdges; i++)
 	{
 		if (zone.edges[i].Get())
 		{
@@ -141,7 +141,7 @@ void KZZtopwatchService::UpdateZoneVisual(Zone &zone, const Color &color)
 		{0, 4}, {1, 5}, {2, 6}, {3, 7}, // verticals
 	};
 
-	for (int i = 0; i < Zone::NUM_EDGES; i++)
+	for (int i = 0; i < Zone::numEdges; i++)
 	{
 		zone.edges[i] = CreateZoneLine(corners[edgePairs[i][0]], corners[edgePairs[i][1]], color);
 	}

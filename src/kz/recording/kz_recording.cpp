@@ -163,7 +163,7 @@ void KZRecordingService::RecordTickData_SetupMove(CUserCmd *pc)
 	this->currentTickData.leftHanded = this->player->GetPlayerPawn()->m_bLeftHanded() || pc->left_hand_desired();
 
 	this->currentSubtickData.numSubtickMoves = pc->base().subtick_moves_size();
-	for (u32 i = 0; i < this->currentSubtickData.numSubtickMoves && i < MAX_SUBTICK_MOVES; i++)
+	for (u32 i = 0; i < this->currentSubtickData.numSubtickMoves && i < maxSubtickMoves; i++)
 	{
 		this->currentSubtickData.subtickMoves[i].FromMove(pc->base().subtick_moves(i));
 	}
@@ -247,7 +247,7 @@ void KZRecordingService::RecordCommand(CUserCmd *cmds, i32 numCmds)
 
 		SubtickData subtickData {};
 		subtickData.numSubtickMoves = pc.base().subtick_moves_size();
-		for (u32 j = 0; j < subtickData.numSubtickMoves && j < MAX_SUBTICK_MOVES; j++)
+		for (u32 j = 0; j < subtickData.numSubtickMoves && j < maxSubtickMoves; j++)
 		{
 			subtickData.subtickMoves[j].FromMove(pc.base().subtick_moves(j));
 		}

@@ -37,8 +37,8 @@ static_global constexpr const char *strafeTypeSymbols[] = {
 	"H"  // GraphStrafeType_NoneRight
 };
 
-static_global constexpr i32 GRAPH_STRAFE_TYPE_COUNT = KZ_ARRAYSIZE(strafeTypeSymbols);
-static_global constexpr i32 JS_CONSOLE_GRAPH_MAX_FRAMES = 150;
+static_global constexpr i32 graphStrafeTypeCount = KZ_ARRAYSIZE(strafeTypeSymbols);
+static_global constexpr i32 jsConsoleGraphMaxFrames = 150;
 
 static_function i32 GetTotalAACallCount(const Jump &jump)
 {
@@ -277,7 +277,7 @@ bool Jump::BuildConsoleStrafeMouseGraph(std::string &strafeLeft, std::string &st
 	mouseRight.clear();
 
 	i32 totalCallCount = GetTotalAACallCount(*this);
-	i32 graphCallCount = Min(totalCallCount, JS_CONSOLE_GRAPH_MAX_FRAMES);
+	i32 graphCallCount = Min(totalCallCount, jsConsoleGraphMaxFrames);
 	if (this->IsFailstat() && this->failstatGraphCallCount > 0)
 	{
 		graphCallCount = Min(graphCallCount, this->failstatGraphCallCount);
@@ -321,12 +321,12 @@ bool Jump::BuildConsoleStrafeMouseGraph(std::string &strafeLeft, std::string &st
 	};
 
 	std::vector<TickGraphSample> tickSamples;
-	tickSamples.reserve(JS_CONSOLE_GRAPH_MAX_FRAMES);
+	tickSamples.reserve(jsConsoleGraphMaxFrames);
 
 	f32 tickAccumulatedDuration = 0.0f;
 	f32 tickStartYaw = 0.0f;
 	f32 tickEndYaw = 0.0f;
-	f32 typeDurations[GRAPH_STRAFE_TYPE_COUNT] = {0.0f};
+	f32 typeDurations[graphStrafeTypeCount] = {0.0f};
 	GraphStrafeType lastTickType = GraphStrafeType_None;
 	bool tickHasData = false;
 
@@ -339,7 +339,7 @@ bool Jump::BuildConsoleStrafeMouseGraph(std::string &strafeLeft, std::string &st
 
 		u8 dominantType = static_cast<u8>(lastTickType);
 		f32 bestDuration = -1.0f;
-		for (u8 i = 0; i < (u8)GRAPH_STRAFE_TYPE_COUNT; i++)
+		for (u8 i = 0; i < (u8)graphStrafeTypeCount; i++)
 		{
 			if (typeDurations[i] > bestDuration + durationEpsilon)
 			{
@@ -356,7 +356,7 @@ bool Jump::BuildConsoleStrafeMouseGraph(std::string &strafeLeft, std::string &st
 		tickAccumulatedDuration = 0.0f;
 		tickStartYaw = 0.0f;
 		tickEndYaw = 0.0f;
-		for (u8 i = 0; i < (u8)GRAPH_STRAFE_TYPE_COUNT; i++)
+		for (u8 i = 0; i < (u8)graphStrafeTypeCount; i++)
 		{
 			typeDurations[i] = 0.0f;
 		}
@@ -365,7 +365,7 @@ bool Jump::BuildConsoleStrafeMouseGraph(std::string &strafeLeft, std::string &st
 
 	for (const AACall *call : calls)
 	{
-		if ((i32)tickSamples.size() >= JS_CONSOLE_GRAPH_MAX_FRAMES)
+		if ((i32)tickSamples.size() >= jsConsoleGraphMaxFrames)
 		{
 			break;
 		}
@@ -394,7 +394,7 @@ bool Jump::BuildConsoleStrafeMouseGraph(std::string &strafeLeft, std::string &st
 		}
 	}
 
-	if (tickHasData && (i32)tickSamples.size() < JS_CONSOLE_GRAPH_MAX_FRAMES)
+	if (tickHasData && (i32)tickSamples.size() < jsConsoleGraphMaxFrames)
 	{
 		FinalizeTick();
 	}

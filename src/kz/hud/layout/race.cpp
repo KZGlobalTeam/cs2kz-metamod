@@ -7,7 +7,7 @@
 #include "tier0/memdbgon.h"
 
 // Each row's panels from the row itself to its value for the course, mode, format, teleport limit, time and personal best.
-static_global const char *const RACE_ROWS[MHUD_RACE_ROW_COUNT][3] = {
+static_global const char *const raceRows[MHUD_RACE_ROW_COUNT][3] = {
 	{"mhud_race_r0", "mhud_race_l0", "mhud_race_v0"}, {"mhud_race_r1", "mhud_race_l1", "mhud_race_v1"},
 	{"mhud_race_r2", "mhud_race_l2", "mhud_race_v2"}, {"mhud_race_r3", "mhud_race_l3", "mhud_race_v3"},
 	{"mhud_race_r4", "mhud_race_l4", "mhud_race_v4"}, {"mhud_race_r5", "mhud_race_l5", "mhud_race_v5"},
@@ -62,7 +62,7 @@ void KZHUDService::UpdateRaceElements(CCSCustomHudLayout *layout, bool showPanel
 			race.phrases[RACE_PHRASE_VALUES + i] = NULL;
 		}
 	}
-	this->UpdateLayoutElement(layout, MHUDElement::Race, showPanel && info.show, NULL, MHUD_DEF_BASE_COLOR, force);
+	this->UpdateLayoutElement(layout, MHUDElement::Race, showPanel && info.show, NULL, mhudDefBaseColor, force);
 
 	auto setHidden = [&](const char *panelId, i32 &cache, bool hidden)
 	{
@@ -109,7 +109,7 @@ void KZHUDService::UpdateRaceElements(CCSCustomHudLayout *layout, bool showPanel
 	const i32 scale = Clamp((i32)this->GetLayoutSize(MHUDElement::Race), MHUD_JS_SIZE_MIN, MHUD_JS_SIZE_MAX);
 	if (race.scale != scale)
 	{
-		const char *panelId = MHUD_ELEMENTS[(i32)MHUDElement::Race].panelId;
+		const char *panelId = mhudElements[(i32)MHUDElement::Race].panelId;
 		char className[32];
 		if (race.scale != INT_MIN)
 		{
@@ -135,7 +135,7 @@ void KZHUDService::UpdateRaceElements(CCSCustomHudLayout *layout, bool showPanel
 		};
 		setFont("mhud_race_title");
 		setFont("mhud_race_status");
-		for (const auto &row : RACE_ROWS)
+		for (const auto &row : raceRows)
 		{
 			setFont(row[1]);
 			setFont(row[2]);
@@ -200,12 +200,12 @@ void KZHUDService::UpdateRaceElements(CCSCustomHudLayout *layout, bool showPanel
 	};
 	for (i32 i = 0; i < MHUD_RACE_ROW_COUNT; i++)
 	{
-		setHidden(RACE_ROWS[i][0], race.rowHidden[i], !rows[i].shown);
+		setHidden(raceRows[i][0], race.rowHidden[i], !rows[i].shown);
 		if (!rows[i].shown)
 		{
 			continue;
 		}
-		setPhrase(RACE_PHRASE_LABELS + i, RACE_ROWS[i][1], rows[i].phrase);
+		setPhrase(RACE_PHRASE_LABELS + i, raceRows[i][1], rows[i].phrase);
 		// Each cache is cleared while the other one is in use so switching between them always writes.
 		if (rows[i].value)
 		{
@@ -213,13 +213,13 @@ void KZHUDService::UpdateRaceElements(CCSCustomHudLayout *layout, bool showPanel
 			if (race.values[i] != rows[i].value)
 			{
 				race.values[i] = rows[i].value;
-				layout->SetDialogVariableString(RACE_ROWS[i][2], "v", rows[i].value);
+				layout->SetDialogVariableString(raceRows[i][2], "v", rows[i].value);
 			}
 		}
 		else
 		{
 			race.values[i].clear();
-			setPhrase(RACE_PHRASE_VALUES + i, RACE_ROWS[i][2], rows[i].valuePhrase);
+			setPhrase(RACE_PHRASE_VALUES + i, raceRows[i][2], rows[i].valuePhrase);
 		}
 	}
 }

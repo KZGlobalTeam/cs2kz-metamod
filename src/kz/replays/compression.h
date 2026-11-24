@@ -19,14 +19,14 @@ namespace KZ::replaysystem::compression
 	};
 
 	// The ticks of a loaded replay kept delta-encoded like on disk.
-	// Every KEYFRAME_INTERVAL-th tick is also kept in full.
+	// Every keyframeInterval-th tick is also kept in full.
 	// A read decodes forward from the keyframe before it and reading the tick after the last one decodes just that one.
 	// The last tick read and the one before it are cached.
 	// Main thread only.
 	class TickStore
 	{
 	public:
-		static constexpr u32 KEYFRAME_INTERVAL = 64;
+		static constexpr u32 keyframeInterval = 64;
 
 		u32 Count() const
 		{

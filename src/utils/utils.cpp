@@ -509,12 +509,12 @@ void utils::SendMultipleConVarValues(CPlayerSlot slot, ConVarRefAbstract **conVa
 	delete msg;
 }
 
-static_global const bbox_t PLAYER_BOUNDS = {{-16.0f, -16.0f, 0.0f}, {16.0f, 16.0f, 72.0f}};
-static_global const f32 PLAYER_EYE_HEIGHT = 64.0f;
+static_global const bbox_t playerBounds = {{-16.0f, -16.0f, 0.0f}, {16.0f, 16.0f, 72.0f}};
+static_global const f32 playerEyeHeight = 64.0f;
 // Player half width along the axes of a trigger with any yaw plus some room.
-static_global const f32 WALL_PROBE_DISTANCE = 16.0f * 1.41421356f + 1.0f;
+static_global const f32 wallProbeDistance = 16.0f * 1.41421356f + 1.0f;
 // Edges first and then corners.
-static_global const i32 WALL_PROBE_DIRECTIONS[8][2] = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}, {1, 1}, {1, -1}, {-1, 1}, {-1, -1}};
+static_global const i32 wallProbeDirections[8][2] = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}, {1, 1}, {1, -1}, {-1, 1}, {-1, -1}};
 
 static_function void InitSpawnTraceFilter(CTraceFilter &filter)
 {
@@ -546,7 +546,7 @@ static_function bool FindFloorPosition(CBaseTrigger *trigger, const CTransform &
 	CTraceFilter filter;
 	InitSpawnTraceFilter(filter);
 	trace_t tr;
-	INavPhysicsInterface::TraceShape(Ray_t(PLAYER_BOUNDS.mins, PLAYER_BOUNDS.maxs), start, floor, &filter, &tr);
+	INavPhysicsInterface::TraceShape(Ray_t(playerBounds.mins, playerBounds.maxs), start, floor, &filter, &tr);
 	feet = tr.m_vEndPos;
 	return true;
 }
@@ -559,8 +559,8 @@ static_function Vector GetWallProbe(CBaseTrigger *trigger, i32 probe, bool outsi
 	for (i32 axis = 0; axis < 2; axis++)
 	{
 		f32 halfSize = (maxs[axis] - mins[axis]) / 2;
-		f32 offset = outside ? halfSize + WALL_PROBE_DISTANCE : MAX(halfSize - WALL_PROBE_DISTANCE, 0.0f);
-		local[axis] += WALL_PROBE_DIRECTIONS[probe][axis] * offset;
+		f32 offset = outside ? halfSize + wallProbeDistance : MAX(halfSize - wallProbeDistance, 0.0f);
+		local[axis] += wallProbeDirections[probe][axis] * offset;
 	}
 	return local;
 }
@@ -594,7 +594,7 @@ bool utils::IsSpawnValid(const Vector &origin)
 	CTraceFilter filter;
 	InitSpawnTraceFilter(filter);
 	trace_t tr;
-	INavPhysicsInterface::TraceShape(Ray_t(PLAYER_BOUNDS.mins, PLAYER_BOUNDS.maxs), origin, origin, &filter, &tr);
+	INavPhysicsInterface::TraceShape(Ray_t(playerBounds.mins, playerBounds.maxs), origin, origin, &filter, &tr);
 	if (tr.m_flFraction != 1.0 || tr.m_bStartInSolid)
 	{
 		return false;
@@ -686,7 +686,7 @@ bool utils::FindValidPositionForTrigger(CBaseTrigger *trigger, Vector &originDes
 	for (i32 probe = 0; probe < 8; probe++)
 	{
 		if (FindFloorPosition(trigger, transform, GetWallProbe(trigger, probe, true), feet)
-			&& CanSeeTrigger(trigger, transform, feet + Vector(0.0f, 0.0f, PLAYER_EYE_HEIGHT)))
+			&& CanSeeTrigger(trigger, transform, feet + Vector(0.0f, 0.0f, playerEyeHeight)))
 		{
 			originDest = feet;
 			anglesDest = GetYawTowards(feet, worldCenter);
@@ -696,7 +696,7 @@ bool utils::FindValidPositionForTrigger(CBaseTrigger *trigger, Vector &originDes
 
 	// Lastly on top of whatever covers it.
 	Vector top = utils::TransformPoint(transform, Vector(center.x, center.y, maxs.z)) + Vector(0.0f, 0.0f, 0.03125f);
-	Vector above = top + Vector(0.0f, 0.0f, PLAYER_BOUNDS.maxs.z);
+	Vector above = top + Vector(0.0f, 0.0f, playerBounds.maxs.z);
 	if (!utils::IsSpawnValid(above))
 	{
 		return false;
@@ -704,7 +704,7 @@ bool utils::FindValidPositionForTrigger(CBaseTrigger *trigger, Vector &originDes
 	CTraceFilter filter;
 	InitSpawnTraceFilter(filter);
 	trace_t tr;
-	INavPhysicsInterface::TraceShape(Ray_t(PLAYER_BOUNDS.mins, PLAYER_BOUNDS.maxs), above, top, &filter, &tr);
+	INavPhysicsInterface::TraceShape(Ray_t(playerBounds.mins, playerBounds.maxs), above, top, &filter, &tr);
 	originDest = tr.m_vEndPos;
 	anglesDest = vec3_angle;
 	return true;

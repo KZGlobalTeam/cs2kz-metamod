@@ -8,7 +8,7 @@
 #include "filesystem/ifilesystem.h"
 #include "utils/tables.h"
 
-static const char *ARCHIVE_INDEX_PATH = KZ_REPLAY_PATH "/archive_index.txt";
+static const char *archiveIndexPath = KZ_REPLAY_PATH "/archive_index.txt";
 
 #define CHEATER_REPLAY_TABLE_KEY "Cheater Replays - Table Name"
 #define RUN_REPLAY_TABLE_KEY     "Run Replays - Table Name"
@@ -654,7 +654,7 @@ void ReplayWatcher::LoadArchiveIndex()
 	this->archivedIndex.clear();
 	KeyValues3 kv;
 	CUtlString error;
-	if (!LoadKV3FromFile(&kv, &error, ARCHIVE_INDEX_PATH, "GAME", g_KV3Format_Generic, 0))
+	if (!LoadKV3FromFile(&kv, &error, archiveIndexPath, "GAME", g_KV3Format_Generic, 0))
 	{
 		// File doesn't exist or failed to load - that's okay for first run
 		return;
@@ -701,9 +701,9 @@ void ReplayWatcher::SaveArchiveIndex()
 	{
 		const char *base = static_cast<const char *>(buf.Base());
 		std::vector<char> data(base, base + buf.TellPut());
-		if (!utils::WriteBufferToFile(ARCHIVE_INDEX_PATH, data))
+		if (!utils::WriteBufferToFile(archiveIndexPath, data))
 		{
-			KZ_LOG_WARN(LogChannel::Replays, "Failed to save archive index to %s\n", ARCHIVE_INDEX_PATH);
+			KZ_LOG_WARN(LogChannel::Replays, "Failed to save archive index to %s\n", archiveIndexPath);
 		}
 	}
 
@@ -922,7 +922,7 @@ void ReplayWatcher::WatchLoop()
 // A full day of staleness cannot belong to one that is still running.
 void ReplayWatcher::SweepOrphanedChunks(u64 currentTime)
 {
-	static constexpr u64 CHUNK_MAX_AGE_SECONDS = 24 * 60 * 60;
+	static constexpr u64 chunkMaxAgeSeconds = 24 * 60 * 60;
 
 	char searchPath[MAX_PATH];
 	V_snprintf(searchPath, sizeof(searchPath), "%s/*.chunk", KZ_REPLAY_PATH);
@@ -939,7 +939,7 @@ void ReplayWatcher::SweepOrphanedChunks(u64 currentTime)
 		char fullPath[MAX_PATH];
 		V_snprintf(fullPath, sizeof(fullPath), "%s/%s", KZ_REPLAY_PATH, pFileName);
 		long fileTime = g_pFullFileSystem->GetFileTime(fullPath, "GAME");
-		if (fileTime <= 0 || currentTime < (u64)fileTime + CHUNK_MAX_AGE_SECONDS)
+		if (fileTime <= 0 || currentTime < (u64)fileTime + chunkMaxAgeSeconds)
 		{
 			continue;
 		}

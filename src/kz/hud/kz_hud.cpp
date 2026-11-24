@@ -355,7 +355,7 @@ SCMD(kz_hidehud, SCFL_HUD)
 	u32 bits = 0;
 	if (args->ArgC() < 2)
 	{
-		for (const GameHudPartDef &part : GAME_HUD_PARTS)
+		for (const GameHudPartDef &part : gameHudParts)
 		{
 			if (part.argName && part.bit != KZ_HIDEHUD_CROSSHAIR)
 			{
@@ -366,7 +366,7 @@ SCMD(kz_hidehud, SCFL_HUD)
 	for (i32 i = 1; i < args->ArgC(); i++)
 	{
 		const GameHudPartDef *found = nullptr;
-		for (const GameHudPartDef &part : GAME_HUD_PARTS)
+		for (const GameHudPartDef &part : gameHudParts)
 		{
 			if (part.argName && KZ_STREQI(args->Arg(i), part.argName))
 			{
@@ -384,7 +384,7 @@ SCMD(kz_hidehud, SCFL_HUD)
 
 	// Hide them all unless every one is already hidden.
 	bool hide = false;
-	for (const GameHudPartDef &part : GAME_HUD_PARTS)
+	for (const GameHudPartDef &part : gameHudParts)
 	{
 		if ((part.bit & bits) && !player->optionService->GetPreferenceBool(part.prefKey, false))
 		{
@@ -393,7 +393,7 @@ SCMD(kz_hidehud, SCFL_HUD)
 		}
 	}
 	std::string names;
-	for (const GameHudPartDef &part : GAME_HUD_PARTS)
+	for (const GameHudPartDef &part : gameHudParts)
 	{
 		if (part.bit & bits)
 		{

@@ -81,7 +81,7 @@ struct JSFieldDef
 	bool extended; // printed on the chat's second line that only shows with extended chat stats on
 };
 
-extern const JSFieldDef JS_FIELDS[(i32)JSField::Count];
+extern const JSFieldDef jsFieldDefs[(i32)JSField::Count];
 
 #define JS_DEFAULT_FIELD_ORDER "block,strafes,sync,premax,edge,height,airtime,width,gaineff,airpath,badangles,deviation,miss,release,offset"
 

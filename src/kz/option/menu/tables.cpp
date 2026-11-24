@@ -23,7 +23,7 @@ struct PanoramaGradientDef
 // clang-format off
 // slug, className, displayName, family, variant
 // TODO: Nuke this table when custom fonts are supported?
-extern const PanoramaFontDef PANORAMA_FONTS[] =
+extern const PanoramaFontDef panoramaFonts[] =
 {
 	{"stratum2", "font-family--stratum2", "Stratum2", "Stratum2", "Regular"},
 	{"stratum2-thin", "font-family--stratum2-thin", "Stratum2 Thin", "Stratum2", "Thin"},
@@ -98,10 +98,10 @@ extern const PanoramaFontDef PANORAMA_FONTS[] =
 };
 // clang-format on
 
-extern const i32 PANORAMA_FONT_COUNT = KZ_ARRAYSIZE(PANORAMA_FONTS);
+extern const i32 panoramaFontCount = KZ_ARRAYSIZE(panoramaFonts);
 
 // clang-format off
-static_global const PanoramaColorDef PANORAMA_COLORS[] =
+static_global const PanoramaColorDef panoramaColors[] =
 {
 	{"pal-fg-0", "pal-bg-0", 0x00, 0x00, 0x00}, // #000000
 	{"pal-fg-1", "pal-bg-1", 0x5E, 0x5E, 0x5E}, // #5e5e5e
@@ -266,7 +266,7 @@ static_global const PanoramaColorDef PANORAMA_COLORS[] =
 };
 // clang-format on
 
-static_global const i32 PANORAMA_COLOR_COUNT = KZ_ARRAYSIZE(PANORAMA_COLORS);
+static_global const i32 panoramaColorCount = KZ_ARRAYSIZE(panoramaColors);
 
 // Nearest by squared RGB distance.
 // Alpha is dropped because no palette class carries one.
@@ -274,11 +274,11 @@ static_function i32 GetNearestColorIndex(const Color &c)
 {
 	i32 best = 0;
 	i32 bestDistance = INT_MAX;
-	for (i32 i = 0; i < PANORAMA_COLOR_COUNT; i++)
+	for (i32 i = 0; i < panoramaColorCount; i++)
 	{
-		i32 dr = (i32)c.r() - (i32)PANORAMA_COLORS[i].r;
-		i32 dg = (i32)c.g() - (i32)PANORAMA_COLORS[i].g;
-		i32 db = (i32)c.b() - (i32)PANORAMA_COLORS[i].b;
+		i32 dr = (i32)c.r() - (i32)panoramaColors[i].r;
+		i32 dg = (i32)c.g() - (i32)panoramaColors[i].g;
+		i32 db = (i32)c.b() - (i32)panoramaColors[i].b;
 		i32 distance = dr * dr + dg * dg + db * db;
 		if (distance < bestDistance)
 		{
@@ -291,18 +291,18 @@ static_function i32 GetNearestColorIndex(const Color &c)
 
 static_function const char *ResolveNearestColorClass(const Color &c)
 {
-	return PANORAMA_COLORS[GetNearestColorIndex(c)].fgClass;
+	return panoramaColors[GetNearestColorIndex(c)].fgClass;
 }
 
 static_function Color GetPaletteColor(i32 index)
 {
-	index = Clamp(index, 0, PANORAMA_COLOR_COUNT - 1);
-	return Color(PANORAMA_COLORS[index].r, PANORAMA_COLORS[index].g, PANORAMA_COLORS[index].b, 255);
+	index = Clamp(index, 0, panoramaColorCount - 1);
+	return Color(panoramaColors[index].r, panoramaColors[index].g, panoramaColors[index].b, 255);
 }
 
 // clang-format off
 // Gradient stops live in palette.css (.grad-N / .gbg-N). Keep this count in step with that file.
-static_global const PanoramaGradientDef PANORAMA_GRADIENTS[] =
+static_global const PanoramaGradientDef panoramaGradients[] =
 {
 	{"grad-0", "gbg-0"},
 	{"grad-1", "gbg-1"},
@@ -347,7 +347,7 @@ static_global const PanoramaGradientDef PANORAMA_GRADIENTS[] =
 };
 // clang-format on
 
-static_global const i32 PANORAMA_GRADIENT_COUNT = KZ_ARRAYSIZE(PANORAMA_GRADIENTS);
+static_global const i32 panoramaGradientCount = KZ_ARRAYSIZE(panoramaGradients);
 
 i32 panorama::GetNearestSolidIndex(const Color &c)
 {
@@ -358,7 +358,7 @@ const char *panorama::ResolveColorClass(const Color &c)
 {
 	if (IsGradient(c))
 	{
-		return PANORAMA_GRADIENTS[Clamp(GetGradientIndex(c), 0, PANORAMA_GRADIENT_COUNT - 1)].fgClass;
+		return panoramaGradients[Clamp(GetGradientIndex(c), 0, panoramaGradientCount - 1)].fgClass;
 	}
 	return ResolveNearestColorClass(c);
 }
@@ -367,37 +367,37 @@ const char *panorama::ResolveSwatchClass(const Color &c)
 {
 	if (IsGradient(c))
 	{
-		return PANORAMA_GRADIENTS[Clamp(GetGradientIndex(c), 0, PANORAMA_GRADIENT_COUNT - 1)].bgClass;
+		return panoramaGradients[Clamp(GetGradientIndex(c), 0, panoramaGradientCount - 1)].bgClass;
 	}
-	return PANORAMA_COLORS[GetNearestColorIndex(c)].bgClass;
+	return panoramaColors[GetNearestColorIndex(c)].bgClass;
 }
 
 i32 panorama::GetColorEntryCount()
 {
-	return PANORAMA_COLOR_COUNT + PANORAMA_GRADIENT_COUNT;
+	return panoramaColorCount + panoramaGradientCount;
 }
 
 i32 panorama::GetSolidColorCount()
 {
-	return PANORAMA_COLOR_COUNT;
+	return panoramaColorCount;
 }
 
 const char *panorama::GetColorEntryBgClass(i32 entry)
 {
-	if (entry < PANORAMA_COLOR_COUNT)
+	if (entry < panoramaColorCount)
 	{
-		return PANORAMA_COLORS[Clamp(entry, 0, PANORAMA_COLOR_COUNT - 1)].bgClass;
+		return panoramaColors[Clamp(entry, 0, panoramaColorCount - 1)].bgClass;
 	}
-	return PANORAMA_GRADIENTS[Clamp(entry - PANORAMA_COLOR_COUNT, 0, PANORAMA_GRADIENT_COUNT - 1)].bgClass;
+	return panoramaGradients[Clamp(entry - panoramaColorCount, 0, panoramaGradientCount - 1)].bgClass;
 }
 
 Color panorama::GetColorEntryValue(i32 entry)
 {
-	if (entry < PANORAMA_COLOR_COUNT)
+	if (entry < panoramaColorCount)
 	{
 		return GetPaletteColor(entry);
 	}
-	return MakeGradient(entry - PANORAMA_COLOR_COUNT);
+	return MakeGradient(entry - panoramaColorCount);
 }
 
 i32 panorama::FindColorEntry(const Color &c)
@@ -405,7 +405,7 @@ i32 panorama::FindColorEntry(const Color &c)
 	if (IsGradient(c))
 	{
 		const i32 g = GetGradientIndex(c);
-		return (g >= 0 && g < PANORAMA_GRADIENT_COUNT) ? PANORAMA_COLOR_COUNT + g : -1;
+		return (g >= 0 && g < panoramaGradientCount) ? panoramaColorCount + g : -1;
 	}
 	return GetNearestColorIndex(c);
 }
@@ -414,11 +414,11 @@ const char *panorama::ResolveFontSlug(const char *name, const char *fallback)
 {
 	if (name && name[0])
 	{
-		for (i32 i = 0; i < PANORAMA_FONT_COUNT; i++)
+		for (i32 i = 0; i < panoramaFontCount; i++)
 		{
-			if (KZ_STREQI(name, PANORAMA_FONTS[i].slug))
+			if (KZ_STREQI(name, panoramaFonts[i].slug))
 			{
-				return PANORAMA_FONTS[i].slug;
+				return panoramaFonts[i].slug;
 			}
 		}
 	}
@@ -429,27 +429,27 @@ const char *panorama::ResolveFontSlug(const char *name, const char *fallback)
 const char *panorama::ResolveFontClass(const char *name, const char *fallback)
 {
 	const char *slug = ResolveFontSlug(name, fallback);
-	for (i32 i = 0; i < PANORAMA_FONT_COUNT; i++)
+	for (i32 i = 0; i < panoramaFontCount; i++)
 	{
-		if (V_strcmp(slug, PANORAMA_FONTS[i].slug) == 0)
+		if (V_strcmp(slug, panoramaFonts[i].slug) == 0)
 		{
-			return PANORAMA_FONTS[i].className;
+			return panoramaFonts[i].className;
 		}
 	}
-	return PANORAMA_FONTS[0].className;
+	return panoramaFonts[0].className;
 }
 
 const char *panorama::GetFontDisplayName(const char *name, const char *fallback)
 {
 	const char *slug = ResolveFontSlug(name, fallback);
-	for (i32 i = 0; i < PANORAMA_FONT_COUNT; i++)
+	for (i32 i = 0; i < panoramaFontCount; i++)
 	{
-		if (V_strcmp(slug, PANORAMA_FONTS[i].slug) == 0)
+		if (V_strcmp(slug, panoramaFonts[i].slug) == 0)
 		{
-			return PANORAMA_FONTS[i].displayName;
+			return panoramaFonts[i].displayName;
 		}
 	}
-	return PANORAMA_FONTS[0].displayName;
+	return panoramaFonts[0].displayName;
 }
 
 // The sheets do not define every value.

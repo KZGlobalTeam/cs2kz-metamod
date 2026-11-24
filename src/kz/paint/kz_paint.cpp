@@ -32,7 +32,7 @@ Color KZPaintService::GetColor() const
 
 f32 KZPaintService::GetSize() const
 {
-	return (f32)player->optionService->GetPreferenceFloat("paintSize", DEFAULT_PAINT_SIZE);
+	return (f32)player->optionService->GetPreferenceFloat("paintSize", defaultPaintSize);
 }
 
 bool KZPaintService::SetColor(const char *colorName)
@@ -67,7 +67,7 @@ bool KZPaintService::SetSize(f32 value)
 		return false;
 	}
 
-	player->optionService->SetPreferenceFloat("paintSize", MIN(value, MAX_PAINT_SIZE));
+	player->optionService->SetPreferenceFloat("paintSize", MIN(value, maxPaintSize));
 	return true;
 }
 

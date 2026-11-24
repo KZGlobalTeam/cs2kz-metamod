@@ -12,7 +12,7 @@ void KZHUDService::RefreshPrefs()
 	auto *opts = this->player->optionService;
 	for (i32 e = 0; e < (i32)MHUDElement::Count; e++)
 	{
-		const MHUDElementDef &def = MHUD_ELEMENTS[e];
+		const MHUDElementDef &def = mhudElements[e];
 		MHUDPrefs::Element &element = this->prefs.elements[e];
 		// The jumpstats panel follows where jumpstats are reported.
 		if (def.enabledKey)
@@ -44,34 +44,34 @@ void KZHUDService::RefreshPrefs()
 		element.border = (MHUDBorder)Clamp(border, (i64)MHUDBorder::None, (i64)MHUDBorder::Count - 1);
 	}
 
-	this->prefs.timerPaused = opts->GetPreferenceColor("mhudTimerPausedColor", MHUD_DEF_TIMER_PAUSED_COLOR);
-	this->prefs.timerStopped = opts->GetPreferenceColor("mhudTimerStoppedColor", MHUD_DEF_TIMER_STOPPED_COLOR);
-	this->prefs.timerTp = opts->GetPreferenceColor("mhudTimerTpColor", MHUD_DEF_TIMER_TP_COLOR);
-	this->prefs.timerPro = opts->GetPreferenceColor("mhudTimerProColor", MHUD_DEF_TIMER_PRO_COLOR);
+	this->prefs.timerPaused = opts->GetPreferenceColor("mhudTimerPausedColor", mhudDefTimerPausedColor);
+	this->prefs.timerStopped = opts->GetPreferenceColor("mhudTimerStoppedColor", mhudDefTimerStoppedColor);
+	this->prefs.timerTp = opts->GetPreferenceColor("mhudTimerTpColor", mhudDefTimerTpColor);
+	this->prefs.timerPro = opts->GetPreferenceColor("mhudTimerProColor", mhudDefTimerProColor);
 	// Indexed by MHUDSpeedState.
-	this->prefs.speed[(i32)MHUDSpeedState::Base] = opts->GetPreferenceColor("mhudSpeedColor", MHUD_DEF_BASE_COLOR);
-	this->prefs.speed[(i32)MHUDSpeedState::CrouchJump] = opts->GetPreferenceColor("mhudSpeedCjColor", MHUD_DEF_CJ_COLOR);
-	this->prefs.speed[(i32)MHUDSpeedState::Perf] = opts->GetPreferenceColor("mhudSpeedPerfColor", MHUD_DEF_BASE_COLOR);
-	this->prefs.speed[(i32)MHUDSpeedState::CrouchPerf] = opts->GetPreferenceColor("mhudSpeedCrouchPerfColor", MHUD_DEF_CJ_COLOR);
-	this->prefs.speed[(i32)MHUDSpeedState::Jumpbug] = opts->GetPreferenceColor("mhudSpeedJumpbugColor", MHUD_DEF_BASE_COLOR);
+	this->prefs.speed[(i32)MHUDSpeedState::Base] = opts->GetPreferenceColor("mhudSpeedColor", mhudDefBaseColor);
+	this->prefs.speed[(i32)MHUDSpeedState::CrouchJump] = opts->GetPreferenceColor("mhudSpeedCjColor", mhudDefCjColor);
+	this->prefs.speed[(i32)MHUDSpeedState::Perf] = opts->GetPreferenceColor("mhudSpeedPerfColor", mhudDefBaseColor);
+	this->prefs.speed[(i32)MHUDSpeedState::CrouchPerf] = opts->GetPreferenceColor("mhudSpeedCrouchPerfColor", mhudDefCjColor);
+	this->prefs.speed[(i32)MHUDSpeedState::Jumpbug] = opts->GetPreferenceColor("mhudSpeedJumpbugColor", mhudDefBaseColor);
 
-	this->prefs.prespeed[(i32)MHUDSpeedState::Base] = opts->GetPreferenceColor("mhudPrespeedColor", MHUD_DEF_BASE_COLOR);
-	this->prefs.prespeed[(i32)MHUDSpeedState::CrouchJump] = opts->GetPreferenceColor("mhudPrespeedCjColor", MHUD_DEF_BASE_COLOR);
-	this->prefs.prespeed[(i32)MHUDSpeedState::Perf] = opts->GetPreferenceColor("mhudPrespeedPerfColor", MHUD_DEF_PERF_COLOR);
-	this->prefs.prespeed[(i32)MHUDSpeedState::CrouchPerf] = opts->GetPreferenceColor("mhudPrespeedCrouchPerfColor", MHUD_DEF_PERF_COLOR);
-	this->prefs.prespeed[(i32)MHUDSpeedState::Jumpbug] = opts->GetPreferenceColor("mhudPrespeedJumpbugColor", MHUD_DEF_JUMPBUG_COLOR);
-	this->prefs.speedDeadstrafe = opts->GetPreferenceColor("mhudSpeedDeadstrafeColor", MHUD_DEF_DEADSTRAFE_COLOR);
-	this->prefs.prespeedDeadstrafe = opts->GetPreferenceColor("mhudPrespeedDeadstrafeColor", MHUD_DEF_DEADSTRAFE_COLOR);
-	this->prefs.keys = opts->GetPreferenceColor("mhudKeysColor", MHUD_DEF_BASE_COLOR);
-	this->prefs.keysOverlap = opts->GetPreferenceColor("mhudKeysOverlapColor", MHUD_DEF_KEYS_OVERLAP_COLOR);
-	this->prefs.keysPressed = opts->GetPreferenceColor("mhudKeysPressedColor", MHUD_DEF_KEYS_PRESSED_COLOR);
-	this->prefs.keysOverlapGlow = opts->GetPreferenceColor("mhudKeysOverlapGlowColor", MHUD_DEF_KEYS_OVERLAP_GLOW_COLOR);
-	this->prefs.checkpoint = opts->GetPreferenceColor("mhudCheckpointColor", MHUD_DEF_BASE_COLOR);
-	this->prefs.checkpointTp = opts->GetPreferenceColor("mhudCheckpointTpColor", MHUD_DEF_BASE_COLOR);
+	this->prefs.prespeed[(i32)MHUDSpeedState::Base] = opts->GetPreferenceColor("mhudPrespeedColor", mhudDefBaseColor);
+	this->prefs.prespeed[(i32)MHUDSpeedState::CrouchJump] = opts->GetPreferenceColor("mhudPrespeedCjColor", mhudDefBaseColor);
+	this->prefs.prespeed[(i32)MHUDSpeedState::Perf] = opts->GetPreferenceColor("mhudPrespeedPerfColor", mhudDefPerfColor);
+	this->prefs.prespeed[(i32)MHUDSpeedState::CrouchPerf] = opts->GetPreferenceColor("mhudPrespeedCrouchPerfColor", mhudDefPerfColor);
+	this->prefs.prespeed[(i32)MHUDSpeedState::Jumpbug] = opts->GetPreferenceColor("mhudPrespeedJumpbugColor", mhudDefJumpbugColor);
+	this->prefs.speedDeadstrafe = opts->GetPreferenceColor("mhudSpeedDeadstrafeColor", mhudDefDeadstrafeColor);
+	this->prefs.prespeedDeadstrafe = opts->GetPreferenceColor("mhudPrespeedDeadstrafeColor", mhudDefDeadstrafeColor);
+	this->prefs.keys = opts->GetPreferenceColor("mhudKeysColor", mhudDefBaseColor);
+	this->prefs.keysOverlap = opts->GetPreferenceColor("mhudKeysOverlapColor", mhudDefKeysOverlapColor);
+	this->prefs.keysPressed = opts->GetPreferenceColor("mhudKeysPressedColor", mhudDefKeysPressedColor);
+	this->prefs.keysOverlapGlow = opts->GetPreferenceColor("mhudKeysOverlapGlowColor", mhudDefKeysOverlapGlowColor);
+	this->prefs.checkpoint = opts->GetPreferenceColor("mhudCheckpointColor", mhudDefBaseColor);
+	this->prefs.checkpointTp = opts->GetPreferenceColor("mhudCheckpointTpColor", mhudDefBaseColor);
 
 	for (i32 i = 0; i < MHUD_INDICATOR_COUNT; i++)
 	{
-		const MHUDIndicatorDef &indicator = MHUD_INDICATOR_DEFS[i];
+		const MHUDIndicatorDef &indicator = mhudIndicatorDefs[i];
 		i32 count = 0;
 		const MHUDColorPrefDef *colors = KZHUDService::GetMHUDElementColorPrefs(indicator.element, count);
 		this->prefs.indicator[i] = opts->GetPreferenceColor(colors[0].prefKey, Color(colors[0].r, colors[0].g, colors[0].b, 255));
@@ -83,9 +83,9 @@ void KZHUDService::RefreshPrefs()
 	this->prefs.jsHistoryBelow = opts->GetPreferenceBool("mhudJsHistoryBelow", false);
 	this->prefs.jsCompact = opts->GetPreferenceBool("mhudJsCompact", false);
 	this->prefs.jsDuration = Clamp((i32)opts->GetPreferenceInt("mhudJsDuration", MHUD_JS_PANEL_TIME), MHUD_JS_PANEL_TIME_MIN, MHUD_JS_PANEL_TIME_MAX);
-	this->prefs.releaseEarly = opts->GetPreferenceColor("mhudReleaseEarlyColor", MHUD_DEF_RELEASE_EARLY_COLOR);
-	this->prefs.releasePerfect = opts->GetPreferenceColor("mhudReleasePerfectColor", MHUD_DEF_RELEASE_PERFECT_COLOR);
-	this->prefs.releaseLate = opts->GetPreferenceColor("mhudReleaseLateColor", MHUD_DEF_RELEASE_LATE_COLOR);
+	this->prefs.releaseEarly = opts->GetPreferenceColor("mhudReleaseEarlyColor", mhudDefReleaseEarlyColor);
+	this->prefs.releasePerfect = opts->GetPreferenceColor("mhudReleasePerfectColor", mhudDefReleasePerfectColor);
+	this->prefs.releaseLate = opts->GetPreferenceColor("mhudReleaseLateColor", mhudDefReleaseLateColor);
 	this->prefs.courseMap = opts->GetPreferenceBool("mhudCourseShowMap", true);
 	this->prefs.courseProgress = opts->GetPreferenceBool("mhudCourseShowProgress", true);
 	this->prefs.courseRecords = opts->GetPreferenceBool("mhudCourseShowRecords", true);
@@ -122,7 +122,7 @@ void KZHUDService::RefreshPrefs()
 	this->prefs.racePB = opts->GetPreferenceBool("raceHudPB", true);
 	this->prefs.screenWidth = (i32)Clamp(opts->GetPreferenceInt("mhudScreenWidth", MHUD_DEF_SCREEN_WIDTH), (i64)1000, (i64)4000);
 	this->prefs.hiddenGameHud = 0;
-	for (const GameHudPartDef &part : GAME_HUD_PARTS)
+	for (const GameHudPartDef &part : gameHudParts)
 	{
 		if (opts->GetPreferenceBool(part.prefKey, false))
 		{

@@ -3,7 +3,7 @@
 #include "tier0/memdbgon.h"
 
 // clang-format off
-extern const MHUDElementDef MHUD_ELEMENTS[(i32)MHUDElement::Count] =
+extern const MHUDElementDef mhudElements[(i32)MHUDElement::Count] =
 {
 	{"mhud_timer",      "mhud_timer_pos",      "mhud_timer_hit",      "timer",      "mhudTimerEnabled",      "mhudTimerX",      "mhudTimerY",      "mhudTimerSize",      "mhudTimerFont",      "mhudTimerOutline",      "mhudTimerOpacity",      "mhudTimerAlign",      NULL,                  MHUD_DEF_TIMER_X,      MHUD_DEF_TIMER_Y,      MHUD_DEF_TIMER_SIZE,      MHUD_SIZE_MIN,    MHUD_SIZE_MAX},
 	{"mhud_speed",      "mhud_speed_pos",      "mhud_speed_hit",      "speed",      "mhudSpeedEnabled",      "mhudSpeedX",      "mhudSpeedY",      "mhudSpeedSize",      "mhudSpeedFont",      "mhudSpeedOutline",      "mhudSpeedOpacity",      "mhudSpeedAlign",      "mhudSpeedBorder",     MHUD_DEF_SPEED_X,      MHUD_DEF_SPEED_Y,      MHUD_DEF_SPEED_SIZE,      MHUD_SIZE_MIN,    MHUD_SIZE_MAX},
@@ -20,7 +20,7 @@ extern const MHUDElementDef MHUD_ELEMENTS[(i32)MHUDElement::Count] =
 };
 
 // A sample value inside each pair so the picker shows the symbols themselves and needs no phrases.
-extern const MHUDBorderDef MHUD_BORDERS[(i32)MHUDBorder::Count] =
+extern const MHUDBorderDef mhudBorders[(i32)MHUDBorder::Count] =
 {
 	{"",   "",   NULL},
 	{"(",  ")",  "(0)"},
@@ -35,7 +35,7 @@ extern const MHUDBorderDef MHUD_BORDERS[(i32)MHUDBorder::Count] =
 };
 
 // What each bit hides according to the client's HUD element constructors.
-extern const GameHudPartDef GAME_HUD_PARTS[GAME_HUD_PART_COUNT] =
+extern const GameHudPartDef gameHudParts[GAME_HUD_PART_COUNT] =
 {
 	// HIDEHUD_ALL also stops the chat input from opening and kz_hidehud from chat could never undo it.
 	{"Menu - Game HUD All", "hideGameHudAll", KZ_HIDEHUD_ALL, nullptr},
@@ -45,7 +45,7 @@ extern const GameHudPartDef GAME_HUD_PARTS[GAME_HUD_PART_COUNT] =
 	{"Menu - Game HUD Voice", "hideGameHudVoice", KZ_HIDEHUD_CHAT, "voice"},
 };
 
-extern const MHUDIndicatorDef MHUD_INDICATOR_DEFS[MHUD_INDICATOR_COUNT] =
+extern const MHUDIndicatorDef mhudIndicatorDefs[MHUD_INDICATOR_COUNT] =
 {
 	{MHUDElement::Perf, "mhudPerfAcronym", "HUD - Perf Full", "HUD - Perf Short",
 	 {"Menu - Ind Perf", "Menu - Ind Perf Position", "Menu - Ind Perf Align", "Menu - Ind Perf Size", "Menu - Ind Perf Font",
@@ -58,7 +58,7 @@ extern const MHUDIndicatorDef MHUD_INDICATOR_DEFS[MHUD_INDICATOR_COUNT] =
 	  "Menu - Ind JB Outline", "Menu - Ind JB Opacity", "Menu - Ind JB Color", "Menu - Ind JB Acronym"}},
 };
 
-static_global constexpr MHUDColorPrefDef TIMER_COLOR_PREFS[] =
+static_global constexpr MHUDColorPrefDef timerColorPrefs[] =
 {
 	{"Menu - Color Pro",      "mhudTimerProColor",     0x5F, 0x99, 0xD9},
 	{"Menu - Color TP",       "mhudTimerTpColor",      0xFF, 0xFF, 0xFF},
@@ -66,7 +66,7 @@ static_global constexpr MHUDColorPrefDef TIMER_COLOR_PREFS[] =
 	{"Menu - Color Stopped",  "mhudTimerStoppedColor", 0xFF, 0xA0, 0xA0},
 };
 
-static_global constexpr MHUDColorPrefDef SPEED_COLOR_PREFS[] =
+static_global constexpr MHUDColorPrefDef speedColorPrefs[] =
 {
 	{"Menu - Color Base",       "mhudSpeedColor",           0xFF, 0xFF, 0xFF, false, NULL, true},
 	{"Menu - Color CJ",         "mhudSpeedCjColor",         0x71, 0xEE, 0xB8, false, NULL, true},
@@ -76,7 +76,7 @@ static_global constexpr MHUDColorPrefDef SPEED_COLOR_PREFS[] =
 	{"Menu - Color Deadstrafe", "mhudSpeedDeadstrafeColor", 0xFF, 0x00, 0x00, false, "mhudSpeedDeadstrafe"},
 };
 
-static_global constexpr MHUDColorPrefDef PRESPEED_COLOR_PREFS[] =
+static_global constexpr MHUDColorPrefDef prespeedColorPrefs[] =
 {
 	{"Menu - Color Base",       "mhudPrespeedColor",           0xFF, 0xFF, 0xFF, false, NULL, true},
 	{"Menu - Color CJ",         "mhudPrespeedCjColor",         0xFF, 0xFF, 0xFF, false, NULL, true},
@@ -86,7 +86,7 @@ static_global constexpr MHUDColorPrefDef PRESPEED_COLOR_PREFS[] =
 	{"Menu - Color Deadstrafe", "mhudPrespeedDeadstrafeColor", 0xFF, 0x00, 0x00, false, "mhudPrespeedDeadstrafe"},
 };
 
-static_global constexpr MHUDColorPrefDef KEYS_COLOR_PREFS[] =
+static_global constexpr MHUDColorPrefDef keysColorPrefs[] =
 {
 	{"Menu - Color Base",     "mhudKeysColor",         0xFF, 0xFF, 0xFF},
 	{"Menu - Color Overlap",  "mhudKeysOverlapColor",  0xFF, 0x40, 0x40, false, "mhudKeysOverlap"},
@@ -94,13 +94,13 @@ static_global constexpr MHUDColorPrefDef KEYS_COLOR_PREFS[] =
 	{"Menu - Color Pressed",      "mhudKeysPressedColor",     0x3B, 0xED, 0xA0, true},
 };
 
-static_global constexpr MHUDColorPrefDef CHECKPOINT_COLOR_PREFS[] =
+static_global constexpr MHUDColorPrefDef checkpointColorPrefs[] =
 {
 	{"Menu - Color Base",     "mhudCheckpointColor",   0xFF, 0xFF, 0xFF},
 	{"Menu - Color TP",       "mhudCheckpointTpColor", 0xFF, 0xFF, 0xFF},
 };
 
-static_global constexpr MHUDColorPrefDef RELEASE_COLOR_PREFS[] =
+static_global constexpr MHUDColorPrefDef releaseColorPrefs[] =
 {
 	{"Menu - Color Early",    "mhudReleaseEarlyColor",   0x5E, 0x98, 0xD9},
 	{"Menu - Color Perfect",  "mhudReleasePerfectColor", 0x40, 0xFF, 0x40},
@@ -108,17 +108,17 @@ static_global constexpr MHUDColorPrefDef RELEASE_COLOR_PREFS[] =
 };
 
 // One color each; the flattened Indicators page relabels the row with the indicator's own phrase.
-static_global constexpr MHUDColorPrefDef PERF_COLOR_PREFS[] =
+static_global constexpr MHUDColorPrefDef perfColorPrefs[] =
 {
 	{"Menu - Color Base",     "mhudPerfColor",         0x40, 0xFF, 0x40},
 };
 
-static_global constexpr MHUDColorPrefDef CJ_COLOR_PREFS[] =
+static_global constexpr MHUDColorPrefDef cjColorPrefs[] =
 {
 	{"Menu - Color Base",     "mhudCjColor",           0x71, 0xEE, 0xB8},
 };
 
-static_global constexpr MHUDColorPrefDef JUMPBUG_COLOR_PREFS[] =
+static_global constexpr MHUDColorPrefDef jumpbugColorPrefs[] =
 {
 	{"Menu - Color Base",     "mhudJumpbugColor",      0xFF, 0xFF, 0x20},
 };
@@ -129,32 +129,32 @@ const MHUDColorPrefDef *KZHUDService::GetMHUDElementColorPrefs(MHUDElement eleme
 	switch (element)
 	{
 		case MHUDElement::Timer:
-			count = KZ_ARRAYSIZE(TIMER_COLOR_PREFS);
-			return TIMER_COLOR_PREFS;
+			count = KZ_ARRAYSIZE(timerColorPrefs);
+			return timerColorPrefs;
 		case MHUDElement::Speed:
-			count = KZ_ARRAYSIZE(SPEED_COLOR_PREFS);
-			return SPEED_COLOR_PREFS;
+			count = KZ_ARRAYSIZE(speedColorPrefs);
+			return speedColorPrefs;
 		case MHUDElement::Prespeed:
-			count = KZ_ARRAYSIZE(PRESPEED_COLOR_PREFS);
-			return PRESPEED_COLOR_PREFS;
+			count = KZ_ARRAYSIZE(prespeedColorPrefs);
+			return prespeedColorPrefs;
 		case MHUDElement::Keys:
-			count = KZ_ARRAYSIZE(KEYS_COLOR_PREFS);
-			return KEYS_COLOR_PREFS;
+			count = KZ_ARRAYSIZE(keysColorPrefs);
+			return keysColorPrefs;
 		case MHUDElement::Checkpoint:
-			count = KZ_ARRAYSIZE(CHECKPOINT_COLOR_PREFS);
-			return CHECKPOINT_COLOR_PREFS;
+			count = KZ_ARRAYSIZE(checkpointColorPrefs);
+			return checkpointColorPrefs;
 		case MHUDElement::Release:
-			count = KZ_ARRAYSIZE(RELEASE_COLOR_PREFS);
-			return RELEASE_COLOR_PREFS;
+			count = KZ_ARRAYSIZE(releaseColorPrefs);
+			return releaseColorPrefs;
 		case MHUDElement::Perf:
-			count = KZ_ARRAYSIZE(PERF_COLOR_PREFS);
-			return PERF_COLOR_PREFS;
+			count = KZ_ARRAYSIZE(perfColorPrefs);
+			return perfColorPrefs;
 		case MHUDElement::CrouchJump:
-			count = KZ_ARRAYSIZE(CJ_COLOR_PREFS);
-			return CJ_COLOR_PREFS;
+			count = KZ_ARRAYSIZE(cjColorPrefs);
+			return cjColorPrefs;
 		case MHUDElement::Jumpbug:
-			count = KZ_ARRAYSIZE(JUMPBUG_COLOR_PREFS);
-			return JUMPBUG_COLOR_PREFS;
+			count = KZ_ARRAYSIZE(jumpbugColorPrefs);
+			return jumpbugColorPrefs;
 		default:
 			count = 0;
 			return NULL;

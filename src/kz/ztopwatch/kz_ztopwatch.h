@@ -17,8 +17,8 @@ public:
 		bool point1Active {};
 		bool point2Active {};
 
-		static constexpr int NUM_EDGES = 12;
-		CEntityHandle edges[NUM_EDGES] {};
+		static constexpr int numEdges = 12;
+		CEntityHandle edges[numEdges] {};
 
 		bool IsValid() const
 		{

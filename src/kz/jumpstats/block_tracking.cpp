@@ -8,7 +8,7 @@
 #include "sdk/navphysicsinterface.h"
 #include "utils/utils.h"
 
-static_global constexpr i32 JS_CONSOLE_GRAPH_MAX_FRAMES = 150;
+static_global constexpr i32 jsConsoleGraphMaxFrames = 150;
 
 static_function i32 GetTotalAACallCount(const Jump &jump)
 {
@@ -394,7 +394,7 @@ void Jump::UpdateFailstat()
 		this->failstatBadAngles = totalDuration > 0.0f ? baDuration / totalDuration : 0.0f;
 		this->failstatStrafeCount = this->strafes.size();
 		this->failstatTotalDistance = this->totalDistance;
-		this->failstatGraphCallCount = Min(GetTotalAACallCount(*this), JS_CONSOLE_GRAPH_MAX_FRAMES);
+		this->failstatGraphCallCount = Min(GetTotalAACallCount(*this), jsConsoleGraphMaxFrames);
 		this->failstatValid = true;
 	}
 	else if (hadValidFailstat)

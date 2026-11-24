@@ -122,7 +122,7 @@ namespace KZ::replaysystem::data
 	void ResetReplayState(ReplayPlayback *replay);
 	// index must be below replay->tickCount.
 	// Reading the tick after the last one read is cheap.
-	// Other ticks cost up to compression::TickStore::KEYFRAME_INTERVAL tick decodes.
+	// Other ticks cost up to compression::TickStore::keyframeInterval tick decodes.
 	TickData GetTick(const ReplayPlayback *replay, u32 index);
 	// The first replay tick recorded on or after serverTick or the last tick if there is none.
 	u32 GetTickAtServerTick(const ReplayPlayback *replay, u32 serverTick);

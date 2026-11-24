@@ -436,9 +436,9 @@ void KZMenuService::RenderListPopup(CCSCustomHudLayout *layout)
 	if (this->popupFont && it)
 	{
 		const char *slug = panorama::ResolveFontSlug(this->player->optionService->GetPreferenceStr(it->prefKey, it->sdef), it->sdef);
-		for (i32 f = 0; f < PANORAMA_FONT_COUNT; f++)
+		for (i32 f = 0; f < panoramaFontCount; f++)
 		{
-			if (V_strcmp(slug, PANORAMA_FONTS[f].slug) == 0)
+			if (V_strcmp(slug, panoramaFonts[f].slug) == 0)
 			{
 				curId = f;
 				break;
@@ -459,7 +459,7 @@ void KZMenuService::RenderListPopup(CCSCustomHudLayout *layout)
 			this->menuLayout.SetVar(LiLbl(i), LiVar(i), c.label.c_str());
 			KZ::ui::SetBoolClass(layout, LiPanel(i), "selected", this->applied.liSel[i], c.selected || c.id == curId);
 			// Font rows preview their own face; a choice row inherits the menu font from the root.
-			const char *face = this->popupFont ? PANORAMA_FONTS[c.id].className : NULL;
+			const char *face = this->popupFont ? panoramaFonts[c.id].className : NULL;
 			KZ::ui::SetSwapClass(layout, LiLbl(i), this->applied.liFont[i], face);
 		}
 		KZ::ui::SetBoolClass(layout, LiPanel(i), "hidden", this->applied.liHidden[i], !used);
@@ -468,7 +468,7 @@ void KZMenuService::RenderListPopup(CCSCustomHudLayout *layout)
 	const char *title = "";
 	if (this->popupFont && count > 0)
 	{
-		title = PANORAMA_FONTS[this->listChoices[first].id].family;
+		title = panoramaFonts[this->listChoices[first].id].family;
 		this->menuLayout.SetVar("lp_title", "lptitle", title);
 	}
 	else if (it)
@@ -674,9 +674,9 @@ void KZMenuService::OpenPopup(Popup kind, i32 itemIdx)
 		{
 			// The table is already ordered by family and a single pass finds the page boundaries.
 			const char *family = NULL;
-			for (i32 f = 0; f < PANORAMA_FONT_COUNT; f++)
+			for (i32 f = 0; f < panoramaFontCount; f++)
 			{
-				const PanoramaFontDef &def = PANORAMA_FONTS[f];
+				const PanoramaFontDef &def = panoramaFonts[f];
 				if (!family || V_strcmp(family, def.family) != 0)
 				{
 					family = def.family;
@@ -689,9 +689,9 @@ void KZMenuService::OpenPopup(Popup kind, i32 itemIdx)
 			}
 			// Open on the family the player is already using rather than always at the first.
 			const char *slug = panorama::ResolveFontSlug(this->player->optionService->GetPreferenceStr(it.prefKey, it.sdef), it.sdef);
-			for (i32 f = 0; f < PANORAMA_FONT_COUNT; f++)
+			for (i32 f = 0; f < panoramaFontCount; f++)
 			{
-				if (V_strcmp(slug, PANORAMA_FONTS[f].slug) != 0)
+				if (V_strcmp(slug, panoramaFonts[f].slug) != 0)
 				{
 					continue;
 				}
@@ -790,7 +790,7 @@ void KZMenuService::PopupPick(i32 slot)
 		const i64 choiceId = this->listChoices[idx].id;
 		if (this->popupFont)
 		{
-			this->player->optionService->SetPreferenceStr(it->prefKey, PANORAMA_FONTS[choiceId].slug);
+			this->player->optionService->SetPreferenceStr(it->prefKey, panoramaFonts[choiceId].slug);
 		}
 		else if (it->onPick)
 		{

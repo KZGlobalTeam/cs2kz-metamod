@@ -168,7 +168,7 @@ static_function bool AddSubtickFrame(SectionBuilder &section, const std::vector<
 	size_t move = 0;
 	for (u8 count : counts)
 	{
-		if (count > MAX_SUBTICK_MOVES || count > moves.size() - move)
+		if (count > maxSubtickMoves || count > moves.size() - move)
 		{
 			return false;
 		}
@@ -204,7 +204,7 @@ static_function bool ReadPackedSubticks(const char *src, const CompressedSection
 	for (u64 i = 0; i < header.elementCount; i++)
 	{
 		u8 count;
-		if (!ReadFromBuffer(readPtr, endPtr, &count, sizeof(count)) || count > MAX_SUBTICK_MOVES
+		if (!ReadFromBuffer(readPtr, endPtr, &count, sizeof(count)) || count > maxSubtickMoves
 			|| count * sizeof(RpSubtickMove) > (size_t)(endPtr - readPtr))
 		{
 			return false;
@@ -227,8 +227,8 @@ static_function bool ReadPackedSubticks(const char *src, const CompressedSection
 static_function bool ReadFixedSubticks(const char *src, const CompressedSectionHeader &header, const parsing::VersionParser &parser,
 									   std::vector<u8> &outCounts, std::vector<RpSubtickMove> &outMoves)
 {
-	// v4-6 stored subtickMoves[MAX_SUBTICK_MOVES]; older versions stored subtickMoves[64].
-	size_t entrySize = sizeof(u32) + (parser.compactSubticks ? MAX_SUBTICK_MOVES : 64) * sizeof(RpSubtickMove);
+	// v4-6 stored subtickMoves[maxSubtickMoves]; older versions stored subtickMoves[64].
+	size_t entrySize = sizeof(u32) + (parser.compactSubticks ? maxSubtickMoves : 64) * sizeof(RpSubtickMove);
 	if (header.uncompressedSize != header.elementCount * entrySize)
 	{
 		return false;
@@ -266,7 +266,7 @@ static_function bool ReadFixedSubticks(const char *src, const CompressedSectionH
 			const char *entry = window.data() + i * entrySize;
 			u32 numMoves;
 			memcpy(&numMoves, entry, sizeof(numMoves));
-			u8 count = (u8)MIN(numMoves, MAX_SUBTICK_MOVES);
+			u8 count = (u8)MIN(numMoves, maxSubtickMoves);
 			outCounts.push_back(count);
 			for (u8 j = 0; j < count; j++)
 			{
@@ -846,7 +846,7 @@ bool KZ::replaysystem::compression::ReadTickStore(const char *&cursor, const cha
 	}
 	outTicks.parser = parser;
 	outTicks.keyframes.clear();
-	outTicks.keyframes.reserve((outTicks.count + TickStore::KEYFRAME_INTERVAL - 1) / TickStore::KEYFRAME_INTERVAL);
+	outTicks.keyframes.reserve((outTicks.count + TickStore::keyframeInterval - 1) / TickStore::keyframeInterval);
 	outTicks.teleportTicks.clear();
 	outTicks.hasCurrent = false;
 	outTicks.hasPrevious = false;
@@ -863,7 +863,7 @@ bool KZ::replaysystem::compression::ReadTickStore(const char *&cursor, const cha
 		{
 			return false;
 		}
-		if (i % TickStore::KEYFRAME_INTERVAL == 0)
+		if (i % TickStore::keyframeInterval == 0)
 		{
 			outTicks.keyframes.push_back({tick, (u64)(readPtr - start)});
 		}
@@ -887,10 +887,10 @@ TickData TickStore::Get(u32 index)
 		return previous;
 	}
 	// Continue from the last read tick if it lies between the keyframe and index and restart at the keyframe otherwise.
-	u32 keyframeIndex = index - index % KEYFRAME_INTERVAL;
+	u32 keyframeIndex = index - index % keyframeInterval;
 	if (!hasCurrent || currentIndex > index || currentIndex < keyframeIndex)
 	{
-		const Keyframe &keyframe = keyframes[index / KEYFRAME_INTERVAL];
+		const Keyframe &keyframe = keyframes[index / keyframeInterval];
 		current = keyframe.tick;
 		currentIndex = keyframeIndex;
 		currentEnd = keyframe.nextOffset;
@@ -931,7 +931,7 @@ u32 TickStore::FindServerTick(u32 serverTick)
 	{
 		return 0;
 	}
-	for (u32 i = (u32)(low - 1) * KEYFRAME_INTERVAL + 1; i < count; i++)
+	for (u32 i = (u32)(low - 1) * keyframeInterval + 1; i < count; i++)
 	{
 		if (Get(i).serverTick >= serverTick)
 		{

@@ -7,7 +7,7 @@
 
 #include "tier0/memdbgon.h"
 
-static_global constexpr const char *ELEMENT_PHRASE[(i32)MHUDElement::Count] = {
+static_global constexpr const char *elementPhrase[(i32)MHUDElement::Count] = {
 	"Menu - Timer", "Speed", "Menu - Prespeed", "Menu - Keys", "Menu - Checkpoint", "Menu - Jumpstats", "Menu - Course Info", "Menu - W Release",
 	"Menu - Race",
 	// The indicators share one flattened page and these entries only name them.
@@ -58,13 +58,13 @@ struct ScreenAspectDef
 	i32 width; // layout units (1080 * aspect)
 };
 
-static_global const ScreenAspectDef SCREEN_ASPECTS[] = {
+static_global const ScreenAspectDef screenAspects[] = {
 	{"5:4", 1350}, {"4:3", 1440}, {"3:2", 1620}, {"16:10", 1728}, {"16:9", 1920}, {"21:9", 2560}, {"32:9", 3840},
 };
 
 static_function void GetScreenAspectChoices(KZPlayer *player, i64, std::vector<KZChoice> &out)
 {
-	for (const ScreenAspectDef &aspect : SCREEN_ASPECTS)
+	for (const ScreenAspectDef &aspect : screenAspects)
 	{
 		out.push_back({aspect.label, aspect.width, NULL});
 	}
@@ -112,13 +112,13 @@ static_function void ResetGameHud(KZPlayer *player, i64)
 }
 
 // Indexed by MHUDKeysIdle so a picked row id is the stored value.
-static_global const char *const KEYS_IDLE_LABELS[] = {"Menu - Keys Unpressed Show", "Menu - Keys Unpressed Hide", "Menu - Keys Unpressed Underscore"};
+static_global const char *const keysIdleLabels[] = {"Menu - Keys Unpressed Show", "Menu - Keys Unpressed Hide", "Menu - Keys Unpressed Underscore"};
 
 static_function void GetKeysIdleChoices(KZPlayer *player, i64, std::vector<KZChoice> &out)
 {
-	for (i32 i = 0; i < KZ_ARRAYSIZE(KEYS_IDLE_LABELS); i++)
+	for (i32 i = 0; i < KZ_ARRAYSIZE(keysIdleLabels); i++)
 	{
-		out.push_back({KZMenuService::GetPhrase(player, KEYS_IDLE_LABELS[i]), i, NULL});
+		out.push_back({KZMenuService::GetPhrase(player, keysIdleLabels[i]), i, NULL});
 	}
 }
 
@@ -133,14 +133,14 @@ static_function void PickKeysIdle(KZPlayer *player, i64, i64 id)
 }
 
 // Indexed by MHUDPrespeedShow so a picked row id is the stored value.
-static_global const char *const PRESPEED_SHOW_LABELS[] = {"Menu - Prespeed Show Brief", "Menu - Prespeed Show Jump Only",
-														  "Menu - Prespeed Show Always"};
+static_global const char *const prespeedShowLabels[] = {"Menu - Prespeed Show Brief", "Menu - Prespeed Show Jump Only",
+														"Menu - Prespeed Show Always"};
 
 static_function void GetPrespeedShowChoices(KZPlayer *player, i64, std::vector<KZChoice> &out)
 {
-	for (i32 i = 0; i < KZ_ARRAYSIZE(PRESPEED_SHOW_LABELS); i++)
+	for (i32 i = 0; i < KZ_ARRAYSIZE(prespeedShowLabels); i++)
 	{
-		out.push_back({KZMenuService::GetPhrase(player, PRESPEED_SHOW_LABELS[i]), i, NULL});
+		out.push_back({KZMenuService::GetPhrase(player, prespeedShowLabels[i]), i, NULL});
 	}
 }
 
@@ -158,7 +158,7 @@ static_function void GetBorderChoices(KZPlayer *player, i64, std::vector<KZChoic
 {
 	for (i32 i = 0; i < (i32)MHUDBorder::Count; i++)
 	{
-		const char *label = MHUD_BORDERS[i].label;
+		const char *label = mhudBorders[i].label;
 		out.push_back({label ? std::string(label) : KZMenuService::GetPhrase(player, "Menu - Border None"), i, NULL});
 	}
 }
@@ -171,17 +171,17 @@ static_function i64 GetCurrentBorder(KZPlayer *player, i64 tag)
 
 static_function void PickBorder(KZPlayer *player, i64 tag, i64 id)
 {
-	player->optionService->SetPreferenceInt(MHUD_ELEMENTS[tag].borderKey, Clamp(id, (i64)MHUDBorder::None, (i64)MHUDBorder::Count - 1));
+	player->optionService->SetPreferenceInt(mhudElements[tag].borderKey, Clamp(id, (i64)MHUDBorder::None, (i64)MHUDBorder::Count - 1));
 }
 
 // Indexed by MHUDAlign so a picked row id is the stored value.
-static_global const char *const ALIGN_LABELS[] = {"Menu - Align Left", "Menu - Align Center", "Menu - Align Right"};
+static_global const char *const alignLabels[] = {"Menu - Align Left", "Menu - Align Center", "Menu - Align Right"};
 
 static_function void GetAlignChoices(KZPlayer *player, i64, std::vector<KZChoice> &out)
 {
-	for (i32 i = 0; i < KZ_ARRAYSIZE(ALIGN_LABELS); i++)
+	for (i32 i = 0; i < KZ_ARRAYSIZE(alignLabels); i++)
 	{
-		out.push_back({KZMenuService::GetPhrase(player, ALIGN_LABELS[i]), i, NULL});
+		out.push_back({KZMenuService::GetPhrase(player, alignLabels[i]), i, NULL});
 	}
 }
 
@@ -192,7 +192,7 @@ static_function i64 GetCurrentAlign(KZPlayer *player, i64 tag)
 
 static_function void PickAlign(KZPlayer *player, i64 tag, i64 id)
 {
-	player->optionService->SetPreferenceInt(MHUD_ELEMENTS[tag].alignKey, Clamp(id, (i64)MHUDAlign::Left, (i64)MHUDAlign::Right));
+	player->optionService->SetPreferenceInt(mhudElements[tag].alignKey, Clamp(id, (i64)MHUDAlign::Left, (i64)MHUDAlign::Right));
 }
 
 // Every row carries the indicator's own label because all three indicators share one page.
@@ -204,9 +204,9 @@ static_function void RegisterIndicators(KZOptNode *hud)
 
 	for (i32 i = 0; i < MHUD_INDICATOR_COUNT; i++)
 	{
-		const MHUDIndicatorDef &indicator = MHUD_INDICATOR_DEFS[i];
+		const MHUDIndicatorDef &indicator = mhudIndicatorDefs[i];
 		const i32 e = (i32)indicator.element;
-		const MHUDElementDef &def = MHUD_ELEMENTS[e];
+		const MHUDElementDef &def = mhudElements[e];
 		const char *const *row = indicator.rowPhrase;
 
 		KZ::menu::AddToggle(sub, row[(i32)MHUDIndicatorRow::Enabled], def.enabledKey, false);
@@ -271,7 +271,7 @@ void KZHUDService::RegisterMenu()
 	KZ::menu::AddButton(general, "Menu - Reset All", ResetAll);
 
 	gameHudNode = KZ::menu::AddSub(hud, "Menu - Game HUD");
-	for (const GameHudPartDef &part : GAME_HUD_PARTS)
+	for (const GameHudPartDef &part : gameHudParts)
 	{
 		KZ::menu::AddToggle(gameHudNode, part.phraseKey, part.prefKey, false);
 		KZ::menu::SetItemSubtext(gameHudNode, part.bit == KZ_HIDEHUD_ALL ? "Menu - Game HUD All Sub" : "Menu - Game HUD Spectators Sub");
@@ -285,8 +285,8 @@ void KZHUDService::RegisterMenu()
 		{
 			continue; // flattened onto the one Indicators page below
 		}
-		const MHUDElementDef &def = MHUD_ELEMENTS[e];
-		KZOptNode *sub = KZ::menu::AddSub(hud, ELEMENT_PHRASE[e]);
+		const MHUDElementDef &def = mhudElements[e];
+		KZOptNode *sub = KZ::menu::AddSub(hud, elementPhrase[e]);
 		elementNodes[e] = sub;
 
 		// Everything below the Enabled toggle only affects a visible element and greys out with it.

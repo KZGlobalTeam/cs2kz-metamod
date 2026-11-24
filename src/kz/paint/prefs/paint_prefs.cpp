@@ -11,7 +11,7 @@ void KZPaintService::RegisterMenu()
 	// Paint draws a decal with one solid color and the gradients in the picker would not render.
 	KZ::menu::SetItemSolidOnly(cat);
 	KZ::menu::SetItemSubtext(cat, "Menu - Paint Color Sub");
-	KZ::menu::AddSize(cat, "Menu - Size", "paintSize", (i32)KZPaintService::DEFAULT_PAINT_SIZE, (i32)KZPaintService::MIN_PAINT_SIZE,
-					  (i32)KZPaintService::MAX_PAINT_SIZE);
+	KZ::menu::AddSize(cat, "Menu - Size", "paintSize", (i32)KZPaintService::defaultPaintSize, (i32)KZPaintService::minPaintSize,
+					  (i32)KZPaintService::maxPaintSize);
 	KZ::menu::AddToggle(cat, "Menu - Show All Paint", "showAllPaint", false);
 }
