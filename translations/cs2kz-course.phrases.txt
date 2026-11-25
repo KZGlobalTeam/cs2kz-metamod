@@ -230,40 +230,49 @@
 	{
 		"#format"	"mode:s"
 		"en"		"Click a course to go to its start. Tiers and ranked states are for {mode}."
+		"ua"		"Натисніть на курс, щоб перейти до його початку. Складність(tiers) та рейтинговий статуси для {mode}."
 	}
 	"Courses - Ranked"
 	{
 		"en"		"Ranked Courses:"
+		"ua"		"Рейтингові курси:"
 	}
 	"Courses - Unranked"
 	{
 		"en"		"Unranked Courses:"
+		"ua"		"Нерейтингові курси:"
 	}
 	"Courses - Made By"
 	{
 		"en"		"Made by:"
+		"ua"		"Створено:"
 	}
 	"Courses - Description"
 	{
 		"en"		"Description:"
+		"ua"		"Опис:"
 	}
 	"Courses - State Approved"
 	{
 		"en"		"Approved"
+		"ua"		"Схвалено"
 	}
 	"Courses - State Invalid"
 	{
 		"en"		"Invalid"
+		"ua"		"Недійсний"
 	}
 	"Courses - Workshop"
 	{
 		"#format"	"id:s"
 		"en"		"Workshop ID {id}"
+		"ua"		"Workshop ID {id}"
 	}
 	"Courses - Workshop Approved"
 	{
 		"#format"	"id:s,date:s"
 		"en"		"Workshop ID {id}, approved {date}"
+		"ua"		"Workshop ID {id}, схвалено {date}"
 	}
 	"Course Info Header - Name"
 	{
@@ -291,7 +300,7 @@
 		"chi"		"Tier (Vanilla)"
 		"zho"		"Tier (Vanilla)"
 		"ru"		"Tier (Vanilla)"
-		"ua"		"Складність (Vanilla)"
+		"ua"		"Tier (Vanilla)"
 		"es"		"Nivel (Vanilla)"
 		"ko"		"티어 (Vanilla)"
 	}
@@ -301,7 +310,7 @@
 		"chi"		"Tier (Classic)"
 		"zho"		"Tier (Classic)"
 		"ru"		"Tier (Classic)"
-		"ua"		"Складність (Classic)"
+		"ua"		"Tier (Classic)"
 		"es"		"Nivel (Classic)"
 		"ko"		"티어 (Classic)"
 	}

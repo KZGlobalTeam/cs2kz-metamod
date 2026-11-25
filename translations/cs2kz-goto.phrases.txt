@@ -73,5 +73,6 @@
 	"Goto - Picker Title"
 	{
 		"en"		"Go to Player"
+		"ua"		"Телепортуватися до гравця"
 	}
 }

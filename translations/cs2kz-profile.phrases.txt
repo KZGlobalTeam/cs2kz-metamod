@@ -3,94 +3,117 @@
 	"Profile - Joined On"
 	{
 		"en"		"Joined On:"
+		"ua"		"Приєднався:"
 	}
 	"Profile - Global Rank"
 	{
 		"en"		"Global Rank:"
+		"ua"		"Місце в світі:"
 	}
 	"Profile - Rating"
 	{
 		"en"		"Rating:"
+		"ua"		"Рейтинг:"
 	}
 	"Profile - Runs"
 	{
 		"en"		"Runs"
+		"ua"		"Проходження:"
 	}
 	"Profile - Map"
 	{
 		"en"		"Map"
+		"ua"		"Мапа"
 	}
 	"Profile - Course"
 	{
 		"en"		"Course"
+		"ua"		"Курс"
 	}
 	"Profile - Tier"
 	{
 		"en"		"Tier"
+		"ua"		"Tier"
 	}
 	"Profile - Pro Tier"
 	{
 		"en"		"Pro Tier"
+		"ua"		"Pro Tier"
 	}
 	"Profile - Overall Rank"
 	{
 		"en"		"Overall Rank"
+		"ua"		"Заг. місце"
 	}
 	"Profile - Pro Rank"
 	{
 		"en"		"Pro Rank"
+		"ua"		"Місце Pro"
 	}
 	"Profile - Not Found"
 	{
 		"en"		"Player not found."
+		"ua"		"Гравця не знайдено."
 	}
 	"Profile - Failed"
 	{
 		"en"		"Couldn't load the profile."
+		"ua"		"Не вдалося завантажити профіль."
 	}
 	"Profile - Copy Steam ID"
 	{
 		"en"		"Print Steam ID to chat and console"
+		"ua"		"Вивести Steam ID в чат і консоль"
 	}
 	"Profile - Steam ID"
 	{
 		"#format"	"name:s,steamid64:s,steamid:s"
 		"en"		"{grey}Steam ID of {default}{name}{grey}: {default}{steamid64} {grey}({default}{steamid}{grey})"
+		"ua"		"{grey}Steam ID гравця {default}{name}{grey}: {default}{steamid64} {grey}({default}{steamid}{grey})"
 	}
 	"Profile - Unavailable"
 	{
 		"en"		"{grey}Profiles need the global API or the server's database, and neither is available."
+		"ua"		"{grey}Для профілів потрібен глобальний API або база даних сервера, але нічого з цього недоступне"
 	}
 	"Profile - Window Unavailable"
 	{
 		"en"		"{grey}The profile window couldn't open."
+		"ua"		"{grey}Вікно профілю не вдалося відкрити."
 	}
 	"Leaderboard - Window Title"
 	{
 		"en"		"Leaderboard"
+		"ua"		"Таблиця лідерів"
 	}
 	"Leaderboard - Rating"
 	{
 		"en"		"Rating"
+		"ua"		"Рейтинг"
 	}
 	"Leaderboard - Title"
 	{
 		"en"		"Title"
+		"ua"		"Назва"
 	}
 	"Leaderboard - Window Failed"
 	{
 		"en"		"Couldn't load the leaderboard."
+		"ua"		"Не вдалося завантажити таблицю лідерів."
 	}
 	"Leaderboard - Window None"
 	{
 		"en"		"No ranked players."
+		"ua"		"Немає рангованих гравців."
 	}
 	"Leaderboard - Unavailable"
 	{
 		"en"		"{grey}The leaderboard needs the global API and it isn't available."
+		"ua"		"{grey}Таблиця лідерів потребує глобального API, але воно недоступне."
 	}
 	"Leaderboard - Window Unavailable"
 	{
 		"en"		"{grey}The leaderboard window couldn't open."
+		"ua"		"{grey}Вікно таблиці лідерів не вдалося відкрити."
 	}
 }

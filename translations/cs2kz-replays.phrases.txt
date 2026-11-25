@@ -1062,44 +1062,54 @@
 	"Replays - Window Title"
 	{
 		"en"		"Replays"
+		"ua"		"Повтори"
 	}
 	"Replays - Window Runs"
 	{
 		"en"		"Runs"
+		"ua"		"Проходження"
 	}
 	"Replays - Window Jumps"
 	{
 		"en"		"Jumps"
+		"ua"		"Стрибки"
 	}
 	"Replays - Window Manual"
 	{
 		"en"		"Manual"
+		"ua"		"Ручні"
 	}
 	"Replays - Window TPs"
 	{
 		"en"		"TPs"
+		"ua"		"TPs"
 	}
 	"Replays - Window Filters"
 	{
 		"#format"	"filters:s"
 		"en"		"Filters: {filters}"
+		"ua"		"Фільтри: {filters}"
 	}
 	"Replays - Window None"
 	{
 		"en"		"No matching replays."
+		"ua"		"Не знайдено відповідних повторів."
 	}
 	"Replays - Window Copy IDs"
 	{
 		"en"		"Print replay and Steam ID to chat and console"
+		"ua"		"Вивести ID повтору та Steam ID у чат і консоль"
 	}
 	"Replays - IDs"
 	{
 		"#format"	"name:s,uuid:s,steamid64:s"
 		"en"		"{grey}Replay of {default}{name}{grey}: {default}{uuid}{grey}, Steam ID {default}{steamid64}"
+		"ua"		"{grey}Повтор {default}{name}{grey}: {default}{uuid}{grey}, Steam ID {default}{steamid64}"
 	}
 	"Replay - Jump Replay Saved"
 	{
 		"#format"	"uuid:s"
 		"en"		"{grey}Jumpstat replay saved: {lime}{uuid}"
+		"ua"		"{grey}Повтор стрибка збережено: {lime}{uuid}"
 	}
 }
