@@ -161,6 +161,9 @@ public:
 		endOfTickMoveCommandTimes.clear();
 		offViewMoveCommandTimes.clear();
 		hasLastFrameYaw = false;
+		hitchGraceEndTime = 0.0f;
+		hitched = false;
+		hasLastCmd = false;
 		zeroWhenCommandTimes.clear();
 		numCommandsWithSubtickInputs.clear();
 		recentJumpStatuses.clear();
@@ -307,6 +310,12 @@ public:
 	std::deque<f32> offViewMoveCommandTimes;
 	f32 lastFrameYaw {};
 	bool hasLastFrameYaw {};
+	// Moves turned away from every frame don't count until this time after the client hitched.
+	f32 hitchGraceEndTime {};
+	bool hitched {};
+	i32 lastCmdNum {};
+	i32 lastClientTick {};
+	bool hasLastCmd {};
 	std::deque<f32> zeroWhenCommandTimes;
 	std::deque<f32> numCommandsWithSubtickInputs;
 	// Clear up old entries beyond a certain duration and ban if there are too many within that timeframe.

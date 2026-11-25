@@ -17,6 +17,10 @@
 #define SUBTICK_SUBTICK_INPUTS_WINDOW      20.0f
 #define SUBTICK_SUBTICK_INPUTS_THRESHOLD   30
 #define SUBTICK_ZERO_WHEN_RATIO_THRESHOLD  0.9f
+// The client tick goes up by one per command and a little jitter is normal.
+// A bigger jump means the client froze and some of its frames never reached the server.
+#define SUBTICK_HITCH_CLIENT_TICKS 2
+#define SUBTICK_HITCH_GRACE_TIME   1.0f
 
 // About 0.1s at each end of a jump is left out because scrolling into and out of a jump is normal.
 #define SUBTICK_SPLIT_EDGE_TICKS    7
@@ -378,6 +382,33 @@ void KZAnticheatService::CheckSubtickAbuse(CUserCmd *cmd)
 	{
 		return;
 	}
+	// A lagging client freezes, sends commands late or skips them.
+	// Its moves can then turn past every frame the server got and that must not count against it.
+	bool isSubstitute = cmd->flags & USERCMD_SUBSTITUTE;
+	i32 clientTick = cmd->base().client_tick();
+	i32 clientTickDelta = clientTick - this->lastClientTick;
+	if (isSubstitute || cmd->IsLate() || !this->hasLastCmd || cmd->cmdNum != this->lastCmdNum + 1 || clientTickDelta < 0
+		|| clientTickDelta > SUBTICK_HITCH_CLIENT_TICKS)
+	{
+		this->hitched = true;
+		this->hasLastFrameYaw = false;
+	}
+	// Late commands run with the time of their own tick.
+	// The on-time command after them runs with the current time.
+	if (this->hitched && !cmd->IsLate())
+	{
+		this->hitchGraceEndTime = g_pKZUtils->GetServerGlobals()->curtime + SUBTICK_HITCH_GRACE_TIME;
+		this->hitched = false;
+	}
+	this->lastCmdNum = cmd->cmdNum;
+	this->lastClientTick = clientTick;
+	this->hasLastCmd = true;
+	// The server makes up a substitute from the last command when the client sends nothing in time.
+	// It keeps the button presses of that command but drops its subtick moves.
+	if (isSubstitute)
+	{
+		return;
+	}
 	// Verify all button presses/releases are accounted for in subtick moves
 	if (!VerifyCommand(*cmd))
 	{
@@ -401,7 +432,8 @@ void KZAnticheatService::CheckSubtickAbuse(CUserCmd *cmd)
 	}
 	if (cmd->input_history_size() > 0)
 	{
-		if (!cmd->IsLate() && GetMoveYawOutsideFrames(*cmd, this->lastFrameYaw, this->hasLastFrameYaw) > SUBTICK_MOVE_YAW_TOLERANCE)
+		if (!cmd->IsLate() && g_pKZUtils->GetServerGlobals()->curtime >= this->hitchGraceEndTime
+			&& GetMoveYawOutsideFrames(*cmd, this->lastFrameYaw, this->hasLastFrameYaw) > SUBTICK_MOVE_YAW_TOLERANCE)
 		{
 			this->offViewMoveCommandTimes.push_back(g_pKZUtils->GetServerGlobals()->curtime);
 		}

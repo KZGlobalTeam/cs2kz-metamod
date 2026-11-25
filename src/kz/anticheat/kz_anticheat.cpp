@@ -150,6 +150,9 @@ void KZAnticheatService::ClearDetectionBuffers()
 	this->endOfTickMoveCommandTimes.clear();
 	this->offViewMoveCommandTimes.clear();
 	this->hasLastFrameYaw = false;
+	this->hitchGraceEndTime = 0.0f;
+	this->hitched = false;
+	this->hasLastCmd = false;
 	this->zeroWhenCommandTimes.clear();
 	this->numCommandsWithSubtickInputs.clear();
 	this->recentSubtickSplits.clear();
