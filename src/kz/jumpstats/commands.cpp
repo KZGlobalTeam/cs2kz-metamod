@@ -161,9 +161,9 @@ CON_COMMAND_F(kz_listjumps, "List the saved jumps of a player by their SteamID64
 			const u32 block = result->GetInt64(4) ? (u32)result->GetInt64(5) : 0;
 			std::string path;
 			const bool replay = !result->IsNull(7) && KZ::replaysystem::FindReplayPath(utils::OrEmpty(result->GetString(7)), path);
-			KZ_LOG_INFO(LogChannel::DB, "  %lld  %s  %s  %.4f  %s  %s  %s\n", result->GetInt64(0), typeName, mode.empty() ? "?" : mode.c_str(),
-						result->GetInt64(3) / KZ_JUMPSTATS_DISTANCE_SCALE, block ? std::to_string(block).c_str() : "-",
-						utils::OrEmpty(result->GetString(6)), replay ? "yes" : "no");
+			KZ_LOG_INFO(LogChannel::DB, "  %lld  %s  %s  %.4f  %s  %s  %s\n", (long long)result->GetInt64(0), typeName,
+						mode.empty() ? "?" : mode.c_str(), result->GetInt64(3) / KZ_JUMPSTATS_DISTANCE_SCALE,
+						block ? std::to_string(block).c_str() : "-", utils::OrEmpty(result->GetString(6)), replay ? "yes" : "no");
 			count++;
 		}
 		KZ_LOG_INFO(LogChannel::DB, "%u jumps. Delete one with kz_deletejump <ID>.\n", count);
