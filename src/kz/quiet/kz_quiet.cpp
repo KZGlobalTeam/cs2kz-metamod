@@ -411,6 +411,14 @@ SCMD(kz_hideweapon, SCFL_PLAYER)
 	return true;
 }
 
+SCMD(kz_stopsound, SCFL_PLAYER)
+{
+	KZPlayer *player = g_pKZPlayerManager->ToPlayer(controller);
+	utils::PlaySoundToClient(player->GetPlayerSlot(), "core.stop_all_soundevents");
+	player->languageService->PrintChat(true, false, "Quiet - Stopped Sounds");
+	return true;
+}
+
 void KZQuietService::ToggleHideWeapon()
 {
 	auto *opts = this->player->optionService;

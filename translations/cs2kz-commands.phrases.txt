@@ -1175,6 +1175,10 @@
 		"ko"		"무기 모델을 숨깁니다."
 		"lv"		"Slēpt ieroča modeļa skatu."
 	}
+	"Command Description - kz_stopsound"
+	{
+		"en"		"Stop all sounds e.g. map soundscapes (music)."
+	}
 	"Command Description - kz_help"
 	{
 		"en"		"Show this help message."

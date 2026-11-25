@@ -128,4 +128,8 @@
 		"es"		"{grey}Al reaparecer, tu arma ya no se esconderá de forma automática."
 		"ko"		"{grey}이제 리스폰 시 무기가 자동으로 숨겨지지 않습니다."
 	}
+	"Quiet - Stopped Sounds"
+	{
+		"en"		"{grey}You have stopped all sounds."
+	}
 }
