@@ -11,7 +11,7 @@ Automated translation linter reports for cs2kz-metamod.
 | **Total Languages** | 15 |
 | **Total Phrases** | 1269 |
 | **Phrases Missing Translations** | 1269 |
-| **Total Missing Entries** | 9922 |
+| **Total Missing Entries** | 9781 |
 | **Menu Files** | 11 |
 
 ## Language Coverage (Phrases)
@@ -30,7 +30,7 @@ Automated translation linter reports for cs2kz-metamod.
   ru (russian)         [███████████████░░░░░]  78.5% (996/1269)
   sv (swedish)         [██████░░░░░░░░░░░░░░]  31.0% (393/1269)
   tr (turkish)         [████░░░░░░░░░░░░░░░░]  20.8% (264/1269)
-  ua (ukrainian)       [█████████████████░░░]  88.9% (1128/1269)
+  ua (ukrainian)       [████████████████████] 100.0% (1269/1269)
   zho (tchinese)       [████████████████░░░░]  84.2% (1069/1269)
 ```
 
@@ -81,9 +81,9 @@ Automated translation linter reports for cs2kz-metamod.
 
 ## Last Updated
 
-- **Commit:** [`ecba2e5c`](https://github.com/KZGlobalTeam/cs2kz-metamod/commit/ecba2e5c83d87619d179faf5d1eedc009c3ad96f)
-- **Time:** 2026-11-25 16:48:09 UTC
-- **Message:** Add !stopsound Closes #343
+- **Commit:** [`78b5e359`](https://github.com/KZGlobalTeam/cs2kz-metamod/commit/78b5e35969700191462a2febadde5524f931a618)
+- **Time:** 2026-11-26 07:45:21 UTC
+- **Message:** Ukrainian translations (#681)
 
 ---
 
