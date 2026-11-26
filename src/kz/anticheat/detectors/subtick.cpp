@@ -393,7 +393,7 @@ void KZAnticheatService::CheckSubtickAbuse(CUserCmd *cmd)
 		this->hitched = true;
 		this->hasLastFrameYaw = false;
 	}
-	// Late commands run with the time of their own tick.
+	// Late commands run with the time of an earlier tick.
 	// The on-time command after them runs with the current time.
 	if (this->hitched && !cmd->IsLate())
 	{
