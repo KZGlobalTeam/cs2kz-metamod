@@ -7,6 +7,7 @@
 		"chi"		"指令帮助"
 		"zho"		"指令說明"
 		"ua" 		"Довідка щодо команд"
+		"nl"		"Commandohulp"
 	}
 	"Help - Hint"
 	{
@@ -14,6 +15,7 @@
 		"chi"		"在聊天栏输入 !<command> 或 /<command>。在控制台输入 kz_help 查看控制台指令帮助。"
 		"zho"		"在聊天欄輸入 !<command> 或 /<command>。在控制台輸入 kz_help 查看控制台指令說明。"
 		"ua"		"Напишіть !<команда> або /<команда> в чаті. Введіть kz_help в консолі для довідки."
+		"nl"		"Typ !<commando> of /<commando> in de chat. Typ kz_help in de console voor consolehulp."
 	}
 	"Help - Usage"
 	{
@@ -22,6 +24,7 @@
 		"chi"		"用法：{usage}"
 		"zho"		"使用方式：{usage}"
 		"ua"		"Використання: {usage}"
+		"nl"		"Gebruik: {usage}"
 	}
 	"Help - Category - Checkpoint"
 	{
@@ -29,6 +32,7 @@
 		"chi"		"存点"
 		"zho"		"儲存點"
 		"ua"		"Чекпоінти"
+		"nl"		"Checkpoints"
 	}
 	"Help - Category - Record"
 	{
@@ -36,6 +40,7 @@
 		"chi"		"记录"
 		"zho"		"紀錄"
 		"ua"		"Рекорди"
+		"nl"		"Records"
 	}
 	"Help - Category - Jumpstats"
 	{
@@ -43,6 +48,7 @@
 		"chi"		"跳跃数据"
 		"zho"		"跳躍數據"
 		"ua"		"Статистика стрибків"
+		"nl"		"Jumpstats"
 	}
 	"Help - Category - Measure"
 	{
@@ -50,6 +56,7 @@
 		"chi"		"测量"
 		"zho"		"測量"
 		"ua"		"Вимірювання дистанції"
+		"nl"		"Meten"
 	}
 	"Help - Category - ModeStyle"
 	{
@@ -57,6 +64,7 @@
 		"chi"		"模式与风格"
 		"zho"		"模式與樣式"
 		"ua"		"Режими та стилі"
+		"nl"		"Modi & stijlen"
 	}
 	"Help - Category - Preference"
 	{
@@ -64,6 +72,7 @@
 		"chi"		"偏好设置"
 		"zho"		"偏好設定"
 		"ua"		"Налаштування"
+		"nl"		"Voorkeuren"
 	}
 	"Help - Category - Racing"
 	{
@@ -71,6 +80,7 @@
 		"chi"		"竞速"
 		"zho"		"競速"
 		"ua"		"Перегони"
+		"nl"		"Racen"
 	}
 	"Help - Category - Replay"
 	{
@@ -78,6 +88,7 @@
 		"chi"		"回放"
 		"zho"		"回放"
 		"ua"		"Повтори"
+		"nl"		"Replays"
 	}
 	"Help - Category - Saveloc"
 	{
@@ -85,6 +96,7 @@
 		"chi"		"已保存的位置"
 		"zho"		"已儲存的位置"
 		"ua"		"Меню збережених позицій (Saveloc)"
+		"nl"		"Opgeslagen locaties"
 	}
 	"Help - Category - Spec"
 	{
@@ -92,6 +104,7 @@
 		"chi"		"观战"
 		"zho"		"觀戰"
 		"ua"		"Спостереження"
+		"nl"		"Spectaten"
 	}
 	"Help - Category - Status"
 	{
@@ -99,6 +112,7 @@
 		"chi"		"状态"
 		"zho"		"狀態"
 		"ua"		"Статус"
+		"nl"		"Status"
 	}
 	"Help - Category - Timer"
 	{
@@ -106,6 +120,7 @@
 		"chi"		"计时器"
 		"zho"		"計時器"
 		"ua"		"Таймер"
+		"nl"		"Timer"
 	}
 	"Help - Category - Player"
 	{
@@ -113,6 +128,7 @@
 		"chi"		"玩家"
 		"zho"		"玩家"
 		"ua"		"Гравець"
+		"nl"		"Speler"
 	}
 	"Help - Category - Global"
 	{
@@ -120,6 +136,7 @@
 		"chi"		"全局"
 		"zho"		"全域"
 		"ua"		"Глобальні"
+		"nl"		"Globaal"
 	}
 	"Help - Category - Misc"
 	{
@@ -127,6 +144,7 @@
 		"chi"		"其他"
 		"zho"		"其他"
 		"ua"		"Інше"
+		"nl"		"Overig"
 	}
 	"Help - Category - Map"
 	{
@@ -134,6 +152,7 @@
 		"chi"		"地图"
 		"zho"		"地圖"
 		"ua"		"Мапи"
+		"nl"		"Maps"
 	}
 	"Help - Category - HUD"
 	{
@@ -141,5 +160,6 @@
 		"chi"		"HUD"
 		"zho"		"HUD"
 		"ua"		"HUD"
+		"nl"		"HUD"
 	}
 }

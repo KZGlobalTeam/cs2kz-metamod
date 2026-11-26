@@ -15,6 +15,7 @@
 		"fi"		"{grey}Sinulla ei ole valittua rataa. Tarkista konsolista valittavien ratojen lista."
 		"lv"		"{grey}Tev nav aktīva trases. Pārbaudi konsoli, lai redzētu pieejamo trašu sarakstu!"
 		"de"		"{grey}Du hast derzeit keine Route ausgewählt. Überprüfe die Konsole für eine Liste verfügbarer Routen!"
+		"nl"		"{grey}Je hebt geen huidige route. Check de console voor een lijst met beschikbare routes!"
 	}
 	"Current Course"
 	{
@@ -32,6 +33,7 @@
 		"fi"		"{grey}Sinun valittu rata on {default}{course}{grey}. Tarkista konsolista valittavien ratojen lista."
 		"lv"		"{grey}Tava pašreizējā trase ir {default}{course}{grey}. Pārbaudi konsoli, lai redzētu pieejamo trašu sarakstu!"
 		"de"		"{grey}Deine derzeitige Route ist {default}{course}{grey}. Überprüfe die Konsole für eine Liste verfügbarer Routen!"
+		"nl"		"{grey}Je huidige route is {default}{course}{grey}. Check de console voor een lijst met beschikbare routes!"
 	}
 	"Course List Header"
 	{
@@ -48,6 +50,7 @@
 		"fi"		"Valittavien ratojen lista (käytä kz_r <course name> teleporttaaksesi radalle): "
 		"lv"		"Pieejamo trašu saraksts (izmanto kz_r <trases nosaukums>, lai teleportētos uz trasi):"
 		"de"		"Liste aller verfügbaren Routen (benutze kz_r <Routenname> für Teleport zur Route):"
+		"nl"		"Lijst met beschikbare routes (gebruik kz_r <routenaam> om naar de route te teleporteren):"
 	}
 
 	"Map Info - No API Connection (Short)"
@@ -59,6 +62,7 @@
 		"ua"		"{yellow}Увага: {grey}Сервер не підключений до CS2KZ API."
 		"es"		"{yellow}Atención: {grey}Este servidor no esta conectado al API de CS2KZ."
 		"ko"		"{yellow}경고: {grey}서버가 CS2KZ API에 연결되어 있지 않습니다."
+		"nl"		"{yellow}Waarschuwing: {grey}De server is niet verbonden met de CS2KZ API."
 	}
 	"Map Info - No API Connection"
 	{
@@ -69,6 +73,7 @@
 		"ua"		"{yellow}Увага: {grey}Сервер не підключений до CS2KZ API. Деяка інформація про мапу може бути недоступною."
 		"es"		"{yellow}Atención: {grey}Este servidor no esta conectado al API de CS2KZ. Alguna información del mapa puede no estar disponible."
 		"ko"		"{yellow}경고: {grey}서버가 CS2KZ API에 연결되어 있지 않습니다. 일부 맵 정보를 사용할 수 없을 수 있습니다."
+		"nl"		"{yellow}Waarschuwing: {grey}De server is niet verbonden met de CS2KZ API. Sommige mapinformatie is mogelijk niet beschikbaar."
 	}
 	"Map Info - No API Map Data (Short)"
 	{
@@ -79,6 +84,7 @@
 		"ua"		"{yellow}Увага: {grey}Не знайдено даних про цю мапу в CS2KZ API."
 		"es"		"{yellow}Atención: {grey}No se han encontrado datos en la API de CS2KZ para este mapa."
 		"ko"		"{yellow}경고: {grey}이 맵에 대한 CS2KZ API 데이터를 찾을 수 없습니다."
+		"nl"		"{yellow}Waarschuwing: {grey}Geen mapgegevens gevonden op de CS2KZ API voor deze map."
 	}
 	"Map Info - No API Map Data"
 	{
@@ -89,6 +95,7 @@
 		"ua"		"{yellow}Увага: {grey}Не знайдено даних про цю мапу в CS2KZ API. Деяка інформація про мапу може бути недоступною."
 		"es"		"{yellow}Atención: {grey}No se han encontrado datos en la API de CS2KZ para este mapa. Alguna información del mapa puede no estar disponible."
 		"ko"		"{yellow}경고: {grey}이 맵에 대한 CS2KZ API 데이터를 찾을 수 없습니다. 일부 맵 정보를 사용할 수 없을 수 있습니다."
+		"nl"		"{yellow}Waarschuwing: {grey}Geen mapgegevens gevonden op de CS2KZ API voor deze map. Sommige mapinformatie is mogelijk niet beschikbaar."
 	}
 	"Map Info - Check Console"
 	{
@@ -99,6 +106,7 @@
 		"ua"		"{grey}Перевірте консоль для детальної інформації!"
 		"es"		"{grey}¡Abre la consola para obtener más detalles!"
 		"ko"		"{grey}자세한 내용은 콘솔을 확인하세요!"
+		"nl"		"{grey}Check de console voor details!"
 	}
 	"Map Info - Map In Testing"
 	{
@@ -110,6 +118,7 @@
 		"ua"		"{default}{map} {grey}наразі {yellow}перебуває на стадії тестування{grey}."
 		"es"		"{default}{map} {grey}está {yellow}en pruebas{grey}."
 		"ko"		"{default}{map} {grey}은(는) 현재 {yellow}테스트 중{grey}입니다."
+		"nl"		"{default}{map} {grey}bevindt zich momenteel in de {yellow}testfase{grey}."
 	}
 	"Map Info - Map Info Header"
 	{
@@ -121,6 +130,7 @@
 		"ua"		"{map} Інформація про мапу"
 		"es"		"{map} Información del mapa"
 		"ko"		"{map} 맵 정보"
+		"nl"		"{map} Mapinformatie"
 	}
 	"Map Info - Mappers"
 	{
@@ -132,6 +142,7 @@
 		"ua"		"Мапери: {mappers}"
 		"es"		"Mapeadores: {mappers}"
 		"ko"		"맵 제작자: {mappers}"
+		"nl"		"Mappers: {mappers}"
 	}
 	"Map Info - State"
 	{
@@ -143,6 +154,7 @@
 		"ua"		"Статус: {state}"
 		"es"		"Estado: {state}"
 		"ko"		"상태: {state}"
+		"nl"		"Status: {state}"
 	}
 	"Map Info - Description"
 	{
@@ -154,6 +166,7 @@
 		"ua"		"Опис: {description}"
 		"es"		"Descripción: {description}"
 		"ko"		"설명: {description}"
+		"nl"		"Beschrijving: {description}"
 	}
 	"Map Info - Invalid"
 	{
@@ -164,6 +177,7 @@
 		"ua"		"Н/Д"
 		"es"			"N/A"
 		"ko"		"N/A"
+		"nl"		"N.v.t."
 	}
 	"Map Info - In Testing"
 	{
@@ -174,6 +188,7 @@
 		"ua"		"На стадії тестування"
 		"es"		"En pruebas"
 		"ko"		"테스트 중"
+		"nl"		"Testfase"
 	}
 	"Map Info - Approved"
 	{
@@ -185,6 +200,7 @@
 		"ua"		"Схвалено ({date})"
 		"es"		"Aprobado ({date})"
 		"ko"		"승인됨 ({date})"
+		"nl"		"Goedgekeurd ({date})"
 	}
 	"Course Info - Unranked"
 	{
@@ -195,6 +211,7 @@
 		"ua"		"Без рейтингу"
 		"es"		"Sin nivel"
 		"ko"		"비랭크"
+		"nl"		"Unranked"
 	}
 	"Course Info - Pending"
 	{
@@ -205,6 +222,7 @@
 		"ua"		"На розгляді"
 		"es"		"Pendiente"
 		"ko"		"검토 중"
+		"nl"		"In afwachting"
 	}
 	"Course Info - Ranked"
 	{
@@ -215,6 +233,7 @@
 		"ua"		"Рейтинговий"
 		"es"		"Nivelado"
 		"ko"		"랭크"
+		"nl"		"Ranked"
 	}
 	"Courses - Table Name"
 	{
@@ -225,45 +244,64 @@
 		"ua"		"Курси"
 		"es"		"Caminos"
 		"ko"		"코스"
+		"nl"		"Routes"
 	}
 	"Courses - Hint"
 	{
 		"#format"	"mode:s"
 		"en"		"Click a course to go to its start. Tiers and ranked states are for {mode}."
+		"ua"		"Натисніть на курс, щоб перейти до його початку. Складність(tiers) та рейтинговий статуси для {mode}."
+		"nl"		"Klik op een route om naar de start te gaan. Tiers en ranked-statussen gelden voor {mode}."
 	}
 	"Courses - Ranked"
 	{
 		"en"		"Ranked Courses:"
+		"ua"		"Рейтингові курси:"
+		"nl"		"Ranked routes:"
 	}
 	"Courses - Unranked"
 	{
 		"en"		"Unranked Courses:"
+		"ua"		"Нерейтингові курси:"
+		"nl"		"Unranked routes:"
 	}
 	"Courses - Made By"
 	{
 		"en"		"Made by:"
+		"ua"		"Створено:"
+		"nl"		"Gemaakt door:"
 	}
 	"Courses - Description"
 	{
 		"en"		"Description:"
+		"ua"		"Опис:"
+		"nl"		"Beschrijving:"
 	}
 	"Courses - State Approved"
 	{
 		"en"		"Approved"
+		"ua"		"Схвалено"
+		"nl"		"Goedgekeurd"
 	}
 	"Courses - State Invalid"
 	{
 		"en"		"Invalid"
+		"ua"		"Недійсний"
+		"nl"		"Ongeldig"
 	}
 	"Courses - Workshop"
 	{
 		"#format"	"id:s"
 		"en"		"Workshop ID {id}"
+		"ua"		"Workshop ID {id}"
+		"nl"		"Workshop-ID {id}"
 	}
 	"Courses - Workshop Approved"
 	{
 		"#format"	"id:s,date:s"
 		"en"		"Workshop ID {id}, approved {date}"
+		"ua"		"Workshop ID {id}, схвалено {date}"
+		"nl"		"Workshop-ID {id}, goedgekeurd {date}"
 	}
 	"Course Info Header - Name"
 	{
@@ -274,6 +312,7 @@
 		"ua"		"Назва"
 		"es"		"Nombre"
 		"ko"		"이름"
+		"nl"		"Naam"
 	}
 	"Course Info Header - Mappers"
 	{
@@ -284,6 +323,7 @@
 		"ua"		"Мапери"
 		"es"		"Mapeadores"
 		"ko"		"제작자"
+		"nl"		"Mappers"
 	}
 	"Course Info Header - Tier (Vanilla)"
 	{
@@ -291,9 +331,10 @@
 		"chi"		"Tier (Vanilla)"
 		"zho"		"Tier (Vanilla)"
 		"ru"		"Tier (Vanilla)"
-		"ua"		"Складність (Vanilla)"
+		"ua"		"Tier (Vanilla)"
 		"es"		"Nivel (Vanilla)"
 		"ko"		"티어 (Vanilla)"
+		"nl"		"Tier (Vanilla)"
 	}
 	"Course Info Header - Tier (Classic)"
 	{
@@ -301,9 +342,10 @@
 		"chi"		"Tier (Classic)"
 		"zho"		"Tier (Classic)"
 		"ru"		"Tier (Classic)"
-		"ua"		"Складність (Classic)"
+		"ua"		"Tier (Classic)"
 		"es"		"Nivel (Classic)"
 		"ko"		"티어 (Classic)"
+		"nl"		"Tier (Classic)"
 	}
 	"Course Info Header - State (Vanilla)"
 	{
@@ -314,6 +356,7 @@
 		"ua"		"Статус (Vanilla)"
 		"es"		"Estado (Vanilla)"
 		"ko"		"상태 (Vanilla)"
+		"nl"		"Status (Vanilla)"
 	}
 	"Course Info Header - State (Classic)"
 	{
@@ -324,6 +367,7 @@
 		"ua"		"Статус (Classic)"
 		"es"		"Estado (Classic)"
 		"ko"		"상태 (Classic)"
+		"nl"		"Status (Classic)"
 	}
 
 	"Course Data Unavailable"
@@ -336,6 +380,7 @@
 		"ua"		"{darkred}Неможливо отримати дані про курс {default}{course}{darkred}."
 		"es"		"{darkred}Datos del curso {default}{course}{darkred} inaccesibles."
 		"ko"		"{darkred}코스 {default}{course}{darkred}의 데이터를 가져올 수 없습니다."
+		"nl"		"{darkred}Gegevens voor route {default}{course}{darkred} kunnen niet worden opgehaald."
 	}
 
 	"Tier Info"
@@ -349,5 +394,6 @@
 		"ua"		"{default}{course}{grey} ({purple}{state}{grey}) - Tier {yellow}{tier_nub}{grey}/{blue}{tier_pro}{grey}{description}"
 		"es"		"{default}{course}{grey} ({purple}{state}{grey}) - Nivel {yellow}{tier_nub}{grey}/{blue}{tier_pro}{grey}{description}"
 		"ko"		"{default}{course}{grey} ({purple}{state}{grey}) - 티어 {yellow}{tier_nub}{grey}/{blue}{tier_pro}{grey}{description}"
+		"nl"		"{default}{course}{grey} ({purple}{state}{grey}) - Tier {yellow}{tier_nub}{grey}/{blue}{tier_pro}{grey}{description}"
 	}
 }

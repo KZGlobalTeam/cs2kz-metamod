@@ -17,6 +17,7 @@
 		"de"		"{grey}Du wirst jetzt regelmäßig zufällige Tipps im Chat sehen."
 		"ko"		"{grey}이제 주기적으로 채팅에서 랜덤 팁을 볼 수 있습니다."
 		"lv"		"{grey}Tagad tu regulāri redzēsi nejaušus padomus čatā."
+		"nl"		"{grey}Je krijgt nu regelmatig willekeurige tips te zien in de chat."
 	}
 	"Option - Tips - Disable"
 	{
@@ -34,122 +35,179 @@
 		"de"		"{grey}Du wirst jetzt keine zufälligen Tipps mehr im Chat sehen."
 		"ko"		"{grey}이제 채팅에서 주기적으로 랜덤 팁이 표시되지 않습니다."
 		"lv"		"{grey}Tu vairs neredzēsi nejaušus padomus čatā regulāri."
+		"nl"		"{grey}Je krijgt geen willekeurige tips meer te zien in de chat."
 	}
 
 	// =====[ WELCOME WINDOW ]=====
 	"Welcome - Unavailable"
 	{
 		"en"		"{grey}The tutorial window couldn't open."
+		"ua"		"{grey}Не вдалося відкрити вікно посібника."
+		"nl"		"{grey}Het tutorialvenster kon niet worden geopend."
 	}
 	"Welcome - Title"
 	{
 		"en"		"Welcome to CS2KZ"
+		"ua"		"Ласкаво просимо до CS2KZ"
+		"nl"		"Welkom bij CS2KZ"
 	}
 	"Welcome - Intro"
 	{
 		"en"		"KreedZ (KZ) is a movement game mode. Climb and navigate through obstacle courses using techniques like bunnyhopping and strafing."
+		"ua"		"KreedZ (KZ) - це режим про вміння пересуватися (мувмент). Підіймайся та долай перешкоди, використовуючи такі техніки, як баніхоп та стрейфи."
+		"nl"		"KreedZ (KZ) is een gamemodus waarin beweging centraal staat. Klim en navigeer door hindernisbanen met technieken zoals bunnyhoppen en strafen."
 	}
 	"Welcome - Goal"
 	{
 		"en"		"Leave the start zone to start the timer, then reach the end zone as fast as possible."
+		"ua"		"Покиньте стартову зону, щоб запустити таймер, а потім досягніть кінцевої зони якомога швидше."
+		"nl"		"Verlaat het startgebied om de timer te starten en bereik vervolgens zo snel mogelijk het eindgebied."
 	}
 	"Welcome - Mode Title"
 	{
 		"en"		"Choose a Mode"
+		"ua"		"Оберіть режим"
+		"nl"		"Kies een modus"
 	}
 	"Welcome - Mode Lead"
 	{
 		"en"		"Pick your preferred mode."
+		"ua"		"Оберіть бажаний режим."
+		"nl"		"Kies de modus die je voorkeur heeft."
 	}
 	"Welcome - Mode Classic"
 	{
 		"en"		"Classic"
+		"ua"		"Класичний (Classic)"
+		"nl"		"Classic"
 	}
 	"Welcome - Mode Classic Text"
 	{
 		"en"		"The fast paced default mode for CS2KZ, with prestrafe, consistent bunnyhops and 128 tick emulation. Most KZ maps are made for this mode."
+		"ua"		"Швидкий стандартний режим для CS2KZ з престрейфом, стабільним баніхопом та емуляцією 128 тіку. Більшість мап KZ створено для цього режиму."
+		"nl"		"De snelle standaardmodus van CS2KZ, met prestrafes, consistente bunnyhops en 128-tick-emulatie. De meeste KZ-maps zijn voor deze modus gemaakt."
 	}
 	"Welcome - Mode Vanilla"
 	{
 		"en"		"Vanilla"
+		"ua"		"Ваніла (Vanilla)"
+		"nl"		"Vanilla"
 	}
 	"Welcome - Mode Vanilla Text"
 	{
 		"en"		"More challenging. Identical to competitive CS2 movement. Some courses might not be possible on this mode."
+		"ua"		"Складніший режим. Механіка руху (мувменту) повністю ідентична змагальному CS2. Деякі курси можуть бути непрохідними в цьому режимі."
+		"nl"		"Een uitdagendere modus die identiek is aan de bewegingsmechanieken van competitief CS2. Sommige routes zijn mogelijk niet haalbaar in deze modus."
 	}
 	"Welcome - Mode Later"
 	{
 		// Follows "Type [/mode]".
 		"en"		"to switch at any time."
+		"ua"		", щоб змінити режим в будь-який час."
+		"nl"		"om op elk moment te kunnen wisselen."
 	}
 	"Welcome - Radio Title"
 	{
 		"en"		"Teleport Menu"
+		"ua"		"Телепорт меню"
+		"nl"		"Teleporteermenu"
 	}
 	"Welcome - Radio Press"
 	{
 		// Followed by the radio1 command and the player's key for it: "Press the key bound to [radio1] ([X])".
 		"en"		"Press the key bound to"
+		"ua"		"Натисніть клавішу, яка відповідає"
+		"nl"		"Druk op de toets die is gekoppeld aan"
 	}
 	"Welcome - Radio Open"
 	{
 		"en"		"to open the teleport menu, then pick an option with its number key."
+		"ua"		", щоб відкрити телепорт меню, а потім оберіть опцію за її номером."
+		"nl"		"om het teleporteermenu te openen. Kies vervolgens een optie met de bijbehorende nummertoets."
 	}
 	"Welcome - Radio Save"
 	{
 		"en"		"Save a checkpoint where you stand, and teleport back to it when you fall."
+		"ua"		"Робіть чекпоїнт на місці, де стоїте, і повертайтеся до нього телепортом у разі падіння."
+		"nl"		"Sla een checkpoint op je huidige locatie op en teleporteer ernaar terug wanneer je valt."
 	}
 	"Welcome - Radio Runs"
 	{
 		"en"		"A run without teleports counts as PRO; one with them counts as TP."
+		"ua"		"Проходження без телепортацій рахується як PRO; з ними - як TP."
+		"nl"		"Een run zonder teleports telt als PRO; een run met teleports telt als TP."
 	}
 	"Welcome - Commands Title"
 	{
 		"en"		"Useful Commands"
+		"ua"		"Корисні команди"
+		"nl"		"Handige commando's"
 	}
 	"Welcome - Commands Lead"
 	{
 		"en"		"Type these in chat. New to KZ? Start on tier 1 and 2 courses."
+		"ua"		"Напишіть ці команди в чаті. Новачок у KZ? Почніть свій шлях на легших мапах — tier 1 та 2."
+		"nl"		"Typ deze commando's in de chat. Nieuw met KZ? Begin dan met routes van tier 1 en 2."
 	}
 	"Welcome - Command Restart"
 	{
 		"en"		"Go back to the start"
+		"ua"		"Повернутися на старт"
+		"nl"		"Ga terug naar het startpunt"
 	}
 	"Welcome - Command Noclip"
 	{
 		"en"		"Enable noclip"
+		"ua"		"Увімкнути noclip"
+		"nl"		"Schakel noclip in"
 	}
 	"Welcome - Command Courses"
 	{
 		"en"		"Show a list of courses"
+		"ua"		"Показати список курсів"
+		"nl"		"Bekijk een lijst met routes"
 	}
 	"Welcome - Command Options"
 	{
 		"en"		"Open the settings"
+		"ua"		"Відкрити налаштування"
+		"nl"		"Open de instellingen"
 	}
 	"Welcome - Command PB"
 	{
 		"en"		"Show your best time"
+		"ua"		"Показати ваш найкращий час"
+		"nl"		"Bekijk je persoonlijk record"
 	}
 	"Welcome - Command WR"
 	{
 		"en"		"Show the records for this course"
+		"ua"		"Показати рекорди для цього курсу"
+		"nl"		"Bekijk de records voor deze route"
 	}
 	"Welcome - Command Hide"
 	{
 		"en"		"Hide other players"
+		"ua"		"Приховати інших гравців"
+		"nl"		"Verberg andere spelers"
 	}
 	"Welcome - More Type"
 	{
 		// "Type [/help] for every command, or [/tutorial] to see this again."
 		"en"		"Type"
+		"ua"		"Введіть"
+		"nl"		"Typ"
 	}
 	"Welcome - More Help"
 	{
 		"en"		"for every command, or"
+		"ua"		", щоб переглянути всі команди, або"
+		"nl"		"voor alle beschikbare commando's, of"
 	}
 	"Welcome - More Again"
 	{
 		"en"		"to see this again."
+		"ua"		", щоб переглянути цей посібник знову."
+		"nl"		"om dit opnieuw te bekijken."
 	}
 }

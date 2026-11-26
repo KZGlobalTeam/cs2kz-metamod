@@ -18,6 +18,7 @@
 		"pl"		"{lime}{player_name}{grey} na {default}{map_name}{grey} ({default}{course_name}{grey}) [{purple}{mode_style_text}{grey}]"
 		"ko"		"{lime}{player_name}{grey}님이 {default}{map_name}{grey} ({default}{course_name}{grey})에서 [{purple}{mode_style_text}{grey}]로 진행 중입니다."
 		"lv"		"{lime}{player_name}{grey} kartē {default}{map_name}{grey} ({default}{course_name}{grey}) [{purple}{mode_style_text}{grey}]"
+		"nl"		"{lime}{player_name}{grey} op {default}{map_name}{grey} ({default}{course_name}{grey}) [{purple}{mode_style_text}{grey}]"
 	}
 	"PB Time - No Times"
 	{
@@ -35,6 +36,7 @@
 		"pl"		"{grey}Nie ustanowiłeś tutaj jeszcze swojego czasu..."
 		"ko"		"{grey}아직 기록이 없습니다."
 		"lv"		"{grey}Tu vēl neesi iestatījis laiku..."
+		"nl"		"{grey}Je hebt nog geen tijd gezet... tot nu toe."
 	}
 	"PB Time - Overall (Server)"
 	{
@@ -54,6 +56,7 @@
 		"pl"		"{grey}Serwer: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Ogółem{grey}]"
 		"ko"		"{grey}서버: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}전체{grey}]"
 		"lv"		"{grey}Serveris: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Kopējais{grey}]"
+		"nl"		"{grey}Server: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Algemeen{grey}]"
 	}
 	"PB Time - Combined (Server)"
 	{
@@ -73,6 +76,7 @@
 		"pl"		"{grey}Serwer: {default}{time}{grey} [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Ogółem{grey}] [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey}]"
 		"ko"		"{grey}서버: {default}{time}{grey} [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}전체{grey}] [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey}]"
 		"lv"		"{grey}Serveris: {default}{time}{grey} [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Kopējais{grey}] [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey}]"
+		"nl"		"{grey}Server: {default}{time}{grey} [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Algemeen{grey}] [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey}]"
 	}
 	"PB Time - Split (Server)"
 	{
@@ -92,6 +96,7 @@
 		"pl"		"{grey}Serwer: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Overall{grey}] | {default}{time_pro}{grey} [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey}]"
 		"ko"		"{grey}서버: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}전체{grey}] | {default}{time_pro}{grey} [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey}]"
 		"lv"		"{grey}Serveris: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Kopējais{grey}] | {default}{time_pro}{grey} [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey}]"
+		"nl"		"{grey}Server: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Algemeen{grey}] | {default}{time_pro}{grey} [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey}]"
 	}
 	"PB Time - Overall Rankless (Server)"
 	{
@@ -111,6 +116,7 @@
 		"pl"		"{grey}Serwer: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}Ogółem{grey}]"
 		"ko"		"{grey}서버: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}전체{grey}]"
 		"lv"		"{grey}Serveris: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}Kopējais{grey}]"
+		"nl"		"{grey}Server: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}Algemeen{grey}]"
 	}
 	"PB Time - Combined Rankless (Server)"
 	{
@@ -130,6 +136,7 @@
 		"pl"		"{grey}Serwer: {default}{time}{grey} [{yellow}Ogółem{grey}/{blue}PRO{grey}]"
 		"ko"		"{grey}서버: {default}{time}{grey} [{yellow}전체{grey}/{blue}PRO{grey}]"
 		"lv"		"{grey}Serveris: {default}{time}{grey} [{yellow}Kopējais{grey}/{blue}PRO{grey}]"
+		"nl"		"{grey}Server: {default}{time}{grey} [{yellow}Algemeen{grey}/{blue}PRO{grey}]"
 	}
 	"PB Time - Split Rankless (Server)"
 	{
@@ -149,6 +156,7 @@
 		"pl"		"{grey}Serwer: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}Ogółem{grey}] | {default}{time_pro}{grey} [{blue}PRO{grey}]"
 		"ko"		"{grey}Server: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}Overall{grey}] | {default}{time_pro}{grey} [{blue}PRO{grey}]"
 		"lv"		"{grey}Serveris: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}Kopējais{grey}] | {default}{time_pro}{grey} [{blue}PRO{grey}]"
+		"nl"		"{grey}Server: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}Algemeen{grey}] | {default}{time_pro}{grey} [{blue}PRO{grey}]"
 	}
 	"PB Time - Overall (Global)"
 	{
@@ -165,6 +173,7 @@
 		"de"		"{grey}Global: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Gesamt{grey} / {purple}{points}{grey} Pkt]"
 		"es"		"{grey}Global: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}General{grey} / {purple}{points}{grey} pts]"
 		"ko"		"{grey}글로벌: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}전체{grey} / {purple}{points}{grey} pts]"
+		"nl"		"{grey}Globaal: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Algemeen{grey} / {purple}{points}{grey} ptn.]"
 	}
 	"PB Time - Combined (Global)"
 	{
@@ -181,6 +190,7 @@
 		"de"		"{grey}Global: {default}{time}{grey} [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Gesamt{grey} / {purple}{points}{grey} Pkt] [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey} / {purple}{points_pro}{grey} Pkt]"
 		"es"		"{grey}Global: {default}{time}{grey} [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}General{grey} / {purple}{points}{grey} pts] [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey} / {purple}{points_pro}{grey} pts]"
 		"ko"		"{grey}글로벌: {default}{time}{grey} [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}전체{grey} / {purple}{points}{grey} pts] [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey} / {purple}{points_pro}{grey} pts]"
+		"nl"		"{grey}Globaal: {default}{time}{grey} [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Algemeen{grey} / {purple}{points}{grey} ptn.] [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey} / {purple}{points_pro}{grey} ptn.]"
 	}
 	"PB Time - Split (Global)"
 	{
@@ -197,6 +207,7 @@
 		"de"		"{grey}Global: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Gesamt{grey} / {purple}{points}{grey} Pkt] | {default}{time_pro}{grey} [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey} / {purple}{points_pro}{grey} Pkt]"
 		"es"		"{grey}Global: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}General{grey} / {purple}{points}{grey} pts] | {default}{time_pro}{grey} [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey} / {purple}{points_pro}{grey} pts]"
 		"ko"		"{grey}글로벌: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}전체{grey} / {purple}{points}{grey} pts] | {default}{time_pro}{grey} [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey} / {purple}{points_pro}{grey} pts]"
+		"nl"		"{grey}Globaal: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [#{default}{rank}{grey}/{default}{max_rank}{grey} {yellow}Algemeen{grey} / {purple}{points}{grey} ptn.] | {default}{time_pro}{grey} [#{default}{rank_pro}{grey}/{default}{max_rank_pro}{grey} {blue}PRO{grey} / {purple}{points_pro}{grey} ptn.]"
 	}
 	"PB Time - Overall Rankless (Global)"
 	{
@@ -213,6 +224,7 @@
 		"de"		"{grey}Global: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}Gesamt{grey}]"
 		"es"		"{grey}Global: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}General{grey}]"
 		"ko"		"{grey}글로벌: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}전체{grey}]"
+		"nl"		"{grey}Globaal: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}Algemeen{grey}]"
 	}
 	"PB Time - Combined Rankless (Global)"
 	{
@@ -229,6 +241,7 @@
 		"de"		"{grey}Global: {default}{time}{grey} [{yellow}Gesamt{grey}/{blue}PRO{grey}]"
 		"es"		"{grey}Global: {default}{time}{grey} [{yellow}General{grey}/{blue}PRO{grey}]"
 		"ko"		"{grey}글로벌: {default}{time}{grey} [{yellow}전체{grey}/{blue}PRO{grey}]"
+		"nl"		"{grey}Globaal: {default}{time}{grey} [{yellow}Algemeen{grey}/{blue}PRO{grey}]"
 	}
 	"PB Time - Split Rankless (Global)"
 	{
@@ -245,6 +258,7 @@
 		"de"		"{grey}Global: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}Gesamt{grey}] | {default}{time_pro}{grey} [{blue}PRO{grey}]"
 		"es"		"{grey}Global: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}General{grey}] | {default}{time_pro}{grey} [{blue}PRO{grey}]"
 		"ko"		"{grey}글로벌: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}전체{grey}] | {default}{time_pro}{grey} [{blue}PRO{grey}]"
+		"nl"		"{grey}Globaal: {default}{time}{grey} ({yellow}{tp_count_text}{grey}) [{yellow}Algemeen{grey}] | {default}{time_pro}{grey} [{blue}PRO{grey}]"
 	}
 	"PB Request - Failed (Generic)"
 	{
@@ -262,6 +276,7 @@
 		"pl"		"{darkred}Nie udało się pobrać statystyk najlepszego wyniku."
 		"ko"		"{darkred}개인 최고 기록을을 가져오지 못했습니다."
 		"lv"		"{darkred}Neizdevās iegūt personīgo rekordu statistiku."
+		"nl"		"{darkred}Statistieken van persoonlijke records ophalen mislukt."
 	}
 	"PB Request - Invalid Course Name"
 	{
@@ -280,6 +295,7 @@
 		"pl"		"{darkred}Nie udało się pobrać statystyk najlepszego wyniku. {grey}(Nieprawidłowa nazwa trasy {default}{course_name}{grey})"
 		"ko"		"{darkred}개인 최고 기록 통계를 가져오지 못했습니다. {grey}(잘못된 코스 이름 {default}{course_name}{grey})"
 		"lv"		"{darkred}Neizdevās iegūt personīgos rekorda datus. {grey}(Nederīgs trases nosaukums {default}{course_name}{grey})"
+		"nl"		"{darkred}Statistieken van persoonlijke records ophalen mislukt. {grey}(Ongeldige routenaam {default}{course_name}{grey})"
 	}
 	"PB Command Usage"
 	{
@@ -297,6 +313,7 @@
 		"pl"		"{grey}Użycie: {default}kz_pb {purple}<c/course/map/mode/p/player/s/style=...>{grey}. Sprawdź konsolę, aby uzyskać szczegóły!"
 		"ko"		"{grey}사용법: {default}kz_pb {purple}<c/course/map/mode/p/player/s/style=...>{grey}. 자세한 내용은 콘솔을 확인하세요!"
 		"lv"		"{grey}Pielietojums: {default}kz_pb {purple}<c/course/map/mode/p/player/s/style=...>{grey}. Detalizēta informācija konsolē!"
+		"nl"		"{grey}Gebruik: {default}kz_pb {purple}<c/course/map/mode/p/player/s/style=...>{grey}. Kijk in de console voor details!"
 	}
 	"PB Command Usage - Console"
 	{
@@ -314,5 +331,6 @@
 		"pl"		"Użycie: kz_pb <c/course/map/mode/p/player/s/style=...>\nPrzykład: \"kz_pb map=kz_map p=Gracz c=Main style=ABH\"\nAby nie podawać stylu, użyj \"style=none\"."
 		"ko"		"사용법: kz_pb <c/course/map/mode/p/player/s/style=...>\n예시: \"kz_pb map=kz_map p=Player c=Main style=ABH\"\n스타일을 지정하지 않으려면 \"style=none\"을 사용하세요."
 		"lv"		"Pielietojums: kz_pb <c/course/map/mode/p/player/s/style=...>\nPiemērs: \"kz_pb map=kz_map p=Player c=Main style=ABH\"\nLai nenorādītu stilu, izmanto \"style=none\"."
+		"nl"		"Gebruik: kz_pb <c/course/map/mode/p/player/s/style=...>\nVoorbeeld: \"kz_pb map=kz_map p=Player c=Main style=ABH\"\nGebruik \"style=none\" om geen stijl op te geven."
 	}
 }

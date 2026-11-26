@@ -18,6 +18,7 @@
 		"de"		"{grey}Du hast Deine Sprache auf {default}{language}{grey} umgestellt."
 		"ko"		"{grey}언어가 {default}{language}{grey}로 변경되었습니다."
 		"lv"		"{grey}Tu nomainīji valodu uz {default}{language}{grey}."
+		"nl"		"{grey}Je hebt je taal gewijzigd naar {default}{language}{grey}."
 	}
 
 	"Language Command Usage"
@@ -26,6 +27,7 @@
 		"zho"		"{grey}用法：{default}kz_language <language>{grey}。"
 		"ua"		"{grey}Використання: {default}kz_language <мова>{grey}."
 		"ru"		"{grey}Применение: {default}kz_language <язык>{grey}."
+		"nl"		"{grey}Gebruik: {default}kz_language <taal>{grey}."
 	}
 
 	"Menu Hint"
@@ -42,6 +44,7 @@
 		"lv"		"{lime}{lime}Menu tagad ir pieejams, izmantojot radio taustiņu īsceļus vai {default}radio{lime}/{default}radio1{lime}/{default}radio2{lime} konsoles komandas!"
 		"de"		"{lime}Menüs sind jetzt über deine Radio-Hotkeys oder die Konsolenbefehle {default}radio{lime}/{default}radio1{lime}/{default}radio2{lime} verfügbar!"
 		"es"		"{lime}¡Los menús ahora son accesibles mediante las teclas de radio, o con el comando {default}radio{lime}/{default}radio1{lime}/{default}radio2{lime} en consola!"
+		"nl"		"{lime}Menu's zijn nu toegankelijk via je radiosneltoetsen, of via de consolecommando's {default}radio{lime}/{default}radio1{lime}/{default}radio2{lime}!"
 	}
 
 	"Language Change - Manual Menu Change Required"
@@ -57,5 +60,6 @@
 		"lv"		"{yellow}Lūdzu, pārslēdzies atpakaļ uz serveri, lai piemērotu izvēlnes izmaiņas."
 		"de"		"{yellow}Bitte verbinde dich erneut mit dem Server, um die Änderungen am Menü zu übernehmen."
 		"es"		"{yellow}Por favor, vuelva a conectarse al servidor para aplicar los cambios en el menú."
+		"nl"		"{yellow}Verbind opnieuw met de server om de wijzigingen in het menu toe te passen."
 	}
 }
