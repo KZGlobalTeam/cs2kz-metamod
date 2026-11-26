@@ -16,6 +16,7 @@
 		"de"	"{grey}Verwende {default}/panel {grey}, um den Panel in der Mitte deines Bildschirms ein- oder auszuschalten."
 		"ko"	"{grey}스크린 중앙의 패널을 전환하려면 {default}/panel{grey}을 사용하세요."
 		"lv"	"{grey}Izmanto {default}/panel {grey}, lai ieslēgtu/izslēgtu paneli ekrāna vidū."
+		"nl"		"{grey}Gebruik {default}/panel {grey}om het paneel in het midden van je scherm in of uit te schakelen."
 	}
 	"Tip - kz_hidelegs"
 	{
@@ -33,6 +34,7 @@
 		"de"	"{grey}Du kannst die Sichtbarkeit deiner Beine umschalten, indem du{default} /hidelegs{grey} eingibst."
 		"ko"	"{grey}다리 표시 여부를 전환하려면 {default}/hidelegs{grey}를 입력하세요."
 		"lv"	"{grey}Tu vari izslēgt kāju redzamību, rakstot{default} /hidelegs{grey}."
+		"nl"		"{grey}Je kunt je benen verbergen of weergeven met {default}/hidelegs{grey}."
 	}
 	"Tip - kz_hide"
 	{
@@ -50,6 +52,7 @@
 		"de"	"{grey}Möchtest du andere Spieler nicht sehen? Verwende {default}/hide{grey}."
 		"ko"	"{grey}다른 플레이어를 보고 싶지 않으면 {default}/hide{grey}를 사용하세요."
 		"lv"	"{grey}Nevēlies redzēt citus spēlētājus? Izmanto {default}/hide{grey}."
+		"nl"		"{grey}Wil je andere spelers niet zien? Gebruik {default}/hide{grey}."
 	}
 	"Tip - kz_hideweapon"
 	{
@@ -67,6 +70,7 @@
 		"de"	"{grey}Gib {default}/hideweapon {grey} ein, um die Sichtbarkeit deiner Waffe umzuschalten."
 		"ko"	"{grey}무기 표시 여부를 전환하려면 {default}/hideweapon{grey}을 입력하세요."
 		"lv"	"{grey}Rakstot {default}/hideweapon {grey}, tu vari izslēgt ieroča redzamību."
+		"nl"		"{grey}Typ {default}/hideweapon {grey}om je wapen te verbergen of weer te geven."
 	}
 	"Tip - kz_fov"
 	{
@@ -77,5 +81,6 @@
 		"ua"	"{grey}Напишіть в чаті {default}/fov {purple}<значення> {grey}, щоб змінити ваш FOV."
 		"es"	"{grey}Usa {default}/fov {purple}<valor> {grey}para cambiar tu campo de visión (FOV)."
 		"ko"		"{grey}FOV를 변경하려면 {default}/fov {purple}<값>{grey}을 사용하세요."
+		"nl"		"{grey}Gebruik {default}/fov {purple}<waarde> {grey}om je gezichtsveld aan te passen."
 	}
 }

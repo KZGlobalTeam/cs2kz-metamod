@@ -12,6 +12,7 @@
 		"ko"		"{grey}사용법: {default}kz_spec <@me/name>{grey}."
 		"de"		"{grey}Verwendung: {default}kz_spec <@me/name>{grey}."
 		"es"		"{grey}Uso: {default}kz_spec <@me/nombre>{grey}."
+		"nl"		"{grey}Gebruik: {default}kz_spec <@me/naam>{grey}."
 	}
 	"Spectator List (None)"
 	{
@@ -25,6 +26,7 @@
 		"ko"		"{grey}지금은 관전중인 인원이 없습니다."
 		"de"		"{grey}Derzeit beobachtet dich niemand."
 		"es"		"{grey}Actualmente no hay espectadores."
+		"nl"		"{grey}Er is op dit moment niemand aan het spectaten."
 	}
 	"Spectator List"
 	{
@@ -40,6 +42,7 @@
 		"ko"		"{grey}관전중인 인원 ({default}{count}{grey}) - {players}"
 		"de"		"{grey}Alle Zuschauer ({default}{count}{grey}) - {players}"
 		"es"		"{grey}Espectadores en el servidor ({default}{count}{grey}) - {players}"
+		"nl"		"{grey}Alle spectators ({default}{count}{grey}) - {players}"
 	}
 	"Target Spectator List (None)"
 	{
@@ -55,6 +58,7 @@
 		"ko"		"{grey}지금은 {lime}{name}{grey} 님을 관전중인 인원이 없습니다."
 		"de"		"{grey}Derzeit beobachtet niemand {lime}{name}{grey}."
 		"es"		"{grey}Actualmente no hay ningún espectador mirando a {lime}{name}{grey}."
+		"nl"		"{grey}Er is op dit moment niemand die {lime}{name}{grey} spectate."
 	}
 	"Target Spectator List"
 	{
@@ -70,6 +74,7 @@
 		"ko"		"{lime}{name}{grey} 님을 관전중인 인원 ({default}{count}{grey}) - {players}"
 		"de"		"{grey}Zuschauer von {lime}{name}{grey} ({default}{count}{grey}) - {players}"
 		"es"		"{grey}Espectadores de {lime}{name}{grey} ({default}{count}{grey}) - {players}"
+		"nl"		"{grey}Spectaten van {lime}{name}{grey} ({default}{count}{grey}) - {players}"
 	}
 	"Spectate Failure (Generic)"
 	{
@@ -83,6 +88,7 @@
 		"ko"		"{darkred}지금은 관전 모드로 전환할 수 없습니다."
 		"de"		"{darkred}Du kannst derzeit nicht in den Zuschauermodus wechseln."
 		"es"		"{darkred}Actualmente no puedes cambiar a modo espectador."
+		"nl"		"{darkred}Je kunt op dit moment niet naar de spectatormodus."
 	}
 	"Spectate Failure (Dead)"
 	{
@@ -96,11 +102,13 @@
 		"ko"		"{darkred}해당 플레이어는 살아있는 상태가 아닙니다."
 		"de"		"{darkred}Der von dir angegebene Spieler ist nicht am Leben."
 		"es"		"{darkred}El jugador especificado no esta vivo."
+		"nl"		"{darkred}De opgegeven speler leeft niet."
 	}
 	"Spectate Failure (Not In Control)"
 	{
 		"en"		"{darkred}The player you specified is not controlling their player."
 		"ua"		"{darkred}Вказаний вами гравець не контролює свого персонажа."
+		"nl"		"{darkred}De opgegeven speler bestuurt zijn speler niet."
 	}
 	"Spectate Failure (Player Not Found)"
 	{
@@ -114,10 +122,12 @@
 		"ko"		"{darkred}해당하는 플레이어를 찾지 못하였습니다."
 		"de"		"{darkred}Der von dir angegebene Spieler konnte nicht gefunden werden."
 		"es"		"{darkred}No se puede encontrar el jugador especificado."
+		"nl"		"{darkred}De opgegeven speler kan niet worden gevonden."
 	}
 	"Spectate - Picker Title"
 	{
 		"en"		"Spectate Player"
 		"ua"		"Спостерігати за гравцем"
+		"nl"		"Speler spectaten"
 	}
 }

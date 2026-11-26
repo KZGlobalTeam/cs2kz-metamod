@@ -10,6 +10,7 @@
 		"de"		"{grey}Gib {default}!replay {grey}ein, um die schnellsten Runs des Servers anzusehen."
 		"pl"		"{grey}Wpisz {default}!replay {grey}, aby obejrzeć najszybsze przejazdy serwera."
 		"ko"		"{grey}서버의 가장 빠른 주행을 보려면 {default}!replay{grey}를 입력하세요."
+		"nl"		"{grey}Typ {default}!replay {grey}om de snelste runs op de server te bekijken."
 	}
 	"Tip - kz_replays"
 	{
@@ -21,6 +22,7 @@
 		"de"		"{grey}Gib {default}!replays {grey}ein, um alle verfügbaren Replays auf dem Server anzuzeigen."
 		"pl"		"{grey}Wpisz {default}!replays {grey}, aby wyświetlić dostępne powtórki na serwerze."
 		"ko"		"{grey}서버에서 사용 가능한 리플레이 목록을 보려면 {default}!replays{grey}를 입력하세요."
+		"nl"		"{grey}Typ {default}!replays {grey}om een lijst met beschikbare replays op de server te bekijken."
 	}
 	"Tip - kz_rpgoto"
 	{
@@ -32,6 +34,7 @@
 		"de"		"{grey}Gib {default}!rpgoto <time> {grey}ein, um zu einer bestimmten Zeit im Replay zu springen."
 		"pl"		"{grey}Wpisz {default}!rpgoto <czas> {grey}, aby przejść do określonego momentu w powtórce."
 		"ko"		"{grey}리플레이의 특정 시간으로 이동하려면 {default}!rpgoto <시간>{grey}을 입력하세요."
+		"nl"		"{grey}Typ {default}!rpgoto <tijd> {grey}om naar een specifiek tijdstip in de replay te gaan."
 	}
 	"Tip - kz_rpgototick"
 	{
@@ -43,6 +46,7 @@
 		"de"		"{grey}Gib {default}!rpgototick <tick> {grey}ein, um zu einem bestimmten Tick im Replay zu springen."
 		"pl"		"{grey}Wpisz {default}!rpgototick <tick> {grey}, aby przejść do określonego ticka w powtórce."
 		"ko"		"{grey}리플레이의 특정 틱으로 이동하려면 {default}!rpgototick <틱>{grey}을 입력하세요."
+		"nl"		"{grey}Typ {default}!rpgototick <tick> {grey}om naar een specifieke tick in de replay te gaan."
 	}
 	"Tip - kz_rpinfo"
 	{
@@ -54,6 +58,7 @@
 		"de"		"{grey}Gib {default}!rpinfo {grey}ein, um Informationen zum aktuellen Replay anzuzeigen."
 		"pl"		"{grey}Wpisz {default}!rpinfo {grey}, aby wyświetlić informacje o aktualnej powtórce."
 		"ko"		"{grey}현재 리플레이에 대한 정보를 보려면 {default}!rpinfo{grey}를 입력하세요."
+		"nl"		"{grey}Typ {default}!rpinfo {grey}om informatie over de huidige replay te bekijken."
 	}
 	"Tip - kz_rppause"
 	{
@@ -65,6 +70,7 @@
 		"de"		"{grey}Gib {default}!rppause {grey}ein, um das Replay zu pausieren oder fortzusetzen."
 		"pl"		"{grey}Wpisz {default}!rppause {grey}, aby wstrzymać lub wznowić odtwarzanie powtórki."
 		"ko"		"{grey}리플레이 재생을 일시 정지하거나 재개하려면 {default}!rppause{grey}를 입력하세요."
+		"nl"		"{grey}Typ {default}!rppause {grey}om de replay te pauzeren of te hervatten."
 	}
 	"Tip - kz_rploadprogress"
 	{
@@ -76,6 +82,7 @@
 		"de"		"{grey}Gib {default}!rploadprogress {grey}ein, um den Ladefortschritt eines Replays zu prüfen."
 		"pl"		"{grey}Wpisz {default}!rploadprogress {grey}, aby sprawdzić postęp ładowania powtórki."
 		"ko"		"{grey}리플레이 로딩 진행 상황을 확인하려면 {default}!rploadprogress{grey}를 입력하세요."
+		"nl"		"{grey}Typ {default}!rploadprogress {grey}om de laadvoortgang van een replay te bekijken."
 	}
 	"Tip - kz_rpcancelload"
 	{
@@ -87,6 +94,7 @@
 		"de"		"{grey}Gib {default}!rpcancelload {grey}ein, um das Laden eines Replays abzubrechen."
 		"pl"		"{grey}Wpisz {default}!rpcancelload {grey}, aby anulować ładowanie powtórki."
 		"ko"		"{grey}리플레이 로딩을 취소하려면 {default}!rpcancelload{grey}를 입력하세요."
+		"nl"		"{grey}Typ {default}!rpcancelload {grey}om het laden van een replay te annuleren."
 	}
 	"Tip - kz_rpseek"
 	{
@@ -98,6 +106,7 @@
 		"de"		"{grey}Gib {default}!rpseek <+/-time> {grey}ein, um relativ im Replay vor- oder zurückzuspringen."
 		"pl"		"{grey}Wpisz {default}!rpseek <+/-czas> {grey}, aby względnie przeskoczyć do określonego momentu w powtórce."
 		"ko"		"{grey}리플레이에서 상대적인 시간으로 이동하려면 {default}!rpseek <+/-시간>{grey}을 입력하세요."
+		"nl"		"{grey}Typ {default}!rpseek <+/-tijd> {grey}om relatief vooruit of achteruit te spoelen in de replay."
 	}
 	"Tip - kz_rpsave"
 	{
@@ -109,6 +118,7 @@
 		"de"		"{grey}Gib {default}!rpsave <seconds> {grey}ein, um ein manuelles Replay bis zur angegebenen Länge zu speichern."
 		"pl"		"{grey}Wpisz {default}!rpsave <sekundy> {grey}, aby zapisać ręcznie powtórkę o określonej długości."
 		"ko"		"{grey}지정된 시간까지의 과거 게임플레이를 수동으로 저장하려면 {default}!rpsave <초>{grey}를 입력하세요."
+		"nl"		"{grey}Typ {default}!rpsave <seconden> {grey}om een replay van maximaal het opgegeven aantal seconden handmatig op te slaan."
 	}
 	"Tip - Replay Storage Policy"
 	{
@@ -120,6 +130,7 @@
 		"de"		"{grey}Ältere oder weniger wichtige Replays können automatisch gelöscht werden, um Speicherplatz freizugeben. Neue manuelle Replays können ältere überschreiben."
 		"pl"		"{grey}Starsze lub mniej ważne powtórki mogą być automatycznie usuwane, aby zwolnić miejsce na serwerze. Zapisanie nowych powtórek ręcznie może nadpisać poprzednie."
 		"ko"		"{grey}오래되거나 덜 중요한 리플레이는 서버 공간 확보를 위해 자동으로 삭제될 수 있습니다. 새 수동 리플레이를 저장하면 이전 것을 덮어쓸 수 있습니다."
+		"nl"		"{grey}Oudere of minder belangrijke replays kunnen automatisch worden verwijderd om serverruimte vrij te maken. Nieuwe handmatig opgeslagen replays kunnen eerdere replays overschrijven."
 	}
 	"Tip - kz_rphidelegs"
 	{
@@ -131,5 +142,6 @@
 		"de"		"{grey}Gib {default}!rphidelegs {grey}ein, um die Sichtbarkeit der Beine des Replay-Bots (1st Person) umzuschalten."
 		"pl"		"{grey}Wpisz {default}!rphidelegs {grey}, aby przełączać widoczność nóg bota powtórki w widoku z pierwszej osoby."
 		"ko"		"{grey}리플레이 봇의 1인칭 다리 표시 여부를 전환하려면 {default}!rphidelegs{grey}를 입력하세요."
+		"nl"		"{grey}Typ {default}!rphidelegs {grey}om de benen van de replay-bot in first person weer te geven of te verbergen."
 	}
 }

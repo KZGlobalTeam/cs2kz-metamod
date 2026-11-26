@@ -8,6 +8,7 @@
 		"ua"		"{grey}Використання: kz_paintcolor <назва кольору> or <R> <G> <B> [A]\nДоступні кольори: red, white, black, blue, brown, green, yellow, purple"
 		"ru"		"{grey}Применение: kz_paintcolor <название цвета> или <R> <G> <B> [A]\nДоступные цвета: red, white, black, blue, brown, green, yellow, purple"
 		"ko"		"{grey}사용법: kz_paintcolor <색상 이름> 또는 <R> <G> <B> [A]\n사용 가능한 색상: red(빨강), white(흰색), black(검정), blue(파랑), brown(갈색), green(초록), yellow(노랑), purple(보라)"
+		"nl"		"{grey}Gebruik: kz_paintcolor <kleurnaam> of <R> <G> <B> [A]\nBeschikbare kleuren: red, white, black, blue, brown, green, yellow, purple"
 	}
 	"Current Paint Color"
 	{
@@ -18,6 +19,7 @@
 		"ua"		"{grey}Колір мітки: {default}{name} {grey}(RGB: {default}{r}{grey}, {default}{g}{grey}, {default}{b}{grey})"
 		"ru"		"{grey}Ваш цвет краски: {default}{name} {grey}(RGB: {default}{r}{grey}, {default}{g}{grey}, {default}{b}{grey})"
 		"ko"		"{grey}현재 페인트 색상: {default}{name} {grey}(RGB: {default}{r}{grey}, {default}{g}{grey}, {default}{b}{grey})"
+		"nl"		"{grey}Huidige verfkleur: {default}{name} {grey}(RGB: {default}{r}{grey}, {default}{g}{grey}, {default}{b}{grey})"
 	}
 	"Paint Color Set"
 	{
@@ -28,6 +30,7 @@
 		"ua"		"{grey}Колір мітки встановлено на {default}{name}{grey}."
 		"ru"		"{grey}Выбранный цвет краски: {default}{name}{grey}."
 		"ko"		"{grey}페인트 색상이 {default}{name}{grey}(으)로 설정되었습니다."
+		"nl"		"{grey}Verfkleur ingesteld op {default}{name}{grey}."
 	}
 	"Paint Color RGB Set"
 	{
@@ -38,6 +41,7 @@
 		"ua"		"{grey}Колір мітки встановлено на RGB({default}{r}{grey}, {default}{g}{grey}, {default}{b}{grey}, {default}{a}{grey})."
 		"ru"		"{grey}Выбранный цвет краски: RGB({default}{r}{grey}, {default}{g}{grey}, {default}{b}{grey}, {default}{a}{grey})."
 		"ko"		"{grey}페인트 색상이 RGB({default}{r}{grey}, {default}{g}{grey}, {default}{b}{grey}, {default}{a}{grey})로 설정되었습니다."
+		"nl"		"{grey}Verfkleur ingesteld op RGB({default}{r}{grey}, {default}{g}{grey}, {default}{b}{grey}, {default}{a}{grey})."
 	}
 	"Paint Size Command Usage"
 	{
@@ -47,6 +51,7 @@
 		"ua"		"{grey}Використання: kz_paintsize <розмір>\nРозмір має бути додатнім числом. За замовчуванням: 16"
 		"ru"		"{grey}Применение: kz_paintsize <размер>\nРазмер — положительное число. По умолчанию: 16"
 		"ko"		"{grey}사용법: kz_paintsize <크기>\n크기는 양수여야 합니다. 기본값: 16"
+		"nl"		"{grey}Gebruik: kz_paintsize <grootte>\nDe grootte moet een positief getal zijn. Standaard: 16"
 	}
 	"Current Paint Size"
 	{
@@ -57,6 +62,7 @@
 		"ua"		"{grey}Розмір кольорової мітки: {default}{size}{grey}."
 		"ru"		"{grey}Ваш размер метки краски: {default}{size}{grey}."
 		"ko"		"{grey}현재 페인트 크기: {default}{size}{grey}."
+		"nl"		"{grey}Huidige verfgrootte: {default}{size}{grey}."
 	}
 	"Paint Size Set"
 	{
@@ -67,6 +73,7 @@
 		"ua"		"{grey}Розмір кольорової мітки встановлено на {default}{size}{grey}."
 		"ru"		"{grey}Размер метки краски установлен: {default}{size}{grey}."
 		"ko"		"{grey}페인트 크기가 {default}{size}{grey}(으)로 설정되었습니다."
+		"nl"		"{grey}Verfgrootte ingesteld op {default}{size}{grey}."
 	}
 	"Paint Toggle Enabled"
 	{
@@ -76,6 +83,7 @@
 		"ua"		"{grey}Автоматична кольорова мітка {lime}увімкнена{grey}."
 		"ru"		"{grey}Автопокраска {lime}включена{grey}."
 		"ko"		"{grey}자동 페인트가 {lime}활성화{grey}되었습니다."
+		"nl"		"{grey}Automatisch verven is nu {lime}ingeschakeld{grey}."
 	}
 	"Paint Toggle Disabled"
 	{
@@ -85,6 +93,7 @@
 		"ua"		"{grey}Автоматична кольорова мітка {darkred}вимкнена{grey}."
 		"ru"		"{grey}Автопокраска {darkred}выключена{grey}."
 		"ko"		"{grey}자동 페인트가 {darkred}비활성화{grey}되었습니다."
+		"nl"		"{grey}Automatisch verven is nu {darkred}uitgeschakeld{grey}."
 	}
 	"Show Paint Enabled"
 	{
@@ -94,6 +103,7 @@
 		"ua"		"{grey}Тепер ви бачите кольорові мітки {default}всіх гравців{grey}."
 		"ru"		"{grey}Теперь вы видите краску {default}всех игроков{grey}."
 		"ko"		"{grey}이제 {default}모든 플레이어{grey}의 페인트를 볼 수 있습니다."
+		"nl"		"{grey}Je ziet nu de verf van {default}alle spelers{grey}."
 	}
 	"Show Paint Disabled"
 	{
@@ -103,5 +113,6 @@
 		"ua"		"{grey}Тепер ви бачите {default}лише свої{grey} кольрові мітки."
 		"ru"		"{grey}Теперь вы видите {default}только вашу краску{grey}."
 		"ko"		"{grey}이제 {default}자신의 페인트{grey}만 볼 수 있습니다."
+		"nl"		"{grey}Je ziet nu alleen {default}je eigen verf{grey}."
 	}
 }

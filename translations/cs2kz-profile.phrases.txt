@@ -4,116 +4,139 @@
 	{
 		"en"		"Joined On:"
 		"ua"		"Приєднався:"
+		"nl"		"Lid sinds:"
 	}
 	"Profile - Global Rank"
 	{
 		"en"		"Global Rank:"
 		"ua"		"Місце в світі:"
+		"nl"		"Globale rang:"
 	}
 	"Profile - Rating"
 	{
 		"en"		"Rating:"
 		"ua"		"Рейтинг:"
+		"nl"		"Rating:"
 	}
 	"Profile - Runs"
 	{
 		"en"		"Runs"
 		"ua"		"Проходження:"
+		"nl"		"Runs"
 	}
 	"Profile - Map"
 	{
 		"en"		"Map"
 		"ua"		"Мапа"
+		"nl"		"Map"
 	}
 	"Profile - Course"
 	{
 		"en"		"Course"
 		"ua"		"Курс"
+		"nl"		"Route"
 	}
 	"Profile - Tier"
 	{
 		"en"		"Tier"
 		"ua"		"Tier"
+		"nl"		"Tier"
 	}
 	"Profile - Pro Tier"
 	{
 		"en"		"Pro Tier"
 		"ua"		"Pro Tier"
+		"nl"		"Pro Tier"
 	}
 	"Profile - Overall Rank"
 	{
 		"en"		"Overall Rank"
 		"ua"		"Заг. місце"
+		"nl"		"Algemene rang"
 	}
 	"Profile - Pro Rank"
 	{
 		"en"		"Pro Rank"
 		"ua"		"Місце Pro"
+		"nl"		"Pro rang"
 	}
 	"Profile - Not Found"
 	{
 		"en"		"Player not found."
 		"ua"		"Гравця не знайдено."
+		"nl"		"Speler niet gevonden."
 	}
 	"Profile - Failed"
 	{
 		"en"		"Couldn't load the profile."
 		"ua"		"Не вдалося завантажити профіль."
+		"nl"		"Het profiel kon niet worden geladen."
 	}
 	"Profile - Copy Steam ID"
 	{
 		"en"		"Print Steam ID to chat and console"
 		"ua"		"Вивести Steam ID в чат і консоль"
+		"nl"		"Steam-ID in chat en console printen"
 	}
 	"Profile - Steam ID"
 	{
 		"#format"	"name:s,steamid64:s,steamid:s"
 		"en"		"{grey}Steam ID of {default}{name}{grey}: {default}{steamid64} {grey}({default}{steamid}{grey})"
 		"ua"		"{grey}Steam ID гравця {default}{name}{grey}: {default}{steamid64} {grey}({default}{steamid}{grey})"
+		"nl"		"{grey}Steam-ID van {default}{name}{grey}: {default}{steamid64} {grey}({default}{steamid}{grey})"
 	}
 	"Profile - Unavailable"
 	{
 		"en"		"{grey}Profiles need the global API or the server's database, and neither is available."
 		"ua"		"{grey}Для профілів потрібен глобальний API або база даних сервера, але нічого з цього недоступне"
+		"nl"		"{grey}Voor profielen is de globale API of de database van de server nodig, en geen van beide is beschikbaar."
 	}
 	"Profile - Window Unavailable"
 	{
 		"en"		"{grey}The profile window couldn't open."
 		"ua"		"{grey}Вікно профілю не вдалося відкрити."
+		"nl"		"{grey}Het profielvenster kon niet worden geopend."
 	}
 	"Leaderboard - Window Title"
 	{
 		"en"		"Leaderboard"
 		"ua"		"Таблиця лідерів"
+		"nl"		"Ranglijst"
 	}
 	"Leaderboard - Rating"
 	{
 		"en"		"Rating"
 		"ua"		"Рейтинг"
+		"nl"		"Rating"
 	}
 	"Leaderboard - Title"
 	{
 		"en"		"Title"
 		"ua"		"Назва"
+		"nl"		"Titel"
 	}
 	"Leaderboard - Window Failed"
 	{
 		"en"		"Couldn't load the leaderboard."
 		"ua"		"Не вдалося завантажити таблицю лідерів."
+		"nl"		"De ranglijst kon niet worden geladen."
 	}
 	"Leaderboard - Window None"
 	{
 		"en"		"No ranked players."
 		"ua"		"Немає рангованих гравців."
+		"nl"		"Geen gerangschikte spelers."
 	}
 	"Leaderboard - Unavailable"
 	{
 		"en"		"{grey}The leaderboard needs the global API and it isn't available."
 		"ua"		"{grey}Таблиця лідерів потребує глобального API, але воно недоступне."
+		"nl"		"{grey}Voor de ranglijst is de globale API nodig en die is niet beschikbaar."
 	}
 	"Leaderboard - Window Unavailable"
 	{
 		"en"		"{grey}The leaderboard window couldn't open."
 		"ua"		"{grey}Вікно таблиці лідерів не вдалося відкрити."
+		"nl"		"{grey}Het ranglijstvenster kon niet worden geopend."
 	}
 }

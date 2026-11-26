@@ -18,6 +18,7 @@
 		"de"		"{grey}Du hast ein Checkpoint gesetzt (#{default}{checkpoint_count}{grey})."
 		"ko"		"{grey}체크포인트를 만들었습니다 (#{default}{checkpoint_count}{grey})."
 		"lv"		"{grey}Tu esi izveidojis kontrolpunktu (#{default}{checkpoint_count}{grey})."
+		"nl"		"{grey}Je hebt een checkpoint gemaakt (#{default}{checkpoint_count}{grey})."
 	}
 	"Anti Checkpoint Area Warning"
 	{
@@ -35,6 +36,7 @@
 		"de"		"{yellow}Achtung{grey}: Checkpoint wurde in einem nicht-Checkpoint Bereich gesetzt."
 		"ko"		"{yellow}경고{grey}: 체크포인트가 비활성화된 구역에 생성되었습니다."
 		"lv"		"{yellow}Brīdinājums{grey}: Kontrolpunkts izveidots zonā, kur kontrolpunkti ir atslēgti."
+		"nl"		"{yellow}Waarschuwing{grey}: Checkpoint gemaakt in een gebied waar checkpoints zijn uitgeschakeld."
 	}
 	"Can't Checkpoint (Midair)"
 	{
@@ -52,6 +54,7 @@
 		"de"		"{darkred}Du kannst kein Checkpoint in der Luft machen."
 		"ko"		"{darkred}공중에서는 체크포인트를 만들 수 없습니다."
 		"lv"		"{darkred}Tu nevari iestatīt kontrolpunktu gaisā."
+		"nl"		"{darkred}Je kunt geen checkpoint maken in de lucht."
 	}
 	"Can't Checkpoint (Just Landed)"
 	{
@@ -69,6 +72,7 @@
 		"de"		"{darkred}Du kannst kein Checkpoint setzen weil du gerade gelanded bist."
 		"ko"		"{darkred}방금 착지했기 때문에 체크포인트를 만들 수 없습니다."
 		"lv"		"{darkred}Tu nevari iestatīt kontrolpunktu, jo tikko esi nosēdies."
+		"nl"		"{darkred}Je kunt geen checkpoint maken omdat je net geland bent."
 	}
 	"Can't Checkpoint (Anti Checkpoint Area)"
 	{
@@ -86,6 +90,7 @@
 		"de"		"{darkred}Du kannst in diesen Bereich kein Checkpoint setzen."
 		"ko"		"{darkred}이 구역에서는 체크포인트가 비활성화되어 있어 체크포인트를 만들 수 없습니다."
 		"lv"		"{darkred}Tu nevari iestatīt kontrolpunktu, jo kontrolpunkti šajā zonā ir atslēgti."
+		"nl"		"{darkred}Je kunt geen checkpoint maken omdat checkpoints in dit gebied zijn uitgeschakeld."
 	}
 	"Can't Teleport (No Checkpoints)"
 	{
@@ -103,6 +108,7 @@
 		"de"		"{darkred}Du kannst dich nicht teleportieren, da Du keinen Checkpoint festgelegt hast."
 		"ko"		"{darkred}체크포인트를 설정하지 않았기 때문에 텔레포트할 수 없습니다."
 		"lv"		"{darkred}Tu nevari teleportēties, jo neesi iestatījis kontrolpunktu."
+		"nl"		"{darkred}Je kunt niet teleporteren omdat je geen checkpoint hebt gemaakt."
 	}
 	"Can't Teleport (Map)"
 	{
@@ -120,6 +126,7 @@
 		"de"		"{darkred}Du kannst dich in diesem Bereich nicht zu Deinem Checkpoint teleportieren."
 		"ko"		"{darkred}이 구역에서는 체크포인트로 텔레포트할 수 없습니다."
 		"lv"		"{darkred}Tu nevari teleportēties uz saviem kontrolpunktiem šajā zonā."
+		"nl"		"{darkred}Je kunt in dit gebied niet naar je checkpoints teleporteren."
 	}
 	"Can't Teleport (Limit Reached)"
 	{
@@ -132,6 +139,7 @@
 		"de"		"{darkred}Du kannst nicht teleportieren, weil du dein Teleportationslimit erreicht hast."
 		"es"		"{darkred}No puedes teletransportarte porque has llegado al limite de teletransportes."
 		"ko"		"{darkred}텔레포트 한도에 도달하여 텔레포트할 수 없습니다."
+		"nl"		"{darkred}Je kunt niet teleporteren omdat je je teleportlimiet hebt bereikt."
 	}
 	"Can't Prev CP (No Checkpoints)"
 	{
@@ -149,6 +157,7 @@
 		"es"		"{darkred}No tienes checkpoints a los que volver."
 		"ko"		"{darkred}돌아갈 체크포인트가 없습니다."
 		"lv"		"{darkred}Tev nav neviena kontrolpunkta, uz kuru atgriezties."
+		"nl"		"{darkred}Je hebt geen checkpoints om naar terug te gaan."
 	}
 	"Can't Next CP (No Checkpoints)"
 	{
@@ -166,6 +175,7 @@
 		"de"		"{darkred}Es gibt keine Checkpoints, zu denen Du weitergehen kannst."
 		"ko"		"{darkred}앞으로 갈 체크포인트가 없습니다."
 		"lv"		"{darkred}Tev nav neviena kontrolpunkta, uz kuru doties uz priekšu."
+		"nl"		"{darkred}Je hebt geen checkpoints om naar vooruit te gaan."
 	}
 	"Can't Undo (No Teleports)"
 	{
@@ -183,6 +193,7 @@
 		"de"		"{darkred}Du kannst nicht zurückkehren, da es keine Teleports gibt zum zurückkehren."
 		"ko"		"{darkred}되돌릴 텔레포트가 없기 때문에 취소할 수 없습니다."
 		"lv"		"{darkred}Nevari atsaukt, jo nav neviena teleportēšanās, ko atsaukt."
+		"nl"		"{darkred}Je kunt niet ongedaan maken omdat er geen teleports zijn om ongedaan te maken."
 	}
 	"Can't Undo (TP Was Midair)"
 	{
@@ -200,6 +211,7 @@
 		"de"		"{darkred}Du kannst nicht zurückkehren, weil du dich mitten in der Luft teleportiert hast."
 		"ko"		"{darkred}공중에서 텔레포트했기 때문에 되돌릴 수 없습니다."
 		"lv"		"{darkred}Nevari atsaukt, jo tu teleportējies gaisā."
+		"nl"		"{darkred}Je kunt niet ongedaan maken omdat je in de lucht hebt geteleporteerd."
 	}
 	"Can't Undo (Just Landed)"
 	{
@@ -217,6 +229,7 @@
 		"de"		"{darkred}Du kannst nicht zurückkehren, da Du gerade gelandet sind."
 		"ko"		"{darkred}방금 착지했기 때문에 되돌릴 수 없습니다."
 		"lv"		"{darkred} Tu nevari atsaukt, jo tu tikko biji nosēdies."
+		"nl"		"{darkred}Je kunt niet ongedaan maken omdat je net was geland."
 	}
 	"Can't Undo (AntiCp)"
 	{
@@ -234,6 +247,7 @@
 		"de"		"{darkred}Du kannst nicht zurückkehren, da Du sich in einer Anti-Checkpoint-Zone teleportiert hast."
 		"ko"		"{darkred}체크포인트 비활성화 구역에서 텔레포트했기 때문에 되돌릴 수 없습니다."
 		"lv"		"{darkred}Nevari atsaukt, jo tu teleportējies, atrodoties pret-kontrolpunkta zonā."
+		"nl"		"{darkred}Je kunt niet ongedaan maken omdat je hebt geteleporteerd terwijl je in een anti-checkpointzone was."
 	}
 	"Can't Set Custom Start Position (Generic)"
 	{
@@ -251,6 +265,7 @@
 		"de"		"{grey}Deine custom Startposition konnte nicht festgelegt werden!"
 		"ko"		"{grey}사용자 지정 시작 위치를 설정하지 못했습니다!"
 		"lv"		"{grey}Neizdevās iestatīt tavu pielāgoto starta pozīciju!"
+		"nl"		"{grey}Je aangepaste startpositie instellen is mislukt!"
 	}
 	"Set Custom Start Position"
 	{
@@ -268,6 +283,7 @@
 		"de"		"{grey}Du hast deine custom Startposition festgelegt."
 		"ko"		"{grey}사용자 지정 시작 위치를 설정했습니다."
 		"lv"		"{grey}Tu esi iestatījis savu pielāgoto starta pozīciju."
+		"nl"		"{grey}Je hebt je aangepaste startpositie ingesteld."
 	}
 	"Cleared Custom Start Position"
 	{
@@ -285,6 +301,7 @@
 		"de"		"{grey}Du hast deine Startposition gelöscht."
 		"ko"		"{grey}사용자 지정 시작 위치를 지웠습니다."
 		"lv"		"{grey}Tu esi notīrījis savu pielāgoto starta pozīciju."
+		"nl"		"{grey}Je hebt je aangepaste startpositie gewist."
 	}
 	"Checkpoints Cleared By Map"
 	{
@@ -300,6 +317,7 @@
 		"es"		"{darkred}El mapa ha eliminado tus checkpoints."
 		"lv"		"{darkred}Karte ir notīrījusi tavus kontrolpunktus."
 		"de"		"{darkred}Die Map hat deine Checkpoints zurückgesetzt."
+		"nl"		"{darkred}De map heeft je checkpoints gewist."
 	}
 	"Checkpoint Options - Checkpoint Sound - Enable"
 	{
@@ -313,6 +331,7 @@
 		"de"		"{grey}Du hast Checkpoint-Sounds aktiviert."
 		"es"		"{grey}Has activado el sonido de checkpoint."
 		"ko"		"{grey}체크포인트 사운드를 활성화했습니다."
+		"nl"		"{grey}Je hebt het checkpointgeluid ingeschakeld."
 	}
 	"Checkpoint Options - Checkpoint Sound - Disable"
 	{
@@ -326,6 +345,7 @@
 		"de"		"{grey}Du hast Checkpoint-Sounds deaktiviert."
 		"es"		"{grey}Has desactivado el sonido de checkpoint."
 		"ko"		"{grey}체크포인트 사운드를 비활성화했습니다."
+		"nl"		"{grey}Je hebt het checkpointgeluid uitgeschakeld."
 	}
 	"Checkpoint Options - Teleport Sound - Enable"
 	{
@@ -339,6 +359,7 @@
 		"de"		"{grey}Du hast Teleport-Sounds aktiviert."
 		"es"		"{grey}Has activado el sonido de teletransporte."
 		"ko"		"{grey}텔레포트 사운드를 활성화했습니다."
+		"nl"		"{grey}Je hebt het teleportgeluid ingeschakeld."
 	}
 	"Checkpoint Options - Teleport Sound - Disable"
 	{
@@ -352,6 +373,7 @@
 		"de"		"{grey}Du hast Teleport-Sounds deaktiviert."
 		"es"		"{grey}Has desactivado el sonido de teletransporte."
 		"ko"		"{grey}텔레포트 사운드를 비활성화했습니다."
+		"nl"		"{grey}Je hebt het teleportgeluid uitgeschakeld."
 	}
 	"Checkpoint Options - Checkpoint Message - Enable"
 	{
@@ -364,6 +386,7 @@
 		"de"		"{grey}Du hast Checkpoint-Nachrichten aktiviert."
 		"es"		"{grey}Has activado los mensajes de checkpoint."
 		"ko"		"{grey}체크포인트 메시지를 활성화했습니다."
+		"nl"		"{grey}Je hebt checkpointberichten ingeschakeld."
 	}
 	"Checkpoint Options - Checkpoint Message - Disable"
 	{
@@ -376,5 +399,6 @@
 		"de"		"{grey}Du hast Checkpoint-Nachrichten deaktiviert."
 		"es"		"{grey}Has desactivado los mensajes de checkpoint."
 		"ko"		"{grey}체크포인트 메시지를 비활성화했습니다."
+		"nl"		"{grey}Je hebt checkpointberichten uitgeschakeld."
 	}
 }
