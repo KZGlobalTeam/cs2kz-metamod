@@ -30,6 +30,7 @@ private:
 	bool IsShown();
 	void Hide();
 	void Render();
+	u64 GetWorkshopId();
 
 	KZPlayer *player;
 	KZ::ui::PlayerLayout layout {this->player, KZ_COURSES_LAYOUT, "kzcourses"};
@@ -40,6 +41,7 @@ private:
 		KZ::ui::WindowStyle style {};
 		bool rootHidden {true};
 		bool metaHidden {true};
+		bool workshopHidden {true};
 		const char *stateClass {};
 		bool creditHidden {};
 		bool descriptionHidden {true};

@@ -69,6 +69,23 @@ void CoursesWindow::OnResume()
 	this->Render();
 }
 
+u64 CoursesWindow::GetWorkshopId()
+{
+	u64 id = g_pKZUtils->GetCurrentMapWorkshopID();
+	if (!id)
+	{
+		KZGlobalService::WithCurrentMap(
+			[&](const std::optional<KZ::api::Map> &currentMap)
+			{
+				if (currentMap)
+				{
+					id = currentMap->workshopId;
+				}
+			});
+	}
+	return id;
+}
+
 void CoursesWindow::Render()
 {
 	CCSCustomHudLayout *entity = this->layout.Get();
@@ -86,6 +103,9 @@ void CoursesWindow::Render()
 	const bool classic = modeInfo.id != KZ::mode::GetModeInfo(KZ::api::Mode::Vanilla).id;
 
 	this->layout.SetVar("courses_window_title", "courses_window_title", g_pKZUtils->GetCurrentMapName().c_str());
+	KZ::ui::SetBoolClass(entity, "courses_workshop_copy", "hidden", this->applied.workshopHidden, this->GetWorkshopId() == 0);
+	this->layout.SetVar("courses_workshop_copy_tip", "courses_workshop_copy_tip",
+						language->PrepareMessage("Course Top - Window Copy Workshop ID").c_str());
 	this->layout.SetVar("courses_credit_label", "courses_credit_label", language->PrepareMessage("Courses - Made By").c_str());
 	const char *dataModeName = classic ? "CKZ" : modeInfo.shortModeName.c_str();
 	this->layout.SetVar("courses_hint", "courses_hint", language->PrepareMessage("Courses - Hint", dataModeName).c_str());
@@ -176,6 +196,17 @@ void CoursesWindow::OnClick(const char *buttonId)
 	if (KZ_STREQ(buttonId, "courses_window_close"))
 	{
 		this->player->uiService->Close(this);
+		return;
+	}
+	if (KZ_STREQ(buttonId, "courses_workshop_copy"))
+	{
+		if (const u64 id = this->GetWorkshopId())
+		{
+			const std::string map = g_pKZUtils->GetCurrentMapName();
+			const std::string idText = std::to_string(id);
+			this->player->languageService->PrintChat(true, false, "Course Top - Workshop ID", map.c_str(), idText.c_str());
+			this->player->languageService->PrintConsole(true, false, "Course Top - Workshop ID", map.c_str(), idText.c_str());
+		}
 		return;
 	}
 	const KZCourseDescriptor *course = this->chips.GetClickedCourse(buttonId);

@@ -41,6 +41,16 @@
 	width: 860px;
 }
 
+/* The map name sizes to its text so the workshop button sits right after it. */
+.kz-window-title.courses-title {
+	width: fit-children;
+	max-width: 740px;
+}
+
+#courses_workshop_copy {
+	margin-left: 8px;
+}
+
 /* The workshop ID is plain text because the game can't open links.
    The state is an outlined tag because a tinted fill was hard to read in game. */
 .courses-meta {

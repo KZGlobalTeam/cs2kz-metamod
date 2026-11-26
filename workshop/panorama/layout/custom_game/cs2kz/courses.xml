@@ -8,7 +8,15 @@
     <Panel id="courses_root" class="kz-window-root hidden" hittest="false">
       <Panel id="courses_window" class="kz-window courses-window">
         <Panel class="kz-window-header">
-          <Label id="courses_window_title" class="kz-window-title" text="{s:courses_window_title}" />
+          <Label id="courses_window_title" class="kz-window-title courses-title" text="{s:courses_window_title}" />
+          <Button id="courses_workshop_copy" class="kz-icon-btn icon-copy tip-right hidden">
+            <Panel class="kz-icon-btn-face" hittest="false" />
+            <Panel class="kz-icon-btn-icon" hittest="false" />
+            <Panel class="kz-tooltip-anchor" hittest="false">
+              <Label id="courses_workshop_copy_tip" class="kz-tooltip" text="{s:courses_workshop_copy_tip}" hittest="false" />
+            </Panel>
+          </Button>
+          <Panel class="fill" />
           <Button id="courses_window_close" class="kz-window-close" />
         </Panel>
         <Panel id="courses_meta" class="courses-meta hidden">
