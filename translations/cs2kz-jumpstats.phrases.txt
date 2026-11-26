@@ -1453,52 +1453,62 @@
 	"Jump Top - Window Title"
 	{
 		"en"		"Jump Top"
+		"ua"		"Рейтингова таблиця стрибків"
 		"nl"		"Jump Top"
 	}
 	"Jump Top - Sync"
 	{
 		"en"		"Sync"
+		"ua"		"Синхр."
 		"nl"		"Sync"
 	}
 	"Jump Top - Pre"
 	{
 		"en"		"Pre"
+		"ua"		"Pre"
 		"nl"		"Pre"
 	}
 	"Jump Top - Max"
 	{
 		"en"		"Max"
+		"ua"		"Макс."
 		"nl"		"Max"
 	}
 	"Jump Top - Airtime"
 	{
 		"en"		"Airtime"
+		"ua"		"Час у повітрі"
 		"nl"		"Airtime"
 	}
 	"Jump Top - Window None"
 	{
 		"en"		"No jumps saved yet"
+		"ua"		"Ще не збережено жодного стрибка"
 		"nl"		"Nog geen sprongen opgeslagen"
 	}
 	"Jump Top - Window Unavailable"
 	{
 		"en"		"Jumps are saved in the server's database and it isn't available"
+		"ua"		"Стрибки збережено в базі даних сервера, але вона недоступна"
 		"nl"		"Sprongen worden opgeslagen in de database van de server en die is niet beschikbaar"
 	}
 	"Jump Top - Unavailable"
 	{
 		"en"		"{grey}Jumps are saved in the server's database and it isn't available."
+		"ua"		"{grey}Стрибки збережено в базі даних сервера, але вона недоступна."
 		"nl"		"{grey}Sprongen worden opgeslagen in de database van de server en die is niet beschikbaar."
 	}
 	"Jump Top - Check Console"
 	{
 		"en"		"{grey}Check console for the best jumps on this server."
+		"ua"		"{grey}Перевірте консоль для перегляду найкращих стрибків на цьому сервері."
 		"nl"		"{grey}Check de console voor de beste sprongen op deze server."
 	}
 	"Jump Top - Table Title"
 	{
 		"#format"	"type:s,mode:s,list:s"
 		"en"		"Best {type} jumps in {mode} by {list}"
+		"ua"		"Найкращі {type} стрибки в {mode} за {list}"
 		"nl"		"Beste {type}-sprongen in {mode}, gesorteerd op {list}"
 	}
 	"Jumpstats - Personal Best"
@@ -1506,6 +1516,7 @@
 		// You beat your Long Jump personal best! [242.4751 | VNL]
 		"#format"	"jump_type:s,color:s,distance:.4f,mode_short:s"
 		"en"		"{grey}You beat your {lime}{jump_type}{grey} personal best! [{color}{distance}{grey} | {purple}{mode_short}{grey}]"
+		"ua"		"{grey}Ви побили свій особистий {lime}{jump_type}{grey} рекорд! [{color}{distance}{grey} | {purple}{mode_short}{grey}]"
 		"nl"		"{grey}Je hebt je persoonlijk record voor {lime}{jump_type}{grey} verbeterd! [{color}{distance}{grey} | {purple}{mode_short}{grey}]"
 	}
 	"Jumpstats - Personal Best Block"
@@ -1513,6 +1524,7 @@
 		// You beat your Long Jump block personal best! [242.4751 | 230 block | VNL]
 		"#format"	"jump_type:s,color:s,distance:.4f,block:d,mode_short:s"
 		"en"		"{grey}You beat your {lime}{jump_type}{grey} block personal best! [{color}{distance}{grey} | {default}{block}{grey} block | {purple}{mode_short}{grey}]"
+		"ua"		"{grey}Ви побили свій особистий {lime}{jump_type}{grey} рекорд по блоках! [{color}{distance}{grey} | {default}{block}{grey} блок | {purple}{mode_short}{grey}]"
 		"nl"		"{grey}Je hebt je persoonlijk blockrecord voor {lime}{jump_type}{grey} verbeterd! [{color}{distance}{grey} | {default}{block}{grey} block | {purple}{mode_short}{grey}]"
 	}
 }

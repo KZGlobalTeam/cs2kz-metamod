@@ -1506,21 +1506,25 @@
 	"Menu - Spectate Pause"
 	{
 		"en"		"Pause while spectating"
+		"ua"		"Пауза під час спостереження"
 		"nl"		"Pauzeren tijdens spectaten"
 	}
 	"Menu - Spectate Pause Sub"
 	{
 		"en"		"Pauses the timer once your player stands still while you spectate"
+		"ua"		"Ставить таймер на паузу, коли ваш гравець стоїть на місці під час спостереження"
 		"nl"		"Pauzeert de timer zodra je speler stilstaat terwijl je spectate"
 	}
 	"Menu - Spectate Resume"
 	{
 		"en"		"Resume after spectating"
+		"ua"		"Відновити після спостереження"
 		"nl"		"Hervatten na spectaten"
 	}
 	"Menu - Spectate Resume Sub"
 	{
 		"en"		"Resumes a paused timer when you stop spectating"
+		"ua"		"Відновлює таймер після того, як ви виходите з режиму спостереження"
 		"nl"		"Hervat een gepauzeerde timer wanneer je stopt met spectaten"
 	}
 	"Menu - Timer Stop Sound"

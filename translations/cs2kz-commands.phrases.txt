@@ -1101,6 +1101,7 @@
 	"Command Description - kz_tutorial"
 	{
 		"en"		"Show the welcome window for new players again."
+		"ua"		"Знову показати вікно привітання та посібник для нових гравців."
 		"nl"		"Toon het welkomstvenster voor nieuwe spelers opnieuw."
 	}
 	"Command Description - kz_hidelegs"
@@ -1256,6 +1257,7 @@
 	"Command Description - kz_stopsound"
 	{
 		"en"		"Stop all sounds e.g. map soundscapes (music)."
+		"ua"		"Зупинити всі звуки, наприклад, звукові ефекти карти (музику)."
 		"nl"		"Stop alle geluiden, bijv. map-soundscapes (muziek)."
 	}
 	"Command Description - kz_help"
@@ -2591,31 +2593,37 @@
 	"Command Description - kz_profile"
 	{
 		"en"		"Show a player's profile."
+		"ua"		"Показати профіль гравця."
 		"nl"		"Toon het profiel van een speler."
 	}
 	"Command Usage - kz_profile"
 	{
 		"en"		"!profile [steamid/name]"
+		"ua"		"!profile [steamid/нік]"
 		"nl"		"!profile [steamid/naam]"
 	}
 	"Command Description - kz_jstop"
 	{
 		"en"		"Show the best saved jumps on this server."
+		"ua"		"Показати найкращі збережені стрибки на цьому сервері."
 		"nl"		"Toon de beste opgeslagen sprongen op deze server."
 	}
 	"Command Usage - kz_jstop"
 	{
 		"en"		"!jstop [jumptype] [ckz/vnl] [block]"
+		"ua"		"!jstop [тип стрибка] [ckz/vnl] [блок]"
 		"nl"		"!jstop [sprongtype] [ckz/vnl] [block]"
 	}
 	"Command Description - kz_top"
 	{
 		"en"		"Show the global players ranked by rating."
+		"ua"		"Показати світовий рейтинг гравців."
 		"nl"		"Toon de globale spelers gerangschikt op rating."
 	}
 	"Command Usage - kz_top"
 	{
 		"en"		"!top [ckz/vnl]"
+		"ua"		"!top [ckz/vnl]"
 		"nl"		"!top [ckz/vnl]"
 	}
 }

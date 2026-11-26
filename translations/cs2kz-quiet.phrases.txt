@@ -139,6 +139,7 @@
 	"Quiet - Stopped Sounds"
 	{
 		"en"		"{grey}You have stopped all sounds."
+		"ua"		"{grey}Ви зупинили всі звуки."
 		"nl"		"{grey}Je hebt alle geluiden gestopt."
 	}
 }
