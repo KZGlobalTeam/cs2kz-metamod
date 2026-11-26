@@ -16,6 +16,7 @@
 		"de"		"{grey}Die Beine deines Spielers sind jetzt sichtbar."
 		"ko"		"{grey}플레이어의 다리가 이제 표시됩니다."
 		"lv"		"{grey}Tava spēlētāja kājas tagad ir redzamas."
+		"nl"		"{grey}De benen van je speler zijn nu zichtbaar."
 	}
 	"Quiet Option - Hide Player Legs - Enable"
 	{
@@ -33,6 +34,7 @@
 		"de"		"{grey}Die Beine deines Spielers sind jetzt versteckt."
 		"ko"		"{grey}플레이어의 다리가 이제 숨겨졌습니다."
 		"lv"		"{grey}Tava spēlētāja kājas tagad ir paslēptas."
+		"nl"		"{grey}De benen van je speler zijn nu verborgen."
 	}
 	"Quiet Option - Show Players - Enable"
 	{
@@ -50,6 +52,7 @@
 		"de"		"{grey}Du zeigst jetzt andere Spieler."
 		"ko"		"{grey}이제 다른 플레이어가 표시됩니다."
 		"lv"		"{grey}Tagad tu redzi citus spēlētājus."
+		"nl"		"{grey}Je toont nu andere spelers."
 	}
 	"Quiet Option - Show Players - Disable"
 	{
@@ -67,6 +70,7 @@
 		"de"		"{grey}Du versteckst jetzt andere Spieler."
 		"ko"		"{grey}이제 다른 플레이어가 숨겨졌습니다."
 		"lv"		"{grey}Tagad tu neredzi citus spēlētājus."
+		"nl"		"{grey}Je verbergt nu andere spelers."
 	}
 	"Quiet Option - Show Weapon - Enable"
 	{
@@ -84,6 +88,7 @@
 		"de"		"{grey}Du zeigst jetzt deine Waffe."
 		"ko"		"{grey}이제 무기가 표시됩니다."
 		"lv"		"{grey}Tagad tu redzi savu ieroci."
+		"nl"		"{grey}Je toont nu je wapen."
 	}
 	"Quiet Option - Show Weapon - Disable"
 	{
@@ -101,6 +106,7 @@
 		"de"		"{grey}Du versteckst jetzt deine Waffe."
 		"ko"		"{grey}이제 무기가 숨겨졌습니다."
 		"lv"		"{grey}Tagad tu neredzi savu ieroci."
+		"nl"		"{grey}Je verbergt nu je wapen."
 	}
 	"Quiet Option - Auto Hide Weapon - Enable"
 	{
@@ -114,6 +120,7 @@
 		"de"		"{grey}Deine Waffe wird nun beim Spawnen automatisch versteckt."
 		"es"		"{grey}Al reaparecer, tu arma se esconderá de forma automática."
 		"ko"		"{grey}리스폰 시 무기가 자동으로 숨겨집니다."
+		"nl"		"{grey}Je verbergt je wapen nu automatisch bij het spawnen."
 	}
 	"Quiet Option - Auto Hide Weapon - Disable"
 	{
@@ -127,9 +134,11 @@
 		"de"		"{grey}Deine Waffe wird beim Spawnen nicht mehr automatisch versteckt."
 		"es"		"{grey}Al reaparecer, tu arma ya no se esconderá de forma automática."
 		"ko"		"{grey}이제 리스폰 시 무기가 자동으로 숨겨지지 않습니다."
+		"nl"		"{grey}Je verbergt je wapen niet langer automatisch bij het spawnen."
 	}
 	"Quiet - Stopped Sounds"
 	{
 		"en"		"{grey}You have stopped all sounds."
+		"nl"		"{grey}Je hebt alle geluiden gestopt."
 	}
 }

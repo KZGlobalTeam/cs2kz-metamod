@@ -14,5 +14,6 @@
 		"es"	"{grey}Puedes seleccionar diferentes referencias con los cuales comparar tu carrera utilizando {default}/comparelevel{grey}."
 		"lv"	"{grey}Tu vari izvēlēties dažādus benchmarks, ar ko salīdzināt savu skrējienu, rakstot {default}/comparelevel{grey}."
 		"de"	"{grey}Du kannst verschiedene Maßstäbe auswählen, anhand derer du deinen aktuellen Run vergleichst. Benutze dafür: {default}/comparelevel{grey}."
+		"nl"		"{grey}Je kunt verschillende tijden selecteren om je run mee te vergelijken met {default}/comparelevel{grey}."
 	}
 }

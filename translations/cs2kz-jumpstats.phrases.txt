@@ -17,6 +17,7 @@
 		"de"		"Offset"
 		"ko"		"오프셋"
 		"lv"		"Nobīde"
+		"nl"		"Offset"
 	}
 	"Height"
 	{
@@ -34,6 +35,7 @@
 		"de"		"Höhe"
 		"ko"		"높이"
 		"lv"		"Augstums"
+		"nl"		"Hoogte"
 	}
 	"Pre"
 	{
@@ -51,6 +53,7 @@
 		"de"		"Pre"
 		"ko"		"프리"
 		"lv"		"Pre"
+		"nl"		"Pre"
 	}
 	"Max"
 	{
@@ -68,6 +71,7 @@
 		"de"		"Max"
 		"ko"		"최대"
 		"lv"		"Max"
+		"nl"		"Max"
 	}
 	"Strafes" // Plural
 	{
@@ -85,6 +89,7 @@
 		"de"		"Strafes"
 		"ko"		"스트레이프"
 		"lv"		"Strafes"
+		"nl"		"Strafes"
 	}
 	"Strafe" // Singular
 	{
@@ -102,6 +107,7 @@
 		"ko"		"스트레이프"
 		"es"		"Strafe"
 		"lv"		"Strafe"
+		"nl"		"Strafe"
 	}
 	"Sync"
 	{
@@ -119,6 +125,7 @@
 		"ko"		"싱크"
 		"es"		"Sinc"
 		"lv"		"Sinhr."
+		"nl"		"Sync"
 	}
 	"Air"
 	{
@@ -136,6 +143,7 @@
 		"ko"		"공중"
 		"es"		"Aire"
 		"lv"		"Air"
+		"nl"		"Air"
 	}
 	"Air Time"
 	{
@@ -153,6 +161,7 @@
 		"ko"		"공중 시간"
 		"es"		"Tiempo en el aire"
 		"lv"		"Airtime"
+		"nl"		"Airtime"
 	}
 	"Block"
 	{
@@ -170,6 +179,7 @@
 		"ko"		"블록"
 		"es"		"Bloque"
 		"lv"		"Block"
+		"nl"		"Block"
 	}
 	"Bad Angles (Short)"
 	{
@@ -187,6 +197,7 @@
 		"ko"		"BA"
 		"es"		"BA"
 		"lv"		"BA"
+		"nl"		"BA"
 	}
 	"Overlap (Short)"
 	{
@@ -204,6 +215,7 @@
 		"ko"		"OL"
 		"es"		"OL"
 		"lv"		"OL"
+		"nl"		"OL"
 	}
 	"Dead Air (Short)"
 	{
@@ -221,6 +233,7 @@
 		"ko"		"DA"
 		"es"		"DA"
 		"lv"		"DA"
+		"nl"		"DA"
 	}
 	"Width (Short)"
 	{
@@ -230,6 +243,7 @@
 		"ua"		"Шир."
 		"ru"		"Шир."
 		"ko"		"너비"
+		"nl"		"Breedte"
 	}
 	"Edge"
 	{
@@ -247,6 +261,7 @@
 		"ko"		"엣지"
 		"es"		"Borde"
 		"lv"		"Edge"
+		"nl"		"Rand"
 	}
 	"Deviation"
 	{
@@ -264,6 +279,7 @@
 		"ko"		"편차"
 		"es"		"Desviación"
 		"lv"		"Novirze"
+		"nl"		"Afwijking"
 	}
 	"Width"
 	{
@@ -281,6 +297,7 @@
 		"ko"		"너비"
 		"es"		"Ancho"
 		"lv"		"Platums"
+		"nl"		"Breedte"
 	}
 	"Duck Time"
 	{
@@ -298,6 +315,7 @@
 		"ko"		"앉기"
 		"es"		"Agachado"
 		"lv"		"Tupus"
+		"nl"		"Gehurkt"
 	}
 	"Gain Efficiency (Short)"
 	{
@@ -315,6 +333,7 @@
 		"ko"		"GainEff"
 		"es"		"GainEff"
 		"lv"		"GainEff"
+		"nl"		"GainEff"
 	}
 	"Air Path"
 	{
@@ -332,6 +351,7 @@
 		"ko"		"공중 경로"
 		"es"		"Airpath"
 		"lv"		"Airpath"
+		"nl"		"Airpath"
 	}
 	"Angle Ratio"
 	{
@@ -349,6 +369,7 @@
 		"ko"		"각도 비율(평균/중앙/최대)"
 		"es"		"AngRatio(Prom/Med/Máx)"
 		"lv"		"AngRatio(Avg/Med/Max)"
+		"nl"		"AngRatio(Avg/Med/Max)"
 	}
 	"Gain"
 	{
@@ -366,6 +387,7 @@
 		"ko"		"게인"
 		"es"		"Ganancia"
 		"lv"		"Gain"
+		"nl"		"Winst"
 	}
 	"Loss"
 	{
@@ -383,6 +405,7 @@
 		"ko"		"손실"
 		"es"		"Pérdida"
 		"lv"		"Loss"
+		"nl"		"Verlies"
 	}
 	"Average Gain (Short)"
 	{
@@ -400,6 +423,7 @@
 		"ko"		"평균 게인"
 		"es"		"PromGan"
 		"lv"		"AvgGain"
+		"nl"		"AvgGain"
 	}
 
 	// =====[ JUMP TYPES ]=====
@@ -409,6 +433,7 @@
 		"zho"		"長跳"
 		"ua"		"Long Jump"
 		"ru"		"Long Jump"
+		"nl"		"Long Jump"
 	}
 	"Bunnyhop"
 	{
@@ -416,6 +441,7 @@
 		"zho"		"連跳"
 		"ua"		"Bunnyhop"
 		"ru"		"Bunnyhop"
+		"nl"		"Bunnyhop"
 	}
 	"Multi Bunnyhop"
 	{
@@ -423,6 +449,7 @@
 		"zho"		"多次連跳"
 		"ua"		"Multi Bunnyhop"
 		"ru"		"Multi Bunnyhop"
+		"nl"		"Multi Bunnyhop"
 	}
 	"Weird Jump"
 	{
@@ -430,6 +457,7 @@
 		"zho"		"怪跳"
 		"ua"		"Weird Jump"
 		"ru"		"Weird Jump"
+		"nl"		"Weird Jump"
 	}
 	"Ladder Jump"
 	{
@@ -437,6 +465,7 @@
 		"zho"		"梯跳"
 		"ua"		"Ladder Jump"
 		"ru"		"Ladder Jump"
+		"nl"		"Ladder Jump"
 	}
 	"Ladderhop"
 	{
@@ -444,6 +473,7 @@
 		"zho"		"梯子連跳"
 		"ua"		"Ladderhop"
 		"ru"		"Ladderhop"
+		"nl"		"Ladderhop"
 	}
 	"Jumpbug"
 	{
@@ -451,6 +481,7 @@
 		"zho"		"Jumpbug"
 		"ua"		"Jumpbug"
 		"ru"		"Jumpbug"
+		"nl"		"Jumpbug"
 	}
 	"Fall"
 	{
@@ -458,6 +489,7 @@
 		"zho"		"墜落"
 		"ua"		"Падіння"
 		"ru"		"Падение"
+		"nl"		"Val"
 	}
 	"Unknown Jump"
 	{
@@ -465,6 +497,7 @@
 		"zho"		"未知跳躍"
 		"ua"		"Невідомий стрибок"
 		"ru"		"Неизвестный прыжок"
+		"nl"		"Onbekende sprong"
 	}
 	"Invalid Jump"
 	{
@@ -472,6 +505,7 @@
 		"zho"		"無效跳躍"
 		"ua"		"Недопустимий стрибок"
 		"ru"		"Недопустимый прыжок"
+		"nl"		"Ongeldige sprong"
 	}
 
 	"Deviation (Short)"
@@ -480,6 +514,7 @@
 		"zho"		"偏差"
 		"ua"		"Dev"
 		"ru"		"Откл"
+		"nl"		"Dev"
 	}
 	"Miss"
 	{
@@ -487,6 +522,7 @@
 		"zho"		"差距"
 		"ua"		"Брак"
 		"ru"		"Нехв"
+		"nl"		"Miss"
 	}
 	"Release (Short)"
 	{
@@ -494,6 +530,7 @@
 		"zho"		"W"
 		"ua"		"W"
 		"ru"		"W"
+		"nl"		"W"
 	}
 
 	// =====[ HUD ]=====
@@ -505,6 +542,7 @@
 		"zho"		"{distance} u"
 		"ua"		"{distance} u"
 		"ru"		"{distance} u"
+		"nl"		"{distance} u"
 	}
 	"Jumpstats HUD - Failstat"
 	{
@@ -514,6 +552,7 @@
 		"zho"		"{jump_type} 失敗"
 		"ua"		"Невдалий {jump_type}"
 		"ru"		"Недолёт {jump_type}"
+		"nl"		"Mislukte {jump_type}"
 	}
 	"Jumpstats HUD - Release"
 	{
@@ -521,6 +560,7 @@
 		"zho"		"鬆開 W"
 		"ua"		"Відпускання W"
 		"ru"		"Отпускание W"
+		"nl"		"W-release"
 	}
 	"Jumpstats HUD - History Info"
 	{
@@ -530,6 +570,7 @@
 		"zho"		"{strafe_count} 次加速 | {sync}%% 同步 | {pre} 地速"
 		"ua"		"{strafe_count} str | {sync}%% sync | {pre} pre"
 		"ru"		"{strafe_count} str | {sync}%% синх | {pre} pre"
+		"nl"		"{strafe_count} str | {sync}%% sync | {pre} pre"
 	}
 
 	// =====[ INVALIDATION REASONS ]=====
@@ -549,6 +590,7 @@
 		"ko"		"첫 번째 점프"
 		"es"		"Primer salto"
 		"lv"		"Pirmais lēciens"
+		"nl"		"Eerste sprong"
 	}
 	"Invalid movetype change"
 	{
@@ -566,6 +608,7 @@
 		"ko"		"잘못된 이동 유형 변경"
 		"es"		"Cambio del tipo de movimiento inválido"
 		"lv"		"Nederīga kustības veida maiņa"
+		"nl"		"Ongeldige movetype-wijziging"
 	}
 	"Invalid movetype"
 	{
@@ -583,6 +626,7 @@
 		"ko"		"잘못된 이동 유형"
 		"es"		"Tipo de movimiento inválido"
 		"lv"		"Nederīgs kustības veids"
+		"nl"		"Ongeldig movetype"
 	}
 	"Just noclipped"
 	{
@@ -600,6 +644,7 @@
 		"ko"		"방금 노클립 모드로 전환되었습니다."
 		"es"		"Acabas de hacer noclip"
 		"lv"		"Tikko izmantots noclip"
+		"nl"		"Zojuist noclip gebruikt"
 	}
 	"Invalid collisions"
 	{
@@ -617,6 +662,7 @@
 		"ko"		"잘못된 충돌"
 		"es"		"Colisiones inválidas"
 		"lv"		"Nederīgas sadursmes"
+		"nl"		"Ongeldige collisions"
 	}
 	"Base velocity detected"
 	{
@@ -635,6 +681,7 @@
 		"es"		"Velocidad base detectada"
 		"lv"		"Tika noteikts bāzes ātrums"
 
+		"nl"		"Base velocity gedetecteerd"
 	}
 	"Player gravity scale changed"
 	{
@@ -649,6 +696,7 @@
 		"es"		"Escala de gravedad de jugador cambiada"
 		"lv"		"Spēlētāja gravitācijas mērogs ir mainīts"
 		"de"		"Spieler-Gravitationsskala geändert."
+		"nl"		"Zwaartekrachtschaal van speler gewijzigd"
 	}
 	"Invalid gains"
 	{
@@ -666,6 +714,7 @@
 		"ko"		"잘못된 게인"
 		"es"		"Ganancias inválidas"
 		"lv"		"Nederīgi ieguvumi"
+		"nl"		"Ongeldige winst"
 	}
 	"Externally modified"
 	{
@@ -683,6 +732,7 @@
 		"ko"		"외부에서 수정됨"
 		"es"		"Modificado externamente"
 		"lv"		"Modificēts ārēji"
+		"nl"		"Extern gewijzigd"
 	}
 	"Edgebugged"
 	{
@@ -700,6 +750,7 @@
 		"ko"		"엣지 버그"
 		"es"		"Edgebugged"
 		"lv"		"Edgebugged"
+		"nl"		"Edgebugged"
 	}
 	"Teleported"
 	{
@@ -717,6 +768,7 @@
 		"ko"		"텔레포트됨"
 		"es"		"Teleportado"
 		"lv"		"Teleportēts"
+		"nl"		"Geteleporteerd"
 	}
 	"Disabled By Map"
 	{
@@ -731,6 +783,7 @@
 		"es"		"Desactivado por el mapa"
 		"lv"		"Disabled by map"
 		"de"		"Deaktiviert durch Map."
+		"nl"		"Uitgeschakeld door map"
 	}
 
 	// =====[OPTIONS]=====
@@ -750,6 +803,7 @@
 		"ko"		"{grey}점프 통계 보고 기능을 활성화했습니다."
 		"es"		"{grey}Has activado los informes de estadísticas de salto."
 		"lv"		"{grey}Tu esi ieslēdzis lēcienu statistikas ziņošanu."
+		"nl"		"{grey}Je hebt jumpstats-rapportage ingeschakeld."
 	}
 	"Jumpstats Option - Master Switch - Disable"
 	{
@@ -767,6 +821,7 @@
 		"ko"		"{grey}모든 점프 통계 보고 기능을 비활성화했습니다."
 		"es"		"{grey}Has desactivado todos los informes de estadísticas de salto."
 		"lv"		"{grey}Tu esi atspējojis visu lēcienu statistikas ziņošanu."
+		"nl"		"{grey}Je hebt alle jumpstats-rapportage uitgeschakeld."
 	}
 	"Jumpstats Option - Jumpstats Always - Enable"
 	{
@@ -784,6 +839,7 @@
 		"ko"		"{grey}항상 활성화된 점프 통계 기능을 활성화했습니다."
 		"es"		"{grey}Has activado las estadísticas de salto siempre activas."
 		"lv"		"{grey}Tu esi ieslēdzis always-on lēcienu statistiku."
+		"nl"		"{grey}Je hebt de always-on jumpstats ingeschakeld."
 	}
 	"Jumpstats Option - Jumpstats Always - Disable"
 	{
@@ -801,6 +857,7 @@
 		"ko"		"{grey}항상 활성화된 점프 통계 기능을 비활성화했습니다."
 		"es"		"{grey}Has desactivado las estadísticas de salto siempre visibles."
 		"lv"		"{grey}Tu esi atspējojis vienmēr ieslēgto lēcienu statistiku."
+		"nl"		"{grey}Je hebt de always-on jumpstats uitgeschakeld."
 	}
 	"Jumpstats Option - Tier Hint"
 	{
@@ -814,6 +871,7 @@
 		"es"		"{grey} Niveles para las estadísticas de salto: {default}0-6, none, meh, impressive, perfect, godlike, ownage, wrecker{grey}."
 		"de"		"{grey}Gütlige Jumpstats-Level: {default}0-6, none, meh, impressive, perfect, godlike, ownage, wrecker{grey}."
 		"ko"		"{grey}유효한 점프스탯 티어: {default}0-6, none, meh, impressive, perfect, godlike, ownage, wrecker{grey}."
+		"nl"		"{grey}Geldige jumpstats-tiers: {default}0-6, none, meh, impressive, perfect, godlike, ownage, wrecker{grey}."
 	}
 	"Jumpstats Option - Jumpstats Minimum Broadcast Tier - Hint"
 	{
@@ -831,6 +889,7 @@
 		"ko"		"{grey}사용법: {default}kz_jsbroadcast <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>."
 		"es"		"{grey}Uso: {default}kz_jsbroadcast <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>."
 		"lv"		"{grey}Pielietojums: {default}kz_jsbroadcast <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>."
+		"nl"		"{grey}Gebruik: {default}kz_jsbroadcast <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>."
 	}
 	"Jumpstats Option - Jumpstats Minimum Broadcast Tier - Disabled"
 	{
@@ -848,6 +907,7 @@
 		"ko"		"{grey}점프 통계 방송이 비활성화되었습니다."
 		"es"		"{grey}Difusión de estadísticas de salto desactivada."
 		"lv"		"{grey}Lēcienu statistikas pārraide ir atspējota."
+		"nl"		"{grey}Jumpstats-broadcasting uitgeschakeld."
 	}
 	"Jumpstats Option - Jumpstats Minimum Broadcast Tier - Response"
 	{
@@ -866,6 +926,7 @@
 		"ko"		"{grey}점프 통계 방송 임계값이 이제 {default}{tier}로 설정되었습니다."
 		"es"		"{grey}El límite de difusión de estadísticas de salto ahora es {default}{tier}."
 		"lv"		"{grey}Lēcienu statistikas pārraides slieksnis tagad ir {default}{tier}."
+		"nl"		"{grey}De drempel voor jumpstats-broadcasting is nu {default}{tier}."
 	}
 	"Jumpstats Option - Jumpstats Minimum Console Broadcast Tier - Disabled"
 	{
@@ -878,6 +939,7 @@
 		"de"		"{grey}Jumpstats-Konsolen-Ausgabe von anderen Spielern deaktiviert."
 		"es"		"{grey}Difusión de estadísticas de salto en consola desactivada."
 		"ko"		"{grey}점프스탯 콘솔 방송이 비활성화되었습니다."
+		"nl"		"{grey}Jumpstats-broadcasting in de console uitgeschakeld."
 	}
 	"Jumpstats Option - Jumpstats Minimum Console Broadcast Tier - Response"
 	{
@@ -891,6 +953,7 @@
 		"de"		"{grey}Schwellwert für Jumpstats-Konsolen-Ausgabe von anderen Spielern ist nun {default}{tier}."
 		"es"		"{grey}El umbral para mostrar las estadísticas de salto ahora es {default}{tier}."
 		"ko"		"{grey}점프스탯 콘솔 방송 임계값이 이제 {default}{tier}로 설정되었습니다."
+		"nl"		"{grey}De drempel voor jumpstats-broadcasting in de console is nu {default}{tier}."
 	}
 	"Jumpstats Option - Jumpstats Minimum Sound Tier - Hint"
 	{
@@ -908,6 +971,7 @@
 		"ko"		"{grey}사용법: {default}kz_jssound <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>."
 		"es"		"{grey}Uso: {default}kz_jssound <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>."
 		"lv"		"{grey}Pielietojums: {default}kz_jssound <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>."
+		"nl"		"{grey}Gebruik: {default}kz_jssound <0-6/none/meh/impressive/perfect/godlike/ownage/wrecker>."
 	}
 	"Jumpstats Option - Jumpstats Minimum Sound Tier - Disabled"
 	{
@@ -925,6 +989,7 @@
 		"ko"		"{grey}점프 통계 사운드 효과가 비활성화되었습니다."
 		"es"		"{grey}Activado el efecto de sonido al mostrar estadísticas de salto."
 		"lv"		"{grey}Lēcienu statistikas skaņas efekts ir atspējots."
+		"nl"		"{grey}Jumpstats-geluidseffect uitgeschakeld."
 	}
 	"Jumpstats Option - Jumpstats Minimum Sound Tier - Response"
 	{
@@ -943,6 +1008,7 @@
 		"ko"		"{grey}점프 통계 사운드 효과 임계값이 이제 {default}{tier}로 설정되었습니다."
 		"es"		"{grey}El límite de efectos de sonidos para estadísticas de salto ahora es {default}{tier}."
 		"lv"		"{grey}Lēcienu statistikas skaņas efekta slieksnis tagad ir {default}{tier}."
+		"nl"		"{grey}De drempel voor het jumpstats-geluidseffect is nu {default}{tier}."
 	}
 
 	"Broadcast Jumpstat Chat Report"
@@ -963,6 +1029,7 @@
 		"ko"		"{default}{player} {grey}님이 {color}{distance} {grey}유닛을 {lime}{jump_type} {grey}[{purple}{mode_short}{grey}]로 점프했습니다."
 		"es"		"{default}{player} {grey}saltó {color}{distance} {grey}unidades con un {lime}{jump_type} {grey}[{purple}{mode_short}{grey}]"
 		"lv"		"{default}{player} {grey}ieleca {color}{distance} {grey}vienības ar {lime}{jump_type} {grey}[{purple}{mode_short}{grey}]"
+		"nl"		"{default}{player} {grey}sprong {color}{distance} {grey}units met een {lime}{jump_type} {grey}[{purple}{mode_short}{grey}]"
 	}
 
 	"Jumpstats Report - Invalidation Reason"
@@ -983,6 +1050,7 @@
 		"es"		"({reason})"
 		"lv"		"({reason})"
 		"de"		"({reason})"
+		"nl"		"({reason})"
 	}
 
 	"Jumpstats Report - Chat Header"
@@ -993,6 +1061,7 @@
 		"zho"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance}"
 		"ua"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance}"
 		"ru"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance}"
+		"nl"		"{jump_color}{jump_type_short}{grey}: {jump_color}{distance}"
 	}
 	"Jumpstats Report - Chat Segment"
 	{
@@ -1002,6 +1071,7 @@
 		"zho"		"{color}{value} {grey}{label}"
 		"ua"		"{color}{value} {grey}{label}"
 		"ru"		"{color}{value} {grey}{label}"
+		"nl"		"{color}{value} {grey}{label}"
 	}
 	"Jumpstats Report - Console Summary"
 	{
@@ -1021,6 +1091,7 @@
 		"es"		"{player_name} saltó {distance} unidades con un {jump_type} {invalidation_reason}"
 		"lv"		"{player_name} leca {distance} vienības ar {jump_type} {invalidation_reason}"
 		"de"		"{player_name} sprang {distance} units mit einem {jump_type} {invalidation_reason}"
+		"nl"		"{player_name} sprong {distance} units met een {jump_type} {invalidation_reason}"
 	}
 	"Jumpstats Report - Console Failstat Summary"
 	{
@@ -1033,6 +1104,7 @@
 		"ru"		"{player_name} не долетел {distance} юнитов с {jump_type} {invalidation_reason}"
 		"es"		"{player_name} falló {distance} unidades con un {jump_type} {invalidation_reason}"
 		"ko"		"{player_name}님이 {distance} 유닛을 {jump_type}(으)로 점프 실패했습니다 {invalidation_reason}"
+		"nl"		"{player_name} mislukte {distance} units met een {jump_type} {invalidation_reason}"
 	}
 	"Jumpstat Report - Console Details 1"
 	{
@@ -1046,6 +1118,7 @@
 		"es"		"{mode_style}{block}{edge}{landing_edge}{miss} | {strafe_count} {strafe_text} | {sync}%% Sincro | {pre} Pre | {max} Max | {bad_angles}%% BA | {overlap}%% OL | {dead_air}%% DA | {height} Altura{release}"
 
 		"ko"		"{mode_style}{block}{edge}{landing_edge}{miss} | {strafe_count} {strafe_text} | {sync}%% 싱크 | {pre} 프리 | {max} 최대 | {bad_angles}%% BA | {overlap}%% OL | {dead_air}%% DA | {height} 높이{release}"
+		"nl"		"{mode_style}{block}{edge}{landing_edge}{miss} | {strafe_count} {strafe_text} | {sync}%% Sync | {pre} Pre | {max} Max | {bad_angles}%% BA | {overlap}%% OL | {dead_air}%% DA | {height} Hoogte{release}"
 	}
 	"Jumpstat Report - Console Segment - Edge"
 	{
@@ -1057,6 +1130,7 @@
 		"ru"		" | {value} Край"
 		"es"		" | {value} Límite"
 		"ko"		" | {value} 엣지"
+		"nl"		" | {value} Rand"
 	}
 	"Jumpstat Report - Console Segment - Block"
 	{
@@ -1068,6 +1142,7 @@
 		"ru"		" | {value} Блок"
 		"es"		" | {value} Bloque"
 		"ko"		" | {value} 블록"
+		"nl"		" | {value} Block"
 	}
 	"Jumpstat Report - Console Segment - Miss"
 	{
@@ -1079,6 +1154,7 @@
 		"ru"		" | {value} Нехватка"
 		"es"		" | {value} Fallo"
 		"ko"		" | {value} 부족"
+		"nl"		" | {value} Miss"
 	}
 	"Jumpstat Report - Console Segment - Landing Edge"
 	{
@@ -1089,6 +1165,7 @@
 		"ru"		" | {value} Остаток"
 		"ua"		" | {value} Край"
 		"ko"		" | {value} 착지 엣지"
+		"nl"		" | {value} Landingsrand"
 	}
 	"Jumpstat Report - Console Details 2"
 	{
@@ -1101,6 +1178,7 @@
 		"ru"		"{gain_eff}%% ЭффПрир | {air_path} Airpath | {deviation} Отклонение | {width} Ширина | {air_time} Airtime | {offset} Смещение | {duck_end_time}/{duck_total_time} В приседе"
 		"es"		"{gain_eff}%% EficGan | {air_path} Aéreo | {deviation} Desviación | {width} Ancho | {air_time} TiempoVuelo | {offset} Compensación | {duck_end_time}/{duck_total_time} Agachado"
 		"ko"		"{gain_eff}%% GainEff | {air_path} Airpath | {deviation} 편차 | {width} 너비 | {air_time} 공중 시간 | {offset} 오프셋 | {duck_end_time}/{duck_total_time} 앉기"
+		"nl"		"{gain_eff}%% GainEff | {air_path} Airpath | {deviation} Afwijking | {width} Breedte | {air_time} Airtime | {offset} Offset | {duck_end_time}/{duck_total_time} Gehurkt"
 	}
 	"Jumpstat Report - Console Graph - Strafe Keys"
 	{
@@ -1110,6 +1188,7 @@
 		"ru"		"Кнопки:"
 		"ua"		"Клавіші:"
 		"ko"		"스트레이프 키:"
+		"nl"		"Strafe-toetsen:"
 	}
 	"Jumpstat Report - Console Graph - Mouse Movement"
 	{
@@ -1119,6 +1198,7 @@
 		"ru"		"Движения мыши:"
 		"ua"		"Рухи миші:"
 		"ko"		"마우스 움직임:"
+		"nl"		"Muisbeweging:"
 	}
 	"Jumpstat Report - Console Graph - Left"
 	{
@@ -1129,6 +1209,7 @@
 		"ru"		"L: {value}"
 		"ua"		"L: {value}"
 		"ko"		"L: {value}"
+		"nl"		"L: {value}"
 	}
 	"Jumpstat Report - Console Graph - Right"
 	{
@@ -1139,6 +1220,7 @@
 		"ru"		"R: {value}"
 		"ua"		"R: {value}"
 		"ko"		"R: {value}"
+		"nl"		"R: {value}"
 	}
 	"Jumpstats Option - Jumpstats Minimum Tier - Disabled"
 	{
@@ -1152,6 +1234,7 @@
 		"de"		"{grey}Jumpstats Chat-Benachrichtigungen deaktivert."
 		"es"		"{grey}Reporte de estadísticas de salto en chat desactivado"
 		"ko"		"{grey}점프스탯 채팅 보고가 비활성화되었습니다."
+		"nl"		"{grey}Jumpstats-rapportage in de chat uitgeschakeld."
 	}
 	"Jumpstats Option - Jumpstats Minimum Tier - Response"
 	{
@@ -1166,6 +1249,7 @@
 		"de"		"{grey}Schwellwert für Jumpstats Chat-Benachrichtigungen ist nun {default}{tier}."
 		"es"		"{grey}El umbral para mostrar el reporte de estadísticas de salto en chat ahora es {default}{tier}."
 		"ko"		"{grey}점프스탯 채팅 보고 임계값이 이제 {default}{tier}로 설정되었습니다."
+		"nl"		"{grey}De drempel voor jumpstats-rapportage in de chat is nu {default}{tier}."
 	}
 	"Jumpstats Option - Jumpstats Minimum HUD Tier - Disabled"
 	{
@@ -1173,6 +1257,7 @@
 		"zho"		"{grey}已停用 HUD 跳躍數據顯示。"
 		"ua"		"{grey}Відображення статистики стрибків у HUD вимкнено."
 		"ru"		"{grey}Отображение статистики прыжков в HUD выключено."
+		"nl"		"{grey}Jumpstats-rapportage op de HUD uitgeschakeld."
 	}
 	"Jumpstats Option - Jumpstats Minimum HUD Tier - Response"
 	{
@@ -1181,6 +1266,7 @@
 		"zho"		"{grey}HUD 跳躍數據顯示門檻已設為 {default}{tier}。"
 		"ua"		"{grey}Поріг відображення статистики стрибків у HUD встановлено на {default}{tier}."
 		"ru"		"{grey}Порог отображения статистики в HUD изменен на {default}{tier}."
+		"nl"		"{grey}De drempel voor jumpstats-rapportage op de HUD is nu {default}{tier}."
 	}
 	"Jumpstats Option - Jumpstats Minimum Console Tier - Disabled"
 	{
@@ -1194,6 +1280,7 @@
 		"de"		"{grey}Jumpstats Konsolen-Benachrichtigungen deaktivert."
 		"es"		"{grey}Reporte de estadísticas de salto en consola desactivado."
 		"ko"		"{grey}점프스탯 콘솔 보고가 비활성화되었습니다."
+		"nl"		"{grey}Jumpstats-rapportage in de console uitgeschakeld."
 	}
 	"Jumpstats Option - Jumpstats Minimum Console Tier - Response"
 	{
@@ -1208,6 +1295,7 @@
 		"de"		"{grey}Schwellwert für Jumpstats Konsolen-Benachrichtigungen ist nun {default}{tier}."
 		"es"		"{grey}El umbral para mostrar el reporte de estadísticas de salto en consola ahora es {default}{tier}."
 		"ko"		"{grey}점프스탯 콘솔 보고 임계값이 이제 {default}{tier}로 설정되었습니다."
+		"nl"		"{grey}De drempel voor jumpstats-rapportage in de console is nu {default}{tier}."
 	}
 	"Jumpstats Option - Jumpstats Minimum Sound Broadcast Tier - Disabled"
 	{
@@ -1221,6 +1309,7 @@
 		"de"		"{grey}Jumpstats-Sounds von anderen Spielern sind nun deaktivert."
 		"es"		"{grey}Efecto de sonido al reportar estadísticas de salto desactivado."
 		"ko"		"{grey}점프스탯 사운드 방송이 비활성화되었습니다."
+		"nl"		"{grey}Jumpstats-geluidsbroadcast uitgeschakeld."
 	}
 	"Jumpstats Option - Jumpstats Minimum Sound Broadcast Tier - Response"
 	{
@@ -1235,6 +1324,7 @@
 		"de"		"{grey}Schwellwert für Jumpstats-Sounds von anderen Spielern ist nun {default}{tier}."
 		"es"		"{grey}El umbral para el efecto de sonido en el reporte de estadísticas de salto ahora es {default}{tier}."
 		"ko"		"{grey}점프스탯 사운드 방송 임계값이 이제 {default}{tier}로 설정되었습니다."
+		"nl"		"{grey}De drempel voor de jumpstats-geluidsbroadcast is nu {default}{tier}."
 	}
 	"Jumpstats Option - Jumpstats Volume - Current"
 	{
@@ -1248,6 +1338,7 @@
 		"de"		"{grey}Derzeitige Lautstärke von Jumpstats-Sounds ist {default}{volume}."
 		"es"		"{grey}El volumen de sonido en el reporte de estadísticas de salto es {default}{volume}."
 		"ko"		"{grey}현재 점프스탯 볼륨은 {default}{volume}입니다."
+		"nl"		"{grey}Het huidige jumpstats-volume is {default}{volume}."
 	}
 	"Jumpstats Option - Jumpstats Volume - Response"
 	{
@@ -1262,6 +1353,7 @@
 		"de"		"{grey}Jumpstats Lautstärke wurde auf {default}{volume} gesetzt."
 		"es"		"{grey}Establecido el volumen de sonido en el reporte de estadísticas de salto a {default}{volume}."
 		"ko"		"{grey}점프스탯 볼륨이 {default}{volume}(으)로 설정되었습니다."
+		"nl"		"{grey}Jumpstats-volume ingesteld op {default}{volume}."
 	}
 	"Jumpstats Option - Extended Chat Stats - Enable"
 	{
@@ -1275,6 +1367,7 @@
 		"de"		"{grey}Erweiterte Jumpstats-Benachrichtigungen im Chat aktiviert."
 		"es"		"{grey}Reporte extendido de estadísticas de salto en el chat activado."
 		"ko"		"{grey}확장된 점프스탯 채팅 보고가 활성화되었습니다."
+		"nl"		"{grey}Uitgebreide jumpstats-rapportage in de chat ingeschakeld."
 	}
 	"Jumpstats Option - Extended Chat Stats - Disable"
 	{
@@ -1288,6 +1381,7 @@
 		"de"		"{grey}Erweiterte Jumpstats-Benachrichtigungen im Chat deaktiviert."
 		"es"		"{grey}Reporte extendido de estadísticas de salto en el chat desactivado."
 		"ko"		"{grey}확장된 점프스탯 채팅 보고가 비활성화되었습니다."
+		"nl"		"{grey}Uitgebreide jumpstats-rapportage in de chat uitgeschakeld."
 	}
 	"Jumpstats Option - Jumpstats Reporting - Enable"
 	{
@@ -1298,6 +1392,7 @@
 		"ua"		"{grey}Відображення статистики стрибків увімкнено."
 		"es"		"{grey}Reporte de estadísticas de salto activado."
 		"ko"		"{grey}점프스탯 보고가 활성화되었습니다."
+		"nl"		"{grey}Jumpstats-rapportage ingeschakeld."
 	}
 	"Jumpstats Option - Jumpstats Reporting - Disable"
 	{
@@ -1308,6 +1403,7 @@
 		"ua"		"{grey}Відображення статистики стрибків вимкнено."
 		"es"		"{grey}Reporte de estadísticas de salto desactivado."
 		"ko"		"{grey}점프스탯 보고가 비활성화되었습니다."
+		"nl"		"{grey}Jumpstats-rapportage uitgeschakeld."
 	}
 	"Jumpstats Option - Failstats Chat Reporting - Enable"
 	{
@@ -1318,6 +1414,7 @@
 		"ua"		"{grey}Показ статистики невдалих стрибків в чаті увімкнено."
 		"es"		"{grey}Reporte de estadísticas de fallo en chat activado"
 		"ko"		"{grey}실패 통계 채팅 보고가 활성화되었습니다."
+		"nl"		"{grey}Failstats-rapportage in de chat ingeschakeld."
 	}
 	"Jumpstats Option - Failstats Chat Reporting - Disable"
 	{
@@ -1328,6 +1425,7 @@
 		"ua"		"{grey}Показ статистики невдалих стрибків в чаті вимкнено."
 		"es"		"{grey}Reporte de estadísticas de fallo en chat desactivado."
 		"ko"		"{grey}실패 통계 채팅 보고가 비활성화되었습니다."
+		"nl"		"{grey}Failstats-rapportage in de chat uitgeschakeld."
 	}
 	"Jumpstats Option - Failstats Console Reporting - Enable"
 	{
@@ -1338,6 +1436,7 @@
 		"ua"		"{grey}Показ статистики невдалих стрибків в консолі увімкнено."
 		"es"		"{grey}Reporte de estadísticas de fallo en console activado."
 		"ko"		"{grey}실패 통계 콘솔 보고가 활성화되었습니다."
+		"nl"		"{grey}Failstats-rapportage in de console ingeschakeld."
 	}
 	"Jumpstats Option - Failstats Console Reporting - Disable"
 	{
@@ -1348,59 +1447,72 @@
 		"ua"		"{grey}Показ статистики невдалих стрибків в консолі вимкнено."
 		"es"		"{grey}Reporte de estadísticas de fallo en console desactivado."
 		"ko"		"{grey}실패 통계 콘솔 보고가 비활성화되었습니다."
+		"nl"		"{grey}Failstats-rapportage in de console uitgeschakeld."
 	}
 	// =====[ JUMP TOP ]=====
 	"Jump Top - Window Title"
 	{
 		"en"		"Jump Top"
+		"nl"		"Jump Top"
 	}
 	"Jump Top - Sync"
 	{
 		"en"		"Sync"
+		"nl"		"Sync"
 	}
 	"Jump Top - Pre"
 	{
 		"en"		"Pre"
+		"nl"		"Pre"
 	}
 	"Jump Top - Max"
 	{
 		"en"		"Max"
+		"nl"		"Max"
 	}
 	"Jump Top - Airtime"
 	{
 		"en"		"Airtime"
+		"nl"		"Airtime"
 	}
 	"Jump Top - Window None"
 	{
 		"en"		"No jumps saved yet"
+		"nl"		"Nog geen sprongen opgeslagen"
 	}
 	"Jump Top - Window Unavailable"
 	{
 		"en"		"Jumps are saved in the server's database and it isn't available"
+		"nl"		"Sprongen worden opgeslagen in de database van de server en die is niet beschikbaar"
 	}
 	"Jump Top - Unavailable"
 	{
 		"en"		"{grey}Jumps are saved in the server's database and it isn't available."
+		"nl"		"{grey}Sprongen worden opgeslagen in de database van de server en die is niet beschikbaar."
 	}
 	"Jump Top - Check Console"
 	{
 		"en"		"{grey}Check console for the best jumps on this server."
+		"nl"		"{grey}Check de console voor de beste sprongen op deze server."
 	}
 	"Jump Top - Table Title"
 	{
 		"#format"	"type:s,mode:s,list:s"
 		"en"		"Best {type} jumps in {mode} by {list}"
+		"nl"		"Beste {type}-sprongen in {mode}, gesorteerd op {list}"
 	}
 	"Jumpstats - Personal Best"
 	{
 		// You beat your Long Jump personal best! [242.4751 | VNL]
 		"#format"	"jump_type:s,color:s,distance:.4f,mode_short:s"
 		"en"		"{grey}You beat your {lime}{jump_type}{grey} personal best! [{color}{distance}{grey} | {purple}{mode_short}{grey}]"
+		"nl"		"{grey}Je hebt je persoonlijk record voor {lime}{jump_type}{grey} verbeterd! [{color}{distance}{grey} | {purple}{mode_short}{grey}]"
 	}
 	"Jumpstats - Personal Best Block"
 	{
 		// You beat your Long Jump block personal best! [242.4751 | 230 block | VNL]
 		"#format"	"jump_type:s,color:s,distance:.4f,block:d,mode_short:s"
 		"en"		"{grey}You beat your {lime}{jump_type}{grey} block personal best! [{color}{distance}{grey} | {default}{block}{grey} block | {purple}{mode_short}{grey}]"
+		"nl"		"{grey}Je hebt je persoonlijk blockrecord voor {lime}{jump_type}{grey} verbeterd! [{color}{distance}{grey} | {default}{block}{grey} block | {purple}{mode_short}{grey}]"
 	}
 }

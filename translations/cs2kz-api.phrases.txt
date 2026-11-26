@@ -15,6 +15,7 @@
 		"de"		"API {api} {grey}| {default} Server {server} {grey}| {default} Map {map} {grey}| {default} Du {player} {grey}| {default} Modus {mode} {grey}| {default} Styles {styles}"
 		"ru"		"API {api} {grey}| {default} Сервер {server} {grey}| {default} Карта {map} {grey}| {default} Вы {player} {grey}| {default} Режим {mode} {grey}| {default} Стили {styles}"
 		"es"		"API {api} {grey}| {default} Servidor {server} {grey}| {default} Mapa {map} {grey}| {default} Tú {player} {grey}| {default} Modo {mode} {grey}| {default} Estilos {styles}"
+		"nl"		"API {api} {grey}| {default} Server {server} {grey}| {default} Map {map} {grey}| {default} Jij {player} {grey}| {default} Modus {mode} {grey}| {default} Stijlen {styles}"
 	}
 	"Non Global Map Warning"
 	{
@@ -25,5 +26,6 @@
 		"ru"		"{yellow}Внимание{grey}: Текущая карта не одобрена глобально. Прохождения на этой карте не будут внесены в глобальную статистику."
 		"es"		"{yellow}Atención{grey}: Este mapa no está aprobado para el ranking global. Los records de este mapa no seran publicados globalmente."
 		"ko"		"{yellow}경고{grey}: 현재 맵은 글로벌 승인을 받지 않았습니다. 이 맵에서의 기록은 글로벌로 제출되지 않습니다."
+		"nl"		"{yellow}Waarschuwing{grey}: De huidige map is niet globaal goedgekeurd. Runs op deze map worden niet globaal ingediend."
 	}
 }

@@ -15,6 +15,7 @@
 		"de"		"{map_name} ({course_name}) {mode_name} Overall Server Top"
 		"es"		"{map_name} ({course_name}) {mode_name} Top general del servidor"
 		"ko"		"{map_name} ({course_name}) {mode_name} 서버 전체 순위"
+		"nl"		"{map_name} ({course_name}) {mode_name} Algemene servertop"
 	}
 	"Course Top - Table Name (Server Pro)"
 	{
@@ -31,6 +32,7 @@
 		"de"		"{map_name} ({course_name}) {mode_name} PRO Server Top"
 		"es"		"{map_name} ({course_name}) {mode_name} Top PRO del servidor"
 		"ko"		"{map_name} ({course_name}) {mode_name} 서버 PRO 순위"
+		"nl"		"{map_name} ({course_name}) {mode_name} PRO-servertop"
 	}
 	"Course Top - Table Name (Global Overall)"
 	{
@@ -47,6 +49,7 @@
 		"de"		"{map_name} ({course_name}) {mode_name} Overall Global Top"
 		"es"		"{map_name} ({course_name}) {mode_name} Top general Global"
 		"ko"		"{map_name} ({course_name}) {mode_name} 글로벌 전체 순위"
+		"nl"		"{map_name} ({course_name}) {mode_name} Algemene globale top"
 	}
 	"Course Top - Table Name (Global Pro)"
 	{
@@ -63,6 +66,7 @@
 		"de"		"{map_name} ({course_name}) {mode_name} PRO Global Top"
 		"es"		"{map_name} ({course_name}) {mode_name} Top PRO Global"
 		"ko"		"{map_name} ({course_name}) {mode_name} 글로벌 PRO 순위"
+		"nl"		"{map_name} ({course_name}) {mode_name} PRO globale top"
 	}
 	"Course Top Header - Player Alias"
 	{
@@ -80,6 +84,7 @@
 		"ko"		"별명"
 		"fi"		"Alias"
 		"lv"		"Alias"
+		"nl"		"Alias"
 	}
 	"Course Top Header - Time"
 	{
@@ -97,6 +102,7 @@
 		"ko"		"시간"
 		"fi"		"Aika"
 		"lv"		"Laiks"
+		"nl"		"Tijd"
 	}
 	"Course Top Header - Teleports"
 	{
@@ -114,6 +120,7 @@
 		"ko"		"텔레포트"
 		"fi"		"Teleportit"
 		"lv"		"Teleports"
+		"nl"		"Teleports"
 	}
 	"Course Top Header - SteamID64"
 	{
@@ -131,6 +138,7 @@
 		"ko"		"SteamID64"
 		"fi"		"SteamID64"
 		"lv"		"SteamID64"
+		"nl"		"SteamID64"
 	}
 	"Course Top Header - Run ID"
 	{
@@ -148,6 +156,7 @@
 		"ko"		"Run ID"
 		"fi"		"Run ID"
 		"lv"		"Run ID"
+		"nl"		"Run-ID"
 	}
 	"Course Top Header - Points"
 	{
@@ -163,6 +172,7 @@
 		"de"		"Punkte"
 		"es"		"Puntos"
 		"ko"		"포인트"
+		"nl"		"Punten"
 	}
 	"Course Top Request - Failed (Generic)"
 	{
@@ -180,6 +190,7 @@
 		"ko"		"{darkred}코스 최고 기록 정보를 가져오지 못했습니다."
 		"fi"		"{darkred}Huipputuloksien haku epäonnistui."
 		"lv"		"{darkred}Neizdevās iegūt trases top informāciju."
+		"nl"		"{darkred}Routetopinformatie ophalen mislukt."
 	}
 	"Course Top Request - Invalid Course Name"
 	{
@@ -197,6 +208,7 @@
 		"ko"		"{darkred}코스 최고 기록 정보를 가져오지 못했습니다. {grey}(잘못된 코스 이름 {default}{course_name}{grey})"
 		"fi"		"{darkred}Huipputuloksien haku epäonnistui. {grey} Virheellinen kartan nimi {default}{course_name}{grey})"
 		"lv"		"{darkred}Neizdevās iegūt trases top informāciju. {grey}(Nederīgs trases nosaukums {default}{course_name}{grey})"
+		"nl"		"{darkred}Routetopinformatie ophalen mislukt. {grey}(Ongeldige routenaam {default}{course_name}{grey})"
 	}
 	"Course Top - Check Console"
 	{
@@ -214,6 +226,7 @@
 		"ko"		"{grey}코스 최고 기록 데이터를 가져왔습니다. 자세한 내용은 콘솔을 확인하세요!"
 		"fi"		"{grey}Huipputulokset haettu. Katso konsolista tarkemmat tulokset!"
 		"lv"		"{grey}Trases top dati iegūti. Skaties konsolē, lai uzzinātu vairāk!"
+		"nl"		"{grey}Routetopgegevens opgehaald. Kijk in de console voor details!"
 	}
 	"Course Top Command Usage"
 	{
@@ -231,6 +244,7 @@
 		"ko"		"{grey}사용법: {default}kz_ctop {purple}<c/course/map/mode/l/limit/o/offset=...>{grey}. 자세한 내용은 콘솔을 확인하세요!"
 		"fi"		"{grey}Käyttö: {default}kz_ctop {purple}<c/course/map/mode/l/limit/o/offset=...>{grey}. Katso konsolista tarkemmat tulokset!"
 		"lv"		"{grey}Pielietojums: {default}kz_ctop {purple}<c/course/map/mode/l/limit/o/offset=...>{grey}. Detalizēta informācija konsolē!"
+		"nl"		"{grey}Gebruik: {default}kz_ctop {purple}<c/course/map/mode/l/limit/o/offset=...>{grey}. Kijk in de console voor details!"
 	}
 	"Course Top Command Usage - Console"
 	{
@@ -248,173 +262,212 @@
 		"ko"		"사용법: kz_ctop/kz_coursetop/kz_maptop/ <c/course/map/mode=...>\n예시: \"kz_ctop map=kz_map c=Main o=10 l=20\". 'g' 또는 's'를 'top' 접미사 앞에 추가하여 글로벌/서버만 지정할 수 있습니다 (예: kz_gctop)."
 		"fi"		"Käyttö: kz_ctop/kz_coursetop/kz_maptop/ <c/course/map/mode=...>\nEsimerkki: \"kz_ctop map=kz_map c=Main o=10 l=20\". Lisää 'g' tai 's' alkuun ennen 'top'-päätettä  määrittääksesi globaalin/palvelimen tulokset (esim. kz_gctop)."
 		"lv"		"Pielietojums: kz_ctop/kz_coursetop/kz_maptop/ <c/course/map/mode=...>\nPiemērs: \"kz_ctop map=kz_map c=Main o=10 l=20\". Pievieno 'g' vai 's' pirms 'top' sufiksa, lai norādītu tikai globālo/servera (piem., kz_gctop)."
+		"nl"		"Gebruik: kz_ctop/kz_coursetop/kz_maptop/ <c/course/map/mode=...>\nVoorbeeld: \"kz_ctop map=kz_map c=Main o=10 l=20\". Voeg 'g' of 's' toe aan het begin vóór het achtervoegsel 'top' om alleen globaal/server op te geven (bijv. kz_gctop)."
 	}
 	"Course Top - Window Ranking"
 	{
 		"en"		"Course Ranking"
+		"nl"		"Routeranglijst"
 	}
 	"Course Top - Window Overall"
 	{
 		"en"		"Overall"
+		"nl"		"Algemeen"
 	}
 	"Course Top - Window Pro"
 	{
 		"en"		"Pro"
+		"nl"		"Pro"
 	}
 	"Course Top - Window Global"
 	{
 		"en"		"Global"
+		"nl"		"Globaal"
 	}
 	"Course Top - Window Server"
 	{
 		"en"		"Server"
+		"nl"		"Server"
 	}
 	"Course Top - Window Rank"
 	{
 		"en"		"Rank"
+		"nl"		"Rang"
 	}
 	"Course Top - Window Player"
 	{
 		"en"		"Player"
+		"nl"		"Speler"
 	}
 	"Course Top - Window Time"
 	{
 		"en"		"Time"
+		"nl"		"Tijd"
 	}
 	"Course Top - Window Overall Points"
 	{
 		"en"		"Overall Pts"
+		"nl"		"Algemene ptn."
 	}
 	"Course Top - Window Pro Points"
 	{
 		"en"		"Pro Pts"
+		"nl"		"Pro-ptn."
 	}
 	"Course Top - Window Date"
 	{
 		"en"		"Date"
+		"nl"		"Datum"
 	}
 	"Course Top - Window Replay"
 	{
 		"en"		"Replay"
+		"nl"		"Replay"
 	}
 	"Course Top - Window Watch Replay"
 	{
 		"en"		"Watch Replay"
+		"nl"		"Replay bekijken"
 	}
 	"Course Top - Window Copy ID"
 	{
 		"en"		"Print ID to chat and console"
+		"nl"		"ID in chat en console printen"
 	}
 	"Course Top - Record ID"
 	{
 		"#format"	"name:s,id:s"
 		"en"		"{grey}Record ID of {default}{name}{grey}: {default}{id}"
+		"nl"		"{grey}Record-ID van {default}{name}{grey}: {default}{id}"
 	}
 	"Course Top - Window Copy Workshop ID"
 	{
 		"en"		"Print workshop ID to chat and console"
+		"nl"		"Workshop-ID in chat en console printen"
 	}
 	"Course Top - Workshop ID"
 	{
 		"#format"	"map:s,id:s"
 		"en"		"{grey}Workshop ID of {default}{map}{grey}: {default}{id}"
+		"nl"		"{grey}Workshop-ID van {default}{map}{grey}: {default}{id}"
 	}
 	"Course Top - Window Previous"
 	{
 		"en"		"Previous"
+		"nl"		"Vorige"
 	}
 	"Course Top - Window Next"
 	{
 		"en"		"Next"
+		"nl"		"Volgende"
 	}
 	"Course Top - Window Loading"
 	{
 		"en"		"Loading..."
+		"nl"		"Laden..."
 	}
 	"Course Top - Window No Data"
 	{
 		"en"		"No Data"
+		"nl"		"Geen gegevens"
 	}
 	"Course Top - Window Failed"
 	{
 		"en"		"Couldn't load the records."
+		"nl"		"De records konden niet worden geladen."
 	}
 	"Course Top - Window Count"
 	{
 		"#format"	"first:s,last:s,total:s"
 		"en"		"{first} - {last} of {total}"
+		"nl"		"{first} - {last} van {total}"
 	}
 	"Course Top - Window Count (No Total)"
 	{
 		"#format"	"first:s,last:s"
 		"en"		"{first} - {last}"
+		"nl"		"{first} - {last}"
 	}
 	"Course Top - Year Ago"
 	{
 		"#format"	"count:i"
 		"en"		"{count} year ago"
+		"nl"		"{count} jaar geleden"
 	}
 	"Course Top - Years Ago"
 	{
 		"#format"	"count:i"
 		"en"		"{count} years ago"
+		"nl"		"{count} jaar geleden"
 	}
 	"Course Top - Month Ago"
 	{
 		"#format"	"count:i"
 		"en"		"{count} month ago"
+		"nl"		"{count} maand geleden"
 	}
 	"Course Top - Months Ago"
 	{
 		"#format"	"count:i"
 		"en"		"{count} months ago"
+		"nl"		"{count} maanden geleden"
 	}
 	"Course Top - Day Ago"
 	{
 		"#format"	"count:i"
 		"en"		"{count} day ago"
+		"nl"		"{count} dag geleden"
 	}
 	"Course Top - Days Ago"
 	{
 		"#format"	"count:i"
 		"en"		"{count} days ago"
+		"nl"		"{count} dagen geleden"
 	}
 	"Course Top - Hour Ago"
 	{
 		"#format"	"count:i"
 		"en"		"{count} hour ago"
+		"nl"		"{count} uur geleden"
 	}
 	"Course Top - Hours Ago"
 	{
 		"#format"	"count:i"
 		"en"		"{count} hours ago"
+		"nl"		"{count} uur geleden"
 	}
 	"Course Top - Minute Ago"
 	{
 		"#format"	"count:i"
 		"en"		"{count} minute ago"
+		"nl"		"{count} minuut geleden"
 	}
 	"Course Top - Minutes Ago"
 	{
 		"#format"	"count:i"
 		"en"		"{count} minutes ago"
+		"nl"		"{count} minuten geleden"
 	}
 	"Course Top - Second Ago"
 	{
 		"#format"	"count:i"
 		"en"		"{count} second ago"
+		"nl"		"{count} seconde geleden"
 	}
 	"Course Top - Seconds Ago"
 	{
 		"#format"	"count:i"
 		"en"		"{count} seconds ago"
+		"nl"		"{count} seconden geleden"
 	}
 	"Course Top - Window No Replay"
 	{
 		"en"		"No replay on this server"
+		"nl"		"Geen replay op deze server"
 	}
 	"Course Top - Window Other Map"
 	{
 		"en"		"Only replays of the current map can be watched"
+		"nl"		"Alleen replays van de huidige map kunnen worden bekeken"
 	}
 }

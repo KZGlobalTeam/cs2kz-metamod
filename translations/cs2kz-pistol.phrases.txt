@@ -12,6 +12,7 @@
 		"de"		"{grey}Anwendung: {default}kz_pistol <name|off>{grey}."
 		"es"		"{grey}Uso: {default}kz_pistol <nombre|off>{grey}."
 		"ko"		"{grey}사용법: {default}kz_pistol <이름|off>{grey}."
+		"nl"		"{grey}Gebruik: {default}kz_pistol <naam|off>{grey}."
 	}
 	"Pistol Disabled"
 	{
@@ -25,6 +26,7 @@
 		"de"		"{grey}Du hast deine Pistole deaktiviert."
 		"es"		"{grey}Has desactivado tu pistola."
 		"ko"		"{grey}권총을 비활성화했습니다."
+		"nl"		"{grey}Je hebt je pistool uitgeschakeld."
 	}
 	"Pistol Changed"
 	{
@@ -39,6 +41,7 @@
 		"de"		"{grey}Du hast deine Pistole zu {default}{pistol}{grey} gewechselt."
 		"es"		"{grey}Has cambiado tu pistola a {default}{pistol}{grey}."
 		"ko"		"{grey}권총을 {default}{pistol}{grey}(으)로 변경했습니다."
+		"nl"		"{grey}Je hebt je pistool gewijzigd naar {default}{pistol}{grey}."
 	}
 	"Pistol Unknown"
 	{
@@ -53,5 +56,6 @@
 		"de"		"{darkred}Unbekannte Pistole: {default}{pistol}{grey}."
 		"es"		"{darkred}Pistola no reconocida: {default}{pistol}{grey}."
 		"ko"		"{darkred}알 수 없는 권총: {default}{pistol}{grey}."
+		"nl"		"{darkred}Onbekend pistool: {default}{pistol}{grey}."
 	}
 }

@@ -15,6 +15,7 @@
 		"fi"		"{darkred}Varoitus{grey}: Sinä et ole autentikoitu Steamin kanssa. Suoritusta ei välttämättä tallenneta. Kirjoita {default}!pc{grey} tarkistaaksesi nykyisen autentikointi statuksen."
 		"lv"		"{darkred}Brīdinājums{grey}: Tu neesi autentificējies ar Steam. Tavs skrējiens var netikt saglabāts. Ieraksti {default}!pc{grey}, lai pārbaudītu savu pašreizējo autentifikācijas statusu."
 		"de"		"{darkred}Warning{grey}: Du bist derzeit nicht bei Steam authentifiziert. Dein Lauf wird möglicherweise nicht gespeichert. Tippe {default}!pc{grey}, um deinen aktuellen Authentifizierungsstatus zu überprüfen.."
+		"nl"		"{darkred}Waarschuwing{grey}: Je bent momenteel niet geauthenticeerd bij Steam. Je run wordt mogelijk niet opgeslagen. Typ {default}!pc{grey} om je huidige authenticatiestatus te controleren."
 	}
 	"No Prime Warning"
 	{
@@ -30,6 +31,7 @@
 		"ko"		"{darkred}경고{grey}: 프라임 계정이 아닙니다. 공식 기록이 저장되지 않습니다."
 		"lv"		"{darkred}Brīdinājums{grey}: Tev nav Prime Status jauninājuma. Tavs skrējiens globāli netiks saglabāts."
 		"de"		"{darkred}Warnung{grey}: Du hast keinen Prime-Status. Dein Run wird nicht global gespeichert."
+		"nl"		"{darkred}Waarschuwing{grey}: Je hebt geen Prime Status-upgrade. Je run wordt niet globaal opgeslagen."
 	}
 	"Player Authenticated (Steam)"
 	{
@@ -47,6 +49,7 @@
 		"fi"		"{grey}Pelaajaa {default}{player}{grey} on autentikoitu Steamin kanssa."
 		"lv"		"{grey}Spēlētājs {default}{player}{grey} ir autentificēts ar Steam."
 		"de"		"{grey}Spieler {default}{player}{grey} is bei Steam authentifiziert."
+		"nl"		"{grey}Speler {default}{player}{grey} is geauthenticeerd bij Steam."
 	}
 	"Player Not Authenticated (Steam)"
 	{
@@ -64,6 +67,7 @@
 		"fi"		"{grey}Pelaajaa {default}{player}{grey} {yellow}ei ole{grey} autentikoitu Steamin kanssa."
 		"lv"		"{grey}Spēlētājs {default}{player}{grey} pašlaik {yellow}nav{grey} autentificēts ar Steam."
 		"de"		"{grey}Spieler {default}{player}{grey} ist derzeit {yellow}nicht{grey} bei Steam authentifiziert."
+		"nl"		"{grey}Speler {default}{player}{grey} is momenteel {yellow}niet{grey} geauthenticeerd bij Steam."
 	}
 	"Error Message (Player Not Found)"
 	{
@@ -82,6 +86,7 @@
 		"ko"		"{darkred}\"{player}\" 해당 플레이어를 찾을 수 없습니다."
 		"lv"		"{darkred}Neizdevās atrast spēlētāju ar vārdu \"{player}\"."
 		"de"		"{darkred}Konnte keinen Spieler mit dem Namen \"{player}\" finden."
+		"nl"		"{darkred}Kon geen speler vinden met de naam \"{player}\"."
 	}
 	"Command Cooldown"
 	{
@@ -95,18 +100,22 @@
 		"de"		"{grey}Bitte warte, bevor du diesen Befehl erneut verwendest."
 		"es"		"{grey}Por favor, espere antes de usar ese comando otra vez."
 		"ko"		"{grey}해당 명령어를 다시 사용하기 전에 잠시 기다려주세요."
+		"nl"		"{grey}Wacht even voordat je dat commando opnieuw gebruikt."
 	}
 	"Not In Control"
 	{
 		"en"		"{darkred}You can't do that while you are not controlling your player."
+		"nl"		"{darkred}Je kunt dit niet doen zolang je je speler niet bestuurt."
 	}
 	"Away Restored"
 	{
 		"en"		"{grey}Welcome back! Your player and run were kept while you were away."
+		"nl"		"{grey}Welkom terug! Je speler en run zijn bewaard terwijl je weg was."
 	}
 	"Away Restored (Paused)"
 	{
 		"en"		"{grey}Welcome back! Your player and run were kept while you were away. Your timer is paused, {default}!pause {grey}to resume."
+		"nl"		"{grey}Welkom terug! Je speler en run zijn bewaard terwijl je weg was. Je timer is gepauzeerd, typ {default}!pause {grey}om te hervatten."
 	}
 	"Command Cooldown (Time Remaining)"
 	{
@@ -116,6 +125,7 @@
 		"zho"		"{grey}請等待 {default}{time}{grey} 秒後再使用其他指令。"
 		"ua"		"{grey}Будь ласка, зачекайте {default}{time}{grey} секунд перед викорстанням наступної команди."
 		"ru"		"{grey}Пожалуйста, подождите {default}{time}{grey} секунд перед использованием другой команды."
+		"nl"		"{grey}Wacht {default}{time}{grey} seconden voordat je een ander commando gebruikt."
 	}
 	"Beta Join Warning"
 	{
@@ -126,14 +136,17 @@
 		"ua"		"CS2KZ наразі перебуває на етапі тестування. Зверніть увагу, що всі рекорди та дані будуть видалені після виходу CS2KZ з бета-версії."
 		"es"		"CS2KZ actualmente esta en fase de pruebas (Beta). Recordatorio de que todos los records y datos serán borrados cuando CS2KZ esté fuera del modo Beta."
 		"ko"		"CS2KZ는 현재 테스트 단계입니다. CS2KZ가 베타를 종료하면 모든 기록과 데이터가 삭제될 수 있음을 유의하세요."
+		"nl"		"CS2KZ bevindt zich momenteel in de testfase. Houd er rekening mee dat alle records en gegevens worden gewist wanneer CS2KZ uit de beta is."
 	}
 	"Picker - No Players"
 	{
 		"en"		"No players to pick."
+		"nl"		"Geen spelers om te kiezen."
 	}
 	"Picker - Player Left"
 	{
 		"#format"	"name:s"
 		"en"		"{default}{name}{grey} left the server."
+		"nl"		"{default}{name}{grey} heeft de server verlaten."
 	}
 }

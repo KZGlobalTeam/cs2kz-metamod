@@ -16,6 +16,7 @@
 		"de"	"Geschwindigkeit"
 		"ko"	"속도"
 		"lv"	"Ātrums"
+		"nl"		"Snelheid"
 	}
 	"HUD - Perf Full"
 	{
@@ -24,6 +25,7 @@
 		"zho"		"完美連跳"
 		"ua"		"PERFECT BHOP"
 		"ru"		"PERFECT BHOP"
+		"nl"		"PERFECT BHOP"
 	}
 	"HUD - Perf Short"
 	{
@@ -32,6 +34,7 @@
 		"zho"		"PERF"
 		"ua"		"PERF"
 		"ru"		"PERF"
+		"nl"		"PERF"
 	}
 	"HUD - Crouch Jump Full"
 	{
@@ -40,6 +43,7 @@
 		"zho"		"蹲跳"
 		"ua"		"CROUCH JUMP"
 		"ru"		"CROUCH JUMP"
+		"nl"		"CROUCH JUMP"
 	}
 	"HUD - Crouch Jump Short"
 	{
@@ -48,6 +52,7 @@
 		"zho"		"CJ"
 		"ua"		"CJ"
 		"ru"		"CJ"
+		"nl"		"CJ"
 	}
 	"HUD - Jumpbug Full"
 	{
@@ -56,6 +61,7 @@
 		"zho"		"JUMPBUG"
 		"ua"		"JUMPBUG"
 		"ru"		"JUMPBUG"
+		"nl"		"JUMPBUG"
 	}
 	"HUD - Jumpbug Short"
 	{
@@ -64,6 +70,7 @@
 		"zho"		"JB"
 		"ua"		"JB"
 		"ru"		"JB"
+		"nl"		"JB"
 	}
 	"HUD - Stopped Text"
 	{
@@ -82,6 +89,7 @@
 		"de"		" (GESTOPPT)"
 		"ko"		" (중지됨)"
 		"lv"		" (APTURĒTS)"
+		"nl"		" (GESTOPT)"
 	}
 	"HUD - Paused Text"
 	{
@@ -100,6 +108,7 @@
 		"de"		" (PAUSIERT)"
 		"ko"		" (일시정지됨)"
 		"lv"		" (NOPAUZĒTS)"
+		"nl"		" (GEPAUZEERD)"
 	}
 	"HUD - Speed Text"
 	{
@@ -119,6 +128,7 @@
 		"de"		"Geschwindigkeit: {speed}"
 		"ko"		"속도: {speed}"
 		"lv"		"Ātrums: {speed}"
+		"nl"		"Snelheid: {speed}"
 	}
 	"HUD - Speed Text (Takeoff)"
 	{
@@ -138,6 +148,7 @@
 		"de"		"Geschwindigkeit: {speed} ({color}{takeoff_speed}</font>){crouch_jump}"
 		"ko"		"속도: {speed} ({color}{takeoff_speed}</font>){crouch_jump}"
 		"lv"		"Ātrums: {speed} ({color}{takeoff_speed}</font>){crouch_jump}"
+		"nl"		"Snelheid: {speed} ({color}{takeoff_speed}</font>){crouch_jump}"
 	}
 	"HUD - Key Text"
 	{
@@ -157,6 +168,7 @@
 		"de"		"Tasten: {left} {forward} {back} {right} {duck} {jump}"
 		"ko"		"키 입력: {left} {forward} {back} {right} {duck} {jump}"
 		"lv"		"Taustiņi: {left} {forward} {back} {right} {duck} {jump}"
+		"nl"		"Toetsen: {left} {forward} {back} {right} {duck} {jump}"
 	}
 	"HUD - Checkpoint Text"
 	{
@@ -176,6 +188,7 @@
 		"de"		"CP: {checkpoint_index}/{checkpoint_count} TPs: {teleport_count}"
 		"ko"		"CP: {checkpoint_index}/{checkpoint_count} TPs: {teleport_count}"
 		"lv"		"CP: {checkpoint_index}/{checkpoint_count} TPs: {teleport_count}"
+		"nl"		"CP: {checkpoint_index}/{checkpoint_count} TPs: {teleport_count}"
 	}
 	"HUD - Timer Text"
 	{
@@ -195,6 +208,7 @@
 		"de"		"{time}{stop_text}{pause_text}"
 		"ko"		"{time}{stop_text}{pause_text}"
 		"lv"		"{time}{stop_text}{pause_text}"
+		"nl"		"{time}{stop_text}{pause_text}"
 	}
 	"HUD - Center Text"
 	{
@@ -215,6 +229,7 @@
 		"de"		"{checkpoint_text}\n{timer_text}"
 		"ko"		"{checkpoint_text}\n{timer_text}"
 		"lv"		"{checkpoint_text}\n{timer_text}"
+		"nl"		"{checkpoint_text}\n{timer_text}"
 	}
 	// This text is actually "more" center.
 	// lint-ignore-start
@@ -257,6 +272,7 @@
 		"de"		"{speed_text}<br>{key_text}"
 		"ko"		"{speed_text}<br>{key_text}"
 		"lv"		"{speed_text}<br>{key_text}"
+		"nl"		"{speed_text}<br>{key_text}"
 	}
 
 	"HUD - HTML Panel Disabled"
@@ -275,6 +291,7 @@
 		"de"		"Panel deaktiviert"
 		"ko"		"패널이 비활성화되었습니다."
 		"lv"		"Panelis atslēgts."
+		"nl"		"Paneel uitgeschakeld."
 	}
 
 	"HUD Option - Hide HUD - Enable"
@@ -282,17 +299,20 @@
 		"#format"	"elements:s"
 		"en"		"{grey}Hidden: {default}{elements}{grey}. Run the same command again to show them."
 		"ua"		"{grey}Приховано: {default}{elements}{grey}. Виконайте ту саму команду ще раз, щоб показати їх."
+		"nl"		"{grey}Verborgen: {default}{elements}{grey}. Voer hetzelfde commando opnieuw uit om ze te tonen."
 	}
 	"HUD Option - Hide HUD - Disable"
 	{
 		"#format"	"elements:s"
 		"en"		"{grey}Shown: {default}{elements}{grey}."
 		"ua"		"{grey}Показується: {default}{elements}{grey}."
+		"nl"		"{grey}Getoond: {default}{elements}{grey}."
 	}
 	"HideHUD Command Usage"
 	{
 		"en"		"{grey}Usage: {default}!hidehud [crosshair|weapons|notices|voice]...{grey}. Without arguments, hides everything but chat and the crosshair."
 		"ua"		"{grey}Використання: {default}!hidehud [crosshair|weapons|notices|voice]...{grey}. Без додаткових аргументів приховує все, крім чату та прицілу."
+		"nl"		"{grey}Gebruik: {default}!hidehud [crosshair|weapons|notices|voice]...{grey}. Zonder argumenten wordt alles verborgen behalve de chat en het crosshair."
 	}
 	"HUD Option - Info Panel - Enable"
 	{
@@ -310,6 +330,7 @@
 		"de"		"{grey}Dein zentrales Informationspanel wurde aktiviert."
 		"ko"		"{grey}중앙 정보 패널이 활성화되었습니다."
 		"lv"		"{grey}Jūsu centrālais informācijas panelis ir aktivizēts."
+		"nl"		"{grey}Je informatiepaneel in het midden is ingeschakeld."
 	}
 	"HUD Option - Info Panel - Disable"
 	{
@@ -327,6 +348,7 @@
 		"de"		"{grey}Dein zentrales Informationspanel wurde deaktiviert."
 		"ko"		"{grey}중앙 정보 패널이 비활성화되었습니다."
 		"lv"		"{grey}Jūsu centrālais informācijas panelis ir deaktivizēts."
+		"nl"		"{grey}Je informatiepaneel in het midden is uitgeschakeld."
 	}
 	"HUD Option - Compact Panel - Enable"
 	{
@@ -336,6 +358,7 @@
 		"ru"		"{grey}Компактная панель включена."
 		"ua"		"{grey}Компактна панель увімкнена."
 		"ko"		"{grey}소형 패널이 활성화되었습니다."
+		"nl"		"{grey}Compact paneel ingeschakeld."
 	}
 	"HUD Option - Compact Panel - Disable"
 	{
@@ -345,6 +368,7 @@
 		"ru"		"{grey}Компактная панель выключена."
 		"ua"		"{grey}Компактна панель вимкнена."
 		"ko"		"{grey}소형 패널이 비활성화되었습니다."
+		"nl"		"{grey}Compact paneel uitgeschakeld."
 	}
 	"Panel Command Usage"
 	{
@@ -354,6 +378,7 @@
 		"ru"		"{grey}Применение: {default}kz_panel <compact>{grey}."
 		"ua"		"{grey}Використання: {default}kz_panel <compact>{grey}."
 		"ko"		"{grey}사용법: {default}kz_panel <compact>{grey}."
+		"nl"		"{grey}Gebruik: {default}kz_panel <compact>{grey}."
 	}
 	"Fonts - Help (Chat)"
 	{
@@ -362,6 +387,7 @@
 		"zho"		"{grey}請查看控制台中的說明！"
 		"ua"		"{grey}Перевірте консоль для інструкцій!"
 		"ru"		"{grey}Инструкции выведены в консоль!"
+		"nl"		"{grey}Check de console voor instructies!"
 	}
 	"Fonts - Help (Console)"
 	{
@@ -375,6 +401,7 @@
 		"zho"		"----- 字型選擇器中標記 * 的字型 -----\n遊戲只會載入已安裝且檔名與 fonts.conf 中項目相符的字型檔案。\n1. 為所有使用者安裝該字型。\n2. 開啟 csgo\\panorama\\fonts\\fonts.conf，並在其他項目旁新增一行：<fontpattern>你的字型檔名</fontpattern>\n3. 完全重新啟動遊戲。"
 		"ua"		"----- Шрифти, позначені * у виборі шрифтів -----\nГра завантажує лише встановлені файли шрифтів, ім'я яких збігається з записом у fonts.conf.\n1. Встановіть шрифт для всіх користувачів.\n2. Відкрийте csgo\\panorama\\fonts\\fonts.conf і додайте рядок поруч з іншими: <fontpattern>yourfontfilename</fontpattern>\n3. Повністю перезапустіть гру."
 		"ru"		"----- Шрифты, обозначенные * в выборе шрифтов -----\nИгра загружает только шрифты, которые записаны в файле fonts.conf.\n1. Установите шрифт для всех пользователей.\n2. Откройте csgo\\panorama\\fonts\\fonts.conf и добавьте линию к остальным: <fontpattern>названиеФайлаШрифта</fontpattern>\n3. Полностью перезапустите игру."
+		"nl"		"----- Lettertypen gemarkeerd met * in de lettertypekiezer -----\nHet spel laadt alleen geïnstalleerde lettertypebestanden waarvan de naam overeenkomt met een item in fonts.conf.\n1. Installeer het lettertype voor alle gebruikers.\n2. Open csgo\\panorama\\fonts\\fonts.conf en voeg een regel toe naast de andere: <fontpattern>jouwlettertypebestandsnaam</fontpattern>\n3. Start het spel volledig opnieuw op."
 	}
 	"HUD Edit - Pick Hint"
 	{
@@ -382,6 +409,7 @@
 		"zho"		"點擊元素可移動位置，拖曳角落可調整大小"
 		"ua"		"Натисніть на елемент, щоб перемістити його, або на один із його кутів, щоб змінити його розмір"
 		"ru"		"Кликните на элемент, чтобы его переместить, или на угол, чтобы изменить его размер"
+		"nl"		"Klik op een element om het te verplaatsen, of op een van de hoeken om het formaat te wijzigen"
 	}
 	"HUD Edit - Place"
 	{
@@ -389,6 +417,7 @@
 		"zho"		"放置"
 		"ua"		"Розмістити"
 		"ru"		"Разместить"
+		"nl"		"Plaatsen"
 	}
 	"HUD Edit - Cancel"
 	{
@@ -396,6 +425,7 @@
 		"zho"		"取消"
 		"ua"		"Скасувати"
 		"ru"		"Отменить"
+		"nl"		"Annuleren"
 	}
 	"HUD Edit - Default"
 	{
@@ -403,6 +433,7 @@
 		"zho"		"預設位置"
 		"ua"		"Початкове положення"
 		"ru"		"Сброс положения"
+		"nl"		"Standaardpositie"
 	}
 	"HUD Edit - Free Move"
 	{
@@ -410,6 +441,7 @@
 		"zho"		"按住：停用吸附"
 		"ua"		"Утримуйте щоб вільно переміщати"
 		"ru"		"Удержание: свободное перемещение"
+		"nl"		"Ingedrukt houden: vrij bewegen"
 	}
 	"HUD Edit - Done"
 	{
@@ -417,6 +449,7 @@
 		"zho"		"完成"
 		"ua"		"Готово"
 		"ru"		"Готово"
+		"nl"		"Klaar"
 	}
 	"HUD Edit - Unavailable"
 	{
@@ -424,6 +457,7 @@
 		"zho"		"{grey}必須使用版面配置 HUD 樣式，且玩家處於存活狀態，才能移動 HUD 元素。"
 		"ua"		"{grey}Для переміщення елементів HUD потрібно увімкнути стиль Компонування (mhud стиль) та мати живого гравця на сервері."
 		"ru"		"{grey}Вы должны включить HUD и быть живы, чтобы перемещать элементы HUD."
+		"nl"		"{grey}Voor het verplaatsen van HUD-elementen is de layout-HUD-stijl en een levende speler nodig."
 	}
 	"HUD - Release Text"
 	{
@@ -433,6 +467,7 @@
 		"zho"		"{value} W"
 		"ua"		"{value} W"
 		"ru"		"{value} W"
+		"nl"		"{value} W"
 	}
 	"HUD - Course Global"
 	{
@@ -440,6 +475,7 @@
 		"zho"		"全球"
 		"ua"		"Глобальний"
 		"ru"		"Глобальный"
+		"nl"		"Globaal"
 	}
 	"HUD - Course Non Global"
 	{
@@ -447,6 +483,7 @@
 		"zho"		"非全球"
 		"ua"		"Неглобальний"
 		"ru"		"Неглобальный"
+		"nl"		"Niet-globaal"
 	}
 	"HUD - Course Line"
 	{
@@ -456,6 +493,7 @@
 		"zho"		"{course} · {mode}"
 		"ua"		"{course} · {mode}"
 		"ru"		"{course} · {mode}"
+		"nl"		"{course} · {mode}"
 	}
 	"HUD - Course Tier"
 	{
@@ -465,6 +503,7 @@
 		"zho"		"T{tier}"
 		"ua"		"T{tier}"
 		"ru"		"T{tier}"
+		"nl"		"T{tier}"
 	}
 	"HUD - Course Pill Split"
 	{
@@ -473,6 +512,7 @@
 		"zho"		"分段 {number}"
 		"ua"		"Спліт {number}"
 		"ru"		"Сплит {number}"
+		"nl"		"Split {number}"
 	}
 	"HUD - Course Pill Checkpoint"
 	{
@@ -481,6 +521,7 @@
 		"zho"		"CP {number}"
 		"ua"		"CP {number}"
 		"ru"		"CP {number}"
+		"nl"		"CP {number}"
 	}
 	"HUD - Course Pill Stage"
 	{
@@ -489,6 +530,7 @@
 		"zho"		"階段 {number}"
 		"ua"		"Етап {number}"
 		"ru"		"Этап {number}"
+		"nl"		"Stage {number}"
 	}
 	"HUD - Course Pill Info"
 	{
@@ -498,6 +540,7 @@
 		"zho"		"{time} vs {target}"
 		"ua"		"{time} проти {target}"
 		"ru"		"{time} vs {target}"
+		"nl"		"{time} vs {target}"
 	}
 	"HUD - Compare Server PB"
 	{
@@ -505,6 +548,7 @@
 		"zho"		"SPB"
 		"ua"		"SPB"
 		"ru"		"SPB"
+		"nl"		"SPB"
 	}
 	"HUD - Compare Global PB"
 	{
@@ -512,6 +556,7 @@
 		"zho"		"GPB"
 		"ua"		"GPB"
 		"ru"		"GPB"
+		"nl"		"GPB"
 	}
 	"HUD - Compare SR"
 	{
@@ -519,6 +564,7 @@
 		"zho"		"SR"
 		"ua"		"SR"
 		"ru"		"SR"
+		"nl"		"SR"
 	}
 	"HUD - Compare WR"
 	{
@@ -526,6 +572,7 @@
 		"zho"		"WR"
 		"ua"		"WR"
 		"ru"		"WR"
+		"nl"		"WR"
 	}
 	"HUD - Compare Pro"
 	{
@@ -535,6 +582,7 @@
 		"zho"		"{target} Pro"
 		"ua"		"{target} Pro"
 		"ru"		"{target} Pro"
+		"nl"		"{target} Pro"
 	}
 	"HUD - Course Stages"
 	{
@@ -542,6 +590,7 @@
 		"zho"		"階段"
 		"ua"		"Етапи"
 		"ru"		"Этапы"
+		"nl"		"Stages"
 	}
 	"HUD - Course Checkpoints"
 	{
@@ -549,6 +598,7 @@
 		"zho"		"檢查點"
 		"ua"		"Чекпоінти"
 		"ru"		"Чекпоинты"
+		"nl"		"Checkpoints"
 	}
 	"HUD - Course Splits"
 	{
@@ -556,6 +606,7 @@
 		"zho"		"分段"
 		"ua"		"Спліти"
 		"ru"		"Сплиты"
+		"nl"		"Splits"
 	}
 	"HUD - Course Progress"
 	{
@@ -565,11 +616,13 @@
 		"zho"		"{reached} / {total}"
 		"ua"		"{reached} / {total}"
 		"ru"		"{reached} / {total}"
+		"nl"		"{reached} / {total}"
 	}
 	"HUD - Course Route"
 	{
 		"en"		"Progress"
 		"ua"		"Прогрес"
+		"nl"		"Voortgang"
 	}
 	"HUD - Course All"
 	{
@@ -577,6 +630,7 @@
 		"zho"		"全部"
 		"ua"		"Всі"
 		"ru"		"Все"
+		"nl"		"Alle"
 	}
 	"HUD - Course Pro"
 	{
@@ -584,6 +638,7 @@
 		"zho"		"Pro"
 		"ua"		"Pro"
 		"ru"		"Pro"
+		"nl"		"Pro"
 	}
 	"HUD - Course Badge TP"
 	{
@@ -591,6 +646,7 @@
 		"zho"		"TP"
 		"ua"		"TP"
 		"ru"		"TP"
+		"nl"		"TP"
 	}
 	"HUD - Course Badge Pro"
 	{
@@ -598,6 +654,7 @@
 		"zho"		"PRO"
 		"ua"		"PRO"
 		"ru"		"PRO"
+		"nl"		"PRO"
 	}
 	"HUD - Course By"
 	{
@@ -606,6 +663,7 @@
 		"zho"		"由 {name} 創下"
 		"ua"		"від {name}"
 		"ru"		"от {name}"
+		"nl"		"door {name}"
 	}
 	"HUD - Course Gap"
 	{
@@ -615,6 +673,7 @@
 		"zho"		"({gap})"
 		"ua"		"({gap})"
 		"ru"		"({gap})"
+		"nl"		"({gap})"
 	}
 	"HUD - Course No Records"
 	{
@@ -622,6 +681,7 @@
 		"zho"		"尚無紀錄"
 		"ua"		"Немає даних"
 		"ru"		"Нет рекордов... пока"
+		"nl"		"Nog geen records"
 	}
 	"HUD - Course Ranked"
 	{
@@ -629,6 +689,7 @@
 		"zho"		"已排名"
 		"ua"		"Рейтинговий"
 		"ru"		"Рейтинговый"
+		"nl"		"Ranked"
 	}
 	"HUD - Course Pending"
 	{
@@ -636,6 +697,7 @@
 		"zho"		"待審核"
 		"ua"		"Очікує"
 		"ru"		"Ожидание"
+		"nl"		"In afwachting"
 	}
 	"HUD - Course Unranked"
 	{
@@ -643,5 +705,6 @@
 		"zho"		"未排名"
 		"ua"		"Нерейтинговий"
 		"ru"		"Без рейтинга"
+		"nl"		"Unranked"
 	}
 }

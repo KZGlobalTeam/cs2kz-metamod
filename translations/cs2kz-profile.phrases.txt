@@ -3,94 +3,117 @@
 	"Profile - Joined On"
 	{
 		"en"		"Joined On:"
+		"nl"		"Lid sinds:"
 	}
 	"Profile - Global Rank"
 	{
 		"en"		"Global Rank:"
+		"nl"		"Globale rang:"
 	}
 	"Profile - Rating"
 	{
 		"en"		"Rating:"
+		"nl"		"Rating:"
 	}
 	"Profile - Runs"
 	{
 		"en"		"Runs"
+		"nl"		"Runs"
 	}
 	"Profile - Map"
 	{
 		"en"		"Map"
+		"nl"		"Map"
 	}
 	"Profile - Course"
 	{
 		"en"		"Course"
+		"nl"		"Route"
 	}
 	"Profile - Tier"
 	{
 		"en"		"Tier"
+		"nl"		"Tier"
 	}
 	"Profile - Pro Tier"
 	{
 		"en"		"Pro Tier"
+		"nl"		"Pro Tier"
 	}
 	"Profile - Overall Rank"
 	{
 		"en"		"Overall Rank"
+		"nl"		"Algemene rang"
 	}
 	"Profile - Pro Rank"
 	{
 		"en"		"Pro Rank"
+		"nl"		"Pro rang"
 	}
 	"Profile - Not Found"
 	{
 		"en"		"Player not found."
+		"nl"		"Speler niet gevonden."
 	}
 	"Profile - Failed"
 	{
 		"en"		"Couldn't load the profile."
+		"nl"		"Het profiel kon niet worden geladen."
 	}
 	"Profile - Copy Steam ID"
 	{
 		"en"		"Print Steam ID to chat and console"
+		"nl"		"Steam-ID in chat en console printen"
 	}
 	"Profile - Steam ID"
 	{
 		"#format"	"name:s,steamid64:s,steamid:s"
 		"en"		"{grey}Steam ID of {default}{name}{grey}: {default}{steamid64} {grey}({default}{steamid}{grey})"
+		"nl"		"{grey}Steam-ID van {default}{name}{grey}: {default}{steamid64} {grey}({default}{steamid}{grey})"
 	}
 	"Profile - Unavailable"
 	{
 		"en"		"{grey}Profiles need the global API or the server's database, and neither is available."
+		"nl"		"{grey}Voor profielen is de globale API of de database van de server nodig, en geen van beide is beschikbaar."
 	}
 	"Profile - Window Unavailable"
 	{
 		"en"		"{grey}The profile window couldn't open."
+		"nl"		"{grey}Het profielvenster kon niet worden geopend."
 	}
 	"Leaderboard - Window Title"
 	{
 		"en"		"Leaderboard"
+		"nl"		"Ranglijst"
 	}
 	"Leaderboard - Rating"
 	{
 		"en"		"Rating"
+		"nl"		"Rating"
 	}
 	"Leaderboard - Title"
 	{
 		"en"		"Title"
+		"nl"		"Titel"
 	}
 	"Leaderboard - Window Failed"
 	{
 		"en"		"Couldn't load the leaderboard."
+		"nl"		"De ranglijst kon niet worden geladen."
 	}
 	"Leaderboard - Window None"
 	{
 		"en"		"No ranked players."
+		"nl"		"Geen gerangschikte spelers."
 	}
 	"Leaderboard - Unavailable"
 	{
 		"en"		"{grey}The leaderboard needs the global API and it isn't available."
+		"nl"		"{grey}Voor de ranglijst is de globale API nodig en die is niet beschikbaar."
 	}
 	"Leaderboard - Window Unavailable"
 	{
 		"en"		"{grey}The leaderboard window couldn't open."
+		"nl"		"{grey}Het ranglijstvenster kon niet worden geopend."
 	}
 }
