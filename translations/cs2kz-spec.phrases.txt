@@ -100,6 +100,7 @@
 	"Spectate Failure (Not In Control)"
 	{
 		"en"		"{darkred}The player you specified is not controlling their player."
+		"ua"		"{darkred}Вказаний вами гравець не контролює свого персонажа."
 	}
 	"Spectate Failure (Player Not Found)"
 	{
@@ -117,5 +118,6 @@
 	"Spectate - Picker Title"
 	{
 		"en"		"Spectate Player"
+		"ua"		"Спостерігати за гравцем"
 	}
 }

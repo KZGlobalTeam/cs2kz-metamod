@@ -40,116 +40,144 @@
 	"Welcome - Unavailable"
 	{
 		"en"		"{grey}The tutorial window couldn't open."
+		"ua"		"{grey}Не вдалося відкрити вікно посібника."
 	}
 	"Welcome - Title"
 	{
 		"en"		"Welcome to CS2KZ"
+		"ua"		"Ласкаво просимо до CS2KZ"
 	}
 	"Welcome - Intro"
 	{
 		"en"		"KreedZ (KZ) is a movement game mode. Climb and navigate through obstacle courses using techniques like bunnyhopping and strafing."
+		"ua"		"KreedZ (KZ) - це режим про вміння пересуватися (мувмент). Підіймайся та долай перешкоди, використовуючи такі техніки, як баніхоп та стрейфи."
 	}
 	"Welcome - Goal"
 	{
 		"en"		"Leave the start zone to start the timer, then reach the end zone as fast as possible."
+		"ua"		"Покиньте стартову зону, щоб запустити таймер, а потім досягніть кінцевої зони якомога швидше."
 	}
 	"Welcome - Mode Title"
 	{
 		"en"		"Choose a Mode"
+		"ua"		"Оберіть режим"
 	}
 	"Welcome - Mode Lead"
 	{
 		"en"		"Pick your preferred mode."
+		"ua"		"Оберіть бажаний режим."
 	}
 	"Welcome - Mode Classic"
 	{
 		"en"		"Classic"
+		"ua"		"Класичний (Classic)"
 	}
 	"Welcome - Mode Classic Text"
 	{
 		"en"		"The fast paced default mode for CS2KZ, with prestrafe, consistent bunnyhops and 128 tick emulation. Most KZ maps are made for this mode."
+		"ua"		"Швидкий стандартний режим для CS2KZ з престрейфом, стабільним баніхопом та емуляцією 128 тіку. Більшість мап KZ створено для цього режиму."
 	}
 	"Welcome - Mode Vanilla"
 	{
 		"en"		"Vanilla"
+		"ua"		"Ваніла (Vanilla)"
 	}
 	"Welcome - Mode Vanilla Text"
 	{
 		"en"		"More challenging. Identical to competitive CS2 movement. Some courses might not be possible on this mode."
+		"ua"		"Складніший режим. Механіка руху (мувменту) повністю ідентична змагальному CS2. Деякі курси можуть бути непрохідними в цьому режимі."
 	}
 	"Welcome - Mode Later"
 	{
 		// Follows "Type [/mode]".
 		"en"		"to switch at any time."
+		"ua"		", щоб змінити режим в будь-який час."
 	}
 	"Welcome - Radio Title"
 	{
 		"en"		"Teleport Menu"
+		"ua"		"Телепорт меню"
 	}
 	"Welcome - Radio Press"
 	{
 		// Followed by the radio1 command and the player's key for it: "Press the key bound to [radio1] ([X])".
 		"en"		"Press the key bound to"
+		"ua"		"Натисніть клавішу, яка відповідає"
 	}
 	"Welcome - Radio Open"
 	{
 		"en"		"to open the teleport menu, then pick an option with its number key."
+		"ua"		", щоб відкрити телепорт меню, а потім оберіть опцію за її номером."
 	}
 	"Welcome - Radio Save"
 	{
 		"en"		"Save a checkpoint where you stand, and teleport back to it when you fall."
+		"ua"		"Робіть чекпоїнт на місці, де стоїте, і повертайтеся до нього телепортом у разі падіння."
 	}
 	"Welcome - Radio Runs"
 	{
 		"en"		"A run without teleports counts as PRO; one with them counts as TP."
+		"ua"		"Проходження без телепортацій рахується як PRO; з ними - як TP."
 	}
 	"Welcome - Commands Title"
 	{
 		"en"		"Useful Commands"
+		"ua"		"Корисні команди"
 	}
 	"Welcome - Commands Lead"
 	{
 		"en"		"Type these in chat. New to KZ? Start on tier 1 and 2 courses."
+		"ua"		"Напишіть ці команди в чаті. Новачок у KZ? Почніть свій шлях на легших мапах — tier 1 та 2."
 	}
 	"Welcome - Command Restart"
 	{
 		"en"		"Go back to the start"
+		"ua"		"Повернутися на старт"
 	}
 	"Welcome - Command Noclip"
 	{
 		"en"		"Enable noclip"
+		"ua"		"Увімкнути noclip"
 	}
 	"Welcome - Command Courses"
 	{
 		"en"		"Show a list of courses"
+		"ua"		"Показати список курсів"
 	}
 	"Welcome - Command Options"
 	{
 		"en"		"Open the settings"
+		"ua"		"Відкрити налаштування"
 	}
 	"Welcome - Command PB"
 	{
 		"en"		"Show your best time"
+		"ua"		"Показати ваш найкращий час"
 	}
 	"Welcome - Command WR"
 	{
 		"en"		"Show the records for this course"
+		"ua"		"Показати рекорди для цього курсу"
 	}
 	"Welcome - Command Hide"
 	{
 		"en"		"Hide other players"
+		"ua"		"Приховати інших гравців"
 	}
 	"Welcome - More Type"
 	{
 		// "Type [/help] for every command, or [/tutorial] to see this again."
 		"en"		"Type"
+		"ua"		"Введіть"
 	}
 	"Welcome - More Help"
 	{
 		"en"		"for every command, or"
+		"ua"		", щоб переглянути всі команди, або"
 	}
 	"Welcome - More Again"
 	{
 		"en"		"to see this again."
+		"ua"		", щоб переглянути цей посібник знову."
 	}
 }

@@ -252,169 +252,207 @@
 	"Course Top - Window Ranking"
 	{
 		"en"		"Course Ranking"
+		"ua"		"Рейтинг курсу"
 	}
 	"Course Top - Window Overall"
 	{
 		"en"		"Overall"
+		"ua"		"Загальний"
 	}
 	"Course Top - Window Pro"
 	{
 		"en"		"Pro"
+		"ua"		"Pro"
 	}
 	"Course Top - Window Global"
 	{
 		"en"		"Global"
+		"ua"		"Глобальний"
 	}
 	"Course Top - Window Server"
 	{
 		"en"		"Server"
+		"ua"		"Сервер"
 	}
 	"Course Top - Window Rank"
 	{
 		"en"		"Rank"
+		"ua"		"Позиція"
 	}
 	"Course Top - Window Player"
 	{
 		"en"		"Player"
+		"ua"		"Гравець"
 	}
 	"Course Top - Window Time"
 	{
 		"en"		"Time"
+		"ua"		"Час"
 	}
 	"Course Top - Window Overall Points"
 	{
 		"en"		"Overall Pts"
+		"ua"		"Загальні очки"
 	}
 	"Course Top - Window Pro Points"
 	{
 		"en"		"Pro Pts"
+		"ua"		"Pro очки"
 	}
 	"Course Top - Window Date"
 	{
 		"en"		"Date"
+		"ua"		"Дата"
 	}
 	"Course Top - Window Replay"
 	{
 		"en"		"Replay"
+		"ua"		"Повтор"
 	}
 	"Course Top - Window Watch Replay"
 	{
 		"en"		"Watch Replay"
+		"ua"		"Дивитися повтор"
 	}
 	"Course Top - Window Copy ID"
 	{
 		"en"		"Print ID to chat and console"
+		"ua"		"Вивести ID у чат і консоль"
 	}
 	"Course Top - Record ID"
 	{
 		"#format"	"name:s,id:s"
 		"en"		"{grey}Record ID of {default}{name}{grey}: {default}{id}"
+		"ua"		"{grey}ID запису {default}{name}{grey}: {default}{id}"
 	}
 	"Course Top - Window Copy Workshop ID"
 	{
 		"en"		"Print workshop ID to chat and console"
+		"ua"		"Вивести workshop ID у чат і консоль"
 	}
 	"Course Top - Workshop ID"
 	{
 		"#format"	"map:s,id:s"
 		"en"		"{grey}Workshop ID of {default}{map}{grey}: {default}{id}"
+		"ua"		"{grey}Workshop ID {default}{map}{grey}: {default}{id}"
 	}
 	"Course Top - Window Previous"
 	{
 		"en"		"Previous"
+		"ua"		"Назад"
 	}
 	"Course Top - Window Next"
 	{
 		"en"		"Next"
+		"ua"		"Далі"
 	}
 	"Course Top - Window Loading"
 	{
 		"en"		"Loading..."
+		"ua"		"Завантаження..."
 	}
 	"Course Top - Window No Data"
 	{
 		"en"		"No Data"
+		"ua"		"Немає даних"
 	}
 	"Course Top - Window Failed"
 	{
 		"en"		"Couldn't load the records."
+		"ua"		"Не вдалося завантажити записи."
 	}
 	"Course Top - Window Count"
 	{
 		"#format"	"first:s,last:s,total:s"
 		"en"		"{first} - {last} of {total}"
+		"ua"		"{first} - {last} з {total}"
 	}
 	"Course Top - Window Count (No Total)"
 	{
 		"#format"	"first:s,last:s"
 		"en"		"{first} - {last}"
+		"ua"		"{first} - {last}"
 	}
 	"Course Top - Year Ago"
 	{
 		"#format"	"count:i"
 		"en"		"{count} year ago"
+		"ua"		"{count} рік тому"
 	}
 	"Course Top - Years Ago"
 	{
 		"#format"	"count:i"
 		"en"		"{count} years ago"
+		"ua"		"{count} років тому"
 	}
 	"Course Top - Month Ago"
 	{
 		"#format"	"count:i"
 		"en"		"{count} month ago"
+		"ua"		"{count} місяць тому"
 	}
 	"Course Top - Months Ago"
 	{
 		"#format"	"count:i"
 		"en"		"{count} months ago"
+		"ua"		"{count} місяців тому"
 	}
 	"Course Top - Day Ago"
 	{
 		"#format"	"count:i"
 		"en"		"{count} day ago"
+		"ua"		"{count} день тому"
 	}
 	"Course Top - Days Ago"
 	{
 		"#format"	"count:i"
 		"en"		"{count} days ago"
+		"ua"		"{count} днів тому"
 	}
 	"Course Top - Hour Ago"
 	{
 		"#format"	"count:i"
 		"en"		"{count} hour ago"
+		"ua"		"{count} година тому"
 	}
 	"Course Top - Hours Ago"
 	{
 		"#format"	"count:i"
 		"en"		"{count} hours ago"
+		"ua"		"{count} годин тому"
 	}
 	"Course Top - Minute Ago"
 	{
 		"#format"	"count:i"
 		"en"		"{count} minute ago"
+		"ua"		"{count} хвилина тому"
 	}
 	"Course Top - Minutes Ago"
 	{
 		"#format"	"count:i"
 		"en"		"{count} minutes ago"
+		"ua"		"{count} хвилин тому"
 	}
 	"Course Top - Second Ago"
 	{
 		"#format"	"count:i"
 		"en"		"{count} second ago"
+		"ua"		"{count} секунда тому"
 	}
 	"Course Top - Seconds Ago"
 	{
 		"#format"	"count:i"
 		"en"		"{count} seconds ago"
+		"ua"		"{count} секунд тому"
 	}
 	"Course Top - Window No Replay"
 	{
 		"en"		"No replay on this server"
+		"ua"		"Немає повтору на цьому сервері"
 	}
 	"Course Top - Window Other Map"
 	{
 		"en"		"Only replays of the current map can be watched"
+		"ua"		"Можна переглядати лише повтори поточної мапи"
 	}
 }

@@ -99,14 +99,17 @@
 	"Not In Control"
 	{
 		"en"		"{darkred}You can't do that while you are not controlling your player."
+		"ua"		"{darkred}Ви не можете цього зробити, поки не керуєте своїм персонажем."
 	}
 	"Away Restored"
 	{
 		"en"		"{grey}Welcome back! Your player and run were kept while you were away."
+		"ua"		"{grey}З поверненням! Ваш персонаж та проходження були збережені, поки вас не було."
 	}
 	"Away Restored (Paused)"
 	{
 		"en"		"{grey}Welcome back! Your player and run were kept while you were away. Your timer is paused, {default}!pause {grey}to resume."
+		"ua"		"{grey}З поверненням! Ваш персонаж та проходження були збережені, поки вас не було. Ваш таймер на паузі, {default}!pause {grey}, щоб відновити."
 	}
 	"Command Cooldown (Time Remaining)"
 	{
@@ -130,10 +133,12 @@
 	"Picker - No Players"
 	{
 		"en"		"No players to pick."
+		"ua"		"Немає гравців для вибору."
 	}
 	"Picker - Player Left"
 	{
 		"#format"	"name:s"
 		"en"		"{default}{name}{grey} left the server."
+		"ua"		"{default}{name}{grey} покинув сервер."
 	}
 }
