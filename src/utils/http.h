@@ -28,9 +28,11 @@ namespace HTTP
 	void Cleanup();
 
 	// HTTP methods we care about.
+	// Methods from POST on send a body.
 	enum class Method
 	{
 		GET,
+		HEAD,
 		POST,
 		PUT,
 		PATCH,
