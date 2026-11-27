@@ -1,6 +1,7 @@
 #include "kz_recording.h"
 #include "filesystem/ifilesystem.h"
 #include "kz/replays/kz_replaysystem.h"
+#include "kz/replays/store.h"
 #include "cs2kz.h"
 #include "utils/utils.h"
 
@@ -93,6 +94,7 @@ void ReplayFileWriter::QueueWriteToFile(std::unique_ptr<Recorder> recorder, Disk
 					[uuid, duration, onSuccess]()
 					{
 						KZ::replaysystem::NotifyReplayFileChanged(uuid.ToString().c_str());
+						KZ::replaysystem::store::QueueUpload(uuid);
 						if (onSuccess)
 						{
 							onSuccess(uuid, duration);

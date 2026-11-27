@@ -1,6 +1,7 @@
 #include <unordered_set>
 #include "watcher.h"
 #include "ledger.h"
+#include "store.h"
 #include "kz/replays/kz_replaysystem.h"
 #include "kz/db/kz_db.h"
 #include "vendor/sql_mm/src/public/sql_mm.h"
@@ -51,28 +52,6 @@ static_global const char *manualReplayTableHeaders[] = {"#.",
 														"Replay Table Header - SteamID",
 														"Replay Table Header - UUID"};
 
-struct PageRange
-{
-	size_t start;
-	size_t end;
-};
-
-static_function PageRange GetPageRange(const ReplayFilterCriteria &criteria, size_t total)
-{
-	size_t startIndex = 0;
-	if (criteria.offset > 0)
-	{
-		startIndex = static_cast<size_t>(criteria.offset);
-	}
-	if (startIndex > total)
-	{
-		startIndex = total;
-	}
-	const size_t limit = criteria.limit > 0 ? static_cast<size_t>(criteria.limit) : 0;
-	const size_t endIndex = limit > 0 ? MIN(startIndex + limit, total) : startIndex;
-	return {startIndex, endIndex};
-}
-
 // Grouping keys compare names case-insensitively.
 // They are lowercased up front to keep the hash consistent with equality.
 static_function std::string LowercaseKey(std::string str)
@@ -108,40 +87,14 @@ static_function std::vector<std::pair<UUID_t, ReplayHeader>> CollectMatchesWithM
 	return matches;
 }
 
-void ReplayWatcher::FilterAndPrintMatchingCheaterReplays(ReplayFilterCriteria &criteria, KZPlayer *player)
+static_function void PrintTable(KZPlayer *player, auto &table)
 {
-	std::vector<std::pair<UUID_t, ReplayHeader>> matchingReplays =
-		CollectMatchesWithMapFallback(this->cheaterReplays, criteria, this->replayMapsMutex);
-	PageRange page = GetPageRange(criteria, matchingReplays.size());
-	std::string headers[KZ_ARRAYSIZE(cheaterReplayTableHeaders)];
-	for (u32 i = 0; i < KZ_ARRAYSIZE(cheaterReplayTableHeaders); i++)
-	{
-		headers[i] = player->languageService->PrepareMessage(cheaterReplayTableHeaders[i]).c_str();
-	}
-
-	utils::Table<KZ_ARRAYSIZE(cheaterReplayTableHeaders)> table(player->languageService->PrepareMessage(CHEATER_REPLAY_TABLE_KEY).c_str(), headers);
-	for (size_t i = page.start; i < page.end; i++)
-	{
-		auto &pair = matchingReplays[i];
-		const ReplayHeader &hdr = pair.second;
-
-		std::string rowNumber = std::to_string((i - page.start) + 1);
-		std::string steamID = hdr.has_player() ? std::to_string(hdr.player().steamid64()) : "0";
-		const char *reason = hdr.has_cheater() ? hdr.cheater().reason().c_str() : "";
-		// clang-format off
-		table.SetRow(i - page.start, rowNumber.c_str(),
-					hdr.player().name().c_str(), 
-					hdr.map().name().c_str(), 
-					reason,
-					steamID.c_str(),
-					pair.first.ToString().c_str());
-		// clang-format on
-	}
 	if (table.GetNumEntries() == 0)
 	{
 		player->languageService->PrintChat(true, false, "Replay List - No Matching Replays");
 		return;
 	}
+	player->languageService->PrintChat(true, false, "Replay List - Check Console");
 	player->PrintConsole(false, false, "%s", table.GetSeparator("=").c_str());
 	player->PrintConsole(false, false, "%s", table.GetTitle().c_str());
 	player->PrintConsole(false, false, "%s", table.GetHeader().c_str());
@@ -152,25 +105,44 @@ void ReplayWatcher::FilterAndPrintMatchingCheaterReplays(ReplayFilterCriteria &c
 	player->PrintConsole(false, false, "%s", table.GetSeparator("=").c_str());
 }
 
-void ReplayWatcher::FilterAndPrintMatchingRunReplays(ReplayFilterCriteria &criteria, KZPlayer *player)
+void ReplayWatcher::PrintCheaterReplays(KZPlayer *player, const std::vector<std::pair<UUID_t, ReplayHeader>> &page)
 {
-	std::vector<std::pair<UUID_t, ReplayHeader>> matchingReplays = CollectMatchesWithMapFallback(this->runReplays, criteria, this->replayMapsMutex);
+	std::string headers[KZ_ARRAYSIZE(cheaterReplayTableHeaders)];
+	for (u32 i = 0; i < KZ_ARRAYSIZE(cheaterReplayTableHeaders); i++)
+	{
+		headers[i] = player->languageService->PrepareMessage(cheaterReplayTableHeaders[i]).c_str();
+	}
 
-	std::sort(matchingReplays.begin(), matchingReplays.end(),
-			  [](const auto &a, const auto &b) { return a.second.run().time() < b.second.run().time(); });
+	utils::Table<KZ_ARRAYSIZE(cheaterReplayTableHeaders)> table(player->languageService->PrepareMessage(CHEATER_REPLAY_TABLE_KEY).c_str(), headers);
+	for (size_t i = 0; i < page.size(); i++)
+	{
+		const ReplayHeader &hdr = page[i].second;
+		std::string rowNumber = std::to_string(i + 1);
+		std::string steamID = hdr.has_player() ? std::to_string(hdr.player().steamid64()) : "0";
+		const char *reason = hdr.has_cheater() ? hdr.cheater().reason().c_str() : "";
+		// clang-format off
+		table.SetRow(i, rowNumber.c_str(),
+					hdr.player().name().c_str(), 
+					hdr.map().name().c_str(), 
+					reason,
+					steamID.c_str(),
+					page[i].first.ToString().c_str());
+		// clang-format on
+	}
+	PrintTable(player, table);
+}
 
-	PageRange page = GetPageRange(criteria, matchingReplays.size());
-
+void ReplayWatcher::PrintRunReplays(KZPlayer *player, const std::vector<std::pair<UUID_t, ReplayHeader>> &page)
+{
 	std::string headers[KZ_ARRAYSIZE(runReplayTableHeaders)];
 	for (u32 i = 0; i < KZ_ARRAYSIZE(runReplayTableHeaders); i++)
 	{
 		headers[i] = player->languageService->PrepareMessage(runReplayTableHeaders[i]).c_str();
 	}
 	utils::Table<KZ_ARRAYSIZE(runReplayTableHeaders)> table(player->languageService->PrepareMessage(RUN_REPLAY_TABLE_KEY).c_str(), headers);
-	for (size_t i = page.start; i < page.end; i++)
+	for (size_t i = 0; i < page.size(); i++)
 	{
-		auto &pair = matchingReplays[i];
-		const ReplayHeader &hdr = pair.second;
+		const ReplayHeader &hdr = page[i].second;
 		if (!hdr.has_run())
 		{
 			continue;
@@ -196,49 +168,33 @@ void ReplayWatcher::FilterAndPrintMatchingRunReplays(ReplayFilterCriteria &crite
 		{
 			stylesList = "-";
 		}
-		std::string rowNumber = std::to_string((i - page.start) + 1);
+		std::string rowNumber = std::to_string(i + 1);
 		std::string teleports = std::to_string(run.num_teleports());
 		std::string steamID = std::to_string(hdr.player().steamid64());
 		// clang-format off
-		table.SetRow(i - page.start, rowNumber.c_str(),
+		table.SetRow(i, rowNumber.c_str(),
                         hdr.player().name().c_str(), 
                         hdr.map().name().c_str(),
                         run.course_name().c_str(), 
                         modeName.c_str(),
 						stylesList.c_str(),
-                        utils::FormatTime(run.time()).c_str(), teleports.c_str(), steamID.c_str(), pair.first.ToString().c_str());
+                        utils::FormatTime(run.time()).c_str(), teleports.c_str(), steamID.c_str(), page[i].first.ToString().c_str());
 		// clang-format on
 	}
-	if (table.GetNumEntries() == 0)
-	{
-		player->languageService->PrintChat(true, false, "Replay List - No Matching Replays");
-		return;
-	}
-	player->languageService->PrintChat(true, false, "Replay List - Check Console");
-	player->PrintConsole(false, false, "%s", table.GetSeparator("=").c_str());
-	player->PrintConsole(false, false, "%s", table.GetTitle().c_str());
-	player->PrintConsole(false, false, "%s", table.GetHeader().c_str());
-	for (u32 i = 0; i < table.GetNumEntries(); i++)
-	{
-		player->PrintConsole(false, false, "%s", table.GetLine(i).c_str());
-	}
-	player->PrintConsole(false, false, "%s", table.GetSeparator("=").c_str());
+	PrintTable(player, table);
 }
 
-void ReplayWatcher::FilterAndPrintMatchingJumpReplays(ReplayFilterCriteria &criteria, KZPlayer *player)
+void ReplayWatcher::PrintJumpReplays(KZPlayer *player, const std::vector<std::pair<UUID_t, ReplayHeader>> &page)
 {
-	std::vector<std::pair<UUID_t, ReplayHeader>> matchingReplays = CollectMatchesWithMapFallback(this->jumpReplays, criteria, this->replayMapsMutex);
-	PageRange page = GetPageRange(criteria, matchingReplays.size());
 	std::string headers[KZ_ARRAYSIZE(jumpReplayTableHeaders)];
 	for (u32 i = 0; i < KZ_ARRAYSIZE(jumpReplayTableHeaders); i++)
 	{
 		headers[i] = player->languageService->PrepareMessage(jumpReplayTableHeaders[i]).c_str();
 	}
 	utils::Table<KZ_ARRAYSIZE(jumpReplayTableHeaders)> table(player->languageService->PrepareMessage(JUMP_REPLAY_TABLE_KEY).c_str(), headers);
-	for (size_t i = page.start; i < page.end; i++)
+	for (size_t i = 0; i < page.size(); i++)
 	{
-		auto &pair = matchingReplays[i];
-		const ReplayHeader &hdr = pair.second;
+		const ReplayHeader &hdr = page[i].second;
 		if (!hdr.has_jump())
 		{
 			continue;
@@ -249,10 +205,10 @@ void ReplayWatcher::FilterAndPrintMatchingJumpReplays(ReplayFilterCriteria &crit
 		{
 			continue;
 		}
-		std::string rowNumber = std::to_string((i - page.start) + 1);
+		std::string rowNumber = std::to_string(i + 1);
 		std::string steamID = std::to_string(hdr.player().steamid64());
 		// clang-format off
-		table.SetRow(i - page.start, rowNumber.c_str(), 
+		table.SetRow(i, rowNumber.c_str(), 
                         hdr.player().name().c_str(), 
                         hdr.map().name().c_str(), 
                         jump.mode().name().c_str(), 
@@ -263,72 +219,40 @@ void ReplayWatcher::FilterAndPrintMatchingJumpReplays(ReplayFilterCriteria &crit
                                 
                         std::to_string(jump.num_strafes()).c_str(), 
                         steamID.c_str(), 
-                        pair.first.ToString().c_str());
+                        page[i].first.ToString().c_str());
 		// clang-format on
 	}
-
-	if (table.GetNumEntries() == 0)
-	{
-		player->languageService->PrintChat(true, false, "Replay List - No Matching Replays");
-		return;
-	}
-	player->languageService->PrintChat(true, false, "Replay List - Check Console");
-	player->PrintConsole(false, false, "%s", table.GetSeparator("=").c_str());
-	player->PrintConsole(false, false, "%s", table.GetTitle().c_str());
-	player->PrintConsole(false, false, "%s", table.GetHeader().c_str());
-	for (u32 i = 0; i < table.GetNumEntries(); i++)
-	{
-		player->PrintConsole(false, false, "%s", table.GetLine(i).c_str());
-	}
-	player->PrintConsole(false, false, "%s", table.GetSeparator("=").c_str());
+	PrintTable(player, table);
 }
 
-void ReplayWatcher::FilterAndPrintMatchingManualReplays(ReplayFilterCriteria &criteria, KZPlayer *player)
+void ReplayWatcher::PrintManualReplays(KZPlayer *player, const std::vector<std::pair<UUID_t, ReplayHeader>> &page)
 {
-	std::vector<std::pair<UUID_t, ReplayHeader>> matchingReplays =
-		CollectMatchesWithMapFallback(this->manualReplays, criteria, this->replayMapsMutex);
-	PageRange page = GetPageRange(criteria, matchingReplays.size());
 	std::string headers[KZ_ARRAYSIZE(manualReplayTableHeaders)];
 	for (u32 i = 0; i < KZ_ARRAYSIZE(manualReplayTableHeaders); i++)
 	{
 		headers[i] = player->languageService->PrepareMessage(manualReplayTableHeaders[i]).c_str();
 	}
 	utils::Table<KZ_ARRAYSIZE(manualReplayTableHeaders)> table(player->languageService->PrepareMessage(MANUAL_REPLAY_TABLE_KEY).c_str(), headers);
-	for (size_t i = page.start; i < page.end; i++)
+	for (size_t i = 0; i < page.size(); i++)
 	{
-		auto &pair = matchingReplays[i];
-		const ReplayHeader &hdr = pair.second;
+		const ReplayHeader &hdr = page[i].second;
 		if (!hdr.has_manual())
 		{
 			continue;
 		}
-		std::string rowNumber = std::to_string((i - page.start) + 1);
+		std::string rowNumber = std::to_string(i + 1);
 		std::string steamID = std::to_string(hdr.player().steamid64());
 		const char *savedBy = (hdr.manual().has_saved_by() ? hdr.manual().saved_by().name().c_str() : "");
 		// clang-format off
-		table.SetRow(i - page.start, rowNumber.c_str(), 
+		table.SetRow(i, rowNumber.c_str(), 
                         hdr.player().name().c_str(), 
                         hdr.map().name().c_str(), 
                         savedBy, 
                         steamID.c_str(),
-		                pair.first.ToString().c_str());
+		                page[i].first.ToString().c_str());
 		// clang-format on
 	}
-
-	if (table.GetNumEntries() == 0)
-	{
-		player->languageService->PrintChat(true, false, "Replay List - No Matching Replays");
-		return;
-	}
-	player->languageService->PrintChat(true, false, "Replay List - Check Console");
-	player->PrintConsole(false, false, "%s", table.GetSeparator("=").c_str());
-	player->PrintConsole(false, false, "%s", table.GetTitle().c_str());
-	player->PrintConsole(false, false, "%s", table.GetHeader().c_str());
-	for (u32 i = 0; i < table.GetNumEntries(); i++)
-	{
-		player->PrintConsole(false, false, "%s", table.GetLine(i).c_str());
-	}
-	player->PrintConsole(false, false, "%s", table.GetSeparator("=").c_str());
+	PrintTable(player, table);
 }
 
 void ReplayWatcher::PrintUsage(KZPlayer *player)
@@ -344,24 +268,35 @@ void ReplayWatcher::PrintUsage(KZPlayer *player)
 
 void ReplayWatcher::FindReplaysMatchingCriteria(const char *inputs, KZPlayer *player)
 {
-	ReplayFilterCriteria criteria = ParseCriteria(inputs, player);
-	switch (criteria.type)
+	const ReplayFilterCriteria criteria = ParseCriteria(inputs, player);
+	const CPlayerUserId userID = player->GetClient()->GetUserID();
+	const ReplayType type = criteria.type;
+	auto print = [userID, type](u64, std::vector<std::pair<UUID_t, ReplayHeader>> &&page)
 	{
-		case RP_CHEATER:
-			this->FilterAndPrintMatchingCheaterReplays(criteria, player);
-			break;
-		case RP_RUN:
-			this->FilterAndPrintMatchingRunReplays(criteria, player);
-			break;
-		case RP_JUMPSTATS:
-			this->FilterAndPrintMatchingJumpReplays(criteria, player);
-			break;
-		case RP_MANUAL:
-			this->FilterAndPrintMatchingManualReplays(criteria, player);
-			break;
-		default:
-			break;
-	}
+		KZPlayer *player = g_pKZPlayerManager->ToPlayer(userID);
+		if (!player)
+		{
+			return;
+		}
+		switch (type)
+		{
+			case RP_CHEATER:
+				PrintCheaterReplays(player, page);
+				break;
+			case RP_RUN:
+				PrintRunReplays(player, page);
+				break;
+			case RP_JUMPSTATS:
+				PrintJumpReplays(player, page);
+				break;
+			case RP_MANUAL:
+				PrintManualReplays(player, page);
+				break;
+			default:
+				break;
+		}
+	};
+	this->CollectPage(criteria, (u64)MAX(criteria.offset, 0), (u64)MAX(criteria.limit, 0), print);
 }
 
 std::vector<std::pair<UUID_t, ReplayHeader>> ReplayWatcher::CollectMatches(const ReplayFilterCriteria &criteria)
@@ -383,6 +318,54 @@ std::vector<std::pair<UUID_t, ReplayHeader>> ReplayWatcher::CollectMatches(const
 		default:
 			return {};
 	}
+}
+
+void ReplayWatcher::CollectPage(const ReplayFilterCriteria &criteria, u64 offset, u64 limit,
+								std::function<void(u64 total, std::vector<std::pair<UUID_t, ReplayHeader>> &&page)> callback)
+{
+	auto local = this->CollectMatches(criteria);
+	std::vector<std::pair<UUID_t, ReplayHeader>> page;
+	for (u64 i = offset; i < local.size() && page.size() < limit; i++)
+	{
+		page.push_back(std::move(local[i]));
+	}
+	if (!KZ::replaysystem::store::HasQueryEndpoint())
+	{
+		callback(local.size(), std::move(page));
+		return;
+	}
+	std::unordered_set<UUID_t> onDisk;
+	for (const auto &[uuid, header] : local)
+	{
+		onDisk.insert(uuid);
+	}
+	for (const auto &[uuid, header] : page)
+	{
+		onDisk.insert(uuid);
+	}
+	// The store is asked even for a page filled from disk because the total includes its replays.
+	const u64 localCount = local.size();
+	const u64 storeOffset = offset > localCount ? offset - localCount : 0;
+	const u64 storeLimit = limit > page.size() ? limit - page.size() : 0;
+	auto onResult = [criteria, storeLimit, localCount, page = std::move(page), onDisk = std::move(onDisk),
+					 callback](bool success, u64 storeTotal, std::vector<std::pair<UUID_t, ReplayHeader>> &&results) mutable
+	{
+		u64 added = 0;
+		for (auto &result : results)
+		{
+			if (added >= storeLimit)
+			{
+				break;
+			}
+			if (!onDisk.count(result.first) && criteria.PassFilters(result.second, false))
+			{
+				page.push_back(std::move(result));
+				added++;
+			}
+		}
+		callback(localCount + (success ? storeTotal : 0), std::move(page));
+	};
+	KZ::replaysystem::store::QueryReplays(criteria, storeOffset, MAX(storeLimit, 1), onResult);
 }
 
 ReplayFilterCriteria ReplayWatcher::ParseCriteria(const char *inputs, KZPlayer *player, std::optional<ReplayType> type)
@@ -993,12 +976,18 @@ void ReplayWatcher::ScanReplays()
 		states = this->databaseStates;
 	}
 
+	// A store leaves the replays it didn't upload to the owner.
+	const bool storeMode = KZ::replaysystem::store::IsEnabled();
 	std::unordered_map<UUID_t, Verdict> verdicts;
 	RankedReplays rankedRuns;
 	RankedReplays rankedJumps;
 	RankedReplays manualSaves;
 	for (auto &[uuid, cached] : this->replayCache)
 	{
+		if (storeMode)
+		{
+			break;
+		}
 		if (this->databaseMode)
 		{
 			auto stateIt = states.find(uuid);
@@ -1113,7 +1102,7 @@ void ReplayWatcher::ScanReplays()
 
 void ReplayWatcher::QueueDatabaseChecks()
 {
-	if (!this->recheckRequested.exchange(false) || !this->databaseMode)
+	if (!this->recheckRequested.exchange(false) || !this->databaseMode || KZ::replaysystem::store::IsEnabled())
 	{
 		return;
 	}
@@ -1324,21 +1313,7 @@ public:
 void KZ::replaysystem::InitWatcher()
 {
 	ledger::Load();
-	// An upload to the API can't resume because its key only lived in memory.
-	// A run still waiting for the API keeps the UUID it has.
-	for (const auto &[uuid, entry] : ledger::GetEntries())
-	{
-		if (!entry.IsPending())
-		{
-			continue;
-		}
-		ledger::UpdateEntry(uuid,
-							[](ledger::Entry &pending)
-							{
-								pending.waitingForUUID = false;
-								pending.uploadToAPI = false;
-							});
-	}
+	store::Init();
 	KZDatabaseService::RegisterEventListener(&databaseEventListener);
 	g_ReplayWatcher.Start(KZDatabaseService::GetDatabaseConnection() != nullptr);
 }

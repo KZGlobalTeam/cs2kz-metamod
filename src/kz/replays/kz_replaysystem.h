@@ -110,11 +110,11 @@ namespace KZ::replaysystem
 	};
 
 	using AvailabilityCallback = std::function<void(std::unordered_map<UUID_t, ReplayAvailability> &&replays)>;
-	// Looks for each replay on disk.
-	// Each replay comes with the map it was played on if known.
+	// Looks for each replay on disk and then in the store.
+	// Each replay comes with the map it was played on if known which fills the {map} of the store's URL.
 	// The callback may run before this returns.
 	void LocateReplays(const std::vector<std::pair<UUID_t, std::string>> &replays, AvailabilityCallback callback);
-	// Finds a replay on disk or downloads it from the API into the download folder.
+	// Finds a replay on disk or downloads it from the store or the API into the download folder.
 	// The path is empty if the replay wasn't found.
 	void FetchReplay(const UUID_t &uuid, std::function<void(const std::string &path)> callback);
 } // namespace KZ::replaysystem

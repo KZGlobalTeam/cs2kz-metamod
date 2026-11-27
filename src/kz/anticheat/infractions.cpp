@@ -2,6 +2,7 @@
 #include "kz/global/kz_global.h"
 #include "kz/db/kz_db.h"
 #include "kz/replays/kz_replay.h"
+#include "kz/replays/store.h"
 #include "utils/async_file_io.h"
 
 KZAnticheatService::Infraction *KZAnticheatService::GetPendingInfraction(const UUID_t &infractionId)
@@ -175,7 +176,14 @@ void KZAnticheatService::Infraction::SaveReplay()
 			V_snprintf(replayPath, sizeof(replayPath), "%s/%s.replay", KZ_REPLAY_PATH, uuid.ToString().c_str());
 			if (g_asyncFileIO)
 			{
-				g_asyncFileIO->QueueWriteBuffer(replayPath, buf);
+				g_asyncFileIO->QueueWriteBuffer(replayPath, buf,
+												[uuid](bool success)
+												{
+													if (success)
+													{
+														KZ::replaysystem::store::QueueUpload(uuid);
+													}
+												});
 			}
 			KZ_LOG_INFO(LogChannel::AC, "Cheater replay %s saved for player %s (%llu)\n", uuid.ToString().c_str(), name.c_str(), steamID);
 		},

@@ -6,6 +6,7 @@
 #include "playback.h"
 #include "events.h"
 #include "commands.h"
+#include "store.h"
 #include "kz/replays/hud/controls.h"
 #include "kz_replay.h"
 #include "utils/uuid.h"
@@ -97,6 +98,7 @@ namespace KZ::replaysystem
 	void OnGameFrame()
 	{
 		data::ProcessAsyncLoadCompletion();
+		store::ProcessUploads();
 		ProcessDatabaseChecks();
 	}
 

@@ -220,21 +220,37 @@ namespace KZ::replaysystem::hud
 			criteria.modeNameSubString = this->mode;
 		}
 		this->filters = FormatFilters(criteria);
-		const std::vector<std::pair<UUID_t, ReplayHeader>> matches = g_ReplayWatcher.CollectMatches(criteria);
-		this->total = matches.size();
+		const u32 serial = ++this->querySerial;
+		const CPlayerUserId userID = this->player->GetClient()->GetUserID();
+		g_ReplayWatcher.CollectPage(criteria, this->offset, KZ_REPLAYS_ROWS,
+									[userID, serial](u64 total, std::vector<std::pair<UUID_t, ReplayHeader>> &&page)
+									{
+										KZPlayer *player = g_pKZPlayerManager->ToPlayer(userID);
+										ReplaysWindow *window = player ? player->uiService->GetWindow<ReplaysWindow>() : nullptr;
+										if (window && window->querySerial == serial)
+										{
+											window->OnPage(total, page);
+										}
+									});
+	}
+
+	void ReplaysWindow::OnPage(u64 total, const std::vector<std::pair<UUID_t, ReplayHeader>> &page)
+	{
+		this->total = total;
 		// An offset past the end shows the last page.
-		if (this->offset >= this->total)
+		if (this->total && this->offset >= this->total)
 		{
-			this->offset = this->total ? (this->total - 1) / KZ_REPLAYS_ROWS * KZ_REPLAYS_ROWS : 0;
+			this->offset = (this->total - 1) / KZ_REPLAYS_ROWS * KZ_REPLAYS_ROWS;
+			this->Query();
+			return;
 		}
 
 		this->rows.clear();
 		const std::string currentMap = g_pKZUtils->GetCurrentMapName();
-		for (u64 i = this->offset; i < this->total && this->rows.size() < KZ_REPLAYS_ROWS; i++)
+		for (const auto &[uuid, header] : page)
 		{
-			const ReplayHeader &header = matches[i].second;
 			Row row;
-			row.uuid = matches[i].first.ToString();
+			row.uuid = uuid.ToString();
 			row.name = header.player().name();
 			row.steamId = header.player().steamid64();
 			row.map = header.map().name();
@@ -277,6 +293,10 @@ namespace KZ::replaysystem::hud
 					break;
 			}
 			this->rows.push_back(std::move(row));
+		}
+		if (this->player->uiService->IsOpen(this))
+		{
+			this->Render();
 		}
 	}
 

@@ -18,6 +18,7 @@
 #include "kz/replays/hud/controls.h"
 #include "kz/replays/hud/replays.h"
 #include "watcher.h"
+#include "store.h"
 #include "utils/uuid.h"
 #include "utils/simplecmds.h"
 #include "kz/global/kz_global.h"
@@ -184,12 +185,47 @@ namespace KZ::replaysystem::commands
 			player->languageService->PrintChat(true, false, "Replay - Multiple Matches", uuid);
 			return;
 		}
-		if (matches.empty())
+		if (matches.size() == 1)
+		{
+			LoadReplayByUUID(player, matches[0]);
+			return;
+		}
+		if (!store::HasQueryEndpoint())
 		{
 			player->languageService->PrintChat(true, false, "Replay - Invalid UUID");
 			return;
 		}
-		LoadReplayByUUID(player, matches[0]);
+		// The store may have a replay matching the partial UUID.
+		const CPlayerUserId userID = player->GetClient()->GetUserID();
+		const std::string text = uuid;
+		auto onResult = [userID, text](bool, u64, std::vector<std::pair<UUID_t, ReplayHeader>> &&replays)
+		{
+			KZPlayer *player = g_pKZPlayerManager->ToPlayer(userID);
+			if (!player)
+			{
+				return;
+			}
+			std::vector<UUID_t> found;
+			for (const auto &[replayUUID, header] : replays)
+			{
+				if (V_stristr(replayUUID.ToString().c_str(), text.c_str()))
+				{
+					found.push_back(replayUUID);
+				}
+			}
+			if (found.size() == 1)
+			{
+				LoadReplayByUUID(player, found[0]);
+				return;
+			}
+			if (found.empty())
+			{
+				player->languageService->PrintChat(true, false, "Replay - Invalid UUID");
+				return;
+			}
+			player->languageService->PrintChat(true, false, "Replay - Multiple Matches", text.c_str());
+		};
+		store::QueryReplaysByUUIDSubstring(text, onResult);
 	}
 
 	void JumpToReplayTime(KZPlayer *player, const char *input)

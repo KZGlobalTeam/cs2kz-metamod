@@ -60,6 +60,7 @@ struct RunSubmission
 	bool mapResolutionPending {};
 
 	bool replayReady {};         // set when the file writer delivers the buffer
+	bool replayQueuedForAPI {};  // set once the replay is queued for the API
 	bool apiResponseReceived {}; // set when NewRecordAck arrives
 	bool finalized {};           // set once TryFinalize() actually commits
 	bool runAnnounced {};        // AnnounceRun()/AnnounceLocal()/AnnounceGlobal() have been called

@@ -63,7 +63,7 @@
 		// Number of days to keep downloaded replays before deletion (0 = keep forever).
 		"downloadRetentionDays"		"7"
 
-		// Replays kept on this server's disk.
+		// Replays kept on this server's disk if there is no store.
 		// With a database only the replays it references are kept.
 		"disk"
 		{
@@ -80,6 +80,28 @@
 			// Whether to delete a global run's replay once the API has it.
 			"deleteGlobalRunsAfterUpload"	"false"
 		}
+
+		// Uncomment to upload every replay to an HTTP store.
+		// New replays then stay on this server only until they're uploaded.
+		// Replays already on disk are left for you to move.
+		// The plugin never deletes anything from the store.
+		//"store"
+		//{
+		//	// Where replays are uploaded with PUT ({id} = replay UUID, {map} = map name).
+		//	"uploadUrl"		"https://replays.example.com/kz/{map}/{id}.replay"
+		//
+		//	// Where replays are downloaded with GET and checked with HEAD (same placeholders).
+		//	"downloadUrl"	"https://replays.example.com/kz/{map}/{id}.replay"
+		//
+		//	// Optional search endpoint that lets !replays and menus list stored replays.
+		//	"queryUrl"		""
+		//
+		//	// Value of the Authorization header (e.g. "Basic a3o6c2VjcmV0").
+		//	"auth"			""
+		//
+		//	// Whether to also upload global runs the API already has (false = only when the API upload fails).
+		//	"includeGlobal"	"true"
+		//}
 	}
 
 	// Lowest distance tier a jump needs to be saved in the database (1 = meh, 2 = impressive, 3 = perfect, 4 = godlike, 5 = ownage, 6 = wrecker).

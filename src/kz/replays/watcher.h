@@ -1,5 +1,6 @@
 #pragma once
 #include <atomic>
+#include <functional>
 #include <optional>
 #include <thread>
 #include "kz_replay.h"
@@ -118,10 +119,10 @@ private:
 public:
 	static void PrintUsage(KZPlayer *player);
 
-	void FilterAndPrintMatchingCheaterReplays(ReplayFilterCriteria &criteria, KZPlayer *player);
-	void FilterAndPrintMatchingRunReplays(ReplayFilterCriteria &criteria, KZPlayer *player);
-	void FilterAndPrintMatchingJumpReplays(ReplayFilterCriteria &criteria, KZPlayer *player);
-	void FilterAndPrintMatchingManualReplays(ReplayFilterCriteria &criteria, KZPlayer *player);
+	static void PrintCheaterReplays(KZPlayer *player, const std::vector<std::pair<UUID_t, ReplayHeader>> &page);
+	static void PrintRunReplays(KZPlayer *player, const std::vector<std::pair<UUID_t, ReplayHeader>> &page);
+	static void PrintJumpReplays(KZPlayer *player, const std::vector<std::pair<UUID_t, ReplayHeader>> &page);
+	static void PrintManualReplays(KZPlayer *player, const std::vector<std::pair<UUID_t, ReplayHeader>> &page);
 
 	void FindReplaysMatchingCriteria(const char *inputs, KZPlayer *player);
 
@@ -130,6 +131,12 @@ public:
 	static ReplayFilterCriteria ParseCriteria(const char *inputs, KZPlayer *player, std::optional<ReplayType> type = std::nullopt);
 	// Collects the replays of the criteria's type that pass its filters in console table order.
 	std::vector<std::pair<UUID_t, ReplayHeader>> CollectMatches(const ReplayFilterCriteria &criteria);
+
+	// Collects a page of the replays matching the criteria.
+	// The replays on disk come first and then the store's if it has a query endpoint.
+	// The callback may run before this returns.
+	void CollectPage(const ReplayFilterCriteria &criteria, u64 offset, u64 limit,
+					 std::function<void(u64 total, std::vector<std::pair<UUID_t, ReplayHeader>> &&page)> callback);
 
 	// The map of the jump replay with this UUID or an empty string if there is none.
 	std::string GetJumpReplayMap(const UUID_t &uuid);

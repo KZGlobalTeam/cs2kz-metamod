@@ -10,6 +10,7 @@
 #include "kz/replays/kz_replay.h"
 #include "kz/replays/kz_replaysystem.h"
 #include "kz/replays/ledger.h"
+#include "kz/replays/store.h"
 #include "utils/async_file_io.h"
 #include "utils/utils.h"
 
@@ -347,6 +348,7 @@ void RunSubmission::OnReplayReady(std::vector<char> &&buffer)
 		if (global && apiResponseReceived && !globalResponse.recordId.empty() && !replayBuffer.empty())
 		{
 			KZGlobalService::QueueReplayUpload(finalUUID, globalResponse.replayUploadKey, std::vector<char>(replayBuffer));
+			replayQueuedForAPI = true;
 		}
 	}
 	else
@@ -481,6 +483,7 @@ void RunSubmission::TryFinalize()
 	if (global && apiResponseReceived && !globalResponse.recordId.empty() && !replayBuffer.empty())
 	{
 		KZGlobalService::QueueReplayUpload(finalUUID, globalResponse.replayUploadKey, std::vector<char>(replayBuffer));
+		replayQueuedForAPI = true;
 	}
 }
 
@@ -523,6 +526,7 @@ void RunSubmission::DoLateAPIResponse(const std::string &apiUUID)
 	if (!replayBuffer.empty())
 	{
 		KZGlobalService::QueueReplayUpload(finalUUID, globalResponse.replayUploadKey, std::vector<char>(replayBuffer));
+		replayQueuedForAPI = true;
 	}
 	else
 	{
@@ -542,6 +546,7 @@ void RunSubmission::DoLateAPIResponse(const std::string &apiUUID)
 
 				KZGlobalService::QueueReplayUpload(uploadUUID, uploadKey, std::move(buffer));
 			});
+		replayQueuedForAPI = true;
 		// clang-format on
 	}
 }
@@ -747,6 +752,10 @@ void RunSubmission::CheckAll()
 			for (const UUID_t &uuid : {sub->localUUID, sub->finalUUID})
 			{
 				KZ::replaysystem::ledger::UpdateEntry(uuid, [](KZ::replaysystem::ledger::Entry &entry) { entry.waitingForUUID = false; });
+			}
+			if (!sub->replayBuffer.empty() && (!sub->replayQueuedForAPI || KZOptionService::GetOptionInt("replays/store/includeGlobal", true)))
+			{
+				KZ::replaysystem::store::QueueUpload(sub->finalUUID, std::move(sub->replayBuffer));
 			}
 			delete sub;
 			return true;

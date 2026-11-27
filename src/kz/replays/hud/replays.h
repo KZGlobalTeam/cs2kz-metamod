@@ -3,6 +3,7 @@
 #include "kz/replays/kz_replay.h"
 #include "kz/ui/kz_ui.h"
 #include "kz/ui/player_layout.h"
+#include "utils/uuid.h"
 
 #define KZ_REPLAYS_LAYOUT "panorama/layout/custom_game/cs2kz/replays.xml"
 // Must match the replay rows in replays.xml.
@@ -54,6 +55,7 @@ namespace KZ::replaysystem::hud
 		};
 
 		void Query();
+		void OnPage(u64 total, const std::vector<std::pair<UUID_t, ReplayHeader>> &page);
 		void Hide();
 		void Render();
 
@@ -71,6 +73,8 @@ namespace KZ::replaysystem::hud
 		std::string filters;
 		std::vector<Row> rows;
 		u64 total {};
+		// A page from the replay store can arrive after the list changed again.
+		u32 querySerial {};
 
 		struct Applied
 		{
