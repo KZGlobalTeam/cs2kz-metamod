@@ -345,7 +345,7 @@ void RunSubmission::OnReplayReady(std::vector<char> &&buffer)
 		{
 			KZGlobalService::QueueReplayUpload(finalUUID, globalResponse.replayUploadKey, std::vector<char>(replayBuffer));
 
-			if (KZOptionService::GetOptionInt("archiveRetentionMinutes", 2880) == 0)
+			if (KZOptionService::GetOptionInt("replays/disk/deleteGlobalRunsAfterUpload", false))
 			{
 				char deletePath[512];
 				BuildReplayPath(deletePath, sizeof(deletePath), finalUUID);
@@ -486,8 +486,8 @@ void RunSubmission::TryFinalize()
 	{
 		KZGlobalService::QueueReplayUpload(finalUUID, globalResponse.replayUploadKey, std::vector<char>(replayBuffer));
 
-		// Delete local replay file after uploading if archiveRetentionMinutes is 0.
-		if (KZOptionService::GetOptionInt("archiveRetentionMinutes", 2880) == 0)
+		// Delete local replay file after uploading if deleteGlobalRunsAfterUpload is on.
+		if (KZOptionService::GetOptionInt("replays/disk/deleteGlobalRunsAfterUpload", false))
 		{
 			char deletePath[512];
 			BuildReplayPath(deletePath, sizeof(deletePath), finalUUID);
@@ -536,8 +536,8 @@ void RunSubmission::DoLateAPIResponse(const std::string &apiUUID)
 	{
 		KZGlobalService::QueueReplayUpload(finalUUID, globalResponse.replayUploadKey, std::vector<char>(replayBuffer));
 
-		// Delete local replay file after uploading if archiveRetentionMinutes is 0.
-		if (KZOptionService::GetOptionInt("archiveRetentionMinutes", 2880) == 0)
+		// Delete local replay file after uploading if deleteGlobalRunsAfterUpload is on.
+		if (KZOptionService::GetOptionInt("replays/disk/deleteGlobalRunsAfterUpload", false))
 		{
 			char deletePath[512];
 			BuildReplayPath(deletePath, sizeof(deletePath), finalUUID);
@@ -562,7 +562,7 @@ void RunSubmission::DoLateAPIResponse(const std::string &apiUUID)
 
 				KZGlobalService::QueueReplayUpload(uploadUUID, uploadKey, std::move(buffer));
 
-				if (KZOptionService::GetOptionInt("archiveRetentionMinutes", 2880) == 0)
+				if (KZOptionService::GetOptionInt("replays/disk/deleteGlobalRunsAfterUpload", false))
 				{
 					utils::RemoveFile(uploadPath.c_str());
 				}

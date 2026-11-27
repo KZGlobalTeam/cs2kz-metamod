@@ -120,7 +120,7 @@ void KZRecordingService::OnTimerStart()
 
 	// Skip recording run replays only when the API has confirmed the map is not global.
 	// We record anyway if the API response is still pending to avoid missing replays on global maps.
-	if (!KZOptionService::GetOptionInt("recordNonGlobalRuns", true) && KZGlobalService::IsCurrentMapConfirmedNotGlobal())
+	if (!KZOptionService::GetOptionInt("replays/recordNonGlobalRuns", true) && KZGlobalService::IsCurrentMapConfirmedNotGlobal())
 	{
 		KZ_LOG_DEBUG(LogChannel::Recording, "Skipping run recorder: map is not global and kz_replay_record_nonglobal_runs is false\n");
 		this->InsertTimerEvent(RpEvent::RpEventData::TimerEvent::TIMER_START, this->player->timerService->GetTime(),

@@ -817,7 +817,7 @@ void ReplayWatcher::ProcessRunReplays(std::vector<std::tuple<UUID_t, ReplayHeade
 		}
 		runMap[uuid] = hdr;
 	}
-	int maxPer = (int)MAX(KZOptionService::GetOptionInt("maxRunReplaysPerGroup", 3), 0);
+	int maxPer = (int)MAX(KZOptionService::GetOptionInt("replays/disk/maxRunsPerGroup", 3), 1);
 	for (auto &[uuid, header] : groups)
 	{
 		std::set<UUID_t> keep;
@@ -887,7 +887,7 @@ void ReplayWatcher::ProcessJumpReplays(std::vector<std::tuple<UUID_t, ReplayHead
 		groups[key].push_back(t);
 		jumpMap[uuid] = hdr;
 	}
-	int maxPer = (int)MAX(KZOptionService::GetOptionInt("maxJumpReplaysPerCategory", 3), 0);
+	int maxPer = (int)MAX(KZOptionService::GetOptionInt("replays/disk/maxJumpsPerCategory", 3), 0);
 	for (auto &[key, vec] : groups)
 	{
 		std::set<UUID_t> keep;
@@ -915,7 +915,7 @@ void ReplayWatcher::ProcessJumpReplays(std::vector<std::tuple<UUID_t, ReplayHead
 void ReplayWatcher::CleanupManualReplays(std::unordered_map<UUID_t, ReplayHeader> &map,
 										 std::unordered_map<u64, std::vector<std::pair<UUID_t, u64>>> &bySteam)
 {
-	int maxManual = (int)MAX(KZOptionService::GetOptionInt("maxManualReplays", 2), 0);
+	int maxManual = (int)MAX(KZOptionService::GetOptionInt("replays/maxManualSaves", 2), 0);
 	for (auto &[steamID, vec] : bySteam)
 	{
 		if (vec.size() > maxManual)
@@ -998,7 +998,7 @@ void ReplayWatcher::ScanReplays()
 
 	time_t currentUnixTime = 0;
 	time(&currentUnixTime);
-	u32 retentionMinutes = (u32)MAX(KZOptionService::GetOptionInt("archiveRetentionMinutes", 2880), 0);
+	u32 retentionMinutes = (u32)MAX(KZOptionService::GetOptionInt("replays/disk/archiveRetentionMinutes", 2880), 0);
 	u64 retentionSeconds = retentionMinutes * 60ULL;
 
 	SweepOrphanedChunks((u64)currentUnixTime);
@@ -1156,7 +1156,7 @@ void ReplayWatcher::ScanDownloadedReplays(u64 currentTime)
 	FileFindHandle_t findHandle = {};
 	const char *pFileName = g_pFullFileSystem->FindFirstEx(searchPath, "GAME", &findHandle);
 	// retentionDays == 0 means keep forever (no eviction).
-	u32 retentionDays = (u32)MAX(KZOptionService::GetOptionInt("downloadedReplayRetentionDays", 7), 0);
+	u32 retentionDays = (u32)MAX(KZOptionService::GetOptionInt("replays/downloadRetentionDays", 7), 0);
 	u64 retentionSeconds = (u64)retentionDays * 24 * 3600;
 
 	std::unordered_set<UUID_t> seen;
