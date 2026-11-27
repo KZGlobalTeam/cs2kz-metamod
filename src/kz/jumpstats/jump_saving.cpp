@@ -7,29 +7,27 @@
 #include "kz/recording/kz_recording.h"
 #include "vendor/sql_mm/src/public/sql_mm.h"
 
-void KZJumpstatsService::SaveJump(Jump *jump)
+bool KZJumpstatsService::ShouldSaveJump(Jump *jump)
 {
 	if (!KZDatabaseService::IsReady() || !this->player->databaseService->IsSetUp() || this->player->IsFakeClient())
 	{
-		return;
+		return false;
 	}
 	// Only valid jumps without styles from players who aren't banned count.
 	if (jump->IsFailstat() || !jump->IsValid() || jump->GetOffset() < -JS_EPSILON || !this->player->styleServices.empty()
 		|| this->player->anticheatService->isBanned)
 	{
-		return;
+		return false;
 	}
 	const i64 minTier = KZOptionService::GetOptionInt("jumpstatsMinSaveTier", DistanceTier_Godlike);
+	return this->player->modeService->GetDistanceTier(jump->GetJumpType(), jump->GetDistance()) >= minTier
+		   && KZ::mode::GetModeInfo(this->player->modeService).databaseID >= 0;
+}
+
+void KZJumpstatsService::SaveJump(Jump *jump)
+{
 	const DistanceTier tier = this->player->modeService->GetDistanceTier(jump->GetJumpType(), jump->GetDistance());
-	if (tier < minTier)
-	{
-		return;
-	}
 	const i32 modeID = KZ::mode::GetModeInfo(this->player->modeService).databaseID;
-	if (modeID < 0)
-	{
-		return;
-	}
 	// Compared as the stored integers so a jump equal to the saved best doesn't count.
 	const i64 distance = (i64)(jump->GetDistance() * KZ_JUMPSTATS_DISTANCE_SCALE + 0.5);
 	const i64 block = (i64)(jump->GetBlock() + 0.5f);

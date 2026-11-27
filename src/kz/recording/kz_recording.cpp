@@ -17,7 +17,8 @@
 
 #include <set>
 
-CConVar<i32> kz_replay_recording_min_jump_tier("kz_replay_recording_min_jump_tier", FCVAR_CHEAT, "Minimum jump tier to record for jumpstat replays",
+CConVar<i32> kz_replay_recording_min_jump_tier("kz_replay_recording_min_jump_tier", FCVAR_CHEAT,
+											   "Minimum jump tier to record for jumpstat replays, jumps saved to the jump top are always recorded",
 											   DistanceTier_Wrecker, true, DistanceTier_Meh, true, DistanceTier_Wrecker);
 
 ReplayFileWriter *KZRecordingService::fileWriter = nullptr;
@@ -89,7 +90,21 @@ void KZRecordingService::Reset()
 		this->circularRecording->rpEvents->Advance(this->circularRecording->rpEvents->GetReadAvailable());
 		this->circularRecording->jumps.clear();
 	}
+	// A finished run is still recording its end and its submission waits for the replay.
+	// A run that hasn't finished has no submission and is dropped.
+	for (RunRecorder &recorder : this->runRecorders)
+	{
+		if (recorder.desiredStopTime >= 0.0f)
+		{
+			this->WriteRunRecorder(recorder);
+		}
+	}
 	this->runRecorders.clear();
+	// A jump recorder is still waiting for the end of its jump and the jump may already be in the jump top.
+	for (JumpRecorder &recorder : this->jumpRecorders)
+	{
+		this->WriteJumpRecorder(recorder);
+	}
 	this->jumpRecorders.clear();
 	this->lastCmdNumReceived = 0;
 	this->currentRunUUID = UUID_t(false);
@@ -261,52 +276,10 @@ void KZRecordingService::CheckRecorders()
 {
 	for (auto it = this->runRecorders.begin(); it != this->runRecorders.end();)
 	{
-		auto &recorder = *it;
-		if (recorder.ShouldStopAndSave(g_pKZUtils->GetServerGlobals()->curtime))
+		if (it->ShouldStopAndSave(g_pKZUtils->GetServerGlobals()->curtime))
 		{
 			KZ_LOG_DEBUG(LogChannel::Recording, "Run recorder stopped\n");
-			if (KZRecordingService::fileWriter)
-			{
-				auto recorderPtr = std::make_unique<RunRecorder>(std::move(recorder));
-				this->CopyWeaponsToRecorder(recorderPtr.get());
-				UUID_t localUUID = recorderPtr->uuid; // capture before move
-				KZRecordingService::fileWriter->QueueWrite(
-					std::move(recorderPtr),
-					// Deliver the buffer to the RunSubmission state machine on success.
-					[localUUID](const UUID_t &, f32, std::vector<char> &&buffer)
-					{
-						RunSubmission *sub = RunSubmission::GetByUUID(localUUID);
-						if (sub)
-						{
-							sub->OnReplayReady(std::move(buffer));
-						}
-					},
-					// Notify the player and log on failure.
-					[localUUID](const char *error)
-					{
-						KZ_LOG_WARN(LogChannel::Recording, "Run replay serialization failed for UUID %s: %s\n", localUUID.ToString().c_str(), error);
-						RunSubmission *sub = RunSubmission::GetByUUID(localUUID);
-						if (sub)
-						{
-							KZPlayer *callbackPlayer = g_pKZPlayerManager->SessionToPlayer(sub->sessionID);
-							if (callbackPlayer)
-							{
-								callbackPlayer->languageService->PrintChat(true, false, "Replay - Run Replay Failed");
-							}
-							sub->OnReplayFailed();
-						}
-					});
-			}
-			else
-			{
-				// Neither callback will ever run without a file writer.
-				// This should never happen.
-				RunSubmission *sub = RunSubmission::GetByUUID(recorder.uuid);
-				if (sub)
-				{
-					sub->OnReplayFailed();
-				}
-			}
+			this->WriteRunRecorder(*it);
 			it = this->runRecorders.erase(it);
 		}
 		else
@@ -316,29 +289,10 @@ void KZRecordingService::CheckRecorders()
 	}
 	for (auto it = this->jumpRecorders.begin(); it != this->jumpRecorders.end();)
 	{
-		auto &recorder = *it;
-		if (recorder.ShouldStopAndSave(g_pKZUtils->GetServerGlobals()->curtime))
+		if (it->ShouldStopAndSave(g_pKZUtils->GetServerGlobals()->curtime))
 		{
-			// Stop this recorder and queue for async write
 			KZ_LOG_DEBUG(LogChannel::Recording, "Jump recorder stopped\n");
-			if (fileWriter)
-			{
-				DiskWriteSuccessCallback onSaved;
-				if (recorder.announceSave)
-				{
-					const CPlayerUserId userID = this->player->GetClient()->GetUserID();
-					onSaved = [userID](const UUID_t &uuid, f32)
-					{
-						if (KZPlayer *player = g_pKZPlayerManager->ToPlayer(userID))
-						{
-							player->languageService->PrintChat(true, false, "Replay - Jump Replay Saved", uuid.ToString().c_str());
-						}
-					};
-				}
-				auto recorderPtr = std::make_unique<JumpRecorder>(std::move(recorder));
-				this->CopyWeaponsToRecorder(recorderPtr.get());
-				fileWriter->QueueWriteToFile(std::move(recorderPtr), onSaved);
-			}
+			this->WriteJumpRecorder(*it);
 			it = this->jumpRecorders.erase(it);
 		}
 		else
@@ -346,6 +300,73 @@ void KZRecordingService::CheckRecorders()
 			++it;
 		}
 	}
+}
+
+void KZRecordingService::WriteRunRecorder(RunRecorder &recorder)
+{
+	const UUID_t uuid = recorder.uuid;
+	if (!KZRecordingService::fileWriter)
+	{
+		// Neither callback will ever run without a file writer.
+		// This should never happen.
+		if (RunSubmission *sub = RunSubmission::GetByUUID(uuid))
+		{
+			sub->OnReplayFailed();
+		}
+		return;
+	}
+	auto recorderPtr = std::make_unique<RunRecorder>(std::move(recorder));
+	this->CopyWeaponsToRecorder(recorderPtr.get());
+	KZRecordingService::fileWriter->QueueWrite(
+		std::move(recorderPtr),
+		// Deliver the buffer to the RunSubmission state machine on success.
+		[uuid](const UUID_t &, f32, std::vector<char> &&buffer)
+		{
+			if (RunSubmission *sub = RunSubmission::GetByUUID(uuid))
+			{
+				sub->OnReplayReady(std::move(buffer));
+			}
+		},
+		// Notify the player and log on failure.
+		[uuid](const char *error)
+		{
+			KZ_LOG_WARN(LogChannel::Recording, "Run replay serialization failed for UUID %s: %s\n", uuid.ToString().c_str(), error);
+			if (RunSubmission *sub = RunSubmission::GetByUUID(uuid))
+			{
+				if (KZPlayer *callbackPlayer = g_pKZPlayerManager->SessionToPlayer(sub->sessionID))
+				{
+					callbackPlayer->languageService->PrintChat(true, false, "Replay - Run Replay Failed");
+				}
+				sub->OnReplayFailed();
+			}
+		});
+}
+
+void KZRecordingService::WriteJumpRecorder(JumpRecorder &recorder)
+{
+	if (!KZRecordingService::fileWriter)
+	{
+		return;
+	}
+	DiskWriteSuccessCallback onSaved;
+	CServerSideClient *client = this->player->GetClient();
+	if (recorder.announceSave && client)
+	{
+		const CPlayerUserId userID = client->GetUserID();
+		onSaved = [userID](const UUID_t &uuid, f32)
+		{
+			if (KZPlayer *player = g_pKZPlayerManager->ToPlayer(userID))
+			{
+				player->languageService->PrintChat(true, false, "Replay - Jump Replay Saved", uuid.ToString().c_str());
+			}
+		};
+	}
+	const UUID_t uuid = recorder.uuid;
+	auto onFailure = [uuid](const char *error)
+	{ KZ_LOG_WARN(LogChannel::Recording, "Jump replay %s was not saved: %s\n", uuid.ToString().c_str(), error); };
+	auto recorderPtr = std::make_unique<JumpRecorder>(std::move(recorder));
+	this->CopyWeaponsToRecorder(recorderPtr.get());
+	KZRecordingService::fileWriter->QueueWriteToFile(std::move(recorderPtr), onSaved, onFailure);
 }
 
 void KZRecordingService::AnnounceJumpReplay(const UUID_t &uuid)

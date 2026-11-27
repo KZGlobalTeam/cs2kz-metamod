@@ -1043,9 +1043,13 @@ void KZJumpstatsService::EndJump(bool landed)
 		this->player->anticheatService->CheckJumpSubtickSplits(jump);
 	}
 	KZJumpstatsService::AnnounceJump(jump);
-	this->player->recordingService->OnJumpFinish(jump);
-	// Runs after the recording service so the jump's UUID is set.
-	this->SaveJump(jump);
+	// A saved jump always gets a replay so the jump top can play it.
+	const bool save = this->ShouldSaveJump(jump);
+	this->player->recordingService->OnJumpFinish(jump, save);
+	if (save)
+	{
+		this->SaveJump(jump);
+	}
 	this->player->anticheatService->OnJumpFinish(jump);
 }
 

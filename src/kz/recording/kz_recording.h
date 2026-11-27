@@ -330,7 +330,8 @@ public:
 		i32 previousCheckpointIndex;
 	};
 
-	void OnJumpFinish(Jump *jump);
+	// Saved jumps are the ones that go into the jump top.
+	void OnJumpFinish(Jump *jump, bool saved);
 	// Invalid but kept for review.
 	void SaveTurnbindJump(Jump *jump);
 
@@ -345,6 +346,9 @@ public:
 
 	// Check all active recorders and stop those that have reached their desired stop time.
 	void CheckRecorders();
+	// Queue the recorder for writing and leave it moved from.
+	void WriteRunRecorder(RunRecorder &recorder);
+	void WriteJumpRecorder(JumpRecorder &recorder);
 
 	// Check the player's currently held weapons and record weapon switch events.
 	// Also tracks the earliest weapon for the circular recorder.
@@ -407,6 +411,7 @@ public:
 		return currentRunUUID;
 	}
 
+	// The replay of the last jump, empty if it isn't recorded.
 	UUID_t lastJumpUUID;
 
 	UUID_t GetLastJumpUUID() const

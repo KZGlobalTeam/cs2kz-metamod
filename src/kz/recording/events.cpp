@@ -269,8 +269,9 @@ void KZRecordingService::SaveTurnbindJump(Jump *jump)
 				this->player->GetName(), this->player->GetSteamId64(), jumpTypeShortStr[jump->jumpType], jump->GetDistance());
 }
 
-void KZRecordingService::OnJumpFinish(Jump *jump)
+void KZRecordingService::OnJumpFinish(Jump *jump, bool saved)
 {
+	this->lastJumpUUID = UUID_t(false);
 	if (KZ::replaysystem::IsReplayBot(this->player))
 	{
 		return;
@@ -284,14 +285,13 @@ void KZRecordingService::OnJumpFinish(Jump *jump)
 	{
 		return;
 	}
-	this->lastJumpUUID = UUID_t(true);
 	// Ignore it if the player has a style.
 	if (!this->player->styleServices.empty())
 	{
 		return;
 	}
-	// Ignore a jump that is way too short.
-	if (jump->airtime < 0.5f)
+	// Ignore a jump that is way too short unless it goes into the jump top.
+	if (jump->airtime < 0.5f && !saved)
 	{
 		return;
 	}
@@ -308,12 +308,10 @@ void KZRecordingService::OnJumpFinish(Jump *jump)
 	}
 	// Add to all active jump recorders.
 	this->PushToRecorders(rpJump, RecorderType::Jump);
-	// Create a new jump recorder if the jump is good enough.
-	if (jump->IsValid() && jump->GetOffset() >= -JS_EPSILON
-		&& jump->GetJumpPlayer()->modeService->GetDistanceTier(jump->jumpType, jump->GetDistance()) >= kz_replay_recording_min_jump_tier.Get())
+	// Saved jumps are always recorded and the convar only decides about the others.
+	if (saved || this->player->modeService->GetDistanceTier(jump->jumpType, jump->GetDistance()) >= kz_replay_recording_min_jump_tier.Get())
 	{
-		this->jumpRecorders.push_back(JumpRecorder(jump));
-		this->jumpRecorders.back().uuid = this->lastJumpUUID;
+		this->lastJumpUUID = this->jumpRecorders.emplace_back(jump).uuid;
 	}
 }
 
@@ -385,40 +383,17 @@ void KZRecordingService::OnControlChange(RpEvent::RpEventData::ControlEvent::Con
 
 void KZRecordingService::OnClientDisconnect()
 {
-	for (auto &recorder : this->runRecorders)
+	for (RunRecorder &recorder : this->runRecorders)
 	{
-		if (recorder.desiredStopTime > 0.0f && KZRecordingService::fileWriter)
+		if (recorder.desiredStopTime >= 0.0f)
 		{
-			auto recorderPtr = std::make_unique<RunRecorder>(std::move(recorder));
-			this->CopyWeaponsToRecorder(recorderPtr.get());
-			UUID_t localUUID = recorderPtr->uuid;
-			// clang-format off
-			KZRecordingService::fileWriter->QueueWrite(
-				std::move(recorderPtr),
-				[localUUID](const UUID_t &, f32, std::vector<char> &&buffer)
-				{
-					RunSubmission *sub = RunSubmission::GetByUUID(localUUID);
-					if (sub)
-					{
-						sub->OnReplayReady(std::move(buffer));
-					}
-				},
-				[localUUID](const char *error)
-				{ 
-					KZ_LOG_WARN(LogChannel::Recording, "Run replay serialization failed for UUID %s: %s\n", localUUID.ToString().c_str(), error);
-				});
-			// clang-format on
+			this->WriteRunRecorder(recorder);
 		}
 	}
 	this->runRecorders.clear();
-	for (auto &recorder : this->jumpRecorders)
+	for (JumpRecorder &recorder : this->jumpRecorders)
 	{
-		if (KZRecordingService::fileWriter)
-		{
-			auto recorderPtr = std::make_unique<JumpRecorder>(std::move(recorder));
-			this->CopyWeaponsToRecorder(recorderPtr.get());
-			KZRecordingService::fileWriter->QueueWriteToFile(std::move(recorderPtr));
-		}
+		this->WriteJumpRecorder(recorder);
 	}
 	this->jumpRecorders.clear();
 

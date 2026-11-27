@@ -637,6 +637,8 @@ public:
 	void DetectWater();
 
 	// Jump saving
+	bool ShouldSaveJump(Jump *jump);
+	// The jump must pass ShouldSaveJump and its replay must already be recording.
 	void SaveJump(Jump *jump);
 
 	// Jump reporting

@@ -46,7 +46,9 @@ JumpRecorder::JumpRecorder(Jump *jump) : Recorder(jump->player, 5.0f, RP_JUMPSTA
 	jumpProto->mutable_mode()->set_md5(modeInfo.md5);
 	jumpProto->set_jump_type(jump->jumpType);
 	jumpProto->set_distance(jump->GetDistance());
-	jumpProto->set_block_distance(-1);
+	// Rounded like the block saved to the jump top.
+	const i32 block = (i32)(jump->GetBlock() + 0.5f);
+	jumpProto->set_block_distance(block > 0 ? block : -1);
 	jumpProto->set_num_strafes(jump->strafes.size());
 	jumpProto->set_air_time(jump->airtime);
 	jumpProto->set_pre(jump->GetTakeoffSpeed());
