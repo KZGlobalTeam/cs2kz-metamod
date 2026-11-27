@@ -5,6 +5,7 @@
 #include "kz/mode/kz_mode.h"
 #include "kz/profile/hud/profile.h"
 #include "kz/replays/commands.h"
+#include "kz/replays/kz_replaysystem.h"
 #include "kz/replays/watcher.h"
 #include "kz/timer/hud/record_format.h"
 #include "sdk/entity/ccscustomhudlayout.h"
@@ -133,6 +134,50 @@ namespace KZ::jumpstats::hud
 			window->total = result && result->FetchRow() ? (u64)result->GetInt64(0) : window->rows.size();
 			window->state = State::Loaded;
 			window->Render();
+
+			// Replays that aren't on disk may be in the replay store.
+			std::vector<std::pair<UUID_t, std::string>> missing;
+			for (const Row &row : window->rows)
+			{
+				UUID_t uuid(false);
+				if (!row.hasReplay && UUID_t::FromString(row.uuid.c_str(), &uuid))
+				{
+					missing.push_back({uuid, std::string()});
+				}
+			}
+			auto onLocated = [userID, serial](std::unordered_map<UUID_t, KZ::replaysystem::ReplayAvailability> &&replays)
+			{
+				KZPlayer *player = g_pKZPlayerManager->ToPlayer(userID);
+				JumpTopWindow *window = player ? player->uiService->GetWindow<JumpTopWindow>() : nullptr;
+				if (!window || window->serial != serial)
+				{
+					return;
+				}
+				const std::string currentMap = g_pKZUtils->GetCurrentMapName().c_str();
+				bool changed = false;
+				for (Row &row : window->rows)
+				{
+					UUID_t uuid(false);
+					auto it = !row.hasReplay && UUID_t::FromString(row.uuid.c_str(), &uuid) ? replays.find(uuid) : replays.end();
+					if (it == replays.end() || !it->second.found)
+					{
+						continue;
+					}
+					// The store only said that the replay exists and it was checked under the current map.
+					row.map = it->second.map.empty() ? currentMap : it->second.map;
+					row.hasReplay = true;
+					row.playable = row.map == currentMap;
+					changed = true;
+				}
+				if (changed)
+				{
+					window->Render();
+				}
+			};
+			if (!missing.empty())
+			{
+				KZ::replaysystem::LocateReplays(missing, onLocated);
+			}
 		};
 		auto onFailure = [userID, serial](std::string, int)
 		{

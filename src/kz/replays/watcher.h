@@ -133,6 +133,8 @@ public:
 
 	// The map of the jump replay with this UUID or an empty string if there is none.
 	std::string GetJumpReplayMap(const UUID_t &uuid);
+	// The header of a replay on disk or in the download folder.
+	std::optional<ReplayHeader> GetReplayHeader(const UUID_t &uuid);
 
 	// Asks the database again about the replays on disk.
 	void RequestDatabaseChecks();

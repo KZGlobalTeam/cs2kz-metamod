@@ -53,43 +53,11 @@ namespace KZ::replaysystem::commands
 		}
 	}
 
-	void LoadReplay(KZPlayer *player, const char *uuid)
+	static void LoadReplayFile(KZPlayer *player, const std::string &replayPath)
 	{
-		if (!player)
-		{
-			return;
-		}
-
-		// Check if already loading
 		if (data::IsLoading())
 		{
 			player->languageService->PrintChat(true, false, "Replay - Loading Already");
-			return;
-		}
-
-		UUID_t parsedUuid(false);
-		if (!UUID_t::FromString(uuid, &parsedUuid))
-		{
-			// Try to find replays matching the UUID substring
-			auto matches = g_ReplayWatcher.FindReplaysByUUIDSubstring(uuid);
-			if (matches.empty())
-			{
-				player->languageService->PrintChat(true, false, "Replay - Invalid UUID");
-				return;
-			}
-			else if (matches.size() > 1)
-			{
-				player->languageService->PrintChat(true, false, "Replay - Multiple Matches", uuid);
-				return;
-			}
-			// Exactly one match found
-			parsedUuid = matches[0];
-		}
-
-		std::string replayPath;
-		if (!FindReplayPath(parsedUuid.ToString().c_str(), replayPath))
-		{
-			KZGlobalService::RequestReplay(player, parsedUuid);
 			return;
 		}
 
@@ -160,6 +128,68 @@ namespace KZ::replaysystem::commands
 			})
 		);
 		// clang-format on
+	}
+
+	static void LoadReplayByUUID(KZPlayer *player, const UUID_t &uuid)
+	{
+		std::string replayPath;
+		if (FindReplayPath(uuid.ToString().c_str(), replayPath))
+		{
+			LoadReplayFile(player, replayPath);
+			return;
+		}
+		player->languageService->PrintChat(true, false, "Replay Request - Sending", uuid.ToString().c_str());
+		const CPlayerUserId userID = player->GetClient()->GetUserID();
+		FetchReplay(uuid,
+					[userID](const std::string &path)
+					{
+						KZPlayer *player = g_pKZPlayerManager->ToPlayer(userID);
+						if (!player)
+						{
+							return;
+						}
+						if (path.empty())
+						{
+							player->languageService->PrintChat(true, false, "Replay Request - Error");
+							return;
+						}
+						LoadReplayFile(player, path);
+					});
+	}
+
+	void LoadReplay(KZPlayer *player, const char *uuid)
+	{
+		if (!player)
+		{
+			return;
+		}
+
+		// Check if already loading
+		if (data::IsLoading())
+		{
+			player->languageService->PrintChat(true, false, "Replay - Loading Already");
+			return;
+		}
+
+		UUID_t parsedUuid(false);
+		if (UUID_t::FromString(uuid, &parsedUuid))
+		{
+			LoadReplayByUUID(player, parsedUuid);
+			return;
+		}
+		// Try to find replays matching the UUID substring
+		auto matches = g_ReplayWatcher.FindReplaysByUUIDSubstring(uuid);
+		if (matches.size() > 1)
+		{
+			player->languageService->PrintChat(true, false, "Replay - Multiple Matches", uuid);
+			return;
+		}
+		if (matches.empty())
+		{
+			player->languageService->PrintChat(true, false, "Replay - Invalid UUID");
+			return;
+		}
+		LoadReplayByUUID(player, matches[0]);
 	}
 
 	void JumpToReplayTime(KZPlayer *player, const char *input)
@@ -582,20 +612,7 @@ namespace KZ::replaysystem::commands
 			player->languageService->PrintChat(true, false, "Replay - Not Found");
 			return;
 		}
-		std::string replayPath;
-		if (FindReplayPath(uuid.ToString().c_str(), replayPath))
-		{
-			LoadReplay(player, uuid.ToString().c_str());
-			return;
-		}
-
-		if (KZGlobalService::IsAvailable())
-		{
-			KZGlobalService::RequestReplay(player, uuid);
-			return;
-		}
-
-		player->languageService->PrintChat(true, false, "Replay - Not Found");
+		LoadReplay(player, uuid.ToString().c_str());
 	}
 
 	struct RecordContext

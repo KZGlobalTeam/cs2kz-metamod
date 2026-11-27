@@ -124,6 +124,26 @@ void CourseTopWindow::OnResult(u32 serial, const Result &result)
 	this->Render();
 }
 
+void CourseTopWindow::OnReplaysLocated(u32 serial, const std::unordered_set<UUID_t> &found)
+{
+	if (serial != this->serial || !this->hasResult || !this->player->uiService->IsOpen(this))
+	{
+		return;
+	}
+	for (std::vector<Run> &runs : this->result.runs[Server])
+	{
+		for (Run &run : runs)
+		{
+			UUID_t uuid(false);
+			if (!run.replay && UUID_t::FromString(run.id.c_str(), &uuid) && found.count(uuid))
+			{
+				run.replay = true;
+			}
+		}
+	}
+	this->Render();
+}
+
 void CourseTopWindow::Navigate(const std::string &course, const std::string &mode, u64 offset)
 {
 	this->query.course = course;

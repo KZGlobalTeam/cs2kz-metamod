@@ -1260,6 +1260,26 @@ std::string ReplayWatcher::GetJumpReplayMap(const UUID_t &uuid)
 	return it == this->jumpReplays.end() ? std::string() : it->second.map().name();
 }
 
+std::optional<ReplayHeader> ReplayWatcher::GetReplayHeader(const UUID_t &uuid)
+{
+	std::lock_guard<std::mutex> lock(this->replayMapsMutex);
+	std::optional<ReplayHeader> found;
+	auto find = [&](const auto &replayMap)
+	{
+		auto it = replayMap.find(uuid);
+		if (!found && it != replayMap.end())
+		{
+			found = it->second;
+		}
+	};
+	find(this->runReplays);
+	find(this->jumpReplays);
+	find(this->manualReplays);
+	find(this->cheaterReplays);
+	find(this->downloadedReplays);
+	return found;
+}
+
 std::vector<UUID_t> ReplayWatcher::FindReplaysByUUIDSubstring(const char *uuidSubstring)
 {
 	std::vector<UUID_t> matches;

@@ -214,9 +214,15 @@ static_function void StartReferenceLoad(PBDataKey key, ProgressReference &refere
 	for (const auto &uuid : reference.uuids)
 	{
 		std::string path;
+		UUID_t parsed(false);
 		if (KZ::replaysystem::FindReplayPath(uuid.c_str(), path))
 		{
 			request.files.push_back({uuid, std::move(path)});
+		}
+		// The reference loads again once the download changes the replay files.
+		else if (UUID_t::FromString(uuid.c_str(), &parsed))
+		{
+			KZ::replaysystem::FetchReplay(parsed, [](const std::string &) {});
 		}
 	}
 	if (request.files.empty())

@@ -448,6 +448,48 @@ void ProfileWindow::RequestServerRuns()
 		window->total = result && result->FetchRow() ? (u64)result->GetInt64(0) : window->runs.size();
 		window->runsState = State::Loaded;
 		window->Render();
+
+		// Runs whose replays aren't on disk may be in the replay store.
+		std::vector<std::pair<UUID_t, std::string>> missing;
+		for (size_t i = 0; i < window->runs.size(); i++)
+		{
+			UUID_t uuid(false);
+			if (!window->runReplays[i] && UUID_t::FromString(window->runs[i].id.c_str(), &uuid))
+			{
+				missing.push_back({uuid, window->runs[i].map.name});
+			}
+		}
+		auto onLocated = [userID, serial](std::unordered_map<UUID_t, KZ::replaysystem::ReplayAvailability> &&replays)
+		{
+			KZPlayer *player = g_pKZPlayerManager->ToPlayer(userID);
+			ProfileWindow *window = player ? player->uiService->GetWindow<ProfileWindow>() : nullptr;
+			if (!window || window->runsSerial != serial)
+			{
+				return;
+			}
+			bool changed = false;
+			for (size_t i = 0; i < window->runs.size(); i++)
+			{
+				UUID_t uuid(false);
+				if (!window->runReplays[i] && UUID_t::FromString(window->runs[i].id.c_str(), &uuid))
+				{
+					auto it = replays.find(uuid);
+					if (it != replays.end() && it->second.found)
+					{
+						window->runReplays[i] = true;
+						changed = true;
+					}
+				}
+			}
+			if (changed)
+			{
+				window->Render();
+			}
+		};
+		if (!missing.empty())
+		{
+			KZ::replaysystem::LocateReplays(missing, onLocated);
+		}
 	};
 	auto onFailure = [userID, serial](std::string, int)
 	{

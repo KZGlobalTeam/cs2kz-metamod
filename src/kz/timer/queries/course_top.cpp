@@ -362,6 +362,42 @@ struct CourseTopRequest : public BaseRequest
 		copyRuns(this->srData.overallData, result.runs[CourseTopWindow::Server][CourseTopWindow::Overall], false);
 		copyRuns(this->srData.proData, result.runs[CourseTopWindow::Server][CourseTopWindow::Pro], false);
 		player->uiService->GetWindow<CourseTopWindow>()->OnResult(this->windowSerial, result);
+
+		// Server runs whose replays aren't on disk may be in the replay store.
+		std::vector<std::pair<UUID_t, std::string>> missing;
+		for (const auto &runs : result.runs[CourseTopWindow::Server])
+		{
+			for (const CourseTopWindow::Run &run : runs)
+			{
+				UUID_t uuid(false);
+				if (!run.replay && UUID_t::FromString(run.id.c_str(), &uuid))
+				{
+					missing.push_back({uuid, this->mapName});
+				}
+			}
+		}
+		if (missing.empty())
+		{
+			return;
+		}
+		auto onLocated =
+			[userID = this->userID, serial = this->windowSerial](std::unordered_map<UUID_t, KZ::replaysystem::ReplayAvailability> &&replays)
+		{
+			std::unordered_set<UUID_t> found;
+			for (const auto &[uuid, availability] : replays)
+			{
+				if (availability.found)
+				{
+					found.insert(uuid);
+				}
+			}
+			KZPlayer *player = g_pKZPlayerManager->ToPlayer(userID);
+			if (player && !found.empty())
+			{
+				player->uiService->GetWindow<CourseTopWindow>()->OnReplaysLocated(serial, found);
+			}
+		};
+		KZ::replaysystem::LocateReplays(missing, onLocated);
 	}
 
 	void ReplyGlobal()

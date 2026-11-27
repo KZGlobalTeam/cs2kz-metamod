@@ -797,11 +797,6 @@ private:
 		void QueueUpload(PendingUpload &&upload);
 		void ProcessUploads();
 		static void RetryUpload(std::shared_ptr<PendingUpload> upload, const char *reason);
-
-		std::optional<UUID_t> pendingDownload;
-
-		static void OnReplayRequestSuccess(const std::vector<char> &binaryData, CPlayerUserId userID);
-		void RequestReplay(KZPlayer *requester, UUID_t replayID);
 	} replayManager;
 
 public:
@@ -814,11 +809,6 @@ public:
 	 * Reads `apiUrl` from the server config and validates it. The result always ends with a `/`.
 	 */
 	static bool GetApiHttpUrl(std::string &url);
-
-	static void RequestReplay(KZPlayer *requester, UUID_t replayID)
-	{
-		replayManager.RequestReplay(requester, replayID);
-	}
 
 	/**
 	 * Called when the player has been re-confirmed to have prime status.

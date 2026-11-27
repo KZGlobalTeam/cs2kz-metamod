@@ -3,8 +3,10 @@
 #include "kz/mappingapi/hud/course_chips.h"
 #include "kz/ui/kz_ui.h"
 #include "kz/ui/player_layout.h"
+#include "utils/uuid.h"
 
 #include <optional>
+#include <unordered_set>
 
 #define KZ_COURSE_TOP_LAYOUT "panorama/layout/custom_game/cs2kz/course_top.xml"
 // Must match the record rows in course_top.xml.
@@ -71,6 +73,8 @@ public:
 	// Opens a course leaderboard on top of the open windows.
 	void ShowCourse(const std::string &map, const std::string &course, KZ::api::Mode mode, bool pro, bool server);
 	void OnResult(u32 serial, const Result &result);
+	// Shows the replays of server runs that turned out to be in the replay store.
+	void OnReplaysLocated(u32 serial, const std::unordered_set<UUID_t> &found);
 
 	virtual KZ::ui::PlayerLayout *GetLayout() override
 	{
