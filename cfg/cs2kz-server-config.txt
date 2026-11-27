@@ -63,7 +63,7 @@
 		// Number of days to keep downloaded replays before deletion (0 = keep forever).
 		"downloadRetentionDays"		"7"
 
-		// Replays kept on this server's disk if there is no store.
+		// Replays kept on this server's disk if there is no store (see docs/replay-retention.md).
 		// With a database only the replays it references are kept.
 		"disk"
 		{
@@ -81,7 +81,7 @@
 			"deleteGlobalRunsAfterUpload"	"false"
 		}
 
-		// Uncomment to upload every replay to an HTTP store.
+		// Uncomment to upload every replay to an HTTP store (see docs/replay-store.md).
 		// New replays then stay on this server only until they're uploaded.
 		// Replays already on disk are left for you to move.
 		// The plugin never deletes anything from the store.
