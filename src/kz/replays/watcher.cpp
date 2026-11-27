@@ -1,6 +1,9 @@
 #include <unordered_set>
 #include "watcher.h"
+#include "ledger.h"
 #include "kz/replays/kz_replaysystem.h"
+#include "kz/db/kz_db.h"
+#include "vendor/sql_mm/src/public/sql_mm.h"
 #include "kz/mode/kz_mode.h"
 #include "kz/language/kz_language.h"
 #include "kz/option/kz_option.h"
@@ -8,7 +11,7 @@
 #include "filesystem/ifilesystem.h"
 #include "utils/tables.h"
 
-static const char *archiveIndexPath = KZ_REPLAY_PATH "/archive_index.txt";
+namespace ledger = KZ::replaysystem::ledger;
 
 #define CHEATER_REPLAY_TABLE_KEY "Cheater Replays - Table Name"
 #define RUN_REPLAY_TABLE_KEY     "Run Replays - Table Name"
@@ -687,172 +690,73 @@ bool ReplayFilterCriteria::PassFilters(const ReplayHeader &header, bool exactMap
 	}
 }
 
-void ReplayWatcher::LoadArchiveIndex()
+// The decision of the retention rules for one replay in one scan.
+enum class Verdict : u8
 {
-	this->archivedIndex.clear();
-	KeyValues3 kv;
-	CUtlString error;
-	if (!LoadKV3FromFile(&kv, &error, archiveIndexPath, "GAME", g_KV3Format_Generic, 0))
-	{
-		// File doesn't exist or failed to load - that's okay for first run
-		return;
-	}
+	Keep,
+	Drop
+};
 
-	// Iterate through all members in the table
-	for (int i = 0; i < kv.GetMemberCount(); i++)
-	{
-		const char *uuidStr = kv.GetMemberName(i);
-		KeyValues3 *member = kv.GetMember(i);
-		if (!member || !uuidStr)
-		{
-			continue;
-		}
+using RankedReplays = std::vector<std::pair<UUID_t, const ReplayHeader *>>;
 
-		u64 timestamp = member->GetUInt64(0);
-		UUID_t uuid(false);
-		if (UUID_t::FromString(uuidStr, &uuid))
-		{
-			this->archivedIndex[uuid] = timestamp;
-		}
-	}
-}
-
-void ReplayWatcher::SaveArchiveIndex()
+// Keeps the fastest runs and the fastest runs without teleports of each player, map, course and mode among the runs without styles.
+static_function void RankRunReplays(const RankedReplays &runs, std::unordered_map<UUID_t, Verdict> &verdicts)
 {
-	KeyValues3 kv;
-
-	// Build KV3 table with UUID -> timestamp mappings
-	for (auto &[uuid, timestamp] : this->archivedIndex)
-	{
-		kv.SetMemberUInt64(uuid.ToString().c_str(), timestamp);
-	}
-
-	// Writes through the "GAME" path ID land in its first directory.
-	// That is csgo/addons/metamod on servers running Metamod.
-	CUtlString error;
-	CUtlBuffer buf(0, 0, CUtlBuffer::TEXT_BUFFER);
-	if (!SaveKV3(g_KV3Encoding_Text, g_KV3Format_Generic, &kv, &error, &buf, KV3_SAVE_TEXT_NONE))
-	{
-		KZ_LOG_WARN(LogChannel::Replays, "Failed to serialize archive index: %s\n", error.Get());
-	}
-	else
-	{
-		const char *base = static_cast<const char *>(buf.Base());
-		std::vector<char> data(base, base + buf.TellPut());
-		if (!utils::WriteBufferToFile(archiveIndexPath, data))
-		{
-			KZ_LOG_WARN(LogChannel::Replays, "Failed to save archive index to %s\n", archiveIndexPath);
-		}
-	}
-
-	this->archiveDirty = false;
-}
-
-void ReplayWatcher::MarkArchived(const UUID_t &uuid, u64 archiveTimestamp)
-{
-	this->archivedIndex[uuid] = archiveTimestamp;
-	this->archiveDirty = true;
-}
-
-void ReplayWatcher::ProcessCheaterReplays(std::unordered_map<UUID_t, ReplayHeader> &map, u64 currentTime)
-{
-	for (auto &[uuid, hdr] : map)
-	{
-		if (hdr.has_cheater() && hdr.cheater().has_reporter() && hdr.cheater().reporter().steamid64() != 0
-			&& this->archivedIndex.find(uuid) == this->archivedIndex.end())
-		{
-			MarkArchived(uuid, currentTime);
-		}
-	}
-}
-
-void ReplayWatcher::ProcessRunReplays(std::vector<std::tuple<UUID_t, ReplayHeader>> &tempRunReplays, std::map<UUID_t, ReplayHeader> &runMap,
-									  u64 currentTime)
-{
-	// Group by steamid, course, mode, and map
-	struct RunReplayKey
+	struct Key
 	{
 		u64 steamid64;
 		std::string mapName;
 		std::string modeName;
 		std::string courseName;
 
-		bool operator==(const RunReplayKey &o) const
+		bool operator==(const Key &o) const
 		{
 			return steamid64 == o.steamid64 && mapName == o.mapName && modeName == o.modeName && courseName == o.courseName;
 		}
 	};
 
-	struct RunReplayKeyHasher
+	struct KeyHasher
 	{
-		size_t operator()(const RunReplayKey &k) const
+		size_t operator()(const Key &k) const
 		{
-			std::size_t h1 = std::hash<u64> {}(k.steamid64);
-			std::size_t h2 = std::hash<std::string> {}(k.mapName);
-			std::size_t h3 = std::hash<std::string> {}(k.modeName);
-			std::size_t h4 = std::hash<std::string> {}(k.courseName);
-			return h1 ^ (h2 << 1) ^ (h3 << 2) ^ (h4 << 3);
+			return std::hash<u64> {}(k.steamid64) ^ (std::hash<std::string> {}(k.mapName) << 1) ^ (std::hash<std::string> {}(k.modeName) << 2)
+				   ^ (std::hash<std::string> {}(k.courseName) << 3);
 		}
 	};
 
-	std::unordered_map<RunReplayKey, std::vector<std::tuple<UUID_t, ReplayHeader>>, RunReplayKeyHasher> groups;
-	for (auto &replay : tempRunReplays)
+	std::unordered_map<Key, RankedReplays, KeyHasher> groups;
+	for (const auto &[uuid, hdr] : runs)
 	{
-		auto &[uuid, hdr] = replay;
-		if (!hdr.has_run())
+		if (!hdr->has_run())
 		{
 			continue;
 		}
-		auto &run = hdr.run();
-		// Styled runs (styleCount > 0) are marked as archived immediately
-		if (run.styles_size() > 0 && this->archivedIndex.find(uuid) == this->archivedIndex.end())
+		const auto &run = hdr->run();
+		if (run.styles_size() > 0)
 		{
-			MarkArchived(uuid, currentTime);
+			verdicts[uuid] = Verdict::Drop;
+			continue;
 		}
-		if (run.styles_size() == 0)
-		{
-			RunReplayKey key {hdr.player().steamid64(), LowercaseKey(hdr.map().name()), LowercaseKey(run.mode().name()),
-							  LowercaseKey(run.course_name())};
-			groups[key].push_back(replay);
-		}
-		runMap[uuid] = hdr;
+		Key key {hdr->player().steamid64(), LowercaseKey(hdr->map().name()), LowercaseKey(run.mode().name()), LowercaseKey(run.course_name())};
+		groups[key].push_back({uuid, hdr});
 	}
-	int maxPer = (int)MAX(KZOptionService::GetOptionInt("replays/disk/maxRunsPerGroup", 3), 1);
-	for (auto &[uuid, header] : groups)
+	const size_t maxPer = (size_t)MAX(KZOptionService::GetOptionInt("replays/disk/maxRunsPerGroup", 3), 1);
+	for (auto &[key, group] : groups)
 	{
-		std::set<UUID_t> keep;
-		// Sort by time (fastest first) and keep top N
-		std::sort(header.begin(), header.end(), [](auto &a, auto &b) { return std::get<1>(a).run().time() < std::get<1>(b).run().time(); });
-		for (size_t i = 0; i < MIN((size_t)maxPer, header.size()); i++)
+		std::sort(group.begin(), group.end(), [](const auto &a, const auto &b) { return a.second->run().time() < b.second->run().time(); });
+		size_t pro = 0;
+		for (size_t i = 0; i < group.size(); i++)
 		{
-			keep.insert(std::get<0>(header[i]));
-		}
-
-		// Filter to only runs with 0 teleports, sort by time (fastest first), and keep top N
-		std::vector<std::tuple<UUID_t, ReplayHeader>> proReplays;
-		for (auto &r : header)
-		{
-			if (std::get<1>(r).run().num_teleports() == 0)
-			{
-				proReplays.push_back(r);
-			}
-		}
-		std::sort(proReplays.begin(), proReplays.end(), [](auto &a, auto &b) { return std::get<1>(a).run().time() < std::get<1>(b).run().time(); });
-		for (size_t i = 0; i < MIN((size_t)maxPer, proReplays.size()); i++)
-		{
-			keep.insert(std::get<0>(proReplays[i]));
-		}
-		for (auto &[uuid, hdr] : header)
-		{
-			if (!keep.count(uuid) && archivedIndex.find(uuid) == archivedIndex.end())
-			{
-				MarkArchived(uuid, currentTime);
-			}
+			const bool isPro = group[i].second->run().num_teleports() == 0;
+			const bool keep = i < maxPer || (isPro && pro < maxPer);
+			pro += isPro;
+			verdicts[group[i].first] = keep ? Verdict::Keep : Verdict::Drop;
 		}
 	}
 }
 
-void ReplayWatcher::ProcessJumpReplays(std::vector<std::tuple<UUID_t, ReplayHeader>> &temp, std::map<UUID_t, ReplayHeader> &jumpMap, u64 currentTime)
+// Keeps the longest jumps and the best block jumps of each player, jump type and mode.
+static_function void RankJumpReplays(const RankedReplays &jumps, std::unordered_map<UUID_t, Verdict> &verdicts)
 {
 	struct Key
 	{
@@ -874,60 +778,65 @@ void ReplayWatcher::ProcessJumpReplays(std::vector<std::tuple<UUID_t, ReplayHead
 		}
 	};
 
-	std::unordered_map<Key, std::vector<std::tuple<UUID_t, ReplayHeader>>, KeyHasher> groups;
-	for (auto &t : temp)
+	std::unordered_map<Key, RankedReplays, KeyHasher> groups;
+	for (const auto &[uuid, hdr] : jumps)
 	{
-		auto &[uuid, hdr] = t;
-		if (!hdr.has_jump())
+		if (hdr->has_jump())
 		{
-			continue;
+			const auto &jump = hdr->jump();
+			groups[{hdr->player().steamid64(), (u8)jump.jump_type(), LowercaseKey(jump.mode().name())}].push_back({uuid, hdr});
 		}
-		auto &jump = hdr.jump();
-		Key key {hdr.player().steamid64(), (u8)jump.jump_type(), LowercaseKey(jump.mode().name())};
-		groups[key].push_back(t);
-		jumpMap[uuid] = hdr;
 	}
-	int maxPer = (int)MAX(KZOptionService::GetOptionInt("replays/disk/maxJumpsPerCategory", 3), 0);
-	for (auto &[key, vec] : groups)
+	const size_t maxPer = (size_t)MAX(KZOptionService::GetOptionInt("replays/disk/maxJumpsPerCategory", 3), 0);
+	for (auto &[key, group] : groups)
 	{
-		std::set<UUID_t> keep;
-		std::sort(vec.begin(), vec.end(),
-				  [](auto &a, auto &b) { return std::get<1>(a).jump().block_distance() > std::get<1>(b).jump().block_distance(); });
-		for (size_t i = 0; i < MIN((size_t)maxPer, vec.size()); i++)
+		std::unordered_set<UUID_t> keep;
+		// Ranked like the block list of the jump top.
+		std::sort(group.begin(), group.end(),
+				  [](const auto &a, const auto &b)
+				  {
+					  const auto &jumpA = a.second->jump();
+					  const auto &jumpB = b.second->jump();
+					  if (jumpA.block_distance() != jumpB.block_distance())
+					  {
+						  return jumpA.block_distance() > jumpB.block_distance();
+					  }
+					  return jumpA.distance() > jumpB.distance();
+				  });
+		for (size_t i = 0; i < MIN(maxPer, group.size()); i++)
 		{
-			keep.insert(std::get<0>(vec[i]));
-		}
-		std::sort(vec.begin(), vec.end(), [](auto &a, auto &b) { return std::get<1>(a).jump().distance() > std::get<1>(b).jump().distance(); });
-		for (size_t i = 0; i < MIN((size_t)maxPer, vec.size()); i++)
-		{
-			keep.insert(std::get<0>(vec[i]));
-		}
-		for (auto &[uuid, hdr] : vec)
-		{
-			if (!keep.count(uuid) && archivedIndex.find(uuid) == archivedIndex.end())
+			if (group[i].second->jump().block_distance() > 0)
 			{
-				MarkArchived(uuid, currentTime);
+				keep.insert(group[i].first);
 			}
+		}
+		std::sort(group.begin(), group.end(), [](const auto &a, const auto &b) { return a.second->jump().distance() > b.second->jump().distance(); });
+		for (size_t i = 0; i < MIN(maxPer, group.size()); i++)
+		{
+			keep.insert(group[i].first);
+		}
+		for (const auto &[uuid, hdr] : group)
+		{
+			verdicts[uuid] = keep.count(uuid) ? Verdict::Keep : Verdict::Drop;
 		}
 	}
 }
 
-void ReplayWatcher::CleanupManualReplays(std::unordered_map<UUID_t, ReplayHeader> &map,
-										 std::unordered_map<u64, std::vector<std::pair<UUID_t, u64>>> &bySteam)
+// Keeps the newest manual saves of each player.
+static_function void RankManualReplays(const RankedReplays &saves, std::unordered_map<UUID_t, Verdict> &verdicts)
 {
-	int maxManual = (int)MAX(KZOptionService::GetOptionInt("replays/maxManualSaves", 2), 0);
-	for (auto &[steamID, vec] : bySteam)
+	std::unordered_map<u64, RankedReplays> byPlayer;
+	for (const auto &save : saves)
 	{
-		if (vec.size() > maxManual)
+		byPlayer[save.second->player().steamid64()].push_back(save);
+	}
+	const size_t maxPer = (size_t)MAX(KZOptionService::GetOptionInt("replays/maxManualSaves", 2), 0);
+	for (auto &[steamID, group] : byPlayer)
+	{
+		std::sort(group.begin(), group.end(), [](const auto &a, const auto &b) { return a.second->timestamp() > b.second->timestamp(); });
+		for (size_t i = 0; i < group.size(); i++)
 		{
-			std::sort(vec.begin(), vec.end(), [](auto &a, auto &b) { return a.second > b.second; });
-			for (size_t i = maxManual; i < vec.size(); i++)
-			{
-				char fullPath[MAX_PATH];
-				V_snprintf(fullPath, sizeof(fullPath), "%s/%s.replay", KZ_REPLAY_PATH, vec[i].first.ToString().c_str());
-				utils::RemoveFile(fullPath);
-				map.erase(vec[i].first);
-			}
+			verdicts[group[i].first] = i < maxPer ? Verdict::Keep : Verdict::Drop;
 		}
 	}
 }
@@ -936,8 +845,6 @@ void ReplayWatcher::WatchLoop()
 {
 	// Long-lived background scanner.
 	// The replay index maps it builds are the plugin's main steady-state allocator outside of recording.
-
-	LoadArchiveIndex();
 	ScanReplays();
 	while (this->running)
 	{
@@ -947,10 +854,6 @@ void ReplayWatcher::WatchLoop()
 			break;
 		}
 		ScanReplays();
-		if (this->archiveDirty)
-		{
-			SaveArchiveIndex();
-		}
 	}
 }
 
@@ -998,10 +901,10 @@ void ReplayWatcher::ScanReplays()
 
 	time_t currentUnixTime = 0;
 	time(&currentUnixTime);
-	u32 retentionMinutes = (u32)MAX(KZOptionService::GetOptionInt("replays/disk/archiveRetentionMinutes", 2880), 0);
-	u64 retentionSeconds = retentionMinutes * 60ULL;
+	const u64 now = (u64)currentUnixTime;
+	const u64 retentionSeconds = (u64)MAX(KZOptionService::GetOptionInt("replays/disk/archiveRetentionMinutes", 2880), 0) * 60;
 
-	SweepOrphanedChunks((u64)currentUnixTime);
+	SweepOrphanedChunks(now);
 
 	// Files still present on disk this scan.
 	// Anything cached but not in this set has been deleted externally and must be dropped from the cache.
@@ -1030,22 +933,6 @@ void ReplayWatcher::ScanReplays()
 			{
 				char fullPath[MAX_PATH];
 				V_snprintf(fullPath, sizeof(fullPath), "%s/%s", KZ_REPLAY_PATH, pFileName);
-
-				auto idxIt = this->archivedIndex.find(uuid);
-				if (idxIt != this->archivedIndex.end())
-				{
-					u64 age = currentUnixTime - idxIt->second;
-					if (age >= retentionSeconds)
-					{
-						utils::RemoveFile(fullPath);
-						this->archivedIndex.erase(idxIt);
-						this->archiveDirty = true;
-						this->replayCache.erase(uuid);
-						pFileName = g_pFullFileSystem->FindNext(findHandle);
-						continue;
-					}
-				}
-
 				seen.insert(uuid);
 
 				long fileTime = g_pFullFileSystem->GetFileTime(fullPath, "GAME");
@@ -1096,16 +983,100 @@ void ReplayWatcher::ScanReplays()
 		}
 	}
 
+	std::unordered_map<UUID_t, bool> states;
+	{
+		std::lock_guard<std::mutex> lock(this->databaseMutex);
+		for (auto it = this->databaseStates.begin(); it != this->databaseStates.end();)
+		{
+			it = seen.count(it->first) ? std::next(it) : this->databaseStates.erase(it);
+		}
+		states = this->databaseStates;
+	}
+
+	std::unordered_map<UUID_t, Verdict> verdicts;
+	RankedReplays rankedRuns;
+	RankedReplays rankedJumps;
+	RankedReplays manualSaves;
+	for (auto &[uuid, cached] : this->replayCache)
+	{
+		if (this->databaseMode)
+		{
+			auto stateIt = states.find(uuid);
+			if (stateIt != states.end())
+			{
+				verdicts[uuid] = stateIt->second ? Verdict::Keep : Verdict::Drop;
+			}
+			continue;
+		}
+		const ReplayHeader &hdr = cached.header;
+		const ReplayType type = static_cast<ReplayType>(hdr.type());
+		if (type == RP_RUN)
+		{
+			rankedRuns.push_back({uuid, &hdr});
+		}
+		else if (type == RP_JUMPSTATS)
+		{
+			rankedJumps.push_back({uuid, &hdr});
+		}
+		else if (type == RP_MANUAL && hdr.has_player())
+		{
+			manualSaves.push_back({uuid, &hdr});
+		}
+	}
+	RankRunReplays(rankedRuns, verdicts);
+	RankJumpReplays(rankedJumps, verdicts);
+	RankManualReplays(manualSaves, verdicts);
+	for (const auto &[uuid, verdict] : verdicts)
+	{
+		if (verdict == Verdict::Keep)
+		{
+			ledger::UpdateEntry(uuid, [](ledger::Entry &entry) { entry.archivedAt = 0; });
+		}
+		else if (verdict == Verdict::Drop)
+		{
+			ledger::UpdateEntry(uuid,
+								[now](ledger::Entry &entry)
+								{
+									if (!entry.archivedAt)
+									{
+										entry.archivedAt = now;
+									}
+								});
+		}
+	}
+
+	// A file waiting for an upload stays even if the retention rules archived it.
+	const auto entries = ledger::GetEntries();
+	for (const auto &[uuid, entry] : entries)
+	{
+		if (!seen.count(uuid))
+		{
+			if (!entry.IsPending())
+			{
+				ledger::RemoveEntry(uuid);
+			}
+			continue;
+		}
+		auto verdictIt = verdicts.find(uuid);
+		const bool expired =
+			verdictIt != verdicts.end() && verdictIt->second == Verdict::Drop && entry.archivedAt && now >= entry.archivedAt + retentionSeconds;
+		if (entry.IsPending() || (!entry.offloaded && !expired))
+		{
+			continue;
+		}
+		char fullPath[MAX_PATH];
+		V_snprintf(fullPath, sizeof(fullPath), "%s/%s.replay", KZ_REPLAY_PATH, uuid.ToString().c_str());
+		utils::RemoveFile(fullPath);
+		ledger::RemoveEntry(uuid);
+		this->replayCache.erase(uuid);
+	}
+
 	// Rebuild the typed maps from the (mostly cached, in-memory) header set.
 	// No file I/O here.
 	std::unordered_map<UUID_t, ReplayHeader> newCheater;
 	std::map<UUID_t, ReplayHeader> newRun;
 	std::map<UUID_t, ReplayHeader> newJump;
 	std::unordered_map<UUID_t, ReplayHeader> newManual;
-	std::vector<std::tuple<UUID_t, ReplayHeader>> tempRun;
-	std::vector<std::tuple<UUID_t, ReplayHeader>> tempJump;
-	std::unordered_map<u64, std::vector<std::pair<UUID_t, u64>>> manualBySteam;
-
 	for (auto &[uuid, cached] : this->replayCache)
 	{
 		const ReplayHeader &hdr = cached.header;
@@ -1115,28 +1086,18 @@ void ReplayWatcher::ScanReplays()
 				newCheater[uuid] = hdr;
 				break;
 			case RP_RUN:
-				tempRun.push_back({uuid, hdr});
+				newRun[uuid] = hdr;
 				break;
 			case RP_JUMPSTATS:
-				tempJump.push_back({uuid, hdr});
+				newJump[uuid] = hdr;
 				break;
 			case RP_MANUAL:
 				newManual[uuid] = hdr;
-				if (hdr.has_player())
-				{
-					manualBySteam[hdr.player().steamid64()].push_back({uuid, hdr.timestamp()});
-				}
 				break;
 			default:
 				break;
 		}
 	}
-
-	// Process each replay type with dedicated functions
-	ProcessCheaterReplays(newCheater, currentUnixTime);
-	ProcessRunReplays(tempRun, newRun, currentUnixTime);
-	ProcessJumpReplays(tempJump, newJump, currentUnixTime);
-	CleanupManualReplays(newManual, manualBySteam);
 	{
 		std::lock_guard<std::mutex> lock(this->replayMapsMutex);
 		this->cheaterReplays = std::move(newCheater);
@@ -1145,7 +1106,48 @@ void ReplayWatcher::ScanReplays()
 		this->manualReplays = std::move(newManual);
 	}
 
-	ScanDownloadedReplays(currentUnixTime);
+	ScanDownloadedReplays(now);
+	QueueDatabaseChecks();
+	ledger::Save();
+}
+
+void ReplayWatcher::QueueDatabaseChecks()
+{
+	if (!this->recheckRequested.exchange(false) || !this->databaseMode)
+	{
+		return;
+	}
+	std::map<ReplayType, std::vector<UUID_t>> checks;
+	for (const auto &[uuid, cached] : this->replayCache)
+	{
+		checks[static_cast<ReplayType>(cached.header.type())].push_back(uuid);
+	}
+	std::lock_guard<std::mutex> lock(this->databaseMutex);
+	this->databaseChecks = std::move(checks);
+}
+
+void ReplayWatcher::RequestDatabaseChecks()
+{
+	this->recheckRequested = true;
+}
+
+std::vector<UUID_t> ReplayWatcher::TakeDatabaseChecks(ReplayType type, u32 count)
+{
+	std::lock_guard<std::mutex> lock(this->databaseMutex);
+	std::vector<UUID_t> &queue = this->databaseChecks[type];
+	const size_t taken = MIN((size_t)count, queue.size());
+	std::vector<UUID_t> batch(queue.end() - taken, queue.end());
+	queue.resize(queue.size() - taken);
+	return batch;
+}
+
+void ReplayWatcher::SetDatabaseStates(const std::vector<std::pair<UUID_t, bool>> &states)
+{
+	std::lock_guard<std::mutex> lock(this->databaseMutex);
+	for (const auto &[uuid, state] : states)
+	{
+		this->databaseStates[uuid] = state;
+	}
 }
 
 void ReplayWatcher::ScanDownloadedReplays(u64 currentTime)
@@ -1290,12 +1292,112 @@ std::vector<UUID_t> ReplayWatcher::FindReplaysByUUIDSubstring(const char *uuidSu
 
 ReplayWatcher g_ReplayWatcher;
 
+static_global class KZDatabaseServiceEventListener_Replays : public KZDatabaseServiceEventListener
+{
+public:
+	virtual void OnDatabaseSetup()
+	{
+		g_ReplayWatcher.RequestDatabaseChecks();
+	}
+} databaseEventListener;
+
 void KZ::replaysystem::InitWatcher()
 {
-	g_ReplayWatcher.Start();
+	ledger::Load();
+	// An upload to the API can't resume because its key only lived in memory.
+	// A run still waiting for the API keeps the UUID it has.
+	for (const auto &[uuid, entry] : ledger::GetEntries())
+	{
+		if (!entry.IsPending())
+		{
+			continue;
+		}
+		ledger::UpdateEntry(uuid,
+							[](ledger::Entry &pending)
+							{
+								pending.waitingForUUID = false;
+								pending.uploadToAPI = false;
+							});
+	}
+	KZDatabaseService::RegisterEventListener(&databaseEventListener);
+	g_ReplayWatcher.Start(KZDatabaseService::GetDatabaseConnection() != nullptr);
 }
 
 void KZ::replaysystem::CleanupWatcher()
 {
+	KZDatabaseService::UnregisterEventListener(&databaseEventListener);
 	g_ReplayWatcher.Stop();
+	ledger::Save();
+}
+
+void KZ::replaysystem::RequestDatabaseChecks()
+{
+	g_ReplayWatcher.RequestDatabaseChecks();
+}
+
+static_global constexpr u32 databaseCheckBatchSize = 100;
+static_global u32 databaseChecksInFlight;
+
+void KZ::replaysystem::ProcessDatabaseChecks()
+{
+	if (!KZDatabaseService::IsReady() || databaseChecksInFlight > 0)
+	{
+		return;
+	}
+	for (ReplayType type : {RP_RUN, RP_JUMPSTATS, RP_MANUAL, RP_CHEATER})
+	{
+		std::vector<UUID_t> batch = g_ReplayWatcher.TakeDatabaseChecks(type, databaseCheckBatchSize);
+		if (batch.empty())
+		{
+			continue;
+		}
+		std::vector<std::string> uuids;
+		for (const UUID_t &uuid : batch)
+		{
+			uuids.push_back(uuid.ToString());
+		}
+		auto onSuccess = [batch, type](std::vector<ISQLQuery *> queries)
+		{
+			databaseChecksInFlight--;
+			std::unordered_map<UUID_t, bool> found;
+			ISQLResult *result = queries[0]->GetResultSet();
+			while (result && result->FetchRow())
+			{
+				UUID_t uuid(false);
+				if (!result->IsNull(0) && UUID_t::FromString(utils::OrEmpty(result->GetString(0)), &uuid))
+				{
+					found[uuid] = type != RP_RUN || result->GetInt64(1) != 0;
+				}
+			}
+			std::vector<std::pair<UUID_t, bool>> states;
+			for (const UUID_t &uuid : batch)
+			{
+				auto it = found.find(uuid);
+				states.push_back({uuid, it != found.end() && it->second});
+			}
+			g_ReplayWatcher.SetDatabaseStates(states);
+		};
+		auto onFailure = [](std::string error, int)
+		{
+			databaseChecksInFlight--;
+			KZ_LOG_WARN(LogChannel::Replays, "Failed to check replays against the database (%s).\n", error.c_str());
+		};
+		databaseChecksInFlight++;
+		switch (type)
+		{
+			case RP_RUN:
+				KZDatabaseService::FindRunReplays(uuids, (i32)MAX(KZOptionService::GetOptionInt("replays/disk/maxRunsPerGroup", 3), 1), onSuccess,
+												  onFailure);
+				break;
+			case RP_JUMPSTATS:
+				KZDatabaseService::FindJumpReplays(uuids, onSuccess, onFailure);
+				break;
+			case RP_MANUAL:
+				KZDatabaseService::FindManualReplays(uuids, onSuccess, onFailure);
+				break;
+			default:
+				KZDatabaseService::FindCheaterReplays(uuids, onSuccess, onFailure);
+				break;
+		}
+	}
 }

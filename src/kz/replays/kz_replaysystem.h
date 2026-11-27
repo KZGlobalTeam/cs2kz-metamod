@@ -1,5 +1,6 @@
 #pragma once
 #include "sdk/datatypes.h"
+#include "utils/uuid.h"
 
 class KZPlayer;
 class CCSPlayerPawnBase;
@@ -92,4 +93,9 @@ namespace KZ::replaysystem
 
 	void InitWatcher();
 	void CleanupWatcher();
+	// Asks the database again which replays on disk it still references.
+	void RequestDatabaseChecks();
+	void ProcessDatabaseChecks();
+
+	void OnAPIUploadFinished(const UUID_t &uuid, bool uploaded);
 } // namespace KZ::replaysystem

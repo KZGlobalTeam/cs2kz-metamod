@@ -132,7 +132,6 @@ bool KZPlugin::Load(PluginId id, ISmmAPI *ismm, char *error, size_t maxlen, bool
 	// We don't need command filtering for KZ maps.
 	CommandLine()->AppendParm("-disable_workshop_command_filtering", "");
 	KZ_LOG_DEBUG(LogChannel::General, "Plugin loaded successfully. (late load: %s)", late ? "true" : "false");
-	KZ::replaysystem::InitWatcher();
 	loading = false;
 	return true;
 }
@@ -186,6 +185,8 @@ bool KZPlugin::Unload(char *error, size_t maxlen)
 void KZPlugin::AllPluginsLoaded()
 {
 	KZDatabaseService::Init();
+	// After the database because it decides which replays are kept.
+	KZ::replaysystem::InitWatcher();
 	KZ::mode::LoadModePlugins();
 	KZ::style::LoadStylePlugins();
 	g_pKZPlayerManager->ResetPlayers();

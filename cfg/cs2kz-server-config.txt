@@ -64,18 +64,20 @@
 		"downloadRetentionDays"		"7"
 
 		// Replays kept on this server's disk.
+		// With a database only the replays it references are kept.
 		"disk"
 		{
 			// Maximum amount of run replays per player, course and mode (top N by time + top N by time with 0 teleports, minimum 1).
 			"maxRunsPerGroup"				"3"
 
 			// Maximum amount of jump replays per player, jump type and mode (top N by distance + top N block jumps by block).
+			// Only used without a database because the jump top's maxJumpstatsPerCategory decides with one.
 			"maxJumpsPerCategory"			"3"
 
 			// Number of minutes to keep archived replays before deletion (0 = at the next scan).
 			"archiveRetentionMinutes"		"2880"
 
-			// Whether to delete a global run's replay once it is queued for the API.
+			// Whether to delete a global run's replay once the API has it.
 			"deleteGlobalRunsAfterUpload"	"false"
 		}
 	}

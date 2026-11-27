@@ -1,4 +1,5 @@
 #pragma once
+#include <atomic>
 #include <optional>
 #include <thread>
 #include "kz_replay.h"
@@ -68,32 +69,28 @@ class ReplayWatcher
 	std::map<UUID_t, ReplayHeader> runReplays;
 	std::map<UUID_t, ReplayHeader> jumpReplays;
 	std::unordered_map<UUID_t, ReplayHeader> downloadedReplays;
-	// External archival index mapping a uuid to its archived unix timestamp.
-	std::unordered_map<UUID_t, u64> archivedIndex;
-	bool archiveDirty = false;
 	std::unordered_map<UUID_t, CachedReplayEntry> replayCache;
 	std::unordered_map<UUID_t, CachedReplayEntry> downloadedReplayCache;
+
+	std::mutex databaseMutex;
+	// Whether the database keeps each replay it has answered for.
+	std::unordered_map<UUID_t, bool> databaseStates;
+	std::map<ReplayType, std::vector<UUID_t>> databaseChecks;
+	std::atomic<bool> recheckRequested;
+	// Whether the local database decides which replays are kept.
+	bool databaseMode {};
 
 	void WatchLoop();
 
 	void ScanReplays();
 	void SweepOrphanedChunks(u64 currentTime);
 	void ScanDownloadedReplays(u64 currentTime);
-
-	void MarkArchived(const UUID_t &uuid, u64 archiveTimestamp);
-	void LoadArchiveIndex();
-	void SaveArchiveIndex();
-	void ProcessCheaterReplays(std::unordered_map<UUID_t, ReplayHeader> &cheaterReplays, u64 currentTime);
-	void ProcessRunReplays(std::vector<std::tuple<UUID_t, ReplayHeader>> &tempRunReplays, std::map<UUID_t, ReplayHeader> &runReplays,
-						   u64 currentTime);
-	void ProcessJumpReplays(std::vector<std::tuple<UUID_t, ReplayHeader>> &tempJumpReplays, std::map<UUID_t, ReplayHeader> &jumpReplays,
-							u64 currentTime);
-	void CleanupManualReplays(std::unordered_map<UUID_t, ReplayHeader> &manualReplays,
-							  std::unordered_map<u64, std::vector<std::pair<UUID_t, u64>>> &manualReplaysBySteamID);
+	void QueueDatabaseChecks();
 
 public:
-	void Start()
+	void Start(bool useDatabase)
 	{
+		databaseMode = useDatabase;
 		running = true;
 		watcherThread = std::thread(&ReplayWatcher::WatchLoop, this);
 	}
@@ -136,6 +133,12 @@ public:
 
 	// The map of the jump replay with this UUID or an empty string if there is none.
 	std::string GetJumpReplayMap(const UUID_t &uuid);
+
+	// Asks the database again about the replays on disk.
+	void RequestDatabaseChecks();
+	// Hands out up to `count` replays of a type to ask the database about.
+	std::vector<UUID_t> TakeDatabaseChecks(ReplayType type, u32 count);
+	void SetDatabaseStates(const std::vector<std::pair<UUID_t, bool>> &states);
 
 	// Find replays by UUID substring.
 	// Returns matching UUIDs.

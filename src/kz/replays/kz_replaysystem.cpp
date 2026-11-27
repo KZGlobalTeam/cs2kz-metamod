@@ -97,6 +97,7 @@ namespace KZ::replaysystem
 	void OnGameFrame()
 	{
 		data::ProcessAsyncLoadCompletion();
+		ProcessDatabaseChecks();
 	}
 
 	bool BeginServerTick(KZPlayer *player)

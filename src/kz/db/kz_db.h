@@ -189,6 +189,22 @@ public:
 	static void DeleteJumpstat(u32 id, TransactionSuccessCallbackFunc onSuccess, TransactionFailureCallbackFunc onFailure);
 	static void DeleteAllJumpstats(u64 steamID64, TransactionSuccessCallbackFunc onSuccess, TransactionFailureCallbackFunc onFailure);
 
+	// Replays
+	// Returns the UUIDs among these that still have a jump in the jump top.
+	static void FindJumpReplays(const std::vector<std::string> &uuids, TransactionSuccessCallbackFunc onSuccess,
+								TransactionFailureCallbackFunc onFailure);
+	// Returns the runs among these UUIDs and whether each is among its player's `keep` fastest or fastest without teleports.
+	static void FindRunReplays(const std::vector<std::string> &uuids, i32 keep, TransactionSuccessCallbackFunc onSuccess,
+							   TransactionFailureCallbackFunc onFailure);
+	// Returns the UUIDs among these that are manual saves their player still keeps.
+	static void FindManualReplays(const std::vector<std::string> &uuids, TransactionSuccessCallbackFunc onSuccess,
+								  TransactionFailureCallbackFunc onFailure);
+	// Returns the UUIDs among these that a ban points to.
+	static void FindCheaterReplays(const std::vector<std::string> &uuids, TransactionSuccessCallbackFunc onSuccess,
+								   TransactionFailureCallbackFunc onFailure);
+	// Records a manual save and forgets the player's saves beyond the newest maxManualSaves.
+	static void SaveManualReplay(const UUID_t &uuid, u64 steamID64);
+
 	static void Ban(u64 steamID64, const char *reason = nullptr, f32 duration = 0.0f, const UUID_t banId = UUID_t(false),
 					const UUID_t replayUuid = UUID_t(false), TransactionSuccessCallbackFunc onSuccess = OnGenericTxnSuccess,
 					TransactionFailureCallbackFunc onFailure = OnGenericTxnFailure);

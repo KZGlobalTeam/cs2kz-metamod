@@ -6,6 +6,7 @@
 #include "kz/option/kz_option.h"
 #include "kz/replays/kz_replay.h"
 #include "kz/replays/kz_replaysystem.h"
+#include "kz/replays/ledger.h"
 #include "kz/replays/data.h"
 #include "kz/replays/bot.h"
 #include "kz/replays/playback.h"
@@ -19,6 +20,7 @@ using namespace KZ::replaysystem;
 
 void KZGlobalService::ReplayManager::QueueUpload(PendingUpload &&upload)
 {
+	ledger::UpdateEntry(upload.recordID, [](ledger::Entry &entry) { entry.uploadToAPI = true; });
 	std::lock_guard _guard(this->mutex);
 	this->pendingUploads.push_back(std::move(upload));
 }
@@ -29,6 +31,7 @@ void KZGlobalService::ReplayManager::RetryUpload(std::shared_ptr<PendingUpload> 
 	{
 		KZ_LOG_WARN(LogChannel::Global, "Failed to upload replay %s (%s); giving up after %u attempts.\n", upload->recordID.ToString().c_str(),
 					reason, upload->attempts);
+		OnAPIUploadFinished(upload->recordID, false);
 		return;
 	}
 
@@ -69,6 +72,10 @@ void KZGlobalService::ReplayManager::ProcessUploads()
 	if (!KZGlobalService::GetApiHttpUrl(apiUrl))
 	{
 		KZ_LOG_WARN(LogChannel::Global, "Dropping %zu replay upload(s) because `apiUrl` is invalid.\n", uploadsToProcess.size());
+		for (const PendingUpload &upload : uploadsToProcess)
+		{
+			OnAPIUploadFinished(upload.recordID, false);
+		}
 		return;
 	}
 
@@ -93,6 +100,7 @@ void KZGlobalService::ReplayManager::ProcessUploads()
 			if (response.status >= 200 && response.status < 300)
 			{
 				KZ_LOG_INFO(LogChannel::Global, "Uploaded replay %s.\n", recordID.c_str());
+				OnAPIUploadFinished(upload->recordID, true);
 				return;
 			}
 
@@ -105,6 +113,7 @@ void KZGlobalService::ReplayManager::ProcessUploads()
 
 			// A 4xx means the key is invalid, expired or already used and a retry cannot succeed.
 			KZ_LOG_WARN(LogChannel::Global, "API rejected replay %s with status %d.\n", recordID.c_str(), response.status);
+			OnAPIUploadFinished(upload->recordID, false);
 		};
 
 		request.Send(onResponse, [upload]() { RetryUpload(upload, "request failed"); });

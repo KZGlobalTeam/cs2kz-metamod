@@ -9,6 +9,7 @@
 #include "kz/option/kz_option.h"
 #include "kz/replays/kz_replay.h"
 #include "kz/replays/kz_replaysystem.h"
+#include "kz/replays/ledger.h"
 #include "utils/async_file_io.h"
 #include "utils/utils.h"
 
@@ -330,6 +331,8 @@ void RunSubmission::OnReplayReady(std::vector<char> &&buffer)
 												KZ::replaysystem::NotifyReplayFileChanged(uuid.c_str());
 											}
 										});
+		// The UUID only becomes final once the submission is done.
+		KZ::replaysystem::ledger::UpdateEntry(finalUUID, [](KZ::replaysystem::ledger::Entry &entry) { entry.waitingForUUID = true; });
 		// Notify the player now (write is async but fire-and-forget, effectively always succeeds).
 		KZPlayer *callbackPlayer = this->IsFromPreviousMap() ? nullptr : g_pKZPlayerManager->SessionToPlayer(sessionID);
 		if (callbackPlayer)
@@ -344,13 +347,6 @@ void RunSubmission::OnReplayReady(std::vector<char> &&buffer)
 		if (global && apiResponseReceived && !globalResponse.recordId.empty() && !replayBuffer.empty())
 		{
 			KZGlobalService::QueueReplayUpload(finalUUID, globalResponse.replayUploadKey, std::vector<char>(replayBuffer));
-
-			if (KZOptionService::GetOptionInt("replays/disk/deleteGlobalRunsAfterUpload", false))
-			{
-				char deletePath[512];
-				BuildReplayPath(deletePath, sizeof(deletePath), finalUUID);
-				utils::RemoveFile(deletePath);
-			}
 		}
 	}
 	else
@@ -485,14 +481,6 @@ void RunSubmission::TryFinalize()
 	if (global && apiResponseReceived && !globalResponse.recordId.empty() && !replayBuffer.empty())
 	{
 		KZGlobalService::QueueReplayUpload(finalUUID, globalResponse.replayUploadKey, std::vector<char>(replayBuffer));
-
-		// Delete local replay file after uploading if deleteGlobalRunsAfterUpload is on.
-		if (KZOptionService::GetOptionInt("replays/disk/deleteGlobalRunsAfterUpload", false))
-		{
-			char deletePath[512];
-			BuildReplayPath(deletePath, sizeof(deletePath), finalUUID);
-			utils::RemoveFile(deletePath);
-		}
 	}
 }
 
@@ -535,14 +523,6 @@ void RunSubmission::DoLateAPIResponse(const std::string &apiUUID)
 	if (!replayBuffer.empty())
 	{
 		KZGlobalService::QueueReplayUpload(finalUUID, globalResponse.replayUploadKey, std::vector<char>(replayBuffer));
-
-		// Delete local replay file after uploading if deleteGlobalRunsAfterUpload is on.
-		if (KZOptionService::GetOptionInt("replays/disk/deleteGlobalRunsAfterUpload", false))
-		{
-			char deletePath[512];
-			BuildReplayPath(deletePath, sizeof(deletePath), finalUUID);
-			utils::RemoveFile(deletePath);
-		}
 	}
 	else
 	{
@@ -561,11 +541,6 @@ void RunSubmission::DoLateAPIResponse(const std::string &apiUUID)
 				}
 
 				KZGlobalService::QueueReplayUpload(uploadUUID, uploadKey, std::move(buffer));
-
-				if (KZOptionService::GetOptionInt("replays/disk/deleteGlobalRunsAfterUpload", false))
-				{
-					utils::RemoveFile(uploadPath.c_str());
-				}
 			});
 		// clang-format on
 	}
@@ -769,6 +744,10 @@ void RunSubmission::CheckAll()
 				return false;
 			}
 
+			for (const UUID_t &uuid : {sub->localUUID, sub->finalUUID})
+			{
+				KZ::replaysystem::ledger::UpdateEntry(uuid, [](KZ::replaysystem::ledger::Entry &entry) { entry.waitingForUUID = false; });
+			}
 			delete sub;
 			return true;
 		}),

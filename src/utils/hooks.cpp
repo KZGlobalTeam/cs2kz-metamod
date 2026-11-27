@@ -605,6 +605,8 @@ static KHook::Return<bool> ActivateServerPost(CNetworkGameServerBase *pThis)
 	RunSubmission::OnMapChange();
 	KZ::misc::OnActivateServer();
 	KZDatabaseService::SetupMap();
+	// Leaderboards may have changed since the last map.
+	KZ::replaysystem::RequestDatabaseChecks();
 	KZRecordingService::OnActivateServer();
 	KZRacingService::OnActivateServer();
 	KZGlobalService::OnActivateServer();

@@ -98,3 +98,27 @@ constexpr char sqlite_times_alter_id_column_3[] = R"(
 constexpr char sqlite_times_alter_id_column_4[] = R"(
     ALTER TABLE Times_New RENAME TO Times
 )";
+
+// Speeds up the per-player lookups of the replay retention.
+constexpr char mysql_times_add_player_index[] = R"(
+    CREATE INDEX IX_Times_Player ON Times (SteamID64, MapCourseID, ModeID, StyleIDFlags, RunTime)
+)";
+
+constexpr char sqlite_times_add_player_index[] = R"(
+    CREATE INDEX IF NOT EXISTS IX_Times_Player ON Times (SteamID64, MapCourseID, ModeID, StyleIDFlags, RunTime)
+)";
+
+// Returns each of these runs with Kept = 1 if it has no styles and is among its player's %d fastest on the course in that mode
+// or among the %d fastest without teleports.
+// Runs with the same time are ranked by ID which is the order they were set in.
+constexpr char sql_times_findkeptruns[] = R"(
+    SELECT t.ID, (t.StyleIDFlags = 0 AND (
+        (SELECT COUNT(*) FROM Times f
+            WHERE f.SteamID64 = t.SteamID64 AND f.MapCourseID = t.MapCourseID AND f.ModeID = t.ModeID AND f.StyleIDFlags = 0
+                AND (f.RunTime < t.RunTime OR (f.RunTime = t.RunTime AND f.ID < t.ID))) < %d
+        OR (t.Teleports = 0 AND (SELECT COUNT(*) FROM Times f
+            WHERE f.SteamID64 = t.SteamID64 AND f.MapCourseID = t.MapCourseID AND f.ModeID = t.ModeID AND f.StyleIDFlags = 0
+                AND f.Teleports = 0 AND (f.RunTime < t.RunTime OR (f.RunTime = t.RunTime AND f.ID < t.ID))) < %d))) AS Kept
+        FROM Times t
+        WHERE t.ID IN (%s)
+)";

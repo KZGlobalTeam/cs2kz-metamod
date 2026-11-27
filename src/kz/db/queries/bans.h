@@ -69,6 +69,11 @@ constexpr char sql_bans_remove_active_before[] = R"(
         AND ExpiresAt < %s
 )";
 
+// The cheater replays among these that a ban points to.
+constexpr char sql_bans_findreplayuuids[] = R"(
+    SELECT ReplayUUID FROM Bans WHERE ReplayUUID IN (%s)
+)";
+
 constexpr char sql_bans_remove_by_id[] = R"(
     DELETE FROM Bans 
         WHERE ID='%s'

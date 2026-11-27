@@ -4,6 +4,7 @@
 #include "kz/timer/submission.h"
 #include "kz/checkpoint/kz_checkpoint.h"
 #include "kz/replays/kz_replaysystem.h"
+#include "kz/db/kz_db.h"
 #include "kz/language/kz_language.h"
 #include "kz/spec/kz_spec.h"
 #include "utils/simplecmds.h"
@@ -684,12 +685,14 @@ SCMD(kz_rpsave, SCFL_REPLAY)
 
 	// Capture player userid for the callback (don't capture player pointer as it may be invalid)
 	CPlayerUserId userID = player->GetClient()->GetUserID();
+	u64 targetSteamID = target->GetSteamId64();
 
 	target->recordingService->WriteCircularBufferToFileAsync(
 		duration, "", player,
 		// Success callback
-		[userID](const UUID_t &uuid, f32 replayDuration)
+		[userID, targetSteamID](const UUID_t &uuid, f32 replayDuration)
 		{
+			KZDatabaseService::SaveManualReplay(uuid, targetSteamID);
 			KZPlayer *callbackPlayer = g_pKZPlayerManager->ToPlayer(userID);
 			if (callbackPlayer)
 			{

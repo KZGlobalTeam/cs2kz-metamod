@@ -331,3 +331,8 @@ constexpr char sql_jumpstats_getuuid[] = R"(
 constexpr char sql_jumpstats_getplayeruuids[] = R"(
     SELECT UUID FROM Jumpstats WHERE SteamID64=%llu
 )";
+
+// The replay UUIDs among these that still have a jump in the jump top.
+constexpr char sql_jumpstats_finduuids[] = R"(
+    SELECT UUID FROM Jumpstats WHERE UUID IN (%s)
+)";
