@@ -41,6 +41,10 @@ void KZDatabaseService::SetupDatabase()
 	{
 		KZ_LOG_INFO(LogChannel::DB, "No database config detected.\n");
 	}
+	if (!databaseConnection)
+	{
+		return;
+	}
 	databaseConnection->Connect(OnDatabaseConnected);
 }
 
