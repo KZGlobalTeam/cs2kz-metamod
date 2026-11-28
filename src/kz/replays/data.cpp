@@ -5,6 +5,7 @@
 #include "utils/uuid.h"
 #include "compression.h"
 #include "parsing.h"
+#include <algorithm>
 #include <thread>
 #include <mutex>
 #include <atomic>
@@ -372,9 +373,11 @@ namespace KZ::replaysystem::data
 		}
 
 		result.numEvents = eventsVec.size();
-		eventsVec.shrink_to_fit();
-		result.events = eventsVec.data();
-		new (&eventsVec) std::vector<RpEvent>();
+		if (!eventsVec.empty())
+		{
+			result.events = new RpEvent[eventsVec.size()];
+			std::copy(eventsVec.begin(), eventsVec.end(), result.events);
+		}
 
 		UpdateProgress(cursor, data, size, progress);
 
