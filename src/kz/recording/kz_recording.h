@@ -124,7 +124,7 @@ struct Recorder
 
 	// Copy the last numSeconds seconds of data from the circular recorder.
 	Recorder(KZPlayer *player, f32 numSeconds, ReplayType type, bool copyTimerEvents, DistanceTier copyJumps);
-	~Recorder();
+	virtual ~Recorder();
 
 	// Explicitly re-enable move operations.
 	// This ensures std::move() transfers ownership rather than copying.
