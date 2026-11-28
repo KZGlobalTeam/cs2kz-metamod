@@ -89,7 +89,7 @@ void KZHUDService::UpdateLayoutElement(CCSCustomHudLayout *layout, MHUDElement e
 	// Edge alignment measures x from the screen edge; shift it so the stored x stays the anchor.
 	const i32 alignShift = cached.align == MHUDAlign::Left ? 500 : (cached.align == MHUDAlign::Right ? -500 : 0);
 	// Top anchoring measures y from the top of the screen in the same way.
-	const i32 anchorShift = IsMHUDElementTopAnchored(element) ? 500 : 0;
+	const i32 anchorShift = (IsMHUDElementTopAnchored(element) || element == MHUDElement::Potential) ? 500 : 0;
 	const bool dragged = this->edit.mode == EditMode::Dragging && this->edit.element == element;
 	const f32 x = dragged ? this->edit.dragX : cached.x;
 	const f32 y = dragged ? this->edit.dragY : cached.y;
@@ -97,7 +97,7 @@ void KZHUDService::UpdateLayoutElement(CCSCustomHudLayout *layout, MHUDElement e
 	this->SetLayoutPosition(layout, def.panelId, def.posPanelId, state.x, state.fineX, RoundFloatToInt(x * 10.0f) + alignShift, "x");
 	this->SetLayoutPosition(layout, def.panelId, def.posPanelId, state.y, state.fineY, RoundFloatToInt(y * 10.0f) + anchorShift, "y");
 	// The jumpstats, course and race panels scale as a whole in their own update instead.
-	if (!IsMHUDElementScaled(element))
+	if (!IsMHUDElementScaled(element) && element != MHUDElement::Potential)
 	{
 		this->SetLayoutValueClass(layout, def.panelId, state.fontSize, (i32)this->GetLayoutSize(element), "font-size", false);
 	}
@@ -113,7 +113,7 @@ void KZHUDService::UpdateLayoutElement(CCSCustomHudLayout *layout, MHUDElement e
 
 	// A panel's opacity fades only its text and its background has its own.
 	const i32 opacity = Clamp(cached.opacity, 0, 100);
-	if (GetMHUDBackgroundOpacityKey(element))
+	if (GetMHUDBackgroundOpacityKey(element) || element == MHUDElement::Potential)
 	{
 		this->SetLayoutValueClass(layout, def.panelId, state.opacity, opacity, "js-fg", true);
 		this->SetLayoutValueClass(layout, def.panelId, state.bgOpacity, Clamp(cached.bgOpacity, 0, 100), "js-bg", true);
@@ -156,6 +156,7 @@ void KZHUDService::DestroyOwnedLayout()
 	this->layoutJumpstats = LayoutJumpstatsState();
 	this->layoutCourse = LayoutCourseState();
 	this->layoutRace = LayoutRaceState();
+	ResetLayoutPotentialState(this->layoutPotential);
 	this->releaseText.clear();
 	this->layoutEdit = LayoutEditState();
 }

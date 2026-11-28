@@ -37,6 +37,29 @@ enum DistanceTier : u8
 	DISTANCETIER_COUNT
 };
 
+enum PotentialTier : u8
+{
+	PotentialTier_Meh = 0,
+	PotentialTier_Impressive,
+	PotentialTier_Perfect,
+	PotentialTier_Godlike,
+	PotentialTier_Ownage,
+	PotentialTier_Wrecker,
+	PotentialTier_Wrecker1,
+	PotentialTier_Wrecker2,
+	PotentialTier_Wrecker3,
+	POTENTIALTIER_COUNT
+};
+
+struct PotentialCrossings
+{
+	bool hit[POTENTIALTIER_COUNT] {};
+	f32 pct[POTENTIALTIER_COUNT] {};
+	f32 prevDistance {};
+	f32 prevProgress {};
+	bool hasPrev {};
+};
+
 // where to show js
 enum JSReportType : u8
 {
@@ -211,6 +234,15 @@ public:
 	f32 externalLoss {};
 	f32 strafeMaxSpeed {};
 
+	// The highest predicted landing distance seen during this strafe, -1 until the first sample
+	f32 bestPredictedDistance {-1.0f};
+	// The previous strafe's bestPredictedDistance, so the report can show how much this strafe improved it
+	// -1 when there is no previous strafe or it never had a prediction
+	f32 previousBestPredictedDistance {-1.0f};
+	// The prediction from the takeoff frame itself, before any strafing, Only the first strafe has one, it is
+	// what that strafe's improvement is measured against
+	f32 initialPredictedDistance {-1.0f};
+
 public:
 	void End();
 
@@ -293,6 +325,26 @@ public:
 	{
 		this->strafeMaxSpeed = MAX(this->strafeMaxSpeed, speed);
 	}
+
+	void UpdateBestPredictedDistance(f32 distance)
+	{
+		this->bestPredictedDistance = MAX(this->bestPredictedDistance, distance);
+	}
+
+	f32 GetBestPredictedDistance()
+	{
+		return this->bestPredictedDistance;
+	}
+
+	f32 GetPreviousBestPredictedDistance()
+	{
+		return this->previousBestPredictedDistance;
+	}
+
+	f32 GetInitialPredictedDistance()
+	{
+		return this->initialPredictedDistance;
+	}
 };
 
 class Jump
@@ -353,6 +405,12 @@ public:
 	bool failstatValid {};
 	f32 failstatBlockHeight {};
 
+	bool potentialActive {};
+	PotentialCrossings potentialCrossings {};
+	f32 potentialDistance {};
+	f32 potentialProgress {};
+	bool potentialExhausted {};
+
 	// Running totals for ended strafes for RecordPose snapshots.
 	f32 poseEndedDuration {};
 	f32 poseEndedSyncDuration {};
@@ -382,6 +440,12 @@ public:
 	}
 
 	Strafe *GetCurrentStrafe();
+
+	// Samples the landing prediction into the current strafe's best, which the console prints per strafe
+	void TrackPredictedDistance();
+	// Per tick potential distance and jump progress percentage at which each tier threshold was first crossed
+	// Called from Update, so it runs once per tick, the HUD and the report both read the results instead of computing their own
+	void TrackPotentialDistance();
 
 	JumpType GetJumpType()
 	{

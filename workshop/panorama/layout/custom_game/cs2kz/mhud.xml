@@ -97,6 +97,16 @@
         <Button id="mhud_release_hit_br" class="edit-corner edit-corner-br" />
       </Panel>
     </Panel>
+    <Panel id="mhud_pred_pos" class="pos" hittest="false">
+      <Label id="mhud_pred" class="element hidden" text="{s:v}" hittest="false" />
+      <Panel id="mhud_pred_hit" class="element edit-box hidden" hittest="false">
+        <Button id="mhud_pred_hit_move" class="edit-hit" />
+        <Button id="mhud_pred_hit_tl" class="edit-corner edit-corner-tl" />
+        <Button id="mhud_pred_hit_tr" class="edit-corner edit-corner-tr" />
+        <Button id="mhud_pred_hit_bl" class="edit-corner edit-corner-bl" />
+        <Button id="mhud_pred_hit_br" class="edit-corner edit-corner-br" />
+      </Panel>
+    </Panel>
     <Panel id="mhud_perf_pos" class="pos" hittest="false">
       <Label id="mhud_perf" class="element hidden" text="{s:perf}" hittest="false" />
       <Panel id="mhud_perf_hit" class="element edit-box hidden" hittest="false">
@@ -253,6 +263,34 @@
       </Panel>
     </Panel>
     <Label id="mhud_race_countdown" class="race-countdown hidden" text="{s:v}" hittest="false" />
+
+    <Panel id="mhud_potential_pos" class="pos" hittest="false">
+      <Panel id="mhud_potential" class="element anchor-top potential-stack hidden" hittest="false">
+        <Panel class="js-panel potential-panel" hittest="false">
+          <Panel class="js-header" hittest="false">
+            <Label id="mhud_potential_title" class="js-type potential-title" text="POTENTIAL DISTANCE" hittest="false" />
+            <Label id="mhud_potential_dist" class="js-tier-name potential-dist" text="{s:v}" hittest="false" />
+          </Panel>
+          <Panel class="js-divider" hittest="false" />
+          <Panel id="mhud_potential_r0" class="js-row potential-row hidden" hittest="false"><Label id="mhud_potential_l0" class="js-label potential-label" text="{s:v}" hittest="false" /><Label id="mhud_potential_v0" class="js-value potential-value" text="{s:v}" hittest="false" /></Panel>
+          <Panel id="mhud_potential_r1" class="js-row potential-row hidden" hittest="false"><Label id="mhud_potential_l1" class="js-label potential-label" text="{s:v}" hittest="false" /><Label id="mhud_potential_v1" class="js-value potential-value" text="{s:v}" hittest="false" /></Panel>
+          <Panel id="mhud_potential_r2" class="js-row potential-row hidden" hittest="false"><Label id="mhud_potential_l2" class="js-label potential-label" text="{s:v}" hittest="false" /><Label id="mhud_potential_v2" class="js-value potential-value" text="{s:v}" hittest="false" /></Panel>
+          <Panel id="mhud_potential_r3" class="js-row potential-row hidden" hittest="false"><Label id="mhud_potential_l3" class="js-label potential-label" text="{s:v}" hittest="false" /><Label id="mhud_potential_v3" class="js-value potential-value" text="{s:v}" hittest="false" /></Panel>
+          <Panel id="mhud_potential_r4" class="js-row potential-row hidden" hittest="false"><Label id="mhud_potential_l4" class="js-label potential-label" text="{s:v}" hittest="false" /><Label id="mhud_potential_v4" class="js-value potential-value" text="{s:v}" hittest="false" /></Panel>
+          <Panel id="mhud_potential_r5" class="js-row potential-row hidden" hittest="false"><Label id="mhud_potential_l5" class="js-label potential-label" text="{s:v}" hittest="false" /><Label id="mhud_potential_v5" class="js-value potential-value" text="{s:v}" hittest="false" /></Panel>
+          <Panel id="mhud_potential_r6" class="js-row potential-row hidden" hittest="false"><Label id="mhud_potential_l6" class="js-label potential-label" text="{s:v}" hittest="false" /><Label id="mhud_potential_v6" class="js-value potential-value" text="{s:v}" hittest="false" /></Panel>
+          <Panel id="mhud_potential_r7" class="js-row potential-row hidden" hittest="false"><Label id="mhud_potential_l7" class="js-label potential-label" text="{s:v}" hittest="false" /><Label id="mhud_potential_v7" class="js-value potential-value" text="{s:v}" hittest="false" /></Panel>
+          <Panel id="mhud_potential_r8" class="js-row potential-row hidden" hittest="false"><Label id="mhud_potential_l8" class="js-label potential-label" text="{s:v}" hittest="false" /><Label id="mhud_potential_v8" class="js-value potential-value" text="{s:v}" hittest="false" /></Panel>
+        </Panel>
+      </Panel>
+      <Panel id="mhud_potential_hit" class="element anchor-top edit-box hidden" hittest="false">
+        <Button id="mhud_potential_hit_move" class="edit-hit" />
+        <Button id="mhud_potential_hit_tl" class="edit-corner edit-corner-tl" />
+        <Button id="mhud_potential_hit_tr" class="edit-corner edit-corner-tr" />
+        <Button id="mhud_potential_hit_bl" class="edit-corner edit-corner-bl" />
+        <Button id="mhud_potential_hit_br" class="edit-corner edit-corner-br" />
+      </Panel>
+    </Panel>
 
     <Panel id="mhud_guide_x_pos" class="pos" hittest="false">
       <Panel id="mhud_guide_x" class="guide guide-x hidden" hittest="false" />

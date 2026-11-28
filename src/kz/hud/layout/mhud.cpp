@@ -6,6 +6,7 @@
 #include "kz/checkpoint/kz_checkpoint.h"
 #include "kz/replays/kz_replaysystem.h"
 #include "kz/jumpstats/kz_jumpstats.h"
+#include "kz/jumpstats/distance_prediction.h"
 #include "kz/mode/kz_mode.h"
 #include "sdk/entity/ccscustomhudlayout.h"
 
@@ -96,6 +97,210 @@ static_global const char *keyGlyphs[] = {"mhud_kg_c_main", "mhud_kg_c_idle",   "
 										 "mhud_kg_j_main", "mhud_kg_j_idle",   "mhud_kg_a_main", "mhud_kg_a_letter", "mhud_kg_a_idle",
 										 "mhud_kg_s_main", "mhud_kg_s_letter", "mhud_kg_s_idle", "mhud_kg_d_main",   "mhud_kg_d_letter",
 										 "mhud_kg_d_idle", "mhud_kg_j_count"};
+
+static_global const char *PREDICTED_TIER_CLASSES[DISTANCETIER_COUNT] = {"js-tier-none", "js-tier-1", "js-tier-2", "js-tier-3",
+																		"js-tier-4",    "js-tier-5", "js-tier-6"};
+
+void KZHUDService::UpdatePredictedElement(CCSCustomHudLayout *layout, const SpeedInfo &info, bool force)
+{
+	const MHUDElementDef &def = mhudElements[(i32)MHUDElement::Predicted];
+	LayoutElementState &state = this->layoutElements[(i32)MHUDElement::Predicted];
+	if (force)
+	{
+		state = LayoutElementState();
+	}
+	const bool show = this->IsMHUDElementEnabled(MHUDElement::Predicted) && info.predictedDistance > 0.0f;
+	if (state.hidden != !show)
+	{
+		state.hidden = !show;
+		layout->SetHasClass(def.panelId, "hidden", state.hidden ? k_eHudPanelClassStatus_HasClass : k_eHudPanelClassStatus_DoesNotHaveClass);
+	}
+	if (!show)
+	{
+		return;
+	}
+	char text[24];
+	V_snprintf(text, sizeof(text), "%.2f", info.predictedDistance);
+	if (state.text != text)
+	{
+		state.text = text;
+		layout->SetDialogVariableString(def.panelId, def.varName, text);
+	}
+	const MHUDPrefs &prefs = this->GetPrefs();
+	const MHUDPrefs::Element &cached = prefs.elements[(i32)MHUDElement::Predicted];
+
+	this->SetLayoutClass(layout, def.panelId, state.alignClass, NULL);
+	this->SetLayoutPosition(layout, def.panelId, def.posPanelId, state.x, state.fineX, RoundFloatToInt(cached.x * 10.0f), "x");
+	this->SetLayoutPosition(layout, def.panelId, def.posPanelId, state.y, state.fineY, RoundFloatToInt(cached.y * 10.0f), "y");
+	this->SetLayoutValueClass(layout, def.panelId, state.fontSize, RoundFloatToInt(cached.size), "font-size", false);
+	this->SetLayoutClass(layout, def.panelId, state.fontClass, KZHUDService::GetMHUDFontClass(this->player, MHUDElement::Predicted));
+
+	JumpType jumpType = JumpType_LongJump;
+	if (!this->player->jumpstatsService->jumps.empty())
+	{
+		jumpType = this->player->jumpstatsService->jumps.back().GetJumpType();
+	}
+	DistanceTier tier = DistanceTier_None;
+	if (this->player->modeService)
+	{
+		tier = this->player->modeService->GetDistanceTier(jumpType, info.predictedDistance);
+	}
+	if (!state.colorComputed || state.lastColorPacked != (u32)tier)
+	{
+		state.colorComputed = true;
+		state.lastColorPacked = (u32)tier;
+		state.colorClassComputed = PREDICTED_TIER_CLASSES[tier];
+	}
+	this->SetLayoutClass(layout, def.panelId, state.colorClass, state.colorClassComputed);
+	this->SetLayoutValueClass(layout, def.panelId, state.opacity, Clamp(cached.opacity, 0, 100), "opacity", true);
+
+	const bool outline = this->IsMHUDOutlineEnabled(MHUDElement::Predicted);
+	layout->SetHasClass(def.panelId, "outline", outline ? k_eHudPanelClassStatus_HasClass : k_eHudPanelClassStatus_DoesNotHaveClass);
+}
+
+static_global const char *const POTENTIAL_ROWS[POTENTIALTIER_COUNT][3] = {
+	{"mhud_potential_r0", "mhud_potential_l0", "mhud_potential_v0"}, {"mhud_potential_r1", "mhud_potential_l1", "mhud_potential_v1"},
+	{"mhud_potential_r2", "mhud_potential_l2", "mhud_potential_v2"}, {"mhud_potential_r3", "mhud_potential_l3", "mhud_potential_v3"},
+	{"mhud_potential_r4", "mhud_potential_l4", "mhud_potential_v4"}, {"mhud_potential_r5", "mhud_potential_l5", "mhud_potential_v5"},
+	{"mhud_potential_r6", "mhud_potential_l6", "mhud_potential_v6"}, {"mhud_potential_r7", "mhud_potential_l7", "mhud_potential_v7"},
+	{"mhud_potential_r8", "mhud_potential_l8", "mhud_potential_v8"}};
+
+void KZHUDService::UpdatePotentialElement(CCSCustomHudLayout *layout, const SpeedInfo &info, bool force, bool preview)
+{
+	LayoutPotentialState &state = this->layoutPotential;
+	if (force)
+	{
+		ResetLayoutPotentialState(state);
+	}
+	const bool enabled =
+		preview ? this->GetOwnPrefs().elements[(i32)MHUDElement::Potential].enabled : this->IsMHUDElementEnabled(MHUDElement::Potential);
+
+	const bool show = enabled && (preview || info.potentialShown);
+	this->UpdateLayoutElement(layout, MHUDElement::Potential, show, NULL, mhudDefBaseColor, force);
+
+	if (!show)
+	{
+		return;
+	}
+
+	const char *panelId = mhudElements[(i32)MHUDElement::Potential].panelId;
+
+	const i32 scale = Clamp((i32)this->GetLayoutSize(MHUDElement::Potential), MHUD_JS_SIZE_MIN, MHUD_JS_SIZE_MAX);
+	if (state.scale != scale)
+	{
+		char className[32];
+		if (state.scale != INT_MIN)
+		{
+			V_snprintf(className, sizeof(className), "js-scale--%i", state.scale);
+			layout->SetHasClass(panelId, className, k_eHudPanelClassStatus_DoesNotHaveClass);
+		}
+		V_snprintf(className, sizeof(className), "js-scale--%i", scale);
+		layout->SetHasClass(panelId, className, k_eHudPanelClassStatus_HasClass);
+		state.scale = scale;
+	}
+
+	const char *fontClass = KZHUDService::GetMHUDFontClass(this->player, MHUDElement::Potential);
+	if (state.fontClass != fontClass)
+	{
+		auto setFont = [&](const char *id)
+		{
+			if (state.fontClass)
+			{
+				layout->SetHasClass(id, state.fontClass, k_eHudPanelClassStatus_DoesNotHaveClass);
+			}
+			if (fontClass)
+			{
+				layout->SetHasClass(id, fontClass, k_eHudPanelClassStatus_HasClass);
+			}
+		};
+		setFont("mhud_potential_title");
+		setFont("mhud_potential_dist");
+		for (const auto &row : POTENTIAL_ROWS)
+		{
+			setFont(row[1]);
+			setFont(row[2]);
+		}
+		state.fontClass = fontClass;
+	}
+
+	JumpType jumpType = JumpType_LongJump;
+	if (!this->player->jumpstatsService->jumps.empty())
+	{
+		jumpType = this->player->jumpstatsService->jumps.back().GetJumpType();
+	}
+
+	const f32 distance = preview ? 268.42f : info.potentialDistance;
+	const bool showDistance = preview || info.potentialAirborne;
+	DistanceTier tier = DistanceTier_None;
+	if (preview)
+	{
+		tier = DistanceTier_Wrecker;
+	}
+	else if (this->player->modeService && showDistance)
+	{
+		tier = this->player->modeService->GetDistanceTier(jumpType, distance);
+	}
+	char text[24];
+	text[0] = '\0';
+	if (showDistance)
+	{
+		V_snprintf(text, sizeof(text), "%.2f", distance);
+	}
+	if (V_strcmp(state.distance, text) != 0)
+	{
+		V_strncpy(state.distance, text, sizeof(state.distance));
+		layout->SetDialogVariableString("mhud_potential_dist", "v", text);
+	}
+	this->SetLayoutClass(layout, "mhud_potential_dist", state.distanceClass, showDistance ? PREDICTED_TIER_CLASSES[tier] : NULL);
+
+	const char *modeShortName = this->player->modeService ? this->player->modeService->GetModeShortName() : NULL;
+	for (i32 i = 0; i < (i32)POTENTIALTIER_COUNT; i++)
+	{
+		const PotentialTier rowTier = (PotentialTier)i;
+		const f32 threshold = KZ::DistancePrediction::GetPotentialRowThreshold(modeShortName, jumpType, rowTier, preview);
+		const bool rowShown = threshold > 0.0f;
+		if (state.rowHidden[i] != !rowShown)
+		{
+			state.rowHidden[i] = !rowShown;
+			layout->SetHasClass(POTENTIAL_ROWS[i][0], "hidden", rowShown ? k_eHudPanelClassStatus_DoesNotHaveClass : k_eHudPanelClassStatus_HasClass);
+		}
+		if (!rowShown)
+		{
+			continue;
+		}
+
+		char label[16];
+		V_snprintf(label, sizeof(label), "%.0f", threshold);
+		if (V_strcmp(state.rowLabel[i], label) != 0)
+		{
+			V_strncpy(state.rowLabel[i], label, sizeof(state.rowLabel[i]));
+			layout->SetDialogVariableString(POTENTIAL_ROWS[i][1], "v", label);
+		}
+
+		const bool hit = preview ? i < 3 : info.tierHit[(i32)rowTier];
+
+		DistanceTier colorTier = DistanceTier_None;
+		if (this->player->modeService)
+		{
+			colorTier = this->player->modeService->GetDistanceTier(jumpType, threshold);
+		}
+		char value[24];
+		if (hit)
+		{
+			V_snprintf(value, sizeof(value), "%.2f%%", preview ? 45.23f + i * 10.0f : info.tierHitPct[(i32)rowTier]);
+		}
+		else
+		{
+			V_snprintf(value, sizeof(value), "--");
+		}
+		if (V_strcmp(state.rowValue[i], value) != 0)
+		{
+			V_strncpy(state.rowValue[i], value, sizeof(state.rowValue[i]));
+			layout->SetDialogVariableString(POTENTIAL_ROWS[i][2], "v", value);
+		}
+		this->SetLayoutClass(layout, POTENTIAL_ROWS[i][2], state.rowClass[i], hit ? PREDICTED_TIER_CLASSES[colorTier] : NULL);
+	}
+}
 
 // The movement axis each panel sits on so an overlap can be shown on just the keys causing it.
 enum KeyAxis
@@ -411,6 +616,8 @@ std::string KZHUDService::GetEditSampleText(MHUDElement element)
 		{
 			return KZLanguageService::PrepareMessageWithLang(language, "HUD - Release Text", "+10.0");
 		}
+		case MHUDElement::Predicted:
+			return std::string("9999.99");
 		case MHUDElement::Perf:
 		case MHUDElement::CrouchJump:
 		case MHUDElement::Jumpbug:
@@ -433,6 +640,8 @@ void KZHUDService::UpdateEditElements(CCSCustomHudLayout *layout, bool force)
 							prefs.prespeed[(i32)MHUDSpeedState::Base],
 							prefs.keys,
 							prefs.checkpoint,
+							mhudDefBaseColor,
+							mhudDefBaseColor,
 							mhudDefBaseColor,
 							mhudDefBaseColor,
 							prefs.releaseLate,
@@ -462,6 +671,11 @@ void KZHUDService::UpdateEditElements(CCSCustomHudLayout *layout, bool force)
 		if (element == MHUDElement::Race)
 		{
 			this->UpdateRaceElements(layout, prefs.elements[i].enabled, false, force, true);
+			continue;
+		}
+		if (element == MHUDElement::Potential)
+		{
+			this->UpdatePotentialElement(layout, SpeedInfo(), force, true);
 			continue;
 		}
 		const bool show = prefs.elements[i].enabled;
@@ -934,6 +1148,8 @@ bool KZHUDService::UpdateHudLayout(KZPlayer *source)
 		this->UpdateCheckpointElement(layout, source, force);
 		this->UpdateIndicatorElements(layout, info, force);
 		this->UpdateReleaseElement(layout, source, info, force);
+		this->UpdatePredictedElement(layout, info, force);
+		this->UpdatePotentialElement(layout, info, force);
 		this->UpdateCourseElement(layout, source, this->IsMHUDElementEnabled(MHUDElement::Course), force);
 		this->UpdateRaceElements(layout, this->IsMHUDElementEnabled(MHUDElement::Race), true, force);
 		// Whether jumpstats go to the HUD is the viewer's own setting even while mimicking.

@@ -2376,6 +2376,14 @@
 		"ru"		"Отжатие W"
 		"nl"		"W-release"
 	}
+	"Menu - Predicted"
+	{
+		"en"		"Predicted Distance"
+		"chi"		"预测距离"
+		"zho"		"預測距離"
+		"ua"		"Прогнозована дистанція"
+		"ru"		"Прогнозируемая дистанция"
+	}
 	"Menu - Course Show Map"
 	{
 		"en"		"Map and course"
@@ -2507,6 +2515,14 @@
 		"en"		"Race"
 		"ua"		"Перегони"
 		"nl"		"Race"
+	}
+	"Menu - Potential"
+	{
+		"en"		"Potential Distance (Time%)"
+		"chi"		"势距离 (时间%)"
+		"zho"		"勢距離 (時間%)"
+		"ua"		"Потенціал (Час%)"
+		"ru"		"Потенциал (Время%)"
 	}
 	"Menu - Race Time Left"
 	{

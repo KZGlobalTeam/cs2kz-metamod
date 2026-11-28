@@ -41,10 +41,18 @@
 #define MHUD_DEF_RACE_Y    -5
 #define MHUD_DEF_RACE_SIZE 125
 
+#define MHUD_DEF_POTENTIAL_X    0
+#define MHUD_DEF_POTENTIAL_Y    -45
+#define MHUD_DEF_POTENTIAL_SIZE 100
+
 // Right of the prespeed at its size.
 #define MHUD_DEF_RELEASE_X    5
 #define MHUD_DEF_RELEASE_Y    12
 #define MHUD_DEF_RELEASE_SIZE 22
+
+#define MHUD_DEF_PREDICTED_X    0
+#define MHUD_DEF_PREDICTED_Y    0
+#define MHUD_DEF_PREDICTED_SIZE 34
 
 // The indicators stack to the right of the speed readout in the order movementhud draws them.
 #define MHUD_DEF_JUMPBUG_X    12
